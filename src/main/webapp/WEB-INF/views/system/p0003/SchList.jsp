@@ -82,15 +82,16 @@ function calendarDayMouseout(){
 				</c:forTokens>
 			</div> 
 			<div class="calendarRow">
-					<c:forEach begin="1" end="${DAYOFWEEK}">
-			             <div class="calendarColumnBox">
-			             	<div class="calendarColumnDay"><span>a</span>
-			             	</div>
-			             </div> 
-				 	</c:forEach>	
-				 	
 					<c:forEach var="listview" items="${listview}" varStatus="status">
 						<c:set var="CDDAYOFWEEK" value="${listview.CDDAYOFWEEK}"/>
+						<c:if test='${listview.CDDD == "1"}'>
+							<c:forEach begin="1" end="${CDDAYOFWEEK - 1 }">
+					             <div class="calendarColumnBox">
+					             	<div class="calendarColumnDay">
+					             	</div>
+					             </div> 
+						 	</c:forEach>
+					 	</c:if>
 						<c:if test='${CDDAYOFWEEK=="1"}'> 
 							</div>
 							<div class="calendarRow">

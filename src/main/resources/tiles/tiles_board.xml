@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+
+	<!-- 로그인 화면 레이아웃 -->
+	<definition name=".login"  template="/WEB-INF/views/common/loginlayout.jsp">
+	  	<put-attribute name="content"   	value="" />
+   </definition>
+   
+   <definition name="/login/*" extends=".login">
+      <put-attribute name="content" value="/WEB-INF/views/login.jsp" />
+   </definition>
+
+	<!-- 로그인 화면 외 레이아웃 -->
+	<definition name="layout" template="/WEB-INF/views/common/layout.jsp">
+		<put-attribute name="css"			value="/WEB-INF/views/common/css.jsp" />
+	  	<put-attribute name="header"    	value="/WEB-INF/views/common/header.jsp" />
+	  	<put-attribute name="content"   	value="" />
+	  	<put-attribute name="menu"    	value="/WEB-INF/views/common/menu.jsp" />
+	  	<put-attribute name="js"			value="/WEB-INF/views/common/js.jsp" />
+	</definition>
+	
+	<definition name="/*/*/*.do" extends="layout">
+	  	<put-attribute name="content"   value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+	</definition>
+	
+	<!-- 메인화면 -->	
+	<definition name="main" template="/WEB-INF/views/common/layout.jsp">
+		<put-attribute name="css"			value="/WEB-INF/views/common/css.jsp" />
+	  	<put-attribute name="header"    	value="/WEB-INF/views/common/header.jsp" />
+	  	<put-attribute name="content"   	value="/WEB-INF/views/index.jsp" />
+	  	<put-attribute name="menu"    	value="/WEB-INF/views/common/menu.jsp" />
+	  	<put-attribute name="js"			value="/WEB-INF/views/common/js.jsp" />
+	</definition>
+	
+		<!-- 
+	<definition name="system/*/*.do" extends="layouts-tiles">
+	  	<put-attribute name="content"   value="/WEB-INF/views/system/{1}/{2}.jsp" />
+	</definition>
+	
+	
+	<definition name="/system/p0001/init.do" extends="layout">
+	  	<put-attribute name="content"   value="/WEB-INF/views/system/p0001/init.jsp" />
+	</definition>
+	 -->
+
+</tiles-definitions>

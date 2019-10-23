@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.system.p0003">
+	<resultMap id="p0003Result01" type="schVO">
+		<result property="SSNO" column="SSNO" />
+		<result property="SSTITLE" column="SSTITLE" />
+		<result property="SSTYPE" column="SSTYPE" />
+		<result property="SSSTARTDATE" column="SSSTARTDATE" />
+		<result property="SSSTARTHOUR" column="SSSTARTHOUR" />
+		<result property="SSSTARTMINUTE" column="SSSTARTMINUTE" />
+		<result property="SSENDDATE" column="SSENDDATE" />
+		<result property="SSENDHOUR" column="SSENDHOUR" />
+		<result property="SSENDMINUTE" column="SSENDMINUTE" />
+		<result property="SSREPEATTYPE" column="SSREPEATTYPE" />
+		<result property="SSREAEATTYPENM" column="SSREAEATTYPENM" />
+		<result property="SSREPEATOPTION" column="SSREPEATOPTION" />
+		<result property="SSREPEATEND" column="SSREPEATEND" />
+		<result property="SSCONTENTS" column="SSCONTENTS" />
+		<result property="SSISOPEN" column="SSISOPEN" />
+		<result property="FK_SAWON_CODE" column="FK_SAWON_CODE" />
+		<result property="SAWON_NAME" column="SAWON_NAME" />
+	</resultMap>
+	
+	<resultMap id="p0003Result02" type="schDetailVO">
+		<result property="FK_SSNO" column="FK_SSNO" />
+		<result property="SDDATE" column="SDDATE" />
+		<result property="SDHOUR" column="SDHOUR" />
+		<result property="SDMINUTE" column="SDMINUTE" />
+		<result property="PK_SAWON_CODE" column="PK_SAWON_CODE" />
+		<result property="SSTITLE" column="SSTITLE" />
+		<result property="FONTCOLOR" column="FONTCOLOR" />
+	</resultMap>
+	
+	<resultMap id="p0003Result03" type="monthVO">
+		<result property="YEAR" column="YEAR" />
+		<result property="MONTH" column="MONTH" />
+	</resultMap>
+	
+	<resultMap id="p0003Result04" type="calendarVO">
+		<result property="CDDATE" column="CDDATE" />
+		<result property="CDDD" column="CDDD" />
+		<result property="CDDAYOFWEEK" column="CDDAYOFWEEK" />
+		<result property="LIST" column="LIST" />
+	</resultMap>
+	
+	<resultMap id="p0003Result05" type="codeVO">
+		<result property="CLASSNO" column="CLASSNO" />
+		<result property="CODECD" column="CODECD" />
+		<result property="CODENM" column="CODENM" />
+	</resultMap>
+	
+    <select id="selectCalendar" resultType="hr.system.p0003.vo.CalendarVO" parameterType="hr.system.p0003.vo.MonthVO">
+		SELECT CDDATE, CDDD, CDDAYOFWEEK
+		  FROM COM_DATE CD
+		 WHERE CDYEAR=#{YEAR} AND CDMM=#{MONTH}
+		 ORDER BY CDDATE
+    </select> 
+
+    <select id="selectSchList4Calen" resultType="hr.system.p0003.vo.SchDetailVO" parameterType="project.common.Field3VO">
+		SELECT SSNO, SDSEQ, SSTITLE, PK_SAWON_CODE, SDHOUR, SDMINUTE, FONTCOLOR
+		  FROM (
+				SELECT NULL SSNO, NULL SDSEQ, SHTITLE SSTITLE, NULL PK_SAWON_CODE, NULL SDHOUR, NULL SDMINUTE, SHCOLOR FONTCOLOR
+				  FROM SCH_HOLIDAY SH
+				 WHERE SHMONTH=TO_DATE(#{field2}, 'MM') AND SHDATE=TO_DATE(#{field2}, 'DD') AND SH.DELETEFLAG='N'
+				 UNION ALL
+				SELECT SD.FK_SSNO, SDSEQ, SSTITLE, PK_SAWON_CODE, SD.SDHOUR, SD.SDMINUTE, NULL FONTCOLOR
+				  FROM SCH_DETAIL SD 
+				  LEFT OUTER JOIN SCHEDULE SS ON SS.SSNO=SD.FK_SSNO 
+				 WHERE SDDATE=#{field2} AND SS.DELETEFLAG='N' AND SS.SSISOPEN='Y'
+				 UNION ALL
+				SELECT SD.FK_SSNO, SDSEQ, SSTITLE, PK_SAWON_CODE, SD.SDHOUR, SD.SDMINUTE, NULL FONTCOLOR
+				  FROM SCH_DETAIL SD 
+				  LEFT OUTER JOIN SCHEDULE SS ON SS.SSNO=SD.FK_SSNO 
+				 WHERE SDDATE=#{field2} AND SS.DELETEFLAG='N' AND SS.SSISOPEN='N' AND PK_SAWON_CODE=#{field1}
+		 )DS
+         ORDER BY SDHOUR, SDMINUTE, SSNO
+    </select> 
+
+    
+    <sql id="includeSch">
+        WHERE DELETEFLAG='N'
+    </sql>
+
+    <select id="selectSchCount" resultType="Integer" parameterType="project.common.SearchVO">
+        SELECT COUNT(*)
+          FROM SCHEDULE TC
+         <include refid="includeSch"/>
+    </select> 
+    
+    <select id="selectSchList" resultType="hr.system.p0003.vo.SchVO" parameterType="project.common.SearchVO">
+        SELECT SSTITLE, SSTYPE, SSSTARTDATE, SSSTARTHOUR, SSSTARTMINUTE, SSENDDATE, SSENDHOUR
+        	 , SSENDMINUTE, SSREPEATTYPE, SSREPEATEND, SSCONTENTS, SSISOPEN, TC.FK_SAWON_CODE, SAWON_NAME
+          FROM SCHEDULE TC
+         INNER JOIN SAWON CU ON TC.FK_SAWON_CODE=CU.PK_SAWON_CODE
+         <include refid="includeSch"/>
+         ORDER BY SSNO DESC
+         <if test="rowStart != null">
+             LIMIT ${rowStart-1}, 10
+         </if>
+    </select> 
+        
+    <insert id="insertSch" parameterType="hr.system.p0003.vo.SchVO" useGeneratedKeys="true" keyProperty="SSNO">
+        INSERT INTO SCHEDULE(SSTITLE, SSTYPE, SSSTARTDATE, SSSTARTHOUR, SSSTARTMINUTE, SSENDDATE, SSENDHOUR, 
+        			SSENDMINUTE, SSREPEATTYPE, SSREPEATOPTION, SSREPEATEND, SSCONTENTS, SSISOPEN, FK_SAWON_CODE, UPDATEDATE, INSERTDATE, DELETEFLAG)
+        VALUES (#{SSTITLE}, #{SSTYPE}, #{SSSTARTDATE}, #{SSSTARTHOUR}, #{SSSTARTMINUTE}, #{SSENDDATE}, #{SSENDHOUR}, 
+        		#{SSENDMINUTE}, #{SSREPEATTYPE}, #{SSREPEATOPTION}, #{SSREPEATEND}, #{SSCONTENTS}, #{SSISOPEN}, #{FK_SAWON_CODE}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
+    </insert>
+    
+    <update id="updateSch" parameterType="hr.system.p0003.vo.SchVO">
+        UPDATE SCHEDULE
+           SET SSTITLE=#{SSTITLE}, SSTYPE=#{SSTYPE}, SSSTARTDATE=#{SSSTARTDATE}, SSSTARTHOUR=#{SSSTARTHOUR}, SSSTARTMINUTE=#{SSSTARTMINUTE}, SSENDDATE=#{SSENDDATE}
+             , SSENDHOUR=#{SSENDHOUR}, SSENDMINUTE=#{SSENDMINUTE}, SSREPEATTYPE=#{SSREPEATTYPE}, SSREPEATOPTION=#{SSREPEATOPTION}, SSREPEATEND=#{SSREPEATEND}
+             , SSCONTENTS=#{SSCONTENTS}, SSISOPEN=#{SSISOPEN}, UPDATEDATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
+         WHERE SSNO=#{SSNO} 
+    </update> 
+
+    <insert id="insertSchDetail" parameterType="hr.system.p0003.vo.SchDetailVO" >
+        INSERT INTO SCH_DETAIL(SSNO, SDSEQ, SDDATE, SDHOUR, SDMINUTE) 
+        		VALUES(#{SSNO}, #{SDSEQ}, #{SDDATE}, #{SDHOUR}, #{SDMINUTE})
+    </insert>
+     
+    <delete id="deleteSchDetail" parameterType="String">
+        DELETE
+          FROM SCH_DETAIL
+         WHERE SSNO=#{ssno} 
+    </delete>  
+                
+    <select id="selectSchOne" parameterType="hr.system.p0003.vo.SchVO" resultType="hr.system.p0003.vo.SchVO">
+        SELECT SSNO, SSTITLE, SSTYPE, SSSTARTDATE, SSSTARTHOUR, SSSTARTMINUTE, SSENDDATE, SSENDHOUR 
+        	 , SSENDMINUTE, SSREPEATTYPE, SSREPEATOPTION, SSREPEATEND, SSCONTENTS, SSISOPEN, TC.FK_SAWON_CODE, SAWON_NAME
+          FROM SCHEDULE TC
+         INNER JOIN SAWON CU ON TC.FK_SAWON_CODE=CU.PK_SAWON_CODE
+         WHERE TC.DELETEFLAG='N' AND SSNO=#{SSNO}
+    </select>  
+
+    <select id="selectSchOne4Read" parameterType="hr.system.p0003.vo.SchVO" resultType="hr.system.p0003.vo.SchVO">
+        SELECT SSNO, SSTITLE, CC1.CODENM SSTYPE, SSSTARTDATE, SSSTARTHOUR, SSSTARTMINUTE, SSENDDATE, SSENDHOUR 
+        	 , SSENDMINUTE, SSREPEATTYPE, CC2.CODENM SSREPEATTYPENM, SSREPEATEND, SSCONTENTS, CC3.CODENM SSISOPEN, TC.FK_SAWON_CODE, SAWON_NAME
+          FROM SCHEDULE TC
+         INNER JOIN SAWON CU ON TC.FK_SAWON_CODE=CU.PK_SAWON_CODE
+         INNER JOIN COM_CODE CC1 ON CC1.CODECD=TC.SSTYPE AND CC1.CLASSNO=4
+         INNER JOIN COM_CODE CC2 ON CC2.CODECD=TC.SSREPEATTYPE AND CC2.CLASSNO=5
+         INNER JOIN COM_CODE CC3 ON CC3.CODECD=TC.SSISOPEN AND CC3.CLASSNO=6
+         WHERE TC.DELETEFLAG='N' AND SSNO=#{SSNO}
+    </select>  
+    
+    <delete id="deleteSch" parameterType="hr.system.p0003.vo.SchVO">
+        UPDATE SCH_SCHEDULE
+           SET DELETEFLAG='Y'
+         WHERE SSNO=#{SSNO} 
+    </delete>
+    
+    <select id="selectClassCode" parameterType="String"  resultType="hr.system.p0003.vo.ClassCodeVO">
+        SELECT CODECD, CODENM 
+          FROM COM_CODE 
+         WHERE CLASSNO=#{CLASSNO} -- AND DELETEFLAG='N'
+         ORDER BY CAST(CODECD AS INT)
+    </select> 
+
+</mapper>

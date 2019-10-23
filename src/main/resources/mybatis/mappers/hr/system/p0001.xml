@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.system.p0001">
+	<resultMap id="p0001Result01" type="sawonVO">
+		<result property="PK_SAWON_CODE" column="PK_SAWON_CODE" />
+		<result property="SAWON_NAME" column="SAWON_NAME" />
+		<result property="SAWON_ENG_NAME" column="SAWON_JOIN_DATE" />
+		<result property="SAWON_RESIGNATION_DATE" column="SAWON_RESIGNATION_DATE" />
+		<result property="SAWON_USER_STATUS" column="SAWON_USER_STATUS" />
+		<result property="SAWON_PASSWORD" column="SAWON_PASSWORD" />
+		<result property="SAWON_VIEW_PERMISSION" column="SAWON_VIEW_PERMISSION" />
+		<result property="SAWON_EMERGENCY_CON_NET" column="SAWON_EMERGENCY_CON_NET" />
+		<result property="FK_DEPT_CODE" column="FK_DEPT_CODE" />
+		<result property="SAWON_INT_USER_ID" column="SAWON_INT_USER_ID" />
+		<result property="SAWON_INT_DATE" column="SAWON_INT_DATE" />
+		<result property="SAWON_MOD_USER_ID" column="SAWON_MOD_USER_ID" />
+		<result property="SAWON_MOD_DATE" column="SAWON_MOD_DATE" />
+	</resultMap>
+	
+	<select id="selectMember4Login" parameterType="hr.system.p0001.vo.LoginVO" resultType="hr.system.p0001.vo.SawonVO" >
+        SELECT PK_SAWON_CODE, SAWON_NAME, SAWON_VIEW_PERMISSION
+          FROM SAWON 
+         WHERE SAWON_USER_STATUS='Y' 
+           AND PK_SAWON_CODE = #{ PK_SAWON_CODE } AND SAWON_PASSWORD = #{ SAWON_PASSWORD }
+    </select> 
+    
+    <insert id="insertLogIn" parameterType="String">
+    	INSERT INTO COM_LOGINOUT (LNO, USERNO, LTYPE, LDATE)
+    	 	              VALUES ((SELECT NVL(MAX(LNO)+1,0) FROM COM_LOGINOUT), #{ PK_SAWON_CODE }, 'I', to_char(sysdate,'yyyy.mm.dd hh24:mi') )
+    </insert>
+
+    <insert id="insertLogOut" parameterType="String">
+    	INSERT INTO COM_LOGINOUT (LNO, USERNO, LTYPE, LDATE)
+    	 	              VALUES ((SELECT NVL(MAX(LNO)+1,0) FROM COM_LOGINOUT), #{ PK_SAWON_CODE }, 'O', to_char(sysdate,'yyyy.mm.dd hh24:mi') )
+    </insert>
+
+	<select id="searchList" resultMap="p0001Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         SELECT 
+		    PK_SAWON_CODE,
+		    SAWON_NAME,
+		    SAWON_ENG_NAME,
+		    SAWON_JOIN_DATE,
+		    SAWON_RESIGNATION_DATE,
+		    SAWON_USER_STATUS,
+		    SAWON_PASSWORD,
+		    SAWON_VIEW_PERMISSION,
+		    SAWON_EMERGENCY_CON_NET,
+		    FK_DEPT_CODE,
+		    SAWON_INT_USER_ID,
+		    SAWON_INT_DATE,
+		    SAWON_MOD_USER_ID,
+		    SAWON_MOD_DATE
+		FROM SAWON;
+      ]]>
+		<where>
+			<if test=" p_id != ''  and  p_id != null">
+				PK_SAWON_CODE = #{p_id}
+			</if>
+		</where>
+	</select>
+
+</mapper>

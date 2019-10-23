@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.elect.p0001">
+	<resultMap id="p0001Result01" type="p0001VO">
+		<result property="cust_id" column="cust_id" />
+		<result property="cust_name" column="cust_name" />
+		<result property="cust_address" column="cust_address" />
+		<result property="cust_state" column="cust_state" />
+		<result property="cust_zip" column="cust_zip" />
+		<result property="cust_country" column="cust_country" />
+		<result property="cust_contact" column="cust_contact" />
+		<result property="cust_email" column="cust_email" />
+	</resultMap>
+
+	<select id="searchList" resultMap="p0001Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select cust_id, cust_name, cust_address, cust_state, cust_zip, cust_country, cust_contact, cust_email
+         from   customers
+      ]]>
+		<where>
+			<if test=" p_id != ''  and  p_id != null">
+				cust_id = #{p_id}
+			</if>
+		</where>
+	</select>
+
+	<update id="updateData" parameterType="java.util.Map">
+		update customers
+		set  cust_name = #{cust_name,jdbcType=VARCHAR}
+		   , cust_address = #{cust_address,jdbcType=VARCHAR}
+		   , cust_state = #{cust_state,jdbcType=VARCHAR}
+		   , cust_zip = #{cust_zip,jdbcType=VARCHAR}
+		   , cust_country = #{cust_country,jdbcType=VARCHAR}
+		   , cust_contact = #{cust_contact,jdbcType=VARCHAR}
+		   , cust_email = #{cust_email,jdbcType=VARCHAR}
+		where cust_id = #{cust_id, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertData" parameterType="java.util.Map">
+		insert into customers(cust_id, cust_name, cust_address, cust_state, cust_zip, cust_country, cust_contact, cust_email) values(#{cust_id, ,jdbcType=VARCHAR}, #{cust_name, ,jdbcType=VARCHAR}, #{cust_address,jdbcType=VARCHAR}, #{cust_state,jdbcType=VARCHAR}, #{cust_zip,jdbcType=VARCHAR}, #{cust_country,jdbcType=VARCHAR}, #{cust_contact,jdbcType=VARCHAR}, #{cust_email,jdbcType=VARCHAR})
+	</insert>	
+	
+	<delete id="deleteData" parameterType="java.util.Map">
+		delete customers
+		where cust_id = #{cust_id}
+	</delete>	
+
+</mapper>

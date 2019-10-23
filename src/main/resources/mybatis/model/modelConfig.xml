@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias type="hr.elect.p0001.vo.P0001VO"  alias="p0001VO" />
+		<typeAlias type="hr.system.p0001.vo.LoginVO"  alias="loginVO" />
+		<typeAlias type="hr.system.p0001.vo.SawonVO"  alias="sawonVO" />
+		<typeAlias type="hr.system.p0003.vo.CalendarVO"  alias="calendarVO" />
+		<typeAlias type="hr.system.p0003.vo.MonthVO"  alias="monthVO" />
+		<typeAlias type="hr.system.p0003.vo.SchDetailVO"  alias="schDetailVO" />
+		<typeAlias type="hr.system.p0003.vo.SchVO"  alias="schVO" />
+		<typeAlias type="hr.system.p0003.vo.CodeVO"  alias="codeVO" />
+		<typeAlias type="hr.system.p0003.vo.ClassCodeVO"  alias="classCodeVO" />
+	</typeAliases> 
+</configuration>

@@ -53,7 +53,7 @@ public class P0001ControllerImpl implements P0001Controller {
         modelMap.addAttribute("PK_SAWON_CODE", userid);
 		
 		String viewName = getViewName(request);
-		viewName = "/login/*";
+		viewName = "/login";
 		request.setCharacterEncoding("utf-8");
 		ModelAndView main = new ModelAndView(viewName);
 		return main;

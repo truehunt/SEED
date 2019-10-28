@@ -1,6 +1,92 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<%
+  request.setCharacterEncoding("UTF-8");
+%>
+
+  		<link href="${pageContext.request.contextPath}/resources/ibsheet/tab/ibtab-style.css" rel="stylesheet">
+	<script src="${pageContext.request.contextPath}/resources/ibsheet/ibleaders.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/ibsheet/ibsheet.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/ibsheet/tab/ibtab.js" type="text/javascript"></script>
+	<script src="${pageContext.request.contextPath}/resources/ibsheet/tab/ibtabinfo.js" type="text/javascript"></script>
+
+<script>
+var ib = {
+	    initialize: function() {
+	        var tabBar = $("#ib-tabs")[0], // 탭바 컨테이너 객체
+	            contents = $("#ib-contents")[0]; // 콘텐츠 컨테이너 객체
+
+	        var idSheet = 0,
+	            idChart = 0;
+
+	        createIBTab(tabBar, contents, "myTab", {
+	            widthTabBar: "100%", // 탭바 너비
+	            widthContents: "100%", // 콘탠츠 너비
+	            heightContents: "300px", // 콘텐츠 높이
+	            themes: {
+	                tabs: "simple_under_blue", // 탭바 테마
+	                contents: "simple_under_blue", // 콘텐츠 테마
+	                contextMenu: "simple_under_blue" // 콘텍스트메뉴 테마
+	            }
+	        });
+	        
+	        myTab.setOptions({
+		        tabs: [{
+	                title: "홈",
+	                style: {
+	                    btnClose: false,
+	                    icon: "none"
+	                }
+	            }],
+	            contents: [{
+	                contents: "<div><iframe src='/SEED/index'></div>"
+	            }]
+	        });
+	    },
+	    data: undefined,
+	    doAction: function(elId, title, type, id, url) {
+	        var Tab = null,
+	            idxTab = 0,
+	            urlToGo = "",
+	            bFindTab = false;
+	        if (elId) {
+	            if (url === "schList") {
+	                urlToGo = "/SEED/schList";
+	            } 
+
+	            Tab = elId.findTabId(id);
+
+	            if (typeof Tab !== "undefined") {
+	                bFindTab = true;
+	                idxTab = Tab.getIndex();
+	            }
+
+	            if (bFindTab) {
+	                elId.goToTab(idxTab);
+	            } else {
+	                elId.addTab({
+	                    tabs: {
+	                        title: title,
+	                        focus: true,
+	                        id: id
+	                    },
+	                    contents: {
+	                        type: "iframe",
+	                        contents: urlToGo,
+	                        preLoad: false
+	                    }
+	                });
+	            }
+	        }
+	    }
+	};
+	ib.initialize();
+</script>
 
 	<div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
@@ -23,14 +109,15 @@
 		                                		$("#searchForm").submit();
 	                                		}
 	                                	}
+	                                	
 	                                </script>                            <!-- /input-group -->
                         </li>
                         <!-- 일반 사원 단 조회 가능메뉴들 -->
                         <li>
                             <a href="#"><i class="fa fa-edit fa-fw"></i> 인사관리<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-                                <li>
-                                    <a href="signDocTypeList">내정보보기</a>
+                                <li>elId, title, type, id, url
+                                     <a href='#' onClick="ib.doAction(myTab,'일정관리','chart','ib-chart-0','schList'); return false">내정보보기</a>
                                 </li>
 	                        </ul>                             
                         </li>
@@ -188,4 +275,7 @@
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
+
+
+
 

@@ -54,7 +54,8 @@ public class SchCtr {
         modelMap.addAttribute("searchVO", searchVO);
         modelMap.addAttribute("dayofweek", dayofweek);
         
-        return "/system/p0003/SchList.do";
+        // return "/system/p0003/SchList.do";
+        return "/SchList";
     }
     
     /** 
@@ -63,7 +64,7 @@ public class SchCtr {
     @RequestMapping(value = "/schForm")
     public String schForm(HttpServletRequest request, SchVO schInfo, ModelMap modelMap) {
         // 페이지 공통: alert
-        String userno = request.getSession().getAttribute("userno").toString();
+        String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
         
         // etcSvc.setCommonAttribute(userno, modelMap);
     	
@@ -75,7 +76,7 @@ public class SchCtr {
         	schInfo.setSSTYPE("1");
         	schInfo.setSSISOPEN("Y");
 
-        	String cddate = request.getParameter("cddate");
+        	String cddate = request.getParameter("CDDATE");
         	if (cddate==null || "".equals(cddate)) {
         		cddate = Util4calen.date2Str(Util4calen.getToday());
         	}
@@ -89,7 +90,7 @@ public class SchCtr {
         List<?> sstypelist= etcSvc.selectClassCode("4");
         modelMap.addAttribute("sstypelist", sstypelist);
         
-        return "schedule/SchForm";
+        return "system/p0003/SchForm";
     }
     
     /**

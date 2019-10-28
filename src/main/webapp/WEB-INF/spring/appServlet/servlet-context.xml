@@ -43,9 +43,9 @@
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
-		<beans:property name="prefix" value="/WEB-INF/views" /> 
+		<beans:property name="prefix" value="/WEB-INF/views/" /> 
 		<beans:property name="suffix" value=".jsp" />
-		<beans:property name="order" value="2"/> 
+		<!-- <beans:property name="order" value="2"/>  --> 
 	</beans:bean>
 	
 
@@ -54,7 +54,7 @@
     <beans:property name="defaultLocale" value="ko" />
   </beans:bean>
 
-<!-- 타일즈 실습 설정 --> 
+<!-- 타일즈 실습 설정 
  
     <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<beans:property name="definitions">
@@ -69,6 +69,8 @@
 		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
 		<beans:property name="order" value="1"/>
 	</beans:bean>
+	
+--> 
 
 	<!-- 다중파일 업로드 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

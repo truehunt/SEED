@@ -46,7 +46,31 @@ public class IndexCtr {
         // modelMap.addAttribute("noticeList", noticeList);
         // modelMap.addAttribute("listtime", listtime);
 
-        return "main";
+        return "/index";
+    }
+    
+    /**
+     * main page - calendar  
+     */
+    @RequestMapping(value = "/indexCalen")
+    public String indexCalen(HttpServletRequest request, ModelMap modelMap) {
+        String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+        modelMap.addAttribute(userno, modelMap);
+
+        Date today = Util4calen.getToday(); 
+
+        calCalen(userno, today, modelMap);
+        
+        
+        // List<?> listview = indexSvc.selectRecentNews();
+        // List<?> noticeList = indexSvc.selectNoticeListTop5();
+        //List<?> listtime = indexSvc.selectTimeLine();
+        
+        // modelMap.addAttribute("listview", listview);
+        // modelMap.addAttribute("noticeList", noticeList);
+        // modelMap.addAttribute("listtime", listtime);
+
+        return "indexCalen";
     }
     
     /**

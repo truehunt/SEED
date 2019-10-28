@@ -20,118 +20,20 @@
 			    <meta name="author" content="">
 			
 			    <title><s:message code="common.pageTitle"/></title>
-			    <link href="${pageContext.request.contextPath}/resources/css/index.css" rel="stylesheet">
+			    
+			    
+			     <link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/index.css" rel="stylesheet">
+    
+     <script src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
 			
-			<script>
-			function fn_moveDate(date){
-			    $.ajax({
-			        url: "moveDate",
-			        type:"post", 
-			        data : {date: date},
-			        success: function(result){
-			            $("#calenDiv").html(result);
-			            calcCalenderHeight();
-			        }
-			    })
-			}
-			 
-			// responsive week calendar
-			function myFunction(x) {
-			    if (x.matches) { // max-width: 450px
-					var columnSelected = $("#weekDiv").children(".columnSelected");
-					if (columnSelected.length===0) { // 반응형 시작
-						var today = $("#weekDiv .today");
-						if (today.length > 0) {  // 오늘이 있으면
-							//today = today.parent();
-							today.addClass( "columnSelected" );
-							if (today.next().hasClass("calendarColumn")) { // 토요일(한주의 마지막)이 아니면
-								today.next().addClass( "columnSelected" );
-							}else {
-								today.prev().addClass( "columnSelected" );
-							}
-						} else {				// 오늘이 없으면 일/월요일 
-							var ch = $("#weekDiv").children(".calendarColumn").first();
-							ch.addClass( "columnSelected" );
-							ch.next().addClass( "columnSelected" );
-						}
-					}
-				}
-			}
 			
-			window.onload = function () {
-				var x = window.matchMedia("(max-width: 450px)")
-				x.addListener(myFunction) 
-				myFunction(x);
-				
-				calcCalenderHeight();
-			}
-			
-			function calcCalenderHeight() {
-				var calendars = $(".calendarColumn .panel-body");
-				var max = 0;
-				calendars.each(function() {
-					var h = parseInt($(this).css("height"));
-					if (h > max) max = h; 
-				});
-				if (max<180) max=180; 
-				calendars.each(function() { 
-					$(this).css("height", max+"px");
-				}); 
-			}
-			
-			function ev_prevSlide() {
-				var columnSelected = $("#weekDiv").children(".columnSelected");
-				var node = columnSelected.first().prev();
-				if (!node || !node.hasClass("calendarColumn")) return;
-				
-				node.addClass( "columnSelected" );
-				if (node.prev().length===0) {
-					$(".calenSlideButton_left").hide();
-				}
-				$(".calenSlideButton_right").show();
-			
-				columnSelected.last().removeClass( "columnSelected" );
-			}
-			
-			function ev_nextSlide() {
-				var columnSelected = $("#weekDiv").children(".columnSelected");
-				var node = columnSelected.last().next();
-				if (!node || !node.hasClass("calendarColumn")) return;
-				
-				node.addClass( "columnSelected" );
-			
-				if (!node.next().hasClass("calendarColumn")) {
-					$(".calenSlideButton_right").hide();
-				}
-				$(".calenSlideButton_left").show();
-			
-				columnSelected.first().removeClass( "columnSelected" );
-			}
-			
-			var oldno = null;
-			function calendarDayMouseover(event, ssno, cddate){
-				if (!ssno) {
-					return;
-				}
-				
-				$(".calendarTooltip").css({left: event.x+"px", top: event.y+"px"});
-				$(".calendarTooltip").show();
-				if (oldno===ssno) return;
-				oldno=ssno;
-			    $.ajax({
-			    	url: "schRead4Ajax",
-			    	cache: false,
-			    	data: { ssno : ssno, cddate:cddate },
-				    success: function(result){
-				    	$(".calendarTooltip").html(result);
-					}    
-			    });	
-			}
-			
-			function calendarDayMouseout(){
-				$(".calendarTooltip").hide();
-			}
-			</script>
 			    
 			</head>
 			
@@ -139,8 +41,12 @@
 			
 			    <div id="wrapper">
 			
+			
+					<jsp:include page="common/navigation.jsp" />
 			        
-			            <div id="calenDiv" class="row">
+			        <div id="page-wrapper">
+		           <!--
+			           <div id="calenDiv" class="row">
 			                <jsp:include page="indexCalen.jsp" />
 			            </div>
 			
@@ -148,14 +54,20 @@
 			                <div class="col-lg-12">
 			                    &nbsp;
 			                </div>
+			                -->
+			                <div id='ib-tabs' class="row"></div>
+									<div id='ib-contents' class="row"></div>  
 			            </div>
-			                
+		            			      
 			            <!-- /.row -->
+		            </div>
 			        <!-- /#page-wrapper -->
 			
 			    </div>
 			    <!-- /#wrapper -->
 			    <div class="calendarTooltip"></div>
+
+			    
 			</body>
 			
 			</html>

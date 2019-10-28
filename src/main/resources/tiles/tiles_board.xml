@@ -30,7 +30,8 @@
 	<definition name="main" template="/WEB-INF/views/common/layout.jsp">
 		<put-attribute name="css"			value="/WEB-INF/views/common/css.jsp" />
 	  	<put-attribute name="header"    	value="/WEB-INF/views/common/header.jsp" />
-	  	<put-attribute name="content"   	value="/WEB-INF/views/index.jsp" />
+	  	<!--  <put-attribute name="content"   	value="/WEB-INF/views/index.jsp" /> -->
+	  	<put-attribute name="content"   	value="" />
 	  	<put-attribute name="menu"    	value="/WEB-INF/views/common/menu.jsp" />
 	  	<put-attribute name="js"			value="/WEB-INF/views/common/js.jsp" />
 	</definition>

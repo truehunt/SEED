@@ -38,9 +38,10 @@ public class SchCtr {
         // 페이지 공통: alert
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
         
+        modelMap.addAttribute("PK_SAWON_CODE", userno);
         // etcSvc.setCommonAttribute(userno, modelMap);
     	
-        // 
+        // s
         if (searchVO.getYEAR()==null || "".equals(searchVO.getYEAR())) {
         	Date today = Util4calen.getToday();
         	searchVO.setYEAR(Util4calen.getYear(today).toString());
@@ -54,8 +55,8 @@ public class SchCtr {
         modelMap.addAttribute("searchVO", searchVO);
         modelMap.addAttribute("dayofweek", dayofweek);
         
-        // return "/system/p0003/SchList.do";
-        return "/SchList";
+        return "/system/p0003/SchList";
+        // return "/SchList";
     }
     
     /** 
@@ -66,6 +67,7 @@ public class SchCtr {
         // 페이지 공통: alert
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
         
+        modelMap.addAttribute("PK_SAWON_CODE", userno);
         // etcSvc.setCommonAttribute(userno, modelMap);
     	
         // 
@@ -98,7 +100,7 @@ public class SchCtr {
      */
     @RequestMapping(value = "/schSave")
     public String schSave(HttpServletRequest request, SchVO schInfo, ModelMap modelMap) {
-        String userno = request.getSession().getAttribute("FK_SAWON_CODE").toString();
+        String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
     	schInfo.setFK_SAWON_CODE(userno);
     	
         schSvc.insertSch(schInfo);
@@ -116,7 +118,7 @@ public class SchCtr {
         modelMap.addAttribute("schInfo", schInfo);
         modelMap.addAttribute("cddate", cddate);
         
-        return "schedule/SchRead4Ajax";
+        return "system/p0003/SchRead4Ajax";
     }
     /**
      * 읽기.
@@ -133,7 +135,7 @@ public class SchCtr {
 
         modelMap.addAttribute("schInfo", schInfo);
         
-        return "schedule/SchRead";
+        return "system/p0003/SchRead";
     }
     
     /**

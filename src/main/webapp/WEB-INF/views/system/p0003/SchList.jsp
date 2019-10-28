@@ -15,7 +15,18 @@
     <meta name="author" content="">
     
     <title><s:message code="common.pageTitle"/></title>
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css" rel="stylesheet">
+    
 	<link href="${pageContext.request.contextPath}/resources/js/dynatree/ui.dynatree.css" rel="stylesheet" id="skinSheet"/>
+	
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
 
 <script>
 function fn_formSubmit(){
@@ -102,14 +113,14 @@ function calendarDayMouseout(){
 			             		<a href="schForm?CDDATE=<c:out value="${listview.CDDATE}"/>"><c:out value="${listview.CDDD}"/></a>
 			             	</div>
 							<c:forEach var="items" items="${listview.LIST}" varStatus="status">
-				             	<div class="calendarDay" onmouseover="calendarDayMouseover(event, '<c:out value="${items.SSNO}"/>', '<c:out value="${listview.CDDATE}"/>')" onmouseout="calendarDayMouseout()">
-					             	<c:if test='${items.FK_SAWON_CODE==sessionScope.PK_SAWON_CODE}'> 
-					             		<a href="schForm?SSNO=<c:out value="${items.SSNO}"/>&SDSEQ=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
+				             	<div class="calendarDay" onmouseover="calendarDayMouseover(event, '<c:out value="${items.FK_SSNO}"/>', '<c:out value="${listview.CDDATE}"/>')" onmouseout="calendarDayMouseout()">
+					             	<c:if test='${items.PK_SAWON_CODE==sessionScope.PK_SAWON_CODE}'> 
+					             		<a href="schForm?SSNO=<c:out value="${items.FK_SSNO}"/>&SDSEQ=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
 				             		</c:if>
-					             	<c:if test='${items.SSNO!=null and items.userno!=sessionScope.PK_SAWON_CODE}'> 
-					             		<a href="schRead?SSNO=<c:out value="${items.SSNO}"/>&SDSEQ=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
+					             	<c:if test='${items.FK_SSNO!=null and items.userno!=sessionScope.PK_SAWON_CODE}'> 
+					             		<a href="schRead?SSNO=<c:out value="${items.FK_SSNO}"/>&SDSEQ=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
 				             		</c:if>
-					             	<c:if test='${items.SSNO==null}'> 
+					             	<c:if test='${items.FK_SSNO==null}'> 
 					             		<span style="color:<c:out value="${items.FONTCOLOR}"/>"><c:out value="${items.SSTITLE}"/></span>
 				             		</c:if>
 				             	</div>

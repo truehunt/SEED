@@ -2,31 +2,26 @@ package hr.system.p0003.vo;
 
 public class ClassCodeVO {
 
-    private String  codecd, codenm;
-    private String  tmp;			// 다용도
-
-	public String getCodecd() {
-		return codecd;
+    private String  CODECD, CODENM;
+    private String  TMP;			// 다용도
+    
+	public String getCODECD() {
+		return CODECD;
 	}
-
-	public void setCodecd(String codecd) {
-		this.codecd = codecd;
+	public void setCODECD(String cODECD) {
+		CODECD = cODECD;
 	}
-
-	public String getCodenm() {
-		return codenm;
+	public String getCODENM() {
+		return CODENM;
 	}
-
-	public void setCodenm(String codenm) {
-		this.codenm = codenm;
+	public void setCODENM(String cODENM) {
+		CODENM = cODENM;
 	}
-
-	public String getTmp() {
-		return tmp;
+	public String getTMP() {
+		return TMP;
 	}
-
-	public void setTmp(String tmp) {
-		this.tmp = tmp;
+	public void setTMP(String tMP) {
+		TMP = tMP;
 	}
 
 }

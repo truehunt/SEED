@@ -102,11 +102,11 @@
          </if>
     </select> 
         
-    <insert id="insertSch" parameterType="hr.system.p0003.vo.SchVO" useGeneratedKeys="true" keyProperty="SSNO">
-        INSERT INTO SCHEDULE(SSTITLE, SSTYPE, SSSTARTDATE, SSSTARTHOUR, SSSTARTMINUTE, SSENDDATE, SSENDHOUR, 
+    <insert id="insertSch" parameterType="hr.system.p0003.vo.SchVO" keyProperty="SSNO">
+        INSERT INTO SCHEDULE(SSNO, SSTITLE, SSTYPE, SSSTARTDATE, SSSTARTHOUR, SSSTARTMINUTE, SSENDDATE, SSENDHOUR, 
         			SSENDMINUTE, SSREPEATTYPE, SSREPEATOPTION, SSREPEATEND, SSCONTENTS, SSISOPEN, FK_SAWON_CODE, UPDATEDATE, INSERTDATE, DELETEFLAG)
-        VALUES (#{SSTITLE}, #{SSTYPE}, #{SSSTARTDATE}, #{SSSTARTHOUR}, #{SSSTARTMINUTE}, #{SSENDDATE}, #{SSENDHOUR}, 
-        		#{SSENDMINUTE}, #{SSREPEATTYPE}, #{SSREPEATOPTION}, #{SSREPEATEND}, #{SSCONTENTS}, #{SSISOPEN}, #{FK_SAWON_CODE}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
+        VALUES ((SELECT NVL(MAX(SSNO)+1,0) FROM SCHEDULE), #{SSTITLE}, #{SSTYPE, jdbcType=VARCHAR}, #{SSSTARTDATE}, #{SSSTARTHOUR}, #{SSSTARTMINUTE}, #{SSENDDATE}, #{SSENDHOUR}, 
+        		#{SSENDMINUTE}, #{SSREPEATTYPE}, #{SSREPEATOPTION, jdbcType=VARCHAR}, #{SSREPEATEND}, #{SSCONTENTS}, #{SSISOPEN}, #{FK_SAWON_CODE}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
     </insert>
     
     <update id="updateSch" parameterType="hr.system.p0003.vo.SchVO">
@@ -118,14 +118,14 @@
     </update> 
 
     <insert id="insertSchDetail" parameterType="hr.system.p0003.vo.SchDetailVO" >
-        INSERT INTO SCH_DETAIL(SSNO, SDSEQ, SDDATE, SDHOUR, SDMINUTE) 
-        		VALUES(#{SSNO}, #{SDSEQ}, #{SDDATE}, #{SDHOUR}, #{SDMINUTE})
+        INSERT INTO SCH_DETAIL(FK_SSNO, SDSEQ, SDDATE, SDHOUR, SDMINUTE) 
+        		VALUES((SELECT NVL(MAX(FK_SSNO)+1,0) FROM SCH_DETAIL), #{SDSEQ}, #{SDDATE}, #{SDHOUR}, #{SDMINUTE})
     </insert>
      
     <delete id="deleteSchDetail" parameterType="String">
         DELETE
           FROM SCH_DETAIL
-         WHERE SSNO=#{ssno} 
+         WHERE FK_SSNO=#{SSNO} 
     </delete>  
                 
     <select id="selectSchOne" parameterType="hr.system.p0003.vo.SchVO" resultType="hr.system.p0003.vo.SchVO">

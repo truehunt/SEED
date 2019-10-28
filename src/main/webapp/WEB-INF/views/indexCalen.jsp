@@ -144,14 +144,14 @@
                      </div> 
                      <div class="panel-body">
 							<c:forEach var="items" items="${calenList.LIST}" varStatus="status"> 
-				             	<div class="calendarDay" onmouseover="calendarDayMouseover(event, '<c:out value="${items.SSNO}"/>', '<c:out value="${calenList.DATE}"/>')" onmouseout="calendarDayMouseout()">
+				             	<div class="calendarDay" onmouseover="calendarDayMouseover(event, '<c:out value="${items.FK_SSNO}"/>', '<c:out value="${calenList.DATE}"/>')" onmouseout="calendarDayMouseout()">
 					             	<c:if test='${items.PK_SAWON_CODE==sessionScope.PK_SAWON_CODE}'>
-					             		<a href="schForm?ssno=<c:out value="${items.SSNO}"/>&sdseq=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
+					             		<a href="schForm?ssno=<c:out value="${items.FK_SSNO}"/>&sdseq=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
 				             		</c:if>
-					             	<c:if test='${items.SSNO!=null and items.PK_SAWON_CODE!=sessionScope.PK_SAWON_CODE}'> 
-					              		<a href="schRead?ssno=<c:out value="${items.SSNO}"/>&sdseq=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
+					             	<c:if test='${items.FK_SSNO!=null and items.PK_SAWON_CODE!=sessionScope.PK_SAWON_CODE}'> 
+					              		<a href="schRead?ssno=<c:out value="${items.FK_SSNO}"/>&sdseq=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
 				             		</c:if>
-					             	<c:if test='${items.SSNO==null}'> 
+					             	<c:if test='${items.FK_SSNO==null}'> 
 					             		<span style="color:<c:out value="${items.FONTCOLOR}"/>"><c:out value="${items.SSTITLE}"/></span>
 				             		</c:if>				             		
 				             	</div>

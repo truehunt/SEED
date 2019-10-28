@@ -64,6 +64,7 @@ public class SchSvc {
         def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
         TransactionStatus status = txManager.getTransaction(def);
         
+        System.out.println(param.getSSNO());
         try {
             if (param.getSSNO()==null || "".equals(param.getSSNO())) {
                 sqlSession.insert("insertSch", param);

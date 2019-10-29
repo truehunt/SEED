@@ -13,6 +13,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-public interface P0001Controller {
+public interface LoginController {
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception;
 }

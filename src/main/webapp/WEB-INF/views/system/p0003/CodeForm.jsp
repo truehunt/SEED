@@ -12,10 +12,10 @@
     <meta name="author" content="">
 
     <title><s:message code="common.pageTitle"/></title>
-    <link href="css/sb-admin/bootstrap.min.css" rel="stylesheet">
-    <link href="css/sb-admin/metisMenu.min.css" rel="stylesheet">
-    <link href="css/sb-admin/sb-admin-2.css" rel="stylesheet">
-    <link href="css/sb-admin/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -24,19 +24,19 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script src="js/jquery-2.2.3.min.js"></script>
-    <script src="css/sb-admin/bootstrap.min.js"></script>
-    <script src="css/sb-admin/metisMenu.min.js"></script>
-    <script src="css/sb-admin/sb-admin-2.js"></script>
-	<script src="js/ckeditor/ckeditor.js"></script>
-	<script src="js/project9.js"></script>    
+    <script src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/ckeditor/ckeditor.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/project9.js"></script>    
 
 <script>
 
 function fn_formSubmit(){
-	if ( ! chkInputValue("#classno", "<s:message code="common.classno"/>")) return false;
-	if ( ! chkInputValue("#codecd", "<s:message code="common.codecd"/>")) return false;
-	if ( ! chkInputValue("#codenm", "<s:message code="common.codenm"/>")) return false;
+	if ( ! chkInputValue("#CLASSNO", "<s:message code="common.classno"/>")) return false;
+	if ( ! chkInputValue("#CODECD", "<s:message code="common.codecd"/>")) return false;
+	if ( ! chkInputValue("#CODENM", "<s:message code="common.codenm"/>")) return false;
 	
 	$("#form1").submit();
 } 
@@ -48,9 +48,7 @@ function fn_formSubmit(){
 
     <div id="wrapper">
 
-		<jsp:include page="../../common/navigation.jsp" />
-		
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><i class="fa fa-gear fa-fw"></i> <s:message code="common.codecd"/></h1>
@@ -67,21 +65,21 @@ function fn_formSubmit(){
 	                    	<div class="row form-group">
 	                            <label class="col-lg-2"><s:message code="common.classno"/></label>
 	                            <div class="col-lg-1">
-	                            	<input type="text" class="form-control" id="classno" name="classno" maxlength="10" 
-	                            	value="<c:out value="${codeInfo.classno}"/>" <c:if test="${codeFormType=='U'}">readonly</c:if>>
+	                            	<input type="text" class="form-control" id="CLASSNO" name="CLASSNO" maxlength="10" 
+	                            	value="<c:out value="${codeInfo.CLASSNO}"/>" <c:if test="${codeFormType=='U'}">readonly</c:if>>
 	                            </div>
 	                        </div>
 	                    	<div class="row form-group">
 	                            <label class="col-lg-2"><s:message code="common.codecd"/></label>
 	                            <div class="col-lg-1">
-	                            	<input type="text" class="form-control" id="codecd" name="codecd" maxlength="10" 
-	                            	value="<c:out value="${codeInfo.codecd}"/>" <c:if test="${codeFormType=='U'}">readonly</c:if>>
+	                            	<input type="text" class="form-control" id="CODECD" name="CODECD" maxlength="10" 
+	                            	value="<c:out value="${codeInfo.CODECD}"/>" <c:if test="${codeFormType=='U'}">readonly</c:if>>
 	                            </div>
 	                        </div>
 	                    	<div class="row form-group">
 	                            <label class="col-lg-2"><s:message code="common.codenm"/></label>
 	                            <div class="col-lg-5">
-	                            	<input type="text" class="form-control" id="codenm" name="codenm" maxlength="30" value="<c:out value="${codeInfo.codenm}"/>">
+	                            	<input type="text" class="form-control" id="CODENM" name="CODENM" maxlength="30" value="<c:out value="${codeInfo.CODENM}"/>">
 	                            </div>
 	                        </div>
 	                    </div>

@@ -18,9 +18,9 @@ import hr.system.p0001.vo.LoginVO;
 
 
 
-@Service("p0001Service")
+@Service("LoginService")
 @Transactional(propagation = Propagation.REQUIRED)
-public class P0001ServiceImpl implements P0001Service {
+public class LoginServiceImpl implements LoginService {
 	@Autowired
 	private SqlSession sqlSession;
 	

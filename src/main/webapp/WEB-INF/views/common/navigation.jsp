@@ -67,8 +67,8 @@ $(document).ready(function(){
 		                urlToGo = "/SEED/schList";
 		            } else if(url === "adCodeList"){
 		            	urlToGo = "/SEED/adCodeList";
-		            } else if(url === "bb"){
-		            	urlToGo = "bb";
+		            } else if(url === "adSignDocTypeList"){
+		            	urlToGo = "/SEED/adSignDocTypeList";
 		            } else if(url === "cc"){
 		            	urlToGo = "cc";
 		            } else if(url === "dd"){
@@ -369,7 +369,7 @@ $(document).ready(function(){
 	                            </ul>
 	                        </li>
                              <li>
-                                 <a href='#' onClick="doAction(myTab,'결재문서양식','chart','a4','a4'); return false"><i class="fa fa-sitemap fa-fw"></i> 결재문서양식</a>
+                                 <a href='#' onClick="doAction(myTab,'결재문서양식','chart','adSignDocTypeList','adSignDocTypeList'); return false"><i class="fa fa-sitemap fa-fw"></i> 결재문서양식</a>
                              </li>
                              <li>
                                  <a href='#' onClick="doAction(myTab,'공통코드관리','chart','adCodeList','adCodeList'); return false"><i class="fa fa-sitemap fa-fw"></i> 공통코드관리</a>

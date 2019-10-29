@@ -7,6 +7,8 @@
 		<typeAlias type="hr.elect.p0001.vo.P0001VO"  alias="p0001VO" />
 		<typeAlias type="hr.system.p0001.vo.LoginVO"  alias="loginVO" />
 		<typeAlias type="hr.system.p0001.vo.SawonVO"  alias="sawonVO" />
+		<typeAlias type="hr.system.p0001.vo.SignDocTypeVO"  alias="signDocTypeVO" />
+		
 		<typeAlias type="hr.system.p0003.vo.CalendarVO"  alias="calendarVO" />
 		<typeAlias type="hr.system.p0003.vo.MonthVO"  alias="monthVO" />
 		<typeAlias type="hr.system.p0003.vo.SchDetailVO"  alias="schDetailVO" />

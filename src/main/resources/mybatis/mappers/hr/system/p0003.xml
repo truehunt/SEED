@@ -52,6 +52,12 @@
 		<result property="CODENM" column="CODENM" />
 	</resultMap>
 	
+	<resultMap id="p0003Result06" type="classCodeVO">
+		<result property="TMP" column="TMP" />
+		<result property="CODECD" column="CODECD" />
+		<result property="CODENM" column="CODENM" />
+	</resultMap>
+	
     <select id="selectCalendar" resultType="hr.system.p0003.vo.CalendarVO" parameterType="hr.system.p0003.vo.MonthVO">
 		SELECT CDDATE, CDDD, CDDAYOFWEEK
 		  FROM COM_DATE CD
@@ -159,5 +165,53 @@
          WHERE CLASSNO=#{CLASSNO} -- AND DELETEFLAG='N'
          ORDER BY CAST(CODECD AS INT)
     </select> 
+    
+    <select id="selectCodeOne" parameterType="hr.system.p0003.vo.CodeVO" resultType="hr.system.p0003.vo.CodeVO">
+        SELECT CLASSNO, CODECD, CODENM
+          FROM COM_CODE CC
+         WHERE CLASSNO=#{CLASSNO} AND CODECD=#{CODECD}
+    </select>
+    
+    <sql id="includeCode">
+        WHERE 1=1
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>               
+    </sql>
+
+    <select id="selectCodeCount" resultType="Integer" parameterType="project.common.SearchVO">
+        SELECT COUNT(*)
+          FROM COM_CODE CC
+         <include refid="includeCode"/>
+    </select> 
+    
+    <select id="selectCodeList" resultType="hr.system.p0003.vo.CodeVO" parameterType="project.common.SearchVO">
+          SELECT CLASSNO, CODECD, CODENM
+			FROM (SELECT ROWNUM as NO, CLASSNO, CODECD, CODENM
+		      FROM COM_CODE TB
+	      	ORDER by CLASSNO, CODECD) A
+	      	<include refid="includeCode"/>
+      	<if test="rowStart != null">
+			AND NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+         </if>
+    </select> 
+        
+    <insert id="insertCode" parameterType="hr.system.p0003.vo.CodeVO" >
+        INSERT INTO COM_CODE(CLASSNO, CODECD, CODENM)
+        VALUES (#{CLASSNO}, #{CODECD}, #{CODENM})
+    </insert>
+    
+    <update id="updateCode" parameterType="hr.system.p0003.vo.CodeVO">
+        UPDATE COM_CODE
+           SET CODENM=#{CODENM}
+         WHERE CLASSNO=#{CLASSNO} AND CODECD=#{CODECD}
+    </update> 
+        
+    <delete id="deleteCodeOne" parameterType="hr.system.p0003.vo.CodeVO">
+        DELETE FROM COM_CODE
+         WHERE CLASSNO=#{CLASSNO} AND CODECD=#{CODECD}
+    </delete>
 
 </mapper>

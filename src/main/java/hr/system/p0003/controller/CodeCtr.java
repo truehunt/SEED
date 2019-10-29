@@ -33,7 +33,7 @@ public class CodeCtr {
         modelMap.addAttribute("searchVO", searchVO);
         modelMap.addAttribute("listview", listview);
         
-        return "system/p0001/CodeList";
+        return "system/p0003/CodeList";
     }
     
     /** 
@@ -48,7 +48,7 @@ public class CodeCtr {
             modelMap.addAttribute("codeFormType", "U");
         }
         
-        return "system/p0001/CodeForm";
+        return "system/p0003/CodeForm";
     }
     
     /**
@@ -80,7 +80,7 @@ public class CodeCtr {
 
         modelMap.addAttribute("codeInfo", codeInfo);
         
-        return "system/p0001/CodeRead";
+        return "system/p0003/CodeRead";
     }
     
     /**

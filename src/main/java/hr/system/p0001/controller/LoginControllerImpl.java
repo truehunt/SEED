@@ -31,17 +31,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import hr.system.p0001.service.P0001Service;
+import hr.system.p0001.service.LoginService;
 import hr.system.p0001.vo.LoginVO;
 import hr.system.p0001.vo.SawonVO;
 
-@Controller("p0001Controller")
-public class P0001ControllerImpl implements P0001Controller {
-	private static final Logger logger = LoggerFactory.getLogger(P0001ControllerImpl.class);
+@Controller("LoginController")
+public class LoginControllerImpl implements LoginController {
+	private static final Logger logger = LoggerFactory.getLogger(LoginControllerImpl.class);
 	private static final Integer cookieExpire = 60 * 60 * 24 * 30; // 1 month
 	
 	@Autowired
-	P0001Service p0001Service;
+	LoginService p0001Service;
 	@Autowired
 	SawonVO sawonVO;
 	

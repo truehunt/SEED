@@ -14,7 +14,7 @@ import hr.system.p0001.vo.LoginVO;
 
 
 
-public interface P0001Service {
+public interface LoginService {
 	
 	public SawonVO selectMember4Login(LoginVO param) throws DataAccessException;
     

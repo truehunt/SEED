@@ -27,8 +27,6 @@
     <![endif]-->
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/dynatree/jquery.dynatree.js"></script>    
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
@@ -45,10 +43,10 @@ function fn_formSubmit(){
 
     <div id="wrapper">
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-gear fa-fw"></i> <s:message code="common.codecd"/></h1>
+                    <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 결재문서양식</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -56,34 +54,32 @@ function fn_formSubmit(){
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-		            <button type="button" class="btn btn-default pull-right" onclick="fn_moveToURL('adCodeForm')">
-		            <i class="fa fa-edit fa-fw"></i> <s:message code="common.codecd"/></button>      
+		            <button type="button" class="btn btn-default pull-right" onclick="fn_moveToURL('adSignDocTypeForm')">
+		            <i class="fa fa-edit fa-fw"></i> 양식추가</button>      
 				</div>
             </div>
             <!-- /.row -->
-            <div class="panel panel-default">
+            <div class="panel panel-default"> 
             	<div class="panel-body">
 					<div class="listHead">
-						<div class="listHiddenField pull-left field60"><s:message code="common.classno"/></div>
-						<div class="listHiddenField pull-left field100"><s:message code="common.codecd"/></div>
-						<div class="listTitle"><s:message code="common.codenm"/></div>
+						<div class="listHiddenField pull-left field60"><s:message code="board.no"/></div>
+						<div class="listTitle">문서종류명</div>
 					</div>
 					
 					<c:if test="${listview.size()==0}">
 						<div class="listBody height200">
 						</div>
 					</c:if>
+					
 					<c:forEach var="listview" items="${listview}" varStatus="status">
-						<c:url var="link" value="adCodeRead">
-							<c:param name="classno" value="${listview.classno}" />
-							<c:param name="codecd" value="${listview.codecd}" />
+						<c:url var="link" value="adSignDocTypeForm">
+							<c:param name="PK_DOCTYPE_NUM" value="${listview.PK_DOCTYPE_NUM}" />
 						</c:url>
 					
 						<div class="listBody">
-							<div class="listHiddenField pull-left field60 textCenter"><c:out value="${listview.classno}"/></div>
-							<div class="listHiddenField pull-left field100 textCenter"><c:out value="${listview.codecd}"/></div>
-							<div class="listTitle" title="<c:out value="${listview.codenm}"/>">
-								<a href="${link}"><c:out value="${listview.codenm}"/></a>
+							<div class="listHiddenField pull-left field60 textCenter"><c:out value="${searchVO.totRow-((searchVO.page-1)*searchVO.displayRowCount + status.index)}"/></div>
+							<div class="listTitle" title="<c:out value="${listview.DOCTYPE_DTTITLE}"/>">
+								<a href="${link}"><c:out value="${listview.DOCTYPE_DTTITLE}"/></a>
 							</div>
 						</div>
 					</c:forEach>	
@@ -92,23 +88,6 @@ function fn_formSubmit(){
 					<form role="form" id="form1" name="form1"  method="post">
 					    <jsp:include page="../../common/pagingforSubmit.jsp" />
 				    
-						<div class="form-group">
-							<div class="checkbox col-lg-3 pull-left">
-							 	<label class="pull-right">
-							 		<input type="checkbox" name="searchType" value="codenm" <c:if test="${fn:indexOf(searchVO.searchType, 'codenm')!=-1}">checked="checked"</c:if>/>
-		                        	<s:message code="common.codenm"/>
-		                        </label>
-		                   </div>
-		                   <div class="input-group custom-search-form col-lg-3">
-	                                <input class="form-control" placeholder="Search..." type="text" name="searchKeyword" 
-	                                	   value='<c:out value="${searchVO.searchKeyword}"/>' >
-	                                <span class="input-group-btn">
-	                                <button class="btn btn-default" onclick="fn_formSubmit()">
-	                                    <i class="fa fa-search"></i>
-	                                </button>
-	                            </span>
-	                       </div>
-						</div>
 					</form>	
             	</div>    
             </div>

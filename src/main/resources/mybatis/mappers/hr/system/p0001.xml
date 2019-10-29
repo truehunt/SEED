@@ -36,6 +36,65 @@
     	INSERT INTO COM_LOGINOUT (LNO, USERNO, LTYPE, LDATE)
     	 	              VALUES ((SELECT NVL(MAX(LNO)+1,0) FROM COM_LOGINOUT), #{ PK_SAWON_CODE }, 'O', to_char(sysdate,'yyyy.mm.dd hh24:mi') )
     </insert>
+    
+    <sql id="includeSignDocType">
+        WHERE DOCTYPE_DELETEFLAG='N'
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>               
+    </sql>
+
+    <select id="selectSignDocTypeCount" resultType="Integer" parameterType="project.common.SearchVO">
+        SELECT COUNT(*)
+          FROM DOCTYPE SDT
+         <include refid="includeSignDocType"/>
+    </select>
+    
+    <sql id="includeCode">
+        WHERE 1=1
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>               
+    </sql> 
+    
+    <select id="selectSignDocTypeList" resultType="hr.system.p0001.vo.SignDocTypeVO" parameterType="project.common.SearchVO">
+        SELECT PK_DOCTYPE_NUM, DOCTYPE_DTTITLE, DOCTYPE_DTCONTENTS, DOCTYPE_DELETEFLAG
+		FROM (SELECT ROWNUM as NO, PK_DOCTYPE_NUM, DOCTYPE_DTTITLE, DOCTYPE_DTCONTENTS, DOCTYPE_DELETEFLAG
+		      FROM DOCTYPE SDT
+		      ORDER by PK_DOCTYPE_NUM DESC) A
+		<include refid="includeCode"/>
+      	<if test="rowStart != null">
+			AND NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+         </if>
+          AND DOCTYPE_DELETEFLAG='N'
+    </select> 
+
+    <insert id="insertSignDocType" parameterType="java.util.Map" >
+        INSERT INTO DOCTYPE(PK_DOCTYPE_NUM, DOCTYPE_DTTITLE, DOCTYPE_DTCONTENTS, DOCTYPE_DELETEFLAG, DOCTYPE_INT_USER_ID, DOCTYPE_INT_DATE)
+        VALUES ((SELECT NVL(MAX(PK_DOCTYPE_NUM)+1,0) FROM DOCTYPE), #{DOCTYPE_DTTITLE}, #{DOCTYPE_DTCONTENTS}, 'N', #{PK_SAWON_CODE}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
+    </insert>
+    
+    <update id="updateSignDocType" parameterType="java.util.Map">
+        UPDATE DOCTYPE
+           SET DOCTYPE_DTTITLE=#{DOCTYPE_DTTITLE}, DOCTYPE_DTCONTENTS=#{DOCTYPE_DTCONTENTS}, DOCTYPE_MOD_USER_ID=#{PK_SAWON_CODE}, DOCTYPE_MOD_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
+         WHERE PK_DOCTYPE_NUM=#{PK_DOCTYPE_NUM} 
+    </update> 
+        
+    <select id="selectSignDocTypeOne" parameterType="hr.system.p0001.vo.SignDocTypeVO" resultType="hr.system.p0001.vo.SignDocTypeVO">
+        SELECT PK_DOCTYPE_NUM, DOCTYPE_DTTITLE, DOCTYPE_DTCONTENTS
+          FROM DOCTYPE SDT
+         WHERE DOCTYPE_DELETEFLAG='N' AND PK_DOCTYPE_NUM=#{PK_DOCTYPE_NUM}
+    </select> 
+    
+    <delete id="deleteSignDocType" parameterType="hr.system.p0001.vo.SignDocTypeVO">
+        UPDATE DOCTYPE
+           SET DOCTYPE_DELETEFLAG='Y'
+         WHERE PK_DOCTYPE_NUM=#{PK_DOCTYPE_NUM} 
+    </delete>
 
 	<select id="searchList" resultMap="p0001Result01" parameterType="java.util.Map"> 
       <![CDATA[

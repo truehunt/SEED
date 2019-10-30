@@ -63,18 +63,18 @@ $(document).ready(function(){
 		            urlToGo = "",
 		            bFindTab = false;
 		        if (elId) {
-		            if (url === "schList") {
-		                urlToGo = "/SEED/schList";
-		            } else if(url === "adCodeList"){
-		            	urlToGo = "/SEED/adCodeList";
-		            } else if(url === "adSignDocTypeList"){
+		            if (url === "schList") { // 일정관리
+		                urlToGo = "/SEED/schList"; 
+		            } else if(url === "adCodeList"){ // 공통코드관리
+		            	urlToGo = "/SEED/adCodeList"; 
+		            } else if(url === "adSignDocTypeList"){ // 결재문서양식관리
 		            	urlToGo = "/SEED/adSignDocTypeList";
-		            } else if(url === "cc"){
-		            	urlToGo = "cc";
-		            } else if(url === "dd"){
-		            	urlToGo = "dd";
-		            } else if(url === "ee"){
-		            	urlToGo = "ee";
+		            } else if(url === "signDocTypeList"){ // 기안하기 
+		            	urlToGo = "/SEED/signDocTypeList";
+		            } else if(url === "signListTobe"){ // 결재 받을(은) 문서 - 전체, 임시저장, 진행중, 완료, 반려
+		            	urlToGo = "/SEED/signListTobe";
+		            } else if(url === "signListTo"){ // 결재 할(한) 문서 - 진행중, 완료
+		            	urlToGo = "/SEED/signListTo";
 		            } else if(url === "ff"){
 		            	urlToGo = "ff";
 		            } else if(url === "gg"){
@@ -226,29 +226,23 @@ $(document).ready(function(){
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> 전자결재<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'미결재문서','chart','a6','a6'); return false">미결재문서</a>
+								<li>
+                                    <a href='#' onClick="doAction(myTab,'기안하기','chart','signDocTypeList','signDocTypeList'); return false">기안하기</a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'결재완료문서','chart','a7','a7'); return false">결재완료문서</a>
+                                    <a href='#' onClick="doAction(myTab,'결재 받을(은) 문서','chart','signListTobe','signListTobe'); return false">결재 받을(은) 문서</a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'전체미결문서','chart','a8','a8'); return false">전체미결문서</a>
+                                    <a href='#' onClick="doAction(myTab,'결재 할(한) 문서','chart','signListTo','signListTo'); return false">결재 할(한) 문서</a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'상신문서','chart','a9','a9'); return false">상신문서</a>
-                                </li>
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'임시보관','chart','b1','b1'); return false">임시보관</a>
-                                </li>
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'결재완료문서','chart','b2','b2'); return false">결재완료문서</a>
-                                </li>
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'회수/반려문서','chart','b3','b3'); return false">회수/반려문서</a>
+                                    <a href='#' onClick="doAction(myTab,'발신문서함','chart','b2','b2'); return false">발신문서함</a>
                                 </li>
                                 <li>
                                     <a href='#' onClick="doAction(myTab,'수신문서함','chart','b4','b4'); return false">수신문서함</a>
+                                </li>
+                                <li>
+                                    <a href='#' onClick="doAction(myTab,'부서문서함','chart','b3','b3'); return false">부서문서함</a>
                                 </li>
 	                        </ul>                             
                         </li> 

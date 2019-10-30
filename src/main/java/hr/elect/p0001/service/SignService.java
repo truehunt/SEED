@@ -9,16 +9,18 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import hr.elect.p0001.vo.P0001VO;
+import hr.elect.p0001.vo.SignVO;
 
 
 
-public interface P0001Service {
-	 public List<P0001VO> searchList(Map<String, Object> searchMap) throws DataAccessException;
+public interface SignService {
+	/*
+	 public List<SignVO> searchList(Map<String, Object> searchMap) throws DataAccessException;
 
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException ;
 
 	public void updateMember(Map<String, Object> dataMap);
 
 	public void insertMember(Map<String, Object> dataMap);
+	*/
 }

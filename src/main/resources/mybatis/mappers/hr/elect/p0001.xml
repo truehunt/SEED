@@ -3,49 +3,165 @@
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="hr.elect.p0001">
-	<resultMap id="p0001Result01" type="p0001VO">
-		<result property="cust_id" column="cust_id" />
-		<result property="cust_name" column="cust_name" />
-		<result property="cust_address" column="cust_address" />
-		<result property="cust_state" column="cust_state" />
-		<result property="cust_zip" column="cust_zip" />
-		<result property="cust_country" column="cust_country" />
-		<result property="cust_contact" column="cust_contact" />
-		<result property="cust_email" column="cust_email" />
-	</resultMap>
+<mapper namespace="sign">
 
-	<select id="searchList" resultMap="p0001Result01" parameterType="java.util.Map"> 
-      <![CDATA[
-         select cust_id, cust_name, cust_address, cust_state, cust_zip, cust_country, cust_contact, cust_email
-         from   customers
-      ]]>
-		<where>
-			<if test=" p_id != ''  and  p_id != null">
-				cust_id = #{p_id}
-			</if>
-		</where>
+	<!-- 결재 문서 작성 -->    
+    <sql id="includeSignDoc">
+        INNER JOIN APPROVAL SS ON SS.FK_AD_NUM=SD.FK_AD_NUM AND SS.PK_SAWON_CODE=${PK_SAWON_CODE} AND APPROVAL_SSTYPE!=0
+        <if test="searchExt1=='signed'">AND SS.APPROVAL_SSRESULT!=0</if>        
+        <if test="searchExt1!='signed'">AND SS.APPROVAL_SSRESULT=0 AND SS.APPROVAL_SSSTEP=SD.AD_DOCSTEP</if>        
+        WHERE SD.AD_DELETEFLAG='N' -- AND SD.AD_DOCSTATUS IN (1,2)
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>               
+    </sql>
+
+    <select id="selectSignDocCount" resultType="Integer" parameterType="project.common.SearchVO">
+        SELECT COUNT(*)
+          FROM AD SD
+         <include refid="includeSignDoc"/> 
+    </select> 
+    
+    <select id="selectSignDocList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
+        SELECT SD.FK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, SAWON_NAME, AD_DOCSTEP, SD.FK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME
+        	 , DATE_FORMAT(AD_MOD_DATE,'%Y-%m-%d') AD_MOD_DATE, CODENM AD_DOCSTATUS
+          FROM AD SD
+         INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
+         INNER JOIN DOCTYPE SDT ON SDT.FK_DOCTYPE_NUM=SD.FK_DOCTYPE_NUM
+         INNER JOIN COM_CODE CC ON CC.CODECD=SD.AD_DOCSTATUS AND CLAPK_APPROVAL_NUM='2'
+         <include refid="includeSignDoc"/>
+         ORDER BY FK_AD_NUM DESC
+         <if test="rowStart != null">
+             AND NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+         </if>
+    </select> 
+        
+   <sql id="includeSignDocTobe">
+        WHERE SD.AD_DELETEFLAG='N' AND SD.PK_SAWON_CODE= '${PK_SAWON_CODE}'
+        <if test="searchExt1!=''">
+	        <if test="searchExt1==2">AND SD.AD_DOCSTATUS IN (1,2)</if>        
+	        <if test="searchExt1!=2">AND SD.AD_DOCSTATUS=${searchExt1}</if>        
+        </if>        
+        
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+            </foreach>
+        </if>               
+    </sql>
+
+    <select id="selectSignDocTobeCount" resultType="Integer" parameterType="project.common.SearchVO">
+        SELECT COUNT(*)
+          FROM AD SD
+         <include refid="includeSignDocTobe"/>
+    </select> 
+    
+    <select id="selectSignDocTobeList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
+         SELECT SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, SD.SAWON_NAME, AD_DOCSTEP, SD.FK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME,
+		        TO_CHAR(TO_DATE(AD_MOD_DATE, 'yyyy-mm-dd')), CC.CODENM, AD_DOCSTATUS
+		 FROM AD SD
+		 INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
+		 INNER JOIN DOCTYPE SDT ON SDT.PK_DOCTYPE_NUM=SD.FK_DOCTYPE_NUM
+		 INNER JOIN COM_CODE CC ON CC.CODECD=SD.AD_DOCSTATUS AND CLASSNO='2'
+         <include refid="includeSignDocTobe"/>
+         <if test="rowStart != null">
+             AND ROWNUM BETWEEN ${rowStart-1} AND ${rowStart+9}
+         </if>
+         ORDER BY PK_AD_NUM DESC
+         
+    </select> 
+            
+    <insert id="insertSignDoc" parameterType="hr.elect.p0001.vo.SignDocVO"  useGeneratedKeys="true" keyProperty="FK_AD_NUM">
+        INSERT INTO AD(AD_TITLE, PK_SAWON_CODE, AD_CONTENT, AD_DOCSTATUS, AD_DOCSTEP, FK_DOCTYPE_NUM, AD_DEPT_NAME, AD_DOCSIGNPATH, AD_MOD_DATE, AD_INT_DATE, AD_DELETEFLAG)
+        VALUES (#{AD_TITLE}, #{PK_SAWON_CODE}, #{AD_CONTENT}, #{AD_DOCSTATUS}, 1, #{FK_DOCTYPE_NUM}, #{AD_DEPT_NAME}, #{AD_DOCSIGNPATH}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
+    </insert>
+    
+    <update id="updateSignDoc" parameterType="hr.elect.p0001.vo.SignDocVO">
+        UPDATE AD
+           SET AD_TITLE=#{AD_TITLE}, AD_CONTENT=#{AD_CONTENT}, AD_DOCSIGNPATH=#{AD_DOCSIGNPATH}
+             , AD_MOD_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
+         WHERE FK_AD_NUM=#{FK_AD_NUM} 
+    </update> 
+    
+    <delete id="deleteSign" parameterType="String">
+        DELETE 
+          FROM APPROVAL
+         WHERE FK_AD_NUM=#{FK_AD_NUM} 
+    </delete>
+         
+    <insert id="insertSign" parameterType="hr.elect.p0001.vo.SignVO" >
+        INSERT INTO APPROVAL(PK_APPROVAL_NUM, FK_AD_NUM, APPROVAL_SSSTEP, APPROVAL_SSTYPE, APPROVAL_SSRESULT, APPROVAL_RECEIVE_DATE, PK_SAWON_CODE, APPROVAL_USER_POS)
+        VALUES ((SELECT NVL(MAX(PK_APPROVAL_NUM)+1,0) FROM APPROVAL), #{FK_AD_NUM}, #{APPROVAL_SSSTEP}, #{APPROVAL_SSTYPE}, #{APPROVAL_SSRESULT}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{PK_SAWON_CODE}, #{APPROVAL_USER_POS})
+    </insert>
+
+    <select id="selectSignDocOne" parameterType="hr.elect.p0001.vo.SignDocVO" resultType="hr.elect.p0001.vo.SignDocVO">
+        SELECT FK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, SAWON_NAME, AD_CONTENT, AD_DOCSTATUS, AD_DOCSTEP, FK_DOCTYPE_NUM, AD_DEPT_NAME
+             , DATE_FORMAT(AD_MOD_DATE,'%Y-%m-%d') AD_MOD_DATE, AD_DOCSIGNPATH
+          FROM AD SD
+         INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
+         WHERE SD.AD_DELETEFLAG='N' AND FK_AD_NUM=#{FK_AD_NUM}
+    </select> 
+    
+    <select id="selectCurrentSigner" parameterType="String" resultType="String">
+		SELECT SS.PK_SAWON_CODE
+          FROM AD SD
+         INNER JOIN APPROVAL SS ON SS.FK_AD_NUM=SD.FK_AD_NUM AND SS.APPROVAL_SSSTEP=SD.AD_DOCSTEP 
+        WHERE SD.FK_AD_NUM=#{FK_AD_NUM} AND SD.AD_DOCSTATUS IN (1,2)
 	</select>
+	            
+    <update id="deleteSignDoc" parameterType="hr.elect.p0001.vo.SignDocVO">
+        UPDATE AD
+           SET AD_DELETEFLAG='Y'
+         WHERE PK_AD_NUM=#{PK_AD_NUM} 
+    </update> 
 
-	<update id="updateData" parameterType="java.util.Map">
-		update customers
-		set  cust_name = #{cust_name,jdbcType=VARCHAR}
-		   , cust_address = #{cust_address,jdbcType=VARCHAR}
-		   , cust_state = #{cust_state,jdbcType=VARCHAR}
-		   , cust_zip = #{cust_zip,jdbcType=VARCHAR}
-		   , cust_country = #{cust_country,jdbcType=VARCHAR}
-		   , cust_contact = #{cust_contact,jdbcType=VARCHAR}
-		   , cust_email = #{cust_email,jdbcType=VARCHAR}
-		where cust_id = #{cust_id, jdbcType=VARCHAR}
-	</update>	
-	
-	<insert id="insertData" parameterType="java.util.Map">
-		insert into customers(cust_id, cust_name, cust_address, cust_state, cust_zip, cust_country, cust_contact, cust_email) values(#{cust_id, ,jdbcType=VARCHAR}, #{cust_name, ,jdbcType=VARCHAR}, #{cust_address,jdbcType=VARCHAR}, #{cust_state,jdbcType=VARCHAR}, #{cust_zip,jdbcType=VARCHAR}, #{cust_country,jdbcType=VARCHAR}, #{cust_contact,jdbcType=VARCHAR}, #{cust_email,jdbcType=VARCHAR})
-	</insert>	
-	
-	<delete id="deleteData" parameterType="java.util.Map">
-		delete customers
-		where cust_id = #{cust_id}
-	</delete>	
+    <select id="selectSign" parameterType="String" resultType="hr.elect.p0001.vo.SignVO">
+        SELECT PK_APPROVAL_NUM, FK_AD_NUM, APPROVAL_SSSTEP, APPROVAL_SSTYPE, APPROVAL_SSRESULT, SD.PK_SAWON_CODE, SAWON_NAME, SD.APPROVAL_USER_POS, APPROVAL_SIGN_DATE, APPROVAL_SSCOMMENT
+          FROM APPROVAL SD
+         INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
+         WHERE FK_AD_NUM=#{FK_AD_NUM}
+         ORDER BY APPROVAL_SSSTEP
+    </select>
+    
+	<select id="selectSignLast" parameterType="hr.elect.p0001.vo.SignDocVO" resultType="hr.elect.p0001.vo.SignVO">
+        SELECT PK_APPROVAL_NUM, FK_AD_NUM, APPROVAL_SSSTEP, APPROVAL_SSTYPE, 0 APPROVAL_SSRESULT, SD.PK_SAWON_CODE, SAWON_NAME, CD.CODENM APPROVAL_USER_POS
+          FROM APPROVAL SD
+         INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
+         INNER JOIN COM_CODE CD ON CLAPK_APPROVAL_NUM='3' AND CD.CODECD=CU.APPROVAL_USER_POS
+         WHERE FK_AD_NUM=(SELECT FK_AD_NUM FROM AD WHERE PK_SAWON_CODE=#{PK_SAWON_CODE} AND FK_DOCTYPE_NUM=#{FK_DOCTYPE_NUM} ORDER BY FK_AD_NUM DESC LIMIT 1)
+         ORDER BY APPROVAL_SSSTEP
+    </select>
+  
+	<!-- 결재 -->    
+    <update id="updateSign" parameterType="hr.elect.p0001.vo.SignVO" >  
+        UPDATE APPROVAL SS 
+         INNER JOIN AD SD ON SD.FK_AD_NUM=SS.FK_AD_NUM AND SD.AD_DOCSTEP=SS.APPROVAL_SSSTEP
+           SET APPROVAL_SSRESULT=#{APPROVAL_SSRESULT}, APPROVAL_SIGN_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi'), APPROVAL_SSCOMMENT=#{APPROVAL_SSCOMMENT}
+         WHERE SS.FK_AD_NUM=#{FK_AD_NUM} 
+    </update>
+
+	<select id="selectChkRemainSign" parameterType="hr.elect.p0001.vo.SignVO" resultType="String">
+        SELECT APPROVAL_SSSTEP
+          FROM APPROVAL SD
+         WHERE FK_AD_NUM=#{FK_AD_NUM} AND APPROVAL_SSRESULT=0
+         LIMIT 1
+    </select>
+
+    <update id="updateSignAD_DOCSTATUS" parameterType="hr.elect.p0001.vo.SignVO">
+        UPDATE AD
+           SET AD_DOCSTATUS = #{APPROVAL_SSRESULT}
+			<if test="APPROVAL_SSSTEP != null">
+	        	, AD_DOCSTEP = AD_DOCSTEP + 1
+	        </if>
+         WHERE FK_AD_NUM=#{FK_AD_NUM} 
+    </update> 
+
+    <update id="updateSignDocCancel" parameterType="String">
+        UPDATE AD
+           SET AD_DOCSTATUS = 0
+         WHERE FK_AD_NUM=#{FK_AD_NUM} 
+    </update>	
 
 </mapper>

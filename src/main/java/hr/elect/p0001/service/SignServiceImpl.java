@@ -11,21 +11,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import hr.elect.p0001.dao.P0001DAO;
-import hr.elect.p0001.vo.P0001VO;
+import hr.elect.p0001.dao.SignDAO;
+import hr.elect.p0001.vo.SignVO;
 
 
 
 
-@Service("s0001Service")
+@Service("signService")
 @Transactional(propagation = Propagation.REQUIRED)
-public class P0001ServiceImpl implements P0001Service {
+public class SignServiceImpl implements SignService {
 	@Autowired
-	private P0001DAO p0001DAO;
+	private SignDAO signDAO;
 
+	/*
 	@Override
-	public List<P0001VO> searchList(Map<String, Object> searchMap) throws DataAccessException {
-		List<P0001VO> list =  p0001DAO.searchList(searchMap); 
+	public List<SignVO> searchList(Map<String, Object> searchMap) throws DataAccessException {
+		List<SignVO> list =  signDAO.searchList(searchMap); 
 		return list;
 	}
 
@@ -38,11 +39,11 @@ public class P0001ServiceImpl implements P0001Service {
 		for(String str : status) {
 			Map<String, String> row = getRow(dataMap, length, i); // ���� Index�� Row Map
 			if("I".equals(str)) { // �߰�
-				p0001DAO.insertData(row);
+				signDAO.insertData(row);
 			}else if("U".equals(str)) { // ����
-				p0001DAO.updateData(row);
+				signDAO.updateData(row);
 			}else if("D".equals(str)) { // ����
-				p0001DAO.deleteData(row);
+				signDAO.deleteData(row);
 			}
 			i++;
 		}
@@ -70,4 +71,5 @@ public class P0001ServiceImpl implements P0001Service {
 		// TODO Auto-generated method stub
 		
 	}	
+	*/
 }

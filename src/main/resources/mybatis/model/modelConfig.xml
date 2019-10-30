@@ -4,11 +4,16 @@
 
 <configuration>
 	<typeAliases>
-		<typeAlias type="hr.elect.p0001.vo.P0001VO"  alias="p0001VO" />
+		<!-- 전자결재 -->
+		<typeAlias type="hr.elect.p0001.vo.SignVO"  alias="signVO" />
+		<typeAlias type="hr.elect.p0001.vo.SignDocVO"  alias="signDocVO" />
+		
+		<!-- 시스템 - 기초환경설정 -->
 		<typeAlias type="hr.system.p0001.vo.LoginVO"  alias="loginVO" />
 		<typeAlias type="hr.system.p0001.vo.SawonVO"  alias="sawonVO" />
 		<typeAlias type="hr.system.p0001.vo.SignDocTypeVO"  alias="signDocTypeVO" />
 		
+		<!-- 시스템 - 메인화면 -->
 		<typeAlias type="hr.system.p0003.vo.CalendarVO"  alias="calendarVO" />
 		<typeAlias type="hr.system.p0003.vo.MonthVO"  alias="monthVO" />
 		<typeAlias type="hr.system.p0003.vo.SchDetailVO"  alias="schDetailVO" />

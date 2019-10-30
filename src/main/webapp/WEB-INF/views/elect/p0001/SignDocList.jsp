@@ -2,6 +2,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
 <html>
@@ -27,8 +28,6 @@
     <![endif]-->
 
     <script src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/dynatree/jquery.dynatree.js"></script>    
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
@@ -45,58 +44,67 @@ function fn_formSubmit(){
 
     <div id="wrapper">
 
-        <div id="page-wrapper" style="margin: 0px;">
+		<form role="form" id="form1" name="form1"  method="post">
+        <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-gear fa-fw"></i> <s:message code="common.codecd"/></h1>
+                    <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 결제  할(한) 문서</h1>
                 </div>
-                <!-- /.col-lg-12 -->
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+				 	<label><input name="searchExt1" id="searchExt1" type="radio" value="sign" onclick="fn_formSubmit()" <c:if test='${searchVO.searchExt1=="sign"}'>checked</c:if>> 진행중</label>
+				 	<label><input name="searchExt1" id="searchExt1" type="radio" value="signed" onclick="fn_formSubmit()" <c:if test='${searchVO.searchExt1=="signed"}'>checked</c:if>> 완료</label>
+                </div>
             </div>
             
             <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-		            <button type="button" class="btn btn-default pull-right" onclick="fn_moveToURL('adCodeForm')">
-		            <i class="fa fa-edit fa-fw"></i> <s:message code="common.codecd"/></button>      
-				</div>
-            </div>
-            <!-- /.row -->
-            <div class="panel panel-default">
+            <div class="panel panel-default guStyle2"> 
             	<div class="panel-body">
 					<div class="listHead">
-						<div class="listHiddenField pull-left field60"><s:message code="common.classno"/></div>
-						<div class="listHiddenField pull-left field100"><s:message code="common.codecd"/></div>
-						<div class="listTitle"><s:message code="common.codenm"/></div>
+						<div class="listHiddenField pull-left field60"><s:message code="board.no"/></div>
+						<div class="listHiddenField pull-right field100">종류</div>
+						<div class="listHiddenField pull-right field100"><s:message code="crud.crdate"/></div>
+						<div class="listHiddenField pull-right field100"><s:message code="crud.usernm"/></div>
+						<div class="listHiddenField pull-right field100">상태</div>
+						<div class="listTitle"><s:message code="crud.crtitle"/></div>
 					</div>
 					
 					<c:if test="${listview.size()==0}">
 						<div class="listBody height200">
 						</div>
 					</c:if>
+					
 					<c:forEach var="listview" items="${listview}" varStatus="status">
-						<c:url var="link" value="adCodeRead">
-							<c:param name="CLASSNO" value="${listview.CLASSNO}" />
-							<c:param name="CODECD" value="${listview.CODECD}" />
+						<c:url var="link" value="signDocRead">
+							<c:param name="docno" value="${listview.docno}" />
 						</c:url>
 					
 						<div class="listBody">
-							<div class="listHiddenField pull-left field60 textCenter"><c:out value="${listview.CLASSNO}"/></div>
-							<div class="listHiddenField pull-left field100 textCenter"><c:out value="${listview.CODECD}"/></div>
-							<div class="listTitle" title="<c:out value="${listview.CODENM}"/>">
-								<a href="${link}"><c:out value="${listview.CODENM}"/></a>
+							<div class="listHiddenField pull-left field60 textCenter"><c:out value="${searchVO.totRow-((searchVO.page-1)*searchVO.displayRowCount + status.index)}"/></div>
+							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.dttitle}"/></div>
+							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.updatedate}"/></div>
+							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.usernm}"/></div>
+							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.docstatus}"/></div>
+							<div class="listTitle" title="<c:out value="${listview.doctitle}"/>">
+								<a href="${link}"><c:out value="${listview.doctitle}"/></a>
 							</div>
 						</div>
 					</c:forEach>	
 					
 					<br/>
-					<form role="form" id="form1" name="form1"  method="post">
 					    <jsp:include page="../../common/pagingforSubmit.jsp" />
 				    
 						<div class="form-group">
 							<div class="checkbox col-lg-3 pull-left">
 							 	<label class="pull-right">
-							 		<input type="checkbox" name="searchType" value="CODENM" <c:if test="${fn:indexOf(searchVO.searchType, 'codenm')!=-1}">checked="checked"</c:if>/>
-		                        	<s:message code="common.codenm"/>
+							 		<input type="checkbox" name="searchType" value="doctitle" <c:if test="${fn:indexOf(searchVO.searchType, 'doctitle')!=-1}">checked="checked"</c:if>/>
+		                        	제목
+		                        </label>
+							 	<label class="pull-right">
+							 		<input type="checkbox" name="searchType" value="doccontents" <c:if test="${fn:indexOf(searchVO.searchType, 'doccontents')!=-1}">checked="checked"</c:if>/>
+		                        	내용
 		                        </label>
 		                   </div>
 		                   <div class="input-group custom-search-form col-lg-3">
@@ -109,11 +117,11 @@ function fn_formSubmit(){
 	                            </span>
 	                       </div>
 						</div>
-					</form>	
             	</div>    
             </div>
             <!-- /.row -->
         </div>
+        </form>	
         <!-- /#page-wrapper -->
 
     </div>

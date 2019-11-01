@@ -77,10 +77,10 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/signListTo";
 		            } else if(url === "pay/p0001/TA_input.do"){ // 근태 결과 입력
 		            	urlToGo = "pay/p0001/TA_input.do";
-		            } else if(url === "gg"){
-		            	urlToGo = "gg";
-		            } else if(url === "hh"){
-		            	urlToGo = "hh";
+		            } else if(url === "day_regist_sawon"){
+		            	urlToGo = "/SEED/attendance/p0001/day_regist_sawon.do";
+		            } else if(url === "ad_day_regist"){
+		            	urlToGo = "/SEED/attendance/p0001/day_regist.do";
 		            } else if(url === "a6"){
 		            	urlToGo = "a6";
 		            } else if(url === "a7"){
@@ -255,10 +255,10 @@ $(document).ready(function(){
                             <a href="#"><i class="fa fa-edit fa-fw"></i> 근태/연차관리<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'일일근태등록','chart','bb','bb'); return false">일일근태등록</a>
+                                    <a href='#' onClick="doAction(myTab,'일일근태등록','chart','day_regist_sawon','day_regist_sawon'); return false">일일근태등록</a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'월마감관리','chart','cc','cc'); return false">월마감관리</a>
+                                    <a href='#' onClick="doAction(myTab,'월마감관리','chart','ad_day_regist','ad_day_regist'); return false">월마감관리</a>
                                 </li>
                                 <li>
                                     <a href='#' onClick="doAction(myTab,'월근태마감','chart','dd','dd'); return false">월근태마감</a>

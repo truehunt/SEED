@@ -139,7 +139,7 @@ public class SignControllerImpl implements SignController {
             String signPath = "";
             for (int i=0; i<signlist.size();i++){
             	SignVO svo = (SignVO) signlist.get(i);
-            	signPath += svo.getFK_SAWON_CODE() + "," + svo.getSAWON_NAME() + "," + svo.getAPPROVAL_SSTYPE() + "," + svo.getAPPROVAL_USER_POS() + "||";  
+            	signPath += svo.getPK_SAWON_CODE() + "," + svo.getSAWON_NAME() + "," + svo.getAPPROVAL_SSTYPE() + "," + svo.getAPPROVAL_USER_POS() + "||";  
             }
             signDocInfo.setAD_DOCSIGNPATH(signPath);
         } else {								// 수정
@@ -155,6 +155,19 @@ public class SignControllerImpl implements SignController {
 		ModelAndView main = new ModelAndView(viewName);
 		return main;
 	}
+	
+    /**
+     * 저장.
+     */
+    @RequestMapping(value = "/signDocSave")
+    public String signDocSave(HttpServletRequest request, SignDocVO signDocInfo, ModelMap modelMap) {
+        String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+    	signDocInfo.setPK_SAWON_CODE(userno);
+    	
+        signService.insertSignDoc(signDocInfo);
+
+        return "redirect:/signListTobe";
+    }
 	
 	private String getViewName(HttpServletRequest request) throws Exception {
 		String contextPath = request.getContextPath();

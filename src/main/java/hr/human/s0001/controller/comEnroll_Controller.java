@@ -16,10 +16,10 @@ public interface comEnroll_Controller {
 	public ModelAndView searchInit(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public Map adsearchList(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	//추가 내용 
-	public ModelAndView adcompany_Enroll(HttpServletRequest request, HttpServletResponse response) throws Exception;//회사등록
+	public ModelAndView company_Enroll(HttpServletRequest request, HttpServletResponse response) throws Exception;//회사등록
 	public Map comEnrollView(HttpServletRequest request, HttpServletResponse response) throws Exception; //회사등록 input
 	
 	public ModelAndView workplace_Enroll(HttpServletRequest request, HttpServletResponse response) throws Exception;//사업장등록

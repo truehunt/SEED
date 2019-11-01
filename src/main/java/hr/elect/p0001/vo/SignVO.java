@@ -16,7 +16,7 @@ public class SignVO {
 	private String APPROVAL_USER_POS, // 직위
 				   FK_AD_NUM, // 전자결재문서번호
 				   FK_FILE_NUM, // 파일번호
-				   FK_SAWON_CODE, // 사원코드
+				   PK_SAWON_CODE, // 사원코드
 				   SAWON_NAME; // 사원이름
 	
 	public SignVO() {
@@ -103,12 +103,12 @@ public class SignVO {
 		FK_FILE_NUM = fK_FILE_NUM;
 	}
 
-	public String getFK_SAWON_CODE() {
-		return FK_SAWON_CODE;
+	public String getPK_SAWON_CODE() {
+		return PK_SAWON_CODE;
 	}
 
-	public void setFK_SAWON_CODE(String fK_SAWON_CODE) {
-		FK_SAWON_CODE = fK_SAWON_CODE;
+	public void setPK_SAWON_CODE(String pK_SAWON_CODE) {
+		PK_SAWON_CODE = pK_SAWON_CODE;
 	}
 
 	public String getSAWON_NAME() {

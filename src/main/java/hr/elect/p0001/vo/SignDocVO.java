@@ -17,6 +17,7 @@ public class SignDocVO {
 				   AD_INT_DATE, // 입력일시
 				   AD_MOD_DATE, // 수정일시
 				   PK_DOCTYPE_NUM, // 양식번호
+				   DOCTYPE_DTTITLE, // 양식명 - > db에없고 vo에만 있음
 				   PK_SAWON_CODE, // 사원코드
 				   SAWON_NAME; // 사원이름
 	
@@ -136,4 +137,12 @@ public class SignDocVO {
 		SAWON_NAME = sAWON_NAME;
 	}
 
+	public String getDOCTYPE_DTTITLE() {
+		return DOCTYPE_DTTITLE;
+	}
+
+	public void setDOCTYPE_DTTITLE(String dOCTYPE_DTTITLE) {
+		DOCTYPE_DTTITLE = dOCTYPE_DTTITLE;
+	}
+	
 }

@@ -15,34 +15,34 @@ import hr.human.s0001.vo.ComEnroll_VO;
 
 @Repository("adcomEnroll_DAO")
 public class comEnroll_DAOImpl implements comEnroll_DAO {
-	@Autowired
-	private SqlSession sqlSession;
+   @Autowired
+   private SqlSession sqlSession;
 
-	@Override
-	public List<ComEnroll_VO> searchList(Map<String, Object> searchMap) throws DataAccessException {
-		List<ComEnroll_VO> list = sqlSession.selectList("hr.human.s0001.searchList", searchMap);
-		return list;
-	}
-	
-	@Override
-	public List<ComEnroll_VO> comEnrollView(Map<String, Object> searchMap) throws DataAccessException {
-		List<ComEnroll_VO> list = sqlSession.selectList("hr.human.s0001.comEnrollView", searchMap);
-		return list;
-	}
+   @Override
+   public List<ComEnroll_VO> searchList(Map<String, Object> searchMap) throws DataAccessException {
+      List<ComEnroll_VO> list = sqlSession.selectList("hr.human.s0001.searchList", searchMap);
+      return list;
+   }
+   
+   @Override
+   public List<ComEnroll_VO> comEnrollView(Map<String, Object> searchMap) throws DataAccessException {
+      List<ComEnroll_VO> list = sqlSession.selectList("hr.human.s0001.comEnrollView", searchMap);
+      return list;
+   }
 
-	@Override
-	public void insertData(Map<String, String> row) throws DataAccessException {
-		sqlSession.update("hr.human.s0001.insertData", row);
-	}
+   @Override
+   public void insertData(Map<String, String> row) throws DataAccessException {
+      sqlSession.update("hr.human.s0001.insertData", row);
+   }
 
-	@Override
-	public void updateData(Map<String, String> row) throws DataAccessException {
-		sqlSession.update("hr.human.s0001.updateData", row);
-	}
+   @Override
+   public void updateData(Map<String, String> row) throws DataAccessException {
+      sqlSession.update("hr.human.s0001.updateData", row);
+   }
 
-	@Override
-	public void deleteData(Map<String, String> row) throws DataAccessException {
-		sqlSession.update("hr.human.s0001.deleteData", row);
-	}
+   @Override
+   public void deleteData(Map<String, String> row) throws DataAccessException {
+      sqlSession.update("hr.human.s0001.deleteData", row);
+   }
 
 }

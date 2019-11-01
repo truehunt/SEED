@@ -71,9 +71,9 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/adSignDocTypeList";
 		            } else if(url === "signDocTypeList"){ // 기안하기 
 		            	urlToGo = "/SEED/signDocTypeList";
-		            } else if(url === "signListTobe"){ // 결재 받을(은) 문서 - 전체, 임시저장, 진행중, 완료, 반려
+		            } else if(url === "signListTobe"){ // 개인문서함 -> 결재 받을(은) 문서 - 전체, 임시저장, 진행중, 완료, 반려
 		            	urlToGo = "/SEED/signListTobe";
-		            } else if(url === "signListTo"){ // 결재 할(한) 문서 - 진행중, 완료
+		            } else if(url === "signListTo"){ // 결재문서함 -> 결재 할(한) 문서 - 진행중, 완료
 		            	urlToGo = "/SEED/signListTo";
 		            } else if(url === "pay/p0001/TA_input.do"){ // 근태 결과 입력
 		            	urlToGo = "pay/p0001/TA_input.do";

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import hr.elect.p0001.vo.SignDocVO;
 import project.common.SearchVO;
 
 
@@ -19,7 +20,7 @@ public class SignDAOImpl implements SignDAO {
 	private SqlSession sqlSession;
 
 	/**
-     * 결제 받을 문서 리스트.
+     * 결제 받을 문서 리스트. -> 개인문서함
      */
 	@Override
 	public Integer selectSignDocTobeCount(SearchVO param) throws DataAccessException {
@@ -29,6 +30,41 @@ public class SignDAOImpl implements SignDAO {
 	@Override
 	public List<?> selectSignDocTobeList(SearchVO param) throws DataAccessException {
         return sqlSession.selectList("selectSignDocTobeList", param);
+    }
+	
+	/**
+     * 결제 할 문서 리스트. -> 결재문서함
+     */
+    public Integer selectSignDocCount(SearchVO param) throws DataAccessException {
+        return sqlSession.selectOne("selectSignDocCount", param);
+    }
+    
+    public List<?> selectSignDocList(SearchVO param) throws DataAccessException {
+        return sqlSession.selectList("selectSignDocList", param);
+    }
+    
+    /**
+     * 읽기.
+     */
+    public SignDocVO selectSignDocOne(SignDocVO param) throws DataAccessException {
+        return sqlSession.selectOne("selectSignDocOne", param);
+    }
+    
+    public String selectCurrentSigner(String param) throws DataAccessException {
+        return sqlSession.selectOne("selectCurrentSigner", param);
+    }
+    
+    /**
+     * 결재 경로.
+     */
+    public List<?> selectSign(String param) throws DataAccessException {
+        return sqlSession.selectList("selectSign", param);
+    }
+    /**
+     * 마지막 결재 경로.
+     */
+    public List<?> selectSignLast(SignDocVO param) throws DataAccessException {
+        return sqlSession.selectList("selectSignLast", param);
     }
 
 

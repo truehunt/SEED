@@ -16,8 +16,8 @@ public class SignDocVO {
 				   AD_DOCSIGNPATH, // 결재경로문자열
 				   AD_INT_DATE, // 입력일시
 				   AD_MOD_DATE, // 수정일시
-				   FK_DOCTYPE_NUM, // 양식번호
-				   FK_SAWON_CODE, // 사원코드
+				   PK_DOCTYPE_NUM, // 양식번호
+				   PK_SAWON_CODE, // 사원코드
 				   SAWON_NAME; // 사원이름
 	
 	public SignDocVO() {
@@ -112,20 +112,20 @@ public class SignDocVO {
 		AD_MOD_DATE = aD_MOD_DATE;
 	}
 
-	public String getFK_DOCTYPE_NUM() {
-		return FK_DOCTYPE_NUM;
+	public String getPK_DOCTYPE_NUM() {
+		return PK_DOCTYPE_NUM;
 	}
 
-	public void setFK_DOCTYPE_NUM(String fK_DOCTYPE_NUM) {
-		FK_DOCTYPE_NUM = fK_DOCTYPE_NUM;
+	public void setPK_DOCTYPE_NUM(String pK_DOCTYPE_NUM) {
+		PK_DOCTYPE_NUM = pK_DOCTYPE_NUM;
 	}
 
-	public String getFK_SAWON_CODE() {
-		return FK_SAWON_CODE;
+	public String getPK_SAWON_CODE() {
+		return PK_SAWON_CODE;
 	}
 
-	public void setFK_SAWON_CODE(String fK_SAWON_CODE) {
-		FK_SAWON_CODE = fK_SAWON_CODE;
+	public void setPK_SAWON_CODE(String pK_SAWON_CODE) {
+		PK_SAWON_CODE = pK_SAWON_CODE;
 	}
 
 	public String getSAWON_NAME() {

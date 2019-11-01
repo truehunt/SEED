@@ -38,24 +38,24 @@
     <script src="${pageContext.request.contextPath}/resources/js/dynatree/jquery.dynatree.js"></script>
 <script>                        
 window.onload =function() {
-	  CKEDITOR.replace( 'doccontents', { 'filebrowserUploadUrl': 'upload4ckeditor'});
+	  CKEDITOR.replace( 'AD_CONTENT', { 'filebrowserUploadUrl': 'upload4ckeditor'});
 }	  
 
 function fn_formSubmit(){
-	CKEDITOR.instances["doccontents"].updateElement();
+	CKEDITOR.instances["AD_CONTENT"].updateElement();
 
-	if ( ! chkInputValue("#doctitle", "제목")) return false;
-	if ( ! chkInputValue("#doccontents", "내용")) return false;
+	if ( ! chkInputValue("#AD_TITLE", "제목")) return false;
+	if ( ! chkInputValue("#AD_CONTENT", "내용")) return false;
 	
 	$("#form1").submit();
 } 
 
 function fn_tempSubmit(){
-	CKEDITOR.instances["doccontents"].updateElement();
+	CKEDITOR.instances["AD_CONTENT"].updateElement();
 
-	if ( ! chkInputValue("#doctitle", "제목")) return false;
+	if ( ! chkInputValue("#AD_TITLE", "제목")) return false;
 	
-	$("#docstatus").val("0");
+	$("#AD_DOCSTATUS").val("0");
 	$("#form1").submit();
 } 
 
@@ -66,7 +66,7 @@ function fn_signPath(){
         type: "post"        
     }).success(function(result){
                 $("#popupUsers").html(result);
-                set_Users($("#docsignpath").val()); 
+                set_Users($("#AD_DOCSIGNPATH").val()); 
     });
     $("#popupUsers").modal("show");
 }
@@ -82,8 +82,8 @@ function deptTreeInUsersActivate(node) {
     });
 }
 
-function fn_selectUsers(docsignpath) {
-    $("#docsignpath").val(docsignpath);
+function fn_selectUsers(AD_DOCSIGNPATH) {
+    $("#AD_DOCSIGNPATH").val(AD_DOCSIGNPATH);
     $("#popupUsers").modal("hide");
     
     var signPath = $("#signPath");
@@ -93,7 +93,7 @@ function fn_selectUsers(docsignpath) {
     signPath4Agree.empty();
      
 	var typearr = ["기안", "합의", "결재"];
-	var nos = docsignpath.split("||"); 
+	var nos = AD_DOCSIGNPATH.split("||"); 
 	for (var i in nos) {
 		if (nos[i]==="") continue;
 		var arr = nos[i].split(",");	// 사번, 이름, 기안/합의/결제, 직책 
@@ -115,7 +115,7 @@ function fn_selectUsers(docsignpath) {
 
     <div id="wrapper">
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 기안하기</h1>
@@ -142,20 +142,20 @@ function fn_selectUsers(docsignpath) {
             <div class="row" style="margin-top: 10px">
 				<div id="signPath" class="signPath">
 					<c:forEach var="signlist" items="${signlist}" varStatus="status">
-					    <c:if test="${signlist.sstype ne '1'}">					
+					    <c:if test="${signlist.APPROVAL_SSTYPE ne '1'}">					
 							<div class="signArea">
-								<div class="signAreaTop"><c:out value="${signlist.userpos}"/></div>
+								<div class="signAreaTop"><c:out value="${signlist.APPROVAL_USER_POS}"/></div>
 								<div class="signAreaCenter">
 									<c:choose>
-							        	<c:when test='${signlist.ssresult == "1"}'>승인</c:when>
-							        	<c:when test='${signlist.ssresult == "2"}'>반려</c:when>
+							        	<c:when test='${signlist.APPROVAL_SSRESULT == "1"}'>승인</c:when>
+							        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'>반려</c:when>
 							         	<c:otherwise></c:otherwise>
 							      </c:choose>								
 								</div>
-								<div class="signAreaBottom"><c:out value="${signlist.usernm}"/> </div>
+								<div class="signAreaBottom"><c:out value="${signlist.SAWON_NAME}"/> </div>
 							</div>
 						</c:if>
-					    <c:if test="${signlist.sstype eq '1'}">
+					    <c:if test="${signlist.APPROVAL_SSTYPE eq '1'}">
 							<c:set var="cnt" value="${cnt + 1}" />		
 						</c:if>
 					</c:forEach>				
@@ -166,17 +166,17 @@ function fn_selectUsers(docsignpath) {
 	            <div class="row" style="margin-top: 10px">
 					<div id="signPath4Agree" class="signPath">
 						<c:forEach var="signlist" items="${signlist}" varStatus="status">
-						    <c:if test="${signlist.sstype eq '1'}">					
+						    <c:if test="${signlist.APPROVAL_SSTYPE eq '1'}">					
 								<div class="signArea">
-									<div class="signAreaTop"><c:out value="${signlist.userpos}"/></div>
+									<div class="signAreaTop"><c:out value="${signlist.APPROVAL_USER_POS}"/></div>
 									<div class="signAreaCenter">
 										<c:choose>
-								        	<c:when test='${signlist.ssresult == "1"}'>결재</c:when>
-								        	<c:when test='${signlist.ssresult == "2"}'>반려</c:when>
+								        	<c:when test='${signlist.APPROVAL_SSRESULT == "1"}'>결재</c:when>
+								        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'>반려</c:when>
 								         	<c:otherwise></c:otherwise>
 								      </c:choose>								
 									</div>
-									<div class="signAreaBottom"><c:out value="${signlist.usernm}"/> </div>
+									<div class="signAreaBottom"><c:out value="${signlist.SAWON_NAME}"/> </div>
 								</div>
 							</c:if>
 						</c:forEach>				
@@ -187,23 +187,23 @@ function fn_selectUsers(docsignpath) {
 						
             <div class="row" style="margin-top: 10px">
             	<form id="form1" name="form1" role="form" action="signDocSave" method="post" >
-            		<input type="hidden" name="docno" value="<c:out value="${signDocInfo.docno}"/>">
-            		<input type="hidden" name="docstatus" id="docstatus"  value="<c:out value="${signDocInfo.docstatus}"/>">
-            		<input type="hidden" name="dtno" value="<c:out value="${signDocInfo.dtno}"/>">
-				    <input type="hidden" name="docsignpath" id="docsignpath"  value="<c:out value="${signDocInfo.docsignpath}"/>">
+            		<input type="hidden" name="PK_AD_NUM" value="<c:out value="${signDocInfo.PK_AD_NUM}"/>">
+            		<input type="hidden" name="AD_DOCSTATUS" id="AD_DOCSTATUS"  value="<c:out value="${signDocInfo.AD_DOCSTATUS}"/>">
+            		<input type="hidden" name="PK_DOCTYPE_NUM" value="<c:out value="${signDocInfo.PK_DOCTYPE_NUM}"/>">
+				    <input type="hidden" name="AD_DOCSIGNPATH" id="AD_DOCSIGNPATH"  value="<c:out value="${signDocInfo.AD_DOCSIGNPATH}"/>">
 					<div class="panel panel-default">
 	                    <div class="panel-body">
 	                    	<div class="row form-group">
 	                            <label class="col-lg-1">제목</label>
 	                            <div class="col-lg-11">
-	                            	<input type="text" class="form-control" id="doctitle" name="doctitle" maxlength="50" 
-	                            	value="<c:out value="${signDocInfo.doctitle}"/>">
+	                            	<input type="text" class="form-control" id="AD_TITLE" name="AD_TITLE" maxlength="50" 
+	                            	value="<c:out value="${signDocInfo.AD_TITLE}"/>">
 	                            </div>
 	                        </div>
 	                    	<div class="row form-group">
 	                            <label class="col-lg-1">내용</label>
 	                            <div class="col-lg-11">
-	                            	<textarea class="form-control" id="doccontents" name="doccontents"><c:out value="${signDocInfo.doccontents}"/></textarea>
+	                            	<textarea class="form-control" id="AD_CONTENT" name="AD_CONTENT"><c:out value="${signDocInfo.AD_CONTENT}"/></textarea>
 	                            </div>
 	                        </div>
 	                    </div>

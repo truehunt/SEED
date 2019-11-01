@@ -16,8 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import hr.elect.p0001.dao.SignDAO;
 import hr.elect.p0001.service.SignService;
+import hr.elect.p0001.vo.SignDocVO;
 import hr.elect.p0001.vo.SignVO;
 import hr.system.p0001.service.SignDocSvc;
+import hr.system.p0001.vo.SignDocTypeVO;
 import project.common.SearchVO;
 
 @Controller("signController")
@@ -26,14 +28,14 @@ public class SignControllerImpl implements SignController {
 	@Autowired
 	private SignDAO signDAO;
 	@Autowired
-	SignService signService;
-	@Autowired
-	SignVO signVO;
+	private SignService signService;
 	@Autowired
     private SignDocSvc signDocSvc;
+	@Autowired
+	private SignVO signVO;
 	
 	/**
-     * 결제 받을 문서 리스트.
+     * 결제 받을 문서 리스트. -> 개인 문서함 
      */
 	@Override
 	@RequestMapping(value = "/signListTobe", method = { RequestMethod.GET, RequestMethod.POST })
@@ -55,7 +57,101 @@ public class SignControllerImpl implements SignController {
 		String viewName = getViewName(request);
 		viewName = "elect/p0001/SignDocListTobe";
 		request.setCharacterEncoding("utf-8");
-		//ModelAndView main = new ModelAndView("hr/sign_init");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
+	
+	/**
+     * 결제 할 문서 리스트 -> 결재 문서함 
+     */
+	@Override
+	@RequestMapping(value = "/signListTo", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView signListTo(HttpServletRequest request, HttpServletResponse response, SearchVO searchVO, ModelMap modelMap) throws Exception {
+		
+		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+        
+		modelMap.addAttribute("PK_SAWON_CODE", userno);
+        // etcSvc.setCommonAttribute(userno, modelMap);
+    	
+        //
+		if (searchVO.getSearchExt1()==null || "".equals(searchVO.getSearchExt1())) searchVO.setSearchExt1("sign");
+		searchVO.setPK_SAWON_CODE(userno);
+        searchVO.pageCalculate( signDAO.selectSignDocCount(searchVO) ); // startRow, endRow
+        List<?> listview  = signDAO.selectSignDocList(searchVO);
+        
+        modelMap.addAttribute("searchVO", searchVO);
+        modelMap.addAttribute("listview", listview);
+        
+		String viewName = getViewName(request);
+		viewName = "elect/p0001/SignDocList";
+		request.setCharacterEncoding("utf-8");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
+	
+	/** 
+     * 기안하기1. -> 양식 리스트 불러오기
+     */
+	@Override
+	@RequestMapping(value = "/signDocTypeList", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView signDocTypeList(HttpServletRequest request, HttpServletResponse response, SearchVO searchVO, ModelMap modelMap) throws Exception {
+		
+		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+        
+		modelMap.addAttribute("PK_SAWON_CODE", userno);
+        // etcSvc.setCommonAttribute(userno, modelMap);
+    	
+		List<?> listview  = signDocSvc.selectSignDocTypeList(searchVO);
+        
+        modelMap.addAttribute("listview", listview);
+        
+		String viewName = getViewName(request);
+		viewName = "elect/p0001/SignDocTypeList";
+		request.setCharacterEncoding("utf-8");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
+	
+	/** 
+     * 기안하기2. -> 양식읽기, 결재경로
+     */
+	@Override
+	@RequestMapping(value = "/signDocForm", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView signDocForm(HttpServletRequest request, SignDocVO signDocInfo, ModelMap modelMap) throws Exception {
+		
+		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+        
+		modelMap.addAttribute("PK_SAWON_CODE", userno);
+        // etcSvc.setCommonAttribute(userno, modelMap);
+    	
+		
+		
+		// 개별 작업
+        List<?> signlist = null;
+        if (signDocInfo.getPK_AD_NUM() == null) {	// 신규
+        	signDocInfo.setAD_DOCSTATUS("1");
+        	SignDocTypeVO docType = signDocSvc.selectSignDocTypeOne(signDocInfo.getPK_DOCTYPE_NUM());
+        	signDocInfo.setPK_DOCTYPE_NUM(docType.getPK_DOCTYPE_NUM());
+        	signDocInfo.setAD_CONTENT(docType.getDOCTYPE_DTCONTENTS());
+        	signDocInfo.setPK_SAWON_CODE(userno);
+        	// 사번, 이름, 기안/합의/결제, 직책
+            signlist = signDAO.selectSignLast(signDocInfo);
+            String signPath = "";
+            for (int i=0; i<signlist.size();i++){
+            	SignVO svo = (SignVO) signlist.get(i);
+            	signPath += svo.getFK_SAWON_CODE() + "," + svo.getSAWON_NAME() + "," + svo.getAPPROVAL_SSTYPE() + "," + svo.getAPPROVAL_USER_POS() + "||";  
+            }
+            signDocInfo.setAD_DOCSIGNPATH(signPath);
+        } else {								// 수정
+            signDocInfo = signDAO.selectSignDocOne(signDocInfo);
+            signlist = signDAO.selectSign(signDocInfo.getPK_AD_NUM());
+        }
+        modelMap.addAttribute("signDocInfo", signDocInfo);
+        modelMap.addAttribute("signlist", signlist);
+        
+		String viewName = getViewName(request);
+		viewName = "elect/p0001/SignDocForm";
+		request.setCharacterEncoding("utf-8");
 		ModelAndView main = new ModelAndView(viewName);
 		return main;
 	}

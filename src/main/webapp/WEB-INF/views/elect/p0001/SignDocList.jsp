@@ -45,10 +45,10 @@ function fn_formSubmit(){
     <div id="wrapper">
 
 		<form role="form" id="form1" name="form1"  method="post">
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 결제  할(한) 문서</h1>
+                    <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 결재문서함</h1>
                 </div>
             </div>
 
@@ -78,17 +78,17 @@ function fn_formSubmit(){
 					
 					<c:forEach var="listview" items="${listview}" varStatus="status">
 						<c:url var="link" value="signDocRead">
-							<c:param name="docno" value="${listview.docno}" />
+							<c:param name="PK_AD_NUM" value="${listview.PK_AD_NUM}" />
 						</c:url>
 					
 						<div class="listBody">
 							<div class="listHiddenField pull-left field60 textCenter"><c:out value="${searchVO.totRow-((searchVO.page-1)*searchVO.displayRowCount + status.index)}"/></div>
-							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.dttitle}"/></div>
-							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.updatedate}"/></div>
-							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.usernm}"/></div>
-							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.docstatus}"/></div>
-							<div class="listTitle" title="<c:out value="${listview.doctitle}"/>">
-								<a href="${link}"><c:out value="${listview.doctitle}"/></a>
+							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.DOCTYPE_DTTITLE}"/></div>
+							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.AD_MOD_DATE}"/></div>
+							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.SAWON_NAME}"/></div>
+							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.AD_DOCSTATUS}"/></div>
+							<div class="listTitle" title="<c:out value="${listview.AD_DTTITLE}"/>">
+								<a href="${link}"><c:out value="${listview.AD_DTTITLE}"/></a>
 							</div>
 						</div>
 					</c:forEach>	
@@ -99,11 +99,11 @@ function fn_formSubmit(){
 						<div class="form-group">
 							<div class="checkbox col-lg-3 pull-left">
 							 	<label class="pull-right">
-							 		<input type="checkbox" name="searchType" value="doctitle" <c:if test="${fn:indexOf(searchVO.searchType, 'doctitle')!=-1}">checked="checked"</c:if>/>
+							 		<input type="checkbox" name="searchType" value="AD_DTTITLE" <c:if test="${fn:indexOf(searchVO.searchType, 'AD_DTTITLE')!=-1}">checked="checked"</c:if>/>
 		                        	제목
 		                        </label>
 							 	<label class="pull-right">
-							 		<input type="checkbox" name="searchType" value="doccontents" <c:if test="${fn:indexOf(searchVO.searchType, 'doccontents')!=-1}">checked="checked"</c:if>/>
+							 		<input type="checkbox" name="searchType" value="AD_CONTENT" <c:if test="${fn:indexOf(searchVO.searchType, 'AD_CONTENT')!=-1}">checked="checked"</c:if>/>
 		                        	내용
 		                        </label>
 		                   </div>

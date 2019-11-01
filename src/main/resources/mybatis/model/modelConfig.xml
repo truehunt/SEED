@@ -21,6 +21,7 @@
 		<typeAlias type="hr.system.p0003.vo.CodeVO"  alias="codeVO" />
 		<typeAlias type="hr.system.p0003.vo.ClassCodeVO"  alias="classCodeVO" />
 		
+		<!-- 급여관리 -->
 		<typeAlias type="hr.pay.p0001.vo.TA_inputVO"  alias="TA_inputVO" />
 		
    

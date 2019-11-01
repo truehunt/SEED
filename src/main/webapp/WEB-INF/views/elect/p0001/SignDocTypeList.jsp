@@ -44,7 +44,7 @@ function fn_formSubmit(){
 
     <div id="wrapper">
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 기안하기</h1>
@@ -62,13 +62,13 @@ function fn_formSubmit(){
 					<br/>
 					<c:forEach var="listview" items="${listview}" varStatus="status">
 						<c:url var="link" value="signDocForm">
-							<c:param name="dtno" value="${listview.dtno}" />
+							<c:param name="PK_DOCTYPE_NUM" value="${listview.PK_DOCTYPE_NUM}" />
 						</c:url>
 					
 						<a href="${link}">
 				            <div class="panel panel-default" style="width: 150px; height: 200px; display:inline-block; overflow:hidden; "> 
-				            	<div class="panel-heading"><c:out value="${listview.dttitle}"/></div>
-				            	<div class="panel-body"><img src="images/if_survey_49353.png" style="margin: 30px 25px;"/></div>
+				            	<div class="panel-heading"><c:out value="${listview.DOCTYPE_DTTITLE}"/></div>
+				            	<div class="panel-body"><img src="images/if_survey_49355.png" style="margin: 30px 25px;"/></div>
 							</div>
 						</a>
 					</c:forEach>

@@ -21,8 +21,11 @@
 		<typeAlias type="hr.system.p0003.vo.CodeVO"  alias="codeVO" />
 		<typeAlias type="hr.system.p0003.vo.ClassCodeVO"  alias="classCodeVO" />
 		
+<<<<<<< HEAD
 		<typeAlias type="hr.pay.p0001.vo.TA_inputVO"  alias="TA_inputVO" />
 		
+=======
+>>>>>>> refs/remotes/origin/master
 		<!-- 인사코드 -->
 		<typeAlias alias="insaCodeVO" type="hr.system.p0001.vo.InsaCodeVO"/>
 		

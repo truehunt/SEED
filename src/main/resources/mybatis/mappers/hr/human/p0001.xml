@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.human.p0001">
+	<resultMap id="cardResult01" type="cardVO">
+		<result property="pk_PERSON_BC_CODE_NUM" column="pk_PERSON_BC_CODE_NUM" />
+		<result property="person_BC_OUTPUT" column="person_BC_OUTPUT" />
+		<result property="person_BC_MNGEMENT_NAME" column="person_BC_MNGEMENT_NAME" />
+		<result property="person_BC_MODIFY_WHE" column="person_BC_MODIFY_WHE" />
+		<result property="person_BC_INT_USER_ID" column="person_BC_INT_USER_ID" />
+		<result property="person_BC_INT_DATE" column="person_BC_INT_DATE" />
+		<result property="person_BC_MOD_USER_ID" column="person_BC_MOD_USER_ID" />
+		<result property="person_BC_MOD_DATE" column="person_BC_MOD_DATE" />
+	</resultMap>
+
+	<select id="searchList" resultMap="cardResult01" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select PK_PERSON_BC_CODE_NUM, PERSON_BC_MNGEMENT_NAME, PERSON_BC_MODIFY_WHE
+         	from   PERSON_BC
+      	]]>
+		<where>
+			<if test="person_BC_OUTPUT != '' and person_BC_OUTPUT != null">
+				person_BC_OUTPUT = #{person_BC_OUTPUT}
+			</if>
+		</where>
+	</select>
+	
+	<select id="outPut" resultMap="cardResult01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select PK_PERSON_BC_CODE_NUM, PERSON_BC_MNGEMENT_NAME, PERSON_BC_MODIFY_WHE
+         from   PERSON_BC
+      ]]>
+		<where>
+			<if test="person_BC_OUTPUT != '' and person_BC_OUTPUT != null">
+				person_BC_OUTPUT = #{person_BC_OUTPUT}
+			</if>
+		</where>
+		<![CDATA[
+			ORDER BY pk_PERSON_BC_CODE_NUM asc
+		]]>
+	</select>
+	
+	<select id="deTai" resultMap="cardResult01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select PK_PERSON_BC_DETAI_CODE_NUM, PERSON_BC_DETAI_MNGEMENT_NAME, PERSON_BC_DETAI_REMARKS, PERSON_BC_DETAI_NOT_USE, fk_PERSON_BC_CODE_NUM
+         from   PERSON_BC_DETAI
+      ]]>
+		<where>
+			<if test="fk_PERSON_BC_CODE_NUM != '' and fk_PERSON_BC_CODE_NUM != null">
+				fk_PERSON_BC_CODE_NUM = #{fk_PERSON_BC_CODE_NUM}
+			</if>
+		</where>
+	</select>
+
+	<update id="updateData" parameterType="java.util.Map">
+		update PERSON_BC_DETAI
+		set  pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM,jdbcType=VARCHAR}
+		   , person_BC_DETAI_MNGEMENT_NAME = #{person_BC_DETAI_MNGEMENT_NAME,jdbcType=VARCHAR}
+		   , person_BC_DETAI_REMARKS = #{person_BC_DETAI_REMARKS,jdbcType=VARCHAR}
+		   , person_BC_DETAI_NOT_USE = #{person_BC_DETAI_NOT_USE,jdbcType=VARCHAR}
+		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertData" parameterType="java.util.Map">
+		insert into PERSON_BC_DETAI(PK_PERSON_BC_DETAI_CODE_NUM, PERSON_BC_DETAI_MNGEMENT_NAME, PERSON_BC_DETAI_REMARKS, PERSON_BC_DETAI_NOT_USE, FK_PERSON_BC_CODE_NUM) 
+		values(#{pk_PERSON_BC_DETAI_CODE_NUM,jdbcType=VARCHAR}, #{person_BC_DETAI_MNGEMENT_NAME,jdbcType=VARCHAR}, #{person_BC_DETAI_REMARKS,jdbcType=VARCHAR}, #{person_BC_DETAI_NOT_USE,jdbcType=VARCHAR},#{fk_PERSON_BC_CODE_NUM, jdbcType=VARCHAR})
+	</insert>	
+	
+	<delete id="deleteData" parameterType="java.util.Map">
+		delete PERSON_BC_DETAI
+		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM}
+	</delete>	
+
+</mapper>

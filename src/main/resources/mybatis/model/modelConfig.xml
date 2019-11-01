@@ -20,5 +20,14 @@
 		<typeAlias type="hr.system.p0003.vo.SchVO"  alias="schVO" />
 		<typeAlias type="hr.system.p0003.vo.CodeVO"  alias="codeVO" />
 		<typeAlias type="hr.system.p0003.vo.ClassCodeVO"  alias="classCodeVO" />
+		
+		<typeAlias type="hr.pay.p0001.vo.TA_inputVO"  alias="TA_inputVO" />
+		
+		<!-- 인사코드 -->
+		<typeAlias alias="insaCodeVO" type="hr.system.p0001.vo.InsaCodeVO"/>
+		
+		<!-- 인사카드 -->
+		<typeAlias alias="cardVO" type="hr.human.p0001.vo.CardVO"/>
+		
 	</typeAliases> 
 </configuration>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="hr.pay.p0001">
+	<resultMap id="TA_inputResult01" type="TA_inputVO">
+		<result property="fk_TA_SAWON_CODE" column="fk_TA_SAWON_CODE"/>
+		<result property="ta_SAWON_NAME" column="ta_SAWON_NAME"/>
+		<result property="ta_ATTRIBUTION" column="ta_ATTRIBUTION"/>
+		<result property="ta_PAYMENTDAY" column="ta_PAYMENTDAY"/>
+		<result property="ta_INQUIRY_CONDITION" column="ta_INQUIRY_CONDITION"/>
+		<result property="pk_TA_WORKPLACE_CODE" column="pk_TA_WORKPLACE_CODE"/>
+		<result property="ta_DIVI" column="ta_DIVI"/>
+		<result property="ta_DAY" column="ta_DAY"/>
+		<result property="ta_HOUR" column="ta_HOUR"/>
+		
+	</resultMap>
+	
+	
+		<resultMap id="TA_inputResult02" type="TA_inputVO">
+		      <result property="fk_TA_SAWON_CODE" column="fk_TA_SAWON_CODE"/>
+		      <result property="ta_DIVI" column="ta_DIVI"/>
+		      <result property="ta_DAY" column="ta_DAY"/>
+		      <result property="ta_HOUR" column="ta_HOUR"/>
+			  <result property="pk_TOTAL_CODE" column="pk_TOTAL_CODE"/>
+		
+		
+	
+	</resultMap>
+	
+	
+	
+	
+	
+	<select id="searchList" resultMap="TA_inputResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select fk_ta_sawon_code, ta_sawon_name
+			from TA
+			
+		]]>
+		<where>
+			<if test="TA_ATTRIBUTION != null">
+				      and TA_ATTRIBUTION = #{TA_ATTRIBUTION}
+			</if>
+				<if test="TA_PAYMENTDAY != null">
+				      and TA_PAYMENTDAY = #{TA_PAYMENTDAY}
+			</if>
+				<if test="TA_INQUIRY_CONDITION != null">
+				      and TA_INQUIRY_CONDITION = #{TA_INQUIRY_CONDITION}
+			</if>
+				<if test="PK_TA_WORKPLACE_CODE != null">
+				      and PK_TA_WORKPLACE_CODE = #{PK_TA_WORKPLACE_CODE}
+			</if>
+			
+		</where>
+	</select>
+	
+	
+	
+	<select id="searchList2" resultMap="TA_inputResult02" parameterType="java.util.Map">
+		<![CDATA[
+			select fk_ta_sawon_code, ta_divi, ta_day, ta_hour
+			from TA_TOTAL
+		]]>
+		<where>
+			<if test="FK_TA_SAWON_CODE != null">
+				      and FK_TA_SAWON_CODE = #{FK_TA_SAWON_CODE}
+			</if>
+		
+		</where>
+	</select>
+	
+	
+	
+	<update id="updateData" parameterType="java.util.Map">
+		update TA_TOTAL
+		set   PK_TOTAL_CODE = #{pk_TOTAL_CODE, jdbcType=VARCHAR}
+		    , FK_TA_SAWON_CODE = #{fk_TA_SAWON_CODE, jdbcType=VARCHAR}
+		    , TA_DIVI = #{ta_DIVI, jdbcType=VARCHAR}
+			, TA_DAY = #{ta_DAY, jdbcType=VARCHAR}
+			, TA_HOUR = #{ta_HOUR, jdbcType=VARCHAR}
+			
+		where PK_TOTAL_CODE = #{pk_TOTAL_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertData" parameterType="java.util.Map">
+		
+		insert into TA_TOTAL(PK_TOTAL_CODE, FK_TA_SAWON_CODE, TA_DIVI, TA_DAY, TA_HOUR) values(#{pk_TOTAL_CODE, jdbcType=VARCHAR},#{fk_TA_SAWON_CODE, jdbcType=VARCHAR}, #{ta_DIVI, jdbcType=VARCHAR}, #{ta_DAY, jdbcType=VARCHAR}, #{ta_HOUR, jdbcType=VARCHAR})
+	
+	</insert>	
+	
+	<delete id="deleteData" parameterType="java.util.Map">
+	     delete TA_TOTAL
+	 
+		 where TRIM(pk_TOTAL_CODE) = #{pk_TOTAL_CODE, jdbcType=VARCHAR}
+	</delete>
+</mapper>

@@ -77,8 +77,11 @@
 		<beans:property name="maxUploadSize" value="52428800" />
 		<beans:property name="maxInMemorySize" value="1000000" />
 		<beans:property name="defaultEncoding" value="utf-8" />
-	</beans:bean>	
-	
+	</beans:bean>
 
+	<beans:bean id = "uploadPath" class="java.lang.String">
+		<beans:constructor-arg	value="C:\gitwork\SEED\src\main\webapp\resources\image">
+	</beans:constructor-arg>
+</beans:bean>
  
 </beans:beans>

@@ -75,8 +75,8 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/signListTobe";
 		            } else if(url === "signListTo"){ // 결재 할(한) 문서 - 진행중, 완료
 		            	urlToGo = "/SEED/signListTo";
-		            } else if(url === "ff"){
-		            	urlToGo = "ff";
+		            } else if(url === "pay/p0001/TA_input.do"){
+		            	urlToGo = "pay/p0001/TA_input.do";
 		            } else if(url === "gg"){
 		            	urlToGo = "gg";
 		            } else if(url === "hh"){
@@ -101,6 +101,10 @@ $(document).ready(function(){
 		            	urlToGo = "b5";
 		            } else if(url === "b6"){
 		            	urlToGo = "b6";
+		            }	else if(url === "code"){ // 인사기초코드 등록
+		            	urlToGo = "/SEED/system/p0001/insa_code.do"
+		            } else if(url === "card"){	// 인사기록카드
+		            	urlToGo = "/SEED/human/p0001/insa_card.do"
 		            }
 	
 		            Tab = elId.findTabId(id);
@@ -281,7 +285,7 @@ $(document).ready(function(){
                             <a href="#"><i class="fa fa-edit fa-fw"></i> 급여/퇴직정산관리<span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'근태결과입력','chart','jj','jj'); return false">근태결과입력</a>
+                                    <a href='#'  onClick="doAction(myTab,'근태결과입력','chart','pay/p0001/ibsheet.do','pay/p0001/TA_input.do'); return false">근태결과입력</a>
                                 </li>
                                 <li>
                                     <a href='#' onClick="doAction(myTab,'급여입력 및 계산','chart','kk','kk'); return false">급여입력 및 계산</a>
@@ -335,7 +339,7 @@ $(document).ready(function(){
 	                                    <a href='#' onClick="doAction(myTab,'인사/급여환경설정','chart','vv','vv'); return false">인사/급여환경설정</a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'인사기초코드등록','chart','ww','ww'); return false">인사기초코드등록</a>
+	                                    <a href='#' onClick="doAction(myTab,'인사기초코드등록','chart','code','code'); return false">인사기초코드등록</a>
 	                                </li>
 	                            </ul>
 	                        </li>
@@ -343,7 +347,7 @@ $(document).ready(function(){
 	                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> 인사관리<span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'인사기록카드','chart','xx','xx'); return false">인사기록카드</a>
+	                                    <a href='#' onClick="doAction(myTab,'인사기록카드','chart','card','card'); return false">인사기록카드</a>
 	                                </li>
 	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'인사정보등록','chart','yy','yy'); return false">인사정보등록</a>

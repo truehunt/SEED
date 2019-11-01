@@ -41,20 +41,20 @@
       mySheet2.SetConfig(cfg); 
       
       var header = [
-    	  {Text:"근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계",Align:"Center"},
-    	  {Text:"NO|상태|삭제|사원코드|구분|일수|시간",Align:"Center"}
-    	  ];  
+         {Text:"근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계",Align:"Center"},
+         {Text:"NO|상태|삭제|사원코드|구분|일수|시간",Align:"Center"}
+         ];  
       var info = {Sort:0,ColMove:1,ColResize:1};  
       mySheet2.InitHeaders(header,info);  
       
       var cols = [   
-		  {Header:"NO",Type:"Seq",Width:20,SaveName:"pk_TOTAL_CODE", Align:"Center"},
-		  {Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
-    	  {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
+        {Header:"NO",Type:"Seq",Width:20,SaveName:"pk_TOTAL_CODE", Align:"Center"},
+        {Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
+         {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
           {Header:"사원코드",Type:"Text",SaveName:"fk_TA_SAWON_CODE",Width:50,Align:"Center"},
-    	  {Header:"구분",Type:"Combo", RowSpan:1,SaveName:"ta_DIVI", ComboText:"평일정상근무일|토일정상근무일|주휴정상근무일|유휴정상근무일|무휴정상근무일", ComboCode:"평일정상근무일|토일정상근무일|주휴정상근무일|유휴정상근무일|무휴정상근무일"},          
-    	  {Header:"일수",Type:"AutoSum",SaveName:"ta_DAY", MinWidth:10, Align: "Center"},
-    	  {Header:"시간",Type:"AutoSum",SaveName:"ta_HOUR", MinWidth:10, Align: "Center"}
+         {Header:"구분",Type:"Combo", RowSpan:1,SaveName:"ta_DIVI", ComboText:"평일정상근무일|토일정상근무일|주휴정상근무일|유휴정상근무일|무휴정상근무일", ComboCode:"평일정상근무일|토일정상근무일|주휴정상근무일|유휴정상근무일|무휴정상근무일"},          
+         {Header:"일수",Type:"AutoSum",SaveName:"ta_DAY", MinWidth:10, Align: "Center"},
+         {Header:"시간",Type:"AutoSum",SaveName:"ta_HOUR", MinWidth:10, Align: "Center"}
    
           ]; 
       mySheet2.InitColumns(cols); 
@@ -294,32 +294,29 @@ function mySheet_OnSaveEnd(code,msg){
          <br>      <br>
          
          <div>
-                 
-          <form name="thisform1" onsubmit="return false;">
+            <br>
+          <form name="thisform1" onsubmit="return false;" style="width:50%; float:left;">
            귀속연월&ensp;<input type="text" id="attribute" size="20">
                <input type="image" name="submit" onclick="javascript:search1()" src="${pageContext.request.contextPath}/resources/image/searchbutton.png">
                    </form>
-                       &emsp;&emsp; 
-                   
-                   <form name="thisform2" onsubmit="return false;" > 
-               지급일&ensp;<input type="text" id="payday" size="20">
+                   <form name="thisform2" onsubmit="return false;" style="width:50%; float:left;"> 
+               지급일&ensp;<input type="text" id="payday" size="20" >
                <input type="image" name="submit" onclick="javascript:search2()" src="${pageContext.request.contextPath}/resources/image/searchbutton.png">
                               </form>  
       
-         <br><br>
-         
-          
-              &emsp;&emsp;&emsp;&emsp;&emsp;조회조건&ensp;<select name="inquiry" id="inquiry">
+         <br><br><br><br>
+        
+          조회조건&ensp;<select name="inquiry" id="inquiry">
                       <option value="사업장">사업장</option>
                        <option value="부서">부서</option>
                            </select>
-         &ensp;&emsp;&emsp; &emsp;&emsp; &emsp; &emsp;&emsp;&emsp;
-   
+         &emsp;&ensp;&emsp;&emsp; &emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+    <form style="width:50%; float:right;">
                      사업장&ensp;<select name="workplace" id="workplace">
                       <option value="본사">본사</option>
                        <option value="대리점">대리점</option>
                            </select>             
-                  
+                  </form>
              
              
          
@@ -335,15 +332,15 @@ function mySheet_OnSaveEnd(code,msg){
       <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
               <DIV class="ib_product" style="width:100%;float:left">
-				<div style="height:100%;width:45%;float:left">
-					<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); </script>
-				</div>
-			
-				
-				<div style="height:100%;width:45%;float:left">
-					<script type="text/javascript"> createIBSheet("mySheet2", "100%", "100%"); </script>
-				</div>
-			</div>
+            <div style="height:100%;width:45%;float:left">
+               <script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); </script>
+            </div>
+         
+            
+            <div style="height:100%;width:45%;float:left">
+               <script type="text/javascript"> createIBSheet("mySheet2", "100%", "100%"); </script>
+            </div>
+         </div>
                
       
         

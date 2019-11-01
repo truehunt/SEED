@@ -44,6 +44,8 @@ function fn_formSubmit(){
 
 <body>
 
+	<div align=center><img src="images/SEED.png" style="position:absoulte; margin-top:150px; margin-left: auto; margin-right: auto;"/></div>
+
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">

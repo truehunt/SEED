@@ -48,7 +48,7 @@ function fn_formSubmit(){
         <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 결제 받을(은) 문서</h1>
+                    <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 개인문서함</h1>
                 </div>
             </div>
 

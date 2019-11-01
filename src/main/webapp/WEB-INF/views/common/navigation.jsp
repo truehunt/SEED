@@ -234,10 +234,10 @@ $(document).ready(function(){
                                     <a href='#' onClick="doAction(myTab,'기안하기','chart','signDocTypeList','signDocTypeList'); return false">기안하기</a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'결재 받을(은) 문서','chart','signListTobe','signListTobe'); return false">결재 받을(은) 문서</a>
+                                    <a href='#' onClick="doAction(myTab,'개인문서함','chart','signListTobe','signListTobe'); return false">개인문서함</a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'결재 할(한) 문서','chart','signListTo','signListTo'); return false">결재 할(한) 문서</a>
+                                    <a href='#' onClick="doAction(myTab,'결재문서함','chart','signListTo','signListTo'); return false">결재문서함</a>
                                 </li>
                                 <li>
                                     <a href='#' onClick="doAction(myTab,'발신문서함','chart','b2','b2'); return false">발신문서함</a>

@@ -30,5 +30,8 @@
 		<!-- 인사카드 -->
 		<typeAlias alias="cardVO" type="hr.human.p0001.vo.CardVO"/>
 		
+		<!-- 등록정보관리 - 회사등록 -->
+		<typeAlias alias="comEnroll_VO" type="hr.human.s0001.vo.ComEnroll_VO"/>
+		
 	</typeAliases> 
 </configuration>

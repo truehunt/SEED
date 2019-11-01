@@ -75,7 +75,7 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/signListTobe";
 		            } else if(url === "signListTo"){ // 결재 할(한) 문서 - 진행중, 완료
 		            	urlToGo = "/SEED/signListTo";
-		            } else if(url === "pay/p0001/TA_input.do"){
+		            } else if(url === "pay/p0001/TA_input.do"){ // 근태 결과 입력
 		            	urlToGo = "pay/p0001/TA_input.do";
 		            } else if(url === "gg"){
 		            	urlToGo = "gg";
@@ -87,8 +87,8 @@ $(document).ready(function(){
 		            	urlToGo = "a7";
 		            } else if(url === "a8"){
 		            	urlToGo = "a8";
-		            } else if(url === "a9"){
-		            	urlToGo = "a9";
+		            } else if(url === "adcompany_Enroll"){ // 등록정보관리 - 회사등록
+		            	urlToGo = "/SEED/human/s0001/company_Enroll.do";
 		            } else if(url === "b1"){
 		            	urlToGo = "b1";
 		            } else if(url === "b2"){
@@ -312,6 +312,9 @@ $(document).ready(function(){
 	                        <li>
 	                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> 등록정보관리<span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
+	                                <li>
+	                                    <a href='#' onClick="doAction(myTab,'회사등록','chart','adcompany_Enroll','adcompany_Enroll'); return false">회사등록</a>
+	                                </li>
 	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'사업장등록','chart','pp','pp'); return false">사업장등록</a>
 	                                </li>

@@ -145,9 +145,9 @@ function SSREPEATTYPEChange(){
 	                            <div class="col-lg-1">
 		                           	<select id="SSSTARTHOUR" name="SSSTARTHOUR" class="form-control">
 										<c:forEach var="item" begin="1" end="24">
-											<c:set var="sshour" value="0${item}"/>
-											<c:set var="sshour" value="${fn:substring(sshour, fn:length(sshour)-2, 3)}"/>
-			                           		<option value="${sshour}" <c:if test='${sshour==schInfo.SSSTARTHOUR}'>selected</c:if>>${sshour}</option>
+											<c:set var="SSHOUR" value="0${item}"/>
+											<c:set var="SSHOUR" value="${fn:substring(SSHOUR, fn:length(SSHOUR)-2, 3)}"/>
+			                           		<option value="${SSHOUR}" <c:if test='${SSHOUR==schInfo.SSSTARTHOUR}'>selected</c:if>>${SSHOUR}</option>
 									 	</c:forEach>
 									</select>						 
 								 </div>  
@@ -164,9 +164,9 @@ function SSREPEATTYPEChange(){
 	                            <div class="col-lg-1">
 		                           	<select id="SSENDHOUR" name="SSENDHOUR" class="form-control">
 										<c:forEach var="item" begin="1" end="24">
-											<c:set var="sshour" value="0${item}"/>
-											<c:set var="sshour" value="${fn:substring(sshour, fn:length(sshour)-2, 3)}"/>
-			                           		<option value="${sshour}" <c:if test='${sshour==schInfo.SSENDHOUR}'>selected</c:if>>${sshour}</option>
+											<c:set var="SSHOUR" value="0${item}"/>
+											<c:set var="SSHOUR" value="${fn:substring(SSHOUR, fn:length(SSHOUR)-2, 3)}"/>
+			                           		<option value="${SSHOUR}" <c:if test='${SSHOUR==schInfo.SSENDHOUR}'>selected</c:if>>${SSHOUR}</option>
 									 	</c:forEach>
 									</select>						
 								 </div>

@@ -50,7 +50,7 @@ public class IndexCtr {
     }
     
     /**
-     * main page - calendar  
+     * main page - calendar, chart  
      */
     @RequestMapping(value = "/indexCalen")
     public String indexCalen(HttpServletRequest request, ModelMap modelMap) {
@@ -61,6 +61,10 @@ public class IndexCtr {
 
         calCalen(userno, today, modelMap);
         
+        // -----------------------------------------
+        // 차트사용
+        List<?> listview = indexSvc.selectBoardGroupCount4Statistic();
+        modelMap.addAttribute("listview", listview);
         
         // List<?> listview = indexSvc.selectRecentNews();
         // List<?> noticeList = indexSvc.selectNoticeListTop5();
@@ -80,7 +84,7 @@ public class IndexCtr {
     @RequestMapping(value = "/moveDate")
     public String moveDate(HttpServletRequest request, ModelMap modelMap) {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
-        String date = request.getParameter("DATE");
+        String date = request.getParameter("date");
 
         Date today = Util4calen.getToday(date);
         

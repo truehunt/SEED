@@ -14,9 +14,14 @@ public class IndexSvc {
     @Autowired
     private SqlSessionTemplate sqlSession;    
         
-
+    // 인덱스 달력
     public List<?> selectSchList4Calen(Field3VO param) {
         return sqlSession.selectList("selectSchList4Calen", param);
+    }
+    
+    // 인덱스 차트
+    public List<?> selectBoardGroupCount4Statistic() {
+        return sqlSession.selectList("selectBoardGroupCount4Statistic");
     }
     
 }

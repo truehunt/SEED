@@ -46,7 +46,7 @@ function calendarDayMouseover(event, ssno, cddate){
     $.ajax({
     	url: "schRead4Ajax",
     	cache: false,
-    	data: { ssno : ssno, cddate:cddate },
+    	data: { ssno : FK_SSNO, cddate:CDDATE },
 	    success: function(result){
 	    	$(".calendarTooltip").html(result);
 		}    

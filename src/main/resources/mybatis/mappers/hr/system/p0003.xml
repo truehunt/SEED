@@ -213,5 +213,13 @@
         DELETE FROM COM_CODE
          WHERE CLASSNO=#{CLASSNO} AND CODECD=#{CODECD}
     </delete>
+    
+    <!-- chart -->
+    <select id="selectBoardGroupCount4Statistic" resultType="project.common.CountVO" >
+        SELECT DOCTYPE_DTTITLE as FIELD1, COUNT(*) as CNT1 
+          FROM DOCTYPE
+         WHERE DOCTYPE_DELETEFLAG='N'
+         GROUP BY DOCTYPE_DTTITLE
+    </select> 
 
 </mapper>

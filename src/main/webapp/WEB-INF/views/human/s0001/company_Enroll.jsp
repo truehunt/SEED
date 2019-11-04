@@ -91,29 +91,27 @@
 			{Header:"구분", Type:"Combo", MinWidth:80, SaveName:"company_division",Edit: 1, Align:"Center",KeyField:1
 						, ComboText:"0. 법인|1. 개인" 
 						, ComboCode:"A00|A01"},
-		/*
-			{Header:"회계년도1",Type:"Date",SaveName:"company_fiscal_year_o",MinWidth:100,Algn:"Center"},
-			{Header:"회계년도2",Type:"Date",SaveName:"company_fiscal_year_t",MinWidth:100,Algn:"Center"},
-			{Header:"사업자등록번호",Type:"Text",SaveName:"company_reg_num",MinWidth:100,Algn:"Center"},
-			{Header:"법인등록번호",Type:"Text",SaveName:"company_corp_reg_num",MinWidth:100,Algn:"Center"},
-			{Header:"대표자성명",Type:"Text",SaveName:"company_rep_name",MinWidth:100,Algn:"Center"},
-			{Header:"외국인여부",Type:"Text",SaveName:"company_foreigner_whe",MinWidth:100,Algn:"Center"},
-			{Header:"주민등록번호",Type:"Text",SaveName:"company_resi_reg_num",MinWidth:100,Algn:"Center"},
-			{Header:"본점우편번호",Type:"Text",SaveName:"company_zip",MinWidth:100,Algn:"Center"},
-			{Header:"본점주소",Type:"Text",SaveName:"company_address",MinWidth:100,Algn:"Center"},
-			{Header:"본점상세주소",Type:"Text",SaveName:"company_detail_address",MinWidth:100,Algn:"Center"},			
-			{Header:"본점전화번호",Type:"Text",SaveName:"company_tel",MinWidth:100,Algn:"Center"},
-			{Header:"본점FAX",Type:"Text",SaveName:"company_fax",MinWidth:100,Algn:"Center"},
-			{Header:"업태",Type:"Text",SaveName:"company_business",MinWidth:100,Algn:"Center"},
-			{Header:"종목",Type:"Text",SaveName:"company_stocks",MinWidth:100,Algn:"Center"},
-			{Header:"설립연월일",Type:"Date", Align:"Center", SaveName:"company_establishment_date", Format:"", MinWidth:110},
-			{Header:"개업연월일",Type:"Date", Align:"Center", SaveName:"company_open_date", Format:"", MinWidth:110},
-			{Header:"폐업연월일",Type:"Date", Align:"Center", SaveName:"company_closed_date", Format:"", MinWidth:110},
-			{Header:"입력자",Type:"Text",SaveName:"company_int_user_id",MinWidth:100,Algn:"Center" },
-			{Header:"입력일시",Type:"Text",SaveName:"company_int_date",MinWidth:100,Algn:"Center", Format:""},
-			{Header:"수정자",Type:"Text",SaveName:"company_mod_user_id",MinWidth:100,Algn:"Center" },
-			{Header:"수정일시",Type:"Text",SaveName:"company_mod_date",MinWidth:100,Algn:"Center", Format:"" },
-		*/
+			{Header:"회계년도1",Type:"Date",SaveName:"company_fiscal_year_o", Hidden:1},
+			{Header:"회계년도2",Type:"Date",SaveName:"company_fiscal_year_t", Hidden:1},
+			{Header:"사업자등록번호",Type:"Text",SaveName:"company_reg_num", Hidden:1},
+			{Header:"법인등록번호",Type:"Text",SaveName:"company_corp_reg_num", Hidden:1},
+			{Header:"대표자성명",Type:"Text",SaveName:"company_rep_name", Hidden:1},
+			{Header:"외국인여부",Type:"Text",SaveName:"company_foreigner_whe", Hidden:1},
+			{Header:"주민등록번호",Type:"Text",SaveName:"company_resi_reg_num", Hidden:1},
+			{Header:"본점우편번호",Type:"Text",SaveName:"company_zip", Hidden:1},
+			{Header:"본점주소",Type:"Text",SaveName:"company_address", Hidden:1},
+			{Header:"본점상세주소",Type:"Text",SaveName:"company_detail_address", Hidden:1},			
+			{Header:"본점전화번호",Type:"Text",SaveName:"company_tel", Hidden:1},
+			{Header:"본점FAX",Type:"Text",SaveName:"company_fax", Hidden:1},
+			{Header:"업태",Type:"Text",SaveName:"company_business", Hidden:1},
+			{Header:"종목",Type:"Text",SaveName:"company_stocks", Hidden:1},
+			{Header:"설립연월일",Type:"Date", Align:"Center", SaveName:"company_establishment_date", Format:"", Hidden:1},
+			{Header:"개업연월일",Type:"Date", Align:"Center", SaveName:"company_open_date", Format:"", Hidden:1},
+			{Header:"폐업연월일",Type:"Date", Align:"Center", SaveName:"company_closed_date", Format:"", Hidden:1},
+			{Header:"입력자",Type:"Text",SaveName:"company_int_user_id", Hidden:1},
+			{Header:"입력일시",Type:"Text",SaveName:"company_int_date", Format:"", Hidden:1},
+			{Header:"수정자",Type:"Text",SaveName:"company_mod_user_id", Hidden:1},
+			{Header:"수정일시",Type:"Text",SaveName:"company_mod_date",Format:"", Hidden:1},
 		];  
 		//sheet 초기화
 		IBS_InitSheet( mySheet , initSheet);
@@ -122,48 +120,30 @@
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
 	}
-	
-	//onClick 이벤트 
+		
+	//onClick 이벤트
+	 var t_row = 0;
 	 function mySheet_OnClick(row, col, value, cellx, celly, cellw, cellh) {
-
-      if (row == null || row < 0) return;
-	  
-      var pk = mySheet.GetCellValue(row,2);
-      
-      $.ajax({
-         url:"${contextPath}/human/s0001/comEnrollView.do",
-         data:{"pk":pk},
-         dataType:"json",
-         type:"post",
-         success:function(res){
-			
-	        	$("#company_fiscal_year_o").val(res.Data[0]['company_fiscal_year_o']) //회계년도 1
-	            $("#company_fiscal_year_t").val(res.Data[0]['company_fiscal_year_t']) //회계년도 2
-	            $("#company_reg_num").val(res.Data[0]['company_reg_num']) //사업자등록번호
-	            $("#company_corp_reg_num").val(res.Data[0]['company_corp_reg_num']) //법인 등록번호
-	            $("#company_rep_name").val(res.Data[0]['company_rep_name']) //대표자 성명
-	            $("#company_foreigner_whe").val(res.Data[0]['company_foreigner_whe']) //외국인 여부
-	            $("#company_resi_reg_num").val(res.Data[0]['company_resi_reg_num']) //주민등록번호
-	            $("#company_zip").val(res.Data[0]['company_zip']) // 본점 우편번호
-	            $("#company_address").val(res.Data[0]['company_address']) //본점 주소
-	            $("#company_detail_address").val(res.Data[0]['company_detail_address']) //본점 상세주소
-	            $("#company_tel").val(res.Data[0]['company_tel']) //본점 전화번호
-	            $("#company_fax").val(res.Data[0]['company_fax']) //본점 fax
-	            $("#company_business").val(res.Data[0]['company_business']) //업태
-	            $("#company_stocks").val(res.Data[0]['company_stocks']) //종목
-	            $("#company_establishment_date").val(res.Data[0]['company_establishment_date']) //설립연월일
-	            $("#company_open_date").val(res.Data[0]['company_open_date']) //개업연월일
-	            $("#company_closed_date").val(res.Data[0]['company_closed_date']) //폐업연월일
-
-         },
-         error:function(e){
-            console.log(e);
-         }
-         
-      })
-      
+	  t_row = row;
+      if (row == null || row < 0) return; // row가 null 이거나 0보다 작으면 바로 리턴
+     
+      var pk = mySheet.GetCellValue(row,2); // 마우스로 클릭한 셀의 value를 가져와서 pk에 저장
+     
+      var colArr =  Object.keys(mySheet.rX); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 
+   											 // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
+   	  
+   	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
+	  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
+	  })
+ 
    }
-	
+	 
+	 $(document).on('change', 'input', function(e) {
+		  var colArr =  Object.keys(mySheet.rX);
+		  var colNum = colArr.indexOf(e.target.id);
+		  mySheet.SetCellValue(t_row, colNum ,e.target.value);
+	 });
+	 
 	/*Sheet 각종 처리*/
 	function doAction(sAction) {
 		switch(sAction) {
@@ -181,6 +161,7 @@
 				break;
 			case "save": // 저장
 				var tempStr = mySheet.GetSaveString();
+				tempStr += 
 				alert("서버로 전달되는 문자열 확인 :"+tempStr);
 				mySheet.DoSave("${contextPath}/human/s0001/insertData.do");
 				break;			
@@ -228,18 +209,23 @@
                 }
                 // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
                 if(extraRoadAddr !== ''){
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                    extraRoadAddr = '(' + extraRoadAddr + ')';
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('company_zip').value = data.zonecode; // 우편번호
+                mySheet.SetCellValue(t_row,12, data.zonecode);
+                
                 document.getElementById('company_address').value = roadAddr; // 도로명주소
-
+                mySheet.SetCellValue(t_row,13, roadAddr);
+                
                 // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
                 if(roadAddr !== ''){ // 상세주소
                     document.getElementById('company_detail_address').value = extraRoadAddr;
+                	mySheet.SetCellValue(t_row,14,extraRoadAddr); // 변경이 있으면 mysheet에 setCellValue를 써서 값 입력
                 } else {
                     document.getElementById('company_detail_address').value = '';
+                    mySheet.SetCellValue(t_row,14,"");
                 }
 
                 var guideTextBox = document.getElementById("guide");
@@ -249,8 +235,11 @@
                     guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
                     guideTextBox.style.display = 'block';
             	}
+                
+                
             }
         }).open();
+        
     } // 주소 api function end
 </script>
 </head>
@@ -290,8 +279,8 @@
 	   <tr>
 	   	<td align="right">회계 년도 : </td>
 	   		<td> 
-		   		<input type="text" name="company_fiscal_year_o" id="company_fiscal_year_o" size="12px" placeholder="_ _ _ _/_ _/_ _"> <a href=""><img src="${contextPath}/resources/ibsheet/Main/calendar.gif" alt="calendar_icon.png" /></a> 
-		   		     ~  <input type="text" name="company_fiscal_year_t" id="company_fiscal_year_t" size="12px" placeholder="_ _ _ _/_ _/_ _"> <a href=""><img src="${contextPath}/resources/ibsheet/Main/calendar.gif" alt="calendar_icon.png" /></a>
+		   		<input type="text" name="company_fiscal_year_o" id="company_fiscal_year_o" size="12px" placeholder="_ _ _ _/_ _/_ _"> <a href=""><img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' /> 
+		   		     ~  <input type="text" name="company_fiscal_year_t" id="company_fiscal_year_t" size="12px" placeholder="_ _ _ _/_ _/_ _"><img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
 	   		</td>
 	   </tr>
 	   <tr>
@@ -305,9 +294,9 @@
 	   </tr>
 	   <tr>
 	   	<td align="right">외국인여부 : </td><td> 
-	   				<select>
-	  					<option value="내국인" selected="selected" id="company_foreigner_whe" name="company_foreigner_whe">0.내국인</option>
-	  					<option value="외국인" id="company_foreigner_whe" name="company_foreigner_whe">1.외국인</option>
+	   				<select name='company_foreigner_whe'>
+	  					<option value='내국인' >0.내국인</option>
+	  					<option value='외국인' >1.외국인</option>
 	  				</select>
 	  	</td>
 	   </tr>
@@ -346,13 +335,13 @@
 	   <tr>
 	   	<td align="right">설립 연월일 : </td>
 	   		<td> <input type="text" name="company_establishment_date" id="company_establishment_date" size="12px" placeholder="_ _ _ _/_ _/_ _">
-	   			<a href=""><img src="${contextPath}/resources/ibsheet/Main/calendar.gif" alt="calendar_icon.png" /> </a> 
+	   			<img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' /> 
 	   		</td>
 	   </tr>
 	   <tr>
 	   	<td align="right">개업 연월일 : </td>
 	   		<td> <input type="text" name="company_open_date" id="company_open_date" size="12px" placeholder="_ _ _ _/_ _/_ _"> 
-	   			<a href=""><img src="${contextPath}/resources/ibsheet/Main/calendar.gif" alt="calendar_icon.png" /> </a>
+	   			<img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
 	   		</td>
 	   </tr>
 	   <tr>

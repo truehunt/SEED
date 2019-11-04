@@ -38,6 +38,27 @@ function fn_formSubmit(){
 	
 	$("#form1").submit();
 }
+
+function fn_FindPassword(){
+	$("#myModal").modal("show");
+}
+
+function fn_chkUserid(){
+	if ( ! chkInputValue("#PK_SAWON_CODE2", "사번")) return false;
+	if ( ! chkInputValue("#SAWON_EMAIL", "이메일주소")) return false;
+	
+	$.ajax({
+		url: "findPw", 
+		type:"post", 
+		data : {PK_SAWON_CODE: $("#PK_SAWON_CODE2").val(),
+				SAWON_EMAIL: $("#SAWON_EMAIL").val()
+		},
+		success: function(result){
+				alert(result);
+			}
+	})		
+}
+
 </script>
 
 </head>
@@ -64,8 +85,14 @@ function fn_formSubmit(){
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Y"  <c:if test='${PK_SAWON_CODE != null && PK_SAWON_CODE != ""}'>checked</c:if>>기억합니다
+                                        <input name="remember" type="checkbox" value="Y"  <c:if test='${PK_SAWON_CODE != null && PK_SAWON_CODE != ""}'>checked</c:if>>Remember
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        
                                     </label>
+                                </div>
+                                <div class="password">
+                                    	<a href="#" onclick="fn_FindPassword()">비밀번호찾기</a>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
                                 <a href="#" class="btn btn-lg btn-success btn-block" onclick="fn_formSubmit()">Login</a>
@@ -76,6 +103,46 @@ function fn_formSubmit(){
             </div>
         </div>
     </div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" id="closeX" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">비밀번호찾기</h4>
+                </div>
+                <div class="modal-body">
+                	<form id="form2" name="form2">
+                    	<div class="row form-group">
+                            <div class="col-lg-1"></div>
+                            <label class="col-lg-2">사번</label>
+                            <div class="col-lg-5">
+                            	<input type="text" class="form-control" id="PK_SAWON_CODE2" name="PK_SAWON_CODE2" maxlength="20">
+                            </div>
+                            <div class="col-lg-4">
+			                    <button type="button" class="btn btn-default" onclick="fn_chkUserid()">메일발송</button>
+                            </div>
+                        </div>
+                    	<div class="row form-group">
+                            <div class="col-lg-1"></div>
+                            <label class="col-lg-2">메일주소</label>
+                            <div class="col-lg-8">
+                            	<input type="text" class="form-control" id="SAWON_EMAIL" name="SAWON_EMAIL" maxlength="20">
+                            </div>
+                        </div>
+                	</form>        
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="close"><s:message code="common.btnClose"/></button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    
 </body>
 
 </html>

@@ -3,6 +3,7 @@ package hr.system.p0001.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.dao.DataAccessException;
@@ -21,4 +22,9 @@ public interface LoginService {
     public void insertLogIn(String param) throws DataAccessException;
 
     public void insertLogOut(String param) throws DataAccessException;
+
+	public void send_mail(SawonVO member, String div) throws Exception;
+
+	public void find_pw(HttpServletResponse response, SawonVO sawonVO) throws Exception;
+
 }

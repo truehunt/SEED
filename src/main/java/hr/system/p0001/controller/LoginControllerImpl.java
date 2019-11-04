@@ -25,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -105,6 +106,26 @@ public class LoginControllerImpl implements LoginController {
         session.removeAttribute("SAWON_NAME");        
         
         return "redirect:/login.do";
+    }
+    
+    /**
+     * 비밀번호 찾기
+     */
+    @RequestMapping(value = "/findPw") 
+       public void findPw(SawonVO sawonVO, HttpServletResponse response) throws Exception {
+        // String userno = request.getSession().getAttribute("userno").toString();
+        
+        // etcSvc.setCommonAttribute(userno, modelMap);
+        
+        // List<?> listview = deptSvc.selectDepartment();
+
+        // TreeMaker tm = new TreeMaker();
+        // String treeStr = tm.makeTreeByHierarchy(listview);
+        
+        // modelMap.addAttribute("treeStr", treeStr);
+        
+        // return "admin/organ/User";
+    	p0001Service.find_pw(response, sawonVO);
     }
     
     

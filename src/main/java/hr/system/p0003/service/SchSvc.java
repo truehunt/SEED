@@ -75,6 +75,7 @@ public class SchSvc {
             sqlSession.insert("deleteSchDetail", param.getSSNO());
 
             SchDetailVO param2 = new SchDetailVO();
+            param2.setPK_SAWON_CODE(param.getPK_SAWON_CODE());
             param2.setSSNO(param.getSSNO());
             param2.setSDHOUR(param.getSSSTARTHOUR());
             param2.setSDMINUTE(param.getSSSTARTMINUTE());

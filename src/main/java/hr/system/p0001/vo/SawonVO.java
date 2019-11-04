@@ -14,7 +14,7 @@ public class SawonVO {
 	private String SAWON_USER_STATUS;
 	private String SAWON_PASSWORD;
 	private String SAWON_VIEW_PERMISSION;
-	private String SAWON_EMERGENCY_CON_NET;
+	private String SAWON_EMAIL;
 	private String FK_DEPT_CODE;
 	private String SAWON_INT_USER_ID;
 	private String SAWON_INT_DATE;
@@ -89,12 +89,12 @@ public class SawonVO {
 		SAWON_VIEW_PERMISSION = sAWON_VIEW_PERMISSION;
 	}
 
-	public String getSAWON_EMERGENCY_CON_NET() {
-		return SAWON_EMERGENCY_CON_NET;
+	public String getSAWON_EMAIL() {
+		return SAWON_EMAIL;
 	}
 
-	public void setSAWON_EMERGENCY_CON_NET(String sAWON_EMERGENCY_CON_NET) {
-		SAWON_EMERGENCY_CON_NET = sAWON_EMERGENCY_CON_NET;
+	public void setSAWON_EMAIL(String sAWON_EMAIL) {
+		SAWON_EMAIL = sAWON_EMAIL;
 	}
 
 	public String getFK_DEPT_CODE() {

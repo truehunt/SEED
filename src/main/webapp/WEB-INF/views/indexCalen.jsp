@@ -153,6 +153,10 @@ function calendarDayMouseout(){
 }
 </script>
 
+<div id="wrapper">
+
+<div id="page-wrapper" style="margin: 0px;">
+	<div id="calenDiv" class="row">
      <div class="col-lg-12">
          <h1 class="page-header">
          <a href="javascript: fn_moveDate('<c:out value="${preWeek}"/>')"><i class="fa fa-angle-left fa-fw"></i></a>
@@ -190,6 +194,9 @@ function calendarDayMouseout(){
 		<div class="calenSlideButton calenSlideButton_left" onclick="ev_prevSlide()">&#10094;</div>
 		<div class="calenSlideButton calenSlideButton_right" onclick="ev_nextSlide()">&#10095;</div>
      </div>
+    </div>
+     
+     <div class="calendarTooltip"></div>
      
      <h1 class="page-header"> <i class="fa fa-tasks fa-fw"></i> 전자결재양식 현황</h1>
      <div class="row">
@@ -213,6 +220,11 @@ function calendarDayMouseout(){
 		<br>
 		전자결재 메인화면 내용도 여기에 들어갈 예정
      </div>
+     
+</div>
+     
+     
+</div>     
      
 
      

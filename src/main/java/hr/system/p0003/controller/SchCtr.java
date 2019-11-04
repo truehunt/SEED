@@ -101,7 +101,7 @@ public class SchCtr {
     @RequestMapping(value = "/schSave")
     public String schSave(HttpServletRequest request, SchVO schInfo, ModelMap modelMap) {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
-    	schInfo.setFK_SAWON_CODE(userno);
+    	schInfo.setPK_SAWON_CODE(userno);
     	
         schSvc.insertSch(schInfo);
 
@@ -116,7 +116,7 @@ public class SchCtr {
         SchVO schInfo = schSvc.selectSchOne4Read(schVO);
 
         modelMap.addAttribute("schInfo", schInfo);
-        modelMap.addAttribute("cddate", cddate);
+        modelMap.addAttribute("CDDATE", cddate);
         
         return "system/p0003/SchRead4Ajax";
     }
@@ -126,8 +126,9 @@ public class SchCtr {
     @RequestMapping(value = "/schRead")
     public String schRead(HttpServletRequest request, SchVO schVO, ModelMap modelMap) {
         // 페이지 공통: alert
-        String userno = request.getSession().getAttribute("FK_SAWON_CODE").toString();
+        String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
         
+        modelMap.addAttribute("PK_SAWON_CODE", userno);
         // etcSvc.setCommonAttribute(userno, modelMap);
         // 
         

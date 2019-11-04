@@ -2,7 +2,7 @@ package hr.system.p0003.vo;
 
 public class SchDetailVO {
 
-    private String  FK_SSNO,	 	//일정번호
+    private String  SSNO,	 	//일정번호
 				    SDDATE,		 //날짜
 				    SDHOUR,		 //시간
 				    SDMINUTE,	 //분
@@ -11,11 +11,12 @@ public class SchDetailVO {
 				    FONTCOLOR
     ;
     private Integer SDSEQ;		 //순번
-	public String getFK_SSNO() {
-		return FK_SSNO;
+    
+	public String getSSNO() {
+		return SSNO;
 	}
-	public void setFK_SSNO(String fK_SSNO) {
-		FK_SSNO = fK_SSNO;
+	public void setSSNO(String sSNO) {
+		SSNO = sSNO;
 	}
 	public String getSDDATE() {
 		return SDDATE;

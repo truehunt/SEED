@@ -12,23 +12,21 @@ public class SchVO {
 				    SSENDHOUR,			//종료일-시간
 				    SSENDMINUTE,		//종료일-분
 				    SSREPEATTYPE,		//반복
-				    SSREAEATTYPENM,
+				    SSREPEATTYPENM, 
 				    SSREPEATOPTION,		//반복 옵션- 주
 				    SSREPEATEND,		//반복종료
 				    SSCONTENTS,			//내용
 				    SSISOPEN,			//공개여부
-				    FK_SAWON_CODE,				//사용자번호
+				    PK_SAWON_CODE,				//사용자번호
 				    SAWON_NAME				
     ;
 
-    
-    
-	public String getFK_SAWON_CODE() {
-		return FK_SAWON_CODE;
+	public String getPK_SAWON_CODE() {
+		return PK_SAWON_CODE;
 	}
 
-	public void setFK_SAWON_CODE(String fK_SAWON_CODE) {
-		FK_SAWON_CODE = fK_SAWON_CODE;
+	public void setPK_SAWON_CODE(String pK_SAWON_CODE) {
+		PK_SAWON_CODE = pK_SAWON_CODE;
 	}
 
 	public String getSSNO() {
@@ -111,12 +109,12 @@ public class SchVO {
 		SSREPEATTYPE = sSREPEATTYPE;
 	}
 
-	public String getSSREAEATTYPENM() {
-		return SSREAEATTYPENM;
+	public String getSSREPEATTYPENM() {
+		return SSREPEATTYPENM;
 	}
 
-	public void setSSREAEATTYPENM(String sSREAEATTYPENM) {
-		SSREAEATTYPENM = sSREAEATTYPENM;
+	public void setSSREPEATTYPENM(String sSREPEATTYPENM) {
+		SSREPEATTYPENM = sSREPEATTYPENM;
 	}
 
 	public String getSSREPEATOPTION() {

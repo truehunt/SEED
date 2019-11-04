@@ -46,7 +46,7 @@ function calendarDayMouseover(event, ssno, cddate){
     $.ajax({
     	url: "schRead4Ajax",
     	cache: false,
-    	data: { ssno : FK_SSNO, cddate:CDDATE },
+    	data: { SSNO : ssno, CDDATE:cddate },
 	    success: function(result){
 	    	$(".calendarTooltip").html(result);
 		}    
@@ -63,7 +63,9 @@ function calendarDayMouseout(){
 <body>
 
     <div id="wrapper">
-
+    
+    
+		<div id="page-wrapper" style="margin: 0px;"> 
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><i class="fa fa-calendar fa-fw"></i> 월간 일정</h1>
@@ -113,14 +115,14 @@ function calendarDayMouseout(){
 			             		<a href="schForm?CDDATE=<c:out value="${listview.CDDATE}"/>"><c:out value="${listview.CDDD}"/></a>
 			             	</div>
 							<c:forEach var="items" items="${listview.LIST}" varStatus="status">
-				             	<div class="calendarDay" onmouseover="calendarDayMouseover(event, '<c:out value="${items.FK_SSNO}"/>', '<c:out value="${listview.CDDATE}"/>')" onmouseout="calendarDayMouseout()">
+				             	<div class="calendarDay" onmouseover="calendarDayMouseover(event, '<c:out value="${items.SSNO}"/>', '<c:out value="${listview.CDDATE}"/>')" onmouseout="calendarDayMouseout()">
 					             	<c:if test='${items.PK_SAWON_CODE==sessionScope.PK_SAWON_CODE}'> 
-					             		<a href="schForm?SSNO=<c:out value="${items.FK_SSNO}"/>&SDSEQ=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
+					             		<a href="schForm?SSNO=<c:out value="${items.SSNO}"/>&SDSEQ=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
 				             		</c:if>
-					             	<c:if test='${items.FK_SSNO!=null and items.userno!=sessionScope.PK_SAWON_CODE}'> 
-					             		<a href="schRead?SSNO=<c:out value="${items.FK_SSNO}"/>&SDSEQ=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
+					             	<c:if test='${items.SSNO!=null and items.PK_SAWON_CODE!=sessionScope.PK_SAWON_CODE}'> 
+					             		<a href="schRead?SSNO=<c:out value="${items.SSNO}"/>&SDSEQ=<c:out value="${items.SDSEQ}"/>"><c:out value="${items.SSTITLE}"/></a>
 				             		</c:if>
-					             	<c:if test='${items.FK_SSNO==null}'> 
+					             	<c:if test='${items.SSNO==null}'> 
 					             		<span style="color:<c:out value="${items.FONTCOLOR}"/>"><c:out value="${items.SSTITLE}"/></span>
 				             		</c:if>
 				             	</div>
@@ -138,6 +140,7 @@ function calendarDayMouseout(){
 			<p>&nbsp;</p>
 			<p>&nbsp;</p> 
             <!-- /.row -->
+           </div>
         <!-- /#page-wrapper -->
 
     </div>

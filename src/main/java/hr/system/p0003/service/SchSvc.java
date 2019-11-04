@@ -75,7 +75,7 @@ public class SchSvc {
             sqlSession.insert("deleteSchDetail", param.getSSNO());
 
             SchDetailVO param2 = new SchDetailVO();
-            param2.setFK_SSNO(param.getSSNO());
+            param2.setSSNO(param.getSSNO());
             param2.setSDHOUR(param.getSSSTARTHOUR());
             param2.setSDMINUTE(param.getSSSTARTMINUTE());
 

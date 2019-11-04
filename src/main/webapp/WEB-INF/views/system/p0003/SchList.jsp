@@ -33,7 +33,7 @@ function fn_formSubmit(){
 	document.form1.submit();	
 }
 
-var oldno = null;
+var oldno = null; 
 function calendarDayMouseover(event, ssno, cddate){
 	if (!ssno) {
 		return;

@@ -119,6 +119,7 @@
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
+		mySheet.DoSearch("${contextPath}/human/s0001/searchList.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 	}
 		
 	//onClick 이벤트

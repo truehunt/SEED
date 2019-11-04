@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.human.s0001">	
+	<resultMap id="s0001Result01" type="comEnroll_VO">
+		<result property="pk_company_code" column="pk_company_code" />
+		<result property="company_name" column="company_name" />
+		<result property="company_division" column="company_division" />
+		<result property="company_fiscal_year_o" column="company_fiscal_year_o" />
+		<result property="company_fiscal_year_t" column="company_fiscal_year_t" />
+		<result property="company_reg_num" column="company_reg_num" />
+		<result property="company_corp_reg_num" column="company_corp_reg_num" />
+		<result property="company_rep_name" column="company_rep_name" />
+		<result property="company_foreigner_whe" column="company_foreigner_whe" />
+		<result property="company_resi_reg_num" column="company_resi_reg_num" />
+		<result property="company_zip" column="company_zip" />
+		<result property="company_address" column="company_address" />
+		<result property="company_detail_address" column="company_detail_address" />
+		<result property="company_tel" column="company_tel" />
+		<result property="company_fax" column="company_fax" />
+		<result property="company_business" column="company_business" />
+		<result property="company_stocks" column="company_stocks" />
+		<result property="company_establishment_date" column="company_establishment_date" />
+		<result property="company_open_date" column="company_open_date" />
+		<result property="company_closed_date" column="company_closed_date" />
+		<result property="company_int_user_id" column="company_int_user_id" />
+		<result property="company_int_date" column="company_int_date" />
+		<result property="company_mod_user_id" column="company_mod_user_id" />
+		<result property="company_mod_date" column="company_mod_date" />
+		
+		<!-- company의 모든 칼럼 
+		pk_company_code, company_name, company_division ,company_fiscal_year_o ,company_fiscal_year_t ,company_reg_num
+		,company_corp_reg_num ,company_rep_name ,company_foreigner_whe ,company_resi_reg_num ,company_zip
+		,company_address ,company_detail_address ,company_tel ,company_fax ,company_business ,company_stocks ,company_establishment_date
+		,company_open_date ,company_closed_date ,company_int_user_id ,company_int_date ,company_mod_user_id
+		,company_mod_date
+		 -->
+	</resultMap>
+
+	<select id="searchList" resultMap="s0001Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select pk_company_code, company_name, company_division, TO_CHAR(TO_DATE(company_fiscal_year_o),'YYYY/MM/DD') as company_fiscal_year_o 
+         		, TO_CHAR(TO_DATE(company_fiscal_year_t),'YYYY/MM/DD') as company_fiscal_year_t, company_reg_num
+				, company_corp_reg_num, company_rep_name, company_foreigner_whe, company_resi_reg_num, company_zip
+				, company_address, company_detail_address, company_tel, company_fax, company_business, company_stocks 
+				, TO_CHAR(TO_DATE(company_establishment_date),'YYYY/MM/DD') as company_establishment_date
+				, TO_CHAR(TO_DATE(company_open_date),'YYYY/MM/DD') as company_open_date
+				, TO_CHAR(TO_DATE(company_closed_date),'YYYY/MM/DD') as company_closed_date
+				, company_int_user_id, company_int_date, company_mod_user_id, company_mod_date
+         from   company
+      ]]>
+		<where>
+			<if test=" p_id != ''  and  p_id != null">
+				pk_company_code = #{p_id}
+			</if>
+		</where>
+	</select>
+	
+	<select id="comEnrollView" resultMap="s0001Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select pk_company_code, TO_CHAR(TO_DATE(company_fiscal_year_o),'YYYY/MM/DD') as company_fiscal_year_o, TO_CHAR(TO_DATE(company_fiscal_year_t),'YYYY/MM/DD') as company_fiscal_year_t 
+         		, company_reg_num, company_corp_reg_num, company_rep_name, company_foreigner_whe, company_resi_reg_num, company_zip
+				, company_address, company_detail_address, company_tel, company_fax, company_business, company_stocks, TO_CHAR(TO_DATE(company_establishment_date,'YYYY/MM/DD') as company_establishment_date
+				, TO_CHAR(TO_DATE(company_open_date),'YYYY/MM/DD') as company_open_date, TO_CHAR(TO_DATE(company_closed_date,'YYYY/MM/DD') as company_closed_date, company_int_user_id 
+				, company_int_date,company_mod_user_id, company_mod_date
+         from   company
+      ]]>
+		<where>
+			<if test=" p_id != ''  and  p_id != null">
+				pk_company_code = #{p_id}
+			</if>
+		</where>
+	</select>
+
+	<update id="updateData" parameterType="java.util.Map">
+		update company
+		set company_name = #{company_name,jdbcType=VARCHAR}
+		   , company_division = #{company_division,jdbcType=VARCHAR}
+		   , company_fiscal_year_o = #{company_fiscal_year_o,jdbcType=VARCHAR}
+		   , company_fiscal_year_t = #{company_fiscal_year_t,jdbcType=VARCHAR}
+		   , company_reg_num = #{company_reg_num,jdbcType=VARCHAR}
+		   , company_corp_reg_num = #{company_corp_reg_num,jdbcType=VARCHAR}
+		   , company_rep_name = #{company_rep_name,jdbcType=VARCHAR}
+		   , company_foreigner_whe = #{company_foreigner_whe,jdbcType=VARCHAR}
+		   , company_resi_reg_num = #{company_resi_reg_num,jdbcType=VARCHAR}
+		   , company_zip = #{company_zip,jdbcType=VARCHAR}
+		   , company_address = #{company_address,jdbcType=VARCHAR}
+		   , company_detail_address = #{company_detail_address,jdbcType=VARCHAR}
+		   , company_tel = #{company_tel,jdbcType=VARCHAR}
+		   , company_fax = #{company_fax,jdbcType=VARCHAR}
+		   , company_business = #{company_business,jdbcType=VARCHAR}
+		   , company_stocks = #{company_stocks,jdbcType=VARCHAR}
+		   , company_establishment_date = #{company_establishment_date,jdbcType=VARCHAR}
+		   , company_open_date = #{company_open_date,jdbcType=VARCHAR}
+		   , company_closed_date = #{company_closed_date,jdbcType=VARCHAR}
+		   , company_int_user_id = #{company_int_user_id,jdbcType=VARCHAR}
+		   , company_int_date = #{company_int_date, jdbcType=TIMESTAMP} 
+		   , company_mod_user_id = #{company_mod_user_id,jdbcType=VARCHAR}
+		   , company_mod_date = #{company_mod_date, jdbcType=TIMESTAMP} 		   
+		where pk_company_code = #{pk_company_code, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertData" parameterType="java.util.Map">
+		insert into company(pk_company_code, company_name, company_division ,company_fiscal_year_o ,company_fiscal_year_t ,company_reg_num
+							  ,company_corp_reg_num ,company_rep_name ,company_foreigner_whe ,company_resi_reg_num ,company_zip
+							  ,company_address ,company_detail_address ,company_tel ,company_fax ,company_business ,company_stocks ,company_establishment_date
+							  ,company_open_date ,company_closed_date ,company_int_user_id ,company_int_date ,company_mod_user_id
+							  ,company_mod_date) 
+			   values(#{pk_company_code, jdbcType=VARCHAR},#{company_name, jdbcType=VARCHAR},#{company_division, jdbcType=VARCHAR},#{company_fiscal_year_o, jdbcType=VARCHAR},
+			   		  #{company_fiscal_year_t, jdbcType=VARCHAR},#{company_reg_num, jdbcType=VARCHAR},#{company_corp_reg_num, jdbcType=VARCHAR},#{company_rep_name, jdbcType=VARCHAR},
+			   		  #{company_foreigner_whe, jdbcType=VARCHAR},#{company_resi_reg_num, jdbcType=VARCHAR},#{company_zip, jdbcType=VARCHAR},#{company_address, jdbcType=VARCHAR},
+			   		  #{company_detail_address, jdbcType=VARCHAR},#{company_tel, jdbcType=VARCHAR},#{company_fax, jdbcType=VARCHAR},#{company_business, jdbcType=VARCHAR},#{company_stocks, jdbcType=VARCHAR},
+			   		  #{company_establishment_date, jdbcType=VARCHAR},#{company_open_date, jdbcType=VARCHAR},#{company_closed_date, jdbcType=VARCHAR},#{company_int_user_id, jdbcType=VARCHAR},
+			   		  #{company_int_date, jdbcType=TIMESTAMP},#{company_mod_user_id, jdbcType=VARCHAR},#{company_mod_date, jdbcType=TIMESTAMP})
+	</insert>	
+	
+	<delete id="deleteData" parameterType="java.util.Map">
+		delete company
+		where pk_company_code = #{pk_company_code}
+	</delete>	
+
+</mapper>

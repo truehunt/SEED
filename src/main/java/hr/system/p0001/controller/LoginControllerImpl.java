@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Cookie;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +27,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hr.system.p0001.service.LoginService;
 import hr.system.p0001.vo.LoginVO;
@@ -45,6 +50,8 @@ public class LoginControllerImpl implements LoginController {
 	LoginService p0001Service;
 	@Autowired
 	SawonVO sawonVO;
+	 @Autowired(required=false)
+	 private LocaleResolver localeResolver;
 	
 	@Override
 	@RequestMapping(value = "login.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -59,6 +66,18 @@ public class LoginControllerImpl implements LoginController {
 		ModelAndView main = new ModelAndView(viewName);
 		return main;
 	}
+	
+	@RequestMapping("/changeLanguage")
+	 public String change(@RequestParam("lang") String language,
+	   HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+	  Locale locale = new Locale(language);
+	  localeResolver.setLocale(request, response, locale);
+	  return "/login";
+	 }
+
+	 public void setLocaleResolver(LocaleResolver localeResolver) {
+	  this.localeResolver = localeResolver;
+	 }
 	
 	/**
      * 로그인 처리.
@@ -112,20 +131,10 @@ public class LoginControllerImpl implements LoginController {
      * 비밀번호 찾기
      */
     @RequestMapping(value = "/findPw") 
-       public void findPw(SawonVO sawonVO, HttpServletResponse response) throws Exception {
-        // String userno = request.getSession().getAttribute("userno").toString();
-        
-        // etcSvc.setCommonAttribute(userno, modelMap);
-        
-        // List<?> listview = deptSvc.selectDepartment();
+    public void findPw(SawonVO sawonVO, RedirectAttributes redirectattr, HttpServletResponse response, Errors errors) throws Exception {
+    	
+	        p0001Service.find_pw(response, sawonVO);
 
-        // TreeMaker tm = new TreeMaker();
-        // String treeStr = tm.makeTreeByHierarchy(listview);
-        
-        // modelMap.addAttribute("treeStr", treeStr);
-        
-        // return "admin/organ/User";
-    	p0001Service.find_pw(response, sawonVO);
     }
     
     

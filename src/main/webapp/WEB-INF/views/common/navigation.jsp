@@ -198,7 +198,7 @@ $(document).ready(function(){
                            	<form id="searchForm" name="searchForm"  method="post" action="boardList">
                                 <input type="hidden" name="searchType" value="brdtitle,brdmemo">
 								<div class="input-group custom-search-form">
-	                                <input class="form-control" type="text" name="globalKeyword" id="globalKeyword" placeholder="검색어를 입력하세요">
+	                                <input class="form-control" type="text" name="globalKeyword" id="globalKeyword" placeholder="<s:message code="main.search"/>">
 	                                <span class="input-group-btn">
 	                                    <button class="btn btn-default" type="button" onclick="fn_search()">
 	                                        <i class="fa fa-search"></i>
@@ -220,87 +220,87 @@ $(document).ready(function(){
                             <a href="#"> ESS</a>
                         </li>
                         <li>
-                            <a href='#' onClick="doAction(myTab,'내정보보기','chart','aa','aa'); return false"><i class="fa fa-envelope-o fa-fw"></i> 내정보보기</a>
+                            <a href='#' onClick="doAction(myTab,'<s:message code="main.myinfo"/>','chart','aa','aa'); return false"><i class="fa fa-envelope-o fa-fw"></i> <s:message code="main.myinfo"/></a>
                         </li>
                         <!-- 일정관리 -->             
                         <li>
-                            <a href='#' onClick="doAction(myTab,'일정관리','chart','ib-chart-0','schList'); return false"><i class="fa fa-calendar fa-fw"></i> 일정관리</a>
+                            <a href='#' onClick="doAction(myTab,'<s:message code="main.cal"/>','chart','ib-chart-0','schList'); return false"><i class="fa fa-calendar fa-fw"></i> <s:message code="main.cal"/></a>
                         </li>
                         <!-- 전자결재 -->
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> 전자결재<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> <s:message code="main.sign"/><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li>
-                                    <a href='#' onClick="doAction(myTab,'기안하기','chart','signDocTypeList','signDocTypeList'); return false">기안하기</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.signDoc"/>','chart','signDocTypeList','signDocTypeList'); return false"><s:message code="main.signDoc"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'개인문서함','chart','signListTobe','signListTobe'); return false">개인문서함</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.signListTobe"/>','chart','signListTobe','signListTobe'); return false"><s:message code="main.signListTobe"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'결재문서함','chart','signListTo','signListTo'); return false">결재문서함</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.signListTo"/>','chart','signListTo','signListTo'); return false"><s:message code="main.signListTo"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'발신문서함','chart','b2','b2'); return false">발신문서함</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.signSend"/>','chart','b2','b2'); return false"><s:message code="main.signSend"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'수신문서함','chart','b4','b4'); return false">수신문서함</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.signArrive"/>','chart','b4','b4'); return false"><s:message code="main.signArrive"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'부서문서함','chart','b3','b3'); return false">부서문서함</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.signDept"/>','chart','b3','b3'); return false"><s:message code="main.signDept"/></a>
                                 </li>
 	                        </ul>                             
                         </li> 
                          <!-- 근태/연차 관리 -->
                         <li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i> 근태/연차관리<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-edit fa-fw"></i> <s:message code="main.T&A"/><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'일일근태등록','chart','day_regist_sawon','day_regist_sawon'); return false">일일근태등록</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.dailyReg"/>','chart','day_regist_sawon','day_regist_sawon'); return false"><s:message code="main.dailyReg"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'월마감관리','chart','ad_day_regist','ad_day_regist'); return false">월마감관리</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.monthlyCls"/>','chart','ad_day_regist','ad_day_regist'); return false"><s:message code="main.monthlyCls"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'월근태마감','chart','dd','dd'); return false">월근태마감</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.monthlyCls2"/>','chart','dd','dd'); return false"><s:message code="main.monthlyCls2"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'휴일연장야간근무관리','chart','ee','ee'); return false">휴일연장야간근무관리</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.nightShift"/>','chart','ee','ee'); return false"><s:message code="main.nightShift"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'휴가조회신청','chart','ff','ff'); return false">휴가조회신청</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.findHoliday"/>','chart','ff','ff'); return false"><s:message code="main.findHoliday"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'출장조회신청','chart','gg','gg'); return false">출장조회신청</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.findBT"/>','chart','gg','gg'); return false"><s:message code="main.findBT"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'외근보고서작성','chart','hh','hh'); return false">외근보고서작성</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.writeDoc"/>','chart','hh','hh'); return false"><s:message code="main.writeDoc"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'휴가일수계산','chart','ii','ii'); return false">휴가일수계산</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.calHoliday"/>','chart','ii','ii'); return false"><s:message code="main.calHoliday"/></a>
                                 </li>
 	                        </ul>                             
                         </li> 
                         <!-- 급여/퇴직정산관리 -->
                         <li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i> 급여/퇴직정산관리<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-edit fa-fw"></i> <s:message code="main.pay"/><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
                                 <li>
-                                    <a href='#'  onClick="doAction(myTab,'근태결과입력','chart','pay/p0001/ibsheet.do','pay/p0001/TA_input.do'); return false">근태결과입력</a>
+                                    <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay1"/>','chart','pay/p0001/ibsheet.do','pay/p0001/TA_input.do'); return false"><s:message code="main.pay1"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'급여입력 및 계산','chart','kk','kk'); return false">급여입력 및 계산</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay2"/>','chart','kk','kk'); return false"><s:message code="main.pay2"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'급여이체현황','chart','ll','ll'); return false">급여이체현황</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay3"/>','chart','ll','ll'); return false"><s:message code="main.pay3"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'퇴직기준설정','chart','mm','mm'); return false">퇴직기준설정</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay4"/>','chart','mm','mm'); return false"><s:message code="main.pay4"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'퇴직금산정','chart','nn','nn'); return false">퇴직금산정</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay5"/>','chart','nn','nn'); return false"><s:message code="main.pay5"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'퇴직금산정현황','chart','oo','oo'); return false">퇴직금산정현황</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay6"/>','chart','oo','oo'); return false"><s:message code="main.pay6"/></a>
                                 </li>
 	                        </ul>                             
                         </li>

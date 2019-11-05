@@ -21,8 +21,6 @@ import hr.system.p0001.vo.SawonVO;
 import hr.system.p0001.vo.LoginVO;
 
 
-
-
 @Service("LoginService")
 @Transactional(propagation = Propagation.REQUIRED)
 public class LoginServiceImpl implements LoginService {
@@ -41,6 +39,10 @@ public class LoginServiceImpl implements LoginService {
         sqlSession.insert("insertLogOut", param);
     }
     
+    public SawonVO find_by_Email(SawonVO sawonVO) {
+    	return sqlSession.selectOne("find_by_Email", sawonVO);
+    }
+    
     // 이메일 발송
  	@Override
  	public void send_mail(SawonVO member, String div) throws Exception {
@@ -52,13 +54,15 @@ public class LoginServiceImpl implements LoginService {
 
  		// 보내는 사람 EMail, 제목, 내용
  		String fromEmail = "SEED@seed.com";
- 		String fromName = "SEED(Smart Erpsystem based-on Encryted Database)";
+ 		String fromName = "SEED";
  		String subject = "";
  		String msg = "";
  		
  		if(div.equals("find_pw")) {
  			subject = "SEED 임시 비밀번호 입니다.";
  			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
+ 			msg += "<h1 style='color: green;'>";
+ 			msg += "SEED(Smart Erpsystem based-on Encryted Database)</h1>";
  			msg += "<h3 style='color: blue;'>";
  			msg += member.getPK_SAWON_CODE() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
  			msg += "<p>임시 비밀번호 : ";
@@ -87,23 +91,35 @@ public class LoginServiceImpl implements LoginService {
  	}
  	
  	// 비밀번호 찾기
- 	@Override
- 	public void find_pw(HttpServletResponse response, SawonVO sawonVO) throws Exception {
- 		response.setContentType("text/html;charset=utf-8");
- 		PrintWriter out = response.getWriter();
- 			// 임시 비밀번호 생성
- 			String pw = "";
- 			for (int i = 0; i < 12; i++) {
- 				pw += (char) ((Math.random() * 26) + 97);
- 			}
- 			sawonVO.setSAWON_PASSWORD(pw);
- 			// 비밀번호 변경
- 			sqlSession.update("update_pw", sawonVO);
- 			// 비밀번호 변경 메일 발송
- 			send_mail(sawonVO, "find_pw");
- 			
- 			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
- 			out.close();
- 	}
-    
+  	@Override
+  	public void find_pw(HttpServletResponse response, SawonVO sawonVO) throws Exception {
+  		response.setContentType("text/html;charset=utf-8");
+  		PrintWriter out = response.getWriter();
+			// 아이디가 없으면
+			if(sqlSession.selectOne("check_id", sawonVO) == null) {
+				out.print("아이디가 없습니다.");
+				out.close();
+			}
+			// 가입에 사용한 이메일이 아니면
+			else if(sqlSession.selectOne("find_by_Email", sawonVO) == null) {
+				out.print("잘못된 이메일 입니다.");
+				out.close();
+			}else {
+  			// 임시 비밀번호 생성
+  			String pw = "";
+  			for (int i = 0; i < 12; i++) {
+  				pw += (char) ((Math.random() * 26) + 97);
+  			}
+  			sawonVO.setSAWON_PASSWORD(pw);
+  			// 비밀번호 변경
+  			sqlSession.update("update_pw", sawonVO);
+  			// 비밀번호 변경 메일 발송
+  			send_mail(sawonVO, "find_pw");
+  			
+  			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
+  			out.close();
+			}
+
+  		}
+  	
 }

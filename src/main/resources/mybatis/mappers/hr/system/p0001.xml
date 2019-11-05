@@ -25,6 +25,18 @@
 		update SAWON set SAWON_PASSWORD = #{SAWON_PASSWORD} where PK_SAWON_CODE = #{PK_SAWON_CODE}
 	</update>
 	
+	<!-- 아이디 중복 검사 -->
+	<select id="check_id" parameterType="String" resultType="String">
+		select PK_SAWON_CODE from SAWON where PK_SAWON_CODE = #{PK_SAWON_CODE}
+	</select>
+	
+	<!-- 이메일 중복 검사 -->
+	<select id="find_by_Email" parameterType="String" resultType="String">
+		select SAWON_EMAIL
+		from SAWON
+		where SAWON_EMAIL = #{SAWON_EMAIL}
+		and PK_SAWON_CODE = #{PK_SAWON_CODE}
+	</select>
 	
 	<select id="selectMember4Login" parameterType="hr.system.p0001.vo.LoginVO" resultType="hr.system.p0001.vo.SawonVO" >
         SELECT PK_SAWON_CODE, SAWON_NAME, SAWON_VIEW_PERMISSION

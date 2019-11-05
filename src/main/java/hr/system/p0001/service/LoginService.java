@@ -26,5 +26,7 @@ public interface LoginService {
 	public void send_mail(SawonVO member, String div) throws Exception;
 
 	public void find_pw(HttpServletResponse response, SawonVO sawonVO) throws Exception;
+	
+	public SawonVO find_by_Email(SawonVO sawonVO);
 
 }

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
     <c:set var="contextPath"  value="${pageContext.request.contextPath}" />	
 <!DOCTYPE html>
 <html>
@@ -50,12 +51,14 @@ function fn_chkUserid(){
 	$.ajax({
 		url: "findPw", 
 		type:"post", 
-		data : {PK_SAWON_CODE: $("#PK_SAWON_CODE2").val(),
+		data : {
+				PK_SAWON_CODE: $("#PK_SAWON_CODE2").val(),
 				SAWON_EMAIL: $("#SAWON_EMAIL").val()
 		},
 		success: function(result){
-				alert(result);
-			}
+			alert(result);
+		}
+
 	})		
 }
 
@@ -72,30 +75,32 @@ function fn_chkUserid(){
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">로그인하세요</h3>
+                        <h3 class="panel-title"><s:message code="login.login"/></h3>
+                        <a href="${pageContext.request.contextPath }/changeLanguage?lang=ko">한국어</a>
+						<a href="${pageContext.request.contextPath }/changeLanguage?lang=en">ENGLISH</a> 
                     </div>
                     <div class="panel-body">
                         <form role="form" action="memberLoginChk" method="post" id="form1" name="form1">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="사번" name="PK_SAWON_CODE" id="PK_SAWON_CODE" type="text" autofocus value="<c:out value="${PK_SAWON_CODE}"/>">
+                                    <input class="form-control" placeholder="<s:message code="login.id"/>" name="PK_SAWON_CODE" id="PK_SAWON_CODE" type="text" autofocus value="<c:out value="${PK_SAWON_CODE}"/>">
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="비밀번호" name="SAWON_PASSWORD" id="SAWON_PASSWORD" type="password" value="" onkeydown="if(event.keyCode == 13) { fn_formSubmit();}">
+                                    <input class="form-control" placeholder="<s:message code="login.pw"/>" name="SAWON_PASSWORD" id="SAWON_PASSWORD" type="password" value="" onkeydown="if(event.keyCode == 13) { fn_formSubmit();}">
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Y"  <c:if test='${PK_SAWON_CODE != null && PK_SAWON_CODE != ""}'>checked</c:if>>Remember
+                                        <input name="remember" type="checkbox" value="Y"  <c:if test='${PK_SAWON_CODE != null && PK_SAWON_CODE != ""}'>checked</c:if>><s:message code="login.check"/>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         
                                     </label>
                                 </div>
                                 <div class="password">
-                                    	<a href="#" onclick="fn_FindPassword()">비밀번호찾기</a>
+                                    	<a href="#" onclick="fn_FindPassword()"><s:message code="login.findpw"/></a>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a href="#" class="btn btn-lg btn-success btn-block" onclick="fn_formSubmit()">Login</a>
+                                <a href="#" class="btn btn-lg btn-success btn-block" onclick="fn_formSubmit()"><s:message code="login.btn"/></a>
                             </fieldset>
                         </form>
                     </div>
@@ -110,28 +115,29 @@ function fn_chkUserid(){
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" id="closeX" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">비밀번호찾기</h4>
+                    <h4 class="modal-title" id="myModalLabel"><s:message code="login.findpw"/></h4>
                 </div>
                 <div class="modal-body">
-                	<form id="form2" name="form2">
-                    	<div class="row form-group">
-                            <div class="col-lg-1"></div>
-                            <label class="col-lg-2">사번</label>
-                            <div class="col-lg-5">
-                            	<input type="text" class="form-control" id="PK_SAWON_CODE2" name="PK_SAWON_CODE2" maxlength="20">
-                            </div>
-                            <div class="col-lg-4">
-			                    <button type="button" class="btn btn-default" onclick="fn_chkUserid()">메일발송</button>
-                            </div>
-                        </div>
-                    	<div class="row form-group">
-                            <div class="col-lg-1"></div>
-                            <label class="col-lg-2">메일주소</label>
-                            <div class="col-lg-8">
-                            	<input type="text" class="form-control" id="SAWON_EMAIL" name="SAWON_EMAIL" maxlength="20">
-                            </div>
-                        </div>
-                	</form>        
+                
+		                    	<div class="row form-group">
+		                    		<div class="col-lg-1"></div>
+		                            <label class="col-lg-2"><s:message code="login.id"/></label>
+		                            <div class="col-lg-5">
+		                            	<input type="text" class="form-control" id="PK_SAWON_CODE2" name="PK_SAWON_CODE2" placeholder="<s:message code="login.id"/>" maxlength="20">
+		                            </div>
+		                            <div class="col-lg-4">
+					                    <button id="btn-signup" type="submit" class="btn btn-warning" onclick="fn_chkUserid()"><s:message code="login.email"/></button>
+		                            </div>
+		                        </div>
+		                        
+								<div class="row form-group">		                            
+		                            <div class="col-lg-1"></div>
+		                            <label class="col-lg-2"><s:message code="login.emailform"/></label>
+		                            <div class="col-lg-8">
+		                            	<input type="text" class="form-control" id="SAWON_EMAIL" name="SAWON_EMAIL" placeholder="<s:message code="login.emailform"/>" maxlength="50">
+		                            </div>
+	                            </div>
+                                
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="close"><s:message code="common.btnClose"/></button>

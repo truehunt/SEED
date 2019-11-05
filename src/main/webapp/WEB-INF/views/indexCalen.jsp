@@ -161,7 +161,7 @@ function calendarDayMouseout(){
          <h1 class="page-header">
          <a href="javascript: fn_moveDate('<c:out value="${preWeek}"/>')"><i class="fa fa-angle-left fa-fw"></i></a>
          
-         <c:out value="${month}"/>월 <c:out value="${week}"/>째주
+         <c:out value="${month}"/><s:message code="main.month"/> <c:out value="${week}"/><s:message code="main.week"/>
          <a href="javascript: fn_moveDate('<c:out value="${nextWeek}"/>')"><i class="fa fa-angle-right fa-fw"></i></a>
          </h1>
      </div>

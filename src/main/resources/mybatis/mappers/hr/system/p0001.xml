@@ -20,17 +20,17 @@
 		<result property="SAWON_MOD_DATE" column="SAWON_MOD_DATE" />
 	</resultMap>
 	
-	<!-- 비밀번호 변경 -->
+	<!-- 비밀번호찾기 - 비밀번호 변경 -->
 	<update id="update_pw" parameterType="hr.system.p0001.vo.SawonVO">
 		update SAWON set SAWON_PASSWORD = #{SAWON_PASSWORD} where PK_SAWON_CODE = #{PK_SAWON_CODE}
 	</update>
 	
-	<!-- 아이디 중복 검사 -->
+	<!-- 비밀번호찾기 - 아이디 유효성 검사 -->
 	<select id="check_id" parameterType="String" resultType="String">
 		select PK_SAWON_CODE from SAWON where PK_SAWON_CODE = #{PK_SAWON_CODE}
 	</select>
 	
-	<!-- 이메일 중복 검사 -->
+	<!-- 비밀번호찾기 - 이메일 유효성 검사 -->
 	<select id="find_by_Email" parameterType="String" resultType="String">
 		select SAWON_EMAIL
 		from SAWON

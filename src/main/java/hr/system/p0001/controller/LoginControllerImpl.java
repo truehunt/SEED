@@ -67,6 +67,9 @@ public class LoginControllerImpl implements LoginController {
 		return main;
 	}
 	
+	/**
+     * 다국어 로그인화면
+     */
 	@RequestMapping("/changeLanguage")
 	 public String change(@RequestParam("lang") String language,
 	   HttpServletRequest request, HttpServletResponse response, HttpSession session) {
@@ -79,6 +82,21 @@ public class LoginControllerImpl implements LoginController {
 	  this.localeResolver = localeResolver;
 	 }
 	
+	 /**
+     * 다국어 메인화면
+     */
+	@RequestMapping("/changeLanguage2")
+	 public String change2(@RequestParam("lang") String language,
+	   HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+	  Locale locale = new Locale(language);
+	  localeResolver.setLocale(request, response, locale);
+	  return "/index";
+	 }
+
+	 public void setLocaleResolver2(LocaleResolver localeResolver) {
+	  this.localeResolver = localeResolver;
+	 }
+	 
 	/**
      * 로그인 처리.
      */

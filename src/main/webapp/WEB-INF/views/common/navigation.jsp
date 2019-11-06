@@ -38,7 +38,7 @@ $(document).ready(function(){
 		        
 		        myTab.setOptions({
 			        tabs: [{
-		                title: "MAIN",
+		                title: "<s:message code="main.tab"/>",
 		                hold: true,
 		                style: {
 		                    btnClose: false,
@@ -145,7 +145,24 @@ $(document).ready(function(){
                 </button>
 
 	            <ul class="nav navbar-top-links navbar-right">
-	                <!-- /.dropdown -->
+	            	
+	            	<!-- /.dropdown-flag -->
+	            	<li class="dropdown">
+	                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		                    <span class="fa-stack fa-lg"> 
+							<i class="fa fa-circle fa-stack-2x"></i> 
+							<i class="fa fa-flag fa-stack-1x fa-inverse"></i>
+							</span> 
+	                        <i class="fa fa-caret-down"></i>
+	                    </a>
+	                    <ul class="dropdown-menu dropdown-user">
+	                        <li><a href="${pageContext.request.contextPath }/changeLanguage2?lang=ko"><span style="color:blue"><i class="fa fa-flag fa-fw"></i></span>한국어</a></li>
+	                        <li><a href="${pageContext.request.contextPath }/changeLanguage2?lang=en"><span style="color:red"><i class="fa fa-flag fa-fw"></i></span>English</a></li>
+	                    </ul>
+	                    <!-- /.dropdown-flag -->
+	                </li>
+	                
+	                <!-- /.dropdown 알림창 -->
                     <c:if test="${alertcount>0}">
 		                <li class="dropdown">
 		                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" onclick="showAlertList()">
@@ -171,10 +188,15 @@ $(document).ready(function(){
 		                    <!-- /.dropdown-alerts -->
 		                </li>
                     </c:if>
-	                <!-- /.dropdown -->
+                    
+	                <!-- /.dropdown 유저상태창 -->
 	                <li class="dropdown">
 	                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-	                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+	                    	<span class="fa-stack fa-lg"> 
+							<i class="fa fa-circle fa-stack-2x"></i> 
+							<i class="fa fa-user fa-stack-1x fa-inverse"></i>
+							</span>
+	                        <i class="fa fa-caret-down"></i>
 	                    </a>
 	                    <ul class="dropdown-menu dropdown-user">
 	                        <li><a href="memberForm"><i class="fa fa-user fa-fw"></i> <c:out value="${sessionScope.SAWON_NAME}"/></a></li>
@@ -183,8 +205,25 @@ $(document).ready(function(){
 	                        <li><a href="/SEED/memberLogout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
 	                        </li>
 	                    </ul>
+                    </li>
+                    
+	                    <!-- /.dropdown 로그아웃 -->
+		                <li class="dropdown">
+		                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		                    	<span class="fa-stack fa-lg"> 
+								<i class="fa fa-circle fa-stack-2x"></i>
+								<i class="fa fa-power-off fa-stack-1x fa-inverse"></i>
+								</span>
+								<i class="fa fa-caret-down"></i>
+							</a>
+							<ul class="dropdown-menu dropdown-user">
+								<li><a href="/SEED/memberLogout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+	                        	</li>
+                        	</ul>
+		                    <!-- /.dropdown-user -->
+		                </li>
 	                    <!-- /.dropdown-user -->
-	                </li>
+	                
 	                <!-- /.dropdown -->
 	            </ul>
 	            <!-- /.navbar-top-links -->
@@ -220,7 +259,7 @@ $(document).ready(function(){
                             <a href="#"> ESS</a>
                         </li>
                         <li>
-                            <a href='#' onClick="doAction(myTab,'<s:message code="main.myinfo"/>','chart','aa','aa'); return false"><i class="fa fa-envelope-o fa-fw"></i> <s:message code="main.myinfo"/></a>
+                            <a href='#' onClick="doAction(myTab,'<s:message code="main.myinfo"/>','chart','aa','aa'); return false"><i class="fa fa-info-circle fa-fw"></i> <s:message code="main.myinfo"/></a>
                         </li>
                         <!-- 일정관리 -->             
                         <li>
@@ -228,8 +267,8 @@ $(document).ready(function(){
                         </li>
                         <!-- 전자결재 -->
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> <s:message code="main.sign"/><span class="fa arrow"></span></a>
-							<ul class="nav nav-second-level">
+                            <a href="#"><i class="fa fa-edit fa-fw"></i> <s:message code="main.sign"/><span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">  
 								<li>
                                     <a href='#' onClick="doAction(myTab,'<s:message code="main.signDoc"/>','chart','signDocTypeList','signDocTypeList'); return false"><s:message code="main.signDoc"/></a>
                                 </li>
@@ -252,7 +291,7 @@ $(document).ready(function(){
                         </li> 
                          <!-- 근태/연차 관리 -->
                         <li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i> <s:message code="main.T&A"/><span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> <s:message code="main.T&A"/><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
                                 <li>
                                     <a href='#' onClick="doAction(myTab,'<s:message code="main.dailyReg"/>','chart','day_regist_sawon','day_regist_sawon'); return false"><s:message code="main.dailyReg"/></a>
@@ -282,7 +321,7 @@ $(document).ready(function(){
                         </li> 
                         <!-- 급여/퇴직정산관리 -->
                         <li>
-                            <a href="#"><i class="fa fa-edit fa-fw"></i> <s:message code="main.pay"/><span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay"/><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
                                 <li>
                                     <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay1"/>','chart','pay/p0001/ibsheet.do','pay/p0001/TA_input.do'); return false"><s:message code="main.pay1"/></a>
@@ -309,71 +348,74 @@ $(document).ready(function(){
 	                        <li>
 	                            <a href="#"> HSS</a>
 	                        </li>
+	                        <!-- 등록정보관리 -->
 	                        <li>
-	                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> 등록정보관리<span class="fa arrow"></span></a>
+	                            <a href="#"><i class="fa fa-folder fa-fw"></i> <s:message code="main.enroll"/><span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'회사등록','chart','adcompany_Enroll','adcompany_Enroll'); return false">회사등록</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll1"/>','chart','adcompany_Enroll','adcompany_Enroll'); return false"><s:message code="main.enroll1"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'사업장등록','chart','pp','pp'); return false">사업장등록</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll2"/>','chart','pp','pp'); return false"><s:message code="main.enroll2"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'부서등록','chart','qq','qq'); return false">부서등록</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll3"/>','chart','qq','qq'); return false"><s:message code="main.enroll3"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'사원등록','chart','rr','rr'); return false">사원등록</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll4"/>','chart','rr','rr'); return false"><s:message code="main.enroll4"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'사용자권한설정','chart','ss','ss'); return false">사용자권한설정</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll5"/>','chart','ss','ss'); return false"><s:message code="main.enroll5"/></a>
 	                                </li>
 	                            </ul>
 	                        </li>
+	                        <!-- 기초환경설정 -->
 	                        <li>
-	                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> 기초환경설정<span class="fa arrow"></span></a>
+	                            <a href="#"><i class="fa fa-cog fa-fw"></i> <s:message code="main.setup"/><span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'호봉테이블등록','chart','tt','tt'); return false">호봉테이블등록</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup1"/>','chart','tt','tt'); return false"><s:message code="main.setup1"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'급/상여 지급일자 등록','chart','uu','uu'); return false">급/상여 지급일자 등록</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup2"/>','chart','uu','uu'); return false"><s:message code="main.setup2"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'인사/급여환경설정','chart','vv','vv'); return false">인사/급여환경설정</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup3"/>','chart','vv','vv'); return false"><s:message code="main.setup3"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'인사기초코드등록','chart','code','code'); return false">인사기초코드등록</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup4"/>','chart','code','code'); return false"><s:message code="main.setup4"/></a>
 	                                </li>
 	                            </ul>
 	                        </li>
+	                        <!-- 인사관리 -->
 	                        <li>
-	                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> 인사관리<span class="fa arrow"></span></a>
+	                            <a href="#"><i class="fa fa-users fa-fw"></i> <s:message code="main.per"/><span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'인사기록카드','chart','card','card'); return false">인사기록카드</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per1"/>','chart','card','card'); return false"><s:message code="main.per1"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'인사정보등록','chart','yy','yy'); return false">인사정보등록</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per2"/>','chart','yy','yy'); return false"><s:message code="main.per2"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'인사발령등록','chart','zz','zz'); return false">인사발령등록</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per3"/>','chart','zz','zz'); return false"><s:message code="main.per3"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'인사발령(사원별)','chart','a1','a1'); return false">인사발령(사원별)</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per4"/>','chart','a1','a1'); return false"><s:message code="main.per4"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'인사발령공고','chart','a2','a2'); return false">인사발령공고</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per5"/>','chart','a2','a2'); return false"><s:message code="main.per5"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'인사발령리포트','chart','a3','a3'); return false">인사발령리포트</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per6"/>','chart','a3','a3'); return false"><s:message code="main.per6"/></a>
 	                                </li>
 	                            </ul>
 	                        </li>
                              <li>
-                                 <a href='#' onClick="doAction(myTab,'결재문서양식','chart','adSignDocTypeList','adSignDocTypeList'); return false"><i class="fa fa-sitemap fa-fw"></i> 결재문서양식</a>
+                                 <a href='#' onClick="doAction(myTab,'<s:message code="main.adSign"/>','chart','adSignDocTypeList','adSignDocTypeList'); return false"><i class="fa fa-files-o fa-fw"></i> <s:message code="main.adSign"/></a>
                              </li>
                              <li>
-                                 <a href='#' onClick="doAction(myTab,'공통코드관리','chart','adCodeList','adCodeList'); return false"><i class="fa fa-sitemap fa-fw"></i> 공통코드관리</a>
+                                 <a href='#' onClick="doAction(myTab,'<s:message code="main.adCode"/>','chart','adCodeList','adCodeList'); return false"><i class="fa fa-check fa-fw"></i> <s:message code="main.adCode"/></a>
                              </li>
 	                	</c:if>
                         	        

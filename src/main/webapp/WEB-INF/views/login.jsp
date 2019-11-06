@@ -31,7 +31,8 @@
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/project9.js"></script>   
+	<script src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
+	   
 <script>
 function fn_formSubmit(){
 	if ( ! chkInputValue("#PK_SAWON_CODE", "<s:message code="common.id"/>")) return false;
@@ -47,6 +48,8 @@ function fn_FindPassword(){
 function fn_chkUserid(){
 	if ( ! chkInputValue("#PK_SAWON_CODE2", "사번")) return false;
 	if ( ! chkInputValue("#SAWON_EMAIL", "이메일주소")) return false;
+	var email = $("#SAWON_EMAIL").val();
+	if ( ! isValidEmail(email)) return alert("올바른 이메일 형식이 아닙니다.");
 	
 	$.ajax({
 		url: "findPw", 
@@ -62,6 +65,18 @@ function fn_chkUserid(){
 	})		
 }
 
+isValidEmail = function (email) { 
+	
+	if (email.lastIndexOf(' ') > 0) {
+		return false;
+	}
+
+	var regText = /^([\.0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,3}$/;
+	return regText.test(email);
+}
+
+
+
 </script>
 
 </head>
@@ -70,14 +85,14 @@ function fn_chkUserid(){
 
 	<div align=center><img src="images/SEED.png" style="position:absoulte; margin-top:150px; margin-left: auto; margin-right: auto;"/></div>
 
-    <div class="container">
+    <div class="container2">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><s:message code="login.login"/></h3>
-                        <a href="${pageContext.request.contextPath }/changeLanguage?lang=ko">한국어</a>
-						<a href="${pageContext.request.contextPath }/changeLanguage?lang=en">ENGLISH</a> 
+                         <a href="${pageContext.request.contextPath }/changeLanguage?lang=ko">한국어</a>
+					  	 <a href="${pageContext.request.contextPath }/changeLanguage?lang=en">English</a> 
                     </div>
                     <div class="panel-body">
                         <form role="form" action="memberLoginChk" method="post" id="form1" name="form1">

@@ -48,7 +48,7 @@ function fn_formSubmit(){
         <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-gear fa-fw"></i> <s:message code="common.codecd"/></h1>
+                    <h1 class="page-header"><i class="fa fa-check fa-fw"></i> <s:message code="common.codecd"/></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

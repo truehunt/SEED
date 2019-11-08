@@ -18,6 +18,13 @@ public interface CardController {
 	public ModelAndView sample(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map saveDataFam(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map saveDataHL(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
 	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map ISA(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map ISA_c(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map COM_CODE(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map ISA_fam(HttpServletRequest request, HttpServletResponse response) throws Exception; // 가족
+	public Map ISA_hl(HttpServletRequest request, HttpServletResponse response) throws Exception; // 학력
 }

@@ -1,3 +1,4 @@
+
 package hr.system.p0003.vo;
 
 public class SchDetailVO {
@@ -65,3 +66,4 @@ public class SchDetailVO {
 
 
 }
+

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="hr.pay.p0003">
+	<resultMap id="SALARY_bo_staResult01" type="SALARY_bo_staVO">
+		<result property="salary_BO_STA_BANK_CODE" column="salary_BO_STA_BANK_CODE"/>
+		<result property="pk_SALARY_BO_STA_SAWON_CODE" column="pk_SALARY_BO_STA_SAWON_CODE"/>
+		<result property="salary_BO_STA_SAWON_NAME" column="salary_BO_STA_SAWON_NAME"/>
+		<result property="salary_BO_STA_PAYMENTDAY" column="salary_BO_STA_PAYMENTDAY"/>
+		<result property="salary_BO_STA_ACC_NUMBER" column="salary_BO_STA_ACC_NUMBER"/>
+		<result property="salary_BO_STA_ACT_PAY" column="salary_BO_STA_ACT_PAY"/>
+	
+	
+		<result property="fk_TA_SAWON_CODE" column="fk_TA_SAWON_CODE"/>
+		<result property="ta_SAWON_NAME" column="ta_SAWON_NAME"/>
+		<result property="ta_ATTRIBUTION" column="ta_ATTRIBUTION"/>
+		<result property="ta_PAYMENTDAY" column="ta_PAYMENTDAY"/>
+		<result property="ta_INQUIRY_CONDITION" column="ta_INQUIRY_CONDITION"/>
+		<result property="pk_TA_WORKPLACE_CODE" column="pk_TA_WORKPLACE_CODE"/>
+		<result property="ta_DIVI" column="ta_DIVI"/>
+		<result property="ta_DAY" column="ta_DAY"/>
+		<result property="ta_HOUR" column="ta_HOUR"/>
+		
+		
+		<result property="pk_WORKPLACE_CODE" column="pk_WORKPLACE_CODE"/>
+		<result property="fk_WORKPLACE_CODE" column="fk_WORKPLACE_CODE"/>
+		<result property="fk_SAWON_WORKPLACE_CODE" column="fk_SAWON_WORKPLACE_CODE"/>
+		<result property="pk_SAWON_CODE" column="pk_SAWON_CODE"/>
+		<result property="sawon_NAME" column="sawon_NAME"/>
+		<result property="pk_DEPT_CODE" column="pk_DEPT_CODE"/>
+		<result property="fk_DEPT_CODE" column="fk_DEPT_CODE"/>
+		
+	</resultMap>
+	
+	
+	<select id="searchList" resultMap="SALARY_bo_staResult01" parameterType="java.util.Map">
+		<![CDATA[
+	 select a.salary_bo_sta_bank_code, b.fk_TA_SAWON_CODE, b.ta_SAWON_NAME, a.salary_bo_sta_acc_number, a.salary_bo_sta_act_pay, b.ta_PAYMENTDAY
+       from SALARY_BO_STA a, ta b
+          	
+		]]>
+
+			<where>
+			
+          	a.pk_salary_bo_sta_sawon_code = b.fk_TA_SAWON_CODE     
+          	
+			<if test="ta_ATTRIBUTION != null">
+				      and TA_ATTRIBUTION = #{ta_ATTRIBUTION}
+			</if>
+				<if test="ta_PAYMENTDAY != null">
+				      and TA_PAYMENTDAY = #{ta_PAYMENTDAY}
+			</if>
+				<if test="salary_BO_STA_BANK_CODE != null">
+				      and SALARY_BO_STA_BANK_CODE = #{salary_BO_STA_BANK_CODE}
+			</if>
+				<if test="pk_TA_WORKPLACE_CODE != null">
+				      and PK_TA_WORKPLACE_CODE = #{pk_TA_WORKPLACE_CODE}
+			</if>
+			</where>
+	
+	</select>
+	
+	
+	
+	
+	
+	<update id="updateData" parameterType="java.util.Map">
+		update SALARY_CALCUL_TOTAL
+		set   PK_SALARY_CALCUL_TOTAL_CODE = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
+		    , FK_TA_SAWON_CODE = #{fk_TA_SAWON_CODE, jdbcType=VARCHAR}
+		    , SALARY_CALCUL_ITEM = #{salary_CALCUL_ITEM, jdbcType=VARCHAR}
+			, SALARY_CALCUL_MONEY = #{salary_CALCUL_MONEY, jdbcType=VARCHAR}
+			
+			
+		where PK_SALARY_CALCUL_TOTAL_CODE = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertData" parameterType="java.util.Map">
+		
+		insert into SALARY_CALCUL_TOTAL(PK_SALARY_CALCUL_TOTAL_CODE, FK_TA_SAWON_CODE, SALARY_CALCUL_ITEM, salary_CALCUL_MONEY) values(#{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR},#{fk_TA_SAWON_CODE, jdbcType=VARCHAR}, #{salary_CALCUL_ITEM, jdbcType=VARCHAR}, #{salary_CALCUL_MONEY, jdbcType=VARCHAR})
+	
+	</insert>	
+	
+	<delete id="deleteData" parameterType="java.util.Map">
+	     delete SALARY_CALCUL_TOTAL
+	 
+		 where TRIM(PK_SALARY_CALCUL_TOTAL_CODE) = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
+	</delete>
+</mapper>

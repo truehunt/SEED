@@ -124,8 +124,10 @@
     </update> 
 
     <insert id="insertSchDetail" parameterType="hr.system.p0003.vo.SchDetailVO" >
-        INSERT INTO SCH_DETAIL(SSNO, SDSEQ, SDDATE, SDHOUR, SDMINUTE, PK_SAWON_CODE) 
-        		VALUES((SELECT NVL(MAX(SSNO)+1,0) FROM SCH_DETAIL), #{SDSEQ}, #{SDDATE}, #{SDHOUR}, #{SDMINUTE}, #{PK_SAWON_CODE})
+        INSERT INTO SCH_DETAIL(SSNO, SDSEQ, SDDATE, SDHOUR, SDMINUTE) 
+        		VALUES((SELECT NVL(MAX(SSNO)+1,0) FROM SCH_DETAIL), #{SDSEQ}, #{SDDATE}, #{SDHOUR}, #{SDMINUTE})
+
+  
     </insert>
      
     <delete id="deleteSchDetail" parameterType="String">

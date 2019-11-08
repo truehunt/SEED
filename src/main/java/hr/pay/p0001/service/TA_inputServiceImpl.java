@@ -38,7 +38,18 @@ public class TA_inputServiceImpl implements TA_inputService {
 		return list;
 	}
 	
+	@Override
+	public List<TA_inputVO> SiteList(Map<String, Object> searchMap) throws DataAccessException {
+		List<TA_inputVO> list =  TA_inputDAO.SiteList(searchMap); 
+		return list;
+	}
 	
+	
+	@Override
+	public List<TA_inputVO> DeptList(Map<String, Object> searchMap) throws DataAccessException {
+		List<TA_inputVO> list =  TA_inputDAO.DeptList(searchMap); 
+		return list;
+	}
 	
 	@Override
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {

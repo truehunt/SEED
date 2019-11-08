@@ -25,8 +25,8 @@
     </select> 
     
     <select id="selectSignDocList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
-         SELECT SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, SD.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME,
-		        TO_CHAR(TO_DATE(AD_MOD_DATE, 'yyyy-mm-dd')), CC.CODENM, AD_DOCSTATUS
+         SELECT SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, CU.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME,
+		        TO_CHAR(TO_DATE(AD_MOD_DATE, 'yyyy-mm-dd')), CC.CODENM as AD_DOCSTATUS
 		 FROM AD SD
 		 INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
 		 INNER JOIN DOCTYPE SDT ON SDT.PK_DOCTYPE_NUM=SD.PK_DOCTYPE_NUM
@@ -59,8 +59,8 @@
     </select> 
     
     <select id="selectSignDocTobeList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
-         SELECT SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, SD.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME,
-		        AD_MOD_DATE, CC.CODENM, AD_DOCSTATUS
+         SELECT SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, CU.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME,
+		        AD_MOD_DATE, CC.CODENM as AD_DOCSTATUS
 		 FROM AD SD
 		 INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
 		 INNER JOIN DOCTYPE SDT ON SDT.PK_DOCTYPE_NUM=SD.PK_DOCTYPE_NUM
@@ -73,9 +73,12 @@
          
     </select> 
             
-    <insert id="insertSignDoc" parameterType="hr.elect.p0001.vo.SignDocVO" keyProperty="PK_AD_NUM">
+    <insert id="insertSignDoc" parameterType="hr.elect.p0001.vo.SignDocVO">
+    	<selectKey resultType="string" keyProperty="PK_AD_NUM" order="BEFORE">
+    		SELECT NVL(MAX(PK_AD_NUM)+1, 0) FROM AD
+    	</selectKey>
         INSERT INTO AD(PK_AD_NUM, AD_TITLE, PK_SAWON_CODE, AD_CONTENT, AD_DOCSTATUS, AD_DOCSTEP, PK_DOCTYPE_NUM, AD_DEPT_NAME, AD_DOCSIGNPATH, AD_MOD_DATE, AD_INT_DATE, AD_DELETEFLAG)
-        VALUES ((SELECT NVL(MAX(PK_AD_NUM)+1,0) FROM AD), #{AD_TITLE}, #{PK_SAWON_CODE}, #{AD_CONTENT}, #{AD_DOCSTATUS}, 1, #{PK_DOCTYPE_NUM, jdbcType=VARCHAR}, #{AD_DEPT_NAME, jdbcType=VARCHAR}, #{AD_DOCSIGNPATH, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
+        VALUES (#{PK_AD_NUM}, #{AD_TITLE}, #{PK_SAWON_CODE}, #{AD_CONTENT}, #{AD_DOCSTATUS}, 1, #{PK_DOCTYPE_NUM, jdbcType=VARCHAR}, #{AD_DEPT_NAME, jdbcType=VARCHAR}, #{AD_DOCSIGNPATH, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
     </insert>
     
     <update id="updateSignDoc" parameterType="hr.elect.p0001.vo.SignDocVO">
@@ -166,5 +169,26 @@
            SET AD_DOCSTATUS = 0
          WHERE FK_AD_NUM=#{FK_AD_NUM} 
     </update>	
+    
+    <!-- 전자결재 결재라인 부서, 사원 선택 팝업-->
+    <select id="selectDepartment" resultType="project.common.TreeVO" >
+        SELECT KEY, DEPT_NAME TITLE, DEPT_PARENTNO PARENT
+          FROM DEPT         
+         ORDER BY KEY
+    </select> 
+    
+    <select id="selectUserListWithDept" parameterType="project.common.SearchVO" resultType="hr.system.p0001.vo.SawonVO">
+          SELECT PK_SAWON_CODE, SAWON_NAME, CU.FK_DEPT_CODE, CD.DEPT_NAME, CC.CODENM RANK_NAME
+          FROM SAWON CU
+         INNER JOIN DEPT CD ON CD.PK_DEPT_CODE=CU.FK_DEPT_CODE
+         INNER JOIN COM_CODE CC ON CC.CODENM=CU.RANK_NAME AND CLASSNO='3'
+         WHERE CU.SAWON_USER_STATUS='Y'
+           <if test="searchExt1!=null and searchExt1!=''">
+               AND CU.KEY=#{searchExt1} 
+           </if>
+           <if test="searchKeyword!=null and searchKeyword!=''">
+               AND CU.SAWON_NAME LIKE '%'||#{searchKeyword}||'%'
+            </if>
+    </select>
 
 </mapper>

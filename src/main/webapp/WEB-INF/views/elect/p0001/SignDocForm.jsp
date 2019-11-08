@@ -76,7 +76,7 @@ function deptTreeInUsersActivate(node) {
     $.ajax({
         url: "popupUsers4Users",
         type:"post", 
-        data: { deptno : node.data.key }        
+        data: { KEY : node.data.key }        
     }).success(function(result){
                 $("#userlist4Users").html(result);
     });

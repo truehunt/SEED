@@ -4,15 +4,41 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="hr.human.p0001">
+	<!-- 인사기록카드 -->
 	<resultMap id="cardResult01" type="cardVO">
-		<result property="pk_PERSON_BC_CODE_NUM" column="pk_PERSON_BC_CODE_NUM" />
-		<result property="person_BC_OUTPUT" column="person_BC_OUTPUT" />
-		<result property="person_BC_MNGEMENT_NAME" column="person_BC_MNGEMENT_NAME" />
-		<result property="person_BC_MODIFY_WHE" column="person_BC_MODIFY_WHE" />
-		<result property="person_BC_INT_USER_ID" column="person_BC_INT_USER_ID" />
-		<result property="person_BC_INT_DATE" column="person_BC_INT_DATE" />
-		<result property="person_BC_MOD_USER_ID" column="person_BC_MOD_USER_ID" />
-		<result property="person_BC_MOD_DATE" column="person_BC_MOD_DATE" />
+		<result property="pk_ISA_CODE" column="pk_ISA_CODE" />
+		<result property="fk_ISA_SAWON_CODE" column="fk_ISA_SAWON_CODE" />
+		<result property="isa_MOD_USER_ID" column="isa_MOD_USER_ID" />
+		<result property="isa_INT_USER_ID" column="isa_INT_USER_ID" />
+		<result property="isa_MOD_DATE" column="isa_MOD_DATE" />
+		<result property="isa_INT_DATE" column="isa_INT_DATE" />
+		<result property="isa_HANJA_NAME" column="isa_HANJA_NAME" />
+		<result property="isa_HIRE_CODE" column="isa_HIRE_CODE" />
+		<result property="isa_NUM" column="isa_NUM" />
+		<result property="isa_ADDRESS" column="isa_ADDRESS" />
+		<result property="isa_PERMANENT_ADDR" column="isa_PERMANENT_ADDR" />
+		<result property="isa_MARRIAGE_CODE" column="isa_MARRIAGE_CODE" />
+		<result property="isa_HOUSE_CODE" column="isa_HOUSE_CODE" />
+		<result property="isa_LIVING_CODE" column="isa_LIVING_CODE" />
+		<result property="isa_ESTATE" column="isa_ESTATE" />
+		<result property="isa_MOVABLES" column="isa_MOVABLES" />
+		<result property="isa_SUM" column="isa_SUM" />
+		<result property="isa_GEONPYEONG" column="isa_GEONPYEONG" />
+		<result property="isa_SITE" column="isa_SITE" />
+		<result property="isa_RELIGION_CODE" column="isa_RELIGION_CODE" />
+		<result property="isa_HOBBY_CODE" column="isa_HOBBY_CODE" />
+		<result property="isa_SPECIALTY_CODE" column="isa_SPECIALTY_CODE" />
+		<result property="isa_MILITARY_CODE" column="isa_MILITARY_CODE" />
+		<result property="isa_MYEONJE" column="isa_MYEONJE" />
+		<result property="isa_MIL_NUM" column="isa_MIL_NUM" />
+		<result property="isa_MILI_STA_DATE" column="isa_MILI_STA_DATE" />
+		<result property="isa_MILI_END_DATE" column="isa_MILI_END_DATE" />
+		<result property="isa_POS_CODE" column="isa_POS_CODE" />
+		<result property="isa_GUNBYEOL_CODE" column="isa_GUNBYEOL_CODE" />
+		<result property="isa_BOTS_CODE" column="isa_BOTS_CODE" />
+		<result property="isa_YEBIGUN_CODE" column="isa_YEBIGUN_CODE" />
+		<result property="isa_DISCHARGE_CODE" column="isa_DISCHARGE_CODE" />
+		<result property="isa_MILITARY_CLASS_CODE" column="isa_MILITARY_CLASS_CODE" />
 	</resultMap>
 
 	<select id="searchList" resultMap="cardResult01" parameterType="java.util.Map"> 
@@ -72,5 +98,197 @@
 		delete PERSON_BC_DETAI
 		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM}
 	</delete>	
-
+	
+	
+	<!-- 인사기록카드_가족 -->
+	<resultMap id="cardResult02" type="cardFamVO">
+		<result property="pk_FAM_CODE" column="pk_FAM_CODE" />
+		<result property="fk_FAM_SAWON_CODE" column="fk_FAM_SAWON_CODE" />
+		<result property="fam_NAME" column="fam_NAME" />
+		<result property="fam_RELATIONS" column="fam_RELATIONS" />
+		<result property="fam_LIVE" column="fam_LIVE" />
+		<result property="fam_RES_NUM" column="fam_RES_NUM" />
+		<result property="fam_SUDANG" column="fam_SUDANG" />
+		<result property="fam_DISABLED_CODE" column="fam_DISABLED_CODE" />
+		<result property="fam_LOCAL_CODE" column="fam_LOCAL_CODE" />
+		<result property="fam_BIRTH_DATE" column="fam_BIRTH_DATE" />
+		<result property="fam_SOLAR_CODE" column="fam_SOLAR_CODE" />
+		<result property="fam_HAGLYEOG_CODE" column="fam_HAGLYEOG_CODE" />
+		<result property="fam_GRADUATION_CODE" column="fam_GRADUATION_CODE" />
+		<result property="fam_JOB" column="fam_JOB" />
+		<result property="fam_WORK_NAME" column="fam_WORK_NAME" />
+		<result property="fam_POSITION" column="fam_POSITION" />
+		<result property="fam_INT_USER_ID" column="fam_INT_USER_ID" />
+		<result property="fam_INT_DATE" column="fam_INT_DATE" />
+		<result property="fam_MOD_USER_ID" column="fam_MOD_USER_ID" />
+		<result property="fam_MOD_DATE" column="fam_MOD_DATE" />
+	</resultMap>
+	
+	<select id="ISA_fam" resultMap="cardResult02" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select PK_FAM_CODE, FK_FAM_SAWON_CODE, FAM_NAME, FAM_RELATIONS, FAM_LIVE,
+			 		FAM_RES_NUM, FAM_SUDANG, FAM_DISABLED_CODE, FAM_LOCAL_CODE, FAM_BIRTH_DATE,
+			 		FAM_SOLAR_CODE, FAM_HAGLYEOG_CODE, FAM_GRADUATION_CODE, FAM_JOB, FAM_WORK_NAME, FAM_POSITION
+         	from   sawon s, fam f
+      	]]>
+		<where>
+			s.pk_sawon_code = f.fk_fam_sawon_code
+			<if test="fk_FAM_SAWON_CODE != '' and fk_FAM_SAWON_CODE != null">
+				and fk_FAM_SAWON_CODE = #{fk_FAM_SAWON_CODE}
+			</if>
+		</where>
+	</select>
+	
+	<update id="updateDataFam" parameterType="java.util.Map">
+		update FAM
+		set  FAM_NAME = #{fam_NAME , jdbcType=VARCHAR},
+			 FAM_RELATIONS = #{fam_RELATIONS , jdbcType=VARCHAR},
+			 FAM_LIVE = #{fam_LIVE , jdbcType=VARCHAR},
+			 FAM_RES_NUM = #{fam_RES_NUM , jdbcType=VARCHAR},
+			 FAM_SUDANG = #{fam_SUDANG , jdbcType=VARCHAR},
+			 FAM_DISABLED_CODE = #{fam_DISABLED_CODE , jdbcType=VARCHAR},
+			 FAM_LOCAL_CODE = #{fam_LOCAL_CODE , jdbcType=VARCHAR},
+			 FAM_BIRTH_DATE = #{fam_BIRTH_DATE , jdbcType=VARCHAR},
+			 FAM_SOLAR_CODE = #{fam_SOLAR_CODE , jdbcType=VARCHAR},
+			 FAM_HAGLYEOG_CODE = #{fam_HAGLYEOG_CODE , jdbcType=VARCHAR},
+			 FAM_GRADUATION_CODE = #{fam_GRADUATION_CODE , jdbcType=VARCHAR},
+			 FAM_JOB = #{fam_JOB, jdbcType=VARCHAR},
+			 FAM_WORK_NAME = #{fam_WORK_NAME, jdbcType=VARCHAR},
+			 FAM_POSITION = #{fam_POSITION, jdbcType=VARCHAR}
+		where PK_FAM_CODE = #{pk_FAM_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertDataFam" parameterType="java.util.Map">
+		insert into FAM
+			(PK_FAM_CODE,
+			 FK_FAM_SAWON_CODE,
+			 FAM_NAME,
+			 FAM_RELATIONS,
+			 FAM_LIVE,
+			 FAM_RES_NUM,
+			 FAM_SUDANG,
+			 FAM_DISABLED_CODE,
+			 FAM_LOCAL_CODE,
+			 FAM_BIRTH_DATE,
+			 FAM_SOLAR_CODE,
+			 FAM_HAGLYEOG_CODE,
+			 FAM_GRADUATION_CODE,
+			 FAM_JOB,
+			 FAM_WORK_NAME,
+			 FAM_POSITION)
+		values(#{pk_FAM_CODE, jdbcType=VARCHAR},
+			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_FAM_SAWON_CODE, jdbcType=VARCHAR}),
+			   #{fam_NAME, jdbcType=VARCHAR},
+			   #{fam_RELATIONS, jdbcType=VARCHAR},
+			   #{fam_LIVE, jdbcType=VARCHAR},
+			   #{fam_RES_NUM, jdbcType=VARCHAR},
+			   #{fam_SUDANG, jdbcType=VARCHAR},
+			   #{fam_DISABLED_CODE, jdbcType=VARCHAR},
+			   #{fam_LOCAL_CODE, jdbcType=VARCHAR},
+			   #{fam_BIRTH_DATE, jdbcType=VARCHAR},
+			   #{fam_SOLAR_CODE, jdbcType=VARCHAR},
+			   #{fam_HAGLYEOG_CODE, jdbcType=VARCHAR},
+			   #{fam_GRADUATION_CODE, jdbcType=VARCHAR},
+			   #{fam_JOB, jdbcType=VARCHAR},
+			   #{fam_WORK_NAME, jdbcType=VARCHAR},
+			   #{fam_POSITION, jdbcType=VARCHAR})
+	</insert>	
+	
+	<delete id="deleteDataFam" parameterType="java.util.Map">
+		delete FAM
+		where PK_FAM_CODE = #{pk_FAM_CODE}
+	</delete>
+	
+	<!-- 인사기록카드_학력 -->
+	<resultMap id="cardResult04" type="hlVO">
+		<result property="pk_HL_CODE" column="pk_HL_CODE" />
+		<result property="fk_HL_SAWON_CODE" column="fk_HL_SAWON_CODE" />
+		<result property="hl_SCHOOL_CODE" column="hl_SCHOOL_CODE" />
+		<result property="hl_STA_DATE" column="hl_STA_DATE" />
+		<result property="hl_END_DATE" column="hl_END_DATE" />
+		<result property="hl_SORT_CODE" column="hl_SORT_CODE" />
+		<result property="hl_LOCATION" column="hl_LOCATION" />
+		<result property="hl_MAJOR_CODE" column="hl_MAJOR_CODE" />
+		<result property="hl_MINOR_CODE" column="hl_MINOR_CODE" />
+		<result property="hl_DEGREE" column="hl_DEGREE" />
+		<result property="hl_JUYA_CODE" column="hl_JUYA_CODE" />
+		<result property="hl_MAIN_CODE" column="hl_MAIN_CODE" />
+		<result property="hl_INT_USER_ID" column="hl_INT_USER_ID" />
+		<result property="hl_INT_DATE" column="hl_INT_DATE" />
+		<result property="hl_MOD_USER_ID" column="hl_MOD_USER_ID" />
+		<result property="hl_MOD_DATE" column="hl_MOD_DATE" />
+	</resultMap>
+	
+	<select id="ISA_hl" resultMap="cardResult04" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select HL_SCHOOL_CODE, HL_STA_DATE, HL_END_DATE,
+         		   HL_SORT_CODE, HL_LOCATION, HL_MAJOR_CODE,
+         		   HL_MINOR_CODE, HL_DEGREE, HL_JUYA_CODE,
+         		   HL_MAIN_CODE, FK_HL_SAWON_CODE, PK_HL_CODE
+			from sawon s, hl h
+      	]]>
+		<where>
+			s.pk_sawon_code = h.fk_hl_sawon_code
+			<if test="fk_HL_SAWON_CODE != '' and fk_HL_SAWON_CODE != null">
+				and h.fk_hl_sawon_code = #{fk_HL_SAWON_CODE, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<update id="updateDataHL" parameterType="java.util.Map">
+		update HL
+		set  HL_SCHOOL_CODE = #{hl_SCHOOL_CODE , jdbcType=VARCHAR},
+			 HL_STA_DATE = #{hl_STA_DATE , jdbcType=VARCHAR},
+			 HL_END_DATE = #{hl_END_DATE , jdbcType=VARCHAR},
+			 HL_SORT_CODE = #{hl_SORT_CODE , jdbcType=VARCHAR},
+			 HL_LOCATION = #{hl_LOCATION , jdbcType=VARCHAR},
+			 HL_MAJOR_CODE = #{hl_MAJOR_CODE , jdbcType=VARCHAR},
+			 HL_MINOR_CODE = #{hl_MINOR_CODE , jdbcType=VARCHAR},
+			 HL_DEGREE = #{hl_DEGREE , jdbcType=VARCHAR},
+			 HL_JUYA_CODE = #{hl_JUYA_CODE , jdbcType=VARCHAR},
+			 HL_MAIN_CODE = #{hl_MAIN_CODE , jdbcType=VARCHAR}
+		where PK_HL_CODE = #{pk_HL_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertDataHL" parameterType="java.util.Map">
+		insert into HL
+			(PK_HL_CODE, FK_HL_SAWON_CODE, HL_SCHOOL_CODE,
+			 HL_STA_DATE, HL_END_DATE, HL_SORT_CODE,
+			 HL_LOCATION, HL_MAJOR_CODE, HL_MINOR_CODE,
+			 HL_DEGREE, HL_JUYA_CODE, HL_MAIN_CODE)
+		values(#{pk_HL_CODE, jdbcType=VARCHAR},
+			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_HL_SAWON_CODE, jdbcType=VARCHAR}),
+			   #{hl_SCHOOL_CODE, jdbcType=VARCHAR},
+			   #{hl_STA_DATE, jdbcType=VARCHAR},
+			   #{hl_END_DATE, jdbcType=VARCHAR},
+			   #{hl_SORT_CODE, jdbcType=VARCHAR},
+			   #{hl_LOCATION, jdbcType=VARCHAR},
+			   #{hl_MAJOR_CODE, jdbcType=VARCHAR},
+			   #{hl_MINOR_CODE, jdbcType=VARCHAR},
+			   #{hl_DEGREE, jdbcType=VARCHAR},
+			   #{hl_JUYA_CODE, jdbcType=VARCHAR},
+			   #{hl_MAIN_CODE, jdbcType=VARCHAR})
+	</insert>	
+	
+	<delete id="deleteDataHL" parameterType="java.util.Map">
+		delete HL
+		where pk_HL_CODE = #{pk_HL_CODE}
+	</delete>
+	
+	
+	
+	<!-- 공통코드 -->
+	<resultMap id="cardResult03" type="com_codeVO">
+		<result property="classno" column="classno" />
+		<result property="codecd" column="codecd" />
+		<result property="codenm" column="codenm" />
+	</resultMap>
+	
+	<select id="COM_CODE" resultMap="cardResult03" parameterType="java.util.Map"> 
+      <![CDATA[
+         select classno, codenm
+		 from   com_code
+      ]]>
+	</select>
+	
 </mapper>

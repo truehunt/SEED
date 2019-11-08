@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="hr.pay.p0002">
+	<resultMap id="SALARY_calculResult01" type="SALARY_calculVO">
+		<result property="fk_TA_SAWON_CODE" column="fk_TA_SAWON_CODE"/>
+		<result property="ta_SAWON_NAME" column="ta_SAWON_NAME"/>
+		<result property="ta_ATTRIBUTION" column="ta_ATTRIBUTION"/>
+		<result property="ta_PAYMENTDAY" column="ta_PAYMENTDAY"/>
+		<result property="ta_INQUIRY_CONDITION" column="ta_INQUIRY_CONDITION"/>
+		<result property="pk_TA_WORKPLACE_CODE" column="pk_TA_WORKPLACE_CODE"/>
+		<result property="salary_CALCUL_ITEM" column="salary_CALCUL_ITEM"/>
+		<result property="salary_CALCUL_MONEY" column="salary_CALCUL_MONEY"/>
+		
+		<result property="pk_WORKPLACE_CODE" column="pk_WORKPLACE_CODE"/>
+		<result property="fk_WORKPLACE_CODE" column="fk_WORKPLACE_CODE"/>
+		<result property="fk_SAWON_WORKPLACE_CODE" column="fk_SAWON_WORKPLACE_CODE"/>
+		<result property="pk_SAWON_CODE" column="pk_SAWON_CODE"/>
+		<result property="sawon_NAME" column="sawon_NAME"/>
+		<result property="pk_DEPT_CODE" column="pk_DEPT_CODE"/>
+		<result property="fk_DEPT_CODE" column="fk_DEPT_CODE"/>
+		
+	</resultMap>
+	
+	
+		<resultMap id="SALARY_calculResult02" type="SALARY_calculVO">
+			  <result property="pk_SALARY_CALCUL_TOTAL_CODE" column="pk_SALARY_CALCUL_TOTAL_CODE"/>
+		      <result property="fk_TA_SAWON_CODE" column="fk_TA_SAWON_CODE"/>
+		      <result property="salary_CALCUL_ITEM" column="salary_CALCUL_ITEM"/>
+		      <result property="salary_CALCUL_MONEY" column="salary_CALCUL_MONEY"/>
+		  
+		      <result property="pk_SAWON_CODE" column="pk_SAWON_CODE"/>
+		
+	
+	</resultMap>
+	
+	
+	
+	
+	
+	<select id="searchList" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select a.pk_sawon_code, a.sawon_name
+			from SAWON a, DEPT b
+			
+		]]>
+		<where>
+		      a.fk_dept_code = b.pk_dept_code
+		 and a.fk_sawon_workplace_code = b.fk_workplace_code
+		      
+				<if test="FK_WORKPLACE_CODE != null">
+				      and FK_SAWON_WORKPLACE_CODE = #{FK_WORKPLACE_CODE}
+			</if>
+				<if test="PK_DEPT_CODE != null">
+				      and FK_DEPT_CODE = #{PK_DEPT_CODE}
+			</if>
+			
+		</where>
+	</select>
+	
+	
+	
+	<select id="searchList2" resultMap="SALARY_calculResult02" parameterType="java.util.Map">
+		<![CDATA[
+			select a.pk_sawon_code, b.salary_calcul_item, b.salary_calcul_money
+			from SAWON a, SALARY_CALCUL_TOTAL b
+		]]>
+		<where>
+			 a.pk_sawon_code = b.fk_ta_sawon_code
+		     
+		<if test="PK_SAWON_CODE != null">
+				      and PK_SAWON_CODE = #{PK_SAWON_CODE}
+			</if>
+		
+		</where>
+	</select>
+	
+	
+	<select id="siteList" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select WORKPLACE_HEADOFF_WHE, PK_WORKPLACE_CODE
+			from WORKPLACE
+		]]>
+	</select>
+	
+	<select id="deptList" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select dept_name, PK_DEPT_CODE
+			from dept d, WORKPLACE w
+		]]>
+		<where>
+			FK_WORKPLACE_CODE = w.PK_WORKPLACE_CODE
+			<if test="pk_WORKPLACE_CODE != null">
+				and w.pk_WORKPLACE_CODE = #{pk_WORKPLACE_CODE}
+			</if>
+		</where>
+	</select>
+	
+	
+	<update id="updateData" parameterType="java.util.Map">
+		update SALARY_CALCUL_TOTAL
+		set   PK_SALARY_CALCUL_TOTAL_CODE = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
+		    , FK_TA_SAWON_CODE = #{fk_TA_SAWON_CODE, jdbcType=VARCHAR}
+		    , SALARY_CALCUL_ITEM = #{salary_CALCUL_ITEM, jdbcType=VARCHAR}
+			, SALARY_CALCUL_MONEY = #{salary_CALCUL_MONEY, jdbcType=VARCHAR}
+			
+			
+		where PK_SALARY_CALCUL_TOTAL_CODE = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertData" parameterType="java.util.Map">
+		
+		insert into SALARY_CALCUL_TOTAL(PK_SALARY_CALCUL_TOTAL_CODE, FK_TA_SAWON_CODE, SALARY_CALCUL_ITEM, salary_CALCUL_MONEY) values(#{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR},#{fk_TA_SAWON_CODE, jdbcType=VARCHAR}, #{salary_CALCUL_ITEM, jdbcType=VARCHAR}, #{salary_CALCUL_MONEY, jdbcType=VARCHAR})
+	
+	</insert>	
+	
+	<delete id="deleteData" parameterType="java.util.Map">
+	     delete SALARY_CALCUL_TOTAL
+	 
+		 where TRIM(PK_SALARY_CALCUL_TOTAL_CODE) = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
+	</delete>
+</mapper>

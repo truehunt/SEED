@@ -15,6 +15,16 @@
 		<result property="ta_DAY" column="ta_DAY"/>
 		<result property="ta_HOUR" column="ta_HOUR"/>
 		
+		
+		
+		
+		<result property="pk_WORKPLACE_CODE" column="pk_WORKPLACE_CODE"/>
+		<result property="fk_WORKPLACE_CODE" column="fk_WORKPLACE_CODE"/>
+		<result property="fk_SAWON_WORKPLACE_CODE" column="fk_SAWON_WORKPLACE_CODE"/>
+		<result property="pk_SAWON_CODE" column="pk_SAWON_CODE"/>
+		<result property="sawon_NAME" column="sawon_NAME"/>
+		<result property="pk_DEPT_CODE" column="pk_DEPT_CODE"/>
+		<result property="fk_DEPT_CODE" column="fk_DEPT_CODE"/>
 	</resultMap>
 	
 	
@@ -25,6 +35,7 @@
 		      <result property="ta_HOUR" column="ta_HOUR"/>
 			  <result property="pk_TOTAL_CODE" column="pk_TOTAL_CODE"/>
 		
+			  <result property="pk_SAWON_CODE" column="pk_SAWON_CODE"/>
 		
 	
 	</resultMap>
@@ -35,22 +46,19 @@
 	
 	<select id="searchList" resultMap="TA_inputResult01" parameterType="java.util.Map">
 		<![CDATA[
-			select fk_ta_sawon_code, ta_sawon_name
-			from TA
+			select a.pk_sawon_code, a.sawon_name
+			from SAWON a, DEPT b
 			
 		]]>
 		<where>
-			<if test="TA_ATTRIBUTION != null">
-				      and TA_ATTRIBUTION = #{TA_ATTRIBUTION}
+		      a.fk_dept_code = b.pk_dept_code
+		 and a.fk_sawon_workplace_code = b.fk_workplace_code
+		      
+				<if test="FK_WORKPLACE_CODE != null">
+				      and FK_SAWON_WORKPLACE_CODE = #{FK_WORKPLACE_CODE}
 			</if>
-				<if test="TA_PAYMENTDAY != null">
-				      and TA_PAYMENTDAY = #{TA_PAYMENTDAY}
-			</if>
-				<if test="TA_INQUIRY_CONDITION != null">
-				      and TA_INQUIRY_CONDITION = #{TA_INQUIRY_CONDITION}
-			</if>
-				<if test="PK_TA_WORKPLACE_CODE != null">
-				      and PK_TA_WORKPLACE_CODE = #{PK_TA_WORKPLACE_CODE}
+				<if test="PK_DEPT_CODE != null">
+				      and FK_DEPT_CODE = #{PK_DEPT_CODE}
 			</if>
 			
 		</where>
@@ -60,23 +68,43 @@
 	
 	<select id="searchList2" resultMap="TA_inputResult02" parameterType="java.util.Map">
 		<![CDATA[
-			select fk_ta_sawon_code, ta_divi, ta_day, ta_hour
-			from TA_TOTAL
+			select a.pk_sawon_code, b.ta_divi, b.ta_day, b.ta_hour
+			from SAWON a,TA_TOTAL b
 		]]>
 		<where>
-			<if test="FK_TA_SAWON_CODE != null">
-				      and FK_TA_SAWON_CODE = #{FK_TA_SAWON_CODE}
+		     a.pk_sawon_code = b.fk_ta_sawon_code
+		     
+			<if test="PK_SAWON_CODE != null">
+				      and PK_SAWON_CODE = #{PK_SAWON_CODE}
 			</if>
 		
 		</where>
 	</select>
 	
+	<select id="siteList" resultMap="TA_inputResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select WORKPLACE_HEADOFF_WHE, PK_WORKPLACE_CODE
+			from WORKPLACE
+		]]>
+	</select>
 	
+	<select id="deptList" resultMap="TA_inputResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select dept_name, PK_DEPT_CODE
+			from dept d, WORKPLACE w
+		]]>
+		<where>
+			FK_WORKPLACE_CODE = w.PK_WORKPLACE_CODE
+			<if test="pk_WORKPLACE_CODE != null">
+				and w.pk_WORKPLACE_CODE = #{pk_WORKPLACE_CODE}
+			</if>
+		</where>
+	</select>
 	
 	<update id="updateData" parameterType="java.util.Map">
 		update TA_TOTAL
 		set   PK_TOTAL_CODE = #{pk_TOTAL_CODE, jdbcType=VARCHAR}
-		    , FK_TA_SAWON_CODE = #{fk_TA_SAWON_CODE, jdbcType=VARCHAR}
+		    , PK_SAWON_CODE = #{pk_SAWON_CODE, jdbcType=VARCHAR}
 		    , TA_DIVI = #{ta_DIVI, jdbcType=VARCHAR}
 			, TA_DAY = #{ta_DAY, jdbcType=VARCHAR}
 			, TA_HOUR = #{ta_HOUR, jdbcType=VARCHAR}
@@ -86,7 +114,7 @@
 	
 	<insert id="insertData" parameterType="java.util.Map">
 		
-		insert into TA_TOTAL(PK_TOTAL_CODE, FK_TA_SAWON_CODE, TA_DIVI, TA_DAY, TA_HOUR) values(#{pk_TOTAL_CODE, jdbcType=VARCHAR},#{fk_TA_SAWON_CODE, jdbcType=VARCHAR}, #{ta_DIVI, jdbcType=VARCHAR}, #{ta_DAY, jdbcType=VARCHAR}, #{ta_HOUR, jdbcType=VARCHAR})
+		insert into TA_TOTAL(PK_TOTAL_CODE, PK_SAWON_CODE, TA_DIVI, TA_DAY, TA_HOUR) values(#{pk_TOTAL_CODE, jdbcType=VARCHAR},#{pk_SAWON_CODE, jdbcType=VARCHAR}, #{ta_DIVI, jdbcType=VARCHAR}, #{ta_DAY, jdbcType=VARCHAR}, #{ta_HOUR, jdbcType=VARCHAR})
 	
 	</insert>	
 	

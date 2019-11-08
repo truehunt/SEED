@@ -20,6 +20,10 @@ public interface TA_inputService {
 
 	 public	List<TA_inputVO> searchList2(Map<String, Object> searchMap) throws DataAccessException;
 
+	 public List<TA_inputVO> SiteList(Map<String, Object> searchMap) throws DataAccessException;
+
+	 public	List<TA_inputVO> DeptList(Map<String, Object> searchMap) throws DataAccessException;
+
 	 
 	 
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException ;
@@ -27,5 +31,7 @@ public interface TA_inputService {
 	public void updateMember(Map<String, Object> dataMap);
 
 	public void insertMember(Map<String, Object> dataMap);
+
+
 
 }

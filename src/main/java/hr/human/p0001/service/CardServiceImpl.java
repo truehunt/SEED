@@ -14,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import hr.human.p0001.dao.CardDAO;
 import hr.human.p0001.service.CardService;
+import hr.human.p0001.vo.CardFamVO;
 import hr.human.p0001.vo.CardVO;
+import hr.human.p0001.vo.Com_codeVO;
+import hr.human.p0001.vo.HlVO;
 
-
-
-
-@Service("h_s0001Service")
+@Service("h_insaCardService")
 @Transactional(propagation = Propagation.REQUIRED)
 public class CardServiceImpl implements CardService {
 	@Autowired
@@ -33,31 +33,114 @@ public class CardServiceImpl implements CardService {
 	
 	@Override
 	public List<CardVO> ISA(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("2. "+searchMap);
 		List<CardVO> list =  p0001DAO.ISA(searchMap); 
 		return list;
 	}
-
+	
+	@Override
+	public List<CardVO> ISA_c(Map<String, Object> searchMap) throws DataAccessException {
+		List<CardVO> list =  p0001DAO.ISA_c(searchMap); 
+		return list;
+	}
+	
+	@Override
+	public List<Com_codeVO> COM_CODE(Map<String, Object> searchMap) throws DataAccessException {
+		List<Com_codeVO> list =  p0001DAO.COM_CODE(searchMap); 
+		return list;
+	}
+	
+	@Override
+	public List<CardFamVO> ISA_fam(Map<String, Object> searchMap) throws DataAccessException {
+		System.out.println("2. "+searchMap);
+		List<CardFamVO> list =  p0001DAO.ISA_fam(searchMap); 
+		return list;
+	}
+	
+	@Override
+	public List<HlVO> ISA_hl(Map<String, Object> searchMap) throws DataAccessException {
+		List<HlVO> list =  p0001DAO.ISA_hl(searchMap);
+		
+		return list;
+	}
+	
+	//
 	@Override
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
 		String[] status = dataMap.get("STATUS");
-		int length = status.length; // row¼ö
+		int length = status.length; // rowìˆ˜
 		int i = 0;
 		
-		for(String str : status) {
-			Map<String, String> row = getRow(dataMap, length, i); // ÇöÀç IndexÀÇ Row Map
-			if("I".equals(str)) { // Ãß°¡
+		for (String str : status) {
+			Map<String, String> row = getRow2(dataMap, length, i); // í˜„ì¬ Indexì˜ Row Map
+			if ("I".equals(str)) { // ì¶”ê°€
 				p0001DAO.insertData(row);
-			}else if("U".equals(str)) { // ¼öÁ¤
+			} else if ("U".equals(str)) { // ìˆ˜ì •
 				p0001DAO.updateData(row);
-			}else if("D".equals(str)) { // »èÁ¦
+			} else if ("D".equals(str)) { // ì‚­ì œ
 				p0001DAO.deleteData(row);
 			}
 			i++;
 		}
 	}
 	
-	private Map getRow(Map<String, String[]> dataMap, int length, int i) {
+	//ê°€ì¡±
+	@Override
+	public void saveDataFam(Map<String, String[]> dataMap, String fk_FAM_SAWON_CODE)  throws DataAccessException  {
+		String[] status = dataMap.get("STATUS");
+		
+		int length = status.length; // rowìˆ˜
+		
+		int i = 0;
+			
+		for (String str : status) {
+			Map<String, String> row = getRow(dataMap, length, i, fk_FAM_SAWON_CODE); // í˜„ì¬ Indexì˜ Row Map
+			if ("I".equals(str)) { // ì¶”ê°€
+				p0001DAO.insertDataFam(row);
+			} else if ("U".equals(str)) { // ìˆ˜ì •
+				p0001DAO.updateDataFam(row);
+			} else if ("D".equals(str)) { // ì‚­ì œ
+				p0001DAO.deleteDataFam(row);
+			}
+			i++;
+		}
+	}
+	
+	
+	//í•™ë ¥
+	@Override
+	public void saveDataHL(Map<String, String[]> dataMap, String fk_HL_SAWON_CODE)  throws DataAccessException  {
+		String[] status = dataMap.get("STATUS");
+		
+		int length = status.length; // rowìˆ˜
+		int i = 0;
+		for (String str : status) {
+			Map<String, String> row = getRow(dataMap, length, i, fk_HL_SAWON_CODE); // í˜„ì¬ Indexì˜ Row Map
+			if ("I".equals(str)) { // ì¶”ê°€
+				p0001DAO.insertDataHL(row);
+			} else if ("U".equals(str)) { // ìˆ˜ì •
+				p0001DAO.updateDataHL(row);
+			} else if ("D".equals(str)) { // ì‚­ì œ
+				p0001DAO.deleteDataHL(row);
+			}
+			i++;
+		}
+	}
+	
+	
+	
+	private Map getRow(Map<String, String[]> dataMap, int length, int i, String x) {
+		Map<String, String> row = new HashMap<String, String>();
+		for(String name : dataMap.keySet()) {
+			String[] data = dataMap.get(name);
+			if(length == data.length) {
+				row.put(name, data[i]);
+				row.put("fk_FAM_SAWON_CODE", x);
+			}
+		}		
+		return row;
+	}
+	
+	private Map getRow2(Map<String, String[]> dataMap, int length, int i) {
 		Map<String, String> row = new HashMap<String, String>();
 		for(String name : dataMap.keySet()) {
 			String[] data = dataMap.get(name);

@@ -20,6 +20,8 @@ public class SawonVO {
 	private String SAWON_INT_DATE;
 	private String SAWON_MOD_USER_ID;
 	private String SAWON_MOD_DATE;
+	private String RANK_NAME; // 직급명
+	private String FK_DEPT_NAME; // 부서명
 	
 	public SawonVO() {
 		System.out.println("SAWON VO 생성");
@@ -137,6 +139,20 @@ public class SawonVO {
 		SAWON_MOD_DATE = sAWON_MOD_DATE;
 	}
 
-	
+	public String getRANK_NAME() {
+		return RANK_NAME;
+	}
+
+	public void setRANK_NAME(String rANK_NAME) {
+		RANK_NAME = rANK_NAME;
+	}
+
+	public String getFK_DEPT_NAME() {
+		return FK_DEPT_NAME;
+	}
+
+	public void setFK_DEPT_NAME(String fK_DEPT_NAME) {
+		FK_DEPT_NAME = fK_DEPT_NAME;
+	}
 	
 }

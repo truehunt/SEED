@@ -77,10 +77,10 @@ public class TA_inputControllerImpl implements TA_inputController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0001/TA_input.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/p0001/p0001.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	request.setCharacterEncoding("utf-8");
-		ModelAndView main = new ModelAndView("pay/p0001/TA_input");
+		ModelAndView main = new ModelAndView("pay/p0001/p0001");
 		return main;
 	}
 	
@@ -96,11 +96,12 @@ public class TA_inputControllerImpl implements TA_inputController {
 		searchMap.put("TA_ATTRIBUTION", request.getParameter("TA_ATTRIBUTION"));
 		searchMap.put("TA_PAYMENTDAY", request.getParameter("TA_PAYMENTDAY"));
 
-		searchMap.put("TA_INQUIRY_CONDITION", request.getParameter("TA_INQUIRY_CONDITION"));
-
-		searchMap.put("PK_TA_WORKPLACE_CODE", request.getParameter("PK_TA_WORKPLACE_CODE"));
+		searchMap.put("FK_WORKPLACE_CODE", request.getParameter("FK_WORKPLACE_CODE"));
+		searchMap.put("FK_SAWON_WORKPLACE_CODE", request.getParameter("FK_SAWON_WORKPLACE_CODE"));
+		searchMap.put("PK_DEPT_CODE", request.getParameter("PK_DEPT_CODE"));
+		searchMap.put("FK_DEPT_CODE", request.getParameter("FK_DEPT_CODE"));
 		
-		
+		System.out.println(request.getParameter("FK_WORKPLACE_CODE"));
 		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
 		List<TA_inputVO> data = TA_inputService.searchList(searchMap);
         resultMap.put("Data", data);
@@ -118,7 +119,7 @@ public class TA_inputControllerImpl implements TA_inputController {
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
 		
 		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
-		searchMap.put("FK_TA_SAWON_CODE", request.getParameter("FK_TA_SAWON_CODE"));
+		searchMap.put("PK_SAWON_CODE", request.getParameter("PK_SAWON_CODE"));
 	
 		
 		
@@ -128,6 +129,52 @@ public class TA_inputControllerImpl implements TA_inputController {
         
         return resultMap;
 	}
+	
+	
+	@Override
+	@RequestMapping(value = "/pay/p0001/SiteList.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map SiteList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		
+		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
+	
+
+		
+		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
+		List<TA_inputVO> data = TA_inputService.SiteList(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}
+	
+	
+	
+	@Override
+	@RequestMapping(value = "/pay/p0001/DeptList.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map DeptList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		
+		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
+		
+		searchMap.put("pk_WORKPLACE_CODE", request.getParameter("SiteList"));
+
+		
+		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
+		List<TA_inputVO> data = TA_inputService.DeptList(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}
+	
+	
+	
+	
 	
 	
 	

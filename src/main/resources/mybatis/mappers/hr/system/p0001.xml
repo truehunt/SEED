@@ -140,15 +140,13 @@
 		</where>
 	</select>
 
-
 	<!-- 인사기록카드 사원목록 -->
 	<select id="ISA" resultMap="p0001Result01" parameterType="java.util.Map"> 
     	SELECT PK_SAWON_CODE, SAWON_NAME
           FROM SAWON 
     </select> 
 	
-	
-	<!-- 인사코드 -->
+		<!-- 인사코드 -->
 	<resultMap id="codeResult01" type="insaCodeVO">
 		<result property="pk_PERSON_BC_CODE_NUM" column="pk_PERSON_BC_CODE_NUM" />
 		<result property="person_BC_OUTPUT" column="person_BC_OUTPUT" />
@@ -187,6 +185,15 @@
 		</where>
 	</select>
 
+	<!--  -->
+	<select id="ISA_c" resultMap="codeResult01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select PERSON_BC_DETAI_MNGEMENT_NAME, fk_PERSON_BC_CODE_NUM
+         from   PERSON_BC_DETAI
+      ]]>
+	</select>
+
+
 	<update id="updateData" parameterType="java.util.Map">
 		update PERSON_BC_DETAI
 		set  pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM,jdbcType=VARCHAR}
@@ -194,6 +201,7 @@
 		   , person_BC_DETAI_REMARKS = #{person_BC_DETAI_REMARKS,jdbcType=VARCHAR}
 		   , person_BC_DETAI_NOT_USE = #{person_BC_DETAI_NOT_USE,jdbcType=VARCHAR}
 		where pk_PERSON_BC_DETAI_CODE_NUM = #{copy_CODE_NUM, jdbcType=VARCHAR}
+		and fk_person_bc_code_num = #{fk_PERSON_BC_CODE_NUM, jdbcType=VARCHAR}
 	</update>	
 	
 	<insert id="insertData" parameterType="java.util.Map">
@@ -205,5 +213,4 @@
 		delete PERSON_BC_DETAI
 		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM}
 	</delete>
-
 </mapper>

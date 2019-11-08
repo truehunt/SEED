@@ -15,11 +15,31 @@ public class TA_inputVO {
 	private String ta_DIVI;
 	private String ta_DAY;
 	private String ta_HOUR;
+	
+	private String pk_WORKPLACE_CODE;
+	private String workplace_NAME;
+	private String workplace_HEADOFF_WHE;
+	private String pk_SAWON_CODE;
+	private String sawon_NAME;
+	private String pk_DEPT_CODE;
+	private String dept_NAME;
 
 	
 
 	public TA_inputVO() {
 		System.out.println("MemberVO 占쎄문占쎄쉐占쎌쁽 占쎌깈�빊占�");
+	}
+
+
+
+	public String getWorkplace_HEADOFF_WHE() {
+		return workplace_HEADOFF_WHE;
+	}
+
+
+
+	public void setWorkplace_HEADOFF_WHE(String workplace_HEADOFF_WHE) {
+		this.workplace_HEADOFF_WHE = workplace_HEADOFF_WHE;
 	}
 
 
@@ -132,8 +152,81 @@ public class TA_inputVO {
 
 
 
+	public String getPk_WORKPLACE_CODE() {
+		return pk_WORKPLACE_CODE;
+	}
+
+
+
+	public void setPk_WORKPLACE_CODE(String pk_WORKPLACE_CODE) {
+		this.pk_WORKPLACE_CODE = pk_WORKPLACE_CODE;
+	}
+
+
+
+	public String getWorkplace_NAME() {
+		return workplace_NAME;
+	}
+
+
+
+	public void setWorkplace_NAME(String workplace_NAME) {
+		this.workplace_NAME = workplace_NAME;
+	}
+
+
+
+	public String getPk_SAWON_CODE() {
+		return pk_SAWON_CODE;
+	}
+
+
+
+	public void setPk_SAWON_CODE(String pk_SAWON_CODE) {
+		this.pk_SAWON_CODE = pk_SAWON_CODE;
+	}
+
+
+
+	public String getSawon_NAME() {
+		return sawon_NAME;
+	}
+
+
+
+	public void setSawon_NAME(String sawon_NAME) {
+		this.sawon_NAME = sawon_NAME;
+	}
+
+
+
+	public String getPk_DEPT_CODE() {
+		return pk_DEPT_CODE;
+	}
+
+
+
+	public void setPk_DEPT_CODE(String pk_DEPT_CODE) {
+		this.pk_DEPT_CODE = pk_DEPT_CODE;
+	}
+
+
+
+	public String getDept_NAME() {
+		return dept_NAME;
+	}
+
+
+
+	public void setDept_NAME(String dept_NAME) {
+		this.dept_NAME = dept_NAME;
+	}
+
+
+
+
 	
-	
+
 
 
 

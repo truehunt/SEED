@@ -35,6 +35,19 @@ public class TA_inputDAOImpl implements TA_inputDAO {
 		return list;
 	}
 	
+	@Override
+	public List<TA_inputVO> SiteList(Map<String, Object> searchMap) throws DataAccessException {
+		List<TA_inputVO> list = sqlSession.selectList("hr.pay.p0001.siteList", searchMap);
+		System.out.println(searchMap);
+		return list;
+	}
+	
+	@Override
+	public List<TA_inputVO> DeptList(Map<String, Object> searchMap) throws DataAccessException {
+		List<TA_inputVO> list = sqlSession.selectList("hr.pay.p0001.deptList", searchMap);
+		System.out.println(searchMap);
+		return list;
+	}
 	
 
 	@Override

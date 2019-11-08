@@ -164,6 +164,8 @@ public class SignControllerImpl implements SignController {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
     	signDocInfo.setPK_SAWON_CODE(userno);
     	
+    	System.out.println("=============================>"+signDocInfo.getPK_AD_NUM());
+    	
         signService.insertSignDoc(signDocInfo);
 
         return "redirect:/signListTobe";

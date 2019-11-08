@@ -75,18 +75,18 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/signListTobe";
 		            } else if(url === "signListTo"){ // 결재문서함 -> 결재 할(한) 문서 - 진행중, 완료
 		            	urlToGo = "/SEED/signListTo";
-		            } else if(url === "pay/p0001/TA_input.do"){ // 근태 결과 입력
-		            	urlToGo = "pay/p0001/TA_input.do";
+		            } else if(url === "pay/p0001/p0001.do"){ // 근태 결과 입력
+		            	urlToGo = "pay/p0001/p0001.do";
 		            } else if(url === "day_regist_sawon"){
 		            	urlToGo = "/SEED/attendance/p0001/day_regist_sawon.do";
 		            } else if(url === "ad_day_regist"){
 		            	urlToGo = "/SEED/attendance/p0001/day_regist.do";
-		            } else if(url === "a6"){
-		            	urlToGo = "a6";
-		            } else if(url === "a7"){
-		            	urlToGo = "a7";
-		            } else if(url === "a8"){
-		            	urlToGo = "a8";
+		            } else if(url === "pay/p0002/p0002.do"){
+		            	urlToGo = "pay/p0002/p0002.do";
+		            } else if(url === "pay/p0003/p0003.do"){
+		            	urlToGo = "pay/p0003/p0003.do";
+		            } else if(url === "pay/s0001/s0001.do"){
+		            	urlToGo = "pay/s0001/s0001.do";
 		            } else if(url === "adcompany_Enroll"){ // 등록정보관리 - 회사등록
 		            	urlToGo = "/SEED/human/s0001/company_Enroll.do";
 		            } else if(url === "b1"){
@@ -324,14 +324,18 @@ $(document).ready(function(){
                             <a href="#"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay"/><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
                                 <li>
-                                    <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay1"/>','chart','pay/p0001/ibsheet.do','pay/p0001/TA_input.do'); return false"><s:message code="main.pay1"/></a>
+
+                                    <a href='#'  onClick="doAction(myTab,'근태결과입력','chart','pay/p0001/p0001.do','pay/p0001/p0001.do'); return false">근태결과입력</a>
+
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay2"/>','chart','kk','kk'); return false"><s:message code="main.pay2"/></a>
-                                </li>
+
+                                    <a href='#' onClick="doAction(myTab,'급여입력 및 계산','chart','pay/p0002/p0002.do','pay/p0002/p0002.do'); return false">급여입력 및 계산</a>                                </li>
+
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay3"/>','chart','ll','ll'); return false"><s:message code="main.pay3"/></a>
-                                </li>
+
+                                    <a href='#' onClick="doAction(myTab,'급여이체현황','chart','pay/p0003/p0003.do','pay/p0003/p0003.do'); return false">급여이체현황</a>
+
                                 <li>
                                     <a href='#' onClick="doAction(myTab,'<s:message code="main.pay4"/>','chart','mm','mm'); return false"><s:message code="main.pay4"/></a>
                                 </li>
@@ -377,7 +381,9 @@ $(document).ready(function(){
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup1"/>','chart','tt','tt'); return false"><s:message code="main.setup1"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup2"/>','chart','uu','uu'); return false"><s:message code="main.setup2"/></a>
+
+	                                    <a href='#' onClick="doAction(myTab,'급/상여 지급일자 등록','chart','pay/s0001/s0001.do','pay/s0001/s0001.do'); return false">급/상여 지급일자 등록</a>
+
 	                                </li>
 	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup3"/>','chart','vv','vv'); return false"><s:message code="main.setup3"/></a>

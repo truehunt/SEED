@@ -24,7 +24,6 @@
       	//{Header:"No",Type:"Seq", Align:"Center"},
       	//{Header:"",Type:"DummyCheck", SaveName:"chk", Width:35, Align:"Center",Edit:1,HeaderCheck:1},
       	{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
-		{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50},
         {Header:"코드",Type:"Text", SaveName:"pk_PERSON_BC_CODE_NUM", Width:60, Align:"Center",Edit:0},
         {Header:"관리항목명",Type:"Text", SaveName:"person_BC_MNGEMENT_NAME", Width:120, Align:"Center",Edit:0},
         {Header:"수정여부",Type:"Text", SaveName:"person_BC_MODIFY_WHE", Width:80, Align:"Center",Edit:0}
@@ -47,8 +46,8 @@
          {Header:"상세코드",Type:"Text", SaveName:"pk_PERSON_BC_DETAI_CODE_NUM", Width:60, Align:"Center"},
          {Header:"update용코드",Type:"Text", SaveName:"copy_CODE_NUM", Width:60, Align:"Center"},
          {Header:"관리내역명",Type:"Text", SaveName:"person_BC_DETAI_MNGEMENT_NAME", Width:100, Align:"Center"},
-         {Header:"사용여부",Type:"Text", SaveName:"person_BC_DETAI_REMARKS", Width:80, Align:"Center"},
-         {Header:"비고",Type:"Text", SaveName:"person_BC_DETAI_NOT_USE", Width:90, Align:"Center"},
+         {Header:"사용여부",Type:"Text", SaveName:"person_BC_DETAI_NOT_USE", Width:80, Align:"Center"},
+         {Header:"비고",Type:"Text", SaveName:"person_BC_DETAI_REMARKS", Width:90, Align:"Center"},
       ];
       
       IBS_InitSheet(mySheet2,initData);
@@ -115,45 +114,57 @@
       	//조회
          case "search":
             mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/searchList.do");
-            break;
-        //초기화
-         case "reload":
-            mySheet.RemoveAll();
-            mySheet2.RemoveAll();
-            break;
-        //저장
-         case "save":
-        	 var sRow = mySheet2.FindStatusRow("U"); // 업데이트 하는 곳을 찾는다
-        	 var arrow = sRow.split(";"); // 위에서 찾은 위치를 배열로서 저장
-        	 for(var i=0; i<arrow.length; i++){
-        		 var row = arrow[i];
-        		 var code = mySheet2.CellSearchValue(row,3);
-        		 mySheet2.SetCellValue(row,4,code);
-        	 }
-        	mySheet2.DoSave("${pageContext.request.contextPath}/system/p0001/insertData.do");
-            break;
-        //추가 - 코드부분들어감
-         case "insert":
-        	 mySheet2.DataInsert(-1);
-        	 //코드부분 들어가는 코딩
-        	 var select_row = mySheet2.GetSelectRow();
-        	 var col = 2;
-        	 mySheet2.SetCellValue(select_row, col, code_num);
-            break; 
-        //인사 선택시
-         case "insa":
-        	 var param = "person_BC_OUTPUT=" +document.getElementById("insa").value;
-             mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
-             break;
-      }
-   }
-   
-   
-  
+			break;
+		//초기화
+		case "reload":
+			mySheet.RemoveAll();
+			mySheet2.RemoveAll();
+			break;
+		//저장
+		case "save":
+			var sRow = mySheet2.FindStatusRow("U"); // 업데이트 하는 곳을 찾는다
+			var arrow = sRow.split(";"); // 위에서 찾은 위치를 배열로서 저장
+			for (var i = 0; i < arrow.length; i++) {
+				var row = arrow[i];
+				var code = mySheet2.CellSearchValue(row, 3);
+				mySheet2.SetCellValue(row, 4, code);
+			}
+			mySheet2.DoSave("${pageContext.request.contextPath}/system/p0001/insertData.do");
+			break;
+		//추가 - 코드부분들어감
+		case "insert":
+			mySheet2.DataInsert(-1);
+			//코드부분 들어가는 코딩
+			var select_row = mySheet2.GetSelectRow();
+			var col = 2;
+			mySheet2.SetCellValue(select_row, col, code_num);
+			break;
+		//인사 선택시
+		case "insa":
+			var param = "person_BC_OUTPUT=" + document.getElementById("insa").value;
+			mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
+			break;
+		//급여 선택시
+		case "salary":
+			var param = "person_BC_OUTPUT=" + document.getElementById("salary").value;
+			mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
+			break;
+		//근태 선택시
+		case "tae":
+			var param = "person_BC_OUTPUT=" + document.getElementById("tae").value;
+			mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
+			break;
+		//기타 선택시
+		case "other":
+			var param = "person_BC_OUTPUT=" + document.getElementById("other").value;
+			mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
+			break;
+		}
+	}
 
-   ////////////////////////////////////////////////
-   /* 
- 	function fnAppendLog(msg) {
+	////////////////////////////////////////////////
+	/* 
+	function fnAppendLog(msg) {
 		var evt_log = document.getElementById("evt_log");
 		evt_log.value = msg + "\n" + evt_log.value;
 	} 
@@ -168,14 +179,28 @@
 			 fnAppendLog(msg)
 	
 	}*/
-	
+
 	// 기타 이벤트 //마우스 클릭시
-	function mySheet_OnSelectCell(oldrow,oldcol,row,col) {
-		x = "fk_PERSON_BC_CODE_NUM=" + mySheet.GetCellValue(row,2);
-		code_num = mySheet.GetCellValue(row,2);
-		mySheet2.DoSearch("${pageContext.request.contextPath}/system/p0001/detai.do",x);
+	function mySheet_OnSelectCell(oldrow, oldcol, row, col) {
+		x = "fk_PERSON_BC_CODE_NUM=" + mySheet.GetCellValue(row, 1);
+		code_num = mySheet.GetCellValue(row, 1);
+		Modify = mySheet.GetCellValue(row, 3);
+		mySheet2.DoSearch("${pageContext.request.contextPath}/system/p0001/detai.do", x);
 	}
-	
+
+	// 기타이벤트 // 키보드 버튼이 올라올 시
+	function mySheet2_OnKeyUp(Row, Col, KeyCode, Shift) {
+		if (Modify == 1) { //인사코드 부분 - 수정 가능일시이니까 / 인사기록카드에서는 상관x
+			//console.log("keycode: "+KeyCode+"&col:"+mySheet2.LastCol()+"&row:"+mySheet2.RowCount());
+			/* console.log("keycode: " + KeyCode);
+			console.log("col:" + Col + "lastcol:" + mySheet2.LastCol());
+			console.log("row:" + Row + "row갯수:" + mySheet2.RowCount()); */
+			if (KeyCode == 13 && Col == mySheet2.LastCol()
+					&& Row == mySheet2.RowCount()) { // 엔터를 누르고 / col이 마지막 col이고 / row가 마지막 열일경우
+				doAction("insert");
+			}
+		}
+	}
 </script>
 
 <body onload="LoadPage()">
@@ -205,14 +230,9 @@
 								<option value="">----</option>
 								<option value="insa" id="insa" >인사</option>
     							<option value="salary" id="salary">급여</option>
-    							<option value="ta" id="ta">근태</option>
+    							<option value="tae" id="tae">근태</option>
     							<option value="other" id="other">기타</option>
 							</select>	
-						</td>
-						<th class="r20">검색:</th>
-						<td class="r20">
-							<input type="text" id="p_id" name="p_id">
-							<a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
 						</td>
 						
 						<!-- 클릭하는 값에 대한 정보를 가져온다 -->

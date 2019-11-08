@@ -14,91 +14,90 @@
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 
+<link href="${contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/sb-admin/metisMenu.min.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/sb-admin/sb-admin-2.css" rel="stylesheet">
+    <link href="${contextPath}/resources/css/sb-admin/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="${contextPath}/resources/js/datepicker/datepicker.css" rel="stylesheet" type="text/css">
+
+    <script src="${contextPath}/resources/js/jquery-2.2.3.min.js"></script>
+    <script src="${contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
+    <script src="${contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
+    <script src="${contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
+    <script src="${contextPath}/resources/js/datepicker/bootstrap-datepicker.js"></script>
+    <script src="${contextPath}/resources/js/project9.js"></script>
+
 <script language="javascript">
    var pageheightoffset = 200;
 
    /*Sheet 기본 설정 */
     function LoadPage() {
+
+      
+      
+      var cfg = {FrozenCol:9,MergeSheet:msHeaderOnly };  
+      mySheet.SetConfig(cfg); 
+      
       var initData = {};
       initData.Cfg = {SearchMode:smLazyLoad, Page:50,MergeSheet:msHeaderOnly,ChildPage:10,DragMode:1   };
       initData.Cols = [
       //{Header:"No",Type:"Seq", Align:"Center"},
-         {Header:"NO",Type:"Seq",SaveName:"Seq", Align:"Center"},
-         {Header:"",Type:"DummyCheck", SaveName:"chk", Width:35, Align:"Center",Edit:1,HeaderCheck:1},
-       {Header:"사원코드",Type:"Text",SaveName:"fk_TA_SAWON_CODE",Width:60,Align:"Center"},
-       {Header:"사원명",Type:"Text",SaveName:"ta_SAWON_NAME",Width:50, Edit:0},
-      ];
+         {Header:"NO",Type:"Seq",Width:20,SaveName:"pk_D_B_PAYMENT_SEQ_CODE", Align:"Center"},
+         {Header:"상태",Type:"Status",Width:60,SaveName:"STATUS", Align:"Center"},
+   	     {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
+         {Header:"지급일자",Type:"Text",SaveName:"d_B_PAYMENT_DT",Width:100,Align:"Center"},
+         {Header:"동시발행",Type:"Text",Width:80,SaveName:"d_B_PAYMENT_SIMULTANE_ISSUE",  Align:"Center"},
+   	     {Header:"대상자선정",Type:"Text",SaveName:"d_B_PAYMENT_TARGET_SELECT",Width:200,Align:"Center"}
+       ];
       IBS_InitSheet(mySheet,initData);
-      mySheet.SetDataAutoTrim(0);
-      mySheet.SetSumText(1,"총인원");
-
-      
-      
-      
-      
-      
-      var cfg = {FrozenCol:7,MergeSheet:msHeaderOnly };  
+   
+      mySheet.SetSumValue(4,"합 계");
+  	  mySheet.SetCellAlign(mySheet.LastRow(),0,"Center");
+   
+  	  
+  	  
+  	  
+      var cfg = {FrozenCol:6,MergeSheet:msHeaderOnly };  
       mySheet2.SetConfig(cfg); 
       
       var header = [
-         {Text:"근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계|근무일별 근태집계",Align:"Center"},
-         {Text:"NO|상태|삭제|사원코드|구분|일수|시간",Align:"Center"}
+         {Text:"NO|지급급여구분|지급급여구분|지급급여구분|지급급여구분|지급급여구분",Align:"Center"},
+         {Text:"NO|급여구분|입사자상여계산|입사자상여계산|퇴사자상여계산|퇴사자상여계산",Align:"Center"},
+         {Text:"NO|급여구분|방법|기준일수|방법|기준일수",Align:"Center"}
          ];  
       var info = {Sort:0,ColMove:1,ColResize:1};  
       mySheet2.InitHeaders(header,info);  
       
       var cols = [   
-        {Header:"NO",Type:"Seq",Width:20,SaveName:"pk_TOTAL_CODE", Align:"Center"},
-        {Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
-         {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
-          {Header:"사원코드",Type:"Text",SaveName:"fk_TA_SAWON_CODE",Width:50,Align:"Center"},
-         {Header:"구분",Type:"Combo", RowSpan:1,SaveName:"ta_DIVI", ComboText:"평일정상근무일|토일정상근무일|주휴정상근무일|유휴정상근무일|무휴정상근무일", ComboCode:"평일정상근무일|토일정상근무일|주휴정상근무일|유휴정상근무일|무휴정상근무일"},          
-         {Header:"일수",Type:"AutoSum",SaveName:"ta_DAY", MinWidth:10, Align: "Center"},
-         {Header:"시간",Type:"AutoSum",SaveName:"ta_HOUR", MinWidth:10, Align: "Center"}
+        {Header:"NO",Type:"Seq",Width:20,SaveName:"fk_D_B_PAYMENT_SEQ_CODE", Align:"Center"},
+          {Header:"급여구분",Type:"Text",SaveName:"pk_PAY_BEN_C_UNIQUE_NUM",Width:50,Align:"Center"},
+         {Header:"방법",Type:"Combo", RowSpan:1,SaveName:"pay_BEN_C_RECRUIT_METHOD", ComboText:"평일정상근무일|토일정상근무일|주휴정상근무일|유휴정상근무일|무휴정상근무일", ComboCode:"평일정상근무일|토일정상근무일|주휴정상근무일|유휴정상근무일|무휴정상근무일"},          
+         {Header:"기준일수",Type:"AutoSum",SaveName:"pay_BEN_C_DATE_RECRUIT", MinWidth:10, Align: "Center"},
+         {Header:"방법",Type:"AutoSum",SaveName:"pay_BEN_C_RETIRE_BEN_METHOD", MinWidth:10, Align: "Center"},
+         {Header:"기준일수",Type:"AutoSum",SaveName:"pay_BEN_C_DATE_RESIG", MinWidth:10, Align: "Center"}
+
    
           ]; 
       mySheet2.InitColumns(cols); 
       mySheet2.SetSumText(1,"합   계");
+      
+  	  
+  	  //달력
+      $('#term1').datepicker().on('changeDate', function(ev) {
+          if (ev.viewMode=="days"){
+              $('#term1').datepicker('hide');
+          }
+      });
+      $('#term2').datepicker().on('changeDate', function(ev) {
+          if (ev.viewMode=="days"){
+              $('#term2').datepicker('hide');
+          }
+      });
     
-   }
+  
+    
+    }
 
-
-   
-   
-
-   w = 640; //팝업창의 너비          //달력정보가져오는 부분
-   h = 510; //팝업창의 높이
-
-   //중앙위치 구해오기
-   LeftPosition=(screen.width-w)/2;
-   TopPosition=(screen.height-h)/2;
-
-   //팝업 호출
-   function search1() {
-   window.open(
-         "calendar.do", "calendar", "width="+w+",height="+h+",top="+TopPosition+",left="+LeftPosition+", scrollbars=no");
-   }
-   
-   function search2() {
-      window.open(
-         "calendar2.do", "calendar2", "width="+w+",height="+h+",top="+TopPosition+",left="+LeftPosition+", scrollbars=no");
-      }
-   
-   
-   function getmonth(frm)
-   {
-    frm.attribution.value = frm.month.options[frm.month.selectedIndex].text;
-    frm.optionValue.value = frm.month.options[frm.month.selectedIndex].value;
-   }
-   
-   
-   
-
-   
-   
-   
-   
- 
 
 
 
@@ -162,29 +161,31 @@
    function doAction(sAction) {
       switch(sAction) {
       case "search": //조회
-          var param = "TA_ATTRIBUTION=" + document.getElementById("attribute").value + "&TA_PAYMENTDAY=" + document.getElementById("payday").value+"&TA_INQUIRY_CONDITION=" + document.getElementById("inquiry").value + "&PK_TA_WORKPLACE_CODE=" + document.getElementById("workplace").value;
-          
-
+          var param = "ta_ATTRIBUTION=" + document.getElementById("attribute").value 
+                   + "&ta_PAYMENTDAY=" + document.getElementById("payday").value
+                   +"&salary_BO_STA_BANK_CODE=" + document.getElementById("salary_BO_STA_BANK_CODE").value 
+                   +"&pk_TA_WORKPLACE_CODE=" + document.getElementById("workplace").value;
+ 
           console.log(param);
-         mySheet.DoSearch("${contextPath}/pay/p0001/searchList.do", param);
+         mySheet.DoSearch("${contextPath}/pay/p0003/searchList.do", param);
          
          //mySheet.DoSearch("transaction_data2.json");
          break;
       case "reload": //초기화
          mySheet.RemoveAll();
-         mySheet2.RemoveAll();
+      
          break;
       case "save": // 저장
          //var tempStr = mySheet.GetSaveString();
          //alert("서버로 전달되는 문자열 확인 :"+tempStr);
-         mySheet2.DoSave("${contextPath}/pay/p0001/saveData.do");
+         mySheet.DoSave("${contextPath}/pay/p0003/saveData.do");
          break;         
       case "insert":
-          mySheet2.DataInsert(-1);
+          mySheet.DataInsert(-1);
           //코드부분 들어가는 코딩
-          var select_row = mySheet2.GetSelectRow();
+          var select_row = mySheet.GetSelectRow();
           var col = 3;
-          mySheet2.SetCellValue(select_row, col, fk_ta_sawon_code);
+          mySheet.SetCellValue(select_row, col, fk_ta_sawon_code);
           break; 
 
    }
@@ -201,7 +202,7 @@
       x = "FK_TA_SAWON_CODE=" + mySheet.GetCellValue(row,2);
       console.log(x);
       fk_ta_sawon_code = mySheet.GetCellValue(row,2);
-      mySheet2.DoSearch("${pageContext.request.contextPath}/pay/p0001/searchList2.do",x);
+      mySheet2.DoSearch("${pageContext.request.contextPath}/pay/p0003/searchList2.do",x);
    }
    
    
@@ -261,8 +262,24 @@ function mySheet_OnSaveEnd(code,msg){
 
    
    
+
+ 
+
+   //팝업 호출
+   function search1() {
+	   
+	   
+	   w = 500; //팝업창의 너비          //달력정보가져오는 부분
+	   h = 500; //팝업창의 높이
+
+	   //중앙위치 구해오기
+	   LeftPosition=(screen.width-w)/2;
+	   TopPosition=(screen.height-h)/2;
+	   
+   window.open("s0002.do", "s0002", "width="+w+",height="+h+",top="+TopPosition+",left="+LeftPosition+", scrollbars=no");
+   }
    
-   
+  
    
    
    
@@ -278,7 +295,7 @@ function mySheet_OnSaveEnd(code,msg){
 <body onload="LoadPage()">
   <div class="page_title">
     <span><a class="closeDepth" href="#">closeDepth</a></span> 
-    <span class="title">급여/퇴직정산관리> <b>근태결과입력</b></span>
+    <span class="title">기초환경설정 > <b>급여지급일자등록</b></span>
   </div>
   <div class="main_content">
        <div class="exp_product"></div>
@@ -287,62 +304,39 @@ function mySheet_OnSaveEnd(code,msg){
       </div>
       <div class="ib_function float_right">
          <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-         <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
          <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-          <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
          </div>
          <br>      <br>
          
-         <div>
-            <br>
-          <form name="thisform1" onsubmit="return false;" style="width:50%; float:left;">
-           귀속연월&ensp;<input type="text" id="attribute" size="20">
-               <input type="image" name="submit" onclick="javascript:search1()" src="${pageContext.request.contextPath}/resources/image/searchbutton.png">
-                   </form>
-                   <form name="thisform2" onsubmit="return false;" style="width:50%; float:left;"> 
-               지급일&ensp;<input type="text" id="payday" size="20" >
-               <input type="image" name="submit" onclick="javascript:search2()" src="${pageContext.request.contextPath}/resources/image/searchbutton.png">
-                              </form>  
-      
-         <br><br><br><br>
-        
-          조회조건&ensp;<select name="inquiry" id="inquiry">
-                      <option value="사업장">사업장</option>
-                       <option value="부서">부서</option>
-                           </select>
-         &emsp;&ensp;&emsp;&emsp; &emsp;&emsp; &emsp; &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
-    <form style="width:50%; float:right;">
-                     사업장&ensp;<select name="workplace" id="workplace">
-                      <option value="본사">본사</option>
-                       <option value="대리점">대리점</option>
-                           </select>             
-                  </form>
-             
-             
+     <input type="image" name="submit" onclick="javascript:search1()" src="${pageContext.request.contextPath}/resources/image/searchbutton.png">
          
-             </div>
-             
-             </div>
-   
+         
+            <br>
+         <form class="form-inline">
+  <div class="form-group">
+    <label for="term1">귀속연월</label>
+    <input type="text" class="form-control" id="term1" >
+  </div>
+  
+ </form>
 
-
+</div>
 
 
 <br><br>
-      <div class="clear hidden"></div>
+     <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
               <DIV class="ib_product" style="width:100%;float:left">
-            <div style="height:100%;width:45%;float:left">
-               <script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); </script>
-            </div>
-         
-            
-            <div style="height:100%;width:45%;float:left">
-               <script type="text/javascript"> createIBSheet("mySheet2", "100%", "100%"); </script>
-            </div>
-         </div>
-               
-      
+				<div style="height:100%;width:45%;float:left">
+					<script type="text/javascript"> createIBSheet("mySheet", "90%", "70%"); selectSite();</script>
+				</div>
+			
+				
+				<div style="height:100%;width:50%;float:left">
+					<script type="text/javascript"> createIBSheet("mySheet2", "80%", "70%"); </script>
+				</div>
+			</div>
+     
         
         <!--right단 정보입력 및 수정단 -->
       

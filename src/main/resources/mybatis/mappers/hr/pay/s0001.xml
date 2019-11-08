@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="hr.pay.s0001">
+	<resultMap id="SET_paydayResult01" type="SET_paydayVO">
+		<result property="pk_D_B_PAYMENT_SEQ_CODE" column="pk_D_B_PAYMENT_SEQ_CODE"/>
+		<result property="d_B_PAYMENT_DT" column="d_B_PAYMENT_DT"/>
+		<result property="d_B_PAYMENT_SIMULTANE_ISSUE" column="d_B_PAYMENT_SIMULTANE_ISSUE"/>
+		<result property="d_B_PAYMENT_TARGET_SELECT" column="d_B_PAYMENT_TARGET_SELECT"/>
+	
+	
+		<result property="fk_D_B_PAYMENT_SEQ_CODE" column="fk_D_B_PAYMENT_SEQ_CODE"/>
+		<result property="pk_PAY_BEN_C_UNIQUE_NUM" column="pk_PAY_BEN_C_UNIQUE_NUM"/>
+		<result property="pay_BEN_C_RECRUIT_METHOD" column="pay_BEN_C_RECRUIT_METHOD"/>
+		<result property="pay_BEN_C_DATE_RECRUIT" column="pay_BEN_C_DATE_RECRUIT"/>
+		<result property="pay_BEN_C_RETIRE_BEN_METHOD" column="pay_BEN_C_RETIRE_BEN_METHOD"/>
+		<result property="pay_BEN_C_DATE_RESIG" column="pay_BEN_C_DATE_RESIG"/>
+	
+		
+	</resultMap>
+	
+	<select id="searchList" resultMap="SET_paydayResult01" parameterType="java.util.Map">
+		<![CDATA[
+	 select a.salary_bo_sta_bank_code, b.fk_TA_SAWON_CODE, b.ta_SAWON_NAME, a.salary_bo_sta_acc_number, a.salary_bo_sta_act_pay, b.ta_PAYMENTDAY
+       from SALARY_BO_STA a, ta b
+          	
+		]]>
+
+			<where>
+			
+          	a.pk_salary_bo_sta_sawon_code = b.fk_TA_SAWON_CODE     
+          	
+			<if test="ta_ATTRIBUTION != null">
+				      and TA_ATTRIBUTION = #{ta_ATTRIBUTION}
+			</if>
+				<if test="ta_PAYMENTDAY != null">
+				      and TA_PAYMENTDAY = #{ta_PAYMENTDAY}
+			</if>
+				<if test="salary_BO_STA_BANK_CODE != null">
+				      and SALARY_BO_STA_BANK_CODE = #{salary_BO_STA_BANK_CODE}
+			</if>
+				<if test="pk_TA_WORKPLACE_CODE != null">
+				      and PK_TA_WORKPLACE_CODE = #{pk_TA_WORKPLACE_CODE}
+			</if>
+			</where>
+	
+	</select>
+	
+	
+	
+	
+	
+	<update id="updateData" parameterType="java.util.Map">
+		update SALARY_CALCUL_TOTAL
+		set   PK_SALARY_CALCUL_TOTAL_CODE = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
+		    , FK_TA_SAWON_CODE = #{fk_TA_SAWON_CODE, jdbcType=VARCHAR}
+		    , SALARY_CALCUL_ITEM = #{salary_CALCUL_ITEM, jdbcType=VARCHAR}
+			, SALARY_CALCUL_MONEY = #{salary_CALCUL_MONEY, jdbcType=VARCHAR}
+			
+			
+		where PK_SALARY_CALCUL_TOTAL_CODE = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertData" parameterType="java.util.Map">
+		
+		insert into SALARY_CALCUL_TOTAL(PK_SALARY_CALCUL_TOTAL_CODE, FK_TA_SAWON_CODE, SALARY_CALCUL_ITEM, salary_CALCUL_MONEY) values(#{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR},#{fk_TA_SAWON_CODE, jdbcType=VARCHAR}, #{salary_CALCUL_ITEM, jdbcType=VARCHAR}, #{salary_CALCUL_MONEY, jdbcType=VARCHAR})
+	
+	</insert>	
+	
+	<delete id="deleteData" parameterType="java.util.Map">
+	     delete SALARY_CALCUL_TOTAL
+	 
+		 where TRIM(PK_SALARY_CALCUL_TOTAL_CODE) = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
+	</delete>
+</mapper>

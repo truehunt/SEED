@@ -22,4 +22,6 @@ public interface TA_inputController {
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map searchList2(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map SiteList(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map DeptList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

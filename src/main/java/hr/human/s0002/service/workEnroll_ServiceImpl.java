@@ -1,4 +1,4 @@
-package hr.human.s0001.service;
+package hr.human.s0002.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,21 +11,21 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import hr.human.s0001.dao.comEnroll_DAO;
-import hr.human.s0001.vo.ComEnroll_VO;
+import hr.human.s0002.dao.workEnroll_DAO;
+import hr.human.s0002.vo.WorkEnroll_VO;
 
 
 
 
-@Service("adcomEnroll_Service")
+@Service("adworkEnroll_Service")
 @Transactional(propagation = Propagation.REQUIRED)
-public class comEnroll_ServiceImpl implements comEnroll_Service {
+public class workEnroll_ServiceImpl implements workEnroll_Service {
    @Autowired
-   private comEnroll_DAO comEnroll_DAO;
+   private workEnroll_DAO workEnroll_DAO;
 
    @Override
-   public List<ComEnroll_VO> searchList(Map<String, Object> searchMap) throws DataAccessException {
-      List<ComEnroll_VO> list =  comEnroll_DAO.searchList(searchMap); 
+   public List<WorkEnroll_VO> searchList(Map<String, Object> searchMap) throws DataAccessException {
+      List<WorkEnroll_VO> list =  workEnroll_DAO.searchList(searchMap); 
       return list;
    }
    
@@ -38,11 +38,11 @@ public class comEnroll_ServiceImpl implements comEnroll_Service {
       for(String str : status) {
          Map<String, String> row = getRow(dataMap, length, i); // ���� Index�� Row Map
          if("I".equals(str)) { // �߰�
-            comEnroll_DAO.insertData(row);
+        	workEnroll_DAO.insertData(row);
          }else if("U".equals(str)) { // ����
-            comEnroll_DAO.updateData(row);
+            workEnroll_DAO.updateData(row);
          }else if("D".equals(str)) { // ����
-            comEnroll_DAO.deleteData(row);
+            workEnroll_DAO.deleteData(row);
          }
          i++;
       }

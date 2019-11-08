@@ -8,13 +8,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="UTF-8">
-<title>회사등록</title>
+<title>사업장 등록</title>
 
 <style>
 	.frame {
-		  width : 1300px;
+		  width : 1200px;
 		  margin: 0px;
 	}
 
@@ -22,26 +21,25 @@
   		overflow: hidden;
   		display: table;
   		margin: 0px;
-  		
 	}
+
 	.nav {
 		  float: left;
 		  margin-left:0px;
-		  width: 650px;
+		  width: 550px;
 		  height: 600px;
 		  border : 1px solid lightblue;
 	}
 	.content {
-		  margin-left:670px;
+		  margin-left:570px;
 		  margin-top:-600px;
 		  float: right;
-		  width: 700px;
+		  width: 800px;
 		  height: 600px;
 		  border : 1px solid lightblue;
 	}
 	.main_content{
-		width: 600px;
-		margin-right:0px;
+		width: 510px;
 	}
 	.main_menu {
 		border : 1px solid lightblue;
@@ -55,13 +53,14 @@
 		width:20px;
 		height:15px;
 	}
-
+	
 	/*datepicer 버튼 롤오버 시 손가락 모양 표시*/
 	.ui-datepicker-trigger{cursor: pointer;}
 	
 	/*datepicer input 롤오버 시 손가락 모양 표시*/
 	.hasDatepicker{cursor: pointer;}
 </style>
+
 
 <!--우편번호 관련된 script 추가 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -91,18 +90,16 @@
 	  
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	
-	
+
 <script type="text/javascript">
 	//시트 높이 계산용
 	var pageheightoffset = 200;
 	
 	/*Sheet 기본 설정 */
-	function LoadPage() { 
+	function LoadPage() {
 		mySheet.RemoveAll();
 		//아이비시트 초기화
 		var initSheet = {};
-		 
 		initSheet.Cfg = {SearchMode:smLazyLoad,ToolTip:1};
 		initSheet.HeaderMode = {Sort:1,ColMove:1,ColResize:1,HeaderCheck:1};
 		initSheet.Cols = [ // 상태, 삭제는 건들면 안됨. SaveName은 VO속성과 동일하게
@@ -112,73 +109,66 @@
 			// MultiLineText:1  : 하나의 셀에 여러값을 넣을수 있음(shift+enter)
 			// Wrap:1 : 데이터
 			// FORMAT 형식 법인/사업자 등록번호 - Format:["IdNo", "SaupNo"], 전화번호/FAX번호 - Format: "PhoneNo", 
+			
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50},
-			{Header:"코드",Type:"Text",SaveName:"pk_company_code",MinWidth:50,Align:"Center", KeyField:1},
-			{Header:"회사명",Type:"Text",SaveName:"company_name",MinWidth:100,Align:"Center", KeyField:1},			
-			{Header:"구분", Type:"Combo", MinWidth:60, SaveName:"company_division",Edit: 1, Align:"Center",KeyField:1
-						, ComboText:"0. 법인|1. 개인" 
-						, ComboCode:"A00|A01"
-						, showMobile:1},
-			{Header:"회계년도1",Type:"Text",SaveName:"company_fiscal_year_o", KeyField:1, Hidden:1},
-			{Header:"회계년도2",Type:"Text",SaveName:"company_fiscal_year_t", KeyField:1, Hidden:1},
-			{Header:"사업자등록번호",Type:"Text",SaveName:"company_reg_num", KeyField:1, Hidden:1},
-			{Header:"법인등록번호",Type:"Text",SaveName:"company_corp_reg_num", Hidden:1},
-			{Header:"대표자성명",Type:"Text",SaveName:"company_rep_name", KeyField:1, Hidden:1},
-			{Header:"외국인여부",Type:"Text",SaveName:"company_foreigner_whe", KeyField:1, Hidden:1},
-			{Header:"주민등록번호",Type:"Text",SaveName:"company_resi_reg_num", KeyField:1, Hidden:1},
-			{Header:"본점우편번호",Type:"Text",SaveName:"company_zip", KeyField:1, Hidden:1},
-			{Header:"본점주소",Type:"Text",SaveName:"company_address", KeyField:1, Hidden:1},
-			{Header:"본점상세주소",Type:"Text",SaveName:"company_detail_address", Hidden:1},			
-			{Header:"본점전화번호",Type:"Text",SaveName:"company_tel", Hidden:1},
-			{Header:"본점FAX",Type:"Text",SaveName:"company_fax", Hidden:1},
-			{Header:"업태",Type:"Text",SaveName:"company_business", KeyField:1, Hidden:1},
-			{Header:"종목",Type:"Text",SaveName:"company_stocks", KeyField:1, Hidden:1},
-			{Header:"설립연월일",Type:"Text", Align:"Center", SaveName:"company_establishment_date", Hidden:1},
-			{Header:"개업연월일",Type:"Text", Align:"Center", SaveName:"company_open_date", Hidden:1},
-			{Header:"폐업연월일",Type:"Text", Align:"Center", SaveName:"company_closed_date", Hidden:1},
-			{Header:"입력자",Type:"Text",SaveName:"company_int_user_id", Hidden:1},
-			{Header:"입력일시",Type:"Text",SaveName:"company_int_date", Format:"", Hidden:1},
-			{Header:"수정자",Type:"Text",SaveName:"company_mod_user_id", Hidden:1},
-			{Header:"수정일시",Type:"Text",SaveName:"company_mod_date",Format:"", Hidden:1},
-		];  
-		//sheet 초기화
+			{Header:"사업장코드",Type:"Text",SaveName:"pk_workplace_code",MinWidth:60},
+			{Header:"회사코드",Type:"Text",SaveName:"fk_company_code",MinWidth:60, Hidden:1},			
+			{Header:"사업장명",Type:"Text",SaveName:"workplace_name",MinWidth:100},
+			{Header:"사업자등록번호",Type:"Text",SaveName:"workplace_com_reg_num",MinWidth:150, Hidden:1},
+			{Header:"법인등록번호",Type:"Text",SaveName:"workplace_corp_reg_num",MinWidth:150, Hidden:1},
+			{Header:"대표자명",Type:"Text",SaveName:"workplace_rep_name",MinWidth:80, Hidden:1},
+			{Header:"사업장우편번호",Type:"Text",SaveName:"workplace_zip",MinWidth:60, Hidden:1},
+			{Header:"사업장주소",Type:"Text",SaveName:"workplace_address",MinWidth:150, Hidden:1},
+			{Header:"사업장상세주소",Type:"Text",SaveName:"workplace_detail_address",MinWidth:100, Hidden:1},
+			{Header:"사업장전화번호",Type:"Text",SaveName:"workplace_tel",MinWidth:60, Hidden:1},			
+			{Header:"사업장fax",Type:"Text",SaveName:"workplace_fax",MinWidth:60, Hidden:1},
+			{Header:"업태",Type:"Text",SaveName:"workplace_business",MinWidth:60, Hidden:1},
+			{Header:"종목",Type:"Text",SaveName:"workplace_stocks",MinWidth:60, Hidden:1},
+			{Header:"개업년월일",Type:"Text",SaveName:"workplace_open_date",MinWidth:60, Hidden:1},
+			{Header:"폐업년월일",Type:"Text",SaveName:"workplace_closed_date",MinWidth:60, Hidden:1},
+			{Header:"본점여부",Type:"Text", MinWidth:80, SaveName:"workplace_headoff_whe",MinWidth:60, Hidden:1},
+			{Header:"입력자",Type:"Text",SaveName:"workplace_int_user_id",MinWidth:80, Hidden:1},
+			{Header:"입력일시",Type:"Text",SaveName:"workplace_int_date",MinWidth:80, Hidden:1},
+			{Header:"수정자",Type:"Text",SaveName:"workplace_mod_user_id",MinWidth:80, Hidden:1},
+			{Header:"수정일시",Type:"Text",SaveName:"workplace_mod_date",MinWidth:80, Hidden:1},
+			{Header:"회사코드(com)",Type:"Text",SaveName:"pk_company_code",MinWidth:80, Hidden:1},
+		];   
 		IBS_InitSheet( mySheet , initSheet);
 
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
-		mySheet.DoSearch("${contextPath}/human/s0001/searchList.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
-		
+		mySheet.DoSearch("${contextPath}/human/s0002/searchList.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 	}
-
+	
 	//onClick 이벤트
 	 var t_row = 0;
 	 function mySheet_OnClick(row, col, value, cellx, celly, cellw, cellh) {
 	  t_row = row;
-      if (row == null || row <= 0) return; // row가 null 이거나 0보다 같거나 작으면 바로 리턴
-     
-      var pk = mySheet.GetCellValue(row,2); // 마우스로 클릭한 셀의 value를 가져와서 pk에 저장
-     
-      var colArr =  Object.keys(mySheet.rX); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 
-   											 // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
-   	  
-   	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
+     if (row == null || row <= 0) return; // row가 null 이거나 0보다 같거나 작으면 바로 리턴
+    
+     var pk = mySheet.GetCellValue(row,2); // 마우스로 클릭한 셀의 value를 가져와서 pk에 저장
+    
+     var colArr =  Object.keys(mySheet.rX); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 
+  											 // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
+  	  
+  	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
 	  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 	  })
 	  
 	  // onClick 이벤트 중 select 태그에 company_foreigner_whe인 값의 변경이 있을때 실행
-	  $("#company_foreigner_whe").change(function(e){ 
+	  $("#workplace_headoff_whe").change(function(e){ 
 			var colNum = colArr.indexOf(e.target.id);	
 			 
-			var foreigner = document.getElementById("company_foreigner_whe");
-			var selectBox = foreigner.options[foreigner.selectedIndex].value;
+			var headoff = document.getElementById("workplace_headoff_whe");
+			var selectBox = headoff.options[headoff.selectedIndex].value;
 			console.log(selectBox);
 			  
 			mySheet.SetCellValue(t_row, colNum, e.target.value);
 		})
 		
-   }
+  }
 	 	 
 	 $(document).on('change', 'input', function(e) { // 수정할시에 state에 문구 저장 및 SetCellValue 실행
 		  var colArr =  Object.keys(mySheet.rX);
@@ -187,16 +177,15 @@
 	 	mySheet.SetCellValue(t_row, colNum ,e.target.value);
 	 	
 	 });
-
-	 
+	
 	/*Sheet 각종 처리*/
 	function doAction(sAction) {
 		switch(sAction) {
 			case "search": //조회
-			    //var param = FormQueryStringEnc(document.frm);
+				//var param = FormQueryStringEnc(document.frm);
 				//alert(param);
 				//mySheet.DoSearch("${contextPath}/human/s0001/searchList.do", param);
-				mySheet.DoSearch("${contextPath}/human/s0001/searchList.do");
+				mySheet.DoSearch("${contextPath}/human/s0002/searchList.do");
 				//mySheet.DoSearch("${contextPath}/human/s0001/comEnrollView.do");
 				
 				//mySheet.DoSearch("transaction_data2.json");
@@ -207,11 +196,9 @@
 			case "save": // 저장
 				var tempStr = mySheet.GetSaveString();
 				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
-				mySheet.DoSave("${contextPath}/human/s0001/insertData.do");
-				break;			
+				mySheet.DoSave("${contextPath}/human/s0002/insertData.do");
+				break;
 			case "insert": //신규행 추가
-				//var Option = { "SumRow" : "AutoSum" }; 
-				//mySheet.RemoveAll(Option); 
 				var row = mySheet.DataInsert();
 				break;
 		}
@@ -259,19 +246,19 @@
                 }
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('company_zip').value = data.zonecode; // 우편번호
-                mySheet.SetCellValue(t_row,12, data.zonecode);
+                document.getElementById('workplace_zip').value = data.zonecode; // 우편번호
+                mySheet.SetCellValue(t_row,8, data.zonecode);
                 
-                document.getElementById('company_address').value = roadAddr; // 도로명주소
-                mySheet.SetCellValue(t_row,13, roadAddr);
+                document.getElementById('workplace_address').value = roadAddr; // 도로명주소
+                mySheet.SetCellValue(t_row,9, roadAddr);
                 
                 // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
                 if(roadAddr !== ''){ // 상세주소
-                    document.getElementById('company_detail_address').value = extraRoadAddr;
-                	mySheet.SetCellValue(t_row,14,extraRoadAddr); // 변경이 있으면 mysheet에 setCellValue를 써서 값 입력
+                    document.getElementById('workplace_detail_address').value = extraRoadAddr;
+                	mySheet.SetCellValue(t_row,10,extraRoadAddr); // 변경이 있으면 mysheet에 setCellValue를 써서 값 입력
                 } else {
-                    document.getElementById('company_detail_address').value = '';
-                    mySheet.SetCellValue(t_row,14,"");
+                    document.getElementById('workplace_detail_address').value = '';
+                    mySheet.SetCellValue(t_row,10,"");
                 }
 
                 var guideTextBox = document.getElementById("guide");
@@ -287,13 +274,13 @@
         }).open();
         
     } // 주소 api function end
-     
-    //Format 
+    
+  //Format 
 	   $(document).ready(function () {
 	   
 	        //사업자등록번호
 	         $(function () {    
-	                  $('input[name=company_reg_num]').keydown(function (event) {
+	                  $('input[name=workplace_com_reg_num]').keydown(function (event) {
 	                   var key = event.charCode || event.keyCode || 0;
 	                   $text = $(this); 
 	                   if (key !== 8 && key !== 9) {
@@ -310,7 +297,7 @@
 	        
 	         //법인등록번호
 	         $(function () {            
-	            $('input[name=company_corp_reg_num]').keydown(function (event) {
+	            $('input[name=workplace_corp_reg_num]').keydown(function (event) {
 	                 var key = event.charCode || event.keyCode || 0;
 	                 $text = $(this); 
 	                 if (key !== 8 && key !== 9) {
@@ -322,20 +309,7 @@
 	               })
 	         });
 
-	         //주민등록번호
-	         $(function () {            
-	            $('input[name=company_resi_reg_num]').keydown(function (event) {
-	                 var key = event.charCode || event.keyCode || 0;
-	                 $text = $(this); 
-	                 if (key !== 8 && key !== 9) {
-	                     if ($text.val().length === 6) {
-	                         $text.val($text.val() + '-');
-	                     }       
-	                 }
-	                   return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
-	               })
-	         });
-		   //전화번호,팩스
+	         //전화번호,팩스
 		   $(function () { 
 		         $('.phoneNo').keydown(function (event) {
 		        var key = event.charCode || event.keyCode || 0;
@@ -361,12 +335,10 @@
 		        return (key == 8 || key == 9 || key == 46 || (key >= 48 && key <= 57) || (key >= 96 && key <= 105));
 		    })
 	   }); 
-     
+  
 	});//document.ready
-	
 </script>
 </head>
-
 <body onload="LoadPage()">
 	<!-- 달력 datepicker  -->
 	
@@ -393,41 +365,24 @@
 		    });
 		
 		    //input을 datepicker로 선언
-		    $("#company_fiscal_year_o").datepicker();                    
-		    $("#company_fiscal_year_t").datepicker();
-		    $("#company_establishment_date").datepicker();
-		    $("#company_open_date").datepicker();
-		    $("#company_closed_date").datepicker();
-		    
+		    $("#workplace_open_date").datepicker();                    
+		    $("#workplace_closed_date").datepicker();
+
 		    //company_fiscal_year_o 설정
-		    $('#company_fiscal_year_o').datepicker(); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
+		    $('#workplace_open_date').datepicker(); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
 		    
 		    //company_fiscal_year_t 설정
-		    $('#company_fiscal_year_t').datepicker();
+		    $('#workplace_closed_date').datepicker();
 		  	
-		    //company_establishment_date 설정
-		    $('#company_establishment_date').datepicker(); 
-		  	
-		    //company_open_date 설정
-		    $('#company_open_date').datepicker(); 
-		  	
-		    //company_closed_date 설정
-		    $('#company_closed_date').datepicker(); 
 		});
 		</script>
 	<div id="wrap" style="margin: 0px;">
 	<div id="page-wrapper" style="margin: 0px;">
 		<div class="row">
 	        <div class="col-lg-12">
-	            <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 회사 등록</h1>
+	            <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 사업장 등록</h1>
 	        </div>
    	 	</div>
-	
-		 <%-- <div class="page_title">
-		    	<span class="title"><b>등록정보관리 > 회사 등록</b></span>
-			  </div>
-				<br> 
-		 --%>
   <div class="frame">
     <%-- //header 및 container 시작--%>
   <div class="container" style="padding:0px; margin-left:0px;">
@@ -446,97 +401,82 @@
 		</div>
 		<!-- ibsheet 뿌려주는 부분  -->
 		<div class="clear hidden"></div>
-		<div class="ib_product"><script>createIBSheet("mySheet", "58%", "58%");</script></div>
+		<div class="ib_product"><script>createIBSheet("mySheet", "60%", "60%");</script></div>
 
 	  </div> <!-- //nav  -->
 	  </div> <!-- //onClick -->
 	  <!-- content (오른쪽 layout시작)  -->
-	 <div class="content">
+	 <div class="content" >
 	 	<div class="page_title" style="height:40px;">
 	 		<span class="title" style="font-size:15px; height:15px"><b>기본등록사항</b></span>
 		</div>
   <form id="frm">
 	  <table width="550px" height="550px">
-	   <tr>
-	   	<td align="right">회계 년도 : </td>
-	   		<td> 
-		   		<input type="text" name="company_fiscal_year_o" id="company_fiscal_year_o" size="12px" placeholder="_ _ _ _-_ _-_ _">
-		   		<!-- <img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='' style='cursor:pointer;' /> --> 
-		   		     ~  <input type="text" name="company_fiscal_year_t" id="company_fiscal_year_t" size="12px" placeholder="_ _ _ _-_ _-_ _">
-		   		     	<!-- <img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' /> -->
-	   		</td>
-	   </tr>
-	   <tr>
-	   	<td align="right">사업자 등록번호 : </td><td> <input type="text" name="company_reg_num" id="company_reg_num" size="30px" placeholder="_ _ _-_ _-_ _ _ _ _"> </td>
-	   </tr>
-	   <tr>
-	   	<td align="right">법인 등록번호 : </td><td> <input type="text" name="company_corp_reg_num" id="company_corp_reg_num" size="30px" placeholder="_ _ _ _ _ _- _ _ _ _ _ _ _"> </td>
-	   </tr>
-	   <tr>
-	   	<td align="right">대표자 성명 : </td><td> <input type="text" name="company_rep_name" id="company_rep_name" size="25px"> </td>
-	   </tr>
-	   <tr>
-	   	<td align="right">외국인여부 : </td><td> 
-	   				<select name="company_foreigner_whe" id="company_foreigner_whe">
+	  	<tr>
+	  		<td align="right">사업자 등록번호 : </td>
+	  			<td> <input type="text" name="workplace_com_reg_num" id="workplace_com_reg_num" size="30px" placeholder="_ _ _-_ _-_ _ _ _ _"> </td>
+	  	</tr>
+	  	<tr>
+	  		<td align="right">법인 등록번호 : </td>
+	  			<td> <input type="text" name="workplace_corp_reg_num" id="workplace_corp_reg_num" size="30px" placeholder="_ _ _ _ _ _- _ _ _ _ _ _ _"> </td>
+	  	</tr>
+	  	<tr>
+	  		<td align="right">대표자 명 : </td>
+	  			<td> <input type="text" name="workplace_rep_name" id="workplace_rep_name" size="25px"> </td>
+	  	</tr>
+	  	<tr>
+	  		<td align="right">사업장 우편번호 : </td>
+	  			<td> <input type="text" name="workplace_zip" id="workplace_zip" size="10px">
+	  				 <img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	  			</td>
+	  	</tr>
+	  	<tr>
+	  		<td align="right">사업장 주소 : </td>
+	  			<td> <input type="text" name="workplace_address" id="workplace_address" size="50px"> </td>
+	  	</tr>
+	  	<tr>
+	  		<td align="right">사업장 상세주소 : </td>
+	  			<td> <input type="text" name="workplace_detail_address" id="workplace_detail_address" size="50px"> </td>
+	  	</tr>
+	  	<tr>
+	  		<td align="right">사업장 전화번호 : </td>
+	  			<td> <input class="phoneNo" type="text" name="workplace_tel" id="workplace_tel"> </td>
+	  	</tr>
+	  	<tr>
+	  		<td align="right">사업장 FAX : </td>
+	  			<td> <input class="phoneNo" type="text" name="workplace_fax" id="workplace_fax"> </td>
+	  	</tr>
+	  	<tr>
+	  		<td align="right">업태 : </td>
+	  			<td> <input type="text" name="workplace_business" id="workplace_business"> </td>
+	  	</tr>
+	  	<tr>
+	  		<td align="right">종목 : </td>
+	  			<td> <input type="text" name="workplace_stocks" id="workplace_stocks"> </td>
+	  	</tr>
+	  	<tr>
+	  		<td align="right">개업년월일 : </td>
+	  			<td>
+	  				<input type="text" name="workplace_open_date" id="workplace_open_date" size="12px" placeholder="_ _ _ _-_ _-_ _">
+	  			</td>
+	  	</tr>
+	  	<tr>
+	  		<td align="right">폐업년월일 : </td>
+	  			<td>
+	  				<input type="text" name="workplace_closed_date" id="workplace_closed_date" size="12px" placeholder="_ _ _ _-_ _-_ _">
+	  			</td>
+	  	</tr>
+	  	<tr><td></td></tr><!-- 공백 -->
+	  	<tr>
+	  		<td align="right">본점 여부 : </td><td>
+	   				<select name="workplace_headoff_whe" id="workplace_headoff_whe">
 	  					<option value='' hidden='1'></option> <!-- 공백 -->
-	  					<option value='내국인' >0.내국인</option>
-	  					<option value='외국인' >1.외국인</option>
+	  					<option value='부' >0. 부</option>
+	  					<option value='여' >1. 여</option>
 	  				</select>
-	  	</td>
-	   </tr>
-	   <tr>
-	   	<td align="right">주민등록번호 : </td><td> <input type="text" name="company_resi_reg_num" id="company_resi_reg_num" size="30px" placeholder="_ _ _ _ _ _- _ _ _ _ _ _ _"> </td>
-	   </tr>
-	   <tr><td></td><tr> <!-- 공백 -->
-	   <tr>
-	   	<td align="right">본점 우편번호 : </td><td> <input type="text" name="company_zip" id="company_zip" size="10px"> 
-	   		<!-- input type 예시  
-	   			<input type="image" src="${contextPath}/resources/image/search_icon.png" onclick="sample4_execDaumPostcode()" width="20px"; height="15px" />
-	   		    <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호찾기" />
-	   		-->
-	   		<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	   	</td>
-	   </tr>
-	   <tr>
-	   	<td align="right">본점 주소 : </td><td> <input type="text" name="company_address" id="company_address" size="50px"> </td>
-	   </tr>
-	   <tr>
-	   	<td align="right">본점 상세주소 : </td><td> <input type="text" name="company_detail_address" id="company_detail_address" size="50px"> </td>
-	   </tr>
-	   <tr>
-	   	<td align="right">본점 전화번호 : </td><td> <input class="phoneNo" type="text" name="company_tel" id="company_tel"> </td>
-	   </tr>
-	   <tr>
-	   	<td align="right">본점 FAX : </td><td> <input class="phoneNo" type="text" name="company_fax" id="company_fax"> </td>
-	   </tr>
-	   <tr>
-	   	<td align="right">업태 : </td><td> <input type="text" name="company_business" id="company_business"> </td>
-	   </tr>
-	   <tr>
-	   	<td align="right">종목 : </td><td> <input type="text" name="company_stocks" id="company_stocks"> </td>
-	   </tr>
-	   <tr><td></td></tr><!-- 공백 -->
-	   <tr>
-	   	<td align="right">설립 연월일 : </td>
-	   		<td> <input type="text" name="company_establishment_date" id="company_establishment_date" size="12px" placeholder="_ _ _ _-_ _-_ _">
-	   			<!--<img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' /> -->
-	   		</td>
-	   </tr>
-	   <tr>
-	   	<td align="right">개업 연월일 : </td>
-	   		<td> <input type="text" name="company_open_date" id="company_open_date" size="12px" placeholder="_ _ _ _-_ _-_ _"> 
-	   			<!--<img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />-->
-	   		</td>
-	   </tr>
-	   <tr>
-	   	<td align="right">폐업 연월일 : </td>
-	   		<td> 
-	   			<input type="text" name="company_closed_date" id="company_closed_date" size="12px" placeholder="_ _ _ _-_ _-_ _"> 
-	   			<!--<img src="${contextPath}/resources/ibsheet/Main/calendar.gif" alt="calendar_icon.png" />-->
-	   		</td>
-	   </tr>
-	                
-	   <tr><td></td></tr><!-- 공백 -->
+	  		</td>
+	  	</tr>
+
 	  </table>
   </form>
   

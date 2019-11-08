@@ -25,6 +25,7 @@
 		<result property="company_establishment_date" column="company_establishment_date" />
 		<result property="company_open_date" column="company_open_date" />
 		<result property="company_closed_date" column="company_closed_date" />
+		
 		<result property="company_int_user_id" column="company_int_user_id" />
 		<result property="company_int_date" column="company_int_date" />
 		<result property="company_mod_user_id" column="company_mod_user_id" />
@@ -35,14 +36,24 @@
 		,company_corp_reg_num ,company_rep_name ,company_foreigner_whe ,company_resi_reg_num ,company_zip
 		,company_address ,company_detail_address ,company_tel ,company_fax ,company_business ,company_stocks ,company_establishment_date
 		,company_open_date ,company_closed_date ,company_int_user_id ,company_int_date ,company_mod_user_id
-<<<<<<< HEAD
-		company_mod_date
+		,company_mod_date
 		 -->
 	</resultMap>
 
 	<select id="searchList" resultMap="s0001Result01" parameterType="java.util.Map"> 
       <![CDATA[
          select pk_company_code, company_name, company_division
+         		, TO_CHAR(TO_DATE(company_fiscal_year_o),'YYYY-MM-DD') as company_fiscal_year_o 
+         		, TO_CHAR(TO_DATE(company_fiscal_year_t),'YYYY-MM-DD') as company_fiscal_year_t
+         		, company_reg_num
+				, company_corp_reg_num
+				, company_rep_name, company_foreigner_whe
+				, company_resi_reg_num
+				, company_zip, company_address, company_detail_address, company_tel, company_fax, company_business, company_stocks 
+				, TO_CHAR(TO_DATE(company_establishment_date),'YYYY-MM-DD') as company_establishment_date
+				, TO_CHAR(TO_DATE(company_open_date),'YYYY-MM-DD') as company_open_date
+				, TO_CHAR(TO_DATE(company_closed_date),'YYYY-MM-DD') as company_closed_date
+				, company_int_user_id, company_int_date, company_mod_user_id, company_mod_date
          from   company
       ]]>
 		<where>
@@ -52,23 +63,6 @@
 		</where>
 	</select>
 	
-	
-	<select id="comEnrollView" resultMap="s0001Result01" parameterType="java.util.Map"> 
-      <![CDATA[
-         select pk_company_code, TO_CHAR(TO_DATE(company_fiscal_year_o),'YYYY/MM/DD') as company_fiscal_year_o, TO_CHAR(TO_DATE(company_fiscal_year_t),'YYYY/MM/DD') as company_fiscal_year_t 
-         		, company_reg_num, company_corp_reg_num, company_rep_name, company_foreigner_whe, company_resi_reg_num, company_zip
-				, company_address, company_detail_address, company_tel, company_fax, company_business, company_stocks, TO_CHAR(TO_DATE(company_establishment_date,'YYYY/MM/DD') as company_establishment_date
-				, TO_CHAR(TO_DATE(company_open_date),'YYYY/MM/DD') as company_open_date, TO_CHAR(TO_DATE(company_closed_date,'YYYY/MM/DD') as company_closed_date, company_int_user_id 
-				, company_int_date,company_mod_user_id, company_mod_date
-         from   company
-      ]]>
-		<where>
-			<if test=" p_id != ''  and  p_id != null">
-				pk_company_code = #{p_id}
-			</if>
-		</where>
-	</select>
-
 	<update id="updateData" parameterType="java.util.Map">
 		update company
 		set company_name = #{company_name,jdbcType=VARCHAR}

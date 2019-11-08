@@ -1,4 +1,4 @@
-package hr.human.s0001.controller;
+package hr.human.s0002.controller;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -29,22 +29,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import hr.human.s0001.service.comEnroll_Service;
-import hr.human.s0001.vo.ComEnroll_VO;
+import hr.human.s0002.service.workEnroll_Service;
+import hr.human.s0002.vo.WorkEnroll_VO;
 
-@Controller("adcomEnroll_Controller")
-public class comEnroll_ControllerImpl implements comEnroll_Controller {
-   private static final Logger logger = LoggerFactory.getLogger(comEnroll_ControllerImpl.class);
+@Controller("adworkEnroll_Controller")
+public class workEnroll_ControllerImpl implements workEnroll_Controller {
+   private static final Logger logger = LoggerFactory.getLogger(workEnroll_ControllerImpl.class);
    @Autowired
-   comEnroll_Service comEnroll_Service;
+   workEnroll_Service workEnroll_Service;
    @Autowired
-   ComEnroll_VO comEnroll_VO;
+   WorkEnroll_VO workEnroll_VO;
    
    @Override
-   @RequestMapping(value = "/human/s0001/init.do", method = { RequestMethod.GET, RequestMethod.POST })
+   @RequestMapping(value = "/human/s0002/init.do", method = { RequestMethod.GET, RequestMethod.POST })
    public ModelAndView searchInit(HttpServletRequest request, HttpServletResponse response) throws Exception {
       String viewName = getViewName(request);
-      viewName = "/human/s0001/init";
+      viewName = "/human/s0002/init";
       request.setCharacterEncoding("utf-8");
       //ModelAndView main = new ModelAndView("hr/p0001_init");
       ModelAndView main = new ModelAndView(viewName);
@@ -52,10 +52,10 @@ public class comEnroll_ControllerImpl implements comEnroll_Controller {
    }
    
    @Override
-   @RequestMapping(value = "/human/s0001/company_Enroll.do", method = { RequestMethod.GET, RequestMethod.POST })
-   public ModelAndView company_Enroll(HttpServletRequest request, HttpServletResponse response) throws Exception {
+   @RequestMapping(value = "/human/s0002/workplace_Enroll.do", method = { RequestMethod.GET, RequestMethod.POST })
+   public ModelAndView workplace_Enroll(HttpServletRequest request, HttpServletResponse response) throws Exception {
       String viewName = getViewName(request);
-      viewName = "/human/s0001/company_Enroll";
+      viewName = "/human/s0002/workplace_Enroll";
       request.setCharacterEncoding("utf-8");
       //ModelAndView main = new ModelAndView("hr/p0001_init");
       ModelAndView main = new ModelAndView(viewName);
@@ -63,10 +63,10 @@ public class comEnroll_ControllerImpl implements comEnroll_Controller {
    }
 
    @Override
-   @RequestMapping(value = "/human/s0001/ibsheet.do", method = { RequestMethod.GET, RequestMethod.POST })
+   @RequestMapping(value = "/human/s0002/ibsheet.do", method = { RequestMethod.GET, RequestMethod.POST })
    public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
       String viewName = getViewName(request);
-      viewName = "/human/s0001/ibsheet_basic";
+      viewName = "/human/s0002/ibsheet_basic";
       request.setCharacterEncoding("utf-8");
       //ModelAndView main = new ModelAndView("hr/p0001_init");
       ModelAndView main = new ModelAndView(viewName);
@@ -74,7 +74,7 @@ public class comEnroll_ControllerImpl implements comEnroll_Controller {
    }
    
    @Override
-   @RequestMapping(value = "/human/s0001/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
+   @RequestMapping(value = "/human/s0002/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
    @ResponseBody
    public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception {
       request.setCharacterEncoding("utf-8");
@@ -85,14 +85,14 @@ public class comEnroll_ControllerImpl implements comEnroll_Controller {
       //searchMap.put("pk_company_code", request.getParameter("p_id"));
       
       //데이터 조회
-      List<ComEnroll_VO> data = comEnroll_Service.searchList(searchMap);
+      List<WorkEnroll_VO> data = workEnroll_Service.searchList(searchMap);
         resultMap.put("Data", data);
         
         return resultMap;
    }
    
    @Override
-   @RequestMapping(value = "/human/s0001/insertData.do", method = { RequestMethod.GET, RequestMethod.POST })
+   @RequestMapping(value = "/human/s0002/insertData.do", method = { RequestMethod.GET, RequestMethod.POST })
    @ResponseBody
    public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
       request.setCharacterEncoding("utf-8");
@@ -109,7 +109,7 @@ public class comEnroll_ControllerImpl implements comEnroll_Controller {
       
       Map<String, String> result = new HashMap<String, String>();
       try {
-         comEnroll_Service.saveData(dataMap);   
+         workEnroll_Service.saveData(dataMap);   
          result.put("Code","0");
          result.put("Message","저장되었습니다");
       }catch(Exception e) {

@@ -1,4 +1,4 @@
-package hr.human.s0001.controller;
+package hr.human.s0002.controller;
 
 import java.util.Map;
 
@@ -12,13 +12,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-public interface comEnroll_Controller {
+public interface workEnroll_Controller {
 	public ModelAndView searchInit(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	//추가 내용 
-	public ModelAndView company_Enroll(HttpServletRequest request, HttpServletResponse response) throws Exception;//회사등록
+	public ModelAndView workplace_Enroll(HttpServletRequest request, HttpServletResponse response) throws Exception;//사업장등록	
 	
 }

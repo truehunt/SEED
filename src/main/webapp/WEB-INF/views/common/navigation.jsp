@@ -89,8 +89,8 @@ $(document).ready(function(){
 		            	urlToGo = "pay/s0001/s0001.do";
 		            } else if(url === "adcompany_Enroll"){ // 등록정보관리 - 회사등록
 		            	urlToGo = "/SEED/human/s0001/company_Enroll.do";
-		            } else if(url === "b1"){
-		            	urlToGo = "b1";
+		            } else if(url === "adworkplace_Enroll"){// 등록정보관리 - 사업장등록
+		            	urlToGo = "/SEED/human/s0002/workplace_Enroll.do";
 		            } else if(url === "b2"){
 		            	urlToGo = "b2";
 		            } else if(url === "b3"){
@@ -360,7 +360,7 @@ $(document).ready(function(){
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll1"/>','chart','adcompany_Enroll','adcompany_Enroll'); return false"><s:message code="main.enroll1"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll2"/>','chart','pp','pp'); return false"><s:message code="main.enroll2"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll2"/>','chart','adworkplace_Enroll','adworkplace_Enroll'); return false"><s:message code="main.enroll2"/></a>
 	                                </li>
 	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll3"/>','chart','qq','qq'); return false"><s:message code="main.enroll3"/></a>

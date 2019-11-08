@@ -1,4 +1,4 @@
-package hr.human.s0001.service;
+package hr.human.s0002.service;
 
 import java.util.List;
 import java.util.Map;
@@ -9,12 +9,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import hr.human.s0001.vo.ComEnroll_VO;
+import hr.human.s0002.vo.WorkEnroll_VO;
 
 
 
-public interface comEnroll_Service {
-	public List<ComEnroll_VO> searchList(Map<String, Object> searchMap) throws DataAccessException;
+public interface workEnroll_Service {
+	public List<WorkEnroll_VO> searchList(Map<String, Object> searchMap) throws DataAccessException;
 	
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException ;
 

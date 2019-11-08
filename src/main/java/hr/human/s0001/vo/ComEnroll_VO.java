@@ -7,6 +7,8 @@ import javax.xml.crypto.Data;
 
 import org.springframework.stereotype.Component;
 
+import oracle.sql.DATE;
+
 @Component("comEnroll_VO")
 public class ComEnroll_VO {
     
@@ -36,9 +38,10 @@ public class ComEnroll_VO {
 	private Timestamp company_mod_date; // 수정일시
 	
 	public ComEnroll_VO() {
-		System.out.println("s0001VO 메서드 호출");
+		System.out.println("ComEnroll_VO 메서드 호출");
 	}
 
+	// 위의 선언 변수들의 GET, SET 정의 
 	public String getPk_company_code() {
 		return pk_company_code;
 	}
@@ -142,7 +145,7 @@ public class ComEnroll_VO {
 	public void setCompany_detail_address(String company_detail_address) {
 		this.company_detail_address = company_detail_address;
 	}
-	
+
 	public String getCompany_tel() {
 		return company_tel;
 	}
@@ -230,7 +233,5 @@ public class ComEnroll_VO {
 	public void setCompany_mod_date(Timestamp company_mod_date) {
 		this.company_mod_date = company_mod_date;
 	}
-	
 
-	
 }

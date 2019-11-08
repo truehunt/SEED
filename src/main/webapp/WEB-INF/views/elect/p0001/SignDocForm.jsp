@@ -62,7 +62,7 @@ function fn_tempSubmit(){
 // 결재 경로
 function fn_signPath(){
     $.ajax({
-        url: "popupUsers4SignPath",
+        url: "popupUsers4SignPath1",
         type: "post"        
     }).success(function(result){
                 $("#popupUsers").html(result);

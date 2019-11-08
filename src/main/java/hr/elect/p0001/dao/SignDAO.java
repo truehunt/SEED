@@ -37,7 +37,13 @@ public interface SignDAO {
      * 마지막 결재 경로.
      */
 	 public List<?> selectSignLast(SignDocVO param) throws DataAccessException;
-	 
-
+	 /**
+     * 삭제.
+     */
+	 public void deleteSignDoc(SignDocVO param) throws DataAccessException;
+	 /**
+     * 회수.
+     */
+	 public void updateSignDocCancel(String param) throws DataAccessException;
 	 
 }

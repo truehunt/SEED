@@ -66,6 +66,19 @@ public class SignDAOImpl implements SignDAO {
     public List<?> selectSignLast(SignDocVO param) throws DataAccessException {
         return sqlSession.selectList("selectSignLast", param);
     }
+    
+    /**
+     * 삭제.
+     */
+    public void deleteSignDoc(SignDocVO param) {
+        sqlSession.delete("deleteSignDoc", param);
+    }
+    /**
+     * 회수.
+     */
+    public void updateSignDocCancel(String param) {
+        sqlSession.update("updateSignDocCancel", param);
+    }
 
 
 }

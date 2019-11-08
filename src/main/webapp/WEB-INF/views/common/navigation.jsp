@@ -325,16 +325,16 @@ $(document).ready(function(){
 							<ul class="nav nav-second-level">
                                 <li>
 
-                                    <a href='#'  onClick="doAction(myTab,'근태결과입력','chart','pay/p0001/p0001.do','pay/p0001/p0001.do'); return false">근태결과입력</a>
+                                    <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay1"/>','chart','pay/p0001/p0001.do','pay/p0001/p0001.do'); return false"><s:message code="main.pay1"/></a>
 
                                 </li>
                                 <li>
 
-                                    <a href='#' onClick="doAction(myTab,'급여입력 및 계산','chart','pay/p0002/p0002.do','pay/p0002/p0002.do'); return false">급여입력 및 계산</a>                                </li>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay2"/>','chart','pay/p0002/p0002.do','pay/p0002/p0002.do'); return false"><s:message code="main.pay2"/></a>                                </li>
 
                                 <li>
 
-                                    <a href='#' onClick="doAction(myTab,'급여이체현황','chart','pay/p0003/p0003.do','pay/p0003/p0003.do'); return false">급여이체현황</a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay3"/>','chart','pay/p0003/p0003.do','pay/p0003/p0003.do'); return false"><s:message code="main.pay3"/></a>
 
                                 <li>
                                     <a href='#' onClick="doAction(myTab,'<s:message code="main.pay4"/>','chart','mm','mm'); return false"><s:message code="main.pay4"/></a>
@@ -382,7 +382,7 @@ $(document).ready(function(){
 	                                </li>
 	                                <li>
 
-	                                    <a href='#' onClick="doAction(myTab,'급/상여 지급일자 등록','chart','pay/s0001/s0001.do','pay/s0001/s0001.do'); return false">급/상여 지급일자 등록</a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup2"/>','chart','pay/s0001/s0001.do','pay/s0001/s0001.do'); return false"><s:message code="main.setup2"/></a>
 
 	                                </li>
 	                                <li>

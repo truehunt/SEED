@@ -87,8 +87,8 @@ function fn_formSubmit(){
 							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.AD_MOD_DATE}"/></div>
 							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.SAWON_NAME}"/></div>
 							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.AD_DOCSTATUS}"/></div>
-							<div class="listTitle" title="<c:out value="${listview.AD_DTTITLE}"/>">
-								<a href="${link}"><c:out value="${listview.AD_DTTITLE}"/></a>
+							<div class="listTitle" title="<c:out value="${listview.AD_TITLE}"/>">
+								<a href="${link}"><c:out value="${listview.AD_TITLE}"/></a>
 							</div>
 						</div>
 					</c:forEach>	

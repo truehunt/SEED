@@ -81,7 +81,7 @@ public class PopUserCtr {
     /**
      *  부서리스트 for 사용자들 - 결재 경로 지정용.
      */
-    @RequestMapping(value = "/popupUsers4SignPath")
+    @RequestMapping(value = "/popupUsers4SignPath1")
     public String popupUsers4SignPath(ModelMap modelMap) {
         popupUser(modelMap);
         

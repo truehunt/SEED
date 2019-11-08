@@ -50,7 +50,7 @@ function fn_signSave(){
 
     <div id="wrapper">
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 결재문서</h1>
@@ -63,20 +63,20 @@ function fn_signSave(){
             <div class="row" style="margin-bottom: 10px">
 				<div id="signPath" class="signPath">
 					<c:forEach var="signlist" items="${signlist}" varStatus="status">
-					    <c:if test="${signlist.sstype ne '1'}">					
+					    <c:if test="${signlist.APPROVAL_SSTYPE ne '1'}">					
 							<div class="signArea">
-								<div class="signAreaTop"><c:out value="${signlist.userpos}"/></div>
+								<div class="signAreaTop"><c:out value="${signlist.APPROVAL_USER_POS}"/></div>
 								<div class="signAreaCenter">
 									<c:choose>
-							        	<c:when test='${signlist.ssresult == "1"}'>승인</c:when>
-							        	<c:when test='${signlist.ssresult == "2"}'>반려</c:when>
+							        	<c:when test='${signlist.APPROVAL_SSRESULT == "1"}'>승인</c:when>
+							        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'>반려</c:when>
 							         	<c:otherwise></c:otherwise>
 							      </c:choose>								
 								</div>
-								<div class="signAreaBottom"><c:out value="${signlist.usernm}"/> </div>
+								<div class="signAreaBottom"><c:out value="${signlist.SAWON_NAME}"/> </div>
 							</div>
 						</c:if>
-					    <c:if test="${signlist.sstype eq '1'}">
+					    <c:if test="${signlist.APPROVAL_SSTYPE eq '1'}">
 							<c:set var="cnt" value="${cnt + 1}" />		
 						</c:if>
 					</c:forEach>				
@@ -87,17 +87,17 @@ function fn_signSave(){
 	            <div class="row" style="margin-bottom: 10px">
 					<div id="signPath4Agree" class="signPath">
 						<c:forEach var="signlist" items="${signlist}" varStatus="status">
-						    <c:if test="${signlist.sstype eq '1'}">					
+						    <c:if test="${signlist.APPROVAL_SSTYPE eq '1'}">					
 								<div class="signArea">
-									<div class="signAreaTop"><c:out value="${signlist.userpos}"/></div>
+									<div class="signAreaTop"><c:out value="${signlist.APPROVAL_USER_POS}"/></div>
 									<div class="signAreaCenter">
 										<c:choose>
-								        	<c:when test='${signlist.ssresult == "1"}'>승인</c:when>
-								        	<c:when test='${signlist.ssresult == "2"}'>반려</c:when>
+								        	<c:when test='${signlist.APPROVAL_SSRESULT == "1"}'>승인</c:when>
+								        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'>반려</c:when>
 								         	<c:otherwise></c:otherwise>
 								      </c:choose>								
 									</div>
-									<div class="signAreaBottom"><c:out value="${signlist.usernm}"/> </div>
+									<div class="signAreaBottom"><c:out value="${signlist.SAWON_NAME}"/> </div>
 								</div>
 							</c:if>
 						</c:forEach>				
@@ -109,19 +109,19 @@ function fn_signSave(){
             <div class="row">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-                        <c:out value="${signDocInfo.doctitle}"/>
+                        <c:out value="${signDocInfo.AD_TITLE}"/>
 					</div>
 	                <div class="panel-body">
-	                	<c:out value="${signDocInfo.doccontents}" escapeXml="false"/>
+	                	<c:out value="${signDocInfo.AD_CONTENT}" escapeXml="false"/>
 	                </div>
                 </div>
                 <button class="btn btn-outline btn-primary" onclick="history.back(-1)" ><s:message code="common.btnList"/></button>
-                <c:if test='${signDocInfo.userno==sessionScope.userno and signDocInfo.docstatus<=1}' >		
-                	<button class="btn btn-outline btn-primary" onclick="fn_moveToURL('signDocDelete?docno=<c:out value="${signDocInfo.docno}"/>', '<s:message code="common.btnDelete"/>')" ><s:message code="common.btnDelete"/></button>
-                	<button class="btn btn-outline btn-primary" onclick="fn_moveToURL('signDocCancel?docno=<c:out value="${signDocInfo.docno}"/>', '회수')" >회수</button>
-                	<button class="btn btn-outline btn-primary" onclick="fn_moveToURL('signDocForm?docno=<c:out value="${signDocInfo.docno}"/>')" ><s:message code="common.btnUpdate"/></button>
+                <c:if test='${signDocInfo.PK_SAWON_CODE==sessionScope.PK_SAWON_CODE and signDocInfo.AD_DOCSTATUS<=1}' >		
+                	<button class="btn btn-outline btn-primary" onclick="fn_moveToURL('signDocDelete?PK_AD_NUM=<c:out value="${signDocInfo.PK_AD_NUM}"/>', '<s:message code="common.btnDelete"/>')" ><s:message code="common.btnDelete"/></button>
+                	<button class="btn btn-outline btn-primary" onclick="fn_moveToURL('signDocCancel?PK_AD_NUM=<c:out value="${signDocInfo.PK_AD_NUM}"/>', '회수')" >회수</button>
+                	<button class="btn btn-outline btn-primary" onclick="fn_moveToURL('signDocForm?PK_AD_NUM=<c:out value="${signDocInfo.PK_AD_NUM}"/>')" ><s:message code="common.btnUpdate"/></button>
                 </c:if>
-                <c:if test='${signer==sessionScope.userno}' >		
+                <c:if test='${signer==sessionScope.PK_SAWON_CODE}' >		
                 	<button class="btn btn-outline btn-primary" onclick="fn_sign()" >결재승인</button>
                 </c:if>
             </div>
@@ -137,13 +137,13 @@ function fn_signSave(){
 					</div>
 					
 					<c:forEach var="signlist" items="${signlist}" varStatus="status">
-					    <c:if test="${signlist.sstype ne '0'}">					
+					    <c:if test="${signlist.APPROVAL_SSTYPE ne '0'}">					
 							<div class="listBody">
 								<div class="listHiddenField pull-left field60 textCenter"><c:out value="${status.index}"/></div>
-								<div class="listHiddenField pull-left field100 textCenter"><c:out value="${signlist.usernm}"/></div>
-								<div class="listHiddenField pull-left field100 textCenter"><c:out value="${signlist.signdate}"/></div>
-								<div class="listTitle" title="<c:out value="${listview.sscomment}"/>">
-									<c:out value="${signlist.sscomment}"/>
+								<div class="listHiddenField pull-left field100 textCenter"><c:out value="${signlist.SAWON_NAME}"/></div>
+								<div class="listHiddenField pull-left field100 textCenter"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div>
+								<div class="listTitle" title="<c:out value="${listview.APPROVAL_SSCOMMENT}"/>">
+									<c:out value="${signlist.APPROVAL_SSCOMMENT}"/>
 								</div>
 							</div> 
 						</c:if>
@@ -164,19 +164,19 @@ function fn_signSave(){
                 </div>
                 <div class="modal-body" id="myModalBody">
                 	<form id="dialogForm" name="dialogForm" role="form" action="signSave" method="post" >
-	            		<input type="hidden" name="docno" value="<c:out value="${signDocInfo.docno}"/>">
+	            		<input type="hidden" name="PK_AD_NUM" value="<c:out value="${signDocInfo.PK_AD_NUM}"/>">
 			            <!-- /.row -->
 			            <div class="row">
 			            	<div class="col-lg-2" ></div> 
 			            	<div class="col-lg-10" >
-							 	<label><input name="ssresult" id="ssresult" type="radio" checked="checked" value="1">승인</label>
-							 	<label><input name="ssresult" id="ssresult" type="radio" value="2">반려</label>
+							 	<label><input name="APPROVAL_SSRESULT" id="APPROVAL_SSRESULT" type="radio" checked="checked" value="1">승인</label>
+							 	<label><input name="APPROVAL_SSRESULT" id="APPROVAL_SSRESULT" type="radio" value="2">반려</label>
 			                </div> 
 			            </div> 
 			            <div class="row">  
 			            	<label class="col-lg-2">의견</label>
 			            	<div class="col-lg-10" >
-			            		<textarea class="form-control" id="sscomment" name="sscomment" rows="4"></textarea>
+			            		<textarea class="form-control" id="APPROVAL_SSCOMMENT" name="APPROVAL_SSCOMMENT" rows="4"></textarea>
 			                </div> 
 			            </div> 
 	            		<!-- /.row -->

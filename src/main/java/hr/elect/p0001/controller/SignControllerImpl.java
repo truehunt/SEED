@@ -164,10 +164,52 @@ public class SignControllerImpl implements SignController {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
     	signDocInfo.setPK_SAWON_CODE(userno);
     	
-    	System.out.println("=============================>"+signDocInfo.getPK_AD_NUM());
-    	
         signService.insertSignDoc(signDocInfo);
 
+        return "redirect:/signListTobe";
+    }
+    
+    /**
+     * 읽기.
+     */
+    @RequestMapping(value = "/signDocRead")
+    public String signDocRead(HttpServletRequest request, SignDocVO SignDocVO, ModelMap modelMap) {
+        // 페이지 공통: alert
+        String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+        
+        modelMap.addAttribute("PK_SAWON_CODE", userno);
+        // etcSvc.setCommonAttribute(userno, modelMap);
+    	
+        // 개별 작업
+        
+        SignDocVO signDocInfo = signDAO.selectSignDocOne(SignDocVO);
+        List<? >signlist = signDAO.selectSign(signDocInfo.getPK_AD_NUM());
+        String signer = signDAO.selectCurrentSigner(SignDocVO.getPK_AD_NUM());
+        
+        modelMap.addAttribute("signDocInfo", signDocInfo);
+        modelMap.addAttribute("signlist", signlist);
+        modelMap.addAttribute("signer", signer);
+        
+        return "elect/p0001/SignDocRead";
+    }
+    
+    /**
+     * 삭제.
+     */
+    @RequestMapping(value = "/signDocDelete")
+    public String signDocDelete(HttpServletRequest request, SignDocVO SignDocVO) {
+
+    	signDAO.deleteSignDoc(SignDocVO);
+        
+        return "redirect:/signListTobe";
+    }
+    /**
+     * 회수.
+     */
+    @RequestMapping(value = "/signDocCancel")
+    public String signDocCancel(HttpServletRequest request, String PK_AD_NUM) {
+    	signDAO.updateSignDocCancel(PK_AD_NUM);
+        
         return "redirect:/signListTobe";
     }
 	

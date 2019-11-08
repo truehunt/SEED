@@ -26,7 +26,7 @@
     
     <select id="selectSignDocList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
          SELECT SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, CU.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME,
-		        TO_CHAR(TO_DATE(AD_MOD_DATE, 'yyyy-mm-dd')), CC.CODENM as AD_DOCSTATUS
+		        AD_MOD_DATE, CC.CODENM as AD_DOCSTATUS
 		 FROM AD SD
 		 INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
 		 INNER JOIN DOCTYPE SDT ON SDT.PK_DOCTYPE_NUM=SD.PK_DOCTYPE_NUM
@@ -95,23 +95,25 @@
     </delete>
          
     <insert id="insertSign" parameterType="hr.elect.p0001.vo.SignVO" >
+    	<selectKey resultType="string" keyProperty="PK_APPROVAL_NUM" order="BEFORE">
+    		SELECT NVL(MAX(PK_APPROVAL_NUM)+1, 0) FROM APPROVAL
+    	</selectKey>
         INSERT INTO APPROVAL(PK_APPROVAL_NUM, FK_AD_NUM, APPROVAL_SSSTEP, APPROVAL_SSTYPE, APPROVAL_SSRESULT, APPROVAL_RECEIVE_DATE, PK_SAWON_CODE, APPROVAL_USER_POS)
-        VALUES ((SELECT NVL(MAX(PK_APPROVAL_NUM)+1,0) FROM APPROVAL), #{FK_AD_NUM}, #{APPROVAL_SSSTEP}, #{APPROVAL_SSTYPE}, #{APPROVAL_SSRESULT}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{PK_SAWON_CODE}, #{APPROVAL_USER_POS})
+        VALUES (#{PK_APPROVAL_NUM}, #{FK_AD_NUM}, #{APPROVAL_SSSTEP}, #{APPROVAL_SSTYPE}, #{APPROVAL_SSRESULT}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{PK_SAWON_CODE}, #{APPROVAL_USER_POS})
     </insert>
 
     <select id="selectSignDocOne" parameterType="hr.elect.p0001.vo.SignDocVO" resultType="hr.elect.p0001.vo.SignDocVO">
-        SELECT FK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, SAWON_NAME, AD_CONTENT, AD_DOCSTATUS, AD_DOCSTEP, PK_DOCTYPE_NUM, AD_DEPT_NAME
-             , DATE_FORMAT(AD_MOD_DATE,'%Y-%m-%d') AD_MOD_DATE, AD_DOCSIGNPATH
+         SELECT PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, SD.SAWON_NAME, AD_CONTENT, AD_DOCSTATUS, AD_DOCSTEP, PK_DOCTYPE_NUM, AD_DEPT_NAME, AD_MOD_DATE, AD_MOD_DATE, AD_DOCSIGNPATH
           FROM AD SD
          INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
-         WHERE SD.AD_DELETEFLAG='N' AND FK_AD_NUM=#{FK_AD_NUM}
+         WHERE SD.AD_DELETEFLAG='N' AND PK_AD_NUM=#{PK_AD_NUM}
     </select> 
     
     <select id="selectCurrentSigner" parameterType="String" resultType="String">
-		SELECT SS.PK_SAWON_CODE
+         SELECT SS.PK_SAWON_CODE
           FROM AD SD
-         INNER JOIN APPROVAL SS ON SS.FK_AD_NUM=SD.FK_AD_NUM AND SS.APPROVAL_SSSTEP=SD.AD_DOCSTEP 
-        WHERE SD.FK_AD_NUM=#{FK_AD_NUM} AND SD.AD_DOCSTATUS IN (1,2)
+         INNER JOIN APPROVAL SS ON SS.FK_AD_NUM=SD.PK_AD_NUM AND SS.APPROVAL_SSSTEP=SD.AD_DOCSTEP 
+        WHERE SD.PK_AD_NUM=#{FK_AD_NUM} AND SD.AD_DOCSTATUS IN (1,2)
 	</select>
 	            
     <update id="deleteSignDoc" parameterType="hr.elect.p0001.vo.SignDocVO">
@@ -121,7 +123,7 @@
     </update> 
 
     <select id="selectSign" parameterType="String" resultType="hr.elect.p0001.vo.SignVO">
-        SELECT PK_APPROVAL_NUM, FK_AD_NUM, APPROVAL_SSSTEP, APPROVAL_SSTYPE, APPROVAL_SSRESULT, SD.PK_SAWON_CODE, SAWON_NAME, SD.APPROVAL_USER_POS, APPROVAL_SIGN_DATE, APPROVAL_SSCOMMENT
+        SELECT PK_APPROVAL_NUM, FK_AD_NUM, APPROVAL_SSSTEP, APPROVAL_SSTYPE, APPROVAL_SSRESULT, SD.PK_SAWON_CODE, SD.SAWON_NAME, SD.APPROVAL_USER_POS, APPROVAL_SIGN_DATE, APPROVAL_SSCOMMENT
           FROM APPROVAL SD
          INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
          WHERE FK_AD_NUM=#{FK_AD_NUM}
@@ -155,19 +157,19 @@
          LIMIT 1
     </select>
 
-    <update id="updateSignAD_DOCSTATUS" parameterType="hr.elect.p0001.vo.SignVO">
+    <update id="updateSignDocStatus" parameterType="hr.elect.p0001.vo.SignVO">
         UPDATE AD
            SET AD_DOCSTATUS = #{APPROVAL_SSRESULT}
 			<if test="APPROVAL_SSSTEP != null">
 	        	, AD_DOCSTEP = AD_DOCSTEP + 1
 	        </if>
-         WHERE FK_AD_NUM=#{FK_AD_NUM} 
+         WHERE FK_AD_NUM=#{PK_AD_NUM} 
     </update> 
 
     <update id="updateSignDocCancel" parameterType="String">
         UPDATE AD
            SET AD_DOCSTATUS = 0
-         WHERE FK_AD_NUM=#{FK_AD_NUM} 
+         WHERE PK_AD_NUM=#{PK_AD_NUM, jdbcType=VARCHAR} 
     </update>	
     
     <!-- 전자결재 결재라인 부서, 사원 선택 팝업-->

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import hr.system.p0003.service.IndexSvc;
 import project.common.DateVO;
 import project.common.Field3VO;
+import project.common.SearchVO;
 import project.common.Util4calen;
 import project.common.EtcSvc;
 
@@ -50,10 +51,10 @@ public class IndexCtr {
     }
     
     /**
-     * main page - calendar, chart  
+     * main page - calendar, chart, 전자결재현황  
      */
     @RequestMapping(value = "/indexCalen")
-    public String indexCalen(HttpServletRequest request, ModelMap modelMap) {
+    public String indexCalen(HttpServletRequest request, SearchVO searchVO, ModelMap modelMap) {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
         modelMap.addAttribute(userno, modelMap);
 
@@ -61,10 +62,20 @@ public class IndexCtr {
 
         calCalen(userno, today, modelMap);
         
+        // 전자결재
+        searchVO.setDisplayRowCount(6); // ->SEED에 있음
+        searchVO.pageCalculate( indexSvc.selectSignCount(searchVO) ); // startRow, endRow // ->SEED에 있음
+        List<?> listview2  = indexSvc.selectSignList(searchVO); // -> xml(SignServiceImpl과 xml에 연결)
+        
+        modelMap.addAttribute("searchVO", searchVO);
+        modelMap.addAttribute("listview2", listview2);
+        
         // -----------------------------------------
         // 차트사용
         List<?> listview = indexSvc.selectBoardGroupCount4Statistic();
         modelMap.addAttribute("listview", listview);
+        
+        
         
         // List<?> listview = indexSvc.selectRecentNews();
         // List<?> noticeList = indexSvc.selectNoticeListTop5();

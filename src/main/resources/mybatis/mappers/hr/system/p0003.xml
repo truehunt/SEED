@@ -223,5 +223,26 @@
          WHERE DOCTYPE_DELETEFLAG='N'
          GROUP BY DOCTYPE_DTTITLE
     </select> 
+    
+    <!-- 전자결재목록 -->
+    <select id="selectSignList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
+        SELECT PK_AD_NUM, AD_TITLE, SD.SAWON_NAME, DT.DOCTYPE_DTTITLE, AD_INT_DATE, CODENM AS AD_DOCSTATUS
+		FROM AD AD
+		INNER JOIN SAWON SD ON AD.PK_SAWON_CODE=SD.PK_SAWON_CODE
+		INNER JOIN COM_CODE CC ON AD.AD_DOCSTATUS=CC.CODECD
+		INNER JOIN DOCTYPE DT ON DT.PK_DOCTYPE_NUM=AD.PK_DOCTYPE_NUM
+		WHERE AD_DELETEFLAG='N'
+		AND CC.CLASSNO=2
+		<if test="rowStart != null">
+             AND ROWNUM BETWEEN ${rowStart-1} AND ${displayRowCount}
+         </if>
+         ORDER BY PK_AD_NUM DESC
+    </select> 
+    
+   <select id="selectSignCount" resultType="Integer" parameterType="project.common.SearchVO">
+        SELECT COUNT(*)
+        FROM AD
+        WHERE AD_DELETEFLAG='N'
+    </select>
 
 </mapper>

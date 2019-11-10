@@ -161,7 +161,7 @@ function calendarDayMouseout(){
          <h1 class="page-header">
          <a href="javascript: fn_moveDate('<c:out value="${preWeek}"/>')"><i class="fa fa-angle-left fa-fw"></i></a>
          
-         <c:out value="${month}"/><s:message code="main.month"/> <c:out value="${week}"/><s:message code="main.week"/>
+         <c:out value="${month}"/> <s:message code="main.month"/> <c:out value="${week}"/><s:message code="main.week"/>
          <a href="javascript: fn_moveDate('<c:out value="${nextWeek}"/>')"><i class="fa fa-angle-right fa-fw"></i></a>
          </h1>
      </div>
@@ -197,6 +197,28 @@ function calendarDayMouseout(){
     </div>
      
      <div class="calendarTooltip"></div>
+     
+     <h1 class="page-header"> <i class="fa fa-edit fa-fw"></i> 전자결재 현황</h1>
+     <div class="row">
+                <div class="col-lg-12">
+					<c:forEach var="listview2" items="${listview2}" varStatus="status">
+						<c:url var="link" value="signDocRead">
+							<c:param name="PK_AD_NUM" value="${listview2.PK_AD_NUM}" />
+						</c:url>
+		                <div class="col-lg-4">
+		                    <div class="panel panel-default">
+		                        <div class="panel-heading">
+		                            <a href="${link}"><c:out value="${listview2.AD_TITLE}"/> (<c:out value="${listview2.AD_DOCSTATUS}"/>)</a>
+		                        </div>
+		                        <div class="panel-body">
+		                            <p> 기안자 : <c:out value="${listview2.SAWON_NAME}"/> (<c:out value="${listview2.AD_INT_DATE}"/>)</p>
+									<p> 결재양식 : <c:out value="${listview2.DOCTYPE_DTTITLE}"/> </p>
+		                        </div>
+		                    </div>
+		                </div>					
+					</c:forEach>	
+            	</div>    
+            </div>
      
      <h1 class="page-header"> <i class="fa fa-tasks fa-fw"></i> 전자결재양식 현황</h1>
      <div class="row">

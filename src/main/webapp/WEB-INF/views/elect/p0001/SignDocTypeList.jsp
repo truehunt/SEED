@@ -68,7 +68,7 @@ function fn_formSubmit(){
 						<a href="${link}">
 				            <div class="panel panel-default" style="width: 150px; height: 200px; display:inline-block; overflow:hidden; "> 
 				            	<div class="panel-heading"><c:out value="${listview.DOCTYPE_DTTITLE}"/></div>
-				            	<div class="panel-body"><img src="images/if_survey_49355.png" style="margin: 30px 25px;"/></div>
+				            	<div class="panel-body"><img src="/SEED/resources/image/doctype.png" style="margin: 30px 25px;"/></div>
 							</div>
 						</a>
 					</c:forEach>

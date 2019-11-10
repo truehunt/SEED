@@ -83,7 +83,7 @@ isValidEmail = function (email) {
 
 <body>
 
-	<div align=center><img src="images/SEED.png" style="position:absoulte; margin-top:150px; margin-left: auto; margin-right: auto;"/></div>
+	<div align=center><img src="/SEED/resources/image/SEED.png" style="position:absoulte; margin-top:150px; margin-left: auto; margin-right: auto;"/></div>
 
     <div class="container2">
         <div class="row">

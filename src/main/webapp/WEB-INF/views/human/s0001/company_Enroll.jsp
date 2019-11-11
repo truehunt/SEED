@@ -173,7 +173,7 @@
 			 
 			var foreigner = document.getElementById("company_foreigner_whe");
 			var selectBox = foreigner.options[foreigner.selectedIndex].value;
-			console.log(selectBox);
+			//console.log(selectBox);
 			  
 			mySheet.SetCellValue(t_row, colNum, e.target.value);
 		})
@@ -191,6 +191,7 @@
 	 
 	/*Sheet 각종 처리*/
 	function doAction(sAction) {
+		console.log(sAction);
 		switch(sAction) {
 			case "search": //조회
 			    //var param = FormQueryStringEnc(document.frm);
@@ -205,14 +206,90 @@
 				mySheet.RemoveAll();
 				break;
 			case "save": // 저장
+				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
+				//save 를 하면서 중복 처리 됨 
 				var tempStr = mySheet.GetSaveString();
 				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				
 				mySheet.DoSave("${contextPath}/human/s0001/insertData.do");
+				
 				break;			
 			case "insert": //신규행 추가
 				//var Option = { "SumRow" : "AutoSum" }; 
 				//mySheet.RemoveAll(Option); 
 				var row = mySheet.DataInsert();
+				break;
+		}
+	}
+	
+		// Validation 확인하기
+	function mySheet_OnValidation(Row, Col, Value){
+		//console.log('확인');
+		
+		switch(Col){
+			/*
+				사업장 등록번호 length == 12
+				법인 등록번호 length == 14
+				주민등록번호 length == 14
+				전화번호 & 팩스 length == 12,11,13
+			*/
+			case 7: // 사업자 등록번호 
+				//console.log(Value);
+				//console.log(Value.length);
+				if(Value.length >= 0 && Value.length < 12){
+					alert("사업자 등록번호는 12자리로 입력하셔야 됩니다!");
+					mySheet.ValidateFail(1); // Validation 실패
+					document.getElementById('company_reg_num').focus(); //실패시 포커스 이동
+					console.log("test")
+				}
+				break;
+				
+			case 8: // 법인 등록번호 
+				//console.log(Value);
+				//console.log(Value.length);
+				if(Value.length == ''){ // null 값이면 
+					mySheet.ValidateFail(0);
+				}else if(Value.length >= 0 && Value.length < 14 ){
+					alert("법인 등록번호는 입력 안하시거나 14자리로 입력하셔야 됩니다.");
+					mySheet.ValidateFail(1);
+					document.getElementById('company_corp_reg_num').focus();
+				}
+				break;
+				
+			case 11: // 주민등록번호 
+				//console.log(Value);
+				//console.log(Value.length);
+				if(Value.length >= 0 && Value.length < 14 ){
+					alert("주민등록번호는 14자리로 입력하셔야 됩니다.");
+					mySheet.ValidateFail(1);
+					document.getElementById('company_resi_reg_num').focus();
+				}
+				break;
+				
+			case 15: // 본점 전화번호
+				//console.log(Value);
+				//console.log(Value.length);
+				if(Value.length == ''){ // null 값이면 
+					mySheet.ValidateFail(0);
+				}else if(Value.length != 11 && Value.length != 12 && Value.length != 13){
+					alert("본점 전화번호는 '-'을 제외한 9 or 10 or 11 자리로 입력하셔야 됩니다.");
+					mySheet.ValidateFail(1);
+					document.getElementById('company_tel').focus();
+				}
+				
+				break;
+			
+			case 16: // 본점 fax 번호
+				//console.log(Value);
+				//console.log(Value.length);
+				if(Value.length == ''){ // null 값이면 
+					mySheet.ValidateFail(0);
+				}else if(Value.length != 11 && Value.length != 12 && Value.length != 13){
+					alert("본점 fax번호는 '-'을 제외한 9 or 10 or 11 자리로 입력하셔야 됩니다.");
+					mySheet.ValidateFail(1);
+					document.getElementById('company_fax').focus();
+				}
+				
 				break;
 		}
 	}
@@ -489,7 +566,7 @@
 	   </tr>
 	   <tr><td></td><tr> <!-- 공백 -->
 	   <tr>
-	   	<td align="right">본점 우편번호 : </td><td> <input type="text" name="company_zip" id="company_zip" size="10px"> 
+	   	<td align="right">본점 우편번호 : </td><td> <input type="text" name="company_zip" id="company_zip" size="10px" readonly> 
 	   		<!-- input type 예시  
 	   			<input type="image" src="${contextPath}/resources/image/search_icon.png" onclick="sample4_execDaumPostcode()" width="20px"; height="15px" />
 	   		    <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호찾기" />
@@ -498,7 +575,7 @@
 	   	</td>
 	   </tr>
 	   <tr>
-	   	<td align="right">본점 주소 : </td><td> <input type="text" name="company_address" id="company_address" size="50px"> </td>
+	   	<td align="right">본점 주소 : </td><td> <input type="text" name="company_address" id="company_address" size="50px" readonly> </td>
 	   </tr>
 	   <tr>
 	   	<td align="right">본점 상세주소 : </td><td> <input type="text" name="company_detail_address" id="company_detail_address" size="50px"> </td>

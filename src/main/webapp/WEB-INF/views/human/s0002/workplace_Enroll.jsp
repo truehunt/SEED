@@ -194,6 +194,8 @@
 				mySheet.RemoveAll();
 				break;
 			case "save": // 저장
+				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
+				//save 를 하면서 중복 처리 됨 
 				var tempStr = mySheet.GetSaveString();
 				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
 				mySheet.DoSave("${contextPath}/human/s0002/insertData.do");
@@ -203,7 +205,65 @@
 				break;
 		}
 	}
-	
+	// Validation 확인하기
+	function mySheet_OnValidation(Row, Col, Value){
+		console.log('확인');
+		
+		switch(Col){
+			/*
+				사업자 등록번호 length == 12
+				법인 등록번호 length == 14
+				전화번호 & 팩스 length == 12,11,13
+			*/
+			case 5: // 사업자 등록번호 
+				console.log(Value);
+				console.log(Value.length);
+				if(Value.length >= 0 && Value.length < 12){
+					alert("사업장 등록번호는 12자리로 입력하셔야 됩니다.");
+					mySheet.ValidateFail(1); // Validation 실패
+					document.getElementById('workplace_com_reg_num').focus(); //실패시 포커스 이동
+				}
+				break;
+				
+			case 6: // 법인 등록번호 
+				console.log(Value);
+				console.log(Value.length);
+				if(Value.length == ''){ // null 값이면 
+					mySheet.ValidateFail(0);
+				}else if(Value.length >= 0 && Value.length < 14 ){
+					alert("법인 등록번호는 입력 안하시거나 14자리로 입력하셔야 됩니다.");
+					mySheet.ValidateFail(1);
+					document.getElementById('workplace_corp_reg_num').focus();
+				}
+				break;
+				
+			case 11: // 사업장 전화번호
+				console.log(Value);
+				console.log(Value.length);
+				if(Value.length == ''){ // null 값이면 
+					mySheet.ValidateFail(0);
+				}else if(Value.length != 11 && Value.length != 12 && Value.length != 13){
+					alert("사업장 전화번호는 '-'을 제외한 9 or 10 or 11 자리로 입력하셔야 됩니다.");
+					mySheet.ValidateFail(1);
+					document.getElementById('workplace_tel').focus();
+				}
+				
+				break;
+			
+			case 12: // 사업장 fax 번호
+				console.log(Value);
+				console.log(Value.length);
+				if(Value.length == ''){ // null 값이면 
+					mySheet.ValidateFail(0);
+				}else if(Value.length != 11 && Value.length != 12 && Value.length != 13){
+					alert("사업장 fax번호는 '-'을 제외한 9 or 10 or 11 자리로 입력하셔야 됩니다.");
+					mySheet.ValidateFail(1);
+					document.getElementById('workplace_fax').focus();
+				}
+				
+				break;
+		}
+	}
 	// 조회완료 후 처리할 작업
 	function mySheet_OnSearchEnd() {
       
@@ -426,13 +486,13 @@
 	  	</tr>
 	  	<tr>
 	  		<td align="right">사업장 우편번호 : </td>
-	  			<td> <input type="text" name="workplace_zip" id="workplace_zip" size="10px">
+	  			<td> <input type="text" name="workplace_zip" id="workplace_zip" size="10px" readonly>
 	  				 <img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
 	  			</td>
 	  	</tr>
 	  	<tr>
 	  		<td align="right">사업장 주소 : </td>
-	  			<td> <input type="text" name="workplace_address" id="workplace_address" size="50px"> </td>
+	  			<td> <input type="text" name="workplace_address" id="workplace_address" size="50px" readonly> </td>
 	  	</tr>
 	  	<tr>
 	  		<td align="right">사업장 상세주소 : </td>

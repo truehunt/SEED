@@ -54,6 +54,7 @@ function fn_formSubmit(){
 
             <div class="row">
                 <div class="col-lg-12">
+                	<label><input name="searchExt1" id="searchExt1" type="radio" value="all" onclick="fn_formSubmit()" <c:if test='${searchVO.searchExt1=="all"}'>checked</c:if>> 전체</label>
 				 	<label><input name="searchExt1" id="searchExt1" type="radio" value="sign" onclick="fn_formSubmit()" <c:if test='${searchVO.searchExt1=="sign"}'>checked</c:if>> 진행중</label>
 				 	<label><input name="searchExt1" id="searchExt1" type="radio" value="signed" onclick="fn_formSubmit()" <c:if test='${searchVO.searchExt1=="signed"}'>checked</c:if>> 완료</label>
                 </div>

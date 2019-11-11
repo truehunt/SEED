@@ -15,6 +15,7 @@ public class SignVO {
 	private String APPROVAL_SIGN_DATE; // 결재일자
 	private String APPROVAL_USER_POS, // 직위
 				   FK_AD_NUM, // 전자결재문서번호
+				   PK_AD_NUM, // updatesign위한 컬럼
 				   FK_FILE_NUM, // 파일번호
 				   PK_SAWON_CODE, // 사원코드
 				   SAWON_NAME; // 사원이름
@@ -118,5 +119,15 @@ public class SignVO {
 	public void setSAWON_NAME(String sAWON_NAME) {
 		SAWON_NAME = sAWON_NAME;
 	}
+
+	public String getPK_AD_NUM() {
+		return PK_AD_NUM;
+	}
+
+	public void setPK_AD_NUM(String pK_AD_NUM) {
+		PK_AD_NUM = pK_AD_NUM;
+	}
+	
+	
 	
 }

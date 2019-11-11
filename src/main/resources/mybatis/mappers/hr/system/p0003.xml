@@ -225,6 +225,14 @@
     </select> 
     
     <!-- 전자결재목록 -->
+    <select id="checkSignDoc" resultType="Integer" >
+    	SELECT COUNT(*)
+        FROM AD SD
+        INNER JOIN APPROVAL SS ON SS.FK_AD_NUM=SD.PK_AD_NUM AND SS.APPROVAL_SSSTEP=SD.AD_DOCSTEP 
+        WHERE SD.AD_DOCSTATUS IN (1,2)
+        AND SS.PK_SAWON_CODE = #{PK_SAWON_CODE}
+    </select>
+    
     <select id="selectSignList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
         SELECT PK_AD_NUM, AD_TITLE, SD.SAWON_NAME, DT.DOCTYPE_DTTITLE, AD_INT_DATE, CODENM AS AD_DOCSTATUS
 		FROM AD AD
@@ -233,6 +241,7 @@
 		INNER JOIN DOCTYPE DT ON DT.PK_DOCTYPE_NUM=AD.PK_DOCTYPE_NUM
 		WHERE AD_DELETEFLAG='N'
 		AND CC.CLASSNO=2
+		AND AD_DOCSTATUS IN(1,2)
 		<if test="rowStart != null">
              AND ROWNUM BETWEEN ${rowStart-1} AND ${displayRowCount}
          </if>

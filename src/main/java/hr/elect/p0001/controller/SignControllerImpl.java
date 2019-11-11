@@ -159,6 +159,7 @@ public class SignControllerImpl implements SignController {
     /**
      * 저장.
      */
+	@Override
     @RequestMapping(value = "/signDocSave")
     public String signDocSave(HttpServletRequest request, SignDocVO signDocInfo, ModelMap modelMap) {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
@@ -172,6 +173,7 @@ public class SignControllerImpl implements SignController {
     /**
      * 읽기.
      */
+	@Override
     @RequestMapping(value = "/signDocRead")
     public String signDocRead(HttpServletRequest request, SignDocVO SignDocVO, ModelMap modelMap) {
         // 페이지 공통: alert
@@ -196,6 +198,7 @@ public class SignControllerImpl implements SignController {
     /**
      * 삭제.
      */
+	@Override
     @RequestMapping(value = "/signDocDelete")
     public String signDocDelete(HttpServletRequest request, SignDocVO SignDocVO) {
 
@@ -206,13 +209,25 @@ public class SignControllerImpl implements SignController {
     /**
      * 회수.
      */
+	@Override
     @RequestMapping(value = "/signDocCancel")
     public String signDocCancel(HttpServletRequest request, String PK_AD_NUM) {
     	signDAO.updateSignDocCancel(PK_AD_NUM);
         
         return "redirect:/signListTobe";
     }
-	
+    /**
+     * 결재.
+     */
+	@Override
+    @RequestMapping(value = "/signSave")
+    public String signSave(HttpServletRequest request, SignVO signInfo) {
+
+    	signService.updateSign(signInfo);
+        
+        return "redirect:/signListTo";
+    }
+    
 	private String getViewName(HttpServletRequest request) throws Exception {
 		String contextPath = request.getContextPath();
 		String uri = (String) request.getAttribute("javax.servlet.include.request_uri");

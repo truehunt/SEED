@@ -16,6 +16,7 @@ import hr.elect.p0001.vo.SignVO;
 
 public interface SignService {
 	
-	public void insertSignDoc(SignDocVO param)  throws DataAccessException ;
+	public void insertSignDoc(SignDocVO param) throws DataAccessException ;
+	public void updateSign(SignVO param) throws DataAccessException ;
 	
 }

@@ -72,7 +72,7 @@ function addRow(optionIndex, userno, usernm, userpos) {
 	
 	td = $("<TD>");
 	tr.append(td);
-	td.html("<a href='javascript:fn_UserDelete(" + userno +")'><i class='fa fa-times fa-fw'></i></a>");
+	td.html("<a href='javascript:fn_UserDelete(" + userno + ")'><i class='fa fa-times fa-fw'></i></a>");
 	
 	if (userpos==="") userpos = typearr[optionIndex];
 	td = $("<TD>");

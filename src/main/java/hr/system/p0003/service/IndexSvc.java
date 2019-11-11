@@ -34,4 +34,12 @@ public class IndexSvc {
         return sqlSession.selectList("selectSignList", param);
     }
     
+    /**
+     * 접속자가 결재해야할 문서 check.
+     */
+    public Integer checkSignDoc(String param) {
+        return sqlSession.selectOne("checkSignDoc", param);
+    }
+
+    
 }

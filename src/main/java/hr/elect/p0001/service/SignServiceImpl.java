@@ -18,9 +18,6 @@ import hr.elect.p0001.dao.SignDAO;
 import hr.elect.p0001.vo.SignDocVO;
 import hr.elect.p0001.vo.SignVO;
 
-
-
-
 @Service("signService")
 @Transactional(propagation = Propagation.REQUIRED)
 public class SignServiceImpl implements SignService {
@@ -74,6 +71,38 @@ public class SignServiceImpl implements SignService {
         } catch (TransactionException ex) {
             txManager.rollback(status);
             LOGGER.error("insertSignDoc");
+        }            
+    }
+    
+    /**
+     * 결재.
+     */
+    public void updateSign(SignVO param) {
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        TransactionStatus status = txManager.getTransaction(def);
+        
+        try {
+	        sqlSession.update("updateSign", param);
+	        
+	        // signdoc의 상태 변경: docstatus 변수를 사용해야 하나 그냥 ssresult로 사용
+	        if ("2".equals(param.getAPPROVAL_SSRESULT())){	// 반려 - 결재 종료
+        		param.setAPPROVAL_SSRESULT("3");
+	        } else {
+	        	String chk = sqlSession.selectOne("selectChkRemainSign", param);
+	        	if (chk!=null) { // 다음 심사가 있으면 심사 단계 설정
+	        		param.setAPPROVAL_SSSTEP("1");
+	        		param.setAPPROVAL_SSRESULT("2");
+	        	} else {
+	        		param.setAPPROVAL_SSRESULT("4");
+	        	}
+	        }
+        	sqlSession.update("updateSignDocStatus", param);
+        	
+            txManager.commit(status);
+        } catch (TransactionException ex) {
+            txManager.rollback(status);
+            LOGGER.error("updateSign");
         }            
     }
 }

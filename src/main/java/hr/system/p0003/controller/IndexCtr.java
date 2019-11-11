@@ -63,19 +63,19 @@ public class IndexCtr {
         calCalen(userno, today, modelMap);
         
         // 전자결재
-        searchVO.setDisplayRowCount(6); // ->SEED에 있음
-        searchVO.pageCalculate( indexSvc.selectSignCount(searchVO) ); // startRow, endRow // ->SEED에 있음
-        List<?> listview2  = indexSvc.selectSignList(searchVO); // -> xml(SignServiceImpl과 xml에 연결)
-        
-        modelMap.addAttribute("searchVO", searchVO);
-        modelMap.addAttribute("listview2", listview2);
-        
+        // 접속자가 전자결재해야할 문서가 있을경우만 아래가 실행됨.
+        if(indexSvc.checkSignDoc(userno)!=0) {
+	        searchVO.setDisplayRowCount(6); // ->SEED에 있음
+	        searchVO.pageCalculate( indexSvc.selectSignCount(searchVO) ); // startRow, endRow // ->SEED에 있음
+	        List<?> listview2  = indexSvc.selectSignList(searchVO); // -> xml(SignServiceImpl과 xml에 연결)
+	        
+	        modelMap.addAttribute("searchVO", searchVO);
+	        modelMap.addAttribute("listview2", listview2);
+        } else {
         // -----------------------------------------
         // 차트사용
         List<?> listview = indexSvc.selectBoardGroupCount4Statistic();
         modelMap.addAttribute("listview", listview);
-        
-        
         
         // List<?> listview = indexSvc.selectRecentNews();
         // List<?> noticeList = indexSvc.selectNoticeListTop5();
@@ -84,7 +84,7 @@ public class IndexCtr {
         // modelMap.addAttribute("listview", listview);
         // modelMap.addAttribute("noticeList", noticeList);
         // modelMap.addAttribute("listtime", listtime);
-
+        }
         return "indexCalen";
     }
     

@@ -199,9 +199,18 @@ function calendarDayMouseout(){
      <div class="calendarTooltip"></div>
      
      <h1 class="page-header"> <i class="fa fa-edit fa-fw"></i> 전자결재 현황</h1>
-     <div class="row">
+     	
+		     <div class="row">
                 <div class="col-lg-12">
 					<c:forEach var="listview2" items="${listview2}" varStatus="status">
+					
+					<c:choose>
+				         	<c:when test="${listview2 eq null}">
+									<!-- <img src="/SEED/resources/image/SEED.png">  -->
+									결재할 문서가 없습니다...
+							</c:when>
+						<c:otherwise>
+					
 						<c:url var="link" value="signDocRead">
 							<c:param name="PK_AD_NUM" value="${listview2.PK_AD_NUM}" />
 						</c:url>
@@ -215,10 +224,15 @@ function calendarDayMouseout(){
 									<p> 결재양식 : <c:out value="${listview2.DOCTYPE_DTTITLE}"/> </p>
 		                        </div>
 		                    </div>
-		                </div>					
+		                </div>	
+		                
+		                </c:otherwise>
+					</c:choose>
+											
 					</c:forEach>	
             	</div>    
             </div>
+         
      
      <h1 class="page-header"> <i class="fa fa-tasks fa-fw"></i> 전자결재양식 현황</h1>
      <div class="row">

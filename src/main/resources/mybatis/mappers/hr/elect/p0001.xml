@@ -8,12 +8,14 @@
 	<!-- 결재 문서 작성 -->    
     <sql id="includeSignDoc">
         INNER JOIN APPROVAL SS ON SS.FK_AD_NUM=SD.PK_AD_NUM AND SS.PK_SAWON_CODE='${PK_SAWON_CODE}' AND APPROVAL_SSTYPE!=0
-        <if test="searchExt1=='signed'">AND SS.APPROVAL_SSRESULT!=0</if>        
-        <if test="searchExt1!='signed'">AND SS.APPROVAL_SSRESULT=0 AND SS.APPROVAL_SSSTEP=SD.AD_DOCSTEP</if>        
+        <if test="searchExt1!='all'">
+	        <if test="searchExt1=='signed'">AND SS.APPROVAL_SSRESULT!=0</if>        
+	        <if test="searchExt1!='signed'">AND SS.APPROVAL_SSRESULT=0 AND SS.APPROVAL_SSSTEP=SD.AD_DOCSTEP</if>
+	    </if>        
         WHERE SD.AD_DELETEFLAG='N' -- AND SD.AD_DOCSTATUS IN (1,2)
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
             <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+                 ${item} LIKE '%'||#{searchKeyword}||'%'
             </foreach>
         </if>               
     </sql>
@@ -25,17 +27,19 @@
     </select> 
     
     <select id="selectSignDocList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
-         SELECT SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, CU.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME,
-		        AD_MOD_DATE, CC.CODENM as AD_DOCSTATUS
-		 FROM AD SD
-		 INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
-		 INNER JOIN DOCTYPE SDT ON SDT.PK_DOCTYPE_NUM=SD.PK_DOCTYPE_NUM
-		 INNER JOIN COM_CODE CC ON CC.CODECD=SD.AD_DOCSTATUS AND CLASSNO='2'
-         <include refid="includeSignDoc"/>
+         SELECT *
+		 FROM (SELECT ROWNUM AS NO, SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, CU.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME, AD_MOD_DATE, CC.CODENM as AD_DOCSTATUS
+			    FROM AD SD
+			    INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
+			    INNER JOIN DOCTYPE SDT ON SDT.PK_DOCTYPE_NUM=SD.PK_DOCTYPE_NUM
+			    INNER JOIN COM_CODE CC ON CC.CODECD=SD.AD_DOCSTATUS AND CLASSNO='2'
+		        <include refid="includeSignDoc"/>
+		        ORDER BY PK_AD_NUM DESC
+         ) A
          <if test="rowStart != null">
-             AND ROWNUM BETWEEN ${rowStart-1} AND ${rowStart+9}
+             WHERE A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
          </if>
-         ORDER BY PK_AD_NUM DESC
+         
     </select> 
         
    <sql id="includeSignDocTobe">
@@ -47,7 +51,7 @@
         
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
             <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
+                 ${item} LIKE '%'||#{searchKeyword}||'%'
             </foreach>
         </if>               
     </sql>
@@ -59,17 +63,18 @@
     </select> 
     
     <select id="selectSignDocTobeList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
-         SELECT SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, CU.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME,
-		        AD_MOD_DATE, CC.CODENM as AD_DOCSTATUS
-		 FROM AD SD
-		 INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
-		 INNER JOIN DOCTYPE SDT ON SDT.PK_DOCTYPE_NUM=SD.PK_DOCTYPE_NUM
-		 INNER JOIN COM_CODE CC ON CC.CODECD=SD.AD_DOCSTATUS AND CLASSNO='2'
-         <include refid="includeSignDocTobe"/>
+         SELECT *
+		FROM (SELECT ROWNUM as NO, SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, CU.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME, AD_MOD_DATE, CC.CODENM as AD_DOCSTATUS
+	    	 FROM AD SD
+		     INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
+		     INNER JOIN DOCTYPE SDT ON SDT.PK_DOCTYPE_NUM=SD.PK_DOCTYPE_NUM
+		     INNER JOIN COM_CODE CC ON CC.CODECD=SD.AD_DOCSTATUS AND CLASSNO='2'
+	         <include refid="includeSignDocTobe"/>
+	         ORDER BY PK_AD_NUM DESC
+         ) A
          <if test="rowStart != null">
-             AND ROWNUM BETWEEN ${rowStart-1} AND ${rowStart+9}
+             WHERE A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
          </if>
-         ORDER BY PK_AD_NUM DESC
          
     </select> 
             
@@ -85,7 +90,7 @@
         UPDATE AD
            SET AD_TITLE=#{AD_TITLE}, AD_CONTENT=#{AD_CONTENT}, AD_DOCSIGNPATH=#{AD_DOCSIGNPATH}
              , AD_MOD_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
-         WHERE FK_AD_NUM=#{FK_AD_NUM} 
+         WHERE PK_AD_NUM=#{PK_AD_NUM} 
     </update> 
     
     <delete id="deleteSign" parameterType="String">
@@ -123,7 +128,7 @@
     </update> 
 
     <select id="selectSign" parameterType="String" resultType="hr.elect.p0001.vo.SignVO">
-        SELECT PK_APPROVAL_NUM, FK_AD_NUM, APPROVAL_SSSTEP, APPROVAL_SSTYPE, APPROVAL_SSRESULT, SD.PK_SAWON_CODE, SD.SAWON_NAME, SD.APPROVAL_USER_POS, APPROVAL_SIGN_DATE, APPROVAL_SSCOMMENT
+        SELECT PK_APPROVAL_NUM, FK_AD_NUM, APPROVAL_SSSTEP, APPROVAL_SSTYPE, APPROVAL_SSRESULT, SD.PK_SAWON_CODE, CU.SAWON_NAME, SD.APPROVAL_USER_POS, APPROVAL_SIGN_DATE, APPROVAL_SSCOMMENT
           FROM APPROVAL SD
          INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
          WHERE FK_AD_NUM=#{FK_AD_NUM}
@@ -144,17 +149,21 @@
   
 	<!-- 결재 -->    
     <update id="updateSign" parameterType="hr.elect.p0001.vo.SignVO" >  
-        UPDATE APPROVAL SS 
-         INNER JOIN AD SD ON SD.FK_AD_NUM=SS.FK_AD_NUM AND SD.AD_DOCSTEP=SS.APPROVAL_SSSTEP
-           SET APPROVAL_SSRESULT=#{APPROVAL_SSRESULT}, APPROVAL_SIGN_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi'), APPROVAL_SSCOMMENT=#{APPROVAL_SSCOMMENT}
-         WHERE SS.FK_AD_NUM=#{FK_AD_NUM} 
+        UPDATE 
+		(SELECT APPROVAL_SSRESULT, APPROVAL_SIGN_DATE, APPROVAL_SSCOMMENT
+		FROM AD SD, APPROVAL SS
+		WHERE SD.PK_AD_NUM=SS.FK_AD_NUM
+		AND SD.AD_DOCSTEP=SS.APPROVAL_SSSTEP
+		AND SS.FK_AD_NUM=#{PK_AD_NUM, jdbcType=VARCHAR} 
+		)
+		SET APPROVAL_SSRESULT= #{APPROVAL_SSRESULT}, APPROVAL_SIGN_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi'), APPROVAL_SSCOMMENT= #{APPROVAL_SSCOMMENT}
     </update>
 
 	<select id="selectChkRemainSign" parameterType="hr.elect.p0001.vo.SignVO" resultType="String">
         SELECT APPROVAL_SSSTEP
           FROM APPROVAL SD
-         WHERE FK_AD_NUM=#{FK_AD_NUM} AND APPROVAL_SSRESULT=0
-         LIMIT 1
+         WHERE FK_AD_NUM=#{PK_AD_NUM} AND APPROVAL_SSRESULT=0
+         AND ROWNUM=1
     </select>
 
     <update id="updateSignDocStatus" parameterType="hr.elect.p0001.vo.SignVO">
@@ -163,7 +172,7 @@
 			<if test="APPROVAL_SSSTEP != null">
 	        	, AD_DOCSTEP = AD_DOCSTEP + 1
 	        </if>
-         WHERE FK_AD_NUM=#{PK_AD_NUM} 
+         WHERE PK_AD_NUM=#{PK_AD_NUM} 
     </update> 
 
     <update id="updateSignDocCancel" parameterType="String">

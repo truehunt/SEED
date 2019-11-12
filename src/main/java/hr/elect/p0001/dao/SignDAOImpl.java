@@ -53,6 +53,10 @@ public class SignDAOImpl implements SignDAO {
     public String selectCurrentSigner(String param) throws DataAccessException {
         return sqlSession.selectOne("selectCurrentSigner", param);
     }
+    // 결재문서 첨부파일 읽기
+    public List<?> selectSignFileList(String param) {
+        return sqlSession.selectList("selectSignFileList", param);
+    }
     
     /**
      * 결재 경로.

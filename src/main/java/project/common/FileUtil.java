@@ -47,7 +47,7 @@ public class FileUtil {
      */
     public List<FileVO> saveAllFiles(List<MultipartFile> upfiles) {
         List<FileVO> filelist = new ArrayList<FileVO>();
-        String filePath = LocaleMessage.getMessage("info.filePath");
+        String filePath = "D:/workspace/upload";
 
         for (MultipartFile uploadfile : upfiles ) {
             if (uploadfile.getSize() == 0) {

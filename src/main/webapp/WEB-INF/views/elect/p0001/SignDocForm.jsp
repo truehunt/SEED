@@ -186,7 +186,7 @@ function fn_selectUsers(AD_DOCSIGNPATH) {
 			</c:if>
 						
             <div class="row" style="margin-top: 10px">
-            	<form id="form1" name="form1" role="form" action="signDocSave" method="post" >
+            	<form id="form1" name="form1" role="form" action="signDocSave" method="post" enctype="multipart/form-data">
             		<input type="hidden" name="PK_AD_NUM" value="<c:out value="${signDocInfo.PK_AD_NUM}"/>">
             		<input type="hidden" name="AD_DOCSTATUS" id="AD_DOCSTATUS"  value="<c:out value="${signDocInfo.AD_DOCSTATUS}"/>">
             		<input type="hidden" name="PK_DOCTYPE_NUM" value="<c:out value="${signDocInfo.PK_DOCTYPE_NUM}"/>">
@@ -206,6 +206,18 @@ function fn_selectUsers(AD_DOCSIGNPATH) {
 	                            	<textarea class="form-control" id="AD_CONTENT" name="AD_CONTENT"><c:out value="${signDocInfo.AD_CONTENT}"/></textarea>
 	                            </div>
 	                        </div>
+	                        <div class="row form-group">
+	                            <label class="col-lg-1">첨부파일</label>
+	                            <div class="col-lg-9">
+	                            	<c:forEach var="listview2" items="${listview2}" varStatus="status">
+										<input type="checkbox" name="fileno" value="<c:out value="${listview2.fileno}"/>">	
+				            			<a href="fileDownload?filename=<c:out value="${listview2.filename}"/>&downname=<c:out value="${listview2.realname}"/>"> 							 
+										<c:out value="${listview2.filename}"/></a> <c:out value="${listview2.size2String()}"/><br/>
+									</c:forEach>					
+									
+									<input type="file" name="uploadfile" multiple="multiple" />
+	                            </div>
+	                        </div> 
 	                    </div>
 	                </div>
 				</form>	

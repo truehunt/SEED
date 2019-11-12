@@ -97,15 +97,17 @@
     </select> 
     
     <select id="selectSchList" resultType="hr.system.p0003.vo.SchVO" parameterType="project.common.SearchVO">
-        SELECT SSTITLE, SSTYPE, SSSTARTDATE, SSSTARTHOUR, SSSTARTMINUTE, SSENDDATE, SSENDHOUR
-        	 , SSENDMINUTE, SSREPEATTYPE, SSREPEATEND, SSCONTENTS, SSISOPEN, TC.PK_SAWON_CODE, SAWON_NAME
-          FROM SCHEDULE TC
-         INNER JOIN SAWON CU ON TC.PK_SAWON_CODE=CU.PK_SAWON_CODE
-         <include refid="includeSch"/>
-         ORDER BY SSNO DESC
-         <if test="rowStart != null">
-             LIMIT ${rowStart-1}, 10
-         </if>
+        SELECT *
+		FROM (SELECT ROWNUM as NO, SSTITLE, SSTYPE, SSSTARTDATE, SSSTARTHOUR, SSSTARTMINUTE, SSENDDATE, SSENDHOUR
+		     , SSENDMINUTE, SSREPEATTYPE, SSREPEATEND, SSCONTENTS, SSISOPEN, TC.PK_SAWON_CODE, SAWON_NAME
+		  	 FROM SCHEDULE TC
+		 	 INNER JOIN SAWON CU ON TC.PK_SAWON_CODE=CU.PK_SAWON_CODE
+			<include refid="includeSch"/>
+			 ORDER BY SSNO DESC
+			 ) A
+		<if test="rowStart != null">
+		     WHERE A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+		</if>
     </select> 
         
     <insert id="insertSch" parameterType="hr.system.p0003.vo.SchVO" keyProperty="SSNO">

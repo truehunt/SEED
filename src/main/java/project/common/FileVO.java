@@ -6,6 +6,7 @@ public class FileVO {
     private String filename;
     private String realname;
     private long filesize;
+    private String PK_SAWON_CODE;
     
     /**
      * 파일 크기를 정형화하기.
@@ -59,5 +60,13 @@ public class FileVO {
     public void setFilesize(long filesize) {
         this.filesize = filesize;
     }
+
+	public String getPK_SAWON_CODE() {
+		return PK_SAWON_CODE;
+	}
+
+	public void setPK_SAWON_CODE(String pK_SAWON_CODE) {
+		PK_SAWON_CODE = pK_SAWON_CODE;
+	}
     
 }

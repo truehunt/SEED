@@ -1,5 +1,8 @@
 package hr.elect.p0001.service;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +20,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import hr.elect.p0001.dao.SignDAO;
 import hr.elect.p0001.vo.SignDocVO;
 import hr.elect.p0001.vo.SignVO;
+import project.common.FileVO;
 
 @Service("signService")
 @Transactional(propagation = Propagation.REQUIRED)
@@ -34,7 +38,7 @@ public class SignServiceImpl implements SignService {
      * 저장.
      */
     @Override
-    public void insertSignDoc(SignDocVO param) throws DataAccessException {
+    public void insertSignDoc(SignDocVO param, List<FileVO> filelist, String[] fileno) throws DataAccessException {
         DefaultTransactionDefinition def = new DefaultTransactionDefinition();
         def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
         TransactionStatus status = txManager.getTransaction(def);
@@ -66,6 +70,17 @@ public class SignServiceImpl implements SignService {
         		
                 sqlSession.insert("insertSign", param2);
         	}
+        	
+        	if (fileno != null) {
+                HashMap<String, String[]> fparam = new HashMap<String, String[]>();
+                fparam.put("fileno", fileno);
+                sqlSession.insert("deleteSignFile", fparam);
+            }
+            
+            for (FileVO f : filelist) {
+                f.setParentPK(param.getPK_AD_NUM());
+                sqlSession.insert("insertSignFile", f);
+            }
         	
             txManager.commit(status);
         } catch (TransactionException ex) {

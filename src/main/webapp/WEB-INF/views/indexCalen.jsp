@@ -204,12 +204,10 @@ function calendarDayMouseout(){
                 <div class="col-lg-12">
 					<c:forEach var="listview2" items="${listview2}" varStatus="status">
 					
-					<c:choose>
-				         	<c:when test="${listview2 eq null}">
+				         	<c:if test="${listview2 eq null}">
 									<!-- <img src="/SEED/resources/image/SEED.png">  -->
 									결재할 문서가 없습니다...
-							</c:when>
-						<c:otherwise>
+							</c:if>
 					
 						<c:url var="link" value="signDocRead">
 							<c:param name="PK_AD_NUM" value="${listview2.PK_AD_NUM}" />
@@ -225,9 +223,6 @@ function calendarDayMouseout(){
 		                        </div>
 		                    </div>
 		                </div>	
-		                
-		                </c:otherwise>
-					</c:choose>
 											
 					</c:forEach>	
             	</div>    

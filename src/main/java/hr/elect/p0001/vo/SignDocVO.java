@@ -1,13 +1,16 @@
 package hr.elect.p0001.vo;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component("signDocVO")
 public class SignDocVO {
 	
 	private String AD_TITLE, // 제목
 				   AD_CONTENT, // 내용
-				   AD_CHAMJO, // 수신참조
+				   fileno, // 파일번호
 				   AD_DEPT_NAME, // 부서명
 				   PK_AD_NUM, // 전자결재문서번호
 				   AD_DELETEFLAG, // 삭제여부
@@ -19,7 +22,11 @@ public class SignDocVO {
 				   PK_DOCTYPE_NUM, // 양식번호
 				   DOCTYPE_DTTITLE, // 양식명 - > db에없고 vo에만 있음
 				   PK_SAWON_CODE, // 사원코드
-				   SAWON_NAME; // 사원이름
+				   SAWON_NAME, // 사원이름
+				   filecnt; // 파일갯수
+	
+	/* 첨부파일 */
+    private List<MultipartFile> uploadfile;
 	
 	public SignDocVO() {
 		System.out.println("SignDocVO 생성");
@@ -41,12 +48,12 @@ public class SignDocVO {
 		AD_CONTENT = aD_CONTENT;
 	}
 
-	public String getAD_CHAMJO() {
-		return AD_CHAMJO;
+	public String getFileno() {
+		return fileno;
 	}
 
-	public void setAD_CHAMJO(String aD_CHAMJO) {
-		AD_CHAMJO = aD_CHAMJO;
+	public void setFileno(String fileno) {
+		this.fileno = fileno;
 	}
 
 	public String getAD_DEPT_NAME() {
@@ -143,6 +150,22 @@ public class SignDocVO {
 
 	public void setDOCTYPE_DTTITLE(String dOCTYPE_DTTITLE) {
 		DOCTYPE_DTTITLE = dOCTYPE_DTTITLE;
+	}
+
+	public String getFilecnt() {
+		return filecnt;
+	}
+
+	public void setFilecnt(String filecnt) {
+		this.filecnt = filecnt;
+	}
+
+	public List<MultipartFile> getUploadfile() {
+		return uploadfile;
+	}
+
+	public void setUploadfile(List<MultipartFile> uploadfile) {
+		this.uploadfile = uploadfile;
 	}
 	
 }

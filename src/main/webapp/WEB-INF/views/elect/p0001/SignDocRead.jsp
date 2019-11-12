@@ -114,6 +114,14 @@ function fn_signSave(){
 	                <div class="panel-body">
 	                	<c:out value="${signDocInfo.AD_CONTENT}" escapeXml="false"/>
 	                </div>
+	                <c:if test="${listview2.size()>0}">
+		                <div class="panel-footer">
+		                	<c:forEach var="listview2" items="${listview2}" varStatus="status">	
+		           				<a href="fileDownload?filename=<c:out value="${listview2.filename}"/>&downname=<c:out value="${listview2.realname }"/>"> 							 
+								<c:out value="${listview2.filename}"/></a> <c:out value="${listview2.size2String()}"/><br/>
+							</c:forEach>
+	                     </div>
+                    </c:if>
                 </div>
                 <button class="btn btn-outline btn-primary" onclick="history.back(-1)" ><s:message code="common.btnList"/></button>
                 <c:if test='${signDocInfo.PK_SAWON_CODE==sessionScope.PK_SAWON_CODE and signDocInfo.AD_DOCSTATUS<=1}' >		

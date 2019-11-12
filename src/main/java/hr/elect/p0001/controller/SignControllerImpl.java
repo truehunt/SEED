@@ -20,6 +20,8 @@ import hr.elect.p0001.vo.SignDocVO;
 import hr.elect.p0001.vo.SignVO;
 import hr.system.p0001.service.SignDocSvc;
 import hr.system.p0001.vo.SignDocTypeVO;
+import project.common.FileUtil;
+import project.common.FileVO;
 import project.common.SearchVO;
 
 @Controller("signController")
@@ -113,7 +115,7 @@ public class SignControllerImpl implements SignController {
 	}
 	
 	/** 
-     * 기안하기2. -> 양식읽기, 결재경로
+     * 기안하기2. -> 양식읽기, 쓰기, 결재경로
      */
 	@Override
 	@RequestMapping(value = "/signDocForm", method = { RequestMethod.GET, RequestMethod.POST })
@@ -123,8 +125,6 @@ public class SignControllerImpl implements SignController {
         
 		modelMap.addAttribute("PK_SAWON_CODE", userno);
         // etcSvc.setCommonAttribute(userno, modelMap);
-    	
-		
 		
 		// 개별 작업
         List<?> signlist = null;
@@ -145,6 +145,9 @@ public class SignControllerImpl implements SignController {
         } else {								// 수정
             signDocInfo = signDAO.selectSignDocOne(signDocInfo);
             signlist = signDAO.selectSign(signDocInfo.getPK_AD_NUM());
+            //파일정보 읽기
+            List<?> listview2 = signDAO.selectSignFileList(signDocInfo.getPK_AD_NUM());
+            modelMap.addAttribute("listview2", listview2);
         }
         modelMap.addAttribute("signDocInfo", signDocInfo);
         modelMap.addAttribute("signlist", signlist);
@@ -165,7 +168,11 @@ public class SignControllerImpl implements SignController {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
     	signDocInfo.setPK_SAWON_CODE(userno);
     	
-        signService.insertSignDoc(signDocInfo);
+    	String[] fileno = request.getParameterValues("fileno");
+        FileUtil fs = new FileUtil();
+        List<FileVO> filelist = fs.saveAllFiles(signDocInfo.getUploadfile());
+    	
+        signService.insertSignDoc(signDocInfo, filelist, fileno);
 
         return "redirect:/signListTobe";
     }
@@ -187,6 +194,9 @@ public class SignControllerImpl implements SignController {
         SignDocVO signDocInfo = signDAO.selectSignDocOne(SignDocVO);
         List<? >signlist = signDAO.selectSign(signDocInfo.getPK_AD_NUM());
         String signer = signDAO.selectCurrentSigner(SignDocVO.getPK_AD_NUM());
+        //파일정보 읽기
+        List<?> listview2 = signDAO.selectSignFileList(signDocInfo.getPK_AD_NUM());
+        modelMap.addAttribute("listview2", listview2);
         
         modelMap.addAttribute("signDocInfo", signDocInfo);
         modelMap.addAttribute("signlist", signlist);

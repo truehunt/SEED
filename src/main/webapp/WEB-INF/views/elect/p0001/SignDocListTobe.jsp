@@ -75,6 +75,7 @@ function fn_formSubmit(){
 					<div class="listHead">
 						<div class="listHiddenField pull-left field60"><s:message code="board.no"/></div>
 						<div class="listHiddenField pull-right field100">종류</div>
+						<div class="listHiddenField pull-right field60"><s:message code="board.attach"/></div>
 						<div class="listHiddenField pull-right field100"><s:message code="crud.crdate"/></div>
 						<div class="listHiddenField pull-right field100"><s:message code="crud.usernm"/></div>
 						<div class="listHiddenField pull-right field100">상태</div>
@@ -94,7 +95,12 @@ function fn_formSubmit(){
 						<div class="listBody">
 							<div class="listHiddenField pull-left field60 textCenter"><c:out value="${searchVO.totRow-((searchVO.page-1)*searchVO.displayRowCount + status.index)}"/></div>
 							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.DOCTYPE_DTTITLE}"/></div>
-							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.AD_MOD_DATE}"/></div>
+							<div class="listHiddenField pull-right field60">
+								<c:if test="${listview.filecnt>0}">
+									<i class="fa fa-download fa-fw" title="<c:out value="${listview.filecnt}"/>"></i>
+								</c:if>	
+							</div>
+							<div class="listHiddenField pull-right field110 textCenter"><c:out value="${listview.AD_MOD_DATE}"/></div>
 							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.SAWON_NAME}"/></div>
 							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.AD_DOCSTATUS}"/></div>
 							<div class="listTitle" title="<c:out value="${listview.AD_TITLE}"/>">

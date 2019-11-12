@@ -29,6 +29,7 @@
     <select id="selectSignDocList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
          SELECT *
 		 FROM (SELECT ROWNUM AS NO, SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, CU.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME, AD_MOD_DATE, CC.CODENM as AD_DOCSTATUS
+		 		, (SELECT COUNT(*) FROM ATTACHMENT WHERE FK_ATTACHMENT_DOCU_NUM=SD.PK_AD_NUM) FILECNT
 			    FROM AD SD
 			    INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
 			    INNER JOIN DOCTYPE SDT ON SDT.PK_DOCTYPE_NUM=SD.PK_DOCTYPE_NUM
@@ -64,7 +65,8 @@
     
     <select id="selectSignDocTobeList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
          SELECT *
-		FROM (SELECT ROWNUM as NO, SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, CU.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME, AD_MOD_DATE, CC.CODENM as AD_DOCSTATUS
+		FROM (SELECT ROWNUM as NO, SD.PK_AD_NUM, AD_TITLE, SD.PK_SAWON_CODE, CU.SAWON_NAME, AD_DOCSTEP, SD.PK_DOCTYPE_NUM, SDT.DOCTYPE_DTTITLE, AD_DEPT_NAME, AD_MOD_DATE, CC.CODENM as AD_DOCSTATUS,
+            	(SELECT COUNT(*) FROM ATTACHMENT WHERE FK_ATTACHMENT_DOCU_NUM=SD.PK_AD_NUM) as FILECNT
 	    	 FROM AD SD
 		     INNER JOIN SAWON CU ON SD.PK_SAWON_CODE=CU.PK_SAWON_CODE
 		     INNER JOIN DOCTYPE SDT ON SDT.PK_DOCTYPE_NUM=SD.PK_DOCTYPE_NUM
@@ -146,6 +148,23 @@
                         WHERE PK_SAWON_CODE=#{PK_SAWON_CODE} AND PK_DOCTYPE_NUM=#{PK_DOCTYPE_NUM}  AND ROWNUM=1)
          ORDER BY APPROVAL_SSSTEP
     </select>
+    
+    <!-- 첨부파일 작성 -->
+    <select id="selectSignFileList" resultType="project.common.FileVO" parameterType="String">
+         SELECT FILENO, FILENAME, REALNAME, FILESIZE
+         FROM ATTACHMENT
+         WHERE FK_ATTACHMENT_DOCU_NUM=#{FK_ATTACHMENT_DOCU_NUM}
+         ORDER BY FILENO DESC 
+    </select>
+    
+    <insert id="insertSignFile" parameterType="project.common.FileVO" >
+    	<selectKey resultType="Integer" keyProperty="fileno" order="BEFORE">
+    		SELECT NVL(MAX(fileno)+1, 1) FROM ATTACHMENT
+    	</selectKey>
+        INSERT INTO ATTACHMENT (fileno, FK_ATTACHMENT_DOCU_NUM, FILENAME, REALNAME, FILESIZE, ATTACHMENT_INT_USER_ID, ATTACHMENT_INT_DATE)
+        VALUES (#{fileno}, #{parentPK}, #{filename}, #{realname}, #{filesize}, #{PK_SAWON_CODE, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
+    </insert>
+    
   
 	<!-- 결재 -->    
     <update id="updateSign" parameterType="hr.elect.p0001.vo.SignVO" >  

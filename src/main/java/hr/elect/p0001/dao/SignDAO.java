@@ -29,6 +29,7 @@ public interface SignDAO {
      */
 	 public SignDocVO selectSignDocOne(SignDocVO param) throws DataAccessException;
 	 public String selectCurrentSigner(String param) throws DataAccessException;
+	 public List<?> selectSignFileList(String param) throws DataAccessException;
 	 /**
      * 결재 경로.
      */

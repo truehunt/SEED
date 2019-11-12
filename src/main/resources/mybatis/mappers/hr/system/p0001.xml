@@ -92,8 +92,11 @@
     </select> 
 
     <insert id="insertSignDocType" parameterType="java.util.Map" >
+    	<selectKey resultType="string" keyProperty="PK_DOCTYPE_NUM" order="BEFORE">
+    		SELECT NVL(MAX(PK_DOCTYPE_NUM)+1, 1) FROM DOCTYPE
+    	</selectKey>
         INSERT INTO DOCTYPE(PK_DOCTYPE_NUM, DOCTYPE_DTTITLE, DOCTYPE_DTCONTENTS, DOCTYPE_DELETEFLAG, DOCTYPE_INT_USER_ID, DOCTYPE_INT_DATE)
-        VALUES ((SELECT NVL(MAX(PK_DOCTYPE_NUM)+1,0) FROM DOCTYPE), #{DOCTYPE_DTTITLE}, #{DOCTYPE_DTCONTENTS}, 'N', #{PK_SAWON_CODE}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
+        VALUES (#{PK_DOCTYPE_NUM}, #{DOCTYPE_DTTITLE}, #{DOCTYPE_DTCONTENTS}, 'N', #{PK_SAWON_CODE}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
     </insert>
     
     <update id="updateSignDocType" parameterType="java.util.Map">

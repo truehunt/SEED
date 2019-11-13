@@ -107,6 +107,21 @@ function fn_selectUsers(AD_DOCSIGNPATH) {
 	}
 }
 
+function fn_fileDelete(fileno) {
+	if (confirm("삭제 하시겠습니까?(삭제시 복구되지 않습니다!!!)")) {
+		$.ajax({
+	        url: "signFileDelete",
+	        type:"POST", 
+	        data: { fileno : fileno },
+			success: function(result){
+				alert(result);
+			}
+	    })
+		
+		$(".div"+fileno).remove();
+	}
+}
+
 </script>
    
 </head>
@@ -209,11 +224,16 @@ function fn_selectUsers(AD_DOCSIGNPATH) {
 	                        <div class="row form-group">
 	                            <label class="col-lg-1">첨부파일</label>
 	                            <div class="col-lg-9">
+	                            	
 	                            	<c:forEach var="listview2" items="${listview2}" varStatus="status">
+	                            	<div class="div<c:out value="${listview2.fileno}"/>">
 										<input type="checkbox" name="fileno" value="<c:out value="${listview2.fileno}"/>">	
 				            			<a href="fileDownload?filename=<c:out value="${listview2.filename}"/>&downname=<c:out value="${listview2.realname}"/>"> 							 
-										<c:out value="${listview2.filename}"/></a> <c:out value="${listview2.size2String()}"/><br/>
-									</c:forEach>					
+										<c:out value="${listview2.filename}"/></a> <c:out value="${listview2.size2String()}"/>
+										<a href='javascript:fn_fileDelete(<c:out value="${listview2.fileno}"/>)'><i class='fa fa-times fa-fw'></i></a>
+										<br/>
+									</div>
+									</c:forEach>
 									
 									<input type="file" name="uploadfile" multiple="multiple" />
 	                            </div>

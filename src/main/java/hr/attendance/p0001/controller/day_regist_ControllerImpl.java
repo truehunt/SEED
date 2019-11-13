@@ -2,6 +2,7 @@ package hr.attendance.p0001.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,6 +24,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +33,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import hr.attendance.p0001.service.day_regist_Service;
 import hr.attendance.p0001.vo.day_regist_VO;
+import project.common.DateVO;
+import project.common.Field3VO;
+import project.common.Util4calen;
 
 @Controller("day_regist_Controller")
 public class day_regist_ControllerImpl implements day_regist_Controller {
@@ -40,19 +45,21 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 	@Autowired
 	day_regist_VO day_regist_VO;
 
-	// ÀüÃ¼ ¸ŞÀÎ È­¸é
+	// ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½
 	@Override
-	@RequestMapping(value = "attendance/p0001/init.do", method = { RequestMethod.GET, RequestMethod.POST }) // ¸ÅÇÎ ÁÖ¼Ò
-	public ModelAndView searchInit(HttpServletRequest request, HttpServletResponse response) throws Exception {// ÄÁÆ®·Ñ·¯¿¡ µé¾î°¡´Â ÀÌ¸§
+	@RequestMapping(value = "attendance/p0001/init.do", method = { RequestMethod.GET, RequestMethod.POST }) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½
+	public ModelAndView searchInit(HttpServletRequest request, HttpServletResponse response) throws Exception {// ï¿½ï¿½Æ®ï¿½Ñ·ï¿½ï¿½ï¿½
+																												// ï¿½ï¿½î°¡ï¿½ï¿½
+																												// ï¿½Ì¸ï¿½
 		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/init";// jspÆÄÀÏ ¸í
+		viewName = "/attendance/p0001/init";// jspï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 		request.setCharacterEncoding("utf-8");
 		// ModelAndView main = new ModelAndView("hr/p0001_init");
 		ModelAndView main = new ModelAndView(viewName);
 		return main;
 	}
 
-	// ibsheet ¿¹½Ã È­¸é
+	// ibsheet ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½
 	@Override
 	@RequestMapping(value = "attendance/p0001/ibsheet.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -64,7 +71,7 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	// ÀÏÀÏ±ÙÅÂÈ®ÀÎ_(»ç¿ø)
+	// ï¿½ï¿½ï¿½Ï±ï¿½ï¿½ï¿½È®ï¿½ï¿½_(ï¿½ï¿½ï¿½)
 	@Override
 	@RequestMapping(value = "attendance/p0001/day_regist_sawon.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView day_regist_sawon(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -76,7 +83,7 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	// ÀÏÀÏ±ÙÅÂµî·Ï_ÀüÃ¼È­¸é(°ü¸®ÀÚ)
+	// ï¿½ï¿½ï¿½Ï±ï¿½ï¿½Âµï¿½ï¿½_ï¿½ï¿½Ã¼È­ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 	@Override
 	@RequestMapping(value = "attendance/p0001/day_regist.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView day_regist(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -88,7 +95,7 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	// ÀÏÀÏ ¸¶°¨°ü¸®
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@Override
 	@RequestMapping(value = "attendance/p0001/day_deadline.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView day_deadline(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -100,33 +107,33 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	// ¿ù¸¶°¨°ü¸®
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@Override
-	@RequestMapping(value = "attendance/p0001/mon_deadline.do", method = { RequestMethod.GET, RequestMethod.POST }) // ¸ÅÇÎ¸í(¸ÅÇÎÇÒ
-																														// ÁÖ¼Ò)
+	@RequestMapping(value = "attendance/p0001/mon_deadline.do", method = { RequestMethod.GET, RequestMethod.POST }) // ï¿½ï¿½ï¿½Î¸ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+																													// ï¿½Ö¼ï¿½)
 	public ModelAndView mon_deadline(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/mon_deadline";// ÆÄÀÏÀÌ¸§
+		viewName = "/attendance/p0001/mon_deadline";// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½
 		request.setCharacterEncoding("utf-8");
 		// ModelAndView main = new ModelAndView("hr/p0001_init");
 		ModelAndView main = new ModelAndView(viewName);
 		return main;
 	}
 
-	// ÈŞÀÏ/¿¬Àå/¾ß°£ ±Ù¹«Á¶È¸
+	// ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½/ï¿½ß°ï¿½ ï¿½Ù¹ï¿½ï¿½ï¿½È¸
 	@Override
-	@RequestMapping(value = "attendance/p0001/inquery.do", method = { RequestMethod.GET, RequestMethod.POST }) // ¸ÅÇÎ¸í(¸ÅÇÎÇÒ
-																												// ÁÖ¼Ò)
+	@RequestMapping(value = "attendance/p0001/inquery.do", method = { RequestMethod.GET, RequestMethod.POST }) // ï¿½ï¿½ï¿½Î¸ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+																												// ï¿½Ö¼ï¿½)
 	public ModelAndView inquery(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/inquery";// ÆÄÀÏÀÌ¸§
+		viewName = "/attendance/p0001/inquery";// ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½
 		request.setCharacterEncoding("utf-8");
 		// ModelAndView main = new ModelAndView("hr/p0001_init");
 		ModelAndView main = new ModelAndView(viewName);
 		return main;
 	}
 
-	// ÈŞ°¡½ÅÃ»
+	// ï¿½Ş°ï¿½ï¿½ï¿½Ã»
 	@Override
 	@RequestMapping(value = "attendance/p0001/holiday.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView holiday(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -138,10 +145,10 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	// ÃâÀå½ÅÃ»
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ã»
 	@Override
 	@RequestMapping(value = "attendance/p0001/business.do", method = { RequestMethod.GET, RequestMethod.POST })
-	// impl ÀÌ¸§ = business
+	// impl ï¿½Ì¸ï¿½ = business
 	public ModelAndView business(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
 		viewName = "/attendance/p0001/business";
@@ -151,10 +158,10 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	// ¿Ü±Ù½ÅÃ»
+	// ï¿½Ü±Ù½ï¿½Ã»
 	@Override
 	@RequestMapping(value = "attendance/p0001/outside.do", method = { RequestMethod.GET, RequestMethod.POST })
-	// impl ÀÌ¸§ = business
+	// impl ï¿½Ì¸ï¿½ = business
 	public ModelAndView outside(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
 		viewName = "/attendance/p0001/outside";
@@ -164,10 +171,10 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	// ÈŞ°¡ÀÏ¼ö °è»ê
+	// ï¿½Ş°ï¿½ï¿½Ï¼ï¿½ ï¿½ï¿½ï¿½
 	@Override
 	@RequestMapping(value = "attendance/p0001/holiday_calc.do", method = { RequestMethod.GET, RequestMethod.POST })
-	// impl ÀÌ¸§ = business
+	// impl ï¿½Ì¸ï¿½ = business
 	public ModelAndView holiday_calc(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
 		viewName = "/attendance/p0001/holiday_calc";
@@ -179,7 +186,7 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 
 	@Override
 	@RequestMapping(value = "attendance/p0001/deadline.do", method = { RequestMethod.GET, RequestMethod.POST })
-	// impl ÀÌ¸§ = business
+	// impl ï¿½Ì¸ï¿½ = business
 	public ModelAndView deadline(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
 		viewName = "/attendance/p0001/deadline";
@@ -189,60 +196,108 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	
-	//============================================================================================================
-	//±â´É ¸ÅÇÎ
-	
-	// »ç¿øÈ­¸é Á¶È¸
+	// ============================================================================================================
+	// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
+	// ì¡°íšŒí™”ë©´
 	@Override
 	@RequestMapping(value = "attendance/p0001/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map searchList(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
+			throws Exception {
+		// request.getSession() => í˜„ì¬ ì„¸ì…˜ì´ ì¡´ì¬í•˜ë©´ ê¸°ì¡´ ì„¸ì…˜ ë¦¬í„´, ì—†ìœ¼ë©´ ìƒˆë¡œìƒì„±í•œ ì„¸ì…˜ ë¦¬í„´
+		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+
 		request.setCharacterEncoding("utf-8");
-		Map<String, Object> searchMap = new HashMap<String, Object>(); // ê²??ƒ‰ì¡°ê±´
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // ï¿½??ï¿½ï¿½ì¡°ê±´
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // ì¡°íšŒê²°ê³¼
+		System.out.println("11." + request.getParameter("PK_DAILY_TA_WORKING_DATE").toString());
+		System.out.println("12. " + userno);
+
+		// ï¿½??ï¿½ï¿½ì¡°ê±´?ï¿½ï¿½?ï¿½ï¿½
+		searchMap.put("PK_DAILY_TA_WORKING_DATE", request.getParameter("PK_DAILY_TA_WORKING_DATE"));
+		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
+		System.out.println("sawon_1: " + request.getParameter("pk_SAWON_CODE"));
+		// ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ì¡°íšŒ
+		List<day_regist_VO> data = day_regist_Service.searchList(searchMap);
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		Field3VO fld = new Field3VO();
+		fld.setField1(userno);
+		resultMap.put("Data", data);
+		resultMap.put("calenList", calenList);
+		System.out.println("1-2" + request.getParameter("pk_SAWON_CODE"));
+		System.out.println("searchMap: " + searchMap);
+		System.out.println("resultMap : " + resultMap);
+		return resultMap;
+	}
+
+	// ì¶œê·¼ì„ ëˆ„ë¥¼ì‹œ ì‚¬ì›ì •ë³´ ë“¤ì–´ê°
+
+	@Override
+	@RequestMapping(value = "attendance/p0001/searchList_sawon.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map searchList_Sawon(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
+			throws Exception {
+		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // ï¿½??ï¿½ï¿½ì¡°ê±´
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // ì¡°íšŒê²°ê³¼
+		System.out.println("12. " + userno);
+
+		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
+		searchMap.put("pk_DAILY_TA_WORKING_DATE", request.getParameter("PK_DAILY_TA_WORKING_DATE"));
+		System.out.println("sawon_work_1: " + request.getParameter("PK_DAILY_TA_WORKING_DATE"));
+
+		// ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ì¡°íšŒ
+		List<day_regist_VO> data = day_regist_Service.searchList_sawon(searchMap);
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		Field3VO fld = new Field3VO();
+		fld.setField1(userno);
+		resultMap.put("Data", data);
+		resultMap.put("calenList", calenList);
+		System.out.println("sawon1_2: " + request.getParameter("pk_SAWON_CODE"));
+		System.out.println("searchMap: " + searchMap);
+		System.out.println("resultMap : " + resultMap);
+
+		return resultMap;
+
+	}
+
+	// ì¶œí‡´ê·¼ ê´€ë¦¬ ê´€ë¦¬ìí™”ë©´
+	@Override
+	@RequestMapping(value = "attendance/p0001/da_searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map da_searchList(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
+			throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // ï¿½??ï¿½ï¿½ì¡°ê±´
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // ì¡°íšŒê²°ê³¼
 
-		// ê²??ƒ‰ì¡°ê±´?„¤? •
-		searchMap.put("PK_DAILY_TA_WORKING_DATE", request.getParameter("PK_DAILY_TA_WORKING_DATE"));
-
-		// ?°?´?„° ì¡°íšŒ
-		List<day_regist_VO> data = day_regist_Service.searchList(searchMap);
+		// ï¿½??ï¿½ï¿½ì¡°ê±´?ï¿½ï¿½?ï¿½ï¿½
+		searchMap.put("PK_DAILY_TA_WORKING_DATE2", request.getParameter("PK_DAILY_TA_WORKING_DATE2"));// VO ê°’ => ë„˜ê²¨ì£¼ëŠ” ê°’
+		searchMap.put("PK_DAILY_TA_WORKING_DATE3", request.getParameter("PK_DAILY_TA_WORKING_DATE3"));// NO
+		System.out.println("searchMap111 : " + searchMap);
+		// ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½ ì¡°íšŒ
+		List<day_regist_VO> data = day_regist_Service.da_searchList(searchMap);
+		System.out.println("searchMap2 : " + searchMap);
 		resultMap.put("Data", data);
+		System.out.println("searchMap3 : " + searchMap);
+		System.out.println(resultMap);
 
 		return resultMap;
 	}
 
-	
-	// °ü¸®ÀÚÈ­¸é »ç¿øÈ­¸é Á¶È¸
-		@Override
-		@RequestMapping(value = "attendance/p0001/da_searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
-		@ResponseBody
-		public Map da_searchList(HttpServletRequest request, HttpServletResponse response) throws Exception {
-			request.setCharacterEncoding("utf-8");
-			Map<String, Object> searchMap = new HashMap<String, Object>(); // ê²??ƒ‰ì¡°ê±´
-			Map<String, Object> resultMap = new HashMap<String, Object>(); // ì¡°íšŒê²°ê³¼
-
-			// ê²??ƒ‰ì¡°ê±´?„¤? •
-			searchMap.put("PK_DAILY_TA_WORKING_DATE", request.getParameter("PK_DAILY_TA_WORKING_DATE"));
-
-			// ?°?´?„° ì¡°íšŒ
-			List<day_regist_VO> data = day_regist_Service.searchList(searchMap);
-			resultMap.put("Data", data);
-
-			return resultMap;
-		}
-	
-	
-	// Ãß°¡<½ÇÇàx>
+	// ï¿½ß°ï¿½<ï¿½ï¿½ï¿½ï¿½x>
 	@Override
 	@RequestMapping(value = "attendance/p0001/insertData.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ???¥?• Daa
+		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ???ï¿½ï¿½?ï¿½ï¿½Daa
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // ì²˜ë¦¬ê²°ê³¼
 
-		// ???¥ Data ì¶”ì¶œ?•˜ê¸?
+		// ???ï¿½ï¿½ Data ì¶”ì¶œ?ï¿½ï¿½ï¿½?
 		Enumeration enu = request.getParameterNames();
 		while (enu.hasMoreElements()) {
 			String name = (String) enu.nextElement();
@@ -253,14 +308,14 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		}
 
 		Map<String, String> result = new HashMap<String, String>();
-		System.out.println("1. "+dataMap);
+		System.out.println("1. " + dataMap);
 		try {
 			day_regist_Service.saveData(dataMap);
 			result.put("Code", "0");
-			result.put("Message", "???¥?˜?—ˆ?Šµ?‹ˆ?‹¤");
+			result.put("Message", "???ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½");
 		} catch (Exception e) {
 			result.put("Code", "-1");
-			result.put("Message", "???¥?— ?‹¤?Œ¨?•˜???Šµ?‹ˆ?‹¤");
+			result.put("Message", "???ï¿½ï¿½?ï¿½ï¿½ ?ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½???ï¿½ï¿½?ï¿½ï¿½?ï¿½ï¿½");
 			e.printStackTrace();
 		}
 

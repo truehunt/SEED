@@ -1,5 +1,6 @@
 package hr.elect.p0001.controller;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,4 +28,5 @@ public interface SignController {
 	public String signDocDelete(HttpServletRequest request, SignDocVO SignDocVO);
 	public String signDocCancel(HttpServletRequest request, String PK_AD_NUM);
 	public String signSave(HttpServletRequest request, SignVO signInfo);
+	public void signFileDelete(HttpServletRequest request, HttpServletResponse response, String fileno) throws IOException;
 }

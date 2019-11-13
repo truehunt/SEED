@@ -62,6 +62,10 @@ public class IndexCtr {
 
         calCalen(userno, today, modelMap);
         
+        // 차트사용
+        List<?> listview3 = indexSvc.selectBoardGroupCount4Statistic();
+        modelMap.addAttribute("listview3", listview3);
+        
         // 전자결재
         // 접속자가 전자결재해야할 문서가 있을경우만 아래가 실행됨.
         if(indexSvc.checkSignDoc(userno)!=0) {
@@ -72,10 +76,9 @@ public class IndexCtr {
 	        modelMap.addAttribute("searchVO", searchVO);
 	        modelMap.addAttribute("listview2", listview2);
         } else {
+        	 
         // -----------------------------------------
-        // 차트사용
-        List<?> listview = indexSvc.selectBoardGroupCount4Statistic();
-        modelMap.addAttribute("listview", listview);
+        
         
         // List<?> listview = indexSvc.selectRecentNews();
         // List<?> noticeList = indexSvc.selectNoticeListTop5();

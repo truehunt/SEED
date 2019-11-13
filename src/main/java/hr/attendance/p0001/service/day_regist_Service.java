@@ -13,7 +13,9 @@ import hr.attendance.p0001.vo.day_regist_VO;
 
 public interface day_regist_Service {
 	public List<day_regist_VO> searchList(Map<String, Object> searchMap) throws DataAccessException;
-
+	
+	public List<day_regist_VO> searchList_sawon(Map<String, Object> searchMap) throws DataAccessException;
+	
 	public List<day_regist_VO> da_searchList(Map<String, Object> searchMap) throws DataAccessException;
 
 	public void saveData(Map<String, String[]> dataMap) throws DataAccessException;
@@ -21,4 +23,9 @@ public interface day_regist_Service {
 	public void updateMember(Map<String, Object> dataMap);
 
 	public void insertMember(Map<String, Object> dataMap);
+
+
+
+	
+	
 }

@@ -46,58 +46,59 @@
 			MinWidth : 50
 		}, {
 			Header : "근무일자",
-			Type : "DATE",
+			Type : "Text",
 			SaveName : "pk_DAILY_TA_WORKING_DATE",
-			MinWidth : 100
+			MinWidth : 100,
 		}, {
 			Header : "성명",
 			Type : "Text",
-			SaveName : "daily_TA_SAWON_NAME",
+			SaveName : "sawon_NAME",
+			MinWidth : 80,
+		}, {
+			Header : "부서",
+			Type : "Text",
+			SaveName : "fk_RANK_NAME",
 			MinWidth : 80
 		}, {
 			Header : "직급",
 			Type : "Text",
-			SaveName : "daily_TA_RANK",
-			MinWidth : 80
-		}, {
-			Header : "부서",
-			Type : "Text",
-			SaveName : "daily_TA_DEPT_NAME",
-			MinWidth : 80
+			SaveName : "rank_NAME",
+			MinWidth : 80,
+			Wrap : 1
 		}, {
 			Header : "출근시각",
-			Type : "Time",
+			Type : "Text",
 			SaveName : "daily_TA_GO_TIME",
 			MinWidth : 60
 		}, {
 			Header : "퇴근시각",
-			Type : "Time",
+			Type : "Text",
 			SaveName : "daily_TA_OFF_TIME",
 			MinWidth : 60
 		}, {
 			Header : "근무시간",
-			Type : "Time",
+			Type : "Text",
 			SaveName : "daily_TA_WORK_TIME",
 			MinWidth : 60
 		}, {
 			Header : "연장근로",
-			Type : "Time",
+			Type : "Text",
 			SaveName : "daily_TA_EXTEN_WORK",
 			MinWidth : 60
 		}, {
 			Header : "지각시간",
-			Type : "Time",
+			Type : "Text",
 			SaveName : "daily_TA_LATE_TIME",
 			MinWidth : 60
 		}, {
 			Header : "조퇴시간",
-			Type : "Time",
+			Type : "Text",
 			SaveName : "daily_TA_LEAVE_TIME",
 			MinWidth : 60
 		} ];
 		IBS_InitSheet(mySheet, initSheet);
-
-		mySheet.SetEditableColorDiff(); // 편집불가능할 셀 표시구분  (1: 수정가능  빈칸 : 수정불가)
+		mySheet.SetEditable(false);
+		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분  (1: 수정가능  빈칸 : 수정불가)
 		//mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
 	}
@@ -105,22 +106,18 @@
 	function doAction(sAction) {
 		switch (sAction) {
 		case "search": //조회
-			var val = "PK_DAILY_TA_WORKING_DATE="
-					+ document.getElementById("PK_DAILY_TA_WORKING_DATE").value;
-			mySheet.DoSearch("${contextPath}/attendance/p0001/searchList.do",
-					val);
-			alert(val);
+			var val = "PK_DAILY_TA_WORKING_DATE=" + document.getElementById("PK_DAILY_TA_WORKING_DATE").value
+					+ "&pk_SAWON_CODE=" + '<%=session.getAttribute("PK_SAWON_CODE")%>';
+				
+			mySheet.DoSearch("${contextPath}/attendance/p0001/searchList.do",val);
 			break;
 
 		//------------------------------------------------------------------------------------------------------------------------------	
 		//출근
 		case "gowork":
-			mySheet.DataInsert(-1);//열 추가
-			//날짜부분 들어가는 코딩 
 			var select_row = mySheet.GetSelectRow();
-			var PK_DAILY_TA_WORKING_DATE = document
-					.getElementById("PK_DAILY_TA_WORKING_DATE").value;
-			Now = new Date();
+			
+			var Now = new Date();
 			NowTime1 = Now.getHours();
 			if (NowTime1 < 10) {
 				NowTime1 = "0" + NowTime1;
@@ -129,9 +126,14 @@
 			if (NowTime2 < 10) {
 				NowTime2 = "0" + NowTime2;
 			}
-			Time1 = NowTime1 + ":" + NowTime2; // ex) 
-			Time = NowTime1 - 9 + " : " + NowTime2;
-			alert("NowTime1 =" + NowTime1)
+			var Time1 = NowTime1 + ":" + NowTime2; // ex) 
+			var Time = NowTime1 - 9 + " :" + NowTime2;
+			console.log("time" + Time1)
+
+	
+			mySheet.SetCellValue(select_row, 5, Time1);
+
+			//======================================================================
 			//지각시간
 			console.log(NowTime1);
 			if (NowTime1 >= 8 && NowTime1 <= 17) {
@@ -141,9 +143,9 @@
 					MowTime2 = "0" + NowTime2;
 				}
 			}
-			mySheet.SetCellValue(select_row, 1, PK_DAILY_TA_WORKING_DATE);
-			mySheet.SetCellValue(select_row, 5, Time1);
 			break;
+			
+			
 		case "save":
 			mySheet.DoSave("${contextPath}/attendance/p0001/insertData.do");
 			break;
@@ -160,6 +162,9 @@
 			if (NowTime4 < 10) {
 				NowTime4 = "0" + NowTime4;
 			}
+			var Time2 = NowTime3 + ":" + NowTime4;
+			mySheet.SetCellValue(select_row, 6, Time2);
+
 			//========================================================================
 			//조퇴시간
 
@@ -185,15 +190,33 @@
 				mySheet.SetCellValue(select_row, 8, ExTime);
 			}
 			//============================================================================
-			var WorkTime = NowTime2 - NowTime1 + " : " + NowTime4 - NowTime2;
+			var WorkTime1 = NowTime3 - NowTime1;//시간
+			var WorkTime2 = NowTime4 - NowTime2;//분
 			if (NowTime2 > NowTime4) {
 				NowTime2 - NowTime1 - 1 + " : " + NowTime4 + 60 - NowTime2;
+				alert("if문");
 			}
+			var WorkTime = WorkTime1 + " : " + WorkTime2
 			mySheet.SetCellValue(select_row, 7, WorkTime);//근무시간
 			mySheet.SetCellValue(select_row, 6, Time2);//퇴근시간
 			break;
 		}
 
+	}
+	
+	// mySheet 조회 끝나기 직전 이벤트 
+	function mySheet_OnSearchEnd() {
+		console.log(mySheet.GetCellValue(1,1));
+		if(mySheet.GetCellValue(1,1) == -1 ){
+			val1 = "PK_DAILY_TA_WORKING_DATE=" + document.getElementById("PK_DAILY_TA_WORKING_DATE").value
+			+ "&pk_SAWON_CODE=" + '<%=session.getAttribute("PK_SAWON_CODE")%>';
+			//날짜부분 들어가는 코딩 
+			mySheet.DoSearch("${contextPath}/attendance/p0001/searchList_sawon.do",val1);// 사원관련정보 조회 = 이름 부서 등
+		}else if(mySheet.GetCellValue(1,1) == "" || mySheet.GetCellValue(1,1) == null){
+			var PK_DAILY_TA_WORKING_DATE = document.getElementById("PK_DAILY_TA_WORKING_DATE").value;
+			mySheet.SetCellValue(1, 1, PK_DAILY_TA_WORKING_DATE);
+			//첫번째 열에서 두번째에다가 변수이름:PK_DAILY_TA_WORKING_DATE를 추가한다.
+		}
 	}
 </script>
 </head>
@@ -204,13 +227,15 @@
 	</div>
 	<div class="main_content">
 		<br> <label for="fromDate">근무일자</label> <input type='date'
-			id="PK_DAILY_TA_WORKING_DATE" name="PK_DAILY_TA_WORKING_DATE" />
-
+			id="PK_DAILY_TA_WORKING_DATE" name="PK_DAILY_TA_WORKING_DATE" /> <input
+			type='hidden' id="PK_DAILY_TA_WORKING_DATE"
+			name="PK_DAILY_TA_WORKING_DATE" />
 		<!-------------------- 달력 -------------------------------->
 
 		<br> <a href="javascript:doAction('search')"
 			class="f1_btn_gray lightgray" style="float: right;">조회</a>
 		<div class="page_title"></div>
+
 		<!-- 구분 선 -->
 		<br> <br>
 
@@ -224,20 +249,9 @@
 
 			<div class="exp_product"></div>
 			<!-- 공간을 넓게 -->
-			<!--<div class="ib_product"><!-- 없으면 크기가 작아짐(3줄정도로 바뀜 -->
+			<!--<div class="ib_product">  없으면 크기가 작아짐(3줄정도로 바뀜 -->
 			<script>
 				createIBSheet("mySheet", "100%", "100%");
 			</script>
 </body>
 </html>
-
-<!-- 1. 조회를 누르면 그날의 디비값을 가져와야함  O
-	 2. 출근을 누르면 오늘날짜는 근무일자에 넣고 현재시간에 맞춰서 출근시간에 넣어야한다. O
-	 3. 로그인한 정보대로 성명, 직급, 부서를 불러온다. V
-	 4. 근무일자가 오늘날짜가 아니면 출근퇴근을 할수 없다. 
-	 5. 표는 수정을 할수가 없다. O
-	 6. DB에 값을 넣어야함 O
-	 7. 연장근무에 시간 들어가야함 V
-	 8. 퇴근시간에서 출근시간 빼서 근무시간 들어가야함 V => 숫자가 아닌 문자임
-	 9. 성명 직급 부서 수정 못하게 변경
-	 -->

@@ -5,99 +5,189 @@
 
 <mapper namespace="hr.attendance.p0001">
 	<resultMap id="p0001Result01" type="day_regist_VO">
-		<result property="FK_DAILY_TA_SAWON_CODE" column="FK_DAILY_TA_SAWON_CODE" />
-		<result property="FK_DAILY_TA_DEPT_CODE" column="FK_DAILY_TA_DEPT_CODE" />
-		<result property="PK_DAILY_TA_WORKING_DATE" column="PK_DAILY_TA_WORKING_DATE" />
-		<result property="DAILY_TA_SAWON_NAME" column="DAILY_TA_SAWON_NAME" />
-		<result property="DAILY_TA_RANK" column="DAILY_TA_RANK" />
-		<result property="DAILY_TA_DEPT_NAME" column="DAILY_TA_DEPT_NAME" />
-		<result property="DAILY_TA_TA" column="DAILY_TA_TA" />
-		<result property="DAILY_TA_GO_TIME" column="DAILY_TA_GO_TIME" />
-		<result property="DAILY_TA_OFF_TIME" column="DAILY_TA_OFF_TIME" />
-		<result property="DAILY_TA_WORK_TIME" column="DAILY_TA_WORK_TIME" />
-		<result property="DAILY_TA_HOLI_WORK" column="DAILY_TA_HOLI_WORK" />
-		<result property="DAILY_TA_EXTEN_WORK" column="DAILY_TA_EXTEN_WORK" />
-		<result property="DAILY_TA_NIGHT_WORK" column="DAILY_TA_NIGHT_WORK" />
-		<result property="DAILY_TA_LATE_TIME" column="DAILY_TA_LATE_TIME" />
-		<result property="DAILY_TA_LEAVE_TIME" column="DAILY_TA_LEAVE_TIME" />
-		<result property="DAILY_TA_INT_USER_ID" column="DAILY_TA_INT_USER_ID" />
-		<result property="DAILY_TA_INT_DATE" column="DAILY_TA_INT_DATE" />
-		<result property="DAILY_TA_MOD_USER_ID" column="DAILY_TA_MOD_USER_ID" />
-		<result property="DAILY_TA_MOD_DATE" column="DAILY_TA_MOD_DATE" />
-		
-		
+		<result property="fk_DAILY_TA_SAWON_CODE"
+			column="fk_DAILY_TA_SAWON_CODE" />
+		<result property="fk_DAILY_TA_DEPT_CODE"
+			column="fk_DAILY_TA_DEPT_CODE" />
+		<result property="pk_DAILY_TA_WORKING_DATE"
+			column="pk_DAILY_TA_WORKING_DATE" />
+		<result property="daily_TA_SAWON_NAME"
+			column="daily_TA_SAWON_NAME" />
+		<result property="daily_TA_RANK" column="daily_TA_RANK" />
+		<result property="daily_TA_DEPT_NAME"
+			column="daily_TA_DEPT_NAME" />
+		<result property="daily_TA_TA" column="daily_TA_TA" />
+		<result property="daily_TA_GO_TIME" column="daily_TA_GO_TIME" />
+		<result property="daily_TA_OFF_TIME" column="daily_TA_OFF_TIME" />
+		<result property="daily_TA_WORK_TIME"
+			column="daily_TA_WORK_TIME" />
+		<result property="daily_TA_HOLI_WORK"
+			column="daily_TA_HOLI_WORK" />
+		<result property="daily_TA_EXTEN_WORK"
+			column="daily_TA_EXTEN_WORK" />
+		<result property="daily_TA_NIGHT_WORK"
+			column="daily_TA_NIGHT_WORK" />
+		<result property="daily_TA_LATE_TIME"
+			column="daily_TA_LATE_TIME" />
+		<result property="daily_TA_LEAVE_TIME"
+			column="daily_TA_LEAVE_TIME" />
+		<result property="daily_TA_INT_USER_ID"
+			column="daily_TA_INT_USER_ID" />
+		<result property="daily_TA_INT_DATE" column="daily_TA_INT_DATE" />
+		<result property="daily_TA_MOD_USER_ID"
+			column="daily_TA_MOD_USER_ID" />
+		<result property="daily_TA_MOD_DATE" column="daily_TA_MOD_DATE" />
+		<result property="fk_RANK_NAME" column="fk_RANK_NAME" />
+		<result property="rank_NAME" column="rank_NAME" />
+		<result property="sawon_NAME" column="sawon_NAME" />
+
+
 	</resultMap>
-<!-- 사원 근태등록 화면 조회 -->
-	<select id="searchList" resultMap="p0001Result01" parameterType="java.util.Map"> 
+	<!-- 사원 근태등록 화면 조회 -->
+
+	<select id="searchList" resultMap="p0001Result01"
+		parameterType="java.util.Map"> 
+		
       <![CDATA[
-         select D.PK_DAILY_TA_WORKING_DATE,S.SAWON_NAME, D.DAILY_TA_SAWON_NAME, D.DAILY_TA_RANK, D.DAILY_TA_DEPT_NAME, D.DAILY_TA_TA,
-          D.DAILY_TA_GO_TIME, D.DAILY_TA_OFF_TIME, D.DAILY_TA_WORK_TIME,D.DAILY_TA_HOLI_WORK,D.DAILY_TA_EXTEN_WORK,
-          D.DAILY_TA_NIGHT_WORK,D.DAILY_TA_LATE_TIME,D.DAILY_TA_LEAVE_TIME
-         from DAILY_TA D, SAWON S
-       where D.FK_DAILY_TA_SAWON_CODE = S.PK_SAWON_CODE
-          and D.PK_DAILY_TA_WORKING_DATE = #{PK_DAILY_TA_WORKING_DATE}
-          
-          
-    
+         select distinct D.pk_daily_ta_working_date,c.userno,s.sawon_name, s.fk_dept_name, s.rank_name,
+				 D.daily_ta_go_time, 
+   			     D.daily_ta_off_time, 
+     		     D.daily_ta_work_time, 
+       			 D.daily_ta_holi_work, 
+      			 D.daily_ta_exten_work, 
+     		     D.daily_ta_night_work, 
+      			 D.daily_ta_late_time, 
+       			 D.daily_ta_leave_time
+ 				from com_loginout c, sawon s ,daily_ta d
       ]]>
-		<!--    <where>-->
-			<!--  <if test="PK_DAILY_TA_WORKING_DATE != ''  and  PK_DAILY_TA_WORKING_DATE != null">-->
-	<!-- </where>  -->	
+		<where>
+			c.userno = s.pk_sawon_code
+			and c.userno = #{PK_SAWON_CODE,
+			jdbcType=VARCHAR}
+			<!-- pk_sawon_code가 받아온 pk_sawon_code와 같을 때 -->
+			<if
+				test="PK_DAILY_TA_WORKING_DATE != '' and PK_DAILY_TA_WORKING_DATE != null"><!-- 값이 널값이 아닐때 -->
+				and
+				d.pk_daily_ta_working_date =
+				#{PK_DAILY_TA_WORKING_DATE}
+
+			</if>
+
+		</where>
 	</select>
-	
+
+
+
+	<!-- 사원 출근 누를시 사원정보 -->
+	<select id="searchList_sawon" resultMap="p0001Result01"
+		parameterType="java.util.Map"> 
+      <![CDATA[
+          select distinct s.sawon_name, s.fk_dept_name, s.rank_name
+			from com_loginout c, sawon s ,daily_ta d
+		where c.userno = s.pk_sawon_code
+			and c.userno = #{PK_SAWON_CODE,jdbcType=VARCHAR}
+      ]]>
+		<!-- <where> c.userno = s.pk_sawon_code and c.userno = #{PK_SAWON_CODE, 
+			jdbcType=VARCHAR} </where> -->
+	</select>
+
+
+
 	<!-- 근태등록 화면 / 관리자 화면 -->
-	<select id="da_searchList" resultMap="p0001Result01" parameterType="java.util.Map"> 
+	<select id="da_searchList" resultMap="p0001Result01"
+		parameterType="java.util.Map"> 
       <![CDATA[
-         select D.PK_DAILY_TA_WORKING_DATE,S.SAWON_NAME, D.DAILY_TA_SAWON_NAME, D.DAILY_TA_RANK, D.DAILY_TA_DEPT_NAME, D.DAILY_TA_TA,
+            select D.PK_DAILY_TA_WORKING_DATE,S.SAWON_NAME, D.DAILY_TA_SAWON_NAME, D.DAILY_TA_RANK, D.DAILY_TA_DEPT_NAME, D.DAILY_TA_TA,
           D.DAILY_TA_GO_TIME, D.DAILY_TA_OFF_TIME, D.DAILY_TA_WORK_TIME,D.DAILY_TA_HOLI_WORK,D.DAILY_TA_EXTEN_WORK,
           D.DAILY_TA_NIGHT_WORK,D.DAILY_TA_LATE_TIME,D.DAILY_TA_LEAVE_TIME
          from DAILY_TA D, SAWON S
-       where D.FK_DAILY_TA_SAWON_CODE = S.PK_SAWON_CODE
-          and D.PK_DAILY_TA_WORKING_DATE = #{PK_DAILY_TA_WORKING_DATE}
-          
-          
-    
       ]]>
-		<!--    <where>-->
-			<!--  <if test="PK_DAILY_TA_WORKING_DATE != ''  and  PK_DAILY_TA_WORKING_DATE != null">-->
-	<!-- </where>  -->	
+		<where>
+			D.FK_DAILY_TA_SAWON_CODE = S.PK_SAWON_CODE
+			and PK_DAILY_TA_WORKING_DATE
+			between #{PK_DAILY_TA_WORKING_DATE2} and #{PK_DAILY_TA_WORKING_DATE3}
+
+			<if test="SAWON_NAME != '' and SAWON_NAME != null"> <!-- 널값이 아닐때 -->
+				sawon_name = #{sawon_name}
+			</if>
+		</where>
 	</select>
-	
-	
-	
-	
+
+
+
+
 
 	<update id="updateData" parameterType="java.util.Map">
-		<!--  update DAILY_TA
-		set  DAILY_TA_SAWON_NAME = #{daily_TA_SAWON_NAME,jdbcType=VARCHAR}
-		   , DAILY_TA_RANK = #{daily_TA_RANK,jdbcType=VARCHAR}
-		   , DAILY_TA_DEPT_NAME = #{daily_TA_DEPT_NAME,jdbcType=VARCHAR}
-		   , DAILY_TA_TA = #{daily_TA_TA,jdbcType=VARCHAR}
-		   , DAILY_TA_GO_TIME = #{daily_TA_GO_TIME,jdbcType=VARCHAR}
-		   , DAILY_TA_OFF_TIME = #{daily_TA_OFF_TIME,jdbcType=VARCHAR}
-		   , DAILY_TA_WORK_TIME = #{daily_TA_WORK_TIME,jdbcType=VARCHAR}
-		   , DAILY_TA_HOLI_WORK = #{daily_TA_HOLI_WORK,jdbcType=VARCHAR}
-		   , DAILY_TA_EXTEN_WORK = #{daily_TA_EXTEN_WORK,jdbcType=VARCHAR}
-		   , DAILY_TA_NIGHT_WORK = #{daily_TA_NIGHT_WORK,jdbcType=VARCHAR}
-		   , DAILY_TA_LATE_TIME = #{daily_TA_LATE_TIME,jdbcType=VARCHAR}
-		   , DAILY_TA_LEAVE_TIME = #{daily_TA_LEAVE_TIME,jdbcType=VARCHAR}
-		   
-		where PK_DAILY_TA_WORKING_DATE = #{pk_DAILY_TA_WORKING_DATE, jdbcType=VARCHAR} -->
-	
-	</update>	
-	
+		update DAILY_TA set
+		DAILY_TA_SAWON_NAME = #{daily_TA_SAWON_NAME,jdbcType=VARCHAR},
+		DAILY_TA_RANK = #{daily_TA_RANK,jdbcType=VARCHAR} ,
+		DAILY_TA_DEPT_NAME
+		= #{daily_TA_DEPT_NAME,jdbcType=VARCHAR} ,
+		DAILY_TA_TA =
+		#{daily_TA_TA,jdbcType=VARCHAR},
+		DAILY_TA_GO_TIME =
+		#{daily_TA_GO_TIME,jdbcType=VARCHAR} ,
+		DAILY_TA_OFF_TIME =
+		#{daily_TA_OFF_TIME,jdbcType=VARCHAR} ,
+		DAILY_TA_WORK_TIME =
+		#{daily_TA_WORK_TIME,jdbcType=VARCHAR},
+		DAILY_TA_HOLI_WORK =
+		#{daily_TA_HOLI_WORK,jdbcType=VARCHAR} ,
+		DAILY_TA_EXTEN_WORK =
+		#{daily_TA_EXTEN_WORK,jdbcType=VARCHAR} ,
+		DAILY_TA_NIGHT_WORK =
+		#{daily_TA_NIGHT_WORK,jdbcType=VARCHAR},
+		DAILY_TA_LATE_TIME =
+		#{daily_TA_LATE_TIME,jdbcType=VARCHAR} ,
+		DAILY_TA_LEAVE_TIME=
+		#{daily_TA_LEAVE_TIME,jdbcType=VARCHAR}
+		where PK_DAILY_TA_WORKING_DATE
+		= #{pk_DAILY_TA_WORKING_DATE,
+		jdbcType=VARCHAR}
+
+	</update>
+
 	<insert id="insertData" parameterType="java.util.Map">
-		insert into daily_TA(PK_DAILY_TA_WORKING_DATE, DAILY_TA_SAWON_NAME, DAILY_TA_RANK, DAILY_TA_DEPT_NAME, DAILY_TA_TA, DAILY_TA_GO_TIME,
-		 DAILY_TA_OFF_TIME, DAILY_TA_WORK_TIME, DAILY_TA_HOLI_WORK, DAILY_TA_EXTEN_WORK, DAILY_TA_NIGHT_WORK, DAILY_TA_LATE_TIME, DAILY_TA_LEAVE_TIME) 
-		 values(#{pk_DAILY_TA_WORKING_DATE, ,jdbcType=VARCHAR}, #{daily_TA_SAWON_NAME, ,jdbcType=VARCHAR}, #{daily_TA_RANK,jdbcType=VARCHAR}, 
-		 #{daily_TA_DEPT_NAME,jdbcType=VARCHAR}, #{daily_TA_TA,jdbcType=VARCHAR}, #{daily_TA_GO_TIME,jdbcType=VARCHAR}, #{daily_TA_OFF_TIME,jdbcType=VARCHAR},
-		  #{daily_TA_WORK_TIME,jdbcType=VARCHAR}, #{daily_TA_HOLI_WORK,jdbcType=VARCHAR}, #{daily_TA_EXTEN_WORK,jdbcType=VARCHAR}, #{daily_TA_NIGHT_WORK,jdbcType=VARCHAR}
-		  ,#{daily_TA_LATE_TIME,jdbcType=VARCHAR}, #{daily_TA_LEAVE_TIME,jdbcType=VARCHAR})
-	</insert>	
-	
+		insert into
+		daily_TA(PK_DAILY_TA_WORKING_DATE, select userno
+		from com_loginout c,
+		sawon s
+		where c.userno = s.pk_sawon_code
+		and lno = (select max(lno)
+		from
+		com_loginout), DAILY_TA_RANK, DAILY_TA_DEPT_NAME, DAILY_TA_GO_TIME,
+		DAILY_TA_OFF_TIME, DAILY_TA_WORK_TIME, DAILY_TA_HOLI_WORK,
+		DAILY_TA_EXTEN_WORK,
+		DAILY_TA_NIGHT_WORK, DAILY_TA_LATE_TIME,
+		DAILY_TA_LEAVE_TIME)
+		values(#{pk_DAILY_TA_WORKING_DATE,,jdbcType=VARCHAR},
+		#{daily_TA_SAWON_NAME,jdbcType=VARCHAR},
+		#{daily_TA_RANK,jdbcType=VARCHAR},
+		#{daily_TA_DEPT_NAME,jdbcType=VARCHAR},
+		#{daily_TA_GO_TIME,jdbcType=VARCHAR},
+		#{daily_TA_OFF_TIME,jdbcType=VARCHAR},
+		#{daily_TA_WORK_TIME,jdbcType=VARCHAR},
+		#{daily_TA_HOLI_WORK,jdbcType=VARCHAR},
+		#{daily_TA_EXTEN_WORK,jdbcType=VARCHAR},
+		#{daily_TA_NIGHT_WORK,jdbcType=VARCHAR},
+		#{daily_TA_LATE_TIME,jdbcType=VARCHAR},
+		#{daily_TA_LEAVE_TIME,jdbcType=VARCHAR})
+	</insert>
+
+	<insert id="update_sawon" parameterType="java.util.Map">
+		update daily_ta set
+		(DAILY_TA_SAWON_NAME = DAILY_TA_RANK,
+		DAILY_TA_DEPT_NAME)
+		select
+		SAWON_NAME, RANK_NAME,FK_RANK_NAME
+		FROM SAWON;
+	</insert>
+
+
 	<delete id="deleteData" parameterType="java.util.Map">
 		delete customers
-		where cust_id = #{cust_id}
-	</delete>	
+		where
+		cust_id = #{cust_id}
+	</delete>
 
 </mapper>

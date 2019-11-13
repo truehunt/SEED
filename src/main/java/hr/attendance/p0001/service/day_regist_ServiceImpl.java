@@ -1,5 +1,6 @@
 package hr.attendance.p0001.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import hr.attendance.p0001.dao.day_regist_DAO;
 import hr.attendance.p0001.vo.day_regist_VO;
+import project.common.DateVO;
 
 
 
@@ -23,16 +25,33 @@ public class day_regist_ServiceImpl implements day_regist_Service {
 	@Autowired
 	private day_regist_DAO p0001DAO;
 
+	//사원 조회
 	public List<day_regist_VO> searchList(Map<String, Object> searchMap) throws DataAccessException {
+		System.out.println("sawon_2: "+searchMap);
 		List<day_regist_VO> list =  p0001DAO.searchList(searchMap); 
+		
+		List<DateVO> calenList = new ArrayList<DateVO>();
 		return list;
 	}
 	
+	
+	//사원 출근시 사원정보
+	public List<day_regist_VO> searchList_sawon(Map<String, Object> searchMap) throws DataAccessException {
+		System.out.println("sawon2_2: "+searchMap);
+		List<day_regist_VO> list =  p0001DAO.searchList_sawon(searchMap); 
+		
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		return list;
+	}
+	
+	//관리자 화면
 	public List<day_regist_VO> da_searchList(Map<String, Object> searchMap) throws DataAccessException {
-		List<day_regist_VO> list =  p0001DAO.searchList(searchMap); 
+		System.out.println("sawon_da_2: "+searchMap);	
+		List<day_regist_VO> list =  p0001DAO.da_searchList(searchMap); 
 		return list;
 	}
 
+	//데이터 저장
 	@Override
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
 		String[] status = dataMap.get("STATUS");
@@ -68,7 +87,11 @@ public class day_regist_ServiceImpl implements day_regist_Service {
 		
 	}
 
+	
 	@Override
 	public void insertMember(Map<String, Object> dataMap) {
+		
 	}	
+	
+
 }

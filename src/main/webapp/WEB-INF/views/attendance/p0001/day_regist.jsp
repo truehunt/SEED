@@ -40,22 +40,20 @@
 			// keyfield : keyfield값 필수값 체크시 필요(미입력시 추가안됨.)
 			// MultiLineText:1  : 하나의 셀에 여러값을 넣을수 있음(shift+enter)
 			// Wrap:1 : 데이터
-			{Header : "근무일자",Type : "DATE",	SaveName : "PK_DAILY_TA_WORKING_DATE",	MinWidth : 100,	},
-			{Header : "성명",	Type : "Text",SaveName : "DAILY_TA_SAWON_NAME",	MinWidth : 80,},
-			{Header : "직급",	Type : "Text",SaveName : "DAILY_TA_RANK",MinWidth : 80},
-			{Header : "부서",	Type : "Text",SaveName : "DAILY_TA_DEPT_NAME",MinWidth : 80,Wrap : 1},
-			{Header : "근태구분",Type : "Text",SaveName : "DAILY_TA_TA",MinWidth : 100	},//ex)9-6까지 근무를 했으면 정상 / 9시 이후 출근 지각 / 6시 이전 퇴근 조퇴
-			{Header : "출근시각",Type : "Time",SaveName : "DAILY_TA_GO_TIME",MinWidth : 60	},
-			{Header : "퇴근시각",Type : "Time",SaveName : "DAILY_TA_OFF_TIME",MinWidth : 60},
-			{Header : "근무시간",Type : "Time",SaveName : "DAILY_TA_WORK_TIME",MinWidth : 60},
-			{Header : "휴일근무",Type : "Time",SaveName : "DAILY_TA_HOLI_WORK",MinWidth : 60},
-			{Header : "연장근로",Type : "Time",SaveName : "DAILY_TA_EXTEN_WORK",MinWidth : 60},
-			{Header : "야간근로",Type : "Time",SaveName : "DAILY_TA_NIGHT_WORK",MinWidth : 60},
-			{Header : "지각시간",Type : "Time",SaveName : "DAILY_TA_LATE_TIME",MinWidth : 60}, 
-			{Header : "조퇴시간",Type : "Time",SaveName : "DAILY_TA_LEAVE_TIME",MinWidth : 60}];
+			{Header : "상태",	Type : "Status", SaveName : "STATUS", MinWidth : 50},
+			{Header : "근무일자",Type : "Text",	SaveName : "pk_DAILY_TA_WORKING_DATE",	MinWidth : 100	},
+			{Header : "성명",	Type : "Text",SaveName : "daily_TA_SAWON_NAME",	MinWidth : 80},
+			{Header : "직급",	Type : "Text",SaveName : "daily_TA_RANK",MinWidth : 80},
+			{Header : "부서",	Type : "Text",SaveName : "daily_TA_DEPT_NAME",MinWidth : 80,Wrap : 1},
+			{Header : "출근시각",Type : "Text",SaveName : "daily_TA_GO_TIME",MinWidth : 60	},
+			{Header : "퇴근시각",Type : "Text",SaveName : "daily_TA_OFF_TIME",MinWidth : 60},
+			{Header : "근무시간",Type : "Text",SaveName : "daily_TA_WORK_TIME",MinWidth : 60},
+			{Header : "연장근로",Type : "Text",SaveName : "daily_TA_EXTEN_WORK",MinWidth : 60},
+			{Header : "지각시간",Type : "Text",SaveName : "daily_TA_LATE_TIME",MinWidth : 60}, 
+			{Header : "조퇴시간",Type : "Text",SaveName : "daily_TA_LEAVE_TIME",MinWidth : 60}];
 		IBS_InitSheet(mySheet, initSheet);
-			mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
-			//mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
+		mySheet.SetEditable(true);
+		//mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 			//doAction('search');
 		}
 
@@ -63,13 +61,10 @@
 		function doAction(sAction) {
 			switch (sAction) {
 			case "search": //조회
-				var val = document.getElementById("gowork").value
-				var val1 = document.getElementById("gohome").value;
-				mySheet.DoSearch("${contextPath}/attendance/p0001/da_searchList.do", val);
-					alert(val +"~"+ val1);
+				var val1 =  "PK_DAILY_TA_WORKING_DATE2=" + document.getElementById("pk_DAILY_TA_WORKING_DATE2").value 
+							+"&PK_DAILY_TA_WORKING_DATE3= " +  document.getElementById("pk_DAILY_TA_WORKING_DATE3").value;
+				mySheet.DoSearch("${contextPath}/attendance/p0001/da_searchList.do",val1);
 					break;
-				//mySheet.DoSearch("transaction_data2.json");
-				break;
 				
 				
 			case "reload": //초기화
@@ -118,14 +113,21 @@
 	부서명
 	<!-- select box -->
 	&emsp;
-	<select name="부서명">
+	<select name="부서">
 		<option value="">부서명</option>
-		<option value="A">A</option>
-		<option value="B">B</option>
-		<option value="C">C</option>
+		<option value="본사">본사</option>
+		<option value="임원실">임원실</option>
+		<option value="영업1부">영업1부</option>
+		<option value="관리부">관리부</option>
+		<option value="대리점">대리점</option>
+		<option value="비서실">비서실</option>
+		<option value="영업지원팀">영업지원팀</option>
+		<option value="경비실">경비실</option>
+		<option value="관리 1팀">관리 1팀</option>
+		
 	</select> &emsp;근무일자&emsp;
-	<input type="Date" name="PK_DAILY_TA_WORKING_DATE" id="gowork">&emsp; ~&emsp;
-	<input type="Date" name="endDate" id="gohome">
+	<input type="Date" name="pk_DAILY_TA_WORKING_DATE2" id="pk_DAILY_TA_WORKING_DATE2">&emsp; ~&emsp;
+	<input type="Date" name="pk_DAILY_TA_WORKING_DATE3" id="pk_DAILY_TA_WORKING_DATE3">
 	&emsp;사원번호&emsp;
 	<input type="text" name="sawon_num" id="sawon_num">
 	<a class="f1_btn_gray lightgray" style="float: right;">검색</a>
@@ -142,3 +144,9 @@
 		</script>
 </body>
 </html>
+
+
+
+
+<!-- 1. select 부서값 DB에서 받아오기
+	 2. from문 써서   -->

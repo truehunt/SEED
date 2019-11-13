@@ -165,6 +165,21 @@
         VALUES (#{fileno}, #{parentPK}, #{filename}, #{realname}, #{filesize}, #{PK_SAWON_CODE, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
     </insert>
     
+    <delete id="deleteSignFile" parameterType="hashmap"> 
+        DELETE 
+          FROM ATTACHMENT
+         WHERE FILENO IN (
+              <foreach item="item" index="index" collection="fileno" separator=",">
+                     ${item}
+              </foreach>  
+        )             
+    </delete>
+    
+    <delete id="deleteSignFile2" parameterType="String"> 
+        DELETE 
+          FROM ATTACHMENT
+         WHERE FILENO = #{fileno}
+    </delete>
   
 	<!-- 결재 -->    
     <update id="updateSign" parameterType="hr.elect.p0001.vo.SignVO" >  

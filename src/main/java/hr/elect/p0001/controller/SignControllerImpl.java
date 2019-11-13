@@ -1,5 +1,7 @@
 package hr.elect.p0001.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -176,6 +178,26 @@ public class SignControllerImpl implements SignController {
 
         return "redirect:/signListTobe";
     }
+	
+	/**
+     * 수정화면에서 첨부파일 삭제
+	 * @throws
+     */
+	@Override
+    @RequestMapping(value = "/signFileDelete")
+    public void signFileDelete(HttpServletRequest request, HttpServletResponse response, String fileno) throws IOException {
+    	
+		response.setContentType("text/html;charset=utf-8");
+  		PrintWriter out = response.getWriter();
+		
+  		try {
+        signDAO.signFileDelete(fileno);
+        
+        out.print("파일을 삭제하였습니다.");
+  		} catch (Exception e) {
+ 			System.out.println("파일삭제 실패 : " + e);
+ 		}
+    }
     
     /**
      * 읽기.
@@ -209,7 +231,7 @@ public class SignControllerImpl implements SignController {
      * 삭제.
      */
 	@Override
-    @RequestMapping(value = "/signDocDelete")
+    @RequestMapping(value = "/signDocDelete", method = { RequestMethod.GET, RequestMethod.POST })
     public String signDocDelete(HttpServletRequest request, SignDocVO SignDocVO) {
 
     	signDAO.deleteSignDoc(SignDocVO);

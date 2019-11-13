@@ -21,18 +21,6 @@
 
 <script>
 
-function fn_moveDate(date){
-    $.ajax({
-        url: "moveDate",
-        type:"post", 
-        data : {date: date},
-        success: function(result){
-            $("#calenDiv").html(result);
-            calcCalenderHeight();
-        }
-    })
-}
- 
 // responsive week calendar
 function myFunction(x) {
     if (x.matches) { // max-width: 450px
@@ -66,8 +54,8 @@ window.onload = function () {
     Morris.Bar({
         element: 'morris-bar-chart',
         data: [
-              <c:forEach var="listview" items="${listview}" varStatus="status">
-               {x: '<c:out value="${listview.field1}"/>', y: <c:out value="${listview.cnt1}"/>}<c:if test="${!status.last}">,</c:if> 
+              <c:forEach var="listview3" items="${listview3}" varStatus="status">
+               {x: '<c:out value="${listview3.field1}"/>', y: <c:out value="${listview3.cnt1}"/>}<c:if test="${!status.last}">,</c:if> 
           </c:forEach>
               ],
         xkey: 'x',
@@ -78,8 +66,8 @@ window.onload = function () {
     Morris.Donut({
         element: 'morris-donut-chart',
         data: [
-                 <c:forEach var="listview" items="${listview}" varStatus="status">
-                    {label: "<c:out value="${listview.field1}"/>",value: <c:out value="${listview.cnt1}"/>}<c:if test="${!status.last}">,</c:if>
+                 <c:forEach var="listview3" items="${listview3}" varStatus="status">
+                    {label: "<c:out value="${listview3.field1}"/>",value: <c:out value="${listview3.cnt1}"/>}<c:if test="${!status.last}">,</c:if>
              </c:forEach>
               ],
         resize: true
@@ -97,35 +85,6 @@ function calcCalenderHeight() {
    calendars.each(function() { 
       $(this).css("height", max+"px");
    }); 
-}
-
-function ev_prevSlide() {
-   var columnSelected = $("#weekDiv").children(".columnSelected");
-   var node = columnSelected.first().prev();
-   if (!node || !node.hasClass("calendarColumn")) return;
-   
-   node.addClass( "columnSelected" );
-   if (node.prev().length===0) {
-      $(".calenSlideButton_left").hide();
-   }
-   $(".calenSlideButton_right").show();
-
-   columnSelected.last().removeClass( "columnSelected" );
-}
-
-function ev_nextSlide() {
-   var columnSelected = $("#weekDiv").children(".columnSelected");
-   var node = columnSelected.last().next();
-   if (!node || !node.hasClass("calendarColumn")) return;
-   
-   node.addClass( "columnSelected" );
-
-   if (!node.next().hasClass("calendarColumn")) {
-      $(".calenSlideButton_right").hide();
-   }
-   $(".calenSlideButton_left").show();
-
-   columnSelected.first().removeClass( "columnSelected" );
 }
 
 var oldno = null;
@@ -158,12 +117,7 @@ function calendarDayMouseout(){
 <div id="page-wrapper" style="margin: 0px;">
    <div id="calenDiv" class="row">
      <div class="col-lg-12">
-         <h1 class="page-header">
-         <a href="javascript: fn_moveDate('<c:out value="${preWeek}"/>')"><i class="fa fa-angle-left fa-fw"></i></a>
-         
-         <c:out value="${month}"/> <s:message code="main.month"/> <c:out value="${week}"/><s:message code="main.week"/>
-         <a href="javascript: fn_moveDate('<c:out value="${nextWeek}"/>')"><i class="fa fa-angle-right fa-fw"></i></a>
-         </h1>
+         <h1 class="page-header"><i class="fa fa-calendar fa-fw"></i> <c:out value="${month}"/> <s:message code="main.month"/> <c:out value="${week}"/> <s:message code="main.week"/></h1>
      </div>
  
      <div class="col-lg-12" id="weekDiv">
@@ -199,15 +153,14 @@ function calendarDayMouseout(){
      <div class="calendarTooltip"></div>
      
      <h1 class="page-header"> <i class="fa fa-edit fa-fw"></i> 전자결재 현황</h1>
-     	
+     		<c:if test="${null eq listview2}">
+				<div id="develop2">
+					<s:message code="main.signNull"/>
+				</div>
+			</c:if>	
 		     <div class="row">
                 <div class="col-lg-12">
 					<c:forEach var="listview2" items="${listview2}" varStatus="status">
-					
-				         	<c:if test="${listview2 eq null}">
-									<!-- <img src="/SEED/resources/image/SEED.png">  -->
-									결재할 문서가 없습니다...
-							</c:if>
 					
 						<c:url var="link" value="signDocRead">
 							<c:param name="PK_AD_NUM" value="${listview2.PK_AD_NUM}" />
@@ -224,7 +177,7 @@ function calendarDayMouseout(){
 		                    </div>
 		                </div>	
 											
-					</c:forEach>	
+					</c:forEach>
             	</div>    
             </div>
          

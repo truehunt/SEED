@@ -9,137 +9,158 @@ import com.ibleaders.utility.ib_jxl.write.DateTime;
 
 @Component("Day_regist_VO")
 public class day_regist_VO {
-	private String FK_DAILY_TA_SAWON_CODE;
-	private String FK_DAILY_TA_DEPT_CODE;
-	private String PK_DAILY_TA_WORKING_DATE;
-	private String DAILY_TA_SAWON_NAME;
-	private String DAILY_TA_RANK;
-	private String DAILY_TA_DEPT_NAME;
-	private String DAILY_TA_TA;
-	private String DAILY_TA_GO_TIME;
-	private String DAILY_TA_OFF_TIME;
-	private String DAILY_TA_WORK_TIME;
-	private String DAILY_TA_HOLI_WORK;
-	private String DAILY_TA_EXTEN_WORK;
-	private String DAILY_TA_NIGHT_WORK;
-	private String DAILY_TA_LATE_TIME;
-	private String DAILY_TA_LEAVE_TIME;
-	private String DAILY_TA_INT_USER_ID;
-	private DateTime DAILY_TA_INT_DATE;
-	private String DAILY_TA_MOD_USER_ID;
-	private DateTime DAILY_TA_MOD_DATE;
-	public String getFK_DAILY_TA_SAWON_CODE() {
-		return FK_DAILY_TA_SAWON_CODE;
+	private String fk_dept_NAME;
+	private String rank_NAME;
+	private String sawon_NAME;
+	private String fk_DAILY_TA_SAWON_CODE;
+	private String fk_DAILY_TA_DEPT_CODE;
+	private String pk_DAILY_TA_WORKING_DATE;
+	private String daily_TA_SAWON_NAME;
+	private String daily_TA_RANK;
+	private String daily_TA_DEPT_NAME;
+	private String daily_TA_TA;
+	private String daily_TA_GO_TIME;
+	private String daily_TA_OFF_TIME;
+	private String daily_TA_WORK_TIME;
+	private String daily_TA_HOLI_WORK;
+	private String daily_TA_EXTEN_WORK;
+	private String daily_TA_NIGHT_WORK;
+	private String daily_TA_LATE_TIME;
+	private String daily_TA_LEAVE_TIME;
+	private String daily_TA_INT_USER_ID;
+	private DateTime daily_TA_INT_DATE;
+	private String daily_TA_MOD_USER_ID;
+	private DateTime daily_TA_MOD_DATE;
+	public String getFk_RANK_NAME() {
+		return fk_dept_NAME;
 	}
-	public void setFK_DAILY_TA_SAWON_CODE(String fK_DAILY_TA_SAWON_CODE) {
-		FK_DAILY_TA_SAWON_CODE = fK_DAILY_TA_SAWON_CODE;
+	public void setFk_RANK_NAME(String fk_RANK_NAME) {
+		this.fk_dept_NAME = fk_RANK_NAME;
 	}
-	public String getFK_DAILY_TA_DEPT_CODE() {
-		return FK_DAILY_TA_DEPT_CODE;
+	public String getRank_NAME() {
+		return rank_NAME;
 	}
-	public void setFK_DAILY_TA_DEPT_CODE(String fK_DAILY_TA_DEPT_CODE) {
-		FK_DAILY_TA_DEPT_CODE = fK_DAILY_TA_DEPT_CODE;
+	public void setRank_NAME(String rank_NAME) {
+		this.rank_NAME = rank_NAME;
 	}
-	public String getPK_DAILY_TA_WORKING_DATE() {
-		return PK_DAILY_TA_WORKING_DATE;
+	public String getSawon_NAME() {
+		return sawon_NAME;
 	}
-	public void setPK_DAILY_TA_WORKING_DATE(String pK_DAILY_TA_WORKING_DATE) {
-		PK_DAILY_TA_WORKING_DATE = pK_DAILY_TA_WORKING_DATE;
+	public void setSawon_NAME(String sawon_NAME) {
+		this.sawon_NAME = sawon_NAME;
 	}
-	public String getDAILY_TA_SAWON_NAME() {
-		return DAILY_TA_SAWON_NAME;
+	public String getFk_DAILY_TA_SAWON_CODE() {
+		return fk_DAILY_TA_SAWON_CODE;
 	}
-	public void setDAILY_TA_SAWON_NAME(String dAILY_TA_SAWON_NAME) {
-		DAILY_TA_SAWON_NAME = dAILY_TA_SAWON_NAME;
+	public void setFk_DAILY_TA_SAWON_CODE(String fk_DAILY_TA_SAWON_CODE) {
+		this.fk_DAILY_TA_SAWON_CODE = fk_DAILY_TA_SAWON_CODE;
 	}
-	public String getDAILY_TA_RANK() {
-		return DAILY_TA_RANK;
+	public String getFk_DAILY_TA_DEPT_CODE() {
+		return fk_DAILY_TA_DEPT_CODE;
 	}
-	public void setDAILY_TA_RANK(String dAILY_TA_RANK) {
-		DAILY_TA_RANK = dAILY_TA_RANK;
+	public void setFk_DAILY_TA_DEPT_CODE(String fk_DAILY_TA_DEPT_CODE) {
+		this.fk_DAILY_TA_DEPT_CODE = fk_DAILY_TA_DEPT_CODE;
 	}
-	public String getDAILY_TA_DEPT_NAME() {
-		return DAILY_TA_DEPT_NAME;
+	public String getPk_DAILY_TA_WORKING_DATE() {
+		return pk_DAILY_TA_WORKING_DATE;
 	}
-	public void setDAILY_TA_DEPT_NAME(String dAILY_TA_DEPT_NAME) {
-		DAILY_TA_DEPT_NAME = dAILY_TA_DEPT_NAME;
+	public void setPk_DAILY_TA_WORKING_DATE(String pk_DAILY_TA_WORKING_DATE) {
+		this.pk_DAILY_TA_WORKING_DATE = pk_DAILY_TA_WORKING_DATE;
 	}
-	public String getDAILY_TA_TA() {
-		return DAILY_TA_TA;
+	public String getDaily_TA_SAWON_NAME() {
+		return daily_TA_SAWON_NAME;
 	}
-	public void setDAILY_TA_TA(String dAILY_TA_TA) {
-		DAILY_TA_TA = dAILY_TA_TA;
+	public void setDaily_TA_SAWON_NAME(String daily_TA_SAWON_NAME) {
+		this.daily_TA_SAWON_NAME = daily_TA_SAWON_NAME;
 	}
-	public String getDAILY_TA_GO_TIME() {
-		return DAILY_TA_GO_TIME;
+	public String getDaily_TA_RANK() {
+		return daily_TA_RANK;
 	}
-	public void setDAILY_TA_GO_TIME(String dAILY_TA_GO_TIME) {
-		DAILY_TA_GO_TIME = dAILY_TA_GO_TIME;
+	public void setDaily_TA_RANK(String daily_TA_RANK) {
+		this.daily_TA_RANK = daily_TA_RANK;
 	}
-	public String getDAILY_TA_OFF_TIME() {
-		return DAILY_TA_OFF_TIME;
+	public String getDaily_TA_DEPT_NAME() {
+		return daily_TA_DEPT_NAME;
 	}
-	public void setDAILY_TA_OFF_TIME(String dAILY_TA_OFF_TIME) {
-		DAILY_TA_OFF_TIME = dAILY_TA_OFF_TIME;
+	public void setDaily_TA_DEPT_NAME(String daily_TA_DEPT_NAME) {
+		this.daily_TA_DEPT_NAME = daily_TA_DEPT_NAME;
 	}
-	public String getDAILY_TA_WORK_TIME() {
-		return DAILY_TA_WORK_TIME;
+	public String getDaily_TA_TA() {
+		return daily_TA_TA;
 	}
-	public void setDAILY_TA_WORK_TIME(String dAILY_TA_WORK_TIME) {
-		DAILY_TA_WORK_TIME = dAILY_TA_WORK_TIME;
+	public void setDaily_TA_TA(String daily_TA_TA) {
+		this.daily_TA_TA = daily_TA_TA;
 	}
-	public String getDAILY_TA_HOLI_WORK() {
-		return DAILY_TA_HOLI_WORK;
+	public String getDaily_TA_GO_TIME() {
+		return daily_TA_GO_TIME;
 	}
-	public void setDAILY_TA_HOLI_WORK(String dAILY_TA_HOLI_WORK) {
-		DAILY_TA_HOLI_WORK = dAILY_TA_HOLI_WORK;
+	public void setDaily_TA_GO_TIME(String daily_TA_GO_TIME) {
+		this.daily_TA_GO_TIME = daily_TA_GO_TIME;
 	}
-	public String getDAILY_TA_EXTEN_WORK() {
-		return DAILY_TA_EXTEN_WORK;
+	public String getDaily_TA_OFF_TIME() {
+		return daily_TA_OFF_TIME;
 	}
-	public void setDAILY_TA_EXTEN_WORK(String dAILY_TA_EXTEN_WORK) {
-		DAILY_TA_EXTEN_WORK = dAILY_TA_EXTEN_WORK;
+	public void setDaily_TA_OFF_TIME(String daily_TA_OFF_TIME) {
+		this.daily_TA_OFF_TIME = daily_TA_OFF_TIME;
 	}
-	public String getDAILY_TA_NIGHT_WORK() {
-		return DAILY_TA_NIGHT_WORK;
+	public String getDaily_TA_WORK_TIME() {
+		return daily_TA_WORK_TIME;
 	}
-	public void setDAILY_TA_NIGHT_WORK(String dAILY_TA_NIGHT_WORK) {
-		DAILY_TA_NIGHT_WORK = dAILY_TA_NIGHT_WORK;
+	public void setDaily_TA_WORK_TIME(String daily_TA_WORK_TIME) {
+		this.daily_TA_WORK_TIME = daily_TA_WORK_TIME;
 	}
-	public String getDAILY_TA_LATE_TIME() {
-		return DAILY_TA_LATE_TIME;
+	public String getDaily_TA_HOLI_WORK() {
+		return daily_TA_HOLI_WORK;
 	}
-	public void setDAILY_TA_LATE_TIME(String dAILY_TA_LATE_TIME) {
-		DAILY_TA_LATE_TIME = dAILY_TA_LATE_TIME;
+	public void setDaily_TA_HOLI_WORK(String daily_TA_HOLI_WORK) {
+		this.daily_TA_HOLI_WORK = daily_TA_HOLI_WORK;
 	}
-	public String getDAILY_TA_LEAVE_TIME() {
-		return DAILY_TA_LEAVE_TIME;
+	public String getDaily_TA_EXTEN_WORK() {
+		return daily_TA_EXTEN_WORK;
 	}
-	public void setDAILY_TA_LEAVE_TIME(String dAILY_TA_LEAVE_TIME) {
-		DAILY_TA_LEAVE_TIME = dAILY_TA_LEAVE_TIME;
+	public void setDaily_TA_EXTEN_WORK(String daily_TA_EXTEN_WORK) {
+		this.daily_TA_EXTEN_WORK = daily_TA_EXTEN_WORK;
 	}
-	public String getDAILY_TA_INT_USER_ID() {
-		return DAILY_TA_INT_USER_ID;
+	public String getDaily_TA_NIGHT_WORK() {
+		return daily_TA_NIGHT_WORK;
 	}
-	public void setDAILY_TA_INT_USER_ID(String dAILY_TA_INT_USER_ID) {
-		DAILY_TA_INT_USER_ID = dAILY_TA_INT_USER_ID;
+	public void setDaily_TA_NIGHT_WORK(String daily_TA_NIGHT_WORK) {
+		this.daily_TA_NIGHT_WORK = daily_TA_NIGHT_WORK;
 	}
-	public DateTime getDAILY_TA_INT_DATE() {
-		return DAILY_TA_INT_DATE;
+	public String getDaily_TA_LATE_TIME() {
+		return daily_TA_LATE_TIME;
 	}
-	public void setDAILY_TA_INT_DATE(DateTime dAILY_TA_INT_DATE) {
-		DAILY_TA_INT_DATE = dAILY_TA_INT_DATE;
+	public void setDaily_TA_LATE_TIME(String daily_TA_LATE_TIME) {
+		this.daily_TA_LATE_TIME = daily_TA_LATE_TIME;
 	}
-	public String getDAILY_TA_MOD_USER_ID() {
-		return DAILY_TA_MOD_USER_ID;
+	public String getDaily_TA_LEAVE_TIME() {
+		return daily_TA_LEAVE_TIME;
 	}
-	public void setDAILY_TA_MOD_USER_ID(String dAILY_TA_MOD_USER_ID) {
-		DAILY_TA_MOD_USER_ID = dAILY_TA_MOD_USER_ID;
+	public void setDaily_TA_LEAVE_TIME(String daily_TA_LEAVE_TIME) {
+		this.daily_TA_LEAVE_TIME = daily_TA_LEAVE_TIME;
 	}
-	public DateTime getDAILY_TA_MOD_DATE() {
-		return DAILY_TA_MOD_DATE;
+	public String getDaily_TA_INT_USER_ID() {
+		return daily_TA_INT_USER_ID;
 	}
-	public void setDAILY_TA_MOD_DATE(DateTime dAILY_TA_MOD_DATE) {
-		DAILY_TA_MOD_DATE = dAILY_TA_MOD_DATE;
+	public void setDaily_TA_INT_USER_ID(String daily_TA_INT_USER_ID) {
+		this.daily_TA_INT_USER_ID = daily_TA_INT_USER_ID;
+	}
+	public DateTime getDaily_TA_INT_DATE() {
+		return daily_TA_INT_DATE;
+	}
+	public void setDaily_TA_INT_DATE(DateTime daily_TA_INT_DATE) {
+		this.daily_TA_INT_DATE = daily_TA_INT_DATE;
+	}
+	public String getDaily_TA_MOD_USER_ID() {
+		return daily_TA_MOD_USER_ID;
+	}
+	public void setDaily_TA_MOD_USER_ID(String daily_TA_MOD_USER_ID) {
+		this.daily_TA_MOD_USER_ID = daily_TA_MOD_USER_ID;
+	}
+	public DateTime getDaily_TA_MOD_DATE() {
+		return daily_TA_MOD_DATE;
+	}
+	public void setDaily_TA_MOD_DATE(DateTime daily_TA_MOD_DATE) {
+		this.daily_TA_MOD_DATE = daily_TA_MOD_DATE;
 	}
 }

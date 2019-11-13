@@ -1,12 +1,17 @@
 package hr.elect.p0001.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import hr.elect.p0001.vo.SignDocVO;
 import project.common.SearchVO;
@@ -57,6 +62,12 @@ public class SignDAOImpl implements SignDAO {
     public List<?> selectSignFileList(String param) {
         return sqlSession.selectList("selectSignFileList", param);
     }
+    /**
+     * 수정화면에서 첨부파일 삭제
+     */
+    public void signFileDelete(String param) {
+        sqlSession.insert("deleteSignFile2", param);
+	}
     
     /**
      * 결재 경로.

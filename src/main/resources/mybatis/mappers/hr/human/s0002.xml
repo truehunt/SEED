@@ -53,6 +53,7 @@
 				pk_workplace_code = #{p_id}
 			</if>
 		</where>
+		order By pk_workplace_code asc
 	</select>
 	
 	<update id="updateData" parameterType="java.util.Map">
@@ -97,6 +98,7 @@
 	<delete id="deleteData" parameterType="java.util.Map">
 		delete workplace
 		where pk_workplace_code = #{pk_workplace_code}
+		and workplace_name = #{workplace_name}
 	</delete>	
 
 </mapper>

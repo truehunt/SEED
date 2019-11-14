@@ -97,12 +97,15 @@
 	//시트 높이 계산용
 	var pageheightoffset = 200;
 	
+	var RA="";
+	var HG="";
+	
 	/*Sheet 기본 설정 */
 	function LoadPage() { 
 		mySheet.RemoveAll();
 		//아이비시트 초기화
 		var initSheet = {};
-		 
+		
 		initSheet.Cfg = {SearchMode:smLazyLoad,ToolTip:1};
 		initSheet.HeaderMode = {Sort:1,ColMove:1,ColResize:1,HeaderCheck:1};
 		initSheet.Cols = [ // 상태, 삭제는 건들면 안됨. SaveName은 VO속성과 동일하게
@@ -115,17 +118,14 @@
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50},
 			{Header:"코드",Type:"Text",SaveName:"pk_company_code",MinWidth:50,Align:"Center", KeyField:1},
-			{Header:"회사명",Type:"Text",SaveName:"company_name",MinWidth:100,Align:"Center", KeyField:1},			
-			{Header:"구분", Type:"Combo", MinWidth:60, SaveName:"company_division",Edit: 1, Align:"Center",KeyField:1
-						, ComboText:"0. 법인|1. 개인" 
-						, ComboCode:"A00|A01"
-						, showMobile:1},
+			{Header:"회사명",Type:"Text",SaveName:"company_name",MinWidth:150,Align:"Center", KeyField:1},			
+			{Header:"구분", Type:"Combo", MinWidth:60, SaveName:"company_division",Edit: 1, Align:"Center",KeyField:1},
 			{Header:"회계년도1",Type:"Text",SaveName:"company_fiscal_year_o", KeyField:1, Hidden:1},
 			{Header:"회계년도2",Type:"Text",SaveName:"company_fiscal_year_t", KeyField:1, Hidden:1},
 			{Header:"사업자등록번호",Type:"Text",SaveName:"company_reg_num", KeyField:1, Hidden:1},
 			{Header:"법인등록번호",Type:"Text",SaveName:"company_corp_reg_num", Hidden:1},
 			{Header:"대표자성명",Type:"Text",SaveName:"company_rep_name", KeyField:1, Hidden:1},
-			{Header:"외국인여부",Type:"Text",SaveName:"company_foreigner_whe", KeyField:1, Hidden:1},
+			{Header:"외국인여부",Type:"Combo",SaveName:"company_foreigner_whe", KeyField:1, Hidden:1},
 			{Header:"주민등록번호",Type:"Text",SaveName:"company_resi_reg_num", KeyField:1, Hidden:1},
 			{Header:"본점우편번호",Type:"Text",SaveName:"company_zip", KeyField:1, Hidden:1},
 			{Header:"본점주소",Type:"Text",SaveName:"company_address", KeyField:1, Hidden:1},
@@ -143,13 +143,22 @@
 			{Header:"수정일시",Type:"Text",SaveName:"company_mod_date",Format:"", Hidden:1},
 		];  
 		//sheet 초기화
+		
 		IBS_InitSheet( mySheet , initSheet);
-
+		
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
-		mySheet.DoSearch("${contextPath}/human/s0001/searchList.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 		
+		mySheet.DoSearch("${contextPath}/human/s0001/searchList.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
+	
+		//콤보박스에 값 불러오기 -> searchList.do 뒤에 실행 
+		selectDivision();
+
+		//ibSheet 에서 col 지정해서 숨김
+		mySheet.SetColHidden([
+	      {Col: 0, Hidden:1}, //상태
+	    ]);
 	}
 
 	//onClick 이벤트
@@ -167,7 +176,7 @@
 	  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 	  })
 	  
-	  // onClick 이벤트 중 select 태그에 company_foreigner_whe인 값의 변경이 있을때 실행
+      // onClick 이벤트 중 select 태그에 company_foreigner_whe인 값의 변경이 있을때 실행
 	  $("#company_foreigner_whe").change(function(e){ 
 			var colNum = colArr.indexOf(e.target.id);	
 			 
@@ -197,10 +206,14 @@
 			    //var param = FormQueryStringEnc(document.frm);
 				//alert(param);
 				//mySheet.DoSearch("${contextPath}/human/s0001/searchList.do", param);
-				mySheet.DoSearch("${contextPath}/human/s0001/searchList.do");
-				//mySheet.DoSearch("${contextPath}/human/s0001/comEnrollView.do");
-				
 				//mySheet.DoSearch("transaction_data2.json");
+				
+				mySheet.DoSearch("${contextPath}/human/s0001/searchList.do");
+				
+				//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
+				selectDivision();
+				$('#company_foreigner_whe').html("   ");
+				
 				break;
 			case "reload": //초기화
 				mySheet.RemoveAll();
@@ -218,6 +231,11 @@
 				//var Option = { "SumRow" : "AutoSum" }; 
 				//mySheet.RemoveAll(Option); 
 				var row = mySheet.DataInsert();
+				
+				//콤보박스에 값 불러오기 -> 행 추가후 실행
+				selectDivision();
+				$('#company_foreigner_whe').html("   ");
+				
 				break;
 		}
 	}
@@ -293,10 +311,60 @@
 				break;
 		}
 	}
-	
+		
+	function selectDivision() { // 인사코드조회
+		
+		var divi1 =""; // 법인/개인 구분
+		var divi2 =""; // 내국인 여부
+		
+		$.ajax({ // 인사기초코드 조회
+			url : "${contextPath}/human/p0001/ISA_c.do",//목록을 조회 할 url 
+			type : "POST",
+			dataType : "JSON",
+			success : function(data) {
+				for (var i = 0; i < data['Data'].length; i++) {
+					var MNGEMENT_NAME = "<option value='" + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME + "'>" + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME + "</option>"; 
+					//이건 상관x => 여기는 일반 table에 넣어주는 코드입니다.
+					var info1 = '|' + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME; // 안건드려도 됩니다.
+					
+					var code_ = data['Data'][i].fk_PERSON_BC_CODE_NUM; //
+					
+					switch(code_){
+						case 'RA': // 법인/개인 구분 -> 그리드
+							divi1 = divi1+info1;
+							//console.log(divi1);
+							break;
+					//---------------------------------------			
+						case 'HG': // 내국인 여부 -> input box
+							divi2 = divi2+info1; // 그리드에 저장
+							$('#company_foreigner_whe').append(MNGEMENT_NAME);//input box에 저장
+							console.log(divi2);
+							break;
+					}
+					
+				}
+				this.Action();
+			},
+			Action: function(){	 // combo를 넣는 곳
+			
+				RA = {'ComboCode':divi1,'ComboText':divi1}; // 법인/개인구분
+				HG = {'ComboCode':divi2,'ComboText':divi2}; // 내국인 여부
+				
+				for(var i = 1; i<=mySheet.RowCount(); i++){ // 조회할때 갯수 세어서 거기에 전부 넣기위해서 for문 돌립니다.
+					console.log(i);
+					console.log("RA : "+RA+" HG : " +HG+ " 입니다.");
+					mySheet.CellComboItem(i,4,RA); // 법인/개인구분( 법인 , 개인 )
+					mySheet.CellComboItem(i,10,HG); // 내국인여부 ( 내국인 , 외국인 )	
+				}
+			},
+			error : function(jqxhr, status, error) {
+				alert("에러");
+			}
+		});
+	};
 	// 조회완료 후 처리할 작업
 	function mySheet_OnSearchEnd() {
-      
+
 	}
 	
 	// 저장완료 후 처리할 작업
@@ -476,27 +544,13 @@
 		    $("#company_open_date").datepicker();
 		    $("#company_closed_date").datepicker();
 		    
-		    //company_fiscal_year_o 설정
-		    $('#company_fiscal_year_o').datepicker(); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
-		    
-		    //company_fiscal_year_t 설정
-		    $('#company_fiscal_year_t').datepicker();
-		  	
-		    //company_establishment_date 설정
-		    $('#company_establishment_date').datepicker(); 
-		  	
-		    //company_open_date 설정
-		    $('#company_open_date').datepicker(); 
-		  	
-		    //company_closed_date 설정
-		    $('#company_closed_date').datepicker(); 
 		});
 		</script>
 	<div id="wrap" style="margin: 0px;">
 	<div id="page-wrapper" style="margin: 0px;">
 		<div class="row">
 	        <div class="col-lg-12">
-	            <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 회사 등록</h1>
+	            <h1 class="page-header"><i class="fa fa-folder fa-fw"></i> 회사 등록</h1>
 	        </div>
    	 	</div>
 	
@@ -553,13 +607,14 @@
 	   	<td align="right">대표자 성명 : </td><td> <input type="text" name="company_rep_name" id="company_rep_name" size="25px"> </td>
 	   </tr>
 	   <tr>
-	   	<td align="right">외국인여부 : </td><td> 
+	   		<td align="right">외국인여부 : </td><td> 
 	   				<select name="company_foreigner_whe" id="company_foreigner_whe">
-	  					<option value='' hidden='1'></option> <!-- 공백 -->
-	  					<option value='내국인' >0.내국인</option>
-	  					<option value='외국인' >1.외국인</option>
+	  				    	 <option value='' hidden='1'></option> <!-- 공백  -->
+	  				   <!--  <option value='내국인' >0.내국인</option>
+	  						 <option value='외국인' >1.외국인</option>
+	  					 -->
 	  				</select>
-	  	</td>
+	  		</td>
 	   </tr>
 	   <tr>
 	   	<td align="right">주민등록번호 : </td><td> <input type="text" name="company_resi_reg_num" id="company_resi_reg_num" size="30px" placeholder="_ _ _ _ _ _- _ _ _ _ _ _ _"> </td>

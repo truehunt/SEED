@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.human.s0003">	
+	<resultMap id="s0003Result01" type="deptEnroll_VO">
+		<result property="pk_dept_code" column="pk_dept_code" /> 
+		<result property="dept_name" column="dept_name" />
+		<result property="workplace_code" column="fk_workplace_code" />
+		<result property="workplace_name" column="workplace_name" />
+		<result property="fk_sector_code" column="fk_sector_code" />
+		<result property="sector_name" column="sector_name" />
+		<result property="dept_priodof" column="dept_priodof" />
+		
+		<result property="dept_int_user_id" column="dept_int_user_id" />
+		<result property="dept_int_date" column="dept_int_date" />
+		<result property="dept_mod_user_id" column="dept_mod_user_id" />
+		<result property="dept_mod_date" column="dept_mod_date" />
+		
+		<!--
+		<result property="pk_company_code" column="pk_company_code" />
+		 dept의 모든 칼럼 및 fk_company_code,fk_company_name, fk_sector_code, sector_name 가져옴
+			pk_dept_code, dept_name, fk_workplace_code, workplace_name, fk_sector_code
+			, sector_name, dept_priodof, dept_int_user_id, dept_int_date, dept_mod_user_id
+			, dept_mod_date
+		 -->
+	</resultMap>
+
+	<select id="searchList" resultMap="s0003Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select d.pk_dept_code, d.dept_name, d.workplace_code, w.workplace_name, d.fk_sector_code
+         , s.sector_name, d.dept_priodof
+         from   dept d, workplace w, sector s
+      ]]>
+		<where>
+			d.workplace_code = w.pk_workplace_code
+			and d.fk_sector_code = s.pk_sector_code
+		</where>
+			order By d.pk_dept_code asc
+	</select>
+	
+	<update id="updateData" parameterType="java.util.Map">
+		update dept
+		set pk_dept_code = #{pk_dept_code,jdbcType=VARCHAR}
+		   , dept_name = #{dept_name,jdbcType=VARCHAR}
+		   , workplace_code = #{workplace_code,jdbcType=VARCHAR}
+		   , workplace_name = #{workplace_name,jdbcType=VARCHAR}
+		   , fk_sector_code = #{fk_sector_code,jdbcType=VARCHAR}
+		   , sector_name = #{sector_name,jdbcType=VARCHAR}
+		   , dept_priodof = #{dept_priodof,jdbcType=VARCHAR}
+		   , dept_int_user_id = #{dept_int_user_id,jdbcType=VARCHAR}
+		   , dept_int_date = #{dept_int_date,jdbcType=TIMESTAMP}
+		   , dept_mod_user_id = #{dept_mod_user_id,jdbcType=VARCHAR}
+		   , dept_mod_date = #{dept_mod_date,jdbcType=TIMESTAMP}
+		   
+		where pk_dept_code = #{pk_dept_code, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertData" parameterType="java.util.Map">
+		insert into dept(pk_dept_code, dept_name, workplace_code, fk_sector_code
+							, dept_priodof, dept_int_user_id, dept_int_date
+							, dept_mod_user_id, dept_mod_date) 
+			   values(#{pk_dept_code, jdbcType=VARCHAR},#{dept_name, jdbcType=VARCHAR},#{workplace_code, jdbcType=VARCHAR},
+			   		  #{fk_sector_code, jdbcType=VARCHAR},#{dept_priodof, jdbcType=VARCHAR},#{dept_int_user_id, jdbcType=VARCHAR},
+			   		  #{dept_int_date, jdbcType=TIMESTAMP},#{dept_mod_user_id, jdbcType=VARCHAR},#{dept_mod_date, jdbcType=TIMESTAMP}
+					  )
+	</insert>	
+	
+	<delete id="deleteData" parameterType="java.util.Map">
+		delete dept
+		where pk_dept_code = #{pk_dept_code}
+		and dept_name = #{dept_name}
+	</delete>	
+
+</mapper>

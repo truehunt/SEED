@@ -95,6 +95,7 @@
 	//시트 높이 계산용
 	var pageheightoffset = 200;
 	
+	var S2="";
 	/*Sheet 기본 설정 */
 	function LoadPage() {
 		mySheet.RemoveAll();
@@ -112,34 +113,43 @@
 			
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50},
-			{Header:"사업장코드",Type:"Text",SaveName:"pk_workplace_code",MinWidth:60},
+			{Header:"사업장코드",Type:"Text",SaveName:"pk_workplace_code",MinWidth:100, KeyField:1},
 			{Header:"회사코드",Type:"Text",SaveName:"fk_company_code",MinWidth:60, Hidden:1},			
-			{Header:"사업장명",Type:"Text",SaveName:"workplace_name",MinWidth:100},
-			{Header:"사업자등록번호",Type:"Text",SaveName:"workplace_com_reg_num",MinWidth:150, Hidden:1},
+			{Header:"사업장명",Type:"Text",SaveName:"workplace_name",MinWidth:150, KeyField:1},
+			{Header:"사업자등록번호",Type:"Text",SaveName:"workplace_com_reg_num",MinWidth:150, KeyField:1, Hidden:1},
 			{Header:"법인등록번호",Type:"Text",SaveName:"workplace_corp_reg_num",MinWidth:150, Hidden:1},
-			{Header:"대표자명",Type:"Text",SaveName:"workplace_rep_name",MinWidth:80, Hidden:1},
+			{Header:"대표자명",Type:"Text",SaveName:"workplace_rep_name",MinWidth:80, KeyField:1, Hidden:1},
 			{Header:"사업장우편번호",Type:"Text",SaveName:"workplace_zip",MinWidth:60, Hidden:1},
-			{Header:"사업장주소",Type:"Text",SaveName:"workplace_address",MinWidth:150, Hidden:1},
+			{Header:"사업장주소",Type:"Text",SaveName:"workplace_address",MinWidth:150, KeyField:1, Hidden:1},
 			{Header:"사업장상세주소",Type:"Text",SaveName:"workplace_detail_address",MinWidth:100, Hidden:1},
 			{Header:"사업장전화번호",Type:"Text",SaveName:"workplace_tel",MinWidth:60, Hidden:1},			
 			{Header:"사업장fax",Type:"Text",SaveName:"workplace_fax",MinWidth:60, Hidden:1},
-			{Header:"업태",Type:"Text",SaveName:"workplace_business",MinWidth:60, Hidden:1},
-			{Header:"종목",Type:"Text",SaveName:"workplace_stocks",MinWidth:60, Hidden:1},
+			{Header:"업태",Type:"Text",SaveName:"workplace_business",MinWidth:60, KeyField:1, Hidden:1},
+			{Header:"종목",Type:"Text",SaveName:"workplace_stocks",MinWidth:60, KeyField:1, Hidden:1},
 			{Header:"개업년월일",Type:"Text",SaveName:"workplace_open_date",MinWidth:60, Hidden:1},
 			{Header:"폐업년월일",Type:"Text",SaveName:"workplace_closed_date",MinWidth:60, Hidden:1},
-			{Header:"본점여부",Type:"Text", MinWidth:80, SaveName:"workplace_headoff_whe",MinWidth:60, Hidden:1},
+			{Header:"본점여부",Type:"Combo", MinWidth:80, SaveName:"workplace_headoff_whe",MinWidth:60, Hidden:1},
 			{Header:"입력자",Type:"Text",SaveName:"workplace_int_user_id",MinWidth:80, Hidden:1},
 			{Header:"입력일시",Type:"Text",SaveName:"workplace_int_date",MinWidth:80, Hidden:1},
 			{Header:"수정자",Type:"Text",SaveName:"workplace_mod_user_id",MinWidth:80, Hidden:1},
 			{Header:"수정일시",Type:"Text",SaveName:"workplace_mod_date",MinWidth:80, Hidden:1},
-			{Header:"회사코드(com)",Type:"Text",SaveName:"pk_company_code",MinWidth:80, Hidden:1},
+			//{Header:"회사코드(com)",Type:"Text",SaveName:"pk_company_code",MinWidth:80, Hidden:1},
 		];   
 		IBS_InitSheet( mySheet , initSheet);
 
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
+		
 		mySheet.DoSearch("${contextPath}/human/s0002/searchList.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
+	
+		//콤보박스에 값 불러오기 
+		selectHead();
+		
+		//ibSheet 에서 col 지정해서 숨김
+		mySheet.SetColHidden([
+	      {Col: 0, Hidden:1}, //상태
+	    ]);
 	}
 	
 	//onClick 이벤트
@@ -157,15 +167,16 @@
 	  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 	  })
 	  
-	  // onClick 이벤트 중 select 태그에 company_foreigner_whe인 값의 변경이 있을때 실행
+	  // onClick 이벤트 중 select 태그에 workplace_headoff_whe인 값의 변경이 있을때 실행
 	  $("#workplace_headoff_whe").change(function(e){ 
 			var colNum = colArr.indexOf(e.target.id);	
 			 
 			var headoff = document.getElementById("workplace_headoff_whe");
 			var selectBox = headoff.options[headoff.selectedIndex].value;
-			console.log(selectBox);
+			//console.log(selectBox);
 			  
 			mySheet.SetCellValue(t_row, colNum, e.target.value);
+			
 		})
 		
   }
@@ -185,10 +196,13 @@
 				//var param = FormQueryStringEnc(document.frm);
 				//alert(param);
 				//mySheet.DoSearch("${contextPath}/human/s0001/searchList.do", param);
-				mySheet.DoSearch("${contextPath}/human/s0002/searchList.do");
-				//mySheet.DoSearch("${contextPath}/human/s0001/comEnrollView.do");
 				
-				//mySheet.DoSearch("transaction_data2.json");
+				mySheet.DoSearch("${contextPath}/human/s0002/searchList.do");
+				
+				//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
+				selectHead();
+				$('#workplace_headoff_whe').html("   ");
+				
 				break;
 			case "reload": //초기화
 				mySheet.RemoveAll();
@@ -202,6 +216,11 @@
 				break;
 			case "insert": //신규행 추가
 				var row = mySheet.DataInsert();
+			
+				//콤보박스에 값 불러오기 -> 행 추가후 실행
+				selectHead();
+				$('#workplace_headoff_whe').html("   ");
+				
 				break;
 		}
 	}
@@ -216,8 +235,8 @@
 				전화번호 & 팩스 length == 12,11,13
 			*/
 			case 5: // 사업자 등록번호 
-				console.log(Value);
-				console.log(Value.length);
+				//console.log(Value);
+				//console.log(Value.length);
 				if(Value.length >= 0 && Value.length < 12){
 					alert("사업장 등록번호는 12자리로 입력하셔야 됩니다.");
 					mySheet.ValidateFail(1); // Validation 실패
@@ -226,8 +245,8 @@
 				break;
 				
 			case 6: // 법인 등록번호 
-				console.log(Value);
-				console.log(Value.length);
+				//console.log(Value);
+				//console.log(Value.length);
 				if(Value.length == ''){ // null 값이면 
 					mySheet.ValidateFail(0);
 				}else if(Value.length >= 0 && Value.length < 14 ){
@@ -238,8 +257,8 @@
 				break;
 				
 			case 11: // 사업장 전화번호
-				console.log(Value);
-				console.log(Value.length);
+				//console.log(Value);
+				//console.log(Value.length);
 				if(Value.length == ''){ // null 값이면 
 					mySheet.ValidateFail(0);
 				}else if(Value.length != 11 && Value.length != 12 && Value.length != 13){
@@ -251,8 +270,8 @@
 				break;
 			
 			case 12: // 사업장 fax 번호
-				console.log(Value);
-				console.log(Value.length);
+				//console.log(Value);
+				//console.log(Value.length);
 				if(Value.length == ''){ // null 값이면 
 					mySheet.ValidateFail(0);
 				}else if(Value.length != 11 && Value.length != 12 && Value.length != 13){
@@ -264,9 +283,53 @@
 				break;
 		}
 	}
+	
+	function selectHead() { // 인사코드조회
+		
+		var head=""; // 해당 여부 코드 ( 부, 여)
+
+		$.ajax({ // 인사기초코드 조회
+			url : "${contextPath}/human/p0001/ISA_c.do",//목록을 조회 할 url 
+			type : "POST",
+			dataType : "JSON",
+			success : function(data) {
+				for (var i = 0; i < data['Data'].length; i++) {
+					var MNGEMENT_NAME = "<option value='" + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME + "'>" + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME + "</option>"; 
+					//이건 상관x => 여기는 일반 table에 넣어주는 코드입니다.
+					var info1 = '|' + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME; // 안건드려도 됩니다.
+					
+					var code_ = data['Data'][i].fk_PERSON_BC_CODE_NUM; //
+					
+					console.log(MNGEMENT_NAME);
+					if(code_ == 'S2'){
+						head = head + info1; 
+						$('#workplace_headoff_whe').append(MNGEMENT_NAME);//input box에 저장
+						console.log(head);
+					}
+				}
+				this.Action();
+			},
+			Action: function(){	 // combo를 넣는 곳
+				
+				S2 = {'ComboCode':head,'ComboText':head}; // 본점 여부
+				
+				for(var i = 1; i<=mySheet.RowCount(); i++){ // 조회할때 갯수 세어서 거기에 전부 넣기위해서 for문 돌립니다.
+					console.log(i);
+					console.log(mySheet.RowCount());
+					console.log("S2 : "+S2+" 입니다.");
+					mySheet.CellComboItem(i,17,S2); // 해당 여부 코드 ( 부, 여)	
+				}
+			},
+			error : function(jqxhr, status, error) {
+				alert("에러");
+			}
+		});
+	};
+	
+	
 	// 조회완료 후 처리할 작업
 	function mySheet_OnSearchEnd() {
-      
+	
 	}
 	
 	// 저장완료 후 처리할 작업
@@ -428,19 +491,13 @@
 		    $("#workplace_open_date").datepicker();                    
 		    $("#workplace_closed_date").datepicker();
 
-		    //company_fiscal_year_o 설정
-		    $('#workplace_open_date').datepicker(); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
-		    
-		    //company_fiscal_year_t 설정
-		    $('#workplace_closed_date').datepicker();
-		  	
 		});
 		</script>
 	<div id="wrap" style="margin: 0px;">
 	<div id="page-wrapper" style="margin: 0px;">
 		<div class="row">
 	        <div class="col-lg-12">
-	            <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 사업장 등록</h1>
+	            <h1 class="page-header"><i class="fa fa-folder fa-fw"></i> 사업장 등록</h1>
 	        </div>
    	 	</div>
   <div class="frame">
@@ -461,7 +518,7 @@
 		</div>
 		<!-- ibsheet 뿌려주는 부분  -->
 		<div class="clear hidden"></div>
-		<div class="ib_product"><script>createIBSheet("mySheet", "60%", "60%");</script></div>
+		<div class="ib_product"><script>createIBSheet("mySheet", "68%", "60%");</script></div>
 
 	  </div> <!-- //nav  -->
 	  </div> <!-- //onClick -->
@@ -530,9 +587,10 @@
 	  	<tr>
 	  		<td align="right">본점 여부 : </td><td>
 	   				<select name="workplace_headoff_whe" id="workplace_headoff_whe">
-	  					<option value='' hidden='1'></option> <!-- 공백 -->
-	  					<option value='부' >0. 부</option>
-	  					<option value='여' >1. 여</option>
+	  						 <option value='' hidden='1'></option><!-- 공백  -->
+	  					<!-- <option value='부' >0. 부</option>
+	  						 <option value='여' >1. 여</option>
+	  					 -->
 	  				</select>
 	  		</td>
 	  	</tr>

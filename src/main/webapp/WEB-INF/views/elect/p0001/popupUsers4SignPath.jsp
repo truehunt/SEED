@@ -99,6 +99,75 @@ function fn_closeUsers() {
 	fn_selectUsers(ret)
 }
 
+function fn_saveUsers(){
+	if ( ! chkInputValue("#LINEPATH_NAME", "저장할 결재선 이름을 입력하세요")) return false;
+	
+	var LINEPATH_NAME = $("#LINEPATH_NAME").val();
+	
+	var ret = "";
+	$("#seletedUsers > tbody  > tr").each(function() {
+		if (!this.id) return; 
+		var userno = this.id.replace("tr","");
+		var usernm = $(this).find('td:eq(1)').text();
+		var select = $(this).find('td:eq(0) > select').val();
+		var userpos = $(this).find('td:eq(3)').text();
+		ret += userno + "," +usernm + "," + select + "," + userpos + "||";
+	});
+	
+	$.ajax({
+    	url: "saveLinePath",
+		type: "post", 
+    	data: { 
+    			LINEPATH_NAME : LINEPATH_NAME,
+    			ret : ret
+    		},
+		success: function(result){
+			alert(result);
+		}    	
+    })
+}
+
+function fn_loadUsers(){
+	
+	$.ajax({
+    	url: "loadLinePath",
+		type: "post"
+    }).success(function(result){
+    	
+    	$("#savedUsers").html(result);
+		}    		
+    );
+}
+
+function fn_addLinePath(usernos){
+	if (usernos==="") {
+		addRow(0, '<c:out value="${sessionScope.PK_SAWON_CODE}"/>', '<c:out value="${sessionScope.SAWON_NAME}"/>', '');
+		return;
+	}
+	var nos = usernos.split("||");
+	for (var i in nos) { 
+		if (nos[i]==="") continue;
+		var arr = nos[i].split(","); // 사번, 이름, 기안/합의/결제, 직책
+		if (arr[2]==="0") continue; // 기안자제외
+		addRow(arr[2], arr[0], arr[1], arr[3]);
+	}
+}
+
+function fn_deleteLinePath(PK_LINEPATH_NUM) {
+	if (confirm("삭제 하시겠습니까?(삭제시 복구되지 않습니다!!!)")) {
+		$.ajax({
+	        url: "deleteLinePath",
+	        type:"POST", 
+	        data: { PK_LINEPATH_NUM : PK_LINEPATH_NUM },
+			success: function(result){
+				alert(result);
+			}
+	    })
+		
+		$("#tr"+PK_LINEPATH_NUM).remove();
+	}
+}
+
 </script>    
 
 	  	<div class="modal-dialog modal-lg" role="document">
@@ -107,7 +176,7 @@ function fn_closeUsers() {
                     <button type="button" id="closeX" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	                <div class="col-lg-3 pull-right">
 		                   	<div class="input-group custom-search-form">
-	                        	<input class="form-control" type="text" id="keyword4Users" name="keyword4Users" onkeydown="if(event.keyCode == 13) { fn_search4Users();}">
+	                        	<input class="form-control" type="text" id="keyword4Users" name="keyword4Users" onkeydown="if(event.keyCode == 13) { fn_search4Users();}" placeholder="사용자 이름 검색">
 	                            <span class="input-group-btn">
 	                            	<button class="btn btn-default" onclick="fn_search4Users()"><i class="fa fa-search"></i></button>
 	                            </span>
@@ -164,11 +233,34 @@ function fn_closeUsers() {
 									</table>
 							    </div>    
 							</div>
-						</div>	
+						</div>
+						<!-- 결재선 저장 -->
+						<div class="col-lg-12" >
+			            	<div class="panel panel-default" >
+			            		<div class="panel-heading">나의 결재선
+			            		</div>
+		            		
+			            		<div class="panel-body maxHeight400" id="savedUsers">
+							    </div>
+						    </div>
+	            		</div>	
 		            </div>
             		<!-- /.row -->                
                 </div>
+                
                 <div class="modal-footer">
+                
+	                <div class="col-lg-5 pull-left">
+	                   	<div class="input-group custom-search-form">
+	                	<input class="form-control" type="text" id="LINEPATH_NAME" name="LINEPATH_NAME" placeholder="결재선 이름을 입력하세요..." value="<c:out value="${signLinePath.LINEPATH_NAME}"/>">
+	                	</div>
+	                </div>
+	                
+	                <div class="col-lg-5 pull-left">
+	                <button type="button" class="btn btn-default" onclick="fn_saveUsers()">결재선 저장</button>
+		        	<button type="button" class="btn btn-primary" onclick="fn_loadUsers()">결재선 불러오기</button>
+		        	</div>
+                	
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="close"><s:message code="common.btnClose"/></button>
                     <button type="button" class="btn btn-primary" onclick="fn_closeUsers()"><s:message code="common.btnOK"/></button>
                 </div>

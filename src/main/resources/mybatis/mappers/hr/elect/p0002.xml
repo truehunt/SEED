@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="signConfig">
+
+	<!-- 결재선 저장 -->
+	<insert id="insertSignLinePath" parameterType="hr.elect.p0002.vo.SignLinePathVO">
+    	<selectKey resultType="String" keyProperty="PK_LINEPATH_NUM" order="BEFORE">
+    		SELECT NVL(MAX(PK_LINEPATH_NUM)+1, 1) FROM LINEPATH
+    	</selectKey>
+        INSERT INTO LINEPATH(PK_LINEPATH_NUM, LINEPATH_NAME, LINEPATH_SIGNPATH, LINEPATH_INT_USER_ID, LINEPATH_INT_DATE, PK_SAWON_CODE)
+        VALUES (#{PK_LINEPATH_NUM}, #{LINEPATH_NAME}, #{LINEPATH_SIGNPATH}, #{PK_SAWON_CODE}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{PK_SAWON_CODE})
+    </insert>
+    
+    <!-- 결재선 리스트 -->
+    <select id="selectSignLinePathList" resultType="hr.elect.p0002.vo.SignLinePathVO" parameterType="String">
+		SELECT PK_LINEPATH_NUM, LINEPATH_NAME, LINEPATH_SIGNPATH
+		FROM LINEPATH LP
+		INNER JOIN SAWON CU ON LP.PK_SAWON_CODE=CU.PK_SAWON_CODE
+		WHERE CU.PK_SAWON_CODE= #{PK_SAWON_CODE, jdbcType=VARCHAR}
+		ORDER BY PK_LINEPATH_NUM ASC
+    </select> 
+    
+    <!-- 결재선 삭제 -->
+    <delete id="signLinePathDelete" parameterType="String"> 
+          DELETE 
+          FROM LINEPATH
+         WHERE PK_LINEPATH_NUM = #{PK_LINEPATH_NUM}
+    </delete>
+    
+
+</mapper>

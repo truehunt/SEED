@@ -38,7 +38,7 @@
     <script src="${pageContext.request.contextPath}/resources/js/dynatree/jquery.dynatree.js"></script>
 <script>                        
 window.onload =function() {
-	  CKEDITOR.replace( 'AD_CONTENT', { 'filebrowserUploadUrl': 'upload4ckeditor'});
+	  CKEDITOR.replace( 'AD_CONTENT', { 'filebrowserUploadUrl': 'upload4ckeditor', 'height': '330'});
 }	  
 
 function fn_formSubmit(){
@@ -236,6 +236,8 @@ function fn_fileDelete(fileno) {
 									</c:forEach>
 									
 									<input type="file" name="uploadfile" multiple="multiple" />
+									<br>
+									<div style="color: red;">※ 첨부파일을 여러개 업로드시 마우스를 이용해 동시에 선택하거나, shift키를 이용해 파일을 동시에 선택해서 업로드해주세요</div> 
 	                            </div>
 	                        </div> 
 	                    </div>

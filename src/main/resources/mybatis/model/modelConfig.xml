@@ -8,8 +8,9 @@
 		<typeAlias type="hr.elect.p0001.vo.SignVO"  alias="signVO" />
 		<typeAlias type="hr.elect.p0001.vo.SignDocVO"  alias="signDocVO" />
 		
-		<!-- 전자결재 결재라인 부서, 사원 선택 팝업-->
+		<!-- 전자결재 결재라인 부서, 사원 선택, 결재라인 저장 및 불러오기 팝업-->
 		<typeAlias type="project.common.DepartmentVO"  alias="departmentVO" />
+		<typeAlias type="hr.elect.p0002.vo.SignLinePathVO"  alias="signLinePathVO" />
 		
 		<!-- 시스템 - 기초환경설정 -->
 		<typeAlias type="hr.system.p0001.vo.LoginVO"  alias="loginVO" />

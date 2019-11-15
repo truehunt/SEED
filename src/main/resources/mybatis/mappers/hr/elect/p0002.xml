@@ -30,5 +30,28 @@
          WHERE PK_LINEPATH_NUM = #{PK_LINEPATH_NUM}
     </delete>
     
+    <!-- 결재이미지 선택 -->
+    <select id="selectSignImageOne" parameterType="String" resultType="hr.elect.p0002.vo.SignImageVO">
+        SELECT IMAGENO, PK_SAWON_CODE, photo
+          FROM APPROVAL_IMAGE
+         WHERE DELETEFLAG='N' 
+           AND PK_SAWON_CODE=#{PK_SAWON_CODE}
+    </select> 
+    
+    <!-- 결재이미지 저장 및 삭제 -->
+	<insert id="insertSignImage" parameterType="hr.elect.p0002.vo.SignImageVO">
+    	<selectKey resultType="String" keyProperty="IMAGENO" order="BEFORE">
+    		SELECT NVL(MAX(IMAGENO)+1, 1) FROM APPROVAL_IMAGE
+    	</selectKey>
+        INSERT INTO APPROVAL_IMAGE(IMAGENO, PK_SAWON_CODE, photo, INT_USER_ID, INT_DATE)
+        VALUES (#{IMAGENO}, #{PK_SAWON_CODE}, #{photo}, #{PK_SAWON_CODE}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
+    </insert>
+    
+    <update id="updateSignImage" parameterType="hr.elect.p0002.vo.SignImageVO">
+        UPDATE APPROVAL_IMAGE
+           SET photo=#{photo}, MOD_USER_ID=#{PK_SAWON_CODE}, MOD_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
+         WHERE DELETEFLAG='N'
+           AND PK_SAWON_CODE=#{PK_SAWON_CODE}
+    </update>
 
 </mapper>

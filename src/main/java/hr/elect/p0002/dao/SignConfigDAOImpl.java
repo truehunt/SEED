@@ -14,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import hr.elect.p0001.vo.SignDocVO;
+import hr.elect.p0002.vo.SignImageVO;
 import hr.elect.p0002.vo.SignLinePathVO;
 import project.common.SearchVO;
 
@@ -46,6 +47,24 @@ public class SignConfigDAOImpl implements SignConfigDAO {
     public void signLinePathDelete(String param) {
         sqlSession.insert("signLinePathDelete", param);
 	}
+    
+    /**
+     * 결재이미지 등록화면
+     */
+    public SignImageVO selectSignImageOne(String param) {
+        return sqlSession.selectOne("selectSignImageOne", param);
+    }
+    
+    /**
+     * 결재이미지 저장, 업데이트.
+     */
+    public void updateSignImage(SignImageVO param) {
+    	if (sqlSession.selectOne("selectSignImageOne", param) == null) {
+            sqlSession.insert("insertSignImage", param);
+       } else {
+        sqlSession.delete("updateSignImage", param);
+       }
+    }
     
 
 }

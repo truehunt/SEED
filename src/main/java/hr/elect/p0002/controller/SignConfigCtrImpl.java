@@ -21,6 +21,7 @@ import hr.elect.p0001.service.SignService;
 import hr.elect.p0001.vo.SignDocVO;
 import hr.elect.p0001.vo.SignVO;
 import hr.elect.p0002.dao.SignConfigDAO;
+import hr.elect.p0002.vo.SignImageVO;
 import hr.elect.p0002.vo.SignLinePathVO;
 import hr.system.p0001.service.SignDocSvc;
 import hr.system.p0001.vo.SignDocTypeVO;
@@ -35,6 +36,8 @@ public class SignConfigCtrImpl implements SignConfigCtr {
 	private SignConfigDAO signConfigDAO;
 	@Autowired
 	private SignLinePathVO signLinePathVO;
+	@Autowired
+	private SignImageVO signImageVO;
 	
     /**
      * 결재선 저장.
@@ -69,7 +72,7 @@ public class SignConfigCtrImpl implements SignConfigCtr {
      */
 	@Override
 	@RequestMapping(value = "/loadLinePath", method = { RequestMethod.GET, RequestMethod.POST })
-	public String loadLinePathList(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception {
+	public String loadLinePathList(HttpServletRequest request, HttpServletResponse response, SignLinePathVO signLinePathVO, ModelMap modelMap) throws Exception {
 		
 		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
 		System.out.println(userno);
@@ -78,6 +81,25 @@ public class SignConfigCtrImpl implements SignConfigCtr {
         // etcSvc.setCommonAttribute(userno, modelMap);
     	
 		List<?> listview  = signConfigDAO.selectSignLinePathList(userno);
+		
+		// 2019001,팀장,0,기안||user1,박홍준,2,부회장|| 값을 분해하기
+		for (int listview_num=0 ; listview_num<listview.size(); listview_num++) {
+
+			SignLinePathVO map1 = (SignLinePathVO)listview.get(listview_num);
+			String temp3 = map1.getLINEPATH_SIGNPATH().toString();
+			Object[] temp = temp3.split("\\|\\|");
+			
+			String replace_path = ""; // 화면에 뿌려지는 값.
+			for(int path_num=0 ; path_num <temp.length; path_num++) {
+				String[] temp1 =((String) temp[path_num]).split(",");
+				replace_path += temp1[1].toString() + " - ";
+			}
+			// if (path_num < (temp.length -1)) 일때 - 붙이게 하면 마지막에 '-' 안붙음
+			String replace_path2 = replace_path.substring(0, replace_path.length()-3);
+			
+			((SignLinePathVO)listview.get(listview_num)).setLINEPATH_SIGNPATH_View(replace_path2);
+			
+		}
 		
         modelMap.addAttribute("listview", listview);
         
@@ -102,6 +124,41 @@ public class SignConfigCtrImpl implements SignConfigCtr {
   		} catch (Exception e) {
  			System.out.println("결재라인 삭제 실패 : " + e);
  		}
+    }
+	
+	/**
+     * 결재이미지 등록화면
+     */
+    @RequestMapping(value = "/signImageForm")
+    public String memberForm(HttpServletRequest request, ModelMap modelMap) {
+        String save = request.getParameter("save");
+
+        String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+        
+        SignImageVO signImageInfo = signConfigDAO.selectSignImageOne(userno);
+        
+        modelMap.addAttribute("signImageInfo", signImageInfo);
+        modelMap.addAttribute("save", save);
+        
+        return "elect/p0002/signImageForm";
+    }
+    
+    /**
+     * 결재이미지 저장, 업데이트.
+     */
+    @RequestMapping(value = "/imageSave")
+    public String imageSave(HttpServletRequest request, ModelMap modelMap, SignImageVO signImageInfo) {
+        String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+        signImageInfo.setPK_SAWON_CODE(userno);
+        
+        FileUtil fs = new FileUtil();
+        FileVO fileInfo = fs.saveImage(signImageInfo.getPhotofile());
+        if (fileInfo != null) {
+        	signImageInfo.setPhoto(fileInfo.getRealname());
+        }
+        signConfigDAO.updateSignImage(signImageInfo);
+
+        return "redirect:/elect/p0002/signImageForm?save=OK";
     }
 
 }

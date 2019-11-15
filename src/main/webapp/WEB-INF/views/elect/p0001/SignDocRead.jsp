@@ -66,10 +66,10 @@ function fn_signSave(){
 					    <c:if test="${signlist.APPROVAL_SSTYPE ne '1'}">					
 							<div class="signArea">
 								<div class="signAreaTop"><c:out value="${signlist.APPROVAL_USER_POS}"/></div>
-								<div class="signAreaCenter">
+								<div class="signAreaCenter" style="padding-top:0px;">
 									<c:choose>
-							        	<c:when test='${signlist.APPROVAL_SSRESULT == "1"}'>승인</c:when>
-							        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'>반려</c:when>
+							        	<c:when test='${signlist.APPROVAL_SSRESULT == "1"}'><img src="${pageContext.request.contextPath}/resources/image/approval.png" height="39px;" width="39px;" style="position:relative; margin:0 auto;"/><div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div></c:when>
+							        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'><img src="${pageContext.request.contextPath}/resources/image/disagree.jpg" height="39px;" width="75px;" style="position:relative; margin:0 auto;"/><div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div></c:when>
 							         	<c:otherwise></c:otherwise>
 							      </c:choose>								
 								</div>

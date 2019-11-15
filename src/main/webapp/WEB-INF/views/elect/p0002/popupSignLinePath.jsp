@@ -15,7 +15,7 @@
 				<th>No.</th>
 				<th>결재선 명칭</th> 
 				<th>결재경로</th>
-				<th>추가</th>
+				<th>선택</th>
 				<th>삭제</th>
 			</tr>
 		</thead>
@@ -24,7 +24,7 @@
 				<tr id='tr<c:out value="${listview.PK_LINEPATH_NUM}"/>'>
 					<td><c:out value="${status.index+1}"/></td>
 					<td><c:out value="${listview.LINEPATH_NAME}"/></td>
-					<td><c:out value="${listview.LINEPATH_SIGNPATH}"/></td>
+					<td><c:out value="${listview.LINEPATH_SIGNPATH_View}"/></td>
 					<td><a href="javascript:fn_addLinePath('<c:out value="${listview.LINEPATH_SIGNPATH}"/>')"><i class="fa fa-check fa-fw"></i></a></td>
 					<td><a href='javascript:fn_deleteLinePath(<c:out value="${listview.PK_LINEPATH_NUM}"/>)'><i class='fa fa-times fa-fw'></i></a><td>
 				</tr>

@@ -36,7 +36,7 @@ public class InsaCodeVO {
 	}
 
 	public InsaCodeVO() {
-		System.out.println("MemberVO ?ƒ?„±? ?˜¸ì¶?");
+		System.out.println("InsaCodeVO ë©”ì„œë“œí˜¸ì¶œ");
 	}
 
 	public String getPk_PERSON_BC_CODE_NUM() {

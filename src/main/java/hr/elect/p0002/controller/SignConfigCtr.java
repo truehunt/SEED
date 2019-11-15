@@ -18,12 +18,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hr.elect.p0001.vo.SignDocVO;
 import hr.elect.p0001.vo.SignVO;
+import hr.elect.p0002.vo.SignImageVO;
 import hr.elect.p0002.vo.SignLinePathVO;
 import project.common.SearchVO;
 
 public interface SignConfigCtr {
 	public void saveLinePath(HttpServletRequest request, HttpServletResponse response, SignLinePathVO signLinePathVO) throws IOException;
-	public String loadLinePathList(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception;
+	public String loadLinePathList(HttpServletRequest request, HttpServletResponse response, SignLinePathVO signLinePathVO, ModelMap modelMap) throws Exception;
 	public void signLinePathDelete(HttpServletRequest request, HttpServletResponse response, String PK_LINEPATH_NUM) throws IOException;
+	public String memberForm(HttpServletRequest request, ModelMap modelMap);
+	public String imageSave(HttpServletRequest request, ModelMap modelMap, SignImageVO signImageInfo);
 	
 }

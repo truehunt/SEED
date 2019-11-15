@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 
 import hr.elect.p0001.vo.SignDocVO;
 import hr.elect.p0001.vo.SignVO;
+import hr.elect.p0002.vo.SignImageVO;
 import hr.elect.p0002.vo.SignLinePathVO;
 import project.common.SearchVO;
 
@@ -29,5 +30,12 @@ public interface SignConfigDAO {
      * 결재라인에서 저장된 결재라인 삭제
      */
     public void signLinePathDelete(String param);
-	 
+    /**
+     * 결재이미지 등록화면
+     */
+    public SignImageVO selectSignImageOne(String param);
+    /**
+     * 결재이미지 저장, 업데이트.
+     */
+    public void updateSignImage(SignImageVO param);
 }

@@ -75,6 +75,8 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/signListTobe";
 		            } else if(url === "signListTo"){ // 결재문서함 -> 결재 할(한) 문서 - 진행중, 완료
 		            	urlToGo = "/SEED/signListTo";
+		            } else if(url === "signImageForm"){ // 결재이미지 등록
+		            	urlToGo = "/SEED/signImageForm";
 		            } else if(url === "pay/p0001/p0001.do"){ // 근태 결과 입력
 		            	urlToGo = "pay/p0001/p0001.do";
 		            } else if(url === "day_regist_sawon"){
@@ -93,8 +95,6 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/human/s0002/workplace_Enroll.do";
 		            } else if(url === "addept_Enroll"){
 		            	urlToGo = "/SEED/human/s0003/dept_Enroll.do";
-		            } else if(url === "b3"){
-		            	urlToGo = "b3";
 		            } else if(url === "b4"){
 		            	urlToGo = "b4";
 		            } else if(url === "b5"){
@@ -279,13 +279,7 @@ $(document).ready(function(){
                                     <a href='#' onClick="doAction(myTab,'<s:message code="main.signListTo"/>','chart','signListTo','signListTo'); return false"><s:message code="main.signListTo"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.signSend"/>','chart','b2','b2'); return false"><s:message code="main.signSend"/></a>
-                                </li>
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.signArrive"/>','chart','b4','b4'); return false"><s:message code="main.signArrive"/></a>
-                                </li>
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.signDept"/>','chart','b3','b3'); return false"><s:message code="main.signDept"/></a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.signImage"/>','chart','signImageForm','signImageForm'); return false"><s:message code="main.signImage"/></a>
                                 </li>
 	                        </ul>                             
                         </li> 

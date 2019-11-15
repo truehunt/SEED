@@ -10,6 +10,7 @@ public class SignLinePathVO {
 	private String PK_LINEPATH_NUM, // 결재선번호
 				   LINEPATH_NAME, // 결재선명
 				   LINEPATH_SIGNPATH, // 결재경로문자열
+				   LINEPATH_SIGNPATH_View, // 결재경로 불러올때 보여주는 용도의 컬럼 -> DB에 없음
 				   LINEPATH_INT_USER_ID, //
 				   LINEPATH_INT_DATE, // 
 				   LINEPATH_MOD_USER_ID, // 
@@ -83,5 +84,14 @@ public class SignLinePathVO {
 	public void setPK_SAWON_CODE(String pK_SAWON_CODE) {
 		PK_SAWON_CODE = pK_SAWON_CODE;
 	}
+
+	public String getLINEPATH_SIGNPATH_View() {
+		return LINEPATH_SIGNPATH_View;
+	}
+
+	public void setLINEPATH_SIGNPATH_View(String lINEPATH_SIGNPATH_View) {
+		LINEPATH_SIGNPATH_View = lINEPATH_SIGNPATH_View;
+	}
+	
 	
 }

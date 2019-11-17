@@ -28,5 +28,6 @@ public interface SignConfigCtr {
 	public void signLinePathDelete(HttpServletRequest request, HttpServletResponse response, String PK_LINEPATH_NUM) throws IOException;
 	public String memberForm(HttpServletRequest request, ModelMap modelMap);
 	public String imageSave(HttpServletRequest request, ModelMap modelMap, SignImageVO signImageInfo);
+    public void deleteSignImage(HttpServletRequest request, HttpServletResponse response, String IMAGENO) throws IOException;
 	
 }

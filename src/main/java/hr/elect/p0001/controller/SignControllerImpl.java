@@ -20,6 +20,8 @@ import hr.elect.p0001.dao.SignDAO;
 import hr.elect.p0001.service.SignService;
 import hr.elect.p0001.vo.SignDocVO;
 import hr.elect.p0001.vo.SignVO;
+import hr.elect.p0002.dao.SignConfigDAO;
+import hr.elect.p0002.vo.SignImageVO;
 import hr.system.p0001.service.SignDocSvc;
 import hr.system.p0001.vo.SignDocTypeVO;
 import project.common.FileUtil;
@@ -37,6 +39,8 @@ public class SignControllerImpl implements SignController {
     private SignDocSvc signDocSvc;
 	@Autowired
 	private SignVO signVO;
+	@Autowired
+	private SignConfigDAO signConfigDAO;
 	
 	/**
      * 결제 받을 문서 리스트. -> 개인 문서함 
@@ -212,9 +216,8 @@ public class SignControllerImpl implements SignController {
         // etcSvc.setCommonAttribute(userno, modelMap);
     	
         // 개별 작업
-        
         SignDocVO signDocInfo = signDAO.selectSignDocOne(SignDocVO);
-        List<? >signlist = signDAO.selectSign(signDocInfo.getPK_AD_NUM());
+        List<? >signlist = signDAO.selectSign(signDocInfo.getPK_AD_NUM()); // 서명이미지까지 불러옴
         String signer = signDAO.selectCurrentSigner(SignDocVO.getPK_AD_NUM());
         //파일정보 읽기
         List<?> listview2 = signDAO.selectSignFileList(signDocInfo.getPK_AD_NUM());

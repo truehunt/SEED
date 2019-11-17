@@ -158,7 +158,27 @@ public class SignConfigCtrImpl implements SignConfigCtr {
         }
         signConfigDAO.updateSignImage(signImageInfo);
 
-        return "redirect:/elect/p0002/signImageForm?save=OK";
+        return "redirect:/signImageForm?save=OK";
+    }
+    
+    /**
+     * 결재이미지 삭제
+	 * @throws
+     */
+	@Override
+    @RequestMapping(value = "/signImageDelete")
+    public void deleteSignImage(HttpServletRequest request, HttpServletResponse response, String IMAGENO) throws IOException {
+    	
+		response.setContentType("text/html;charset=utf-8");
+  		PrintWriter out = response.getWriter();
+		
+  		try {
+  			signConfigDAO.deleteSignImage(IMAGENO);
+        
+        out.print("등록된 서명이미지를 삭제하였습니다.");
+  		} catch (Exception e) {
+ 			System.out.println("파일삭제 실패 : " + e);
+ 		}
     }
 
 }

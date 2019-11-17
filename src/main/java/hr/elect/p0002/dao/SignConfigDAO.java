@@ -38,4 +38,8 @@ public interface SignConfigDAO {
      * 결재이미지 저장, 업데이트.
      */
     public void updateSignImage(SignImageVO param);
+    /**
+     * 등록된 결재 이미지 삭제
+     */
+    public void deleteSignImage(String param);
 }

@@ -3,6 +3,7 @@ package hr.elect.p0001.vo;
 import java.sql.Date;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component("signVO")
 public class SignVO {
@@ -19,6 +20,14 @@ public class SignVO {
 				   FK_FILE_NUM, // 파일번호
 				   PK_SAWON_CODE, // 사원코드
 				   SAWON_NAME; // 사원이름
+	
+	// SignDocRead에서 photo 불러오기 위한 VO 
+	private String photo; // 결재이미지
+	
+	/* 
+     * 사진 
+     */
+    private MultipartFile photofile;
 	
 	public SignVO() {
 		System.out.println("SignVO 생성");
@@ -127,7 +136,21 @@ public class SignVO {
 	public void setPK_AD_NUM(String pK_AD_NUM) {
 		PK_AD_NUM = pK_AD_NUM;
 	}
-	
-	
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public MultipartFile getPhotofile() {
+		return photofile;
+	}
+
+	public void setPhotofile(MultipartFile photofile) {
+		this.photofile = photofile;
+	}
 	
 }

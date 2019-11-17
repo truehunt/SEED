@@ -100,7 +100,7 @@ function fn_formSubmit(){
 									<i class="fa fa-download fa-fw" title="<c:out value="${listview.filecnt}"/>"></i>
 								</c:if>	
 							</div>
-							<div class="listHiddenField pull-right field110 textCenter"><c:out value="${listview.AD_MOD_DATE}"/></div>
+							<div class="listHiddenField pull-right field100 textCenter" style="font-size:11px;"><c:out value="${listview.AD_MOD_DATE}"/></div>
 							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.SAWON_NAME}"/></div>
 							<div class="listHiddenField pull-right field100 textCenter"><c:out value="${listview.AD_DOCSTATUS}"/></div>
 							<div class="listTitle" title="<c:out value="${listview.AD_TITLE}"/>">

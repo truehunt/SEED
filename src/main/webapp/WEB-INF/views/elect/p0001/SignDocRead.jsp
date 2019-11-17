@@ -68,8 +68,18 @@ function fn_signSave(){
 								<div class="signAreaTop"><c:out value="${signlist.APPROVAL_USER_POS}"/></div>
 								<div class="signAreaCenter" style="padding-top:0px;">
 									<c:choose>
-							        	<c:when test='${signlist.APPROVAL_SSRESULT == "1"}'><img src="${pageContext.request.contextPath}/resources/image/approval.png" height="39px;" width="39px;" style="position:relative; margin:0 auto;"/><div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div></c:when>
-							        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'><img src="${pageContext.request.contextPath}/resources/image/disagree.jpg" height="39px;" width="75px;" style="position:relative; margin:0 auto;"/><div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div></c:when>
+							        	<c:when test='${signlist.APPROVAL_SSRESULT == "1"}'>
+							        		<c:choose>
+							        			<c:when test='${signlist.photo eq null}'>
+							        				<img src="${pageContext.request.contextPath}/resources/image/agree.png" height="35px;" width="35px;" style="position:relative; margin:0 auto;"/>
+												</c:when>
+												<c:when test='${signlist.photo ne null}'>							        				
+							        				<img src="fileDownload?downname=<c:out value="${signlist.photo}"/>" height="35px;" width="35px;" style="position:relative; margin:0 auto;"/>
+							        			</c:when>
+						        			</c:choose>
+							        				<div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div>
+				        				</c:when>
+							        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'><img src="${pageContext.request.contextPath}/resources/image/disagree.jpg" height="35px;" width="75px;" style="position:relative; margin:0 auto;"/><div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div></c:when>
 							         	<c:otherwise></c:otherwise>
 							      </c:choose>								
 								</div>
@@ -90,11 +100,21 @@ function fn_signSave(){
 						    <c:if test="${signlist.APPROVAL_SSTYPE eq '1'}">					
 								<div class="signArea">
 									<div class="signAreaTop"><c:out value="${signlist.APPROVAL_USER_POS}"/></div>
-									<div class="signAreaCenter">
+									<div class="signAreaCenter" style="padding-top:0px;">
 										<c:choose>
-								        	<c:when test='${signlist.APPROVAL_SSRESULT == "1"}'>승인</c:when>
-								        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'>반려</c:when>
-								         	<c:otherwise></c:otherwise>
+								        	<c:when test='${signlist.APPROVAL_SSRESULT == "1"}'>
+							        		<c:choose>
+							        			<c:when test='${signlist.photo eq null}'>
+							        				<img src="${pageContext.request.contextPath}/resources/image/agree.png" height="35px;" width="35px;" style="position:relative; margin:0 auto;"/>
+												</c:when>
+												<c:when test='${signlist.photo ne null}'>							        				
+							        				<img src="fileDownload?downname=<c:out value="${signlist.photo}"/>" height="35px;" width="35px;" style="position:relative; margin:0 auto;"/>
+							        			</c:when>
+						        			</c:choose>
+							        				<div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div>
+				        				</c:when>
+							        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'><img src="${pageContext.request.contextPath}/resources/image/disagree.jpg" height="35px;" width="75px;" style="position:relative; margin:0 auto;"/><div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div></c:when>
+							         	<c:otherwise></c:otherwise>
 								      </c:choose>								
 									</div>
 									<div class="signAreaBottom"><c:out value="${signlist.SAWON_NAME}"/> </div>
@@ -149,7 +169,7 @@ function fn_signSave(){
 							<div class="listBody">
 								<div class="listHiddenField pull-left field60 textCenter"><c:out value="${status.index}"/></div>
 								<div class="listHiddenField pull-left field100 textCenter"><c:out value="${signlist.SAWON_NAME}"/></div>
-								<div class="listHiddenField pull-left field100 textCenter"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div>
+								<div class="listHiddenField pull-left field100 textCenter" style="font-size:11px;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div>
 								<div class="listTitle" title="<c:out value="${listview.APPROVAL_SSCOMMENT}"/>">
 									<c:out value="${signlist.APPROVAL_SSCOMMENT}"/>
 								</div>

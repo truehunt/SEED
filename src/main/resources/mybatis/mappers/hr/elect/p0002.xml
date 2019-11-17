@@ -43,8 +43,8 @@
     	<selectKey resultType="String" keyProperty="IMAGENO" order="BEFORE">
     		SELECT NVL(MAX(IMAGENO)+1, 1) FROM APPROVAL_IMAGE
     	</selectKey>
-        INSERT INTO APPROVAL_IMAGE(IMAGENO, PK_SAWON_CODE, photo, INT_USER_ID, INT_DATE)
-        VALUES (#{IMAGENO}, #{PK_SAWON_CODE}, #{photo}, #{PK_SAWON_CODE}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
+        INSERT INTO APPROVAL_IMAGE(IMAGENO, PK_SAWON_CODE, photo, INT_USER_ID, INT_DATE, DELETEFLAG)
+        VALUES (#{IMAGENO}, #{PK_SAWON_CODE}, #{photo}, #{PK_SAWON_CODE}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
     </insert>
     
     <update id="updateSignImage" parameterType="hr.elect.p0002.vo.SignImageVO">
@@ -53,5 +53,11 @@
          WHERE DELETEFLAG='N'
            AND PK_SAWON_CODE=#{PK_SAWON_CODE}
     </update>
+    
+    <delete id="deleteSignImage" parameterType="String"> 
+        DELETE 
+          FROM APPROVAL_IMAGE
+         WHERE IMAGENO=#{IMAGENO}
+    </delete>
 
 </mapper>

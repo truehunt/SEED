@@ -66,5 +66,12 @@ public class SignConfigDAOImpl implements SignConfigDAO {
        }
     }
     
+    /**
+     * 등록된 결재 이미지 삭제
+     */
+    public void deleteSignImage(String param) {
+        sqlSession.insert("deleteSignImage", param);
+	}
+    
 
 }

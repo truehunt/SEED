@@ -57,8 +57,19 @@ function fn_formSubmit(){ // 저장 및 업데이트
 	
 	$("#form1").submit();
 } 
-function fn_formSubmit2(){ // 삭제
-	
+function fn_formSubmit2(IMAGENO){ // 삭제
+	if (confirm("삭제 하시겠습니까?(삭제시 복구되지 않습니다!!!)")) {
+		$.ajax({
+	        url: "signImageDelete",
+	        type:"POST", 
+	        data: { IMAGENO : IMAGENO,
+	        	},
+			success: function(result){
+				alert(result);
+			}
+	    })
+		
+	}
 }
 
 </script>    
@@ -104,7 +115,7 @@ function fn_formSubmit2(){ // 삭제
 				            
             </div>
             <button type="button" class="btn btn-primary" onclick="fn_formSubmit()"><s:message code="common.btnSave"/></button>
-            <button type="button" class="btn btn-primary" onclick="fn_formSubmit2()"><s:message code="common.btnDelete"/></button>
+            <button type="button" class="btn btn-primary" onclick="fn_formSubmit2(<c:out value="${signImageInfo.IMAGENO}"/>)"><s:message code="common.btnDelete"/></button>
             <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->

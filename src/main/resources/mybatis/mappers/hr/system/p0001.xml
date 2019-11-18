@@ -117,32 +117,6 @@
          WHERE PK_DOCTYPE_NUM=#{PK_DOCTYPE_NUM} 
     </delete>
 
-	<select id="searchList" resultMap="p0001Result01" parameterType="java.util.Map"> 
-      <![CDATA[
-         SELECT 
-		    PK_SAWON_CODE,
-		    SAWON_NAME,
-		    SAWON_ENG_NAME,
-		    SAWON_JOIN_DATE,
-		    SAWON_RESIGNATION_DATE,
-		    SAWON_USER_STATUS,
-		    SAWON_PASSWORD,
-		    SAWON_VIEW_PERMISSION,
-		    SAWON_EMERGENCY_CON_NET,
-		    FK_DEPT_CODE,
-		    SAWON_INT_USER_ID,
-		    SAWON_INT_DATE,
-		    SAWON_MOD_USER_ID,
-		    SAWON_MOD_DATE
-		FROM SAWON;
-      ]]>
-		<where>
-			<if test=" p_id != ''  and  p_id != null">
-				PK_SAWON_CODE = #{p_id}
-			</if>
-		</where>
-	</select>
-
 	<!-- 인사기록카드 사원목록 -->
 	<select id="ISA" resultMap="p0001Result01" parameterType="java.util.Map"> 
     	SELECT PK_SAWON_CODE, SAWON_NAME
@@ -216,4 +190,404 @@
 		delete PERSON_BC_DETAI
 		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM}
 	</delete>
+	
+	<resultMap id="hobongResult01" type="hbtableVO">
+      <result property="pk_HOBONG_TABLE_UNIQUE_NUM" column="pk_HOBONG_TABLE_UNIQUE_NUM" />
+      <result property="fk_RANK_CODE" column="fk_RANK_CODE" />
+      <result property="fk_HOBONG_CODE" column="fk_HOBONG_CODE" />
+      <result property="fk_HOBONG_CODE_CLA_CODE" column="fk_HOBONG_CODE_CLA_CODE" />
+      <result property="hobong_TABLE_START_DATE_APPLI" column="hobong_TABLE_START_DATE_APPLI" />
+      <result property="hobong_TABLE_END_DATE_APPLI" column="hobong_TABLE_END_DATE_APPLI" />
+      <result property="hobong_TABLE_PRICE" column="hobong_TABLE_PRICE" />
+      <result property="hobong_TABLE_INT_USER_ID" column="hobong_TABLE_INT_USER_ID" />
+      <result property="hobong_TABLE_INT_DATE" column="hobong_TABLE_INT_DATE" />
+      <result property="hobong_TABLE_MOD_USER_ID" column="hobong_TABLE_MOD_USER_ID" />
+      <result property="hobong_TABLE_MOD_DATE" column="hobong_TABLE_MOD_DATE" />
+   </resultMap>
+   
+   <select id="hobongApp" resultMap="hobongResult01" parameterType="java.util.Map"> 
+      <![CDATA[
+        select DISTINCT hobong_table_start_date_appli, hobong_table_end_date_appli, fk_RANK_CODE
+      FROM hobong_table
+      ]]>
+      <where>
+         <if test="fk_RANK_CODE != '' and fk_RANK_CODE != null">
+            fk_rank_code = #{fk_RANK_CODE, jdbcType=VARCHAR}
+            ORDER BY hobong_table_start_date_appli ASC
+         </if>
+      </where>
+   </select>
+   
+   <select id="hobongTable" resultMap="hobongResult01" parameterType="java.util.Map"> 
+      <![CDATA[
+        select pd.person_bc_detai_mngement_name, ht.hobong_table_price
+      from person_bc_detai pd, hobong_table ht
+      ]]>
+      <where>
+      pd.person_bc_detai_mngement_name = ht.fk_hobong_code
+      and ht.hobong_table_start_date_appli = #{hobong_TABLE_START_DATE_APPLI, jdbcType=VARCHAR}
+         
+         <if test="fk_RANK_CODE != '' and fk_RANK_CODE != null">
+            and fk_rank_code = #{fk_RANK_CODE, jdbcType=VARCHAR}
+         </if>
+      </where>
+   </select>
+   
+<!--    문제 있는곳임 주의바람 -->
+   <update id="updateHB" parameterType="java.util.Map">
+   <![CDATA[
+       update hobong_table
+      set hobong_table_end_date_appli = #{hobong_TABLE_END_DATE_APPLI, jdbcType=VARCHAR}
+      where hobong_table_start_date_appli = #{hobong_TABLE_START_DATE_APPLI, jdbcType=VARCHAR}
+      and fk_rank_code = #{fk_RANK_CODE, jdbcType=VARCHAR}  
+      ]]>
+   </update>   
+   
+   <insert id="insertHB" parameterType="java.util.Map">
+   <![CDATA[
+      insert all into hobong_table(hobong_TABLE_START_DATE_APPLI, fk_RANK_CODE, fk_HOBONG_CODE, fk_HOBONG_CODE_CLA_CODE)
+      values(#{hobong_TABLE_START_DATE_APPLI, jdbcType=VARCHAR},
+            #{fk_RANK_CODE, jdbcType=VARCHAR},
+            person_bc_detai_mngement_name,
+            'PE')
+      select person_bc_detai_mngement_name from person_bc_detai 
+      where fk_person_bc_code_num = 'PE'
+      ]]> 
+   </insert>   
+   
+   <delete id="deleteHB" parameterType="java.util.Map">
+<!--       delete PERSON_BC_DETAI -->
+<!--       where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM} -->
+   </delete>
+   
+   <!-- setPay -->
+   <resultMap id="SET_paydayResult01" type="SET_paydayVO">
+		<result property="pk_D_B_PAYMENT_SEQ_CODE" column="pk_D_B_PAYMENT_SEQ_CODE"/>
+		<result property="d_B_PAYMENT_DT" column="d_B_PAYMENT_DT"/>
+		<result property="d_B_PAYMENT_SIMULTANE_ISSUE" column="d_B_PAYMENT_SIMULTANE_ISSUE"/>
+		<result property="d_B_PAYMENT_TARGET_SELECT" column="d_B_PAYMENT_TARGET_SELECT"/>
+	    <result property="d_B_PAYMENT_DATE_ATTRIBUT" column="d_B_PAYMENT_DATE_ATTRIBUT"/>
+	
+		<result property="fk_D_B_PAYMENT_SEQ_CODE" column="fk_D_B_PAYMENT_SEQ_CODE"/>
+		<result property="pk_PAY_BEN_C_UNIQUE_NUM" column="pk_PAY_BEN_C_UNIQUE_NUM"/>
+		<result property="pay_BEN_C_RECRUIT_METHOD" column="pay_BEN_C_RECRUIT_METHOD"/>
+		<result property="pay_BEN_C_DATE_RECRUIT" column="pay_BEN_C_DATE_RECRUIT"/>
+		<result property="pay_BEN_C_RETIRE_BEN_METHOD" column="pay_BEN_C_RETIRE_BEN_METHOD"/>
+		<result property="pay_BEN_C_DATE_RESIG" column="pay_BEN_C_DATE_RESIG"/>
+	
+		
+	</resultMap>
+	
+	<select id="SPsearchList" resultMap="SET_paydayResult01" parameterType="java.util.Map">
+		<![CDATA[
+	 select d_B_PAYMENT_DT, d_B_PAYMENT_SIMULTANE_ISSUE, d_B_PAYMENT_TARGET_SELECT
+       from D_B_PAYMENT
+       where d_B_PAYMENT_DATE_ATTRIBUT = #{d_B_PAYMENT_DATE_ATTRIBUT, jdbcType=VARCHAR}
+		]]>
+
+	
+	</select>
+	
+	
+	
+	
+	
+	<update id="SPupdateData" parameterType="java.util.Map">
+		update D_B_PAYMENT
+		set   d_B_PAYMENT_DT = #{d_B_PAYMENT_DT, jdbcType=VARCHAR}
+		    , d_B_PAYMENT_SIMULTANE_ISSUE = #{d_B_PAYMENT_SIMULTANE_ISSUE, jdbcType=VARCHAR}
+		    , d_B_PAYMENT_TARGET_SELECT = #{d_B_PAYMENT_TARGET_SELECT, jdbcType=VARCHAR}
+	
+		where d_B_PAYMENT_DT = #{d_B_PAYMENT_DT, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="SPinsertData" parameterType="java.util.Map">
+		
+		insert into SALARY_CALCUL_TOTAL(PK_SALARY_CALCUL_TOTAL_CODE, FK_TA_SAWON_CODE, SALARY_CALCUL_ITEM, salary_CALCUL_MONEY) values(#{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR},#{fk_TA_SAWON_CODE, jdbcType=VARCHAR}, #{salary_CALCUL_ITEM, jdbcType=VARCHAR}, #{salary_CALCUL_MONEY, jdbcType=VARCHAR})
+	
+	</insert>	
+	
+	<delete id="SPdeleteData" parameterType="java.util.Map">
+	     delete SALARY_CALCUL_TOTAL
+	 
+		 where TRIM(PK_SALARY_CALCUL_TOTAL_CODE) = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
+	</delete>
+	
+	<!-- comEnroll -->
+	<resultMap id="s0001Result01" type="comEnroll_VO">
+		<result property="pk_company_code" column="pk_company_code" />
+		<result property="company_name" column="company_name" />
+		<result property="company_division" column="company_division" />
+		<result property="company_fiscal_year_o" column="company_fiscal_year_o" />
+		<result property="company_fiscal_year_t" column="company_fiscal_year_t" />
+		<result property="company_reg_num" column="company_reg_num" />
+		<result property="company_corp_reg_num" column="company_corp_reg_num" />
+		<result property="company_rep_name" column="company_rep_name" />
+		<result property="company_foreigner_whe" column="company_foreigner_whe" />
+		<result property="company_resi_reg_num" column="company_resi_reg_num" />
+		<result property="company_zip" column="company_zip" />
+		<result property="company_address" column="company_address" />
+		<result property="company_detail_address" column="company_detail_address" />
+		<result property="company_tel" column="company_tel" />
+		<result property="company_fax" column="company_fax" />
+		<result property="company_business" column="company_business" />
+		<result property="company_stocks" column="company_stocks" />
+		<result property="company_establishment_date" column="company_establishment_date" />
+		<result property="company_open_date" column="company_open_date" />
+		<result property="company_closed_date" column="company_closed_date" />
+		
+		<result property="company_int_user_id" column="company_int_user_id" />
+		<result property="company_int_date" column="company_int_date" />
+		<result property="company_mod_user_id" column="company_mod_user_id" />
+		<result property="company_mod_date" column="company_mod_date" />
+		
+		<!-- company의 모든 칼럼 
+		pk_company_code, company_name, company_division ,company_fiscal_year_o ,company_fiscal_year_t ,company_reg_num
+		,company_corp_reg_num ,company_rep_name ,company_foreigner_whe ,company_resi_reg_num ,company_zip
+		,company_address ,company_detail_address ,company_tel ,company_fax ,company_business ,company_stocks ,company_establishment_date
+		,company_open_date ,company_closed_date ,company_int_user_id ,company_int_date ,company_mod_user_id
+		,company_mod_date
+		 -->
+	</resultMap>
+
+	<select id="CEsearchList" resultMap="s0001Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select pk_company_code, company_name, company_division
+         		, TO_CHAR(TO_DATE(company_fiscal_year_o),'YYYY-MM-DD') as company_fiscal_year_o 
+         		, TO_CHAR(TO_DATE(company_fiscal_year_t),'YYYY-MM-DD') as company_fiscal_year_t
+         		, company_reg_num
+				, company_corp_reg_num
+				, company_rep_name, company_foreigner_whe
+				, company_resi_reg_num
+				, company_zip, company_address, company_detail_address, company_tel, company_fax, company_business, company_stocks 
+				, TO_CHAR(TO_DATE(company_establishment_date),'YYYY-MM-DD') as company_establishment_date
+				, TO_CHAR(TO_DATE(company_open_date),'YYYY-MM-DD') as company_open_date
+				, TO_CHAR(TO_DATE(company_closed_date),'YYYY-MM-DD') as company_closed_date
+				, company_int_user_id, company_int_date, company_mod_user_id, company_mod_date
+         from   company
+      ]]>
+		<where>
+			<if test=" p_id != ''  and  p_id != null">
+				pk_company_code = #{p_id}
+			</if>
+		</where>
+		order By pk_company_code asc
+	</select>
+	
+	<update id="CEupdateData" parameterType="java.util.Map">
+		update company
+		set company_name = #{company_name,jdbcType=VARCHAR}
+		   , company_division = #{company_division,jdbcType=VARCHAR}
+		   , company_fiscal_year_o = #{company_fiscal_year_o,jdbcType=VARCHAR}
+		   , company_fiscal_year_t = #{company_fiscal_year_t,jdbcType=VARCHAR}
+		   , company_reg_num = #{company_reg_num,jdbcType=VARCHAR}
+		   , company_corp_reg_num = #{company_corp_reg_num,jdbcType=VARCHAR}
+		   , company_rep_name = #{company_rep_name,jdbcType=VARCHAR}
+		   , company_foreigner_whe = #{company_foreigner_whe,jdbcType=VARCHAR}
+		   , company_resi_reg_num = #{company_resi_reg_num,jdbcType=VARCHAR}
+		   , company_zip = #{company_zip,jdbcType=VARCHAR}
+		   , company_address = #{company_address,jdbcType=VARCHAR}
+		   , company_detail_address = #{company_detail_address,jdbcType=VARCHAR}
+		   , company_tel = #{company_tel,jdbcType=VARCHAR}
+		   , company_fax = #{company_fax,jdbcType=VARCHAR}
+		   , company_business = #{company_business,jdbcType=VARCHAR}
+		   , company_stocks = #{company_stocks,jdbcType=VARCHAR}
+		   , company_establishment_date = #{company_establishment_date,jdbcType=VARCHAR}
+		   , company_open_date = #{company_open_date,jdbcType=VARCHAR}
+		   , company_closed_date = #{company_closed_date,jdbcType=VARCHAR}
+		   , company_int_user_id = #{company_int_user_id,jdbcType=VARCHAR}
+		   , company_int_date = #{company_int_date, jdbcType=TIMESTAMP} 
+		   , company_mod_user_id = #{company_mod_user_id,jdbcType=VARCHAR}
+		   , company_mod_date = #{company_mod_date, jdbcType=TIMESTAMP} 		   
+		where pk_company_code = #{pk_company_code, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="CEinsertData" parameterType="java.util.Map">
+		insert into company(pk_company_code, company_name, company_division ,company_fiscal_year_o ,company_fiscal_year_t ,company_reg_num
+							  ,company_corp_reg_num ,company_rep_name ,company_foreigner_whe ,company_resi_reg_num ,company_zip
+							  ,company_address ,company_detail_address ,company_tel ,company_fax ,company_business ,company_stocks ,company_establishment_date
+							  ,company_open_date ,company_closed_date ,company_int_user_id ,company_int_date ,company_mod_user_id
+							  ,company_mod_date) 
+			   values(#{pk_company_code, jdbcType=VARCHAR},#{company_name, jdbcType=VARCHAR},#{company_division, jdbcType=VARCHAR},#{company_fiscal_year_o, jdbcType=VARCHAR},
+			   		  #{company_fiscal_year_t, jdbcType=VARCHAR},#{company_reg_num, jdbcType=VARCHAR},#{company_corp_reg_num, jdbcType=VARCHAR},#{company_rep_name, jdbcType=VARCHAR},
+			   		  #{company_foreigner_whe, jdbcType=VARCHAR},#{company_resi_reg_num, jdbcType=VARCHAR},#{company_zip, jdbcType=VARCHAR},#{company_address, jdbcType=VARCHAR},
+			   		  #{company_detail_address, jdbcType=VARCHAR},#{company_tel, jdbcType=VARCHAR},#{company_fax, jdbcType=VARCHAR},#{company_business, jdbcType=VARCHAR},#{company_stocks, jdbcType=VARCHAR},
+			   		  #{company_establishment_date, jdbcType=VARCHAR},#{company_open_date, jdbcType=VARCHAR},#{company_closed_date, jdbcType=VARCHAR},#{company_int_user_id, jdbcType=VARCHAR},
+			   		  #{company_int_date, jdbcType=TIMESTAMP},#{company_mod_user_id, jdbcType=VARCHAR},#{company_mod_date, jdbcType=TIMESTAMP})
+	</insert>	
+	
+	<delete id="CEdeleteData" parameterType="java.util.Map">
+		delete company
+		where pk_company_code = #{pk_company_code}
+		and company_name = #{company_name}
+	</delete>	
+	
+	<!-- WorkEnroll -->
+	<resultMap id="s0002Result01" type="workEnroll_VO">
+		<result property="pk_workplace_code" column="pk_workplace_code" />
+		<result property="fk_company_code" column="fk_company_code" />
+		<result property="workplace_name" column="workplace_name" />
+		<result property="workplace_com_reg_num" column="workplace_com_reg_num" />
+		<result property="workplace_corp_reg_num" column="workplace_corp_reg_num" />
+		<result property="workplace_rep_name" column="workplace_rep_name" />
+		<result property="workplace_zip" column="workplace_zip" />
+		<result property="workplace_address" column="workplace_address" />
+		<result property="workplace_detail_address" column="workplace_detail_address" />
+		<result property="workplace_tel" column="workplace_tel" />
+		<result property="workplace_fax" column="workplace_fax" />
+		<result property="workplace_business" column="workplace_business" />
+		<result property="workplace_stocks" column="workplace_stocks" />
+		<result property="workplace_open_date" column="workplace_open_date" />
+		<result property="workplace_closed_date" column="workplace_closed_date" />
+		<result property="workplace_headoff_whe" column="workplace_headoff_whe" />
+		
+		<result property="workplace_int_user_id" column="workplace_int_user_id" />
+		<result property="workplace_int_date" column="workplace_int_date" />
+		<result property="workplace_mod_user_id" column="workplace_mod_user_id" />
+		<result property="workplace_mod_date" column="workplace_mod_date" />
+		<!--
+		<result property="pk_company_code" column="pk_company_code" />
+		 workplace의 모든 칼럼 및 fk_company_code 가져옴
+			pk_workplace_code, fk_company_code, workplace_name, workplace_com_reg_num, workplace_corp_reg_num
+			, workplace_rep_name, workplace_zip, workplace_address, workplace_detail_address, workplace_tel
+			, workplace_fax, workplace_business, workplace_stocks, workplace_open_date, workplace_closed_date
+			, workplace_headoff_whe, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
+			, workplace_mod_date, pk_company_code
+		 -->
+	</resultMap>
+
+	<select id="WEsearchList" resultMap="s0002Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select pk_workplace_code, fk_company_code, workplace_name, workplace_com_reg_num, workplace_corp_reg_num
+				, workplace_rep_name, workplace_zip, workplace_address, workplace_detail_address, workplace_tel
+				, workplace_fax, workplace_business, workplace_stocks
+				, TO_CHAR(TO_DATE(workplace_open_date),'YYYY-MM-DD') as workplace_open_date 
+				, TO_CHAR(TO_DATE(workplace_closed_date),'YYYY-MM-DD') as workplace_closed_date 
+				, workplace_headoff_whe, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
+				, workplace_mod_date
+         from   workplace
+      ]]>
+		<where>
+			<if test=" p_id != ''  and  p_id != null">
+				pk_workplace_code = #{p_id}
+			</if>
+		</where>
+		order By pk_workplace_code asc
+	</select>
+	
+	<update id="WEupdateData" parameterType="java.util.Map">
+		update workplace
+		set fk_company_code = #{fk_company_code,jdbcType=VARCHAR}
+		   , workplace_name = #{workplace_name,jdbcType=VARCHAR}
+		   , workplace_com_reg_num = #{workplace_com_reg_num,jdbcType=VARCHAR}
+		   , workplace_corp_reg_num = #{workplace_corp_reg_num,jdbcType=VARCHAR}
+		   , workplace_rep_name = #{workplace_rep_name,jdbcType=VARCHAR}
+		   , workplace_zip = #{workplace_zip,jdbcType=VARCHAR}
+		   , workplace_address = #{workplace_address,jdbcType=VARCHAR}
+		   , workplace_detail_address = #{workplace_detail_address,jdbcType=VARCHAR}
+		   , workplace_tel = #{workplace_tel,jdbcType=VARCHAR}
+		   , workplace_fax = #{workplace_fax,jdbcType=VARCHAR}
+		   , workplace_business = #{workplace_business,jdbcType=VARCHAR}
+		   , workplace_stocks = #{workplace_stocks,jdbcType=VARCHAR}
+		   , workplace_open_date = #{workplace_open_date,jdbcType=VARCHAR}
+		   , workplace_closed_date = #{workplace_closed_date,jdbcType=VARCHAR}
+		   , workplace_headoff_whe = #{workplace_headoff_whe,jdbcType=VARCHAR}
+		   , workplace_int_user_id = #{workplace_int_user_id,jdbcType=VARCHAR}
+		   , workplace_int_date = #{workplace_int_date,jdbcType=TIMESTAMP}
+		   , workplace_mod_user_id = #{workplace_mod_user_id,jdbcType=VARCHAR}
+		   , workplace_mod_date = #{workplace_mod_date,jdbcType=TIMESTAMP}
+		   
+		where pk_workplace_code = #{pk_workplace_code, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="WEinsertData" parameterType="java.util.Map">
+		insert into workplace(pk_workplace_code, fk_company_code, workplace_name, workplace_com_reg_num, workplace_corp_reg_num
+							, workplace_rep_name, workplace_zip, workplace_address, workplace_detail_address, workplace_tel
+							, workplace_fax, workplace_business, workplace_stocks, workplace_open_date, workplace_closed_date
+							, workplace_headoff_whe, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
+							, workplace_mod_date) 
+			   values(#{pk_workplace_code, jdbcType=VARCHAR},#{fk_company_code, jdbcType=VARCHAR},#{workplace_name, jdbcType=VARCHAR},#{workplace_com_reg_num, jdbcType=VARCHAR},
+			   		  #{workplace_corp_reg_num, jdbcType=VARCHAR},#{workplace_rep_name, jdbcType=VARCHAR},#{workplace_zip, jdbcType=VARCHAR},#{workplace_address, jdbcType=VARCHAR},
+			   		  #{workplace_detail_address, jdbcType=VARCHAR},#{workplace_tel, jdbcType=VARCHAR},#{workplace_fax, jdbcType=VARCHAR},#{workplace_business, jdbcType=VARCHAR},
+			   		  #{workplace_stocks, jdbcType=VARCHAR},#{workplace_open_date, jdbcType=VARCHAR},#{workplace_closed_date, jdbcType=VARCHAR},#{workplace_headoff_whe, jdbcType=VARCHAR},
+			   		  #{workplace_int_user_id, jdbcType=VARCHAR},#{workplace_int_date, jdbcType=TIMESTAMP},#{workplace_mod_user_id, jdbcType=VARCHAR},#{workplace_mod_date, jdbcType=TIMESTAMP}
+					  )
+	</insert>	
+	
+	<delete id="WEdeleteData" parameterType="java.util.Map">
+		delete workplace
+		where pk_workplace_code = #{pk_workplace_code}
+		and workplace_name = #{workplace_name}
+	</delete>	
+	
+	<!-- DeptEnroll -->
+	<resultMap id="s0003Result01" type="deptEnroll_VO">
+		<result property="pk_dept_code" column="pk_dept_code" /> 
+		<result property="dept_name" column="dept_name" />
+		<result property="workplace_code" column="fk_workplace_code" />
+		<result property="workplace_name" column="workplace_name" />
+		<result property="fk_sector_code" column="fk_sector_code" />
+		<result property="sector_name" column="sector_name" />
+		<result property="dept_priodof" column="dept_priodof" />
+		
+		<result property="dept_int_user_id" column="dept_int_user_id" />
+		<result property="dept_int_date" column="dept_int_date" />
+		<result property="dept_mod_user_id" column="dept_mod_user_id" />
+		<result property="dept_mod_date" column="dept_mod_date" />
+		
+		<!--
+		<result property="pk_company_code" column="pk_company_code" />
+		 dept의 모든 칼럼 및 fk_company_code,fk_company_name, fk_sector_code, sector_name 가져옴
+			pk_dept_code, dept_name, fk_workplace_code, workplace_name, fk_sector_code
+			, sector_name, dept_priodof, dept_int_user_id, dept_int_date, dept_mod_user_id
+			, dept_mod_date
+		 -->
+	</resultMap>
+
+	<select id="DEsearchList" resultMap="s0003Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select d.pk_dept_code, d.dept_name, d.workplace_code, w.workplace_name, d.fk_sector_code
+         , s.sector_name, d.dept_priodof
+         from   dept d, workplace w, sector s
+      ]]>
+		<where>
+			d.workplace_code = w.pk_workplace_code
+			and d.fk_sector_code = s.pk_sector_code
+		</where>
+			order By d.pk_dept_code asc
+	</select>
+	
+	<update id="DEupdateData" parameterType="java.util.Map">
+		update dept
+		set pk_dept_code = #{pk_dept_code,jdbcType=VARCHAR}
+		   , dept_name = #{dept_name,jdbcType=VARCHAR}
+		   , workplace_code = #{workplace_code,jdbcType=VARCHAR}
+		   , workplace_name = #{workplace_name,jdbcType=VARCHAR}
+		   , fk_sector_code = #{fk_sector_code,jdbcType=VARCHAR}
+		   , sector_name = #{sector_name,jdbcType=VARCHAR}
+		   , dept_priodof = #{dept_priodof,jdbcType=VARCHAR}
+		   , dept_int_user_id = #{dept_int_user_id,jdbcType=VARCHAR}
+		   , dept_int_date = #{dept_int_date,jdbcType=TIMESTAMP}
+		   , dept_mod_user_id = #{dept_mod_user_id,jdbcType=VARCHAR}
+		   , dept_mod_date = #{dept_mod_date,jdbcType=TIMESTAMP}
+		   
+		where pk_dept_code = #{pk_dept_code, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="DEinsertData" parameterType="java.util.Map">
+		insert into dept(pk_dept_code, dept_name, workplace_code, fk_sector_code
+							, dept_priodof, dept_int_user_id, dept_int_date
+							, dept_mod_user_id, dept_mod_date) 
+			   values(#{pk_dept_code, jdbcType=VARCHAR},#{dept_name, jdbcType=VARCHAR},#{workplace_code, jdbcType=VARCHAR},
+			   		  #{fk_sector_code, jdbcType=VARCHAR},#{dept_priodof, jdbcType=VARCHAR},#{dept_int_user_id, jdbcType=VARCHAR},
+			   		  #{dept_int_date, jdbcType=TIMESTAMP},#{dept_mod_user_id, jdbcType=VARCHAR},#{dept_mod_date, jdbcType=TIMESTAMP}
+					  )
+	</insert>	
+	
+	<delete id="DEdeleteData" parameterType="java.util.Map">
+		delete dept
+		where pk_dept_code = #{pk_dept_code}
+		and dept_name = #{dept_name}
+	</delete>	
+	
 </mapper>

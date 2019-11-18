@@ -27,12 +27,14 @@ public interface day_regist_Controller {
 	public ModelAndView holiday_calc(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView business(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView outside(HttpServletRequest request, HttpServletResponse response) throws Exception;
-
+	//public ModelAndView select(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
 	
 	//��� 
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map searchList(HttpServletRequest request, HttpServletResponse response,  ModelMap modelMap) throws Exception;
 	public Map da_searchList(HttpServletRequest request, HttpServletResponse response,  ModelMap modelMap) throws Exception;
 	public Map searchList_Sawon(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception;
+	
 	
 }

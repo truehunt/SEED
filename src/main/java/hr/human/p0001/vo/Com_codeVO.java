@@ -11,7 +11,7 @@ public class Com_codeVO {
 	private String codenm;
 
 	public Com_codeVO() {
-		System.out.println("MemberVO ?깮?꽦?옄 ?샇異?");
+		System.out.println("com_codeVO 메서드 호출");
 	}
 
 	public String getClassno() {

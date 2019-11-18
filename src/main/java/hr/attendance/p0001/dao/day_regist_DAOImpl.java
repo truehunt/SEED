@@ -1,5 +1,6 @@
 package hr.attendance.p0001.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public class day_regist_DAOImpl implements day_regist_DAO {
 	@Autowired
 	private SqlSession sqlSession;
 
-	//����� ȭ�� ��ȸ
+	//조회
 	@Override
 	public List<day_regist_VO> searchList(Map<String, Object> searchMap) throws DataAccessException {
 		System.out.println("sawon_3: "+searchMap);
@@ -41,11 +42,19 @@ public class day_regist_DAOImpl implements day_regist_DAO {
 		List<day_regist_VO> list = sqlSession.selectList("hr.attendance.p0001.searchList_sawon", searchMap);
 		return list;
 	}
+	
+	
+	@Override
+	public List<HashMap<String,String>> select() throws DataAccessException {
+
+		List<HashMap<String,String>> list = sqlSession.selectList("hr.attendance.p0001.select");
+		return list;
+	}
 
 	//�߰�, ���
 	@Override
 	public void insertData(Map<String, String> row) throws DataAccessException {
-		sqlSession.update("hr.attendance.p0001.insertData", row);
+		sqlSession.insert("hr.attendance.p0001.insertData", row);
 	}
 	
 	

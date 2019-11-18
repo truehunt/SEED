@@ -1,5 +1,6 @@
 package hr.attendance.p0001.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ public interface day_regist_Service {
 
 	public void insertMember(Map<String, Object> dataMap);
 
+	public List<HashMap<String,String>> select() throws DataAccessException;
 
 
 	

@@ -22,7 +22,7 @@
 		up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:resources mapping="/images/**" location="/images/" />
-	<mvc:resources mapping="/img/**" location="E:/workspace/upload2019" />
+	<mvc:resources mapping="/img/**" location="D:/workspace/upload2019" />
 	
 	<!-- 인터셉터 -->
 	<mvc:interceptors>

@@ -23,7 +23,7 @@ public class CarVO {
 	private String car_MOD_DATE;
 	
 	public CarVO() {
-		System.out.println("CarVO 생성");
+		System.out.println("CarVO 메서드 호출");
 	}
 
 	public String getPk_CAR_CODE() {

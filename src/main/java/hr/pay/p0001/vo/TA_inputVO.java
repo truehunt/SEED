@@ -27,7 +27,7 @@ public class TA_inputVO {
 	
 
 	public TA_inputVO() {
-		System.out.println("MemberVO 占쎄문占쎄쉐占쎌쁽 占쎌깈�빊占�");
+		System.out.println("TA_inputVO 생성");
 	}
 
 

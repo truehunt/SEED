@@ -30,7 +30,7 @@ public class SALARY_bo_staVO {
 	
 	
 	public SALARY_bo_staVO() {
-		System.out.println("MemberVO �뜝�럡臾멨뜝�럡�뎽�뜝�럩�겱 �뜝�럩源덌옙鍮듿뜝占�");
+		System.out.println("SALARY_bo_staVO 생성");
 	}
 
 

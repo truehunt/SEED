@@ -24,7 +24,7 @@ public class HlVO {
 	private String hl_INT_DATE;
 
 	public HlVO() {
-		System.out.println("MemberVO ?깮?꽦?옄 ?샇異?");
+		System.out.println("HlVO 메서드 호출");
 	}
 
 	public String getPk_HL_CODE() {

@@ -139,26 +139,37 @@
 			var col = 2;
 			mySheet2.SetCellValue(select_row, col, code_num);
 			break;
-		//인사 선택시
+		//인사(H,R) 선택시
 		case "insa":
 			var param = "person_BC_OUTPUT=" + document.getElementById("insa").value;
 			mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
 			break;
-		//급여 선택시
-		case "salary":
-			var param = "person_BC_OUTPUT=" + document.getElementById("salary").value;
-			mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
-			break;
-		//근태 선택시
+		//근태(T) 선택시
 		case "tae":
 			var param = "person_BC_OUTPUT=" + document.getElementById("tae").value;
 			mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
 			break;
-		//기타 선택시
+		//급여(P) 선택시
+		case "salary":
+			var param = "person_BC_OUTPUT=" + document.getElementById("salary").value;
+			mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
+			break;
+		//사원그룹(G) 선택시
+		case "group":
+			var param = "person_BC_OUTPUT=" + document.getElementById("group").value;
+			mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
+			break;
+		//기타(E) 선택시
 		case "other":
 			var param = "person_BC_OUTPUT=" + document.getElementById("other").value;
 			mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
 			break;
+		//시스템설정(S) 선택시
+		case "system":
+			var param = "person_BC_OUTPUT=" + document.getElementById("system").value;
+			mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/output.do",param);
+			break;
+
 		}
 	}
 
@@ -228,10 +239,12 @@
 						<td class="r20">
 							<select id="selTheme" class="contentsLeftText" onChange="doAction(this.value);">
 								<option value="">----</option>
-								<option value="insa" id="insa" >인사</option>
-    							<option value="salary" id="salary">급여</option>
-    							<option value="tae" id="tae">근태</option>
-    							<option value="other" id="other">기타</option>
+								<option value="insa" id="insa" >0. 인사(H,R)</option>
+    							<option value="tae" id="tae">1. 근태(T)</option>
+    							<option value="salary" id="salary">2. 급여(P)</option>
+    							<option value="group" id="group">3. 사원그룹(G)</option>
+    							<option value="other" id="other">4. 기타(E)</option>
+    							<option value="system" id="system">5. 시스템설정(S)</option>
 							</select>	
 						</td>
 						

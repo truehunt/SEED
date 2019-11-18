@@ -29,10 +29,11 @@
       <typeAlias type="hr.pay.p0001.vo.TA_inputVO"  alias="TA_inputVO" />
       <typeAlias type="hr.pay.p0002.vo.SALARY_calculVO"  alias="SALARY_calculVO" />
       <typeAlias type="hr.pay.p0003.vo.SALARY_bo_staVO"  alias="SALARY_bo_staVO" />
-      <typeAlias type="hr.pay.s0001.vo.SET_paydayVO"  alias="SET_paydayVO" />
+      <typeAlias type="hr.system.p0001.vo.SET_paydayVO"  alias="SET_paydayVO" />
 
       <!-- 인사코드 -->
       <typeAlias alias="insaCodeVO" type="hr.system.p0001.vo.InsaCodeVO"/>
+      <typeAlias alias="hbtableVO" type="hr.system.p0001.vo.HBTableVO"/>
 
       <!-- 인사카드 -->
       <typeAlias alias="cardVO" type="hr.human.p0001.vo.CardVO"/>
@@ -41,11 +42,11 @@
       <typeAlias alias="hlVO" type="hr.human.p0001.vo.HlVO"/>
 
       <!-- 등록정보관리 - 회사등록 -->
-      <typeAlias alias="comEnroll_VO" type="hr.human.s0001.vo.ComEnroll_VO"/>
+      <typeAlias alias="comEnroll_VO" type="hr.system.p0001.vo.ComEnroll_VO"/>
       <!-- 등록정보관리 - 사업장등록 -->
-	  <typeAlias alias="workEnroll_VO" type="hr.human.s0002.vo.WorkEnroll_VO"/>
+	  <typeAlias alias="workEnroll_VO" type="hr.system.p0001.vo.WorkEnroll_VO"/>
 	  <!-- 등록정보관리 - 부서등록 -->
-	  <typeAlias alias="deptEnroll_VO" type="hr.human.s0003.vo.DeptEnroll_VO"/>
+	  <typeAlias alias="deptEnroll_VO" type="hr.system.p0001.vo.DeptEnroll_VO"/>
 	  
       <!-- 근태관리 / 사원출퇴근 등록 -->
       <typeAlias alias="Day_regist_VO" type="hr.attendance.p0001.vo.day_regist_VO"/>

@@ -18,7 +18,7 @@ import project.common.DateVO;
 
 
 
-
+//조회
 @Service("day_regist_Service")
 @Transactional(propagation = Propagation.REQUIRED)
 public class day_regist_ServiceImpl implements day_regist_Service {
@@ -45,11 +45,20 @@ public class day_regist_ServiceImpl implements day_regist_Service {
 	}
 	
 	//관리자 화면
+	
+
 	public List<day_regist_VO> da_searchList(Map<String, Object> searchMap) throws DataAccessException {
 		System.out.println("sawon_da_2: "+searchMap);	
 		List<day_regist_VO> list =  p0001DAO.da_searchList(searchMap); 
 		return list;
 	}
+	
+	//select문
+	public List<HashMap<String,String>> select() throws DataAccessException {
+		List<HashMap<String,String>> list =  p0001DAO.select(); 
+		return list;
+	}
+
 
 	//데이터 저장
 	@Override

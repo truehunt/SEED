@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -195,6 +196,21 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		ModelAndView main = new ModelAndView(viewName);
 		return main;
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "attendance/p0001/select.do", method = { RequestMethod.GET, RequestMethod.POST },produces="application/text;charset=utf-8")
+	// impl �̸� = business
+	public String select(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//String viewName = getViewName(request);
+		//viewName = "/attendance/p0001/select";
+		request.setCharacterEncoding("utf-8");
+		List<HashMap<String,String>> result = day_regist_Service.select();
+		ObjectMapper mapper = new ObjectMapper();
+		String resultJson=mapper.writeValueAsString(result);
+		return resultJson;
+		//return main;
+	}
 
 	// ============================================================================================================
 	// ��� ����
@@ -227,7 +243,7 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		resultMap.put("calenList", calenList);
 		System.out.println("1-2" + request.getParameter("pk_SAWON_CODE"));
 		System.out.println("searchMap: " + searchMap);
-		System.out.println("resultMap : " + resultMap);
+		
 		return resultMap;
 	}
 
@@ -243,7 +259,6 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
-		System.out.println("12. " + userno);
 
 		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
 		searchMap.put("pk_DAILY_TA_WORKING_DATE", request.getParameter("PK_DAILY_TA_WORKING_DATE"));
@@ -277,13 +292,16 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		// �??��조건?��?��
 		searchMap.put("PK_DAILY_TA_WORKING_DATE2", request.getParameter("PK_DAILY_TA_WORKING_DATE2"));// VO 값 => 넘겨주는 값
 		searchMap.put("PK_DAILY_TA_WORKING_DATE3", request.getParameter("PK_DAILY_TA_WORKING_DATE3"));// NO
-		System.out.println("searchMap111 : " + searchMap);
+		searchMap.put("sawon_num", request.getParameter("sawon_num"));// NO
+		searchMap.put("option",request.getParameter("option"));
+		
+		System.out.println("searchMap111 : " + request.getParameter("sawon_num"));
 		// ?��?��?�� 조회
 		List<day_regist_VO> data = day_regist_Service.da_searchList(searchMap);
 		System.out.println("searchMap2 : " + searchMap);
 		resultMap.put("Data", data);
 		System.out.println("searchMap3 : " + searchMap);
-		System.out.println(resultMap);
+		System.out.println("resultMap :" +resultMap);
 
 		return resultMap;
 	}

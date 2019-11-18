@@ -41,41 +41,43 @@
 		<result property="rank_NAME" column="rank_NAME" />
 		<result property="sawon_NAME" column="sawon_NAME" />
 
-
+		
 	</resultMap>
+
+	
 	<!-- 사원 근태등록 화면 조회 -->
 
 	<select id="searchList" resultMap="p0001Result01"
 		parameterType="java.util.Map"> 
 		
       <![CDATA[
-         select distinct D.pk_daily_ta_working_date,c.userno,s.sawon_name, s.fk_dept_name, s.rank_name,
-				 D.daily_ta_go_time, 
-   			     D.daily_ta_off_time, 
-     		     D.daily_ta_work_time, 
-       			 D.daily_ta_holi_work, 
-      			 D.daily_ta_exten_work, 
-     		     D.daily_ta_night_work, 
-      			 D.daily_ta_late_time, 
-       			 D.daily_ta_leave_time
- 				from com_loginout c, sawon s ,daily_ta d
+    select distinct
+     d.pk_daily_TA_WORKING_DATE,
+     d.daily_TA_SAWON_NAME,
+     d.daily_TA_RANK,
+     d.daily_TA_DEPT_NAME,
+     d.daily_TA_GO_TIME,
+     d.daily_TA_OFF_TIME,
+     d.daily_TA_WORK_TIME,
+     d.daily_TA_HOLI_WORK,
+     d.daily_TA_EXTEN_WORK,
+     d.daily_TA_NIGHT_WORK, 
+     d.daily_TA_LATE_TIME,
+     d.daily_TA_LEAVE_TIME 
+	 from DAILY_TA d, sawon s
       ]]>
+
 		<where>
-			c.userno = s.pk_sawon_code
-			and c.userno = #{PK_SAWON_CODE,
-			jdbcType=VARCHAR}
-			<!-- pk_sawon_code가 받아온 pk_sawon_code와 같을 때 -->
+			s.PK_SAWON_CODE = #{PK_SAWON_CODE}
+			and s.sawon_name =
+			d.daily_TA_SAWON_NAME
 			<if
-				test="PK_DAILY_TA_WORKING_DATE != '' and PK_DAILY_TA_WORKING_DATE != null"><!-- 값이 널값이 아닐때 -->
-				and
-				d.pk_daily_ta_working_date =
-				#{PK_DAILY_TA_WORKING_DATE}
-
+				test=" PK_DAILY_TA_WORKING_DATE != '' and PK_DAILY_TA_WORKING_DATE != null">
+				and d.pk_DAILY_TA_WORKING_DATE = #{PK_DAILY_TA_WORKING_DATE}
 			</if>
-
 		</where>
-	</select>
 
+	</select>
 
 
 	<!-- 사원 출근 누를시 사원정보 -->
@@ -93,22 +95,55 @@
 
 
 
+	<!-- 부서명 select문 -->
+	<select id="select" resultType="java.util.HashMap"> 
+      <![CDATA[
+        select dept_name
+		from dept
+      ]]>
+	</select>
+
+
+
 	<!-- 근태등록 화면 / 관리자 화면 -->
 	<select id="da_searchList" resultMap="p0001Result01"
 		parameterType="java.util.Map"> 
       <![CDATA[
-            select D.PK_DAILY_TA_WORKING_DATE,S.SAWON_NAME, D.DAILY_TA_SAWON_NAME, D.DAILY_TA_RANK, D.DAILY_TA_DEPT_NAME, D.DAILY_TA_TA,
-          D.DAILY_TA_GO_TIME, D.DAILY_TA_OFF_TIME, D.DAILY_TA_WORK_TIME,D.DAILY_TA_HOLI_WORK,D.DAILY_TA_EXTEN_WORK,
-          D.DAILY_TA_NIGHT_WORK,D.DAILY_TA_LATE_TIME,D.DAILY_TA_LEAVE_TIME
-         from DAILY_TA D, SAWON S
+            select distinct
+            d.pk_DAILY_TA_WORKING_DATE,
+            d.daily_TA_SAWON_NAME, 
+            d.daily_TA_RANK,
+            d.daily_TA_DEPT_NAME,
+            d.daily_TA_GO_TIME,
+            d.daily_TA_OFF_TIME,
+            d.daily_TA_WORK_TIME,
+            d.daily_TA_EXTEN_WORK,
+            d.daily_TA_NIGHT_WORK,
+            d.daily_TA_LATE_TIME,
+            d.daily_TA_LEAVE_TIME
+            from DAILY_TA d, sawon s, dept p
       ]]>
-		<where>
-			D.FK_DAILY_TA_SAWON_CODE = S.PK_SAWON_CODE
-			and PK_DAILY_TA_WORKING_DATE
-			between #{PK_DAILY_TA_WORKING_DATE2} and #{PK_DAILY_TA_WORKING_DATE3}
 
-			<if test="SAWON_NAME != '' and SAWON_NAME != null"> <!-- 널값이 아닐때 -->
-				sawon_name = #{sawon_name}
+		<where>
+			<if
+				test="PK_DAILY_TA_WORKING_DATE2 != '' and PK_DAILY_TA_WORKING_DATE2 != null
+				and PK_DAILY_TA_WORKING_DATE3 != '' and PK_DAILY_TA_WORKING_DATE3 != null">
+				PK_DAILY_TA_WORKING_DATE
+				between #{PK_DAILY_TA_WORKING_DATE2}
+				and
+				#{PK_DAILY_TA_WORKING_DATE3}
+			</if>
+			<if test="sawon_num != '' and sawon_num != null"> <!-- 널값이 아닐때 -->
+				and s.PK_SAWON_CODE = #{sawon_num}
+				and s.sawon_name =
+				d.daily_TA_SAWON_NAME
+			</if>
+		
+			<if test="option != '' and option != null">
+				<if test="option = '선택해주세요'">
+				and daily_ta_dept_name = ''
+				</if>
+					and daily_ta_dept_name = #{option}
 			</if>
 		</where>
 	</select>
@@ -118,11 +153,16 @@
 
 
 	<update id="updateData" parameterType="java.util.Map">
+		<!-- <if test="DAILY_TA_OFF_TIME = '' and DAILY_TA_OFF_TIME = null"> 널값일 
+			때 -->
 		update DAILY_TA set
-		DAILY_TA_SAWON_NAME = #{daily_TA_SAWON_NAME,jdbcType=VARCHAR},
-		DAILY_TA_RANK = #{daily_TA_RANK,jdbcType=VARCHAR} ,
+		DAILY_TA_SAWON_NAME =
+		#{daily_TA_SAWON_NAME,jdbcType=VARCHAR},
+		DAILY_TA_RANK =
+		#{daily_TA_RANK,jdbcType=VARCHAR} ,
 		DAILY_TA_DEPT_NAME
-		= #{daily_TA_DEPT_NAME,jdbcType=VARCHAR} ,
+		=
+		#{daily_TA_DEPT_NAME,jdbcType=VARCHAR} ,
 		DAILY_TA_TA =
 		#{daily_TA_TA,jdbcType=VARCHAR},
 		DAILY_TA_GO_TIME =
@@ -144,32 +184,27 @@
 		where PK_DAILY_TA_WORKING_DATE
 		= #{pk_DAILY_TA_WORKING_DATE,
 		jdbcType=VARCHAR}
-
 	</update>
 
 	<insert id="insertData" parameterType="java.util.Map">
 		insert into
-		daily_TA(PK_DAILY_TA_WORKING_DATE, select userno
-		from com_loginout c,
-		sawon s
-		where c.userno = s.pk_sawon_code
-		and lno = (select max(lno)
-		from
-		com_loginout), DAILY_TA_RANK, DAILY_TA_DEPT_NAME, DAILY_TA_GO_TIME,
-		DAILY_TA_OFF_TIME, DAILY_TA_WORK_TIME, DAILY_TA_HOLI_WORK,
-		DAILY_TA_EXTEN_WORK,
-		DAILY_TA_NIGHT_WORK, DAILY_TA_LATE_TIME,
-		DAILY_TA_LEAVE_TIME)
-		values(#{pk_DAILY_TA_WORKING_DATE,,jdbcType=VARCHAR},
+		daily_TA
+		(pk_DAILY_TA_WORKING_DATE,daily_TA_SAWON_NAME,
+		daily_TA_DEPT_NAME,
+		daily_TA_RANK,daily_TA_GO_TIME,
+		daily_TA_OFF_TIME,
+		daily_TA_WORK_TIME,
+		daily_TA_EXTEN_WORK,
+		daily_TA_LATE_TIME,
+		daily_TA_LEAVE_TIME)
+		values(#{pk_DAILY_TA_WORKING_DATE,jdbcType=VARCHAR},
 		#{daily_TA_SAWON_NAME,jdbcType=VARCHAR},
 		#{daily_TA_RANK,jdbcType=VARCHAR},
 		#{daily_TA_DEPT_NAME,jdbcType=VARCHAR},
 		#{daily_TA_GO_TIME,jdbcType=VARCHAR},
 		#{daily_TA_OFF_TIME,jdbcType=VARCHAR},
 		#{daily_TA_WORK_TIME,jdbcType=VARCHAR},
-		#{daily_TA_HOLI_WORK,jdbcType=VARCHAR},
 		#{daily_TA_EXTEN_WORK,jdbcType=VARCHAR},
-		#{daily_TA_NIGHT_WORK,jdbcType=VARCHAR},
 		#{daily_TA_LATE_TIME,jdbcType=VARCHAR},
 		#{daily_TA_LEAVE_TIME,jdbcType=VARCHAR})
 	</insert>
@@ -180,14 +215,15 @@
 		DAILY_TA_DEPT_NAME)
 		select
 		SAWON_NAME, RANK_NAME,FK_RANK_NAME
-		FROM SAWON;
+		FROM SAWON
 	</insert>
 
 
 	<delete id="deleteData" parameterType="java.util.Map">
-		delete customers
-		where
-		cust_id = #{cust_id}
+		delete daily_ta <!-- from 생략가능 -->
+		where pk_DAILY_TA_WORKING_DATE = #{pk_DAILY_TA_WORKING_DATE}
+		and
+		daily_TA_SAWON_NAME = #{daily_TA_SAWON_NAME}
 	</delete>
 
 </mapper>

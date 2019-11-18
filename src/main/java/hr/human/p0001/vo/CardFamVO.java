@@ -29,7 +29,7 @@ public class CardFamVO {
 	private String num;
 	
 	public CardFamVO() {
-		System.out.println("MemberVO ?깮?꽦?옄 ?샇異?");
+		System.out.println("FamVO 메서드호출");
 	}
 
 	public String getNum() {

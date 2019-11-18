@@ -41,7 +41,7 @@ public class CardVO {
 	private String isa_MILITARY_CLASS_CODE;
 	
 	public CardVO() {
-		System.out.println("MemberVO ?깮?꽦?옄 ?샇異?");
+		System.out.println("CardVO 메서드 호출");
 	}
 
 	public String getPk_ISA_CODE() {

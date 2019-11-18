@@ -20,7 +20,7 @@ public class CertVO {
 	private String certificate_MOD_DATE;
 
 	public CertVO() {
-		System.out.println("CertVO 생성");
+		System.out.println("CertVO 메서드 호출");
 	}
 
 	public String getPk_CERTIFICATE_CODE() {

@@ -14,10 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import hr.human.p0001.dao.CardDAO;
 import hr.human.p0001.service.CardService;
-import hr.human.p0001.vo.CardFamVO;
 import hr.human.p0001.vo.CardVO;
 import hr.human.p0001.vo.Com_codeVO;
-import hr.human.p0001.vo.HlVO;
 
 @Service("h_insaCardService")
 @Transactional(propagation = Propagation.REQUIRED)
@@ -49,19 +47,9 @@ public class CardServiceImpl implements CardService {
 		return list;
 	}
 	
-	@Override
-	public List<CardFamVO> ISA_fam(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("2. "+searchMap);
-		List<CardFamVO> list =  p0001DAO.ISA_fam(searchMap); 
-		return list;
-	}
 	
-	@Override
-	public List<HlVO> ISA_hl(Map<String, Object> searchMap) throws DataAccessException {
-		List<HlVO> list =  p0001DAO.ISA_hl(searchMap);
-		
-		return list;
-	}
+	
+	
 	
 	//
 	@Override
@@ -83,58 +71,13 @@ public class CardServiceImpl implements CardService {
 		}
 	}
 	
-	//가족
-	@Override
-	public void saveDataFam(Map<String, String[]> dataMap, String fk_FAM_SAWON_CODE)  throws DataAccessException  {
-		String[] status = dataMap.get("STATUS");
-		
-		int length = status.length; // row수
-		
-		int i = 0;
-			
-		for (String str : status) {
-			Map<String, String> row = getRow(dataMap, length, i, fk_FAM_SAWON_CODE); // 현재 Index의 Row Map
-			if ("I".equals(str)) { // 추가
-				p0001DAO.insertDataFam(row);
-			} else if ("U".equals(str)) { // 수정
-				p0001DAO.updateDataFam(row);
-			} else if ("D".equals(str)) { // 삭제
-				p0001DAO.deleteDataFam(row);
-			}
-			i++;
-		}
-	}
-	
-	
-	//학력
-	@Override
-	public void saveDataHL(Map<String, String[]> dataMap, String fk_HL_SAWON_CODE)  throws DataAccessException  {
-		String[] status = dataMap.get("STATUS");
-		
-		int length = status.length; // row수
-		int i = 0;
-		for (String str : status) {
-			Map<String, String> row = getRow(dataMap, length, i, fk_HL_SAWON_CODE); // 현재 Index의 Row Map
-			if ("I".equals(str)) { // 추가
-				p0001DAO.insertDataHL(row);
-			} else if ("U".equals(str)) { // 수정
-				p0001DAO.updateDataHL(row);
-			} else if ("D".equals(str)) { // 삭제
-				p0001DAO.deleteDataHL(row);
-			}
-			i++;
-		}
-	}
-	
-	
-	
 	private Map getRow(Map<String, String[]> dataMap, int length, int i, String x) {
 		Map<String, String> row = new HashMap<String, String>();
 		for(String name : dataMap.keySet()) {
 			String[] data = dataMap.get(name);
 			if(length == data.length) {
 				row.put(name, data[i]);
-				row.put("fk_FAM_SAWON_CODE", x);
+				row.put("fk_SAWON_CODE", x);
 			}
 		}		
 		return row;
@@ -151,15 +94,4 @@ public class CardServiceImpl implements CardService {
 		return row;
 	}
 
-	@Override
-	public void updateMember(Map<String, Object> dataMap) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void insertMember(Map<String, Object> dataMap) {
-		// TODO Auto-generated method stub
-		
-	}	
 }

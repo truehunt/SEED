@@ -440,6 +440,7 @@
 		<result property="workplace_open_date" column="workplace_open_date" />
 		<result property="workplace_closed_date" column="workplace_closed_date" />
 		<result property="workplace_headoff_whe" column="workplace_headoff_whe" />
+		<result property="fk_workplace_code2" column="fk_workplace_code2" />
 		
 		<result property="workplace_int_user_id" column="workplace_int_user_id" />
 		<result property="workplace_int_date" column="workplace_int_date" />
@@ -463,7 +464,7 @@
 				, workplace_fax, workplace_business, workplace_stocks
 				, TO_CHAR(TO_DATE(workplace_open_date),'YYYY-MM-DD') as workplace_open_date 
 				, TO_CHAR(TO_DATE(workplace_closed_date),'YYYY-MM-DD') as workplace_closed_date 
-				, workplace_headoff_whe, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
+				, workplace_headoff_whe, fk_workplace_code2, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
 				, workplace_mod_date
          from   workplace
       ]]>
@@ -492,6 +493,7 @@
 		   , workplace_open_date = #{workplace_open_date,jdbcType=VARCHAR}
 		   , workplace_closed_date = #{workplace_closed_date,jdbcType=VARCHAR}
 		   , workplace_headoff_whe = #{workplace_headoff_whe,jdbcType=VARCHAR}
+		   , fk_workplace_code2 = #{fk_workplace_code2,jdbcType=VARCHAR}
 		   , workplace_int_user_id = #{workplace_int_user_id,jdbcType=VARCHAR}
 		   , workplace_int_date = #{workplace_int_date,jdbcType=TIMESTAMP}
 		   , workplace_mod_user_id = #{workplace_mod_user_id,jdbcType=VARCHAR}
@@ -504,15 +506,16 @@
 		insert into workplace(pk_workplace_code, fk_company_code, workplace_name, workplace_com_reg_num, workplace_corp_reg_num
 							, workplace_rep_name, workplace_zip, workplace_address, workplace_detail_address, workplace_tel
 							, workplace_fax, workplace_business, workplace_stocks, workplace_open_date, workplace_closed_date
-							, workplace_headoff_whe, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
+							, workplace_headoff_whe, fk_workplace_code2, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
 							, workplace_mod_date) 
 			   values(#{pk_workplace_code, jdbcType=VARCHAR},#{fk_company_code, jdbcType=VARCHAR},#{workplace_name, jdbcType=VARCHAR},#{workplace_com_reg_num, jdbcType=VARCHAR},
 			   		  #{workplace_corp_reg_num, jdbcType=VARCHAR},#{workplace_rep_name, jdbcType=VARCHAR},#{workplace_zip, jdbcType=VARCHAR},#{workplace_address, jdbcType=VARCHAR},
 			   		  #{workplace_detail_address, jdbcType=VARCHAR},#{workplace_tel, jdbcType=VARCHAR},#{workplace_fax, jdbcType=VARCHAR},#{workplace_business, jdbcType=VARCHAR},
 			   		  #{workplace_stocks, jdbcType=VARCHAR},#{workplace_open_date, jdbcType=VARCHAR},#{workplace_closed_date, jdbcType=VARCHAR},#{workplace_headoff_whe, jdbcType=VARCHAR},
-			   		  #{workplace_int_user_id, jdbcType=VARCHAR},#{workplace_int_date, jdbcType=TIMESTAMP},#{workplace_mod_user_id, jdbcType=VARCHAR},#{workplace_mod_date, jdbcType=TIMESTAMP}
+			   		  #{fk_workplace_code2, jdbcType=VARCHAR},#{workplace_int_user_id, jdbcType=VARCHAR},#{workplace_int_date, jdbcType=TIMESTAMP},#{workplace_mod_user_id, jdbcType=VARCHAR},
+			   		  #{workplace_mod_date, jdbcType=TIMESTAMP}
 					  )
-	</insert>	
+	</insert>
 	
 	<delete id="WEdeleteData" parameterType="java.util.Map">
 		delete workplace
@@ -534,6 +537,8 @@
 		<result property="dept_int_date" column="dept_int_date" />
 		<result property="dept_mod_user_id" column="dept_mod_user_id" />
 		<result property="dept_mod_date" column="dept_mod_date" />
+		
+		<result property="sector_priodof" column="sector_priodof" />
 		
 		<!--
 		<result property="pk_company_code" column="pk_company_code" />

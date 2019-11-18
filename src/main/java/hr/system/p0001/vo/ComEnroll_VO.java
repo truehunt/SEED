@@ -38,7 +38,7 @@ public class ComEnroll_VO {
 	private Timestamp company_mod_date; // 수정일시
 	
 	public ComEnroll_VO() {
-		System.out.println("ComEnroll_VO 메서드 호출");
+		System.out.println("ComEnroll_VO 생성");
 	}
 
 	// 위의 선언 변수들의 GET, SET 정의 

@@ -13,7 +13,7 @@
 
 <style>
 	.frame {
-		  width : 1400px;
+		  width : 50%;
 		  margin: 0px;
 
 	}
@@ -21,14 +21,14 @@
 	.container {
   		display: table;
   		margin-top: 8px;
-  		height: 500px;
+  		height: 50%;
   		border : 1px solid lightblue;
 	}
 
 	.nav {
 		  float: left;
 		  margin-left:5px;
-		  width: 1345px;
+		  width: 50%;
 	}
 	
 	.img {
@@ -36,18 +36,18 @@
 		height:15px;
 	}
 	.header{
-		width:1350px;
+		width:100%;
 		border : 1px solid lightblue;
 	}
 	.header_child{
-		 height:35px; 
+		 height:50%; 
 		 margin-top:10px;
 		 margin-left:30px;
 	}
 	p.indent{
 		 padding-left:38em; 
-		 margin-left:780px;
-		 height:-30px;
+		 margin-left:50%;
+		 height:-10%;
 	}
 
 </style>
@@ -96,13 +96,9 @@
 			
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50},
-			{Header:"부서코드",Type:"Text",SaveName:"pk_dept_code",MinWidth:60},
-			{Header:"부서명",Type:"Text",SaveName:"dept_name",MinWidth:60, },			
-			{Header:"사업장코드",Type:"Text",SaveName:"fk_workplace_code",MinWidth:70},
-			{Header:"사업장 명",Type:"Text",SaveName:"workplace_name",MinWidth:150},
-			{Header:"부문코드",Type:"Text",SaveName:"fk_sector_code",MinWidth:70},
-			{Header:"부문명",Type:"Text",SaveName:"sector_name",MinWidth:150},
-			{Header:"사용기간",Type:"Date",SaveName:"dept_priodof",MinWidth:60, format:""},
+			{Header:"부문코드",Type:"Text",SaveName:"pk_sector_code",MinWidth:60},
+			{Header:"부문 명",Type:"Text",SaveName:"sector_name",MinWidth:60, },			
+			{Header:"사용기간",Type:"Date",SaveName:"sector_priodof",MinWidth:60, format:""},
 			{Header:"입력자",Type:"Text",SaveName:"dept_int_user_id",MinWidth:80, Hidden:1},
 			{Header:"입력일시",Type:"Text",SaveName:"dept_int_date",MinWidth:80, Hidden:1},
 			{Header:"수정자",Type:"Text",SaveName:"dept_mod_user_id",MinWidth:80, Hidden:1},
@@ -134,10 +130,6 @@
 				//mySheet.DoSearch("${contextPath}/human/s0001/searchList.do", param);
 				
 				mySheet.DoSearch("${contextPath}/human/s0003/searchList.do");
-				
-				//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
-				//selectHead();
-				//$('#workplace_headoff_whe').html("   ");
 				break;
 			case "reload": //초기화
 				mySheet.RemoveAll();
@@ -152,10 +144,6 @@
 			case "insert": //신규행 추가
 				var row = mySheet.DataInsert();
 			
-				//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
-				//selectHead();
-				//$('#workplace_headoff_whe').html("   ");
-				
 				break;
 		}
 	}
@@ -183,7 +171,7 @@
 	<div id="page-wrapper" style="margin: 0px;">
 		<div class="row">
 	        <div class="col-lg-12">
-	            <h1 class="page-header"><i class="fa fa-folder fa-fw"> </i> 부서 등록 <p class='indent' />
+	            <h1 class="page-header"><i class="fa fa-folder fa-fw"> </i> 부문등록 <p class='indent' />
 	            <button type="submit" class="f1_btn_gray lightgray" onClick="">부문등록</button></h1>
 	        </div>
    	 	</div>
@@ -209,7 +197,7 @@
 		</div>
 		<!-- ibsheet 뿌려주는 부분  -->
 		<div class="clear hidden"></div>
-		<div class="ib_product" style="margin-left:10px;"><script>createIBSheet("mySheet", "100%", "70%");</script></div>
+		<div class="ib_product" style="margin-left:10px;"><script>createIBSheet("mySheet", "100%", "100%");</script></div>
 
   </div><!-- //container -->
   </div><!-- //frame -->

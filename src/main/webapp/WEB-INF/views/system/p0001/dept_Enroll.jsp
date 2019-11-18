@@ -31,8 +31,8 @@
 	}
 	
 	.img {
-		width:20px;
-		height:15px;
+		width:5%;
+		height:5%;
 	}
 	.header{
 		width:1300px;
@@ -94,6 +94,7 @@
 			// keyfield : keyfield값 필수값 체크시 필요(미입력시 추가안됨.)
 			// MultiLineText:1  : 하나의 셀에 여러값을 넣을수 있음(shift+enter)
 			// Wrap:1 : 데이터
+			// Edit:1 : 그리드 화면에서 편집 가능 여부 (1-입력가능,0-입력 불가능)
 			// FORMAT 형식 법인/사업자 등록번호 - Format:["IdNo", "SaupNo"], 전화번호/FAX번호 - Format: "PhoneNo", 
 			
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
@@ -101,9 +102,9 @@
 			{Header:"부서코드",Type:"Text",SaveName:"pk_dept_code",MinWidth:60},
 			{Header:"부서명",Type:"Text",SaveName:"dept_name",MinWidth:100, },			
 			{Header:"사업장코드",Type:"Text",SaveName:"workplace_code",MinWidth:70},
-			{Header:"사업장 명",Type:"Text",SaveName:"workplace_name",MinWidth:150},
+			{Header:"사업장 명",Type:"Text",SaveName:"workplace_name",MinWidth:150, Edit:0},
 			{Header:"부문코드",Type:"Text",SaveName:"fk_sector_code",MinWidth:70},
-			{Header:"부문명",Type:"Text",SaveName:"sector_name",MinWidth:100},
+			{Header:"부문명",Type:"Text",SaveName:"sector_name",MinWidth:100, Edit:0},
 			{Header:"사용기간",Type:"Date",SaveName:"dept_priodof",MinWidth:60, format:""},
 			{Header:"입력자",Type:"Text",SaveName:"dept_int_user_id",MinWidth:80, Hidden:1},
 			{Header:"입력일시",Type:"Text",SaveName:"dept_int_date",MinWidth:80, Hidden:1},
@@ -150,7 +151,17 @@
 				break;
 		}
 	}
-		
+	
+	function mySheet_OnDblClick(Row, Col, Value, CellX, CellY, CellW, CellH) {    
+		//더블 클릭했을 때, 선택행의 값을 전달 어미 창으로 전달. 
+		//var selectRowJson = mySheet.GetRowData(Row);
+		var selectRowJson = mySheet.GetCols(Col); 
+		 
+		self.close(); 
+		//console.log(selectRowJson);
+		return false; //창을 닫는 경우에는 false를 리턴해 줘야 함. 
+	} 
+	
 	// 조회완료 후 처리할 작업
 	function mySheet_OnSearchEnd() {
 	
@@ -182,7 +193,7 @@
     <%-- //header 및 container 시작--%>
     	<div class="header">
     		<div class="header_child">
-	        	 사업장  : <select id="workplace_name" name="workplace_name">
+	        	 사업장  : <select id="workplace_name" name="workplace_name" style="width:9%;">
 	        	 		<option value='aaaaa' hidden='1'></option><!-- 공백 -->
 	        	 		</select>
 	        	<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />

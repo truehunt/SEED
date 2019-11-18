@@ -129,11 +129,14 @@
 			{Header:"개업년월일",Type:"Text",SaveName:"workplace_open_date",MinWidth:60, Hidden:1},
 			{Header:"폐업년월일",Type:"Text",SaveName:"workplace_closed_date",MinWidth:60, Hidden:1},
 			{Header:"본점여부",Type:"Combo", MinWidth:80, SaveName:"workplace_headoff_whe",MinWidth:60, Hidden:1},
+			{Header:"본점여부2",Type:"Text",SaveName:"fk_workplace_code2",MinWidth:80, Hidden:1},
 			{Header:"입력자",Type:"Text",SaveName:"workplace_int_user_id",MinWidth:80, Hidden:1},
 			{Header:"입력일시",Type:"Text",SaveName:"workplace_int_date",MinWidth:80, Hidden:1},
 			{Header:"수정자",Type:"Text",SaveName:"workplace_mod_user_id",MinWidth:80, Hidden:1},
 			{Header:"수정일시",Type:"Text",SaveName:"workplace_mod_date",MinWidth:80, Hidden:1},
 			//{Header:"회사코드(com)",Type:"Text",SaveName:"pk_company_code",MinWidth:80, Hidden:1},
+			
+			
 		];   
 		IBS_InitSheet( mySheet , initSheet);
 
@@ -170,22 +173,41 @@
 	  // onClick 이벤트 중 select 태그에 workplace_headoff_whe인 값의 변경이 있을때 실행
 	  $("#workplace_headoff_whe").change(function(e){ 
 			var colNum = colArr.indexOf(e.target.id);	
+			
+			console.log("colNum :" + colNum);
 			 
 			var headoff = document.getElementById("workplace_headoff_whe");
 			var selectBox = headoff.options[headoff.selectedIndex].value;
-			//console.log(selectBox);
-			  
-			mySheet.SetCellValue(t_row, colNum, e.target.value);
+			
+			/* var val = colNum+1; 
+			   console.log(val);
+			*/
+			switch(selectBox){
+			case "부" :
+				console.log("본점여부 2 : "+ workplace_headoff_whe)
+				//mySheet.GetCellValue(t_row, colNum+1) = 2;
+				mySheet.SetCellValue(t_row, colNum+1, 2);
+				break;
+			case "여" :
+				console.log("본점여부 1 : "+ workplace_headoff_whe)
+				//mySheet.GetCellValue(t_row, colNum+1) = 1;
+				mySheet.SetCellValue(t_row, colNum+1, 1);
+				break;
+			default:
+				break;
+			}
+			
+			mySheet.SetCellValue(t_row, colNum, e.target.value); // 본점여부
 			
 		})
 		
   }
 	 	 
 	 $(document).on('change', 'input', function(e) { // 수정할시에 state에 문구 저장 및 SetCellValue 실행
-		  var colArr =  Object.keys(mySheet.rX);
-		  var colNum = colArr.indexOf(e.target.id);	 	 
-		
-	 	mySheet.SetCellValue(t_row, colNum ,e.target.value);
+		  var colArr = Object.keys(mySheet.rX);
+		  var colNum = colArr.indexOf(e.target.id);
+			
+   		  mySheet.SetCellValue(t_row, colNum ,e.target.value);
 	 	
 	 });
 	
@@ -300,11 +322,11 @@
 					
 					var code_ = data['Data'][i].fk_PERSON_BC_CODE_NUM; //
 					
-					console.log(MNGEMENT_NAME);
+					//console.log(MNGEMENT_NAME);
 					if(code_ == 'S2'){
 						head = head + info1; 
 						$('#workplace_headoff_whe').append(MNGEMENT_NAME);//input box에 저장
-						console.log(head);
+						//console.log(head);
 					}
 				}
 				this.Action();
@@ -314,9 +336,9 @@
 				S2 = {'ComboCode':head,'ComboText':head}; // 본점 여부
 				
 				for(var i = 1; i<=mySheet.RowCount(); i++){ // 조회할때 갯수 세어서 거기에 전부 넣기위해서 for문 돌립니다.
-					console.log(i);
-					console.log(mySheet.RowCount());
-					console.log("S2 : "+S2+" 입니다.");
+					//console.log(i);
+					//console.log(mySheet.RowCount());
+					//console.log("S2 : "+S2+" 입니다.");
 					mySheet.CellComboItem(i,17,S2); // 해당 여부 코드 ( 부, 여)	
 				}
 			},
@@ -594,6 +616,13 @@
 	  				</select>
 	  		</td>
 	  	</tr>
+	  	<tr>
+	  		<td align="right" hidden='1'>본점 여부2 : </td>
+	  			<td>
+	  				<input type="text" name="fk_workplace_code2" id="fk_workplace_code2" size="12px" hidden='1'>
+	  			</td>
+	  	</tr>
+	  	
 
 	  </table>
   </form>

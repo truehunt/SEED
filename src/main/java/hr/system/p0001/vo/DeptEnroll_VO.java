@@ -26,7 +26,7 @@ public class DeptEnroll_VO {
 	private Timestamp dept_mod_date; // 수정일시
 	
 	public DeptEnroll_VO() {
-		System.out.println("DeptEnroll_VO 메서드 호출");
+		System.out.println("DeptEnroll_VO 생성");
 	}
 
 	// 위의 선언 변수들의 GET, SET 정의 

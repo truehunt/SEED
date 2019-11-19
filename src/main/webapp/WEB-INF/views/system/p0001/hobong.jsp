@@ -19,7 +19,7 @@
    /*Sheet 기본 설정 */
    function LoadPage() {
       var initData = {};
-      initData.Cfg = {SearchMode:smLazyLoad, Page:50,MergeSheet:msHeaderOnly,ChildPage:10,DragMode:1   };
+      initData.Cfg = {SearchMode:smLazyLoad, Page:50,MergeSheet:msHeaderOnly,ChildPage:10,DragMode:1 };
       initData.Cols = [
       	{Header:"상태|상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
         {Header:"대상직급|코드",Type:"Text", SaveName:"pk_PERSON_BC_DETAI_CODE_NUM", Width:60, Align:"Center",Edit:0},
@@ -38,14 +38,15 @@
 //    mySheet2.SetTheme("GMT","MainTree");
       initData.Cols = [
     	 {Header:"상태|상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
-  		 {Header:"호봉|호봉",Type:"Text",SaveName:"fk_PERSON_BC_CODE_NUM",MinWidth:50},
-  		 {Header:"호봉테이블|기본급",Type:"Text", SaveName:"copy_CODE_NUM", Width:120, Align:"Center"},
-  		 {Header:"합계|합계",Type:"Text", SaveName:"pk_PERSON_BC_DETAI_CODE_NUM", Width:60, Align:"Center"},
+  		 {Header:"호봉|호봉",Type:"Text",SaveName:"fk_HOBONG_CODE", MinWidth:50, Edit:0},
+  		 {Header:"호봉테이블|기본급",Type:"Int", SaveName:"hobong_TABLE_PRICE", Width:120, Align:"Center","Format": "#,###",Edit:0},
+  		 {Header:"합계|합계",Type:"Int", SaveName:"SUM", CalcLogic: "|hobong_TABLE_PRICE|", Width:60, Align:"Center"},
       ];
       
       IBS_InitSheet(mySheet2,initData);
       mySheet2.SetRowBackColorI("#EDEDED");
-	
+      mySheet2.SetEditEnterBehavior("down"); // 엔터 누를시 아래로 이동 
+      
       mySheet2.SetColHidden([
     	  {Col: 0, Hidden:1}, //상태
       ]); 
@@ -56,11 +57,12 @@
         	//{Header:"",Type:"DummyCheck", SaveName:"chk", Width:35, Align:"Center",Edit:1,HeaderCheck:1},
         	{Header:"상태|상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"호봉이력|적용시작년월",Type:"Date", SaveName:"hobong_TABLE_START_DATE_APPLI", Width:120, Align:"Center",Edit:0, Format: "Ym"},
-			{Header:"호봉이력|적용종료월",Type:"Date", SaveName:"hobong_TABLE_APPLI_END_DATE", Width:120, Align:"Center",Edit:0, Format: "Ym"},
+			{Header:"호봉이력|적용종료월",Type:"Date", SaveName:"hobong_TABLE_END_DATE_APPLI", Width:120, Align:"Center",Edit:0, Format: "Ym"},
+			{Header:"직급코드|직급코드",Type:"Text", SaveName:"fk_RANK_CODE", Width:10, Align:"Center",Edit:0}
         ];
         
         IBS_InitSheet(mySheet3,initData);
-        mySheet.SetDataAutoTrim(0);
+        mySheet3.SetDataAutoTrim(0);
         
         mySheet3.SetColHidden([
       	  {Col: 0, Hidden:1} //상태
@@ -76,28 +78,11 @@
          case "search":
             mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/searchList.do");
 			break;
-		//초기화
-		case "reload":
-			mySheet.RemoveAll();
-			mySheet2.RemoveAll();
-			break;
 		//저장
 		case "save":
-			var sRow = mySheet2.FindStatusRow("U"); // 업데이트 하는 곳을 찾는다
-			var arrow = sRow.split(";"); // 위에서 찾은 위치를 배열로서 저장
-			for (var i = 0; i < arrow.length; i++) {
-				var row = arrow[i];
-				var code = mySheet2.CellSearchValue(row, 3);
-				mySheet2.SetCellValue(row, 4, code);
-			}
-			mySheet2.DoSave("${pageContext.request.contextPath}/system/p0001/insertData.do");
+			mySheet2.DoSave("${pageContext.request.contextPath}/system/p0001/updateHB.do",sta_app);
 			break;
 		//추가 - 코드부분들어감
-		case "insert":
-			var select_row = mySheet2.GetSelectRow();
-			var col = 2;
-			mySheet2.SetCellValue(select_row, col, code_num);
-			break;
 		case "list":
             mySheet.DoSearch("${pageContext.request.contextPath}/system/p0001/hobongCode.do");
        	 	break;
@@ -106,22 +91,56 @@
 
 	// 기타 이벤트 //마우스 클릭시
 	function mySheet_OnSelectCell(oldrow, oldcol, row, col) {
-		x = "fk_RANK_CODE=" + mySheet.GetCellValue(row, 1);
-		mySheet3.DoSearch("${pageContext.request.contextPath}/system/p0001/hobongApp.do", x);
+		rank_code = mySheet.GetCellValue(row, 1);
+		fk_RANK_CODE = "fk_RANK_CODE=" + rank_code;
+		mySheet3.DoSearch("${pageContext.request.contextPath}/system/p0001/hobongApp.do", fk_RANK_CODE);
 	}
 	
 	// 조회이벤트 끝날 시
 	function mySheet3_OnSearchEnd() {
 		mySheet3.DataInsert(-1); 
 		var i = mySheet3.RowCount() +1;
-		alert(i);
 		mySheet3.SetCellEditable(i, 1, 1);
 	}
 	
+	function mySheet3_OnSelectCell(oldrow, oldcol, row, col) {
+		if(row > 1 && col == 1){
+				sta_app = "hobong_TABLE_START_DATE_APPLI=" + mySheet3.GetCellValue(row,1) +"&" + fk_RANK_CODE;
+				mySheet2.DoSearch("${pageContext.request.contextPath}/system/p0001/hobongTable.do", sta_app);
+				
+				if(mySheet3.GetCellValue(row,2) == ""){
+					mySheet2.SetColEditable(2,1);
+				}else{
+					mySheet2.SetColEditable(2,0);
+				}
+		}
+	}
+	
+
 	function mySheet3_OnChange(Row, Col, Value, OldValue, RaiseFlag) {
-		alert(Row+", " + Col + " : " + Value) 
+		if(Row == 2 && Col == 1){
+			mySheet3.SetCellValue(Row, 3, rank_code);
+			mySheet3.DoSave("${pageContext.request.contextPath}/system/p0001/insertHB.do");
+		}else if(Row != 2 && Col == 1){
+			mySheet3.SetCellValue(Row, 3, rank_code);
+			if(Row != 2 && mySheet3.GetCellValue(Row-1, 2) == ""){
+				if(mySheet3.GetCellValue(Row,1) == 1){
+					mySheet3.SetCellValue(Row-1,2,mySheet3.GetCellValue(Row,1));
+				}else{
+					mySheet3.SetCellValue(Row-1,2,mySheet3.GetCellValue(Row,1)-1);
+				}
+				
+			}
+			mySheet3.DoSave("${pageContext.request.contextPath}/system/p0001/insertHB.do");
+		}
+		
 	} 
-	 
+	function mySheet3_OnSaveEnd() { 
+		mySheet3.DataInsert(-1);
+		console.log(mySheet3.RowCount());
+		mySheet3.SetCellEditable(mySheet3.RowCount(), 1, 0);
+		mySheet3.SetCellEditable(mySheet3.RowCount()+1, 1, 1);
+	}
 
 </script>
 
@@ -133,8 +152,6 @@
   <div class="main_content">
 		<!-- 버튼 -->
 		<div class="ib_function float_right">
-			<a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-			<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
 			<a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
 		</div>
 		

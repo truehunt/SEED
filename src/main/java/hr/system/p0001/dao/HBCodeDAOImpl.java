@@ -10,7 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import hr.system.p0001.vo.InsaCodeVO;
-
+import hr.system.p0001.vo.HBTableVO;
 
 
 
@@ -26,26 +26,38 @@ public class HBCodeDAOImpl implements HBCodeDAO {
 	}
 	
 	@Override
-	public List<InsaCodeVO> hobongApp(Map<String, Object> searchMap) throws DataAccessException {
-		List<InsaCodeVO> list = sqlSession.selectList("hr.system.p0001.hobongApp",searchMap);
+	public List<HBTableVO> hobongApp(Map<String, Object> searchMap) throws DataAccessException {
+		List<HBTableVO> list = sqlSession.selectList("hr.system.p0001.hobongApp",searchMap);
+		return list;
+	}
+	
+	@Override
+	public List<HBTableVO> hobongTable(Map<String, Object> searchMap) throws DataAccessException {
+		List<HBTableVO> list = sqlSession.selectList("hr.system.p0001.hobongTable",searchMap);
 		return list;
 	}
 	
 
 	@Override
 	public void insertData(Map<String, String> row) throws DataAccessException {
-		sqlSession.update("hr.system.p0001.insertData", row);
+		sqlSession.update("hr.system.p0001.insertHB", row);
 	}
 
 	@Override
 	public void updateData(Map<String, String> row) throws DataAccessException {
 		System.out.println(row);
-		sqlSession.update("hr.system.p0001.updateData", row);
+		sqlSession.update("hr.system.p0001.updateHB", row);
 	}
 
 	@Override
 	public void deleteData(Map<String, String> row) throws DataAccessException {
-		sqlSession.update("hr.system.p0001.deleteData", row);
+		sqlSession.update("hr.system.p0001.deleteHB", row);
+	}
+	
+	@Override
+	public void updatePRICE(Map<String, String> row) throws DataAccessException {
+		System.out.println(row);
+		sqlSession.update("hr.system.p0001.updatePrice", row);
 	}
 
 }

@@ -177,7 +177,7 @@
 			 FAM_WORK_NAME,
 			 FAM_POSITION)
 		values(#{pk_FAM_CODE, jdbcType=VARCHAR},
-			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_FAM_SAWON_CODE, jdbcType=VARCHAR}),
+			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
 			   #{fam_NAME, jdbcType=VARCHAR},
 			   #{fam_RELATIONS, jdbcType=VARCHAR},
 			   #{fam_LIVE, jdbcType=VARCHAR},
@@ -257,7 +257,7 @@
 			 HL_LOCATION, HL_MAJOR_CODE, HL_MINOR_CODE,
 			 HL_DEGREE, HL_JUYA_CODE, HL_MAIN_CODE)
 		values(#{pk_HL_CODE, jdbcType=VARCHAR},
-			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_HL_SAWON_CODE, jdbcType=VARCHAR}),
+			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
 			   #{hl_SCHOOL_CODE, jdbcType=VARCHAR},
 			   #{hl_STA_DATE, jdbcType=VARCHAR},
 			   #{hl_END_DATE, jdbcType=VARCHAR},
@@ -275,6 +275,145 @@
 		where pk_HL_CODE = #{pk_HL_CODE}
 	</delete>
 	
+	
+	<!-- 인사기록카드_경력 -->
+	<resultMap id="cardResult05" type="carVO">
+		<result property="pk_CAR_CODE" column="pk_CAR_CODE" />
+		<result property="fk_CAR_SAWON_CODE" column="fk_CAR_SAWON_CODE" />
+		<result property="car_NAME" column="car_NAME" />
+		<result property="car_STA_DATE" column="car_STA_DATE" />
+		<result property="car_END_DATE" column="car_END_DATE" />
+		<result property="car_DATE" column="car_DATE" />
+		<result property="car_DANDANG" column="car_DANDANG" />
+		<result property="car_POSITION" column="car_POSITION" />
+		<result property="car_SALARY" column="car_SALARY" />
+		<result property="car_RESIGN" column="car_RESIGN" />
+		<result property="car_GEUNSOG_CODE" column="car_GEUNSOG_CODE" />
+		<result property="car_INT_USER_ID" column="car_INT_USER_ID" />
+		<result property="car_INT_DATE" column="car_INT_DATE" />
+		<result property="car_MOD_USER_ID" column="car_MOD_USER_ID" />
+		<result property="car_MOD_DATE" column="car_MOD_DATE" />
+	</resultMap>
+	
+	<select id="ISA_car" resultMap="cardResult05" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select pk_car_code, fk_car_sawon_code, car_name,
+         		   car_sta_date, car_end_date, car_date, 
+         		   car_dandang, car_position, car_salary,
+         		   car_resign, car_geunsog_code
+			from sawon s, car c
+      	]]>
+		<where>
+			s.pk_sawon_code = c.fk_car_sawon_code
+			<if test="fk_CAR_SAWON_CODE != '' and fk_CAR_SAWON_CODE != null">
+				and c.fk_car_sawon_code = #{fk_CAR_SAWON_CODE, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<update id="updateDataCar" parameterType="java.util.Map">
+		update CAR
+		set  car_NAME = #{car_NAME , jdbcType=VARCHAR},
+			 car_STA_DATE = #{car_STA_DATE , jdbcType=VARCHAR},
+			 car_END_DATE = #{car_END_DATE , jdbcType=VARCHAR},
+			 car_DATE = #{car_DATE , jdbcType=VARCHAR},
+			 car_DANDANG = #{car_DANDANG , jdbcType=VARCHAR},
+			 car_POSITION = #{car_POSITION , jdbcType=VARCHAR},
+			 car_SALARY = #{car_SALARY , jdbcType=VARCHAR},
+			 car_RESIGN = #{car_RESIGN , jdbcType=VARCHAR},
+			 car_GEUNSOG_CODE = #{car_GEUNSOG_CODE , jdbcType=VARCHAR}
+		where pk_CAR_CODE = #{pk_CAR_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertDataCar" parameterType="java.util.Map">
+		insert into CAR
+			(pk_CAR_CODE, fk_CAR_SAWON_CODE, car_NAME,
+			 car_STA_DATE, car_END_DATE, car_DATE,
+			 car_DANDANG, car_POSITION, car_SALARY,
+			 car_RESIGN, car_GEUNSOG_CODE)
+		values(#{pk_CAR_CODE, jdbcType=VARCHAR},
+			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
+			   #{car_NAME, jdbcType=VARCHAR},
+			   #{car_STA_DATE, jdbcType=VARCHAR},
+			   #{car_END_DATE, jdbcType=VARCHAR},
+			   #{car_DATE, jdbcType=VARCHAR},
+			   #{car_DANDANG, jdbcType=VARCHAR},
+			   #{car_POSITION, jdbcType=VARCHAR},
+			   #{car_SALARY, jdbcType=VARCHAR},
+			   #{car_RESIGN, jdbcType=VARCHAR},
+			   #{car_GEUNSOG_CODE, jdbcType=VARCHAR}) 
+	</insert>	
+	
+	<delete id="deleteDataCar" parameterType="java.util.Map">
+		delete CAR
+		where pk_CAR_CODE = #{pk_CAR_CODE}
+	</delete>
+	
+	
+	
+	<!-- 인사기록카드_면허/자격 -->
+	<resultMap id="cardResult06" type="certVO">
+		<result property="pk_CERTIFICATE_CODE" column="pk_CERTIFICATE_CODE" />
+		<result property="fk_CERTIFICATE_SAWON_CODE" column="fk_CERTIFICATE_SAWON_CODE" />
+		<result property="certificate_SORT_CODE" column="certificate_SORT_CODE" />
+		<result property="certificate_STA_DATE" column="certificate_STA_DATE" />
+		<result property="certificate_END_DATE" column="certificate_END_DATE" />
+		<result property="certificate_NUM" column="certificate_NUM" />
+		<result property="certificate_ISSUER_CODE" column="certificate_ISSUER_CODE" />
+		<result property="certificate_SUDANG_CODE" column="certificate_SUDANG_CODE" />
+		<result property="certificate_INT_USER_ID" column="certificate_INT_USER_ID" />
+		<result property="certificate_INT_DATE" column="certificate_INT_DATE" />
+		<result property="certificate_MOD_USER_ID" column="certificate_MOD_USER_ID" />
+		<result property="certificate_MOD_DATE" column="certificate_MOD_DATE" />
+	</resultMap>
+	
+	<select id="ISA_cert" resultMap="cardResult06" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select certificate_SORT_CODE, certificate_STA_DATE, certificate_END_DATE,
+         		   certificate_NUM, certificate_ISSUER_CODE, certificate_SUDANG_CODE,
+         		   fk_CERTIFICATE_SAWON_CODE, pk_CERTIFICATE_CODE
+			from sawon s, CERTIFICATE c
+      	]]>
+		<where>
+			s.pk_sawon_code = c.fk_CERTIFICATE_SAWON_CODE
+			<if test="fk_CERTIFICATE_SAWON_CODE != '' and fk_CERTIFICATE_SAWON_CODE != null">
+				and c.fk_CERTIFICATE_SAWON_CODE = #{fk_CERTIFICATE_SAWON_CODE, jdbcType=VARCHAR}
+			</if> 
+		</where>
+	</select>
+	
+	<update id="updateDataCert" parameterType="java.util.Map">
+		update CERTIFICATE
+		set  certificate_SORT_CODE = #{certificate_SORT_CODE , jdbcType=VARCHAR},
+			 certificate_STA_DATE = #{certificate_STA_DATE , jdbcType=VARCHAR},
+			 certificate_END_DATE = #{certificate_END_DATE , jdbcType=VARCHAR},
+			 certificate_NUM = #{certificate_NUM , jdbcType=VARCHAR},
+			 certificate_ISSUER_CODE = #{certificate_ISSUER_CODE , jdbcType=VARCHAR},
+			 certificate_SUDANG_CODE = #{certificate_SUDANG_CODE , jdbcType=VARCHAR} 
+		where pk_CERTIFICATE_CODE = #{pk_CERTIFICATE_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertDataCert" parameterType="java.util.Map">
+		insert into CERTIFICATE
+			(pk_CERTIFICATE_CODE, fk_CERTIFICATE_SAWON_CODE, certificate_SORT_CODE,
+			 certificate_STA_DATE, certificate_END_DATE, certificate_NUM,
+			 certificate_ISSUER_CODE, certificate_SUDANG_CODE)
+		values(#{pk_CERTIFICATE_CODE, jdbcType=VARCHAR},
+			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
+			   #{certificate_SORT_CODE, jdbcType=VARCHAR},
+			   #{certificate_STA_DATE, jdbcType=VARCHAR},
+			   #{certificate_END_DATE, jdbcType=VARCHAR},
+			   #{certificate_NUM, jdbcType=VARCHAR},
+			   #{certificate_ISSUER_CODE, jdbcType=VARCHAR},
+			   #{certificate_SUDANG_CODE, jdbcType=VARCHAR})
+	</insert>	
+	
+	<delete id="deleteDataCert" parameterType="java.util.Map">
+		delete CERTIFICATE
+		where pk_CERTIFICATE_CODE = #{pk_CERTIFICATE_CODE}
+	</delete>
+	
+	 
 	
 	
 	<!-- 공통코드 -->

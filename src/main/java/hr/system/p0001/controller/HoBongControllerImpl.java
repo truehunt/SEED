@@ -1,36 +1,25 @@
 package hr.system.p0001.controller;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import hr.system.p0001.service.HBCodeService;
 import hr.system.p0001.vo.InsaCodeVO;
+import hr.system.p0001.vo.HBTableVO;
 
 @Controller("h_hobongController")
 public class HoBongControllerImpl implements HoBongController {
@@ -66,9 +55,6 @@ public class HoBongControllerImpl implements HoBongController {
 	        return resultMap;
 		}
 		
-		
-		
-		
 		@Override
 		@RequestMapping(value = "/system/p0001/hobongApp.do", method = { RequestMethod.GET, RequestMethod.POST })
 		@ResponseBody
@@ -80,44 +66,94 @@ public class HoBongControllerImpl implements HoBongController {
 			searchMap.put("fk_RANK_CODE", request.getParameter("fk_RANK_CODE"));
 			
 			//데이터 조회
-			List<InsaCodeVO> data = p0001Service.hobongApp(searchMap);
+			List<HBTableVO> data = p0001Service.hobongApp(searchMap);
 	        resultMap.put("Data", data);
 	        
 	        return resultMap;
 		}
 		
-//	@Override
-//	@RequestMapping(value = "/system/p0001/insertData.do", method = { RequestMethod.GET, RequestMethod.POST })
-//	@ResponseBody
-//	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		request.setCharacterEncoding("utf-8");
-//		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 占쏙옙占쎌삢占쎈막Daa
-//		Map<String, Object> resultMap = new HashMap<String, Object>(); // 筌ｌ꼶�봺野껉퀗�궢
-//		
-//		// 占쏙옙占쎌삢 Data �빊遺욱뀱占쎈릭疫뀐옙
-//		Enumeration enu = request.getParameterNames();
-//		while (enu.hasMoreElements()) {
-//			String name = (String) enu.nextElement();
-//			String[] values = request.getParameterValues(name);
-//			System.out.println("name:"+name+"  values:"+ request.getParameterValues(name));
-//			dataMap.put(name, values);
-//		}
-//		
-//		Map<String, String> result = new HashMap<String, String>();
-//		System.out.println("1."+dataMap+" \n...�뜝�럩�꼪�뜝�럩逾ι쨹恝�삕...");
-//		try {
-//			p0001Service.saveData(dataMap);	
-//			result.put("Code","0");
-//			result.put("Message","占쏙옙占쎌삢占쎈┷占쎈�占쎈뮸占쎈빍占쎈뼄");
-//		}catch(Exception e) {
-//			result.put("Code","-1");
-//			result.put("Message","占쏙옙占쎌삢占쎈퓠 占쎈뼄占쎈솭占쎈릭占쏙옙占쎈뮸占쎈빍占쎈뼄");
-//			e.printStackTrace();
-//		}
-//		
-//		resultMap.put("Result", result);         
-//        return resultMap;
-//	}
+		@Override
+		@RequestMapping(value = "/system/p0001/hobongTable.do", method = { RequestMethod.GET, RequestMethod.POST })
+		@ResponseBody
+		public Map hobongTable(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			request.setCharacterEncoding("utf-8");
+			Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+			Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+			// 검색조건설정
+			searchMap.put("fk_RANK_CODE", request.getParameter("fk_RANK_CODE"));
+			searchMap.put("hobong_TABLE_START_DATE_APPLI", request.getParameter("hobong_TABLE_START_DATE_APPLI"));
+			//데이터 조회
+			List<HBTableVO> data = p0001Service.hobongTable(searchMap);
+	        resultMap.put("Data", data);
+	        
+	        return resultMap;
+		}
+	
+		
+		
+	@Override
+	@RequestMapping(value = "/system/p0001/insertHB.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 저장할Daa
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+		
+		// 저장 Data 추출하기
+		Enumeration enu = request.getParameterNames();
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			String[] values = request.getParameterValues(name);
+			System.out.println("name:"+name+"  values:"+ request.getParameterValues(name));
+			dataMap.put(name, values);
+		}
+		
+		Map<String, String> result = new HashMap<String, String>();
+		try {
+			p0001Service.saveData(dataMap);	
+			result.put("Code","0");
+			result.put("Message","저장되었습니다");
+		}catch(Exception e) {
+			result.put("Code","-1");
+			result.put("Message","저장에 실패하였습니다");
+			e.printStackTrace();
+		}
+		
+		resultMap.put("Result", result);         
+        return resultMap;
+	}
+	
+	@Override
+	@RequestMapping(value = "/system/p0001/updateHB.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map updateData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 저장할Daa
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+		
+		// 저장 Data 추출하기
+		Enumeration enu = request.getParameterNames();
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			String[] values = request.getParameterValues(name);
+			System.out.println("name:"+name+"  values:"+ request.getParameterValues(name));
+			dataMap.put(name, values);
+		}
+		
+		Map<String, String> result = new HashMap<String, String>();
+		try {
+			p0001Service.updateData(dataMap);	
+			result.put("Code","0");
+			result.put("Message","저장되었습니다");
+		}catch(Exception e) {
+			result.put("Code","-1");
+			result.put("Message","저장에 실패하였습니다");
+			e.printStackTrace();
+		}
+		
+		resultMap.put("Result", result);         
+        return resultMap;
+	}
 	
 	private String getViewName(HttpServletRequest request) throws Exception {
 		String contextPath = request.getContextPath();

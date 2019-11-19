@@ -21,6 +21,19 @@ public interface SALARY_bo_staDAO {
 
 	public void deleteData(Map<String, String> row) throws DataAccessException;
 
+
+	public List<SALARY_bo_staVO> SiteList(Map<String, Object> searchMap) throws DataAccessException;
+
+	public List<SALARY_bo_staVO> DeptList(Map<String, Object> searchMap) throws DataAccessException;
+
+
+	public List<SALARY_bo_staVO> yearday(Map<String, Object> searchMap) throws DataAccessException;
+
+
+	public List<SALARY_bo_staVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException;
+
+
+
 	
 	 
 }

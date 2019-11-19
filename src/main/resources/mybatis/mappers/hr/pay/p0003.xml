@@ -13,15 +13,13 @@
 		<result property="salary_BO_STA_ACT_PAY" column="salary_BO_STA_ACT_PAY"/>
 	
 	
-		<result property="fk_TA_SAWON_CODE" column="fk_TA_SAWON_CODE"/>
-		<result property="ta_SAWON_NAME" column="ta_SAWON_NAME"/>
-		<result property="ta_ATTRIBUTION" column="ta_ATTRIBUTION"/>
-		<result property="ta_PAYMENTDAY" column="ta_PAYMENTDAY"/>
-		<result property="ta_INQUIRY_CONDITION" column="ta_INQUIRY_CONDITION"/>
-		<result property="pk_TA_WORKPLACE_CODE" column="pk_TA_WORKPLACE_CODE"/>
-		<result property="ta_DIVI" column="ta_DIVI"/>
-		<result property="ta_DAY" column="ta_DAY"/>
-		<result property="ta_HOUR" column="ta_HOUR"/>
+		<result property="sal_INFO_TRANS_AMOUNT_O" column="sal_INFO_TRANS_AMOUNT_O"/>
+		<result property="fk_SALARY_CAL_SAWON_CODE" column="fk_SALARY_CAL_SAWON_CODE"/>
+		<result property="salary_CAL_MONEY" column="salary_CAL_MONEY"/>
+		<result property="sal_INFO_ACC_HOLD_ONE" column="sal_INFO_ACC_HOLD_ONE"/>
+		<result property="sal_INFO_ACC_NUM_ONE" column="sal_INFO_ACC_NUM_ONE"/>
+		<result property="salary_CAL_PAYMENTDAY" column="salary_CAL_PAYMENTDAY"/>
+		
 		
 		
 		<result property="pk_WORKPLACE_CODE" column="pk_WORKPLACE_CODE"/>
@@ -37,30 +35,60 @@
 	
 	<select id="searchList" resultMap="SALARY_bo_staResult01" parameterType="java.util.Map">
 		<![CDATA[
-	 select a.salary_bo_sta_bank_code, b.fk_TA_SAWON_CODE, b.ta_SAWON_NAME, a.salary_bo_sta_acc_number, a.salary_bo_sta_act_pay, b.ta_PAYMENTDAY
-       from SALARY_BO_STA a, ta b
+	 select  d.sal_INFO_TRANS_AMOUNT_O, c.fk_SALARY_CAL_SAWON_CODE, d.sal_INFO_ACC_HOLD_ONE, d.sal_INFO_ACC_NUM_ONE, c.SALARY_CAL_MONEY, c.salary_CAL_PAYMENTDAY
+     from SAWON a, DEPT b, SALARY_CAL c, sal_info d
+
           	
 		]]>
 
 			<where>
+			  a.fk_dept_code = b.pk_dept_code
+		    and a.fk_sawon_workplace_code = b.fk_workplace_code
+			and a.pk_sawon_code = c.fk_salary_cal_sawon_code
+            and c.fk_salary_cal_sawon_code = d.fk_sawon_code
+            and SALARY_CAL_PAYMENTDAY = #{SALARY_CAL_PAYMENTDAY, jdbcType=VARCHAR}
+			and SAL_INFO_TRANS_AMOUNT_O = #{SAL_INFO_TRANS_AMOUNT_O, jdbcType=VARCHAR}
+                    	
+			<if test="fk_SALARY_CAL_SAWON_CODE != null">
+				      and fk_SALARY_CAL_SAWON_CODE = #{FK_SALARY_CAL_SAWON_CODE}
+			</if>
+					<if test="FK_WORKPLACE_CODE != null">
+				      and FK_SAWON_WORKPLACE_CODE = #{FK_WORKPLACE_CODE}
+			</if>
+				<if test="PK_DEPT_CODE != null">
+				      and FK_DEPT_CODE = #{PK_DEPT_CODE}
+			</if>
 			
-          	a.pk_salary_bo_sta_sawon_code = b.fk_TA_SAWON_CODE     
-          	
-			<if test="ta_ATTRIBUTION != null">
-				      and TA_ATTRIBUTION = #{ta_ATTRIBUTION}
-			</if>
-				<if test="ta_PAYMENTDAY != null">
-				      and TA_PAYMENTDAY = #{ta_PAYMENTDAY}
-			</if>
-				<if test="salary_BO_STA_BANK_CODE != null">
-				      and SALARY_BO_STA_BANK_CODE = #{salary_BO_STA_BANK_CODE}
-			</if>
-				<if test="pk_TA_WORKPLACE_CODE != null">
-				      and PK_TA_WORKPLACE_CODE = #{pk_TA_WORKPLACE_CODE}
-			</if>
+				
 			</where>
 	
 	</select>
+	
+	
+	
+	
+		
+	<select id="siteList" resultMap="SALARY_bo_staResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select WORKPLACE_HEADOFF_WHE, PK_WORKPLACE_CODE
+			from WORKPLACE
+		]]>
+	</select>
+	
+	<select id="deptList" resultMap="SALARY_bo_staResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select dept_name, PK_DEPT_CODE
+			from dept d, WORKPLACE w
+		]]>
+		<where>
+			FK_WORKPLACE_CODE = w.FK_WORKPLACE_CODE2
+			<if test="pk_WORKPLACE_CODE != null">
+				and w.FK_WORKPLACE_CODE2 = #{pk_WORKPLACE_CODE}
+			</if>
+		</where>
+	</select>
+	
+	
 	
 	
 	
@@ -76,6 +104,14 @@
 			
 		where PK_SALARY_CALCUL_TOTAL_CODE = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
 	</update>	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<insert id="insertData" parameterType="java.util.Map">
 		

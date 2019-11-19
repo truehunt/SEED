@@ -51,6 +51,20 @@ public class TA_inputServiceImpl implements TA_inputService {
 		return list;
 	}
 	
+	
+	@Override
+	public List<TA_inputVO> yearday(Map<String, Object> searchMap) throws DataAccessException {
+		List<TA_inputVO> list =  TA_inputDAO.yearday(searchMap); 
+		return list;
+	}
+	
+	
+	@Override
+	public List<TA_inputVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException {
+		List<TA_inputVO> list =  TA_inputDAO.yeardayd(searchMap); 
+		return list;
+	}
+	
 	@Override
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
 		String[] status = dataMap.get("STATUS");

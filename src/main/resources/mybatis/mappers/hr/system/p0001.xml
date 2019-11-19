@@ -165,7 +165,7 @@
 	<!--  -->
 	<select id="ISA_c" resultMap="codeResult01" parameterType="java.util.Map"> 
       <![CDATA[
-         select PERSON_BC_DETAI_MNGEMENT_NAME, fk_PERSON_BC_CODE_NUM
+         select pk_PERSON_BC_DETAI_CODE_NUM, PERSON_BC_DETAI_MNGEMENT_NAME, fk_PERSON_BC_CODE_NUM
          from   PERSON_BC_DETAI
       ]]>
 	</select>
@@ -594,5 +594,40 @@
 		where pk_dept_code = #{pk_dept_code}
 		and dept_name = #{dept_name}
 	</delete>	
+	
+	<!-- Sawon Enroll -->
+	<select id="SEsearchList" resultMap="p0001Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         SELECT PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME, FK_DEPT_CODE, FK_DEPT_NAME, SAWON_JOIN_DATE, SAWON_USER_STATUS, SAWON_VIEW_PERMISSION, SAWON_EMAIL
+		 FROM SAWON
+      ]]>
+		<where>
+			<if test=" SAWON_NAME != ''  and  SAWON_NAME != null">
+				SAWON_NAME LIKE '%'||#{SAWON_NAME}||'%'
+			</if>
+		</where>
+	</select>
+	
+	<update id="SEupdateData" parameterType="java.util.Map">
+		update customers
+		set  cust_name = #{cust_name,jdbcType=VARCHAR}
+		   , cust_address = #{cust_address,jdbcType=VARCHAR}
+		   , cust_state = #{cust_state,jdbcType=VARCHAR}
+		   , cust_zip = #{cust_zip,jdbcType=VARCHAR}
+		   , cust_country = #{cust_country,jdbcType=VARCHAR}
+		   , cust_contact = #{cust_contact,jdbcType=VARCHAR}
+		   , cust_email = #{cust_email,jdbcType=VARCHAR}
+		where cust_id = #{cust_id, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="SEinsertData" parameterType="java.util.Map">
+		INSERT INTO SAWON(PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME, SAWON_JOIN_DATE, SAWON_USER_STATUS, SAWON_PASSWORD, SAWON_VIEW_PERMISSION, SAWON_EMAIL, FK_DEPT_CODE, SAWON_INT_USER_ID, SAWON_INT_DATE)
+		VALUES (#{pk_SAWON_CODE}, #{sawon_NAME}, #{sawon_ENG_NAME, jdbcType=VARCHAR}, #{sawon_JOIN_DATE}, #{sawon_USER_STATUS}, #{pk_SAWON_CODE}, #{sawon_VIEW_PERMISSION}, #{sawon_EMAIL, jdbcType=VARCHAR}, #{fk_DEPT_CODE}, #{PK_SAWON_CODE2, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
+	</insert>	
+	
+	<delete id="SEdeleteData" parameterType="java.util.Map">
+		delete SAWON
+		where PK_SAWON_CODE = #{pk_SAWON_CODE}
+	</delete>
 	
 </mapper>

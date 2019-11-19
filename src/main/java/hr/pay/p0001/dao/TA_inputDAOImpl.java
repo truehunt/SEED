@@ -50,6 +50,23 @@ public class TA_inputDAOImpl implements TA_inputDAO {
 	}
 	
 
+	
+	@Override
+	public List<TA_inputVO> yearday(Map<String, Object> searchMap) throws DataAccessException {
+		List<TA_inputVO> list = sqlSession.selectList("hr.pay.p0001.yearday", searchMap);
+		System.out.println(searchMap);
+		return list;
+	}
+	
+	@Override
+	public List<TA_inputVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException {
+		List<TA_inputVO> list = sqlSession.selectList("hr.pay.p0001.yeardayd", searchMap);
+		System.out.println(searchMap);
+		return list;
+	}
+	
+	
+	
 	@Override
 	public void insertData(Map<String, String> row) throws DataAccessException {
 		System.out.println("1."+row);

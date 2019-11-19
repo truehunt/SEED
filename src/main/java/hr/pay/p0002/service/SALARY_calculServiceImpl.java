@@ -52,15 +52,35 @@ public class SALARY_calculServiceImpl implements SALARY_calculService {
 		return list;
 	}
 	
+	
+	
+
+	@Override
+	public List<SALARY_calculVO> yearday(Map<String, Object> searchMap) throws DataAccessException {
+		List<SALARY_calculVO> list =  SALARY_calculDAO.yearday(searchMap); 
+		return list;
+	}
+	
+	
+	@Override
+	public List<SALARY_calculVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException {
+		List<SALARY_calculVO> list =  SALARY_calculDAO.yeardayd(searchMap); 
+		return list;
+	}
+	
 	@Override
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
 		String[] status = dataMap.get("STATUS");
 		int length = status.length; // row??
 		int i = 0;
 		
+		System.out.println("dataMap: " + dataMap);
 		for(String str : status) {
+			System.out.println("i:"+i);
+			System.out.println("length: " + length);
 			Map<String, String> row = getRow(dataMap, length, i); // ???? Index?? Row Map
 			if("I".equals(str)) { // ???
+				System.out.println("services: " + row);
 				SALARY_calculDAO.insertData(row);
 			}else if("U".equals(str)) { // ????
 				SALARY_calculDAO.updateData(row);
@@ -75,7 +95,10 @@ public class SALARY_calculServiceImpl implements SALARY_calculService {
 		Map<String, String> row = new HashMap<String, String>();
 		for(String name : dataMap.keySet()) {
 			String[] data = dataMap.get(name);
+			System.out.println(length+"_"+data.length);
 			if(length == data.length) {
+				System.out.println(length+"_"+data.length);
+				System.out.println(name+data[index]);
 				row.put(name, data[index]);
 			}
 		}		

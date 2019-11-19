@@ -9,17 +9,34 @@
 <title>Insert title here</title>
 
 <link rel="stylesheet" href="${contextPath}/resources/css/style.css"> 
+<link rel="stylesheet" href="${contextPath}/resources/css/ibtab-style.min.css">
+
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
-
 <script type="text/javascript" src="${contextPath}/resources/ibsheet/ibtab.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/ibsheet/ibtabinfo.js"></script>
-<link rel="stylesheet" href="${contextPath}/resources/css/ibtab-style.min.css">
+
 
 <!-- 우편번호 관련된 script 추가 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+
+<!-- popup관련 -->
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<script src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/project9.js"></script>    
+
+<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+
 
 <script language="javascript">
    var pageheightoffset = 200;
@@ -99,16 +116,16 @@
 			{Header:"NO",Type:"Seq", Align:"Center"},
 			{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
 			{Header:"", Type:"Text", SaveName:"pk_HL_CODE", Align:"Center"},
-            {Header:"학교명",Type:"Text", SaveName:"hl_SCHOOL_CODE", Width:100, Align:"Center"},
-            {Header:"입학일",Type:"Date", SaveName:"hl_STA_DATE", Width:60, Align:"Center"},
-            {Header:"졸업일",Type:"Text", SaveName:"hl_END_DATE", Width:60, Align:"Center"},
-            {Header:"구분",Type:"Text", SaveName:"hl_SORT_CODE", Width:60, Align:"Center"},
+            {Header:"학교명",Type:"ComboEdit", SaveName:"hl_SCHOOL_CODE", Width:100, Align:"Center"},
+            {Header:"입학일",Type:"Date", SaveName:"hl_STA_DATE", Width:120, Align:"Center"},
+            {Header:"졸업일",Type:"Date", SaveName:"hl_END_DATE", Width:120, Align:"Center"},
+            {Header:"구분",Type:"Combo", SaveName:"hl_SORT_CODE", Width:60, Align:"Center"},
             {Header:"소재지",Type:"Text", SaveName:"hl_LOCATION", Width:60, Align:"Center"},
-            {Header:"전공과목",Type:"Text", SaveName:"hl_MAJOR_CODE", Width:60, Align:"Center"},
-            {Header:"부전공",Type:"Text", SaveName:"hl_MINOR_CODE", Width:60, Align:"Center"},
+            {Header:"전공과목",Type:"ComboEdit", SaveName:"hl_MAJOR_CODE", Width:60, Align:"Center"},
+            {Header:"부전공",Type:"ComboEdit", SaveName:"hl_MINOR_CODE", Width:60, Align:"Center"},
             {Header:"학위구분",Type:"Text", SaveName:"hl_DEGREE", Width:60, Align:"Center"},
-            {Header:"주야",Type:"Text", SaveName:"hl_JUYA_CODE", Width:60, Align:"Center"},
-            {Header:"본교",Type:"Text", SaveName:"hl_MAIN_CODE", Width:60, Align:"Center"},
+            {Header:"주야",Type:"Combo", SaveName:"hl_JUYA_CODE", Width:60, Align:"Center"},
+            {Header:"본교",Type:"Combo", SaveName:"hl_MAIN_CODE", Width:60, Align:"Center"},
         ];
 	
        	createIBSheet2($("#ib-container2")[0],"mySheet5", "100%", "300px");
@@ -123,38 +140,54 @@
        	
 		//mySheet6 //경력
         initData.Cols = [
-        	{Header:"NO",Type:"Status",SaveName:"Seq", Align:"Center"},
-            {Header:"직장명",Type:"Text", SaveName:"sName", Width:150, Align:"Left"},
-            {Header:"입사일",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-            {Header:"퇴사일",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-            {Header:"근무년한",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-            {Header:"담당업무",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-            {Header:"직위",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-            {Header:"급여",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-            {Header:"퇴직사유",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-            {Header:"근속기",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+        	{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
+        	{Header:"NO",Type:"Seq", Align:"Center"},
+        	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
+        	{Header:"경력코드",Type:"Text",SaveName:"pk_CAR_CODE", Align:"Center"},
+            {Header:"직장명",Type:"Text", SaveName:"car_NAME", Width:150, Align:"Center"},
+            {Header:"입사일",Type:"Text", SaveName:"car_STA_DATE", Width:60, Align:"Center"},
+            {Header:"퇴사일",Type:"Text", SaveName:"car_END_DATE", Width:60, Align:"Center"},
+            {Header:"근무년한",Type:"Text", SaveName:"car_DATE", Width:60, Align:"Center"},
+            {Header:"담당업무",Type:"Text", SaveName:"car_DANDANG", Width:60, Align:"Center"},
+            {Header:"직위",Type:"Text", SaveName:"car_POSITION", Width:60, Align:"Center"},
+            {Header:"급여",Type:"Int", SaveName:"car_SALARY", "Format": "#,### 원", Width:60, Align:"Center"},
+            {Header:"퇴직사유",Type:"Text", SaveName:"car_RESIGN", Width:60, Align:"Center"},
+            {Header:"근속기",Type:"Text", SaveName:"car_GEUNSOG_CODE", Width:60, Align:"Center"},
         ];
          
         createIBSheet2($("#ib-container3")[0],"mySheet6", "100%", "300px");
 		IBS_InitSheet(mySheet6,initData);
 		mySheet6.DataInsert();
 		
+		//숨김
+       	mySheet6.SetColHidden([
+  	     // {Col: 0, Hidden:1}, //상태
+  	      //{Col: 3, Hidden:1} // pk값
+  	    ]);
+		
 		//mySheet7 //면허/자격
         initData.Cols = [
-        	{Header:"NO",Type:"Status",SaveName:"Seq", Align:"Center"},
-            {Header:"자격종류",Type:"Text", SaveName:"sName", Width:150, Align:"Left"},
-            {Header:"취득일",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-            {Header:"만료일",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-            {Header:"자격증번호",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-            {Header:"발행기관",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-            {Header:"수당",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+        	{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
+        	{Header:"NO",Type:"Seq", Align:"Center"},
+        	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
+        	{Header:"자격코드",Type:"Text",SaveName:"pk_CERTIFICATE_CODE", Align:"Center"},
+            {Header:"자격종류",Type:"Text", SaveName:"certificate_SORT_CODE", Width:150, Align:"Left"},
+            {Header:"취득일",Type:"Text", SaveName:"certificate_STA_DATE", Width:60, Align:"Center"},
+            {Header:"만료일",Type:"Text", SaveName:"certificate_END_DATE", Width:60, Align:"Center"},
+            {Header:"자격증번호",Type:"Text", SaveName:"certificate_NUM", Width:60, Align:"Center"},
+            {Header:"발행기관",Type:"Text", SaveName:"certificate_ISSUER_CODE", Width:60, Align:"Center"},
+            {Header:"수당",Type:"Text", SaveName:"certificate_SUDANG_CODE", Width:60, Align:"Center"},
         ];
           
         createIBSheet2($("#ib-container4")[0],"mySheet7", "100%", "300px");
         IBS_InitSheet(mySheet7,initData);
         mySheet7.DataInsert();
         
-       
+    	//숨김
+       	mySheet7.SetColHidden([
+  	      {Col: 0, Hidden:1}, //상태
+  	      {Col: 3, Hidden:1} // pk값
+  	    ]);
         
 		//mySheet8 //인사발령
 		initData.Cols = [
@@ -227,6 +260,8 @@
 		createIBSheet2($("#ib-container8")[0],"mySheet11", "100%", "300px");
 		IBS_InitSheet(mySheet11,initData);
 		mySheet11.DataInsert();
+		
+// 		selectSite();
    }
 
   
@@ -235,21 +270,29 @@
 	function mySheet_OnSelectCell(oldrow, oldcol, row, col) {
 		fk_fam_sawon_code = "fk_FAM_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
 		fk_hl_sawon_code = "fk_HL_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
-		selectSite();
+		fk_car_sawon_code = "fk_CAR_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
+		fk_cert_sawon_code = "fk_CERTIFICATE_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
+		x = mySheet.GetCellValue(row, 2);
+		
 		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
 		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
-		//mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
-		//mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
+		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
+		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
 		//mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
 		//mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
 		//mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
 		//mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
 	}
 	
-	function selectSite() { // 인사코드조회
+	function mySheet_OnBeforeSearch() {  
+// 	function selectSite() { // 인사코드조회
 		var info4 = ""; // 관계
 		var info5 = ""; // 졸업
 		var info6 = ""; // 학력
+		var info10 = ""; // 학교명
+		var info11 = ""; // 전공코드
+		var info12 = ""; // 주야구분
+		var info13 = ""; // 본분교구분
 		
 		var info7 = ""; //여부코드(함/안함)
 		var info8 = ""; //여부코드(해당/비해당)
@@ -275,6 +318,18 @@
 						case 'HB': // 졸업구분
 							info6 = info6 + info1;
 							break;
+						case 'HX': // 학교
+							info10 = info10 + info1;
+							break;
+						case 'HY': // 전공코드
+							info11 = info11 + info1;
+							break;
+						case 'HZ': // 주야구분
+							info12 = info12 + info1;
+							break;
+						case 'R1': // 본분교구분
+							info13 = info13 + info1;
+							break;
 			//---------------------------------------------------------------------	
 						case 'HT': // 채용구분
 							$('#isa_HIRE_CODE').append(MNGEMENT_NAME);
@@ -296,12 +351,13 @@
 							break;
 					}
 				}
-				this.Action();
-			},
-			Action: function(){	 // combo를 넣는 곳
 				H1 = {'ComboCode':info4,'ComboText':info4}; // 관계
 				HB = {'ComboCode':info6,'ComboText':info6}; // 학력
 				HW = {'ComboCode':info5,'ComboText':info5}; // 졸업구분
+				HX = {'ComboCode':info10,'ComboText':info10}; // 학교
+				HY = {'ComboCode':info11,'ComboText':info11}; // 전공코드
+				HZ = {'ComboCode':info12,'ComboText':info12}; // 주야구분
+				R1 = {'ComboCode':info13,'ComboText':info13}; // 본분교구분
 			},
 			error : function(jqxhr, status, error) {
 				alert("에러");
@@ -341,7 +397,51 @@
 			}
 		});
 	};
-	
+	function selectSite() {
+		$.ajax({ // 
+			url : "${contextPath}/human/p0001/ISA_hl.do",//목록을 조회 할 url
+			type : "POST",
+			dataType : "JSON",
+			data : {"fk_HL_SAWON_CODE":x},
+			success : function(data) {
+				var SCHOOL_CODE = ""; // 학교명 
+				var MAJOR_CODE = ""; // 전공코드
+				var MINOR_CODE = ""; // 부전공코드
+				for (var i = 0; i < data['Data'].length; i++) {
+						SCHOOL_CODE = SCHOOL_CODE + "|" + data['Data'][i].hl_SCHOOL_CODE;
+						MAJOR_CODE = MAJOR_CODE + "|" + data['Data'][i].hl_MAJOR_CODE;
+						MINOR_CODE = MINOR_CODE + "|" + data['Data'][i].hl_MINOR_CODE;
+					}
+				var school = SCHOOL_CODE.split("|");
+				var major = MAJOR_CODE.split("|");
+				var minor = MINOR_CODE.split("|");
+				for(var i in school){
+					arr1 = school[i].split(",");
+					arr2 = major[i].split(",");
+					arr3 = minor[i].split(",");
+					if(i != 0){
+						console.log(arr2);
+						if(arr1[0] == "null" ){ 
+							arr1[0] = "" 
+						};
+						if(arr2[0] == "null" ){ 
+							arr2[0] = "" 
+						};
+						if(arr3[0] == "null" ){
+							arr3[0] = "" 
+						};
+						mySheet5.SetCellValue(i,4,arr1[0]);
+						mySheet5.SetCellValue(i,9,arr2[0]);
+						mySheet5.SetCellValue(i,10,arr3[0]);
+					}
+				}
+				
+			},
+			error : function(jqxhr, status, error) {
+				alert("에러");
+			}
+		});
+	}
 	
 	 /*Sheet 각종 처리*/
 	   function doAction(sAction) {
@@ -356,11 +456,16 @@
 	            break;
 	         case "save":
 	            //mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/upload.do");
-	        	mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
+	        	//mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
 	        	mySheet5.DoSave("${pageContext.request.contextPath}/human/p0001/insertHL.do", fk_hl_sawon_code);
+	        	//mySheet6.DoSave("${pageContext.request.contextPath}/human/p0001/insertCar.do", fk_car_sawon_code);
+	        	//mySheet7.DoSave("${pageContext.request.contextPath}/human/p0001/insertCert.do", fk_cert_sawon_code);
 	           break;
 	         case "insert":
-				mySheet4.DataInsert(-1);
+				//mySheet4.DataInsert(-1); 
+				mySheet5.DataInsert(-1);
+				mySheet6.DataInsert(-1);
+				mySheet7.DataInsert(-1);
 				var i = mySheet4.RowCount();
 				mySheet4.CellComboItem(i,5,H1); // 관계
 				mySheet4.CellComboItem(i,13,HB); // 학력
@@ -377,8 +482,9 @@
 	   }
 	 
 	// mySheet 조회 끝나기 직전 이벤트 
-	function mySheet4_OnSearchEnd() {
-		mySheet4.DataInsert(-1); // 가족
+	function mySheet4_OnSearchEnd() { // 가족
+// 		selectSite();
+		mySheet4.DataInsert(-1); 
 		for(var i = 1; i<=mySheet4.RowCount(); i++ ){
 			mySheet4.CellComboItem(i,5,H1); // 관계
 			mySheet4.CellComboItem(i,13,HB); // 학력
@@ -388,6 +494,18 @@
 			mySheet4.CellComboItem(i,8,S2); // 해당/비해당
 			mySheet4.CellComboItem(i,12,S3); // 양/음
 		}
+	}
+	
+	function mySheet5_OnSearchEnd() { // 학력
+		for(var i = 1; i<=mySheet5.RowCount(); i++ ){
+			mySheet5.CellComboItem(i,4,HX); // 학교명
+			mySheet5.CellComboItem(i,7,HW); // 졸업구분
+ 			mySheet5.CellComboItem(i,9,HY); // 전공코드
+			mySheet5.CellComboItem(i,10,HY); // 전공코드
+			mySheet5.CellComboItem(i,12,HZ); // 주야구분
+			mySheet5.CellComboItem(i,13,R1); // 본분교구분
+		}
+		selectSite();
 	}
 	// 기타이벤트 // 키보드 버튼이 올라올 시
 	function mySheet4_OnKeyDown(Row, Col, KeyCode, Shift) {
@@ -484,7 +602,7 @@
 		function upload_flie(){
 		    $('input[type=file]').click();
 		}
-   
+		
 </script>
 <body onload="LoadPage()">
   <div class="page_title">
@@ -499,7 +617,7 @@
 			<a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
 			<a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
 		</div>
-
+		
 		<div class="clear hidden"></div>
 		
 		<div class="ib_product" style="width:100%;float:left">

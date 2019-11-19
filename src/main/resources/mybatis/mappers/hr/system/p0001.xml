@@ -126,6 +126,9 @@
 		<!-- 인사코드 -->
 	<resultMap id="codeResult01" type="insaCodeVO">
 		<result property="pk_PERSON_BC_CODE_NUM" column="pk_PERSON_BC_CODE_NUM" />
+		<result property="pk_PERSON_BC_DETAI_CODE_NUM" column="pk_PERSON_BC_DETAI_CODE_NUM" />
+		<result property="fk_PERSON_BC_CODE_NUM" column="fk_PERSON_BC_CODE_NUM" />
+		<result property="person_BC_DETAI_MNGEMENT_NAME" column="person_BC_DETAI_MNGEMENT_NAME" />
 		<result property="person_BC_OUTPUT" column="person_BC_OUTPUT" />
 		<result property="person_BC_MNGEMENT_NAME" column="person_BC_MNGEMENT_NAME" />
 		<result property="person_BC_MODIFY_WHE" column="person_BC_MODIFY_WHE" />
@@ -191,75 +194,98 @@
 		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM}
 	</delete>
 	
-	<resultMap id="hobongResult01" type="hbtableVO">
-      <result property="pk_HOBONG_TABLE_UNIQUE_NUM" column="pk_HOBONG_TABLE_UNIQUE_NUM" />
-      <result property="fk_RANK_CODE" column="fk_RANK_CODE" />
-      <result property="fk_HOBONG_CODE" column="fk_HOBONG_CODE" />
-      <result property="fk_HOBONG_CODE_CLA_CODE" column="fk_HOBONG_CODE_CLA_CODE" />
-      <result property="hobong_TABLE_START_DATE_APPLI" column="hobong_TABLE_START_DATE_APPLI" />
-      <result property="hobong_TABLE_END_DATE_APPLI" column="hobong_TABLE_END_DATE_APPLI" />
-      <result property="hobong_TABLE_PRICE" column="hobong_TABLE_PRICE" />
-      <result property="hobong_TABLE_INT_USER_ID" column="hobong_TABLE_INT_USER_ID" />
-      <result property="hobong_TABLE_INT_DATE" column="hobong_TABLE_INT_DATE" />
-      <result property="hobong_TABLE_MOD_USER_ID" column="hobong_TABLE_MOD_USER_ID" />
-      <result property="hobong_TABLE_MOD_DATE" column="hobong_TABLE_MOD_DATE" />
-   </resultMap>
-   
-   <select id="hobongApp" resultMap="hobongResult01" parameterType="java.util.Map"> 
+	<!-- 호봉테이블 -->
+	<select id="hobongCode" resultMap="codeResult01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select pk_PERSON_BC_DETAI_CODE_NUM, person_BC_DETAI_MNGEMENT_NAME
+         from   PERSON_BC_DETAI
+         WHERE	fk_PERSON_BC_CODE_NUM = 'G4'
+         ORDER BY pk_PERSON_BC_DETAI_CODE_NUM asc
+      ]]>
+	</select>
+	
+	<resultMap id="hobongResult01" type="hbtalbeVO">
+		<result property="pk_HOBONG_TABLE_UNIQUE_NUM" column="pk_HOBONG_TABLE_UNIQUE_NUM" />
+		<result property="fk_RANK_CODE" column="fk_RANK_CODE" />
+		<result property="fk_HOBONG_CODE" column="fk_HOBONG_CODE" />
+		<result property="fk_HOBONG_CODE_CLA_CODE" column="fk_HOBONG_CODE_CLA_CODE" />
+		<result property="hobong_TABLE_START_DATE_APPLI" column="hobong_TABLE_START_DATE_APPLI" />
+		<result property="hobong_TABLE_END_DATE_APPLI" column="hobong_TABLE_END_DATE_APPLI" />
+		<result property="hobong_TABLE_PRICE" column="hobong_TABLE_PRICE" />
+		<result property="hobong_TABLE_INT_USER_ID" column="hobong_TABLE_INT_USER_ID" />
+		<result property="hobong_TABLE_INT_DATE" column="hobong_TABLE_INT_DATE" />
+		<result property="hobong_TABLE_MOD_USER_ID" column="hobong_TABLE_MOD_USER_ID" />
+		<result property="hobong_TABLE_MOD_DATE" column="hobong_TABLE_MOD_DATE" />
+	</resultMap>
+	
+	<select id="hobongApp" resultMap="hobongResult01" parameterType="java.util.Map"> 
       <![CDATA[
         select DISTINCT hobong_table_start_date_appli, hobong_table_end_date_appli, fk_RANK_CODE
-      FROM hobong_table
+		FROM hobong_table
       ]]>
       <where>
-         <if test="fk_RANK_CODE != '' and fk_RANK_CODE != null">
-            fk_rank_code = #{fk_RANK_CODE, jdbcType=VARCHAR}
-            ORDER BY hobong_table_start_date_appli ASC
-         </if>
+      	<if test="fk_RANK_CODE != '' and fk_RANK_CODE != null">
+      		fk_rank_code = #{fk_RANK_CODE, jdbcType=VARCHAR}
+      		ORDER BY hobong_table_start_date_appli ASC
+      	</if>
       </where>
-   </select>
-   
-   <select id="hobongTable" resultMap="hobongResult01" parameterType="java.util.Map"> 
+	</select>
+	
+	<select id="hobongTable" resultMap="hobongResult01" parameterType="java.util.Map"> 
       <![CDATA[
-        select pd.person_bc_detai_mngement_name, ht.hobong_table_price
-      from person_bc_detai pd, hobong_table ht
+        select ht.fk_hobong_code, ht.hobong_table_price
+		from person_bc_detai pd, hobong_table ht
       ]]>
       <where>
-      pd.person_bc_detai_mngement_name = ht.fk_hobong_code
-      and ht.hobong_table_start_date_appli = #{hobong_TABLE_START_DATE_APPLI, jdbcType=VARCHAR}
-         
-         <if test="fk_RANK_CODE != '' and fk_RANK_CODE != null">
-            and fk_rank_code = #{fk_RANK_CODE, jdbcType=VARCHAR}
-         </if>
+		pd.person_bc_detai_mngement_name = ht.fk_hobong_code
+		and ht.hobong_table_start_date_appli = #{hobong_TABLE_START_DATE_APPLI, jdbcType=VARCHAR}
+      	
+      	<if test="fk_RANK_CODE != '' and fk_RANK_CODE != null">
+      		and fk_rank_code = #{fk_RANK_CODE, jdbcType=VARCHAR}
+      	</if>
       </where>
-   </select>
-   
-<!--    문제 있는곳임 주의바람 -->
-   <update id="updateHB" parameterType="java.util.Map">
-   <![CDATA[
-       update hobong_table
-      set hobong_table_end_date_appli = #{hobong_TABLE_END_DATE_APPLI, jdbcType=VARCHAR}
-      where hobong_table_start_date_appli = #{hobong_TABLE_START_DATE_APPLI, jdbcType=VARCHAR}
-      and fk_rank_code = #{fk_RANK_CODE, jdbcType=VARCHAR}  
-      ]]>
-   </update>   
-   
-   <insert id="insertHB" parameterType="java.util.Map">
-   <![CDATA[
-      insert all into hobong_table(hobong_TABLE_START_DATE_APPLI, fk_RANK_CODE, fk_HOBONG_CODE, fk_HOBONG_CODE_CLA_CODE)
-      values(#{hobong_TABLE_START_DATE_APPLI, jdbcType=VARCHAR},
-            #{fk_RANK_CODE, jdbcType=VARCHAR},
-            person_bc_detai_mngement_name,
-            'PE')
-      select person_bc_detai_mngement_name from person_bc_detai 
-      where fk_person_bc_code_num = 'PE'
-      ]]> 
-   </insert>   
-   
-   <delete id="deleteHB" parameterType="java.util.Map">
-<!--       delete PERSON_BC_DETAI -->
-<!--       where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM} -->
-   </delete>
-   
+	</select>
+	
+	<!-- 호봉이력 추가시 들어오는 곳 -->
+	<update id="updateHB" parameterType="java.util.Map">
+	<![CDATA[
+ 		update hobong_table
+		set hobong_table_end_date_appli = #{hobong_TABLE_END_DATE_APPLI, jdbcType=VARCHAR}
+		where hobong_table_start_date_appli = #{hobong_TABLE_START_DATE_APPLI, jdbcType=VARCHAR}
+		and fk_rank_code = #{fk_RANK_CODE, jdbcType=VARCHAR}  
+		]]>
+	</update>
+	
+	<!-- 기본급 수정시 들어오는 곳 -->
+	<update id="updatePrice" parameterType="java.util.Map"> 
+	<![CDATA[
+ 		update hobong_table
+		set hobong_table_price = #{hobong_TABLE_PRICE, jdbcType=VARCHAR}
+		where hobong_table_start_date_appli = #{hobong_TABLE_START_DATE_APPLI, jdbcType=VARCHAR}
+		and fk_rank_code = #{fk_RANK_CODE, jdbcType=VARCHAR}
+		and fk_hobong_code = #{fk_HOBONG_CODE, jdbcType=VARCHAR}
+		]]>
+	</update>
+	
+	
+	<insert id="insertHB" parameterType="java.util.Map">
+	<![CDATA[
+		insert all into hobong_table(hobong_TABLE_START_DATE_APPLI, fk_RANK_CODE, fk_HOBONG_CODE, fk_HOBONG_CODE_CLA_CODE)
+		values(#{hobong_TABLE_START_DATE_APPLI, jdbcType=VARCHAR},
+			   #{fk_RANK_CODE, jdbcType=VARCHAR},
+			   person_bc_detai_mngement_name,
+			   'PE')
+		select person_bc_detai_mngement_name from person_bc_detai 
+		where fk_person_bc_code_num = 'PE'
+		]]> 
+	</insert>
+	
+	<delete id="deleteHB" parameterType="java.util.Map">
+<!-- 		delete PERSON_BC_DETAI -->
+<!-- 		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM} -->
+	</delete>
+	
+	
    <!-- setPay -->
    <resultMap id="SET_paydayResult01" type="SET_paydayVO">
 		<result property="pk_D_B_PAYMENT_SEQ_CODE" column="pk_D_B_PAYMENT_SEQ_CODE"/>

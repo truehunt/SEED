@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
-@Component("HBTableVO")
+@Component("HBTalbeVO")
 public class HBTableVO {
 	private String pk_HOBONG_TABLE_UNIQUE_NUM;
 	private String fk_RANK_CODE;
@@ -17,9 +17,18 @@ public class HBTableVO {
 	private String hobong_TABLE_INT_DATE;
 	private String hobong_TABLE_MOD_USER_ID;
 	private String hobong_TABLE_MOD_DATE;
+	private String person_BC_DETAI_MNGEMENT_NAME;
 	
 	public HBTableVO() {
 		System.out.println("HBTableVO 메서드호출");
+	}
+
+	public String getPerson_BC_DETAI_MNGEMENT_NAME() {
+		return person_BC_DETAI_MNGEMENT_NAME;
+	}
+
+	public void setPerson_BC_DETAI_MNGEMENT_NAME(String person_BC_DETAI_MNGEMENT_NAME) {
+		this.person_BC_DETAI_MNGEMENT_NAME = person_BC_DETAI_MNGEMENT_NAME;
 	}
 
 	public String getPk_HOBONG_TABLE_UNIQUE_NUM() {
@@ -66,8 +75,8 @@ public class HBTableVO {
 		return hobong_TABLE_END_DATE_APPLI;
 	}
 
-	public void setHobong_TABLE_END_DATE_APPLI(String hobong_TABLE_END_DATE_APPLI) {
-		this.hobong_TABLE_END_DATE_APPLI = hobong_TABLE_END_DATE_APPLI;
+	public void setHobong_TABLE_END_DATE_APPLI(String hobong_TABLE_APPLI_END_DATE) {
+		this.hobong_TABLE_END_DATE_APPLI = hobong_TABLE_APPLI_END_DATE;
 	}
 
 	public String getHobong_TABLE_PRICE() {

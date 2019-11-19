@@ -17,5 +17,9 @@ public interface HoBongController {
 	
 //	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map hobongCode(HttpServletRequest request, HttpServletResponse response) throws Exception;  
-	public Map hobongApp(HttpServletRequest request, HttpServletResponse response) throws Exception;  
+	public Map hobongApp(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map hobongTable(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map updateData(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

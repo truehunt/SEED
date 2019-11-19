@@ -31,15 +31,19 @@
       <typeAlias type="hr.pay.p0003.vo.SALARY_bo_staVO"  alias="SALARY_bo_staVO" />
       <typeAlias type="hr.system.p0001.vo.SET_paydayVO"  alias="SET_paydayVO" />
 
-      <!-- 인사코드 -->
-      <typeAlias alias="insaCodeVO" type="hr.system.p0001.vo.InsaCodeVO"/>
-      <typeAlias alias="hbtableVO" type="hr.system.p0001.vo.HBTableVO"/>
+		<!-- 인사코드 -->
+		<typeAlias alias="insaCodeVO" type="hr.system.p0001.vo.InsaCodeVO"/>
 
-      <!-- 인사카드 -->
-      <typeAlias alias="cardVO" type="hr.human.p0001.vo.CardVO"/>
-      <typeAlias alias="cardFamVO" type="hr.human.p0001.vo.CardFamVO"/>
-      <typeAlias alias="com_codeVO" type="hr.human.p0001.vo.Com_codeVO"/>
-      <typeAlias alias="hlVO" type="hr.human.p0001.vo.HlVO"/>
+		<!-- 호봉테이블 -->
+		<typeAlias alias="hbtalbeVO" type="hr.system.p0001.vo.HBTableVO"/>
+		
+		<!-- 인사카드 -->
+		<typeAlias alias="cardVO" type="hr.human.p0001.vo.CardVO"/>
+		<typeAlias alias="cardFamVO" type="hr.human.p0001.vo.CardFamVO"/>
+		<typeAlias alias="com_codeVO" type="hr.human.p0001.vo.Com_codeVO"/>
+		<typeAlias alias="hlVO" type="hr.human.p0001.vo.HlVO"/>
+		<typeAlias alias="carVO" type="hr.human.p0001.vo.CarVO"/>
+		<typeAlias alias="certVO" type="hr.human.p0001.vo.CertVO"/>
 
       <!-- 등록정보관리 - 회사등록 -->
       <typeAlias alias="comEnroll_VO" type="hr.system.p0001.vo.ComEnroll_VO"/>

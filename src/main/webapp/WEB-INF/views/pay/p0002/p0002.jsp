@@ -27,6 +27,15 @@
     <script src="${contextPath}/resources/js/datepicker/bootstrap-datepicker.js"></script>
     <script src="${contextPath}/resources/js/project9.js"></script>
 
+  <script src="${contextPath}/resources/js/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+
+
+<style> 
+table.ui-datepicker-calendar { display:none; }
+</style>
+
 <script language="javascript">
    var pageheightoffset = 200;
 
@@ -58,33 +67,24 @@
       initData.Cfg = {SearchMode:smLazyLoad, Page:50,MergeSheet:msHeaderOnly,ChildPage:10,DragMode:1   };
       initData.Cols = [
       //{Header:"No",Type:"Seq", Align:"Center"},
-         {Header:"NO",Type:"Seq",SaveName:"pk_SALARY_CALCUL_TOTAL_CODE",  Align:"Center"},
+         {Header:"NO",Type:"Seq",SaveName:"pk_SALARY_CAL_INFO",  Align:"Center"},
          {Header:"상태",Type:"Status",Width:60,SaveName:"STATUS", Align:"Center"},
    	     {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
-         {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:60,Align:"Center"},
-         {Header:"지급항목",Type:"Combo", RowSpan:1,SaveName:"salary_CALCUL_ITEM", ComboText:"기본급|직책수당", ComboCode:"기본급|직책수당"},   
-         {Header:"금액",Type:"AutoSum",SaveName:"salary_CALCUL_MONEY",Format:"#,### 만원",Width:150,Align:"Center"}
-       ];
+         {Header:"사원코드",Type:"Text",SaveName:"fk_SALARY_CAL_SAWON_CODE",Width:60,Align:"Center"},
+         {Header:"지급항목",Type:"Combo", RowSpan:1,SaveName:"salary_CAL_SALARY_ITEM"},   
+         {Header:"금액",Type:"AutoSum",SaveName:"salary_CAL_MONEY",Format:"#,### 만원",Width:150,Align:"Center"},
+         {Header:"지급일",Type:"Text",SaveName:"salary_CAL_PAYMENTDAY",Format:" 일",Width:150,Align:"Center"}
+
+         ];
       IBS_InitSheet(mySheet2,initData);
    
       mySheet2.SetSumValue(2,"합 계");
   	  mySheet2.SetCellAlign(mySheet2.LastRow(),0,"Center");
   	 
   	  
-  	  //달력
-      $('#term1').datepicker().on('changeDate', function(ev) {
-          if (ev.viewMode=="days"){
-              $('#term1').datepicker('hide');
-          }
-      });
-      $('#term2').datepicker().on('changeDate', function(ev) {
-          if (ev.viewMode=="days"){
-              $('#term2').datepicker('hide');
-          }
-      });
-    
-  
-    
+  	  
+  	  selectSite1();
+    	yearday();
     }
    
    
@@ -154,7 +154,7 @@
    function doAction(sAction) {
       switch(sAction) {
       case "search": //조회
-          var param = "TA_ATTRIBUTION=" + document.getElementById("term1").value + "&TA_PAYMENTDAY=" + document.getElementById("term2").value+"&FK_WORKPLACE_CODE=" + document.getElementById("SiteList").value + "&PK_DEPT_CODE=" + document.getElementById("DeptList").value;
+          var param = "D_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("yearday").value + "&D_B_PAYMENT_DT=" + document.getElementById("yeardayd").value+"&PK_WORKPLACE_CODE=" + document.getElementById("SiteList").value + "&PK_DEPT_CODE=" + document.getElementById("DeptList").value;
           
 
           console.log(param);
@@ -173,10 +173,17 @@
          break;         
       case "insert":
           mySheet2.DataInsert(-1);
+          var i = mySheet2.RowCount();
+          mySheet2.CellComboItem(i,4,P2); // 관계
           //코드부분 들어가는 코딩
           var select_row = mySheet2.GetSelectRow();
           var col = 3;
           mySheet2.SetCellValue(select_row, col, pk_sawon_code);
+          
+          var xx = document.getElementById("yeardayd");
+          var xy = xx.options[xx.selectedIndex].text;
+          mySheet2.SetCellValue(select_row, 6, xy);
+          
           break; 
 
    }
@@ -187,7 +194,10 @@
    
 // 기타 이벤트 //마우스 클릭시
    function mySheet_OnSelectCell(oldrow,oldcol,row,col) {
-      x = "PK_SAWON_CODE=" + mySheet.GetCellValue(row,2);
+	   	var xx = document.getElementById("yeardayd");
+	   	var xy = xx.options[xx.selectedIndex].text;  
+		x = "PK_SAWON_CODE=" + mySheet.GetCellValue(row,2) + "&salary_CAL_PAYMENTDAY=" + xy;
+      
       console.log(x);
       pk_sawon_code = mySheet.GetCellValue(row,2);
       mySheet2.DoSearch("${pageContext.request.contextPath}/pay/p0002/searchList2.do",x);
@@ -195,10 +205,7 @@
    
    
    
-// 조회완료 후 처리할 작업
-function mySheet_OnSearchEnd() {
- 
-}
+
 
 // 저장완료 후 처리할 작업
 // code: 0(저장성공), -1(저장실패)
@@ -246,42 +253,36 @@ function mySheet_OnSaveEnd(code,msg){
    
 
    function selectSite() {
-
-      $
-            .ajax({
-
-               url : "${contextPath}/pay/p0002/SiteList.do",//목록을 조회 할 url
-
-               type : "POST",
-
-               dataType : "JSON",
-
-               success : function(data) {
-
-                  for (var i = 0; i < data['Data'].length; i++) {
-                     
-                     
-
-                     var option = "<option value='" + data['Data'][i].pk_WORKPLACE_CODE + "'>"
-                           + data['Data'][i].workplace_HEADOFF_WHE + "</option>";
-                           console.log("option: " + option);
-                     //대상 콤보박스에 추가
-					
-                     $('#SiteList').append(option);
-
-                  }
-                  
-               },
-
-               error : function(jqxhr, status, error) {
-
-                  alert("에러");
-
-               }
-
-            });
-
-   };
+	   var info4;
+	   var info5;
+	   $.ajax({ // 인사기초코드 조회
+	         url : "${contextPath}/human/p0001/ISA_c.do",//목록을 조회 할 url
+	         type : "POST",
+	         dataType : "JSON",
+	         success : function(data) {
+	            for (var i = 0; i < data['Data'].length; i++) {
+	               var code_ = data['Data'][i].fk_PERSON_BC_CODE_NUM;
+	               
+	               var option = "<option class='1' value='" + data['Data'][i].pk_PERSON_BC_DETAI_CODE_NUM + "'>"
+                   + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME
+                   + "</option>";
+                   
+	               switch(code_){
+	                  case 'EL': // 
+	                	  $('#SiteList').append(option);
+	                     break;
+	               }
+	               
+	            }
+	           
+	         },
+	         error : function(jqxhr, status, error) {
+	            alert("에러");
+	         }
+	      });
+	   };
+	   
+	   
 
    function selectDept() {
 
@@ -301,7 +302,7 @@ function mySheet_OnSaveEnd(code,msg){
                dataType : "JSON",
 
                success : function(data) {
-                  $(".1").remove();
+                  $(".2").remove();
                   //$("select#DeptList option").append(x); // 이거 되는거 ㅎ
                   //$("#DeptList").append(data);
                   //var y="<option value="" selected>전체</option>";
@@ -309,7 +310,7 @@ function mySheet_OnSaveEnd(code,msg){
 
                   for (var i = 0; i < data['Data'].length; i++) {
 
-                     var option = "<option class='1' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
+                     var option = "<option class='2' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
                            + data['Data'][i].dept_NAME
                            + "</option>";
 
@@ -333,6 +334,196 @@ function mySheet_OnSaveEnd(code,msg){
 
 
 
+ <script>
+
+$(function(){	
+   	var cal = {
+   			closeText : "닫기",
+   			prevText : "이전달",
+   			nextText : "다음달",
+   			currentText : "오늘",
+   			changeMonth: true, // 월을 바꿀 수 있는 셀렉트 박스
+   			changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스
+   			monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+   			monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월",	"9월", "10월", "11월", "12월" ],
+   			dayNames : [ "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일" ],
+   			dayNamesShort : [ "일", "월", "화", "수", "목", "금", "토" ],
+   			dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
+   			weekHeader : "주",
+   			firstDay : 0,
+   			isRTL : false,
+   			showMonthAfterYear : true, // 연,월,일 순으로
+   			yearSuffix : '',
+   			
+   			showOn: 'both', // 텍스트와 버튼을 함께 보여준다
+   			buttonImage:'https://www.shareicon.net/data/16x16/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
+   			buttonImageOnly: true,
+   			
+   			showButtonPanel: true
+   	};
+               cal.closeText = "선택"; 
+   	    cal.dateFormat = "yymm";
+   	    cal.onClose = function (dateText, inst) {
+   	        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+   	        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+   	        $(this).datepicker( "option", "defaultDate", new Date(year, month, 1) );
+   	        $(this).datepicker('setDate', new Date(year, month, 1));
+   	     	yeardayd();
+   	    }
+   	 
+   	    cal.beforeShow = function () {
+   	        var selectDate = $("#yearday").val().split("-");
+   	        var year = Number(selectDate[0]);
+   	        var month = Number(selectDate[1]) - 1;
+   	        $(this).datepicker( "option", "defaultDate", new Date(year, month, 1) );
+   	    }
+
+        $("#yearday").datepicker(cal);
+
+        $('img.ui-datepicker-trigger').css({'cursor':'pointer', 'margin-left':'5px'});  //아이콘(icon) 위치	
+        $('img.ui-datepicker-trigger').attr('align', 'absmiddle');
+   });
+   
+   
+   
+
+function yearday() {
+
+    $.ajax({
+
+             url : "${contextPath}/pay/p0001/yearday.do",//목록을 조회 할 url
+
+             type : "POST",
+
+             dataType : "JSON",
+
+             success : function(data) {
+
+                for (var i = 0; i < data['Data'].length; i++) {
+                   
+                   
+
+                    var option = "<option class='' value='" + data['Data'][i].pk_D_B_PAYMENT_SEQ_CODE + "'>"
+                    + data['Data'][i].d_B_PAYMENT_DATE_ATTRIBUT 
+                    + "</option>";
+                   //대상 콤보박스에 추가
+             
+                   $('#yearday').append(option);
+
+                }
+                
+             },
+
+             error : function(jqxhr, status, error) {
+
+                alert("에러");
+
+             }
+
+          });
+
+ };
+
+ function yeardayd() {
+
+    var yearday = $('#yearday').val();
+    
+    //var x = $('#DeptList option[name='all']').find("option").val();
+    $
+          .ajax({
+
+             url : "${contextPath}/pay/p0001/yeardayd.do",//목록을 조회 할 url
+
+             type : "POST",
+
+             data : {
+                "yearday" : yearday
+             },
+
+             dataType : "JSON",
+
+             success : function(data) {
+                //$(".1").remove();
+                //$("select#yeardayd option").append(x); // 이거 되는거 ㅎ
+                //$("#yeardayd").append(data);
+                //var y="<option value="" selected>전체</option>";
+                //$("select#DeptList").find(".1").remove().end().append(y);
+
+                for (var i = 0; i < data['Data'].length; i++)  {
+
+                	   var option = "<option class='3' value='" + data['Data'][i].pk_D_B_PAYMENT_SEQ_CODE + "'>"
+                       + data['Data'][i].d_B_PAYMENT_DT
+                       + "</option>";
+ 
+                   //대상 콤보박스에 추가
+                   $('#yeardayd').append(option);
+
+                }
+
+             },
+
+             error : function(jqxhr, status, error) {
+
+                alert("에러");
+
+             }
+
+          });
+
+ };
+ 
+ </script>
+
+   
+   
+   
+   <script>
+   
+   
+   
+   
+   function selectSite1() {
+	   var info4;
+	   var info5;
+	   $.ajax({ // 인사기초코드 조회
+	         url : "${contextPath}/human/p0001/ISA_c.do",//목록을 조회 할 url
+	         type : "POST",
+	         dataType : "JSON",
+	         success : function(data) {
+	            for (var i = 0; i < data['Data'].length; i++) {
+	               var info1 = '|' + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME;
+	               
+	               var code_ = data['Data'][i].fk_PERSON_BC_CODE_NUM;
+	               switch(code_){
+	                  case 'P2': // 
+	                     info4 = info4 + info1;
+	                     break;
+	               }
+	            }
+	            this.Action();
+	         },
+	         Action: function(){    // combo를 넣는 곳
+	        	 P2 = {'ComboCode':info4,'ComboText':info4}; // 관계
+	         },
+	         error : function(jqxhr, status, error) {
+	            alert("에러");
+	         }
+	      });
+	   };
+
+   
+	// mySheet 조회 끝나기 직전 이벤트 
+	   function mySheet2_OnSearchEnd() { // 가족
+	      for(var i = 1; i<=mySheet2.RowCount(); i++ ){
+	         mySheet2.CellComboItem(i,4,P2); // 관계
+	      }
+	   }
+   
+   
+      </script>
+
+
+
 
 
 <body onload="LoadPage()">
@@ -346,10 +537,10 @@ function mySheet_OnSaveEnd(code,msg){
          
       </div>
       <div class="ib_function float_right">
-         <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-         <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-         <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-          <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
+         <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
+         <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
+         <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
+          <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
          </div>
          <br>      <br>
          
@@ -357,23 +548,24 @@ function mySheet_OnSaveEnd(code,msg){
             <br>
            <form class="form-inline">
   <div class="form-group">
-    <label for="term1">귀속연월</label>
-    <input type="text" class="form-control" id="term1" >
-  </div>
+    <label for="yearday">귀속연월</label>
+<input type="text" class="form-control" id="yearday" onchange="yeardayd()"> 
+         </div>
   
   &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp;
   
   <div class="form-group">
-    <label for="term2">지급일</label>
-    <input type="text" class="form-control" id="term2" >
-  </div>
+    <label for="yeardayd">지급일</label>
+<select id="yeardayd" >
+         <option value="" id="yeardayd" selected>전체</option>
+      </select>  </div>
   </form>
       
       
       
         
         <br>  
-         <form class="form-inline">
+         <form class="form-inline_2">
          <label for="SiteList">사업장</label>
         &ensp;<select id="SiteList" onchange="selectDept()"  >
          <option value="" selected>전체</option>
@@ -404,7 +596,7 @@ function mySheet_OnSaveEnd(code,msg){
       <!-- left단 사원리스트 -->
               <DIV class="ib_product" style="width:100%;float:left">
 				<div style="height:100%;width:45%;float:left">
-					<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); selectSite();</script>
+					<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%");selectSite(); </script>
 				</div>
 			
 				

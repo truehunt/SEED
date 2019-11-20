@@ -105,8 +105,8 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/human/s0002/workplace_Enroll.do";
 		            } else if(url === "addept_Enroll"){
 		            	urlToGo = "/SEED/human/s0003/dept_Enroll.do";
-		            } else if(url === "b4"){
-		            	urlToGo = "b4";
+		            } else if(url === "adSawon_Enroll"){ // 사원등록
+		            	urlToGo = "adSawon_Enroll";
 		            } else if(url === "b5"){
 		            	urlToGo = "b5";
 		            // 인적자원관리
@@ -357,7 +357,7 @@ $(document).ready(function(){
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll3"/>','chart','addept_Enroll','addept_Enroll'); return false"><s:message code="main.enroll3"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll4"/>','chart','rr','rr'); return false"><s:message code="main.enroll4"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll4"/>','chart','adSawon_Enroll','adSawon_Enroll'); return false"><s:message code="main.enroll4"/></a>
 	                                </li>
 	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll5"/>','chart','ss','ss'); return false"><s:message code="main.enroll5"/></a>

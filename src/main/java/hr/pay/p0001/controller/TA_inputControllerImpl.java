@@ -1,4 +1,3 @@
-
 package hr.pay.p0001.controller;
 
 import java.io.File;
@@ -122,7 +121,8 @@ public class TA_inputControllerImpl implements TA_inputController {
 		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
 		searchMap.put("PK_SAWON_CODE", request.getParameter("PK_SAWON_CODE"));
 	
-		
+		searchMap.put("TA_TOTAL_PAYMENTDAY", request.getParameter("ta_TOTAL_PAYMENTDAY"));
+
 		
 		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
 		List<TA_inputVO> data = TA_inputService.searchList2(searchMap);
@@ -174,6 +174,48 @@ public class TA_inputControllerImpl implements TA_inputController {
 	}
 	
 	
+	
+	
+	
+	@Override
+	@RequestMapping(value = "/pay/p0001/yearday.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map yearday(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		
+		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
+	
+
+		
+		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
+		List<TA_inputVO> data = TA_inputService.yearday(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}
+	
+	
+	
+	@Override
+	@RequestMapping(value = "/pay/p0001/yeardayd.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map yeardayd(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		
+		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
+		
+		searchMap.put("pk_D_B_PAYMENT_SEQ_CODE", request.getParameter("yearday"));
+		
+		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
+		List<TA_inputVO> data = TA_inputService.yeardayd(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}
 	
 	
 	

@@ -28,9 +28,20 @@ public class SALARY_bo_staVO {
 	private String pk_DEPT_CODE;
 	private String dept_NAME;
 	
+	private String sal_INFO_TRANS_AMOUNT_O;
+	private String fk_SALARY_CAL_SAWON_CODE;
+	private String salary_CAL_MONEY;
+	private String sal_INFO_ACC_HOLD_ONE;
+	private String sal_INFO_ACC_NUM_ONE;
+	private String salary_CAL_PAYMENTDAY;
+	
+	private String fk_WORKPLACE_CODE;
+	private String fk_SAWON_WORKPLACE_CODE;
+	private String fk_DEPT_CODE;
+	
 	
 	public SALARY_bo_staVO() {
-		System.out.println("SALARY_bo_staVO 생성");
+		System.out.println("SALARY_bo_staVO");
 	}
 
 
@@ -221,6 +232,97 @@ public class SALARY_bo_staVO {
 
 	public void setDept_NAME(String dept_NAME) {
 		this.dept_NAME = dept_NAME;
+	}
+
+
+	public String getSal_INFO_TRANS_AMOUNT_O() {
+		return sal_INFO_TRANS_AMOUNT_O;
+	}
+
+
+	public void setSal_INFO_TRANS_AMOUNT_O(String sal_INFO_TRANS_AMOUNT_O) {
+		this.sal_INFO_TRANS_AMOUNT_O = sal_INFO_TRANS_AMOUNT_O;
+	}
+
+
+	public String getFk_SALARY_CAL_SAWON_CODE() {
+		return fk_SALARY_CAL_SAWON_CODE;
+	}
+
+
+	public void setFk_SALARY_CAL_SAWON_CODE(String fk_SALARY_CAL_SAWON_CODE) {
+		this.fk_SALARY_CAL_SAWON_CODE = fk_SALARY_CAL_SAWON_CODE;
+	}
+
+
+	public String getSalary_CAL_MONEY() {
+		return salary_CAL_MONEY;
+	}
+
+
+	public void setSalary_CAL_MONEY(String salary_CAL_MONEY) {
+		this.salary_CAL_MONEY = salary_CAL_MONEY;
+	}
+
+
+	public String getSal_INFO_ACC_HOLD_ONE() {
+		return sal_INFO_ACC_HOLD_ONE;
+	}
+
+
+	public void setSal_INFO_ACC_HOLD_ONE(String sal_INFO_ACC_HOLD_ONE) {
+		this.sal_INFO_ACC_HOLD_ONE = sal_INFO_ACC_HOLD_ONE;
+	}
+
+
+
+	public String getSal_INFO_ACC_NUM_ONE() {
+		return sal_INFO_ACC_NUM_ONE;
+	}
+
+
+	public void setSal_INFO_ACC_NUM_ONE(String sal_INFO_ACC_NUM_ONE) {
+		this.sal_INFO_ACC_NUM_ONE = sal_INFO_ACC_NUM_ONE;
+	}
+
+
+	public String getSalary_CAL_PAYMENTDAY() {
+		return salary_CAL_PAYMENTDAY;
+	}
+
+
+	public void setSalary_CAL_PAYMENTDAY(String salary_CAL_PAYMENTDAY) {
+		this.salary_CAL_PAYMENTDAY = salary_CAL_PAYMENTDAY;
+	}
+
+
+	public String getFk_WORKPLACE_CODE() {
+		return fk_WORKPLACE_CODE;
+	}
+
+
+	public void setFk_WORKPLACE_CODE(String fk_WORKPLACE_CODE) {
+		this.fk_WORKPLACE_CODE = fk_WORKPLACE_CODE;
+	}
+
+
+	public String getFk_SAWON_WORKPLACE_CODE() {
+		return fk_SAWON_WORKPLACE_CODE;
+	}
+
+
+	public void setFk_SAWON_WORKPLACE_CODE(String fk_SAWON_WORKPLACE_CODE) {
+		this.fk_SAWON_WORKPLACE_CODE = fk_SAWON_WORKPLACE_CODE;
+	}
+
+
+	public String getFk_DEPT_CODE() {
+		return fk_DEPT_CODE;
+	}
+
+
+	public void setFk_DEPT_CODE(String fk_DEPT_CODE) {
+		this.fk_DEPT_CODE = fk_DEPT_CODE;
 	}
 
 

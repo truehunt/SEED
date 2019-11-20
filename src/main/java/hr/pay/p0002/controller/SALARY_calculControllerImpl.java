@@ -123,8 +123,10 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 		
 		// �뇦猿볦삕�뜝�럡�돰�댖怨뚰�쀦뤃酉귥삕�땻類㏃삕?�젧
 		searchMap.put("PK_SAWON_CODE", request.getParameter("PK_SAWON_CODE"));
-	
-		
+		searchMap.put("SALARY_CAL_PAYMENTDAY", request.getParameter("salary_CAL_PAYMENTDAY"));
+		searchMap.put("D_B_PAYMENT_DT", request.getParameter("D_B_PAYMENT_DT"));
+
+		System.out.println("1" + request.getParameter("salary_CAL_PAYMENTDAY"));
 		
 		//�뜝�럥�몥�뜝�럩逾졾뜝�럡�댉 �댖怨뚰��?�뤂
 		List<SALARY_calculVO> data = SALARY_calculService.searchList2(searchMap);
@@ -180,6 +182,49 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	
 	
 	
+	@Override
+	@RequestMapping(value = "/pay/p0002/yearday.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map yearday(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		
+		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
+	
+
+		
+		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
+		List<SALARY_calculVO> data = SALARY_calculService.yearday(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}
+	
+	
+	
+	@Override
+	@RequestMapping(value = "/pay/p0002/yeardayd.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map yeardayd(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		
+		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
+		
+		searchMap.put("pk_D_B_PAYMENT_SEQ_CODE", request.getParameter("yearday"));
+		
+		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
+		List<SALARY_calculVO> data = SALARY_calculService.yeardayd(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}
+	
+	
+	
+	
 	
 	@Override
 	@RequestMapping(value = "/pay/p0002/saveData.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -196,7 +241,7 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 			String[] values = request.getParameterValues(name);
 			dataMap.put(name, values);
 		}
-		
+		System.out.println("_1." + dataMap);
 		Map<String, String> result = new HashMap<String, String>();
 		try {
 			SALARY_calculService.saveData(dataMap);	

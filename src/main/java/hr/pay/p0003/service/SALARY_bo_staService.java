@@ -18,13 +18,24 @@ import hr.pay.p0003.vo.SALARY_bo_staVO;
 public interface SALARY_bo_staService {
 	 public List<SALARY_bo_staVO> searchList(Map<String, Object> searchMap) throws DataAccessException;
 
+	public List<SALARY_bo_staVO> SiteList(Map<String, Object> searchMap) throws DataAccessException;
 
-	 
+	public List<SALARY_bo_staVO> DeptList(Map<String, Object> searchMap) throws DataAccessException;
+
 	 
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException ;
 
 	public void updateMember(Map<String, Object> dataMap);
 
 	public void insertMember(Map<String, Object> dataMap);
+
+	public List<SALARY_bo_staVO> yearday(Map<String, Object> searchMap) throws DataAccessException;
+
+	public List<SALARY_bo_staVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException;
+
+
+
+
+
 
 }

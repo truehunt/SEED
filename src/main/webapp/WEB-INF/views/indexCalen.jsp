@@ -117,7 +117,7 @@ function calendarDayMouseout(){
 <div id="page-wrapper" style="margin: 0px;">
    <div id="calenDiv" class="row">
      <div class="col-lg-12">
-         <h1 class="page-header"><i class="fa fa-calendar fa-fw"></i> <c:out value="${month}"/> <s:message code="main.month"/> <c:out value="${week}"/> <s:message code="main.week"/></h1>
+         <h1 class="page-header"><i class="fa fa-calendar fa-fw"></i> <s:message code="main.header"/></h1>
      </div>
  
      <div class="col-lg-12" id="weekDiv">
@@ -145,14 +145,12 @@ function calendarDayMouseout(){
                  </div>
              </div>
         </c:forEach>
-      <div class="calenSlideButton calenSlideButton_left" onclick="ev_prevSlide()">&#10094;</div>
-      <div class="calenSlideButton calenSlideButton_right" onclick="ev_nextSlide()">&#10095;</div>
      </div>
     </div>
      
      <div class="calendarTooltip"></div>
      
-     <h1 class="page-header"> <i class="fa fa-edit fa-fw"></i> 전자결재 현황</h1>
+     <h1 class="page-header"> <i class="fa fa-edit fa-fw"></i> <s:message code="main.signHeader"/></h1>
      		<c:if test="${null eq listview2}">
 				<div id="develop2">
 					<s:message code="main.signNull"/>
@@ -182,7 +180,7 @@ function calendarDayMouseout(){
             </div>
          
      
-     <h1 class="page-header"> <i class="fa fa-tasks fa-fw"></i> 전자결재양식 현황</h1>
+     <h1 class="page-header"> <i class="fa fa-tasks fa-fw"></i> <s:message code="main.taHeader"/></h1>
      <div class="row">
         <div class="col-lg-5">
                       <div id="morris-bar-chart"></div>

@@ -413,7 +413,147 @@
 		where pk_CERTIFICATE_CODE = #{pk_CERTIFICATE_CODE}
 	</delete>
 	
+	
+	<!-- 인사기록카드_인사고과 -->
+	<resultMap id="cardResult07" type="assVO">
+		<result property="pk_ASS_CODE" column="pk_ASS_CODE" />
+		<result property="fk_ASS_SAWON_CODE" column="fk_ASS_SAWON_CODE" />
+		<result property="fk_ASS_PER_CODE" column="fk_ASS_PER_CODE" />
+		<result property="ass_NAME" column="ass_NAME" />
+		<result property="ass_STA_DATE" column="ass_STA_DATE" />
+		<result property="ass_END_DATE" column="ass_END_DATE" />
+		<result property="ass_DATE" column="ass_DATE" />
+		<result property="ass_REFLECTANCE" column="ass_REFLECTANCE" />
+		<result property="ass_SCORE" column="ass_SCORE" />
+		<result property="ass_CLASS" column="ass_CLASS" />
+		<result property="ass_NOTE" column="ass_NOTE" />
+		<result property="ass_INT_USER_ID" column="ass_INT_USER_ID" />
+		<result property="ass_INT_DATE" column="ass_INT_DATE" />
+		<result property="ass_MOD_USER_ID" column="ass_MOD_USER_ID" />
+		<result property="ass_MOD_DATE" column="ass_MOD_DATE" />
+	</resultMap>
 	 
+	 
+	 <select id="ISA_ass" resultMap="cardResult07" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select ass_NAME, ass_STA_DATE, ass_END_DATE,
+         		   ass_DATE, ass_REFLECTANCE, ass_SCORE,
+         		   ass_CLASS, ass_NOTE,
+         		   fk_ASS_PER_CODE, fk_ASS_SAWON_CODE, pk_ASS_CODE
+			from sawon s, ASS a
+			where s.pk_sawon_code = a.fk_ass_sawon_code
+      	]]>
+	</select>
+	
+	<update id="updateDataAss" parameterType="java.util.Map">
+		update ASS
+		set  ass_NAME = #{ass_NAME , jdbcType=VARCHAR},
+			 ass_STA_DATE = #{ass_STA_DATE , jdbcType=VARCHAR},
+			 ass_END_DATE = #{ass_END_DATE , jdbcType=VARCHAR},
+			 ass_DATE = #{ass_DATE , jdbcType=VARCHAR},
+			 ass_REFLECTANCE = #{ass_REFLECTANCE , jdbcType=VARCHAR},
+			 ass_SCORE = #{ass_SCORE , jdbcType=VARCHAR},
+			 ass_CLASS = #{ass_CLASS , jdbcType=VARCHAR},
+			 ass_NOTE = #{ass_NOTE , jdbcType=VARCHAR},
+			 fk_ASS_PER_CODE = #{fk_ASS_PER_CODE , jdbcType=VARCHAR} 
+		where pk_ASS_CODE = #{pk_ASS_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertDataAss" parameterType="java.util.Map">
+		insert into ASS 
+				  (pk_ASS_CODE, fk_ASS_SAWON_CODE, ass_NAME,
+				   ass_STA_DATE, ass_END_DATE, 
+         		   ass_DATE, ass_REFLECTANCE, ass_SCORE,
+         		   ass_CLASS, ass_NOTE,
+         		   fk_ASS_PER_CODE)
+		values(#{pk_ASS_CODE, jdbcType=VARCHAR},
+			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
+			   #{ass_NAME, jdbcType=VARCHAR},
+			   #{ass_STA_DATE, jdbcType=VARCHAR},
+			   #{ass_END_DATE, jdbcType=VARCHAR},
+			   #{ass_DATE, jdbcType=VARCHAR},
+			   #{ass_REFLECTANCE, jdbcType=VARCHAR},
+			   #{ass_SCORE, jdbcType=VARCHAR},
+			   #{ass_CLASS, jdbcType=VARCHAR},
+			   #{ass_NOTE, jdbcType=VARCHAR},
+			   #{fk_ASS_PER_CODE, jdbcType=VARCHAR})
+	</insert>	
+	
+	<delete id="deleteDataAss" parameterType="java.util.Map">
+		delete ASS
+		where pk_ASS_CODE = #{pk_ASS_CODE}
+	</delete>
+	
+	
+	<!-- 인사기록카드_인사고과 -->
+	<resultMap id="cardResult08" type="chjVO">
+		<result property="pk_CHJ_CODE" column="pk_CHJ_CODE" />
+		<result property="fk_CHJ_SAWON_CODE" column="fk_CHJ_SAWON_CODE" />
+		<result property="chj_COUNTRY_CODE" column="chj_COUNTRY_CODE" />
+		<result property="chj_AREA" column="chj_AREA" />
+		<result property="chj_STA_YMD" column="chj_STA_YMD" />
+		<result property="chj_END_YMD" column="chj_END_YMD" />
+		<result property="chj_AIRFARE" column="chj_AIRFARE" />
+		<result property="chj_OWN" column="chj_OWN" />
+		<result property="chj_COMPANY" column="chj_COMPANY" />
+		<result property="chj_OTHER" column="chj_OTHER" />
+		<result property="chj_TOTAL" column="chj_TOTAL" />
+		<result property="chj_PURPOSE" column="chj_PURPOSE" />
+		<result property="chj_INT_USER_ID" column="chj_INT_USER_ID" />
+		<result property="chj_INT_DATE" column="chj_INT_DATE" />
+		<result property="chj_MOD_USER_ID" column="chj_MOD_USER_ID" />
+		<result property="chj_MOD_DATE" column="chj_MOD_DATE" />
+	</resultMap>
+	
+	<select id="ISA_chj" resultMap="cardResult08" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select ass_NAME, ass_STA_DATE, ass_END_DATE,
+         		   ass_DATE, ass_REFLECTANCE, ass_SCORE,
+         		   ass_CLASS, ass_NOTE,
+         		   fk_ASS_PER_CODE, fk_ASS_SAWON_CODE, pk_ASS_CODE
+			from sawon s, ASS a
+			where s.pk_sawon_code = a.fk_ass_sawon_code
+      	]]>
+	</select>
+	
+	<update id="updateDataChj" parameterType="java.util.Map">
+		update ASS
+		set  ass_NAME = #{ass_NAME , jdbcType=VARCHAR},
+			 ass_STA_DATE = #{ass_STA_DATE , jdbcType=VARCHAR},
+			 ass_END_DATE = #{ass_END_DATE , jdbcType=VARCHAR},
+			 ass_DATE = #{ass_DATE , jdbcType=VARCHAR},
+			 ass_REFLECTANCE = #{ass_REFLECTANCE , jdbcType=VARCHAR},
+			 ass_SCORE = #{ass_SCORE , jdbcType=VARCHAR},
+			 ass_CLASS = #{ass_CLASS , jdbcType=VARCHAR},
+			 ass_NOTE = #{ass_NOTE , jdbcType=VARCHAR},
+			 fk_ASS_PER_CODE = #{fk_ASS_PER_CODE , jdbcType=VARCHAR} 
+		where pk_ASS_CODE = #{pk_ASS_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertDataChj" parameterType="java.util.Map">
+		insert into ASS 
+				  (pk_ASS_CODE, fk_ASS_SAWON_CODE, ass_NAME,
+				   ass_STA_DATE, ass_END_DATE, 
+         		   ass_DATE, ass_REFLECTANCE, ass_SCORE,
+         		   ass_CLASS, ass_NOTE,
+         		   fk_ASS_PER_CODE)
+		values(#{pk_ASS_CODE, jdbcType=VARCHAR},
+			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
+			   #{ass_NAME, jdbcType=VARCHAR},
+			   #{ass_STA_DATE, jdbcType=VARCHAR},
+			   #{ass_END_DATE, jdbcType=VARCHAR},
+			   #{ass_DATE, jdbcType=VARCHAR},
+			   #{ass_REFLECTANCE, jdbcType=VARCHAR},
+			   #{ass_SCORE, jdbcType=VARCHAR},
+			   #{ass_CLASS, jdbcType=VARCHAR},
+			   #{ass_NOTE, jdbcType=VARCHAR},
+			   #{fk_ASS_PER_CODE, jdbcType=VARCHAR})
+	</insert>	
+	
+	<delete id="deleteDataChj" parameterType="java.util.Map">
+		delete CHJ
+		where pk_CHJ_CODE = #{pk_CHJ_CODE}
+	</delete>
 	
 	
 	<!-- 공통코드 -->

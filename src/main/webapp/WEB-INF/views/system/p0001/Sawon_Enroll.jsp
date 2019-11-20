@@ -23,12 +23,15 @@
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/resources/js/dynatree/ui.dynatree.css" rel="stylesheet"/> 
 
      <script src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/dynatree/jquery.dynatree.js"></script>
 
 <script type="text/javascript">
 	//시트 높이 계산용
@@ -51,13 +54,13 @@
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50},
 			{Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",MinWidth:80,Align:"Center", KeyField:1},
 			{Header:"사원명",Type:"Text",SaveName:"sawon_NAME",MinWidth:80, KeyField:1},			
-			{Header:"사원명(영문)",Type:"Text",SaveName:"sawon_ENG_NAME",MinWidth:150, MultiLineText:1},
-			{Header:"부서코드",Type:"Text",SaveName:"fk_DEPT_CODE",MinWidth:150, Wrap:1, KeyField:1},
-			{Header:"부서명",Type:"Text",SaveName:"fk_DEPT_NAME",MinWidth:100, KeyField:1},
-			{Header:"입사일",Type:"Date",SaveName:"sawon_JOIN_DATE",MinWidth:150, MultiLineText:1, KeyField:1, format:"Ymd"},
-			{Header:"사용자여부",Type:"Text",SaveName:"sawon_USER_STATUS",MinWidth:60, KeyField:1},
-			{Header:"조회권한",Type:"Text",SaveName:"sawon_VIEW_PERMISSION",MinWidth:60, KeyField:1},
-			{Header:"이메일주소",Type:"Text",SaveName:"sawon_EMAIL",MinWidth:60, KeyField:1},
+			{Header:"사원명(영문)",Type:"Text",SaveName:"sawon_ENG_NAME",MinWidth:150},
+			{Header:"부서코드",Type:"Text",SaveName:"fk_DEPT_CODE",MinWidth:150},
+			{Header:"부서명",Type:"Text",SaveName:"fk_DEPT_NAME",MinWidth:100},
+			{Header:"입사일",Type:"Date",SaveName:"sawon_JOIN_DATE",MinWidth:150, KeyField:1, format:"Ymd"},
+			{Header:"사용자여부",Type:"Combo",SaveName:"sawon_USER_STATUS",MinWidth:60, KeyField:1, ComboText:"Y|N", ComboCode:"Y|N"},
+			{Header:"조회권한",Type:"Combo",SaveName:"sawon_VIEW_PERMISSION",MinWidth:60, KeyField:1, ComboText:"A|B|C", ComboCode:"A|B|C"},
+			{Header:"이메일주소",Type:"Text",SaveName:"sawon_EMAIL",MinWidth:150, KeyField:1},
 		];   
 		IBS_InitSheet( mySheet , initSheet);
 
@@ -76,6 +79,9 @@
 				break;
 			case "reload": //초기화
 				mySheet.RemoveAll();
+				$('#SAWON_NAME').val('');
+				$('#SelectDeptCode').val('');
+				$('#SelectDeptName').val('');
 				break;
 			case "save": // 저장
 				//var tempStr = mySheet.GetSaveString();
@@ -101,7 +107,26 @@
 			//번호 다시 매기기
             //mySheet.ReNumberSeq();
 		}	
-	}	
+	}
+	
+	// 부서선택
+	function fn_DeptSelect(){
+	    $.ajax({
+	        url: "adDepartment",
+	        type: "post"        
+	    }).success(function(result){
+	                $("#popupDept").html(result);
+	    });
+	    $("#popupDept").modal("show");
+	}
+	
+	// 팝업창에서 선택된 부서코드, 부서명 값 넣기
+	function fn_selectDept(deptno, deptnm) {
+	    $("#SelectDeptCode").val(deptno);
+	    $("#SelectDeptName").val(deptnm);
+	    
+	    $("#popupDept").modal("hide");
+	}
 	
 </script>
 </head>
@@ -115,24 +140,33 @@
                 <!-- /.col-lg-12 -->
             </div>
             
-			  <div class="main_content">
+			  <div class="main_content" style="width:1500px;">
+			    
+			    <div class="ib_function float_left">
+			      <button class="btn btn-outline btn-primary" onclick="fn_DeptSelect()">부서선택</button>
+				  <button type="button" class="btn btn-primary" onclick="doAction('reload')">초기화</button>
+				  <button type="button" class="btn btn-primary" onclick="doAction('insert')">추가</button>
+				  <button class="btn btn-outline btn-primary" onclick="doAction('search')">조회</button>
+				  <button class="btn btn-outline btn-primary" onclick="doAction('save')">저장</button>
+				</div>
+				<br><br><br>
 			    <div class="exp_product">
 			      <form name='frm'>
-			         사원명검색: <input type='text' id="SAWON_NAME" name="SAWON_NAME" /> 
+			         사원명검색:<input type='text' id="SAWON_NAME" name="SAWON_NAME" />
+			         부서코드:<input type="text" name="SelectDeptCode" id="SelectDeptCode" readonly />
+			         부서명:<input type="text" name="SelectDeptName" id="SelectDeptName" readonly />  
 			      </form>
+			      
 			    </div>
-			    <div class="ib_function float_right">
-				  <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-				  <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-				  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-				  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
-				</div>
+			    <br>
 			
 				<div class="clear hidden"></div>
-				<div class="ib_product"><script>createIBSheet("mySheet", "100%", "100%");</script></div>
+				<div class="ib_product_1"><script>createIBSheet("mySheet", "100%", "500px");</script></div>
 			  </div>
         </div>
         <!-- /#page-wrapper -->
+        <div id="popupDept" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" 
+    aria-labelledby="myLargeModalLabel"></div> 
 
 </body>
 </html>

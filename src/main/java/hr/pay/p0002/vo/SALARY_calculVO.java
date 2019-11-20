@@ -37,7 +37,10 @@ public class SALARY_calculVO {
 	
 
 	private String pk_D_B_PAYMENT_SEQ_CODE;
+<<<<<<< HEAD
 	
+=======
+>>>>>>> refs/remotes/origin/master
 	
 
 	public SALARY_calculVO() {

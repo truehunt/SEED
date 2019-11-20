@@ -34,7 +34,7 @@ public class SawonCtr {
     /**
      * 리스트.
      */
-    @RequestMapping(value = "/adUser")
+    @RequestMapping(value = "/adSawon_Permission")
        public String user(HttpServletRequest request, ModelMap modelMap) {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
         
@@ -49,7 +49,7 @@ public class SawonCtr {
         
         modelMap.addAttribute("treeStr", treeStr);
         
-        return "admin/organ/User";
+        return "system/p0001/Sawon_Permission";
     }
     
     /**
@@ -71,7 +71,7 @@ public class SawonCtr {
         
         modelMap.addAttribute("listview", listview);
         
-        return "admin/organ/UserList";
+        return "system/p0001/Sawon_List";
     }
     
     /**

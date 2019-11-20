@@ -7,13 +7,16 @@
 	<resultMap id="p0001Result01" type="sawonVO">
 		<result property="PK_SAWON_CODE" column="PK_SAWON_CODE" />
 		<result property="SAWON_NAME" column="SAWON_NAME" />
-		<result property="SAWON_ENG_NAME" column="SAWON_JOIN_DATE" />
+		<result property="SAWON_ENG_NAME" column="SAWON_ENG_NAME" />
+		<result property="SAWON_JOIN_DATE" column="SAWON_JOIN_DATE" />
 		<result property="SAWON_RESIGNATION_DATE" column="SAWON_RESIGNATION_DATE" />
 		<result property="SAWON_USER_STATUS" column="SAWON_USER_STATUS" />
 		<result property="SAWON_PASSWORD" column="SAWON_PASSWORD" />
 		<result property="SAWON_VIEW_PERMISSION" column="SAWON_VIEW_PERMISSION" />
 		<result property="SAWON_EMAIL" column="SAWON_EMAIL" />
 		<result property="FK_DEPT_CODE" column="FK_DEPT_CODE" />
+		<result property="FK_DEPT_NAME" column="FK_DEPT_NAME" />
+		<result property="RANK_NAME" column="RANK_NAME" />
 		<result property="SAWON_INT_USER_ID" column="SAWON_INT_USER_ID" />
 		<result property="SAWON_INT_DATE" column="SAWON_INT_DATE" />
 		<result property="SAWON_MOD_USER_ID" column="SAWON_MOD_USER_ID" />
@@ -55,6 +58,16 @@
     	 	              VALUES ((SELECT NVL(MAX(LNO)+1,0) FROM COM_LOGINOUT), #{ PK_SAWON_CODE }, 'O', to_char(sysdate,'yyyy.mm.dd hh24:mi') )
     </insert>
     
+    <!-- 사용자 권한 조회 -->
+    <select id="selectUserList" parameterType="String" resultType="hr.system.p0001.vo.SawonVO">
+        SELECT PK_SAWON_CODE, SAWON_NAME, FK_DEPT_CODE, SAWON_VIEW_PERMISSION 
+          FROM SAWON CU
+         INNER JOIN COM_CODE CC ON CC.CODECD=CU.SAWON_VIEW_PERMISSION
+         WHERE KEY=#{deptno} 
+           AND CC.CLASSNO=1          
+    </select> 
+    
+    <!-- 전자결재문서등록 -->
     <sql id="includeSignDocType">
         WHERE DOCTYPE_DELETEFLAG='N'
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
@@ -288,56 +301,62 @@
 	
    <!-- setPay -->
    <resultMap id="SET_paydayResult01" type="SET_paydayVO">
-		<result property="pk_D_B_PAYMENT_SEQ_CODE" column="pk_D_B_PAYMENT_SEQ_CODE"/>
-		<result property="d_B_PAYMENT_DT" column="d_B_PAYMENT_DT"/>
-		<result property="d_B_PAYMENT_SIMULTANE_ISSUE" column="d_B_PAYMENT_SIMULTANE_ISSUE"/>
-		<result property="d_B_PAYMENT_TARGET_SELECT" column="d_B_PAYMENT_TARGET_SELECT"/>
-	    <result property="d_B_PAYMENT_DATE_ATTRIBUT" column="d_B_PAYMENT_DATE_ATTRIBUT"/>
-	
-		<result property="fk_D_B_PAYMENT_SEQ_CODE" column="fk_D_B_PAYMENT_SEQ_CODE"/>
-		<result property="pk_PAY_BEN_C_UNIQUE_NUM" column="pk_PAY_BEN_C_UNIQUE_NUM"/>
-		<result property="pay_BEN_C_RECRUIT_METHOD" column="pay_BEN_C_RECRUIT_METHOD"/>
-		<result property="pay_BEN_C_DATE_RECRUIT" column="pay_BEN_C_DATE_RECRUIT"/>
-		<result property="pay_BEN_C_RETIRE_BEN_METHOD" column="pay_BEN_C_RETIRE_BEN_METHOD"/>
-		<result property="pay_BEN_C_DATE_RESIG" column="pay_BEN_C_DATE_RESIG"/>
-	
-		
-	</resultMap>
-	
-	<select id="SPsearchList" resultMap="SET_paydayResult01" parameterType="java.util.Map">
-		<![CDATA[
-	 select d_B_PAYMENT_DT, d_B_PAYMENT_SIMULTANE_ISSUE, d_B_PAYMENT_TARGET_SELECT
+      <result property="pk_D_B_PAYMENT_SEQ_CODE" column="pk_D_B_PAYMENT_SEQ_CODE"/>
+      <result property="d_B_PAYMENT_DT" column="d_B_PAYMENT_DT"/>
+      <result property="d_B_PAYMENT_SIMULTANE_ISSUE" column="d_B_PAYMENT_SIMULTANE_ISSUE"/>
+      <result property="d_B_PAYMENT_TARGET_SELECT" column="d_B_PAYMENT_TARGET_SELECT"/>
+       <result property="d_B_PAYMENT_DATE_ATTRIBUT" column="d_B_PAYMENT_DATE_ATTRIBUT"/>
+   
+      <result property="fk_D_B_PAYMENT_SEQ_CODE" column="fk_D_B_PAYMENT_SEQ_CODE"/>
+      <result property="pk_PAY_BEN_C_UNIQUE_NUM" column="pk_PAY_BEN_C_UNIQUE_NUM"/>
+      <result property="pay_BEN_C_RECRUIT_METHOD" column="pay_BEN_C_RECRUIT_METHOD"/>
+      <result property="pay_BEN_C_DATE_RECRUIT" column="pay_BEN_C_DATE_RECRUIT"/>
+      <result property="pay_BEN_C_RETIRE_BEN_METHOD" column="pay_BEN_C_RETIRE_BEN_METHOD"/>
+      <result property="pay_BEN_C_DATE_RESIG" column="pay_BEN_C_DATE_RESIG"/>
+   
+      
+   </resultMap>
+   
+   <select id="SPsearchList" resultMap="SET_paydayResult01" parameterType="java.util.Map">
+      <![CDATA[
+    select pk_D_B_PAYMENT_SEQ_CODE, d_B_PAYMENT_DATE_ATTRIBUT, d_B_PAYMENT_DT, d_B_PAYMENT_SIMULTANE_ISSUE, d_B_PAYMENT_TARGET_SELECT
        from D_B_PAYMENT
        where d_B_PAYMENT_DATE_ATTRIBUT = #{d_B_PAYMENT_DATE_ATTRIBUT, jdbcType=VARCHAR}
-		]]>
+      ]]>
 
-	
-	</select>
-	
-	
-	
-	
-	
-	<update id="SPupdateData" parameterType="java.util.Map">
-		update D_B_PAYMENT
-		set   d_B_PAYMENT_DT = #{d_B_PAYMENT_DT, jdbcType=VARCHAR}
-		    , d_B_PAYMENT_SIMULTANE_ISSUE = #{d_B_PAYMENT_SIMULTANE_ISSUE, jdbcType=VARCHAR}
-		    , d_B_PAYMENT_TARGET_SELECT = #{d_B_PAYMENT_TARGET_SELECT, jdbcType=VARCHAR}
-	
-		where d_B_PAYMENT_DT = #{d_B_PAYMENT_DT, jdbcType=VARCHAR}
-	</update>	
-	
-	<insert id="SPinsertData" parameterType="java.util.Map">
-		
-		insert into SALARY_CALCUL_TOTAL(PK_SALARY_CALCUL_TOTAL_CODE, FK_TA_SAWON_CODE, SALARY_CALCUL_ITEM, salary_CALCUL_MONEY) values(#{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR},#{fk_TA_SAWON_CODE, jdbcType=VARCHAR}, #{salary_CALCUL_ITEM, jdbcType=VARCHAR}, #{salary_CALCUL_MONEY, jdbcType=VARCHAR})
-	
-	</insert>	
-	
-	<delete id="SPdeleteData" parameterType="java.util.Map">
-	     delete SALARY_CALCUL_TOTAL
-	 
-		 where TRIM(PK_SALARY_CALCUL_TOTAL_CODE) = #{pk_SALARY_CALCUL_TOTAL_CODE, jdbcType=VARCHAR}
-	</delete>
+   
+   </select>
+   
+   
+   
+   
+   
+   <update id="SPupdateData" parameterType="java.util.Map">
+      update D_B_PAYMENT
+      set   d_B_PAYMENT_DATE_ATTRIBUT  = #{d_B_PAYMENT_DATE_ATTRIBUT, jdbcType=VARCHAR}
+          , d_B_PAYMENT_DT = #{d_B_PAYMENT_DT, jdbcType=VARCHAR}
+          , d_B_PAYMENT_SIMULTANE_ISSUE = #{d_B_PAYMENT_SIMULTANE_ISSUE, jdbcType=VARCHAR}
+          , d_B_PAYMENT_TARGET_SELECT = #{d_B_PAYMENT_TARGET_SELECT, jdbcType=VARCHAR}
+   
+      where d_B_PAYMENT_DATE_ATTRIBUT = #{d_B_PAYMENT_DATE_ATTRIBUT, jdbcType=VARCHAR}
+   </update>   
+   
+   <insert id="SPinsertData" parameterType="java.util.Map">
+   
+      <selectKey resultType="String" keyProperty="pk_SALARY_CAL_INFO" order="BEFORE">
+
+          SELECT NVL(MAX(pk_D_B_PAYMENT_SEQ_CODE)+1, 1) FROM D_B_PAYMENT
+
+       </selectKey>
+      insert into D_B_PAYMENT(pk_D_B_PAYMENT_SEQ_CODE, D_B_PAYMENT_DATE_ATTRIBUT, d_B_PAYMENT_DT, d_B_PAYMENT_SIMULTANE_ISSUE, d_B_PAYMENT_TARGET_SELECT) values(#{pk_D_B_PAYMENT_SEQ_CODE, jdbcType=VARCHAR},#{D_B_PAYMENT_DATE_ATTRIBUT, jdbcType=VARCHAR}, #{d_B_PAYMENT_DT , jdbcType=VARCHAR}, #{d_B_PAYMENT_SIMULTANE_ISSUE, jdbcType=VARCHAR}, #{d_B_PAYMENT_TARGET_SELECT, jdbcType=VARCHAR})
+   
+   </insert>   
+   
+   <delete id="SPdeleteData" parameterType="java.util.Map">
+        delete D_B_PAYMENT
+    
+       where TRIM(pk_D_B_PAYMENT_SEQ_CODE) = #{pk_D_B_PAYMENT_SEQ_CODE, jdbcType=VARCHAR}
+   </delete>
 	
 	<!-- comEnroll -->
 	<resultMap id="s0001Result01" type="comEnroll_VO">
@@ -623,32 +642,36 @@
 	
 	<!-- Sawon Enroll -->
 	<select id="SEsearchList" resultMap="p0001Result01" parameterType="java.util.Map"> 
-      <![CDATA[
-         SELECT PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME, FK_DEPT_CODE, FK_DEPT_NAME, SAWON_JOIN_DATE, SAWON_USER_STATUS, SAWON_VIEW_PERMISSION, SAWON_EMAIL
+         SELECT PK_SAWON_CODE, SAWON_NAME, SAWON_JOIN_DATE, FK_DEPT_CODE, FK_DEPT_NAME, SAWON_ENG_NAME, SAWON_USER_STATUS, SAWON_VIEW_PERMISSION, SAWON_EMAIL
 		 FROM SAWON
-      ]]>
-		<where>
+		 WHERE PK_SAWON_CODE IS NOT NULL
 			<if test=" SAWON_NAME != ''  and  SAWON_NAME != null">
-				SAWON_NAME LIKE '%'||#{SAWON_NAME}||'%'
+				and SAWON_NAME LIKE '%'||#{SAWON_NAME}||'%'
 			</if>
-		</where>
+			<if test=" SelectDeptCode != '' and SelectDeptCode != null">
+                and FK_DEPT_CODE = #{SelectDeptCode}
+	        </if>
 	</select>
 	
 	<update id="SEupdateData" parameterType="java.util.Map">
-		update customers
-		set  cust_name = #{cust_name,jdbcType=VARCHAR}
-		   , cust_address = #{cust_address,jdbcType=VARCHAR}
-		   , cust_state = #{cust_state,jdbcType=VARCHAR}
-		   , cust_zip = #{cust_zip,jdbcType=VARCHAR}
-		   , cust_country = #{cust_country,jdbcType=VARCHAR}
-		   , cust_contact = #{cust_contact,jdbcType=VARCHAR}
-		   , cust_email = #{cust_email,jdbcType=VARCHAR}
-		where cust_id = #{cust_id, jdbcType=VARCHAR}
+		UPDATE SAWON
+		SET  PK_SAWON_CODE = #{pk_SAWON_CODE,jdbcType=VARCHAR}
+		   , SAWON_NAME = #{sawon_NAME,jdbcType=VARCHAR}
+		   , SAWON_ENG_NAME = #{sawon_ENG_NAME,jdbcType=VARCHAR}
+		   , SAWON_JOIN_DATE = #{sawon_JOIN_DATE,jdbcType=VARCHAR}
+		   , SAWON_USER_STATUS = #{sawon_USER_STATUS,jdbcType=VARCHAR}
+		   , SAWON_VIEW_PERMISSION = #{sawon_VIEW_PERMISSION,jdbcType=VARCHAR}
+		   , SAWON_EMAIL = #{sawon_EMAIL,jdbcType=VARCHAR}
+		   , FK_DEPT_CODE = #{fk_DEPT_CODE,jdbcType=VARCHAR}
+		   , FK_DEPT_NAME = #{fk_DEPT_NAME,jdbcType=VARCHAR}
+		   , SAWON_MOD_USER_ID =  #{PK_SAWON_CODE2, jdbcType=VARCHAR}
+		   , SAWON_MOD_DATE = to_char(sysdate,'yyyy.mm.dd hh24:mi')
+		WHERE PK_SAWON_CODE = #{pk_SAWON_CODE, jdbcType=VARCHAR}
 	</update>	
 	
 	<insert id="SEinsertData" parameterType="java.util.Map">
-		INSERT INTO SAWON(PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME, SAWON_JOIN_DATE, SAWON_USER_STATUS, SAWON_PASSWORD, SAWON_VIEW_PERMISSION, SAWON_EMAIL, FK_DEPT_CODE, SAWON_INT_USER_ID, SAWON_INT_DATE)
-		VALUES (#{pk_SAWON_CODE}, #{sawon_NAME}, #{sawon_ENG_NAME, jdbcType=VARCHAR}, #{sawon_JOIN_DATE}, #{sawon_USER_STATUS}, #{pk_SAWON_CODE}, #{sawon_VIEW_PERMISSION}, #{sawon_EMAIL, jdbcType=VARCHAR}, #{fk_DEPT_CODE}, #{PK_SAWON_CODE2, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
+		INSERT INTO SAWON(PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME, SAWON_JOIN_DATE, SAWON_USER_STATUS, SAWON_PASSWORD, SAWON_VIEW_PERMISSION, FK_DEPT_NAME, SAWON_EMAIL, FK_DEPT_CODE, SAWON_INT_USER_ID, SAWON_INT_DATE)
+		VALUES (#{pk_SAWON_CODE}, #{sawon_NAME}, #{sawon_ENG_NAME, jdbcType=VARCHAR}, #{sawon_JOIN_DATE}, #{sawon_USER_STATUS}, #{pk_SAWON_CODE}, #{sawon_VIEW_PERMISSION}, #{fk_DEPT_NAME, jdbcType=VARCHAR}, #{sawon_EMAIL, jdbcType=VARCHAR}, #{fk_DEPT_CODE, jdbcType=VARCHAR}, #{PK_SAWON_CODE2, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
 	</insert>	
 	
 	<delete id="SEdeleteData" parameterType="java.util.Map">

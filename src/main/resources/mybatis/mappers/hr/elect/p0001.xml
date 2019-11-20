@@ -223,6 +223,12 @@
          ORDER BY KEY
     </select> 
     
+    <select id="selectDepartmentOne" parameterType="String" resultType="project.common.DepartmentVO">
+        SELECT PK_DEPT_CODE, DEPT_NAME
+          FROM DEPT
+         WHERE KEY=#{deptno} 
+    </select>
+    
     <select id="selectUserListWithDept" parameterType="project.common.SearchVO" resultType="hr.system.p0001.vo.SawonVO">
           SELECT PK_SAWON_CODE, SAWON_NAME, CU.FK_DEPT_CODE, CD.DEPT_NAME, CC.CODENM RANK_NAME
           FROM SAWON CU

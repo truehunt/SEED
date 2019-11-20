@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%> 
 <c:set var="contextPath"  value="${pageContext.request.contextPath}" />   
 <!DOCTYPE html>
 <html>
@@ -18,10 +19,8 @@
 <script type="text/javascript" src="${contextPath}/resources/ibsheet/ibtab.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/ibsheet/ibtabinfo.js"></script>
 
-
 <!-- 우편번호 관련된 script 추가 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
 
 <!-- popup관련 -->
 <link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
@@ -87,7 +86,7 @@
 			{Header:"성명",Type:"Text", SaveName:"fam_NAME", Width:100, Align:"Left", Align:"Center"},
           	{Header:"관계",Type:"Combo", SaveName:"fam_RELATIONS", Width:60, Align:"Center"},
           	{Header:"동거여부",Type:"Combo", SaveName:"fam_LIVE", Width:60, Align:"Center"},
-          	{Header:"주민등록번호",Type:"Text", SaveName:"fam_RES_NUM", Format:"########******", Width:120, Align:"Center"},
+          	{Header:"주민등록번호",Type:"Text", SaveName:"fam_RES_NUM", Format: "IdNo", Width:120, Align:"Center"},
           	{Header:"수당여부",Type:"Combo", SaveName:"fam_SUDANG", Width:60, Align:"Center"},
           	{Header:"장애인구분",Type:"Combo", SaveName:"fam_DISABLED_CODE", ComboText:"|비해당|장애인복지법|국가유공자|중증환자", ComboCode:"|비해당|장애인복지법|국가유공자|중증환자", Width:120, Align:"Center"},
           	{Header:"내외국인",Type:"Combo", SaveName:"fam_LOCAL_CODE", ComboText:"|내국인|외국인", ComboCode:"|내국인|외국인" ,Width:60, Align:"Center"},
@@ -208,16 +207,19 @@
 		
 		//mySheet9 //인사고과
 		initData.Cols = [
-			{Header:"NO",Type:"Status",SaveName:"Seq", Align:"Center"},
-			{Header:"고과명",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"평가시작일",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"평가종료일",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"고과일",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"고과자",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"반영률",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"점수",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"등급",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"비고",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+			{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
+        	{Header:"NO",Type:"Seq", Align:"Center"},
+        	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
+        	{Header:"고과코드",Type:"Text",SaveName:"pk_ASS_CODE", Align:"Center"},
+			{Header:"고과명",Type:"Text", SaveName:"ass_NAME", Width:60, Align:"Center"},
+			{Header:"평가시작일",Type:"Text", SaveName:"ass_STA_DATE", Width:60, Align:"Center"},
+			{Header:"평가종료일",Type:"Text", SaveName:"ass_END_DATE", Width:60, Align:"Center"},
+			{Header:"고과일",Type:"Text", SaveName:"ass_DATE", Width:60, Align:"Center"},
+			{Header:"고과자",Type:"Text", SaveName:"fk_ASS_PER_CODE", Width:60, Align:"Center"},
+			{Header:"반영률",Type:"Text", SaveName:"ass_REFLECTANCE", Width:60, Align:"Center"},
+			{Header:"점수",Type:"Text", SaveName:"ass_SCORE", Width:60, Align:"Center"},
+			{Header:"등급",Type:"Text", SaveName:"ass_CLASS", Width:60, Align:"Center"},
+			{Header:"비고",Type:"Text", SaveName:"ass_NOTE", Width:60, Align:"Center"}
 		];
            
 		createIBSheet2($("#ib-container6")[0],"mySheet9", "100%", "300px");
@@ -261,31 +263,29 @@
 		IBS_InitSheet(mySheet11,initData);
 		mySheet11.DataInsert();
 		
-// 		selectSite();
    }
 
-  
-   
 	// 기타 이벤트 //마우스 클릭시
 	function mySheet_OnSelectCell(oldrow, oldcol, row, col) {
 		fk_fam_sawon_code = "fk_FAM_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
 		fk_hl_sawon_code = "fk_HL_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
 		fk_car_sawon_code = "fk_CAR_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
 		fk_cert_sawon_code = "fk_CERTIFICATE_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
+		
+		fk_ass_sawon_code = "fk_ASS_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
 		x = mySheet.GetCellValue(row, 2);
 		
-		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
-		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
-		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
-		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
+// 		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
+// 		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
+// 		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
+// 		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
 		//mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
-		//mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
+		mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
 		//mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
 		//mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
 	}
 	
 	function mySheet_OnBeforeSearch() {  
-// 	function selectSite() { // 인사코드조회
 		var info4 = ""; // 관계
 		var info5 = ""; // 졸업
 		var info6 = ""; // 학력
@@ -397,6 +397,7 @@
 			}
 		});
 	};
+	
 	function selectSite() {
 		$.ajax({ // 
 			url : "${contextPath}/human/p0001/ISA_hl.do",//목록을 조회 할 url
@@ -456,24 +457,39 @@
 	            break;
 	         case "save":
 	            //mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/upload.do");
-	        	//mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
-	        	mySheet5.DoSave("${pageContext.request.contextPath}/human/p0001/insertHL.do", fk_hl_sawon_code);
-	        	//mySheet6.DoSave("${pageContext.request.contextPath}/human/p0001/insertCar.do", fk_car_sawon_code);
-	        	//mySheet7.DoSave("${pageContext.request.contextPath}/human/p0001/insertCert.do", fk_cert_sawon_code);
+// 	        	mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
+// 	        	mySheet5.DoSave("${pageContext.request.contextPath}/human/p0001/insertHL.do", fk_hl_sawon_code);
+// 	        	mySheet6.DoSave("${pageContext.request.contextPath}/human/p0001/insertCar.do", fk_car_sawon_code);
+// 	        	mySheet7.DoSave("${pageContext.request.contextPath}/human/p0001/insertCert.do", fk_cert_sawon_code);
+
+
+	        	mySheet9.DoSave("${pageContext.request.contextPath}/human/p0001/insertAss.do", fk_ass_sawon_code);
 	           break;
 	         case "insert":
 				//mySheet4.DataInsert(-1); 
-				mySheet5.DataInsert(-1);
-				mySheet6.DataInsert(-1);
-				mySheet7.DataInsert(-1);
-				var i = mySheet4.RowCount();
-				mySheet4.CellComboItem(i,5,H1); // 관계
-				mySheet4.CellComboItem(i,13,HB); // 학력
-				mySheet4.CellComboItem(i,14,HW); // 졸업구분
+// 				mySheet5.DataInsert(-1);
+// 				mySheet6.DataInsert(-1);
+// 				mySheet7.DataInsert(-1);
 				
-				mySheet4.CellComboItem(i,6,S1); // 함/안함
-				mySheet4.CellComboItem(i,8,S2); // 해당/비해당
-				mySheet4.CellComboItem(i,12,S3); // 양/음
+				mySheet9.DataInsert(-1);
+				
+// 				var i = mySheet4.RowCount();
+// 				mySheet4.CellComboItem(i,5,H1); // 관계
+// 				mySheet4.CellComboItem(i,13,HB); // 학력
+// 				mySheet4.CellComboItem(i,14,HW); // 졸업구분
+// 				mySheet4.CellComboItem(i,6,S1); // 함/안함
+// 				mySheet4.CellComboItem(i,8,S2); // 해당/비해당
+// 				mySheet4.CellComboItem(i,12,S3); // 양/음
+				
+// 				var j = mySheet5.RowCount();
+// 				mySheet5.CellComboItem(j,4,HX); // 학교명
+// 				mySheet5.CellComboItem(j,7,HW); // 졸업구분
+// 	 			mySheet5.CellComboItem(j,9,HY); // 전공코드
+// 				mySheet5.CellComboItem(j,10,HY); // 전공코드
+// 				mySheet5.CellComboItem(j,12,HZ); // 주야구분
+// 				mySheet5.CellComboItem(j,13,R1); // 본분교구분
+				
+				
 	            break; 
 	         case "list":
 	             mySheet.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA.do");
@@ -483,7 +499,6 @@
 	 
 	// mySheet 조회 끝나기 직전 이벤트 
 	function mySheet4_OnSearchEnd() { // 가족
-// 		selectSite();
 		mySheet4.DataInsert(-1); 
 		for(var i = 1; i<=mySheet4.RowCount(); i++ ){
 			mySheet4.CellComboItem(i,5,H1); // 관계
@@ -507,108 +522,29 @@
 		}
 		selectSite();
 	}
-	// 기타이벤트 // 키보드 버튼이 올라올 시
-	function mySheet4_OnKeyDown(Row, Col, KeyCode, Shift) {
-			if (KeyCode == 13 && Col == 4 && Row == 2) { //엔터를 누름 -> col이 성명에 있고, row가 마지막일때
-				mySheet4.SetCellEditable(2, 7, 0);
-				//mySheet4.SetCellEditable(2, 7, 1);
+	
+	//마지막 col / row 에서 입력이 되었을 때 한줄이 추가된다.  
+	function mySheet4_OnChange(Row, Col, Value, OldValue, RaiseFlag) {
+			if (Col == mySheet4.LastCol() && Row == mySheet4.RowCount()) { 
+				mySheet4.DataInsert(-1);
 			}
 	}
 	
-	 function Postcode() {
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	                var roadAddr = data.roadAddress; // 도로명 주소 변수
-	                var extraRoadAddr = ''; // 참고 항목 변수
-	                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                    extraRoadAddr += data.bname;
-	                }
-	                // 건물명이 있고, 공동주택일 경우 추가한다.
-	                if(data.buildingName !== '' && data.apartment === 'Y'){
-	                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                }
-	                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	                if(extraRoadAddr !== ''){
-	                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-	                }
-	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                document.getElementById('company_zip').value = data.zonecode; // 우편번호
-	                document.getElementById('company_address').value = roadAddr; // 도로명주소
-	                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-	                if(roadAddr !== ''){ // 상세주소
-	                    document.getElementById('company_detail_address').value = extraRoadAddr;
-	                } else {
-	                    document.getElementById('company_detail_address').value = '';
-	                }
-	                
-	                var guideTextBox = document.getElementById("guide");
-	                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-	                if(data.autoRoadAddress) {
-	                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-	                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-	                    guideTextBox.style.display = 'block';
-	            	}
-	            }
-	        }).open();
-	    } // 주소 api function end
-	    
-	    function Postcode2() {
-	        new daum.Postcode({
-	            oncomplete: function(data) {
-	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-	                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-	                var roadAddr = data.roadAddress; // 도로명 주소 변수
-	                var extraRoadAddr = ''; // 참고 항목 변수
-	                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-	                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-	                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-	                    extraRoadAddr += data.bname;
-	                }
-	                // 건물명이 있고, 공동주택일 경우 추가한다.
-	                if(data.buildingName !== '' && data.apartment === 'Y'){
-	                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-	                }
-	                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-	                if(extraRoadAddr !== ''){
-	                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-	                }
-	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                document.getElementById('company_zip2').value = data.zonecode; // 우편번호
-	                document.getElementById('company_address2').value = roadAddr; // 도로명주소
-	                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-	                if(roadAddr !== ''){ // 상세주소
-	                    document.getElementById('company_detail_address2').value = extraRoadAddr;
-	                } else {
-	                    document.getElementById('company_detail_address2').value = '';
-	                }
-	                
-	                var guideTextBox = document.getElementById("guide");
-	                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-	                if(data.autoRoadAddress) {
-	                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-	                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-	                    guideTextBox.style.display = 'block';
-	            	}
-	            }
-	        }).open();
-	    } // 주소 api function end
-	 
-		function upload_flie(){
-		    $('input[type=file]').click();
-		}
 		
 </script>
 <body onload="LoadPage()">
-  <div class="page_title">
-    <span><a class="closeDepth" href="#">closeDepth</a></span> 
-    <span class="title">인사관리> <b>인사기록카드</b></span>
-  </div>
+  
+	<div id="wrapper">
+		<div id="page-wrapper" style="margin: 0px;">
+
+	<!--tab 하단의 메인 타이틀(제목) 들어가는 부분 -->
+	<div class="row">
+		<div class="col-lg-12">        <!-- 해당 메뉴의 아이콘 -->        <!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
+			<h1 class="page-header"><i class="fa fa-users fa-fw"></i> <s:message code="main.per1"/></h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+  
   <div class="main_content">
 		<!-- 버튼 -->
 		<div class="ib_function float_right">
@@ -842,7 +778,9 @@
 			</div>
 		</div>
 	</DIV>
-
+	
+	</div>
+	</div>
 </body>
 <script>
 	var file = document.querySelector('#file');

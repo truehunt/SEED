@@ -107,8 +107,8 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/human/s0003/dept_Enroll.do";
 		            } else if(url === "adSawon_Enroll"){ // 사원등록
 		            	urlToGo = "adSawon_Enroll";
-		            } else if(url === "b5"){
-		            	urlToGo = "b5";
+		            } else if(url === "adSawon_Permission"){ // 사용자권한
+		            	urlToGo = "adSawon_Permission";
 		            // 인적자원관리
 		            } else if(url === "hobong"){
 		            	urlToGo = "/SEED/system/p0001/hobong.do";
@@ -157,22 +157,6 @@ $(document).ready(function(){
 
 	            <ul class="nav navbar-top-links navbar-right">
 	            	
-	            	<!-- /.dropdown-flag -->
-	            	<li class="dropdown">
-	                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-		                    <span class="fa-stack fa-lg"> 
-							<i class="fa fa-circle fa-stack-2x"></i> 
-							<i class="fa fa-flag fa-stack-1x fa-inverse"></i>
-							</span> 
-	                        <i class="fa fa-caret-down"></i>
-	                    </a>
-	                    <ul class="dropdown-menu dropdown-user">
-	                        <li><a href="${pageContext.request.contextPath }/changeLanguage2?lang=ko"><span style="color:blue"><i class="fa fa-flag fa-fw"></i></span>한국어</a></li>
-	                        <li><a href="${pageContext.request.contextPath }/changeLanguage2?lang=en"><span style="color:red"><i class="fa fa-flag fa-fw"></i></span>English</a></li>
-	                    </ul>
-	                    <!-- /.dropdown-flag -->
-	                </li>
-	                
 	                <!-- /.dropdown 알림창 -->
                     <c:if test="${alertcount>0}">
 		                <li class="dropdown">
@@ -207,16 +191,32 @@ $(document).ready(function(){
 							<i class="fa fa-circle fa-stack-2x"></i> 
 							<i class="fa fa-user fa-stack-1x fa-inverse"></i>
 							</span>
+							<c:out value="${sessionScope.SAWON_NAME}"/> 님
 	                        <i class="fa fa-caret-down"></i>
 	                    </a>
 	                    <ul class="dropdown-menu dropdown-user">
-	                        <li><a href="memberForm"><i class="fa fa-user fa-fw"></i> <c:out value="${sessionScope.SAWON_NAME}"/></a></li>
-	                        <li><a href="searchMember"><i class="fa fa-users fa-fw"></i> <s:message code="memu.users"/></a></li>
+	                        <li><a href="memberForm"><i class="fa fa-user fa-fw"></i> 내 정보 보기</a></li>
 	                        <li class="divider"></li>
-	                        <li><a href="/SEED/memberLogout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+	                        <li><a href="searchMember"><i class="fa fa-users fa-fw"></i> 사원 조회</a>
 	                        </li>
 	                    </ul>
                     </li>
+                    
+                    <!-- /.dropdown-flag 언어 선택-->
+	            	<li class="dropdown">
+	                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		                    <span class="fa-stack fa-lg"> 
+							<i class="fa fa-circle fa-stack-2x"></i> 
+							<i class="fa fa-flag fa-stack-1x fa-inverse"></i>
+							</span> 
+	                        <i class="fa fa-caret-down"></i>
+	                    </a>
+	                    <ul class="dropdown-menu dropdown-user">
+	                        <li><a href="${pageContext.request.contextPath }/changeLanguage2?lang=ko"><span style="color:blue"><i class="fa fa-flag fa-fw"></i></span>한국어</a></li>
+	                        <li><a href="${pageContext.request.contextPath }/changeLanguage2?lang=en"><span style="color:red"><i class="fa fa-flag fa-fw"></i></span>English</a></li>
+	                    </ul>
+	                    <!-- /.dropdown-flag -->
+	                </li>
                     
 	                    <!-- /.dropdown 로그아웃 -->
 		                <li class="dropdown">
@@ -360,7 +360,7 @@ $(document).ready(function(){
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll4"/>','chart','adSawon_Enroll','adSawon_Enroll'); return false"><s:message code="main.enroll4"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll5"/>','chart','ss','ss'); return false"><s:message code="main.enroll5"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.enroll5"/>','chart','adSawon_Permission','adSawon_Permission'); return false"><s:message code="main.enroll5"/></a>
 	                                </li>
 	                            </ul>
 	                        </li>

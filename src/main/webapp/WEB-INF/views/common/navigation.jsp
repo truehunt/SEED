@@ -67,6 +67,8 @@ $(document).ready(function(){
 		                urlToGo = "/SEED/schList"; 
 		            } else if(url === "adCodeList"){ // 공통코드관리
 		            	urlToGo = "/SEED/adCodeList"; 
+		            } else if(url === "searchMember"){ // 사원조회(ESS)
+		            	urlToGo = "searchMember";
 		            // 전자결재
 		            } else if(url === "adSignDocTypeList"){ // 결재문서양식관리
 		            	urlToGo = "/SEED/adSignDocTypeList";
@@ -196,9 +198,6 @@ $(document).ready(function(){
 	                    </a>
 	                    <ul class="dropdown-menu dropdown-user">
 	                        <li><a href="memberForm"><i class="fa fa-user fa-fw"></i> 내 정보 보기</a></li>
-	                        <li class="divider"></li>
-	                        <li><a href="searchMember"><i class="fa fa-users fa-fw"></i> 사원 조회</a>
-	                        </li>
 	                    </ul>
                     </li>
                     
@@ -213,6 +212,7 @@ $(document).ready(function(){
 	                    </a>
 	                    <ul class="dropdown-menu dropdown-user">
 	                        <li><a href="${pageContext.request.contextPath }/changeLanguage2?lang=ko"><span style="color:blue"><i class="fa fa-flag fa-fw"></i></span>한국어</a></li>
+	                        <li class="divider"></li>
 	                        <li><a href="${pageContext.request.contextPath }/changeLanguage2?lang=en"><span style="color:red"><i class="fa fa-flag fa-fw"></i></span>English</a></li>
 	                    </ul>
 	                    <!-- /.dropdown-flag -->
@@ -269,8 +269,13 @@ $(document).ready(function(){
                         <li>
                             <a href="#"> ESS</a>
                         </li>
+                        <!-- 내정보보기 -->
                         <li>
                             <a href='#' onClick="doAction(myTab,'<s:message code="main.myinfo"/>','chart','aa','aa'); return false"><i class="fa fa-info-circle fa-fw"></i> <s:message code="main.myinfo"/></a>
+                        </li>
+                        <!-- 사원조회 -->
+                        <li>
+                            <a href='#' onClick="doAction(myTab,'<s:message code="main.userinfo"/>','chart','searchMember','searchMember'); return false"><i class="fa fa-users fa-fw"></i> <s:message code="main.userinfo"/></a>
                         </li>
                         <!-- 일정관리 -->             
                         <li>

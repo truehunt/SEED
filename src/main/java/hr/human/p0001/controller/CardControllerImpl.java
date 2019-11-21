@@ -120,9 +120,7 @@ public class CardControllerImpl implements CardController{
 			request.setCharacterEncoding("utf-8");
 			Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
 			Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
-			System.out.println("1. "+request.getParameter("PK_SAWON_CODE"));
 			// 검색조건설정
-			searchMap.put("PK_SAWON_CODE", request.getParameter("PK_SAWON_CODE"));
 			
 			//데이터 조회
 			List<CardVO> data = p0001Service.ISA(searchMap);

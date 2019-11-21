@@ -33,10 +33,11 @@
 	<script src="${pageContext.request.contextPath}/resources/js/project9.js"></script>    
 <script>
 function fn_formSubmit(){
-	if ( ! chkInputValue("#searchKeyword", "<s:message code="common.keyword"/>")) return false;
+	// if ( ! chkInputValue("#searchKeyword", "<s:message code="common.keyword"/>")) return false;
 	
 	$("#form1").submit();
 }
+
 </script>
 </head>
 
@@ -47,7 +48,7 @@ function fn_formSubmit(){
         <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-users fa-fw"></i> <s:message code="memu.users"/></h1>
+                    <h1 class="page-header"><i class="fa fa-users fa-fw"></i> <s:message code="main.userinfo"/></h1>
                 </div>
             </div>
             
@@ -59,13 +60,15 @@ function fn_formSubmit(){
 							<s:message code="msg.page.inputName"/>
 	                   	</div>
 	                   	<div class="input-group custom-search-form col-lg-3">
-                        	<input class="form-control" placeholder="Search..." type="text" id="searchKeyword" name="searchKeyword" 
+                        	<input class="form-control" placeholder="<s:message code="main.search"/>" type="text" id="searchKeyword" name="searchKeyword" 
                                 	   value='<c:out value="${searchVO.searchKeyword}"/>' >
                             <span class="input-group-btn">
                             <button class="btn btn-default" onclick="fn_formSubmit()"><i class="fa fa-search"></i></button>
                             </span>
                        	</div>
 					</div>
+					<!-- 페이징처리 -->
+					<jsp:include page="../../common/pagingforSubmit.jsp" />
 				</form>	
             </div>
             
@@ -73,17 +76,23 @@ function fn_formSubmit(){
             <div class="row">
 					 <table class="table table-striped table-bordered table-hover">
 						<colgroup>
+							<col width='5%' />
 							<col width='10%' />
-							<col width='25%' />
-							<col width='25%' />
+							<col width='10%' />
+							<col width='15%' />
+							<col width='15%' />
 							<col width='20%' />
+							<col width='15%' />
 						</colgroup>
 						<thead>
 							<tr>
 								<th><s:message code="board.no"/></th> 
 								<th><s:message code="common.id"/></th>
 								<th><s:message code="common.name"/></th>
+								<th>직급</th>
 								<th><s:message code="common.deptName"/></th>
+								<th>이메일주소</th>
+								<th>입사일</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -92,11 +101,15 @@ function fn_formSubmit(){
 									<td><c:out value="${status.index+1}"/></td>
 									<td><c:out value="${listview.PK_SAWON_CODE}"/></td>
 									<td><c:out value="${listview.SAWON_NAME}"/></td>
+									<td><c:out value="${listview.RANK_NAME}"/></td>
 									<td><c:out value="${listview.FK_DEPT_NAME}"/></td>
+									<td><c:out value="${listview.SAWON_EMAIL}"/></td>
+									<td><c:out value="${listview.SAWON_JOIN_DATE}"/></td>
 								</tr>
 							</c:forEach>
 						</tbody>
-					</table>            	
+					</table>
+				
             </div>
             <!-- /.row -->
         </div>

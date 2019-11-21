@@ -17,6 +17,7 @@ public interface CardDAO {
 	 public List<Com_codeVO> COM_CODE(Map<String, Object> searchMap) throws DataAccessException;
 	 public List<CardVO> ISA_cha(Map<String, Object> searchMap) throws DataAccessException;
 	 
+	public void ISA_cha_N(Map<String, Object> searchMap) throws DataAccessException;
 	public void insertData(Map<String, String> row) throws DataAccessException;
 	public void updateData(Map<String, String> row) throws DataAccessException;
 	public void deleteData(Map<String, String> row) throws DataAccessException;

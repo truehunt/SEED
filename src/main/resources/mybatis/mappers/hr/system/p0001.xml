@@ -45,16 +45,21 @@
         SELECT COUNT(*)
           FROM SAWON CU
          WHERE CU.SAWON_USER_STATUS='Y'
-           AND CU.SAWON_NAME LIKE '%'||#{SAWON_NAME}||'%'
+           AND CU.SAWON_NAME LIKE '%'||#{searchKeyword}||'%'
     </select> 
     
     <select id="selectSearchMemberList" parameterType="project.common.SearchVO" resultType="hr.system.p0001.vo.SawonVO" >
-        SELECT USERNO, USERID, USERNM, PHOTO, DEPTNM DEPTNO
-          FROM COM_USER CU
-         INNER JOIN COM_DEPT CD ON CD.DEPTNO=CU.DEPTNO
-         WHERE CU.DELETEFLAG='N' AND CD.DELETEFLAG='N'
-           AND CU.USERNM LIKE CONCAT('%', #{searchKeyword},'%')
-         LIMIT ${rowStart-1}, 10
+       SELECT *
+        FROM (SELECT ROWNUM as NO, PK_SAWON_CODE, SAWON_NAME, RANK_NAME, FK_DEPT_NAME, SAWON_JOIN_DATE, SAWON_EMAIL, SAWON_USER_STATUS
+                FROM SAWON CU
+                INNER JOIN DEPT CD ON CD.PK_DEPT_CODE=CU.FK_DEPT_CODE
+                WHERE CU.SAWON_USER_STATUS='Y'
+                ORDER by PK_SAWON_CODE
+                ) A
+        WHERE A.SAWON_NAME LIKE '%'||#{searchKeyword}||'%'
+       	<if test="rowStart != null">
+			AND A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+        </if>
     </select>
 	
 	<select id="selectMember4Login" parameterType="hr.system.p0001.vo.LoginVO" resultType="hr.system.p0001.vo.SawonVO" >
@@ -624,22 +629,14 @@
 			order By d.pk_dept_code asc
 	</select>
 	
-	<select id="DEsearchList2" resultMap="s0003Result01" parameterType="java.util.Map"> 
-      <![CDATA[
-         select pk_sector_code, sector_name, TO_CHAR(TO_DATE(sector_priodof),'YYYY-MM-DD') as sector_priodof
-         from sector 
-         order By pk_sector_code asc
-      ]]>
-	</select>
-	
 	<update id="DEupdateData" parameterType="java.util.Map">
 		update dept
 		set pk_dept_code = #{pk_dept_code,jdbcType=VARCHAR}
 		   , dept_name = #{dept_name,jdbcType=VARCHAR}
 		   , fk_workplace_code = #{fk_workplace_code,jdbcType=VARCHAR}
-		   , workplace_name = #{workplace_name,jdbcType=VARCHAR}
+		   <!-- , workplace_name = #{workplace_name,jdbcType=VARCHAR} -->
 		   , fk_sector_code = #{fk_sector_code,jdbcType=VARCHAR}
-		   , sector_name = #{sector_name,jdbcType=VARCHAR}
+		   <!-- , sector_name = #{sector_name,jdbcType=VARCHAR} -->
 		   , dept_priodof = #{dept_priodof,jdbcType=VARCHAR}
 		   , dept_int_user_id = #{dept_int_user_id,jdbcType=VARCHAR}
 		   , dept_int_date = #{dept_int_date,jdbcType=TIMESTAMP}
@@ -663,7 +660,49 @@
 		delete dept
 		where pk_dept_code = #{pk_dept_code}
 		and dept_name = #{dept_name}
-	</delete>		
+	</delete>	
+	
+	<!-- 부문등록 -->
+	<select id="DEsearchList2" resultMap="s0003Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select pk_sector_code, sector_name, TO_CHAR(TO_DATE(sector_priodof),'YYYY-MM-DD') as sector_priodof
+         from sector 
+         order By pk_sector_code asc
+      ]]>
+	</select>
+	
+	<update id="DEupdateData2" parameterType="java.util.Map">
+		update sector
+		set pk_sector_code = #{pk_sector_code,jdbcType=VARCHAR}
+		   , sector_name = #{sector_name,jdbcType=VARCHAR}
+		   , sector_priodof = #{sector_priodof,jdbcType=VARCHAR}
+		   		   
+		where pk_sector_code = #{pk_sector_code, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="DEinsertData2" parameterType="java.util.Map">
+		insert into sector(pk_sector_code, sector_name, sector_priodof) 
+			   values(#{pk_sector_code, jdbcType=VARCHAR},#{sector_name, jdbcType=VARCHAR},#{sector_priodof, jdbcType=VARCHAR})
+	</insert>	
+	
+	<delete id="DEdeleteData2" parameterType="java.util.Map">
+		delete sector
+		where pk_sector_code = #{pk_sector_code}
+		and sector_name = #{sector_name}
+	</delete>	
+	
+	<!-- 부문코드도움 -->
+	<!-- DEsearchList2와 같이 사용 -->
+	
+	<!-- 사업장코드도움 -->
+	
+	<select id="DEsearchList3" resultMap="s0003Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select pk_workplace_code, workplace_name
+         from workplace 
+         order By pk_workplace_code asc
+      ]]>
+	</select>		
 	
 	<!-- Sawon Enroll -->
 	<select id="SEsearchList" resultMap="p0001Result01" parameterType="java.util.Map"> 

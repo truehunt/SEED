@@ -18,7 +18,11 @@ public interface deptEnroll_Service {
 	
 	public List<DeptEnroll_VO> searchList2(Map<String, Object> searchMap) throws DataAccessException;
 	
+	public List<DeptEnroll_VO> searchList3(Map<String, Object> searchMap) throws DataAccessException;
+	
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException ;
+	
+	public void saveData2(Map<String, String[]> dataMap)  throws DataAccessException ;
 
 	public void updateMember(Map<String, Object> dataMap);
 

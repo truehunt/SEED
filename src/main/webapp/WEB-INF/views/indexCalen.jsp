@@ -191,18 +191,6 @@ function calendarDayMouseout(){
           </div>
     </div>
     
-    <h1 class="page-header"> <i class="fa fa-music fa-fw"></i> 부서별 휴가 현황</h1>
-     <div id="develop">
-        e-HR의 시스템을 크게 나눌때 HSS, MSS, ESS 세가지로 분류하게 됩니다.
-      HSS는 인사부서 등의 시스템 관리자 사용화면 내지는 시스템이며,
-      MSS는 조직의 관리자(부서장 등)이 쓰는 화면 내지 시스템이며
-      ESS는 일반직원들이 사용하는 화면 내지 시스템입니다.
-      <br>
-      <br>
-      <br>
-      전자결재 메인화면 내용도 여기에 들어갈 예정
-     </div>
-     
 </div>
      
      

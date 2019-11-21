@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 @Component("h_insaCardVO")
 public class CardVO {
+	private String pk_SAWON_CODE;
+	private String sawon_NAME;
+	
 	private String pk_ISA_CODE;
 	private String fk_ISA_SAWON_CODE;
 	private String isa_MOD_USER_ID;

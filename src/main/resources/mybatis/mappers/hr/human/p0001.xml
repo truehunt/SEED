@@ -6,6 +6,9 @@
 <mapper namespace="hr.human.p0001">
 	<!-- 인사기록카드 -->
 	<resultMap id="cardResult01" type="cardVO">
+		<result property="pk_SAWON_CODE" column="pk_SAWON_CODE" />
+		<result property="sawon_NAME" column="sawon_NAME" />
+		
 		<result property="pk_ISA_CODE" column="pk_ISA_CODE" />
 		<result property="fk_ISA_SAWON_CODE" column="fk_ISA_SAWON_CODE" />
 		<result property="isa_MOD_USER_ID" column="isa_MOD_USER_ID" />

@@ -54,6 +54,13 @@ public class CardServiceImpl implements CardService {
 		return list;
 	}
 	
+	@Override
+	public List<CardVO> ISA_cha_N(Map<String, Object> searchMap) throws DataAccessException {
+		p0001DAO.ISA_cha_N(searchMap); 
+		List<CardVO> list =  p0001DAO.ISA(searchMap);
+		return list;
+	}
+	
 	
 	//
 	@Override

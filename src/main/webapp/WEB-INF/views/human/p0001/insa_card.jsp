@@ -836,19 +836,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<link rel="stylesheet" href="${contextPath}/resources/css/style.css"> 
-<link rel="stylesheet" href="${contextPath}/resources/css/ibtab-style.min.css">
-
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
-<script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/ibsheet/ibtab.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/ibsheet/ibtabinfo.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 
 <!-- 우편번호 관련된 script 추가 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<link rel="stylesheet" href="${contextPath}/resources/css/style.css"> 
+<link rel="stylesheet" href="${contextPath}/resources/css/ibtab-style.min.css">
 
 <!-- popup관련 -->
 <link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">

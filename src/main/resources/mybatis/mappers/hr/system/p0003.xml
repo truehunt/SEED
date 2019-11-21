@@ -220,10 +220,10 @@
     
     <!-- chart -->
     <select id="selectBoardGroupCount4Statistic" resultType="project.common.CountVO" >
-        SELECT DOCTYPE_DTTITLE as FIELD1, COUNT(*) as CNT1 
-          FROM DOCTYPE
-         WHERE DOCTYPE_DELETEFLAG='N'
-         GROUP BY DOCTYPE_DTTITLE
+        SELECT FK_DEPT_NAME as FIELD1, count(*) as CNT1
+        FROM SAWON S, HOLIDAY H
+        WHERE S.PK_SAWON_CODE=H.FK_HOLIDAY_SAWON_CODE
+        GROUP BY FK_DEPT_NAME
     </select> 
     
     <!-- 전자결재목록 -->

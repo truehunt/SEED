@@ -163,24 +163,7 @@ public class CardControllerImpl implements CardController{
 			return resultMap;
 		}
 		
-//		// 인사기록카드_채용/거주_ json
-//				@Override
-//				@RequestMapping(value = "/human/p0001/ISA_cha.do", method = { RequestMethod.GET, RequestMethod.POST })
-//				@ResponseBody
-//				public Map ISA_cha(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//					request.setCharacterEncoding("utf-8");
-//					Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
-//					Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
-//					// 검색조건설정
-//
-//					// 데이터 조회
-//					List<CardVO> data = p0001Service.ISA_cha(searchMap);
-//					resultMap.put("Data", data);
-//
-//					return resultMap;
-//				}
-				
-				// 인사기록카드_채용/거주_ json
+		// 인사기록카드_채용/거주_ json
 				@Override
 				@RequestMapping(value = "/human/p0001/ISA_cha.do", method = { RequestMethod.GET, RequestMethod.POST })
 				@ResponseBody
@@ -189,17 +172,23 @@ public class CardControllerImpl implements CardController{
 					Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
 					Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
 					// 검색조건설정
-					System.out.println("1."+request.getParameter("isa_HIRE_CODE"));
-					System.out.println("2."+request.getParameter("ISA_NUM"));
-					System.out.println("3."+request.getParameter("isa_MARRIAGE_CODE"));
+					searchMap.put("fk_ISA_SAWON_CODE", request.getParameter("fk_ISA_SAWON_CODE"));
+					searchMap.put("pk_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
+
 					// 데이터 조회
-					List<CardVO> data = p0001Service.ISA_cha(searchMap);
-					resultMap.put("Data", data);
+					if("".equals(request.getParameter("fk_ISA_SAWON_CODE"))) {
+						List<CardVO> data = p0001Service.ISA_cha_N(searchMap);
+						resultMap.put("Data", data);
+					}else {
+						List<CardVO> data = p0001Service.ISA_cha(searchMap);
+						resultMap.put("Data", data);
+					}
+					
+					
 
 					return resultMap;
 				}
-		
-	
+				
 			
 	@Override
 	@RequestMapping(value = "/human/p0001/insertData.do", method = { RequestMethod.GET, RequestMethod.POST })

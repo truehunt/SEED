@@ -151,11 +151,7 @@
          WHERE PK_DOCTYPE_NUM=#{PK_DOCTYPE_NUM} 
     </delete>
 
-	<!-- 인사기록카드 사원목록 -->
-	<select id="ISA" resultMap="p0001Result01" parameterType="java.util.Map"> 
-    	SELECT PK_SAWON_CODE, SAWON_NAME
-          FROM SAWON 
-    </select> 
+	
 	
 		<!-- 인사코드 -->
 	<resultMap id="codeResult01" type="insaCodeVO">

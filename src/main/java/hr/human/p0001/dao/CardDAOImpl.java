@@ -62,14 +62,17 @@ public class CardDAOImpl implements CardDAO {
 	//
 	@Override
 	public void insertData(Map<String, String> row) throws DataAccessException {
+		System.out.println(row);
 		sqlSession.update("hr.human.p0001.insertData", row);
 	}
 	@Override
 	public void updateData(Map<String, String> row) throws DataAccessException {
+		System.out.println(row);
 		sqlSession.update("hr.human.p0001.updateData", row);
 	}
 	@Override
 	public void deleteData(Map<String, String> row) throws DataAccessException {
+		System.out.println(row);
 		sqlSession.update("hr.human.p0001.deleteData", row);
 	}
 	

@@ -37,7 +37,7 @@ public class ChjControllerImpl implements ChjController{
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
 		// 검색조건설정
-		searchMap.put("fk_ASS_SAWON_CODE", request.getParameter("fk_ASS_SAWON_CODE")); 
+		searchMap.put("fk_CHJ_SAWON_CODE", request.getParameter("fk_CHJ_SAWON_CODE")); 
 
 		//데이터 조회
 		List<ChjVO> data = p0001Service.ISA_chj(searchMap);

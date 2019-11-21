@@ -56,48 +56,43 @@
 		</where>
 	</select>
 	
-	<select id="outPut" resultMap="cardResult01" parameterType="java.util.Map"> 
-      <![CDATA[
-         select PK_PERSON_BC_CODE_NUM, PERSON_BC_MNGEMENT_NAME, PERSON_BC_MODIFY_WHE
-         from   PERSON_BC
-      ]]>
-		<where>
-			<if test="person_BC_OUTPUT != '' and person_BC_OUTPUT != null">
-				person_BC_OUTPUT = #{person_BC_OUTPUT}
-			</if>
-		</where>
-		<![CDATA[
-			ORDER BY pk_PERSON_BC_CODE_NUM asc
-		]]>
-	</select>
-	
-	<select id="deTai" resultMap="cardResult01" parameterType="java.util.Map"> 
-      <![CDATA[
-         select PK_PERSON_BC_DETAI_CODE_NUM, PERSON_BC_DETAI_MNGEMENT_NAME, PERSON_BC_DETAI_REMARKS, PERSON_BC_DETAI_NOT_USE, fk_PERSON_BC_CODE_NUM
-         from   PERSON_BC_DETAI
-      ]]>
-		<where>
-			<if test="fk_PERSON_BC_CODE_NUM != '' and fk_PERSON_BC_CODE_NUM != null">
-				fk_PERSON_BC_CODE_NUM = #{fk_PERSON_BC_CODE_NUM}
-			</if>
-		</where>
-	</select>
-	 
-	<select id="ISA_cha" resultMap="cardResult01" parameterType="java.util.Map"> 
-      <![CDATA[
-         select isa_hanja_name, ISA_HIRE_CODE, ISA_NUM,
-			ISA_ADDRESS, ISA_PERMANENT_ADDR, ISA_MARRIAGE_CODE,
-			ISA_HOUSE_CODE, ISA_LIVING_CODE, ISA_ESTATE,
-			ISA_MOVABLES, ISA_SUM, ISA_GEONPYEONG, ISA_SITE, 
-			ISA_RELIGION_CODE, ISA_HOBBY_CODE, ISA_SPECIALTY_CODE
-			from ISA
-      ]]>
-		<where>
-			<if test="fk_PERSON_BC_CODE_NUM != '' and fk_PERSON_BC_CODE_NUM != null">
-				fk_PERSON_BC_CODE_NUM = #{fk_PERSON_BC_CODE_NUM}
-			</if>
-		</where>
-	</select>
+	<!-- 인사기록카드 사원목록 -->
+   <select id="ISA" resultMap="cardResult01" parameterType="java.util.Map"> 
+       SELECT i.fk_isa_sawon_code, s.pk_sawon_code, s.sawon_name
+        FROM ISA i, sawon s
+       WHERE i.fk_isa_sawon_code(+) = s.pk_sawon_code
+       ORDER BY s.pk_sawon_code ASC 
+    </select>      
+     
+    <select id="ISA_cha_N" resultMap="cardResult01" parameterType="java.util.Map"> 
+       insert ALL into ISA(fk_isa_sawon_code)
+      values(pk_sawon_code)
+          select pk_sawon_code
+          from sawon s, isa i 
+          where s.pk_sawon_code = i.fk_isa_sawon_code(+) 
+          and i.fk_isa_sawon_code IS NULL
+    </select>    
+    
+   <select id="ISA_cha" resultMap="cardResult01" parameterType="java.util.Map"> 
+         <![CDATA[
+               select fk_ISA_SAWON_CODE, isa_hanja_name, ISA_HIRE_CODE, ISA_NUM,
+               ISA_ADDRESS, ISA_PERMANENT_ADDR, ISA_MARRIAGE_CODE,
+               ISA_HOUSE_CODE, ISA_LIVING_CODE, ISA_ESTATE,
+               ISA_MOVABLES, ISA_SUM, ISA_GEONPYEONG, ISA_SITE, 
+               ISA_RELIGION_CODE, ISA_HOBBY_CODE, ISA_SPECIALTY_CODE
+            from ISA
+            ]]> 
+         <where>
+            <choose>
+               <when test="fk_ISA_SAWON_CODE != '' and fk_ISA_SAWON_CODE != null">
+                  fk_ISA_SAWON_CODE = #{fk_ISA_SAWON_CODE}
+               </when>
+               <otherwise>
+                  fk_ISA_SAWON_CODE = #{pk_SAWON_CODE}
+               </otherwise>
+            </choose>
+         </where> 
+   </select>
 
 	<update id="updateData" parameterType="java.util.Map">
 		update PERSON_BC_DETAI

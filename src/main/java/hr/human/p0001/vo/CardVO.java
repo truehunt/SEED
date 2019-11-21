@@ -31,6 +31,7 @@ public class CardVO {
 	private String isa_RELIGION_CODE;
 	private String isa_HOBBY_CODE;
 	private String isa_SPECIALTY_CODE;
+	
 	private String isa_MILITARY_CODE;
 	private String isa_MYEONJE;
 	private String isa_MIL_NUM;
@@ -46,6 +47,32 @@ public class CardVO {
 	public CardVO() {
 		System.out.println("CardVO 메서드 호출");
 	}
+
+	
+	
+	public String getPk_SAWON_CODE() {
+		return pk_SAWON_CODE;
+	}
+
+
+
+	public void setPk_SAWON_CODE(String pk_SAWON_CODE) {
+		this.pk_SAWON_CODE = pk_SAWON_CODE;
+	}
+
+
+
+	public String getSawon_NAME() {
+		return sawon_NAME;
+	}
+
+
+
+	public void setSawon_NAME(String sawon_NAME) {
+		this.sawon_NAME = sawon_NAME;
+	}
+
+
 
 	public String getPk_ISA_CODE() {
 		return pk_ISA_CODE;

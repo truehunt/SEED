@@ -23,11 +23,6 @@ public interface day_regist_Controller {
 	public ModelAndView mon_deadline(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView deadline(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView inquery(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView holiday(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView holiday_calc(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView business(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView outside(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	//public ModelAndView select(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	
 	//��� 

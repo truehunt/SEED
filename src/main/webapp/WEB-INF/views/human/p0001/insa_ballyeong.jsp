@@ -7,11 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="${contextPath}/resources/css/style.css"> 
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
-<script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+<link rel="stylesheet" href="${contextPath}/resources/css/style.css">
 
 <script language="javascript">
    var pageheightoffset = 200;

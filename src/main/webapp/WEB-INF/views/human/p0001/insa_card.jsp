@@ -8,19 +8,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<link rel="stylesheet" href="${contextPath}/resources/css/style.css"> 
-<link rel="stylesheet" href="${contextPath}/resources/css/ibtab-style.min.css">
-
-<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
-<script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/ibsheet/ibtab.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/ibsheet/ibtabinfo.js"></script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 
 <!-- 우편번호 관련된 script 추가 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<link rel="stylesheet" href="${contextPath}/resources/css/style.css"> 
+<link rel="stylesheet" href="${contextPath}/resources/css/ibtab-style.min.css">
 
 <!-- popup관련 -->
 <link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
@@ -71,7 +70,38 @@
          	{Header:"",Type:"DummyCheck", SaveName:"chk", Width:35, Align:"Center",Edit:1,HeaderCheck:1},
          	//{Header: "이미지", Type: "Image",SaveName:"productImage",Width:100,  Align: "Center",ImgWidth:60,ImgHeight:20},
 		 	{Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:60,Align:"Center"},
-		 	{Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:50, Edit:0}
+		 	{Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:50, Edit:0},
+		 	
+		 	{Header:"",Type:"Text",SaveName:"fk_ISA_SAWON_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_HANJA_NAME",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_HIRE_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_NUM",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_ADDRESS",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_PERMANENT_ADDR",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_MARRIAGE_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_HOUSE_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_LIVING_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_ESTATE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_MOVABLES",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_SUM",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_GEONPYEONG",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_SITE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_RELIGION_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_HOBBY_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_SPECIALTY_CODE",Width:60,Align:"Center"},
+		 	
+		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_MYEONJE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_MIL_NUM",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_MILI_STA_DATE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_MILI_END_DATE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_POS_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_GUNBYEOL_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_BOTS_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_YEBIGUN_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_DISCHARGE_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CLASS_CODE",Width:60,Align:"Center"}
+		 	
       	];
       	IBS_InitSheet(mySheet,initData);
       	mySheet.SetDataAutoTrim(0);
@@ -274,16 +304,19 @@
 		fk_ass_sawon_code = "fk_ASS_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
 		fk_chj_sawon_code = "fk_CHJ_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
 		fk_sb_sawon_code = "fk_SB_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
-		x = mySheet.GetCellValue(row, 2);
+		// fk_sawon_code로 줄이고 controller - service 에서도 고칠 것
 		
+		x = mySheet.GetCellValue(row, 2);
+		y = mySheet.GetCellValue(row, 4);
 		ISA();
+		
 		
 		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
 		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
 		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
 		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
 		
-		//mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
+// 		//mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
 		mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
 		mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
 		mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
@@ -307,8 +340,7 @@
 	            
 // 	            var param = document.getElementById("ISA_NUM").value;
 				var param = FormQueryStringEnc(document.frm);
-	            alert(param);
-	            mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/ISA_cha.do", param);
+	            mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/insertData.do", param);
 	            
 	            
 	            
@@ -352,6 +384,7 @@
 	            break; 
 	         case "list":
 	             mySheet.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA.do");
+// 	             mySheet.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cha.do");
 	        	 break;
 	      }
 	   }
@@ -512,8 +545,24 @@
 			url : "${contextPath}/human/p0001/ISA_cha.do",//목록을 조회 할 url
 			type : "POST",
 			dataType : "JSON",
+			data: {"fk_ISA_SAWON_CODE":y, "pk_SAWON_CODE":x},
 			success : function(data) {
-				 $('input[id=ISA_HANJA_NAME]').val(data['Data'][0].isa_HANJA_NAME);
+				 	$('input[id=ISA_HANJA_NAME]').val(data['Data'][0].isa_HANJA_NAME);
+				 	$('select[id=isa_HIRE_CODE]').val(data['Data'][0].isa_HIRE_CODE); // select
+				 	$('input[id=isa_NUM]').val(data['Data'][0].isa_NUM);
+				 	$('input[id=isa_ADDRESS]').val(data['Data'][0].isa_ADDRESS);
+				 	$('input[id=isa_PERMANENT_ADDR]').val(data['Data'][0].isa_PERMANENT_ADDR);
+				 	$('select[id=isa_MARRIAGE_CODE]').val(data['Data'][0].isa_MARRIAGE_CODE);
+				 	$('select[id=isa_HOUSE_CODE]').val(data['Data'][0].isa_HOUSE_CODE);
+				 	$('select[id=isa_LIVING_CODE]').val(data['Data'][0].isa_LIVING_CODE);
+				 	$('input[id=isa_ESTATE]').val(data['Data'][0].isa_ESTATE);
+				 	$('input[id=isa_MOVABLES]').val(data['Data'][0].isa_MOVABLES);
+				 	$('input[id=isa_SUM]').val(data['Data'][0].isa_SUM);
+				 	$('input[id=isa_GEONPYEONG]').val(data['Data'][0].isa_GEONPYEONG);
+				 	$('input[id=isa_SITE]').val(data['Data'][0].isa_SITE);
+				 	$('select[id=isa_RELIGION_CODE]').val(data['Data'][0].isa_RELIGION_CODE);
+				 	$('select[id=isa_HOBBY_CODE]').val(data['Data'][0].isa_HOBBY_CODE);
+				 	$('select[id=isa_SPECIALTY_CODE]').val(data['Data'][0].isa_SPECIALTY_CODE);
 			},
 			error : function(jqxhr, status, error) {
 				alert("aaaaaaaaaaaa");

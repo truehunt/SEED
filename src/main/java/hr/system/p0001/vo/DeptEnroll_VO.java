@@ -14,7 +14,7 @@ public class DeptEnroll_VO {
 
 	private String pk_dept_code; // 부서코드
 	private String dept_name; // 부서 명
-	private String workplace_code; // 사업장 코드
+	private String fk_workplace_code; // 사업장 코드
 	private String workplace_name; // 사업장 명
 	private String fk_sector_code; // 부문코드
 	private String sector_name; // 부문 명
@@ -25,6 +25,9 @@ public class DeptEnroll_VO {
 	private String dept_mod_user_id; // 수정자
 	private Timestamp dept_mod_date; // 수정일시
 	
+	private String pk_sector_code; // 부문코드 
+	private String sector_priodof; // 부문 사용기간
+
 	public DeptEnroll_VO() {
 		System.out.println("DeptEnroll_VO 생성");
 	}
@@ -47,12 +50,12 @@ public class DeptEnroll_VO {
 		this.dept_name = dept_name;
 	}
 
-	public String getworkplace_code() {
-		return workplace_code;
+	public String getFk_workplace_code() {
+		return fk_workplace_code;
 	}
 
-	public void setworkplace_code(String workplace_code) {
-		this.workplace_code = workplace_code;
+	public void setFk_workplace_code(String fk_workplace_code) {
+		this.fk_workplace_code = fk_workplace_code;
 	}
 
 	public String getWorkplace_name() {
@@ -117,6 +120,22 @@ public class DeptEnroll_VO {
 
 	public void setDept_mod_date(Timestamp dept_mod_date) {
 		this.dept_mod_date = dept_mod_date;
+	}
+	
+	public String getPk_sector_code() {
+		return pk_sector_code;
+	}
+
+	public void setPk_sector_code(String pk_sector_code) {
+		this.pk_sector_code = pk_sector_code;
+	}
+
+	public String getSector_priodof() {
+		return sector_priodof;
+	}
+
+	public void setSector_priodof(String sector_priodof) {
+		this.sector_priodof = sector_priodof;
 	}
 
 }

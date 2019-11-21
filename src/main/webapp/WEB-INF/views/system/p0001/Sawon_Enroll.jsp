@@ -14,10 +14,11 @@
 	
 	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 	
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css"> 
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
+	<script src="${pageContext.request.contextPath}/resources/ibsheet/ibleaders.js"></script> 
 	<script src="${pageContext.request.contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/ibsheet/ibsheet.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/ibsheet/ibleaders.js"></script>
+	
 	
 	<link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css" rel="stylesheet">
@@ -67,6 +68,10 @@
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
+		
+		// ibsheet 버전 확인
+		//alert(mySheet.Version()); 
+		 
 	}
 	
 	/*Sheet 각종 처리*/

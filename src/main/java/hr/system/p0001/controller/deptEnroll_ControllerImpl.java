@@ -92,6 +92,24 @@ public class deptEnroll_ControllerImpl implements deptEnroll_Controller {
    }
    
    @Override
+   @RequestMapping(value = "/human/s0003/searchList2.do", method = { RequestMethod.GET, RequestMethod.POST })
+   @ResponseBody
+   public Map searchList2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+      request.setCharacterEncoding("utf-8");
+      Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+      Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+      
+      // 검색조건설정
+      //searchMap.put("pk_company_code", request.getParameter("p_id"));
+      
+      //데이터 조회
+      List<DeptEnroll_VO> data = deptEnroll_Service.searchList2(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+   }
+   
+   @Override
    @RequestMapping(value = "/human/s0003/insertData.do", method = { RequestMethod.GET, RequestMethod.POST })
    @ResponseBody
    public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {

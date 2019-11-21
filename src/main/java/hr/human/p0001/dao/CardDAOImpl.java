@@ -30,7 +30,7 @@ public class CardDAOImpl implements CardDAO {
 	
 	@Override
 	public List<CardVO> ISA(Map<String, Object> searchMap) throws DataAccessException {
-		List<CardVO> list = sqlSession.selectList("hr.system.p0001.ISA",searchMap);
+		List<CardVO> list = sqlSession.selectList("hr.human.p0001.ISA",searchMap);
 		return list;
 	}
 
@@ -49,7 +49,6 @@ public class CardDAOImpl implements CardDAO {
 	
 	@Override
 	public List<CardVO> ISA_cha(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println(searchMap);
 		List<CardVO> list = sqlSession.selectList("hr.human.p0001.ISA_cha",searchMap);
 		return list;
 	}
@@ -58,14 +57,17 @@ public class CardDAOImpl implements CardDAO {
 	//
 	@Override
 	public void insertData(Map<String, String> row) throws DataAccessException {
+		System.out.println(row);
 		sqlSession.update("hr.human.p0001.insertData", row);
 	}
 	@Override
 	public void updateData(Map<String, String> row) throws DataAccessException {
+		System.out.println(row);
 		sqlSession.update("hr.human.p0001.updateData", row);
 	}
 	@Override
 	public void deleteData(Map<String, String> row) throws DataAccessException {
+		System.out.println(row);
 		sqlSession.update("hr.human.p0001.deleteData", row);
 	}
 	

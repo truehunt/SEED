@@ -30,6 +30,12 @@ public class deptEnroll_ServiceImpl implements deptEnroll_Service {
    }
    
    @Override
+   public List<DeptEnroll_VO> searchList2(Map<String, Object> searchMap) throws DataAccessException {
+      List<DeptEnroll_VO> list =  deptEnroll_DAO.searchList2(searchMap); 
+      return list;
+   }
+   
+   @Override
    public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
       String[] status = dataMap.get("STATUS");
       int length = status.length; // row��

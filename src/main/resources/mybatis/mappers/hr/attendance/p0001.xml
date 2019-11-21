@@ -140,9 +140,6 @@
 			</if>
 		
 			<if test="option != '' and option != null">
-				<if test="option = '선택해주세요'">
-				and daily_ta_dept_name = ''
-				</if>
 					and daily_ta_dept_name = #{option}
 			</if>
 		</where>

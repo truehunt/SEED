@@ -24,6 +24,6 @@ ibleaders = {
      * licenseType이 "file" 일 경우 라이선스 파일 명을 기입한다.
      */
     // license: "license",
-    license: ""
+    license: "W2FtSztPKCVzaDYyYjJxbn8QY0I6RjNzJyZmej5jMn8gIxonWD1XYS4gLDRpM2wraGk/Sj5DKFonPXliMHstfDtvOz9TMEskV2UxMno0eyhwaj4zf0gmTi4PID18fjV+JzRqdDFtSDVZaB8oYjxhOGhgLXYvfW1aIhttRjNjNWwnI2ljNmwyaVt+Dz1TcjxqbW0/M2g4ciR+EHRKNE0pdC85eXs8f3c5bjUbMUc/RyZwcjMqaTVlP2NhIFYiSCwbfXB4YThkOnwmLn1zUjBFJUFtPjR7K286MjNsLnZAOVkuF2N7MH89cSEiYns1bFchSypGen81aSd/YDAzaTFsUi0ae046ZCttLSclPXt3NmMWZBE2SD9lJnA="
 
 };

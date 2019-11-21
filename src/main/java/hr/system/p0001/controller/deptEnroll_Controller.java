@@ -18,6 +18,8 @@ public interface deptEnroll_Controller {
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
+	public Map searchList2(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
 	public ModelAndView dept_Enroll(HttpServletRequest request, HttpServletResponse response) throws Exception;//사업장등록	
 	
 }

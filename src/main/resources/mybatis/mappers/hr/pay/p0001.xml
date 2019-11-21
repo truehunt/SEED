@@ -29,6 +29,8 @@
       <result property="d_B_PAYMENT_DT" column="d_B_PAYMENT_DT"/>
       
       <result property="pk_D_B_PAYMENT_SEQ_CODE" column="pk_D_B_PAYMENT_SEQ_CODE"/>
+      <result property="workplace_NAME" column="workplace_NAME"/>
+      <result property="workplace_INQUIRY_CODE" column="workplace_INQUIRY_CODE"/>
       
       
    </resultMap>
@@ -54,19 +56,23 @@
    <select id="searchList" resultMap="TA_inputResult01" parameterType="java.util.Map">
       <![CDATA[
          select a.pk_sawon_code, a.sawon_name
-         from SAWON a, DEPT b
+         from SAWON a, DEPT b, workplace c
          
       ]]>
       <where>
-            a.fk_dept_code = b.pk_dept_code
-       and a.fk_sawon_workplace_code = b.fk_workplace_code
+                a.fk_SAWON_WORKPLACE_CODE = c.pk_workplace_code
+            and   a.fk_dept_code = b.pk_dept_code
             
-            <if test="FK_WORKPLACE_CODE != null">
-                  and FK_SAWON_WORKPLACE_CODE = #{FK_WORKPLACE_CODE}
-         </if>
-            <if test="PK_DEPT_CODE != null">
-                  and FK_DEPT_CODE = #{PK_DEPT_CODE}
-         </if>
+            <if test="PK_WORKPLACE_CODE != null">
+                  and FK_SAWON_WORKPLACE_CODE = #{PK_WORKPLACE_CODE}
+<!--                   이거는 사업장 -->
+            </if>
+            
+            <if test="FK_DEPT_CODE != null">
+                  and FK_DEPT_CODE = #{FK_DEPT_CODE}
+<!--                   여기는 부서 -->
+<!--                PK_DEPT_CODE 대신에    DEPT_WORKPLACE_CODE  -->
+            </if>
          
       </where>
    </select>
@@ -80,11 +86,12 @@
       ]]>
       <where>
            a.pk_sawon_code = b.FK_TA_TOTAL_SAWON_CODE
-       and ta_TOTAL_PAYMENTDAY = #{TA_TOTAL_PAYMENTDAY, jdbcType=VARCHAR}
            
+         <if test="PK_SAWON_CODE != null">
+                  and PK_SAWON_CODE = #{PK_SAWON_CODE}
+         </if>
          
-         
-          
+      
       </where>
    </select>
    
@@ -98,13 +105,14 @@
    
    <select id="deptList" resultMap="TA_inputResult01" parameterType="java.util.Map">
       <![CDATA[
-         select dept_name, PK_DEPT_CODE
-         from dept d, WORKPLACE w
+         select workplace_NAME, PK_WORKPLACE_CODE
+           from WORKPLACE
       ]]>
       <where>
-         FK_WORKPLACE_CODE = w.FK_WORKPLACE_CODE2
-         and w.FK_WORKPLACE_CODE2 = #{pk_WORKPLACE_CODE, jdbcType=VARCHAR}
          
+         <if test="pk_WORKPLACE_CODE != null">
+            workplace_INQUIRY_CODE = #{pk_WORKPLACE_CODE}
+         </if>
       </where>
    </select>
    

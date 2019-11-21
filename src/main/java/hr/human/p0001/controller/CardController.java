@@ -24,4 +24,5 @@ public interface CardController {
 	public Map ISA(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map ISA_c(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map COM_CODE(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map ISA_cha(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

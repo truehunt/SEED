@@ -49,6 +49,7 @@ public class SawonEnrollControllerImpl implements SawonEnrollController {
 		
 		// 검색조건설정
 		searchMap.put("SAWON_NAME", request.getParameter("SAWON_NAME"));
+		searchMap.put("SelectDeptCode", request.getParameter("SelectDeptCode"));
 		
 		//데이터 조회
 		List<SawonVO> data = sawonEnrollService.searchList(searchMap);

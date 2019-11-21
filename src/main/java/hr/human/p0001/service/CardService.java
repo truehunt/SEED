@@ -19,6 +19,7 @@ public interface CardService {
 	 public List<CardVO> ISA(Map<String, Object> searchMap) throws DataAccessException;
 	 public List<CardVO> ISA_c(Map<String, Object> searchMap) throws DataAccessException;
 	 public List<Com_codeVO> COM_CODE(Map<String, Object> searchMap) throws DataAccessException;
-
+	 public List<CardVO> ISA_cha(Map<String, Object> searchMap) throws DataAccessException;
+	 
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException ;
 }

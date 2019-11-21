@@ -101,13 +101,12 @@
 		
 		createIBSheet2($("#ib-container1")[0],"mySheet4", "100%", "300px");
        	IBS_InitSheet(mySheet4,initData);
-		mySheet4.DataInsert();
 		
-		//숨김
-		mySheet4.SetColHidden([
-	      {Col: 0, Hidden:1}, //상태
-	      {Col: 3, Hidden:1} // pk값
-	    ]);
+// 		//숨김
+// 		mySheet4.SetColHidden([
+// 	      {Col: 0, Hidden:1}, //상태
+// 	      {Col: 3, Hidden:1} // pk값
+// 	    ]);
        	
 		//mySheet5 //학력
        	initData.Cols = [
@@ -129,13 +128,12 @@
 	
        	createIBSheet2($("#ib-container2")[0],"mySheet5", "100%", "300px");
        	IBS_InitSheet(mySheet5,initData);
-       	mySheet5.DataInsert();
        	
-       	//숨김
-       	mySheet5.SetColHidden([
-  	      {Col: 0, Hidden:1}, //상태
-  	      {Col: 3, Hidden:1} // pk값
-  	    ]);
+//        	//숨김
+//        	mySheet5.SetColHidden([
+//   	      {Col: 0, Hidden:1}, //상태
+//   	      {Col: 3, Hidden:1} // pk값
+//   	    ]);
        	
 		//mySheet6 //경력
         initData.Cols = [
@@ -156,13 +154,12 @@
          
         createIBSheet2($("#ib-container3")[0],"mySheet6", "100%", "300px");
 		IBS_InitSheet(mySheet6,initData);
-		mySheet6.DataInsert();
 		
-		//숨김
-       	mySheet6.SetColHidden([
-  	     // {Col: 0, Hidden:1}, //상태
-  	      //{Col: 3, Hidden:1} // pk값
-  	    ]);
+// 		//숨김
+//        	mySheet6.SetColHidden([
+//   	     // {Col: 0, Hidden:1}, //상태
+//   	      //{Col: 3, Hidden:1} // pk값
+//   	    ]);
 		
 		//mySheet7 //면허/자격
         initData.Cols = [
@@ -180,13 +177,12 @@
           
         createIBSheet2($("#ib-container4")[0],"mySheet7", "100%", "300px");
         IBS_InitSheet(mySheet7,initData);
-        mySheet7.DataInsert();
         
-    	//숨김
-       	mySheet7.SetColHidden([
-  	      {Col: 0, Hidden:1}, //상태
-  	      {Col: 3, Hidden:1} // pk값
-  	    ]);
+//     	//숨김
+//        	mySheet7.SetColHidden([
+//   	      {Col: 0, Hidden:1}, //상태
+//   	      {Col: 3, Hidden:1} // pk값
+//   	    ]);
         
 		//mySheet8 //인사발령
 		initData.Cols = [
@@ -224,44 +220,47 @@
            
 		createIBSheet2($("#ib-container6")[0],"mySheet9", "100%", "300px");
 		IBS_InitSheet(mySheet9,initData);
-		mySheet9.DataInsert();
 		
 		//mySheet10 //출장
 		initData.Cols = [
-			{Header:"NO",Type:"Status",SaveName:"Seq", Align:"Center"},
-			{Header:"출장국가",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"출장지",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"시작일",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"종료일",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"항공료",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"본인부담",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"회사부담",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"기타비용",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"총비용",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"목적",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+			{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
+        	{Header:"NO",Type:"Seq", Align:"Center"},
+        	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
+        	{Header:"출장코드",Type:"Text",SaveName:"pk_CHJ_CODE", Align:"Center"},
+			{Header:"출장국가",Type:"Text", SaveName:"chj_COUNTRY_CODE", Width:60, Align:"Center"},
+			{Header:"출장지",Type:"Text", SaveName:"chj_AREA", Width:60, Align:"Center"},
+			{Header:"시작일",Type:"Text", SaveName:"chj_STA_YMD", Width:60, Align:"Center"},
+			{Header:"종료일",Type:"Text", SaveName:"chj_END_YMD", Width:60, Align:"Center"},
+			{Header:"항공료",Type:"Text", SaveName:"chj_AIRFARE", Width:60, Align:"Center"},
+			{Header:"본인부담",Type:"Text", SaveName:"chj_OWN", Width:60, Align:"Center"},
+			{Header:"회사부담",Type:"Text", SaveName:"chj_COMPANY", Width:60, Align:"Center"},
+			{Header:"기타비용",Type:"Text", SaveName:"chj_OTHER", Width:60, Align:"Center"},
+			{Header:"총비용",Type:"Text", SaveName:"chj_TOTAL", Width:60, Align:"Center"},
+			{Header:"목적",Type:"Text", SaveName:"chj_PURPOSE", Width:60, Align:"Center"},
 		];
            
 		createIBSheet2($("#ib-container7")[0],"mySheet10", "100%", "300px");
 		IBS_InitSheet(mySheet10,initData);
-		mySheet10.DataInsert();
 		
 		//mySheet11 //상벌관리
 		initData.Cols = [
-			{Header:"NO",Type:"Status",SaveName:"Seq", Align:"Center"},
-			{Header:"구분",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"포상/징계명",Type:"Text", SaveName:"sPos", Width:100, Align:"Center"},
-			{Header:"포상/징계일",Type:"Text", SaveName:"sPos", Width:100, Align:"Center"},
-			{Header:"포상/징계내역",Type:"Text", SaveName:"sPos", Width:100, Align:"Center"},
-			{Header:"시행처",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"금액",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-			{Header:"징계시작일",Type:"Text", SaveName:"sPos", Width:100, Align:"Center"},
-			{Header:"징계종료일",Type:"Text", SaveName:"sPos", Width:100, Align:"Center"},
-			{Header:"비고",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+			{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
+        	{Header:"NO",Type:"Seq", Align:"Center"},
+        	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
+        	{Header:"상벌코드",Type:"Text",SaveName:"pk_SB_CODE", Align:"Center"},
+			{Header:"구분",Type:"Text", SaveName:"sb_DIVISION", Width:60, Align:"Center"},
+			{Header:"포상/징계명",Type:"Text", SaveName:"sb_NAME", Width:100, Align:"Center"},
+			{Header:"포상/징계일",Type:"Text", SaveName:"sb_DATE", Width:100, Align:"Center"},
+			{Header:"포상/징계내역",Type:"Text", SaveName:"sb_DETAILS", Width:100, Align:"Center"},
+			{Header:"시행처",Type:"Text", SaveName:"sb_SIHAENGCHEO", Width:60, Align:"Center"},
+			{Header:"금액",Type:"Text", SaveName:"sb_AMOUNT", Width:60, Align:"Center"},
+			{Header:"징계시작일",Type:"Text", SaveName:"sb_STA_DATE", Width:100, Align:"Center"},
+			{Header:"징계종료일",Type:"Text", SaveName:"sb_END_DATE", Width:100, Align:"Center"},
+			{Header:"비고",Type:"Text", SaveName:"sb_NOTE", Width:60, Align:"Center"}
 		];
            
 		createIBSheet2($("#ib-container8")[0],"mySheet11", "100%", "300px");
 		IBS_InitSheet(mySheet11,initData);
-		mySheet11.DataInsert();
 		
    }
 
@@ -273,17 +272,124 @@
 		fk_cert_sawon_code = "fk_CERTIFICATE_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
 		
 		fk_ass_sawon_code = "fk_ASS_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
+		fk_chj_sawon_code = "fk_CHJ_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
+		fk_sb_sawon_code = "fk_SB_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
 		x = mySheet.GetCellValue(row, 2);
 		
-// 		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
-// 		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
-// 		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
-// 		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
+		ISA();
+		
+		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
+		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
+		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
+		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
+		
 		//mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
 		mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
-		//mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
-		//mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
+		mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
+		mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
 	}
+	
+	
+	
+	 /*Sheet 각종 처리*/
+	   function doAction(sAction) {
+	      switch(sAction) {
+	         case "search":
+	        	var param = FormQueryStringEnc(document.frm);
+				console.log(param);
+				//mySheet.DoSearch("${contextPath}/hm/s0002/searchList.do", param);
+	            break;
+	         case "reload":
+	            mySheet.RemoveAll();
+	            break;
+	         case "save":
+	            //mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/upload.do");
+	            
+// 	            var param = document.getElementById("ISA_NUM").value;
+				var param = FormQueryStringEnc(document.frm);
+	            alert(param);
+	            mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/ISA_cha.do", param);
+	            
+	            
+	            
+	            
+// 	        	mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
+// 	        	mySheet5.DoSave("${pageContext.request.contextPath}/human/p0001/insertHL.do", fk_hl_sawon_code);
+// 	        	mySheet6.DoSave("${pageContext.request.contextPath}/human/p0001/insertCar.do", fk_car_sawon_code);
+// 	        	mySheet7.DoSave("${pageContext.request.contextPath}/human/p0001/insertCert.do", fk_cert_sawon_code);
+
+
+// 	        	mySheet9.DoSave("${pageContext.request.contextPath}/human/p0001/insertAss.do", fk_ass_sawon_code);
+// 	        	mySheet10.DoSave("${pageContext.request.contextPath}/human/p0001/insertChj.do", fk_chj_sawon_code);
+// 	        	mySheet11.DoSave("${pageContext.request.contextPath}/human/p0001/insertSb.do", fk_sb_sawon_code);
+	        	
+	           break;
+	         case "insert":
+				mySheet4.DataInsert(-1); 
+				mySheet5.DataInsert(-1);
+				mySheet6.DataInsert(-1);
+				mySheet7.DataInsert(-1);
+				
+				mySheet9.DataInsert(-1);
+				mySheet10.DataInsert(-1);
+				mySheet11.DataInsert(-1);
+				
+				var i = mySheet4.RowCount();
+				mySheet4.CellComboItem(i,5,H1); // 관계
+				mySheet4.CellComboItem(i,13,HB); // 학력
+				mySheet4.CellComboItem(i,14,HW); // 졸업구분
+				mySheet4.CellComboItem(i,6,S1); // 함/안함
+				mySheet4.CellComboItem(i,8,S2); // 해당/비해당
+				mySheet4.CellComboItem(i,12,S3); // 양/음
+				
+				var j = mySheet5.RowCount();
+				mySheet5.CellComboItem(j,4,HX); // 학교명
+				mySheet5.CellComboItem(j,7,HW); // 졸업구분
+	 			mySheet5.CellComboItem(j,9,HY); // 전공코드
+				mySheet5.CellComboItem(j,10,HY); // 전공코드
+				mySheet5.CellComboItem(j,12,HZ); // 주야구분
+				mySheet5.CellComboItem(j,13,R1); // 본분교구분
+	            break; 
+	         case "list":
+	             mySheet.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA.do");
+	        	 break;
+	      }
+	   }
+	 
+	// mySheet 조회 끝나기 직전 이벤트 
+	function mySheet4_OnSearchEnd() { // 가족
+		mySheet4.DataInsert(-1); 
+		for(var i = 1; i<=mySheet4.RowCount(); i++ ){
+			mySheet4.CellComboItem(i,5,H1); // 관계
+			mySheet4.CellComboItem(i,13,HB); // 학력
+			mySheet4.CellComboItem(i,14,HW); // 졸업구분
+			
+			mySheet4.CellComboItem(i,6,S1); // 함/안함
+			mySheet4.CellComboItem(i,8,S2); // 해당/비해당
+			mySheet4.CellComboItem(i,12,S3); // 양/음
+		}
+	}
+	
+	function mySheet5_OnSearchEnd() { // 학력
+		for(var i = 1; i<=mySheet5.RowCount(); i++ ){
+			mySheet5.CellComboItem(i,4,HX); // 학교명
+			mySheet5.CellComboItem(i,7,HW); // 졸업구분
+ 			mySheet5.CellComboItem(i,9,HY); // 전공코드
+			mySheet5.CellComboItem(i,10,HY); // 전공코드
+			mySheet5.CellComboItem(i,12,HZ); // 주야구분
+			mySheet5.CellComboItem(i,13,R1); // 본분교구분
+		}
+		selectSite();
+	}
+	
+	//마지막 col / row 에서 입력이 되었을 때 한줄이 추가된다.  
+	function mySheet4_OnChange(Row, Col, Value, OldValue, RaiseFlag) {
+			if (Col == mySheet4.LastCol() && Row == mySheet4.RowCount()) { 
+				mySheet4.DataInsert(-1);
+			}
+	}
+	
+	
 	
 	function mySheet_OnBeforeSearch() {  
 		var info4 = ""; // 관계
@@ -360,7 +466,7 @@
 				R1 = {'ComboCode':info13,'ComboText':info13}; // 본분교구분
 			},
 			error : function(jqxhr, status, error) {
-				alert("에러");
+				alert("에러_ㅅㅂ");
 			}
 		});
 		$.ajax({ // 공통코드조회
@@ -393,10 +499,32 @@
 				S3 = {'ComboCode':info9,'ComboText':info9}; // 양음구분(양/음)
 			},
 			error : function(jqxhr, status, error) {
-				alert("에러");
+				alert("에러_");
 			}
 		});
 	};
+	
+	
+	
+	 // tqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtq
+	function ISA(){
+		$.ajax({ // 
+			url : "${contextPath}/human/p0001/ISA_cha.do",//목록을 조회 할 url
+			type : "POST",
+			dataType : "JSON",
+			success : function(data) {
+				 $('input[id=ISA_HANJA_NAME]').val(data['Data'][0].isa_HANJA_NAME);
+			},
+			error : function(jqxhr, status, error) {
+				alert("aaaaaaaaaaaa");
+			}
+		});
+	}
+	
+	
+	
+	
+	
 	
 	function selectSite() {
 		$.ajax({ // 
@@ -439,97 +567,58 @@
 				
 			},
 			error : function(jqxhr, status, error) {
-				alert("에러");
+				alert("에러_?");
 			}
 		});
 	}
 	
-	 /*Sheet 각종 처리*/
-	   function doAction(sAction) {
-	      switch(sAction) {
-	         case "search":
-	        	var param = FormQueryStringEnc(document.frm);
-				console.log(param);
-				//mySheet.DoSearch("${contextPath}/hm/s0002/searchList.do", param);
-	            break;
-	         case "reload":
-	            mySheet.RemoveAll();
-	            break;
-	         case "save":
-	            //mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/upload.do");
-// 	        	mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
-// 	        	mySheet5.DoSave("${pageContext.request.contextPath}/human/p0001/insertHL.do", fk_hl_sawon_code);
-// 	        	mySheet6.DoSave("${pageContext.request.contextPath}/human/p0001/insertCar.do", fk_car_sawon_code);
-// 	        	mySheet7.DoSave("${pageContext.request.contextPath}/human/p0001/insertCert.do", fk_cert_sawon_code);
-
-
-	        	mySheet9.DoSave("${pageContext.request.contextPath}/human/p0001/insertAss.do", fk_ass_sawon_code);
-	           break;
-	         case "insert":
-				//mySheet4.DataInsert(-1); 
-// 				mySheet5.DataInsert(-1);
-// 				mySheet6.DataInsert(-1);
-// 				mySheet7.DataInsert(-1);
-				
-				mySheet9.DataInsert(-1);
-				
-// 				var i = mySheet4.RowCount();
-// 				mySheet4.CellComboItem(i,5,H1); // 관계
-// 				mySheet4.CellComboItem(i,13,HB); // 학력
-// 				mySheet4.CellComboItem(i,14,HW); // 졸업구분
-// 				mySheet4.CellComboItem(i,6,S1); // 함/안함
-// 				mySheet4.CellComboItem(i,8,S2); // 해당/비해당
-// 				mySheet4.CellComboItem(i,12,S3); // 양/음
-				
-// 				var j = mySheet5.RowCount();
-// 				mySheet5.CellComboItem(j,4,HX); // 학교명
-// 				mySheet5.CellComboItem(j,7,HW); // 졸업구분
-// 	 			mySheet5.CellComboItem(j,9,HY); // 전공코드
-// 				mySheet5.CellComboItem(j,10,HY); // 전공코드
-// 				mySheet5.CellComboItem(j,12,HZ); // 주야구분
-// 				mySheet5.CellComboItem(j,13,R1); // 본분교구분
-				
-				
-	            break; 
-	         case "list":
-	             mySheet.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA.do");
-	        	 break;
-	      }
-	   }
-	 
-	// mySheet 조회 끝나기 직전 이벤트 
-	function mySheet4_OnSearchEnd() { // 가족
-		mySheet4.DataInsert(-1); 
-		for(var i = 1; i<=mySheet4.RowCount(); i++ ){
-			mySheet4.CellComboItem(i,5,H1); // 관계
-			mySheet4.CellComboItem(i,13,HB); // 학력
-			mySheet4.CellComboItem(i,14,HW); // 졸업구분
-			
-			mySheet4.CellComboItem(i,6,S1); // 함/안함
-			mySheet4.CellComboItem(i,8,S2); // 해당/비해당
-			mySheet4.CellComboItem(i,12,S3); // 양/음
-		}
-	}
 	
-	function mySheet5_OnSearchEnd() { // 학력
-		for(var i = 1; i<=mySheet5.RowCount(); i++ ){
-			mySheet5.CellComboItem(i,4,HX); // 학교명
-			mySheet5.CellComboItem(i,7,HW); // 졸업구분
- 			mySheet5.CellComboItem(i,9,HY); // 전공코드
-			mySheet5.CellComboItem(i,10,HY); // 전공코드
-			mySheet5.CellComboItem(i,12,HZ); // 주야구분
-			mySheet5.CellComboItem(i,13,R1); // 본분교구분
-		}
-		selectSite();
-	}
 	
-	//마지막 col / row 에서 입력이 되었을 때 한줄이 추가된다.  
-	function mySheet4_OnChange(Row, Col, Value, OldValue, RaiseFlag) {
-			if (Col == mySheet4.LastCol() && Row == mySheet4.RowCount()) { 
-				mySheet4.DataInsert(-1);
-			}
-	}
 	
+	
+	
+	 function Postcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var roadAddr = data.roadAddress; // 도로명 주소 변수
+	                var extraRoadAddr = ''; // 참고 항목 변수
+	                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                    extraRoadAddr += data.bname;
+	                }
+	                // 건물명이 있고, 공동주택일 경우 추가한다.
+	                if(data.buildingName !== '' && data.apartment === 'Y'){
+	                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                }
+	                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                if(extraRoadAddr !== ''){
+	                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+	                }
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('company_zip').value = data.zonecode; // 우편번호
+	                document.getElementById('isa_ADDRESS').value = roadAddr; // 도로명주소
+	                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+	                if(roadAddr !== ''){ // 상세주소
+	                    document.getElementById('company_detail_address').value = extraRoadAddr;
+	                } else {
+	                    document.getElementById('company_detail_address').value = '';
+	                }
+	                
+	                var guideTextBox = document.getElementById("guide");
+	                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+	                if(data.autoRoadAddress) {
+	                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+	                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+	                    guideTextBox.style.display = 'block';
+	            	}
+	            }
+	        }).open();
+	    } // 주소 api function end
+	    
 		
 </script>
 <body onload="LoadPage()">
@@ -605,13 +694,14 @@
 									<td class="bg02_l"><input type="text" id="ISA_HANJA_NAME" style="width: 98%; "></td>
 									<td class="bg01_r">채용구분</td>
 									<td class="bg02_l">
-										<select name="selectBox" id="isa_HIRE_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_HIRE_CODE" style="width: 80px;" class="select_02">
 												<option value=""></option>
 										</select>
 									</td>
 									<td class="bg01_r">기수</td>
 									<td class="bg02_l"><input type="text" id="ISA_NUM" style="width: 98%; "></td>
 								</tr>
+								
 								<tr>
 									<td class="bg01_r">현주소</td>
 									<!-- 이름 변경해야함 -->
@@ -620,13 +710,14 @@
 										<img src='${contextPath}/resources/image/search_icon.png;' onclick='Postcode();' style='cursor:pointer;' />
 									</td>
 									<td class="bg02_l" colspan="4">
-										<input type="text" id="ISA_ADDRESS" size="50px" style="width:100%;">
+										<input type="text" id="isa_ADDRESS" size="50px" style="width:100%;">
 									</td>
 								</tr>
 	   							<tr>
 		   							<td class="bg01_r"></td><!-- 이름 변경해야함 -->
 		   							<td class="bg02_l" colspan="5"><input type="text" name="company_detail_address" id="company_detail_address" size="50px" style="width:100%;"></td>
 	   							</tr>
+	   							
 								<tr>
 									<td class="bg01_r">등록기준지</td><!-- 이름 변경해야함 -->
 									<td>
@@ -642,7 +733,7 @@
 								<tr>
 									<td class="bg01_r">결혼여부</td>
 									<td class="bg02_l">
-										<select name="selectBox" id="isa_MARRIAGE_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_MARRIAGE_CODE" style="width: 80px;" class="select_02">
 												<option value=""></option>
 												<option value="미혼">미혼</option>
 												<option value="기혼">기혼</option>
@@ -650,13 +741,13 @@
 									</td>
 									<td class="bg01_r">주거구분</td>
 									<td class="bg02_l">
-										<select name="selectBox" id="isa_HOUSE_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_HOUSE_CODE" style="width: 80px;" class="select_02">
 												<option value=""></option>
 										</select>
 									</td>
 									<td class="bg01_r">생활수준</td>
 									<td class="bg02_l">
-										<select name="selectBox" id="isa_LIVING_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_LIVING_CODE" style="width: 80px;" class="select_02">
 												<option value=""></option>
 										</select>
 									</td>
@@ -681,27 +772,29 @@
 								<tr>
 									<td class="bg01_r">종교</td>
 									<td class="bg02_l">
-										<select name="selectBox" id="isa_RELIGION_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_RELIGION_CODE" style="width: 80px;" class="select_02">
 											<option value=""></option>
 										</select>
 									</td>
-									<td colspan="4" class="bg02_l" id="EMP_ADDRESS">서울시 강남구 압구정동 한양 아파트 2동 909호</td>
+									<td colspan="4" class="bg02_l" id="EMP_ADDRESS">
+									</td>
 								</tr>
 							
 								<tr>
 									<td class="bg01_r">취미</td>
 									<td class="bg02_l">
-										<select name="selectBox" id="isa_HOBBY_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_HOBBY_CODE" style="width: 80px;" class="select_02">
 											<option value=""></option>
 										</select>
 									</td>
-									<td colspan="4" class="bg02_l" id="EMP_ADDRESS">서울시 강남구 구정동 한양 아파트 2동 909호</td>
+									<td colspan="4" class="bg02_l" id="EMP_ADDRESS">
+									</td>
 								</tr>
 							
 								<tr>
 									<td class="bg01_r">특기</td>
 									<td class="bg02_l">
-										<select name="selectBox" id="isa_SPECIALTY_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_SPECIALTY_CODE" style="width: 80px;" class="select_02">
 											<option value=""></option>
 											<option value="기타">기타</option>
 										</select>

@@ -74,8 +74,8 @@ table.ui-datepicker-calendar { display:none; }
         {Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
          {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
           {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:50,Align:"Center"},
-         {Header:"구분",Type:"Combo", RowSpan:1,SaveName:"ta_TOTAL_DIVI_CODE", ComboText:"평일정상근무일|토일정상근무일|주휴정상근무일|유휴정상근무일|무휴정상근무일", ComboCode:"평일정상근무일|토일정상근무일|주휴정상근무일|유휴정상근무일|무휴정상근무일"},          
-         {Header:"일수",Type:"AutoSum",SaveName:"ta_TOTAL_DAY", MinWidth:10, Align: "Center"},
+          {Header:"구분",Type:"Combo", RowSpan:1,SaveName:"ta_TOTAL_DIVI_CODE", ComboCode:"평일근무일|토일근무일|주휴근무일|유휴근무일|무휴근무일"},         
+          {Header:"일수",Type:"AutoSum",SaveName:"ta_TOTAL_DAY", MinWidth:10, Align: "Center"},
          {Header:"시간",Type:"AutoSum",SaveName:"ta_TOTAL_HOUR", MinWidth:10, Align: "Center"},
          {Header:"지급일",Type:"Text",SaveName:"ta_TOTAL_PAYMENTDAY",Format:" 일",Width:150,Align:"Center"}
 
@@ -157,12 +157,13 @@ table.ui-datepicker-calendar { display:none; }
    function doAction(sAction) {
       switch(sAction) {
       case "search": //조회
-           var xx = document.getElementById("yeardayd");
-         var xy = xx.options[xx.selectedIndex].text; 
-         
-          var param = "D_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("yearday").value + "&TA_TOTAL_PAYMENTDAY=" + xy + "&PK_WORKPLACE_CODE=" + document.getElementById("SiteList").value + "&PK_DEPT_CODE=" + document.getElementById("DeptList").value;
-          
-       
+         if(document.getElementById("SiteList").value == "1"){
+            var param = "D_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("yearday").value + "&D_B_PAYMENT_DT=" + document.getElementById("yeardayd").value +  "&PK_WORKPLACE_CODE=" + document.getElementById("DeptList").value;
+         }else if(document.getElementById("SiteList").value == "2"){
+            var param = "D_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("yearday").value + "&D_B_PAYMENT_DT=" + document.getElementById("yeardayd").value +  "&FK_DEPT_CODE=" + document.getElementById("DeptList").value;
+         }
+         alert(param);
+          //"&FK_SAWON_WORKPLACE_CODE=" + document.getElementById("SiteList").value +
           console.log(param);
          mySheet.DoSearch("${contextPath}/pay/p0001/searchList.do", param);
          
@@ -202,7 +203,7 @@ table.ui-datepicker-calendar { display:none; }
    function mySheet_OnSelectCell(oldrow,oldcol,row,col) {
      var xx = document.getElementById("yeardayd");
       var xy = xx.options[xx.selectedIndex].text;  
-   x = "PK_SAWON_CODE=" + mySheet.GetCellValue(row,2) + "&ta_TOTAL_PAYMENTDAY=" + xy;
+   x = "PK_SAWON_CODE=" + mySheet.GetCellValue(row,2) + "&ta_TOTAL_PAYMENTDAY=" + xy + "&ta_TOTAL_DIVI_CODE" ;
   
       
       console.log(x);
@@ -337,6 +338,8 @@ function selectSite() {
    function selectDept() {
 
       var SiteList = $('#SiteList').val();
+      
+      if(SiteList==1){
       //var x = $('#DeptList option[name='all']').find("option").val();
       $
             .ajax({
@@ -357,17 +360,39 @@ function selectSite() {
                   //$("#DeptList").append(data);
                   //var y="<option value="" selected>전체</option>";
                   //$("select#DeptList").find(".1").remove().end().append(y);
-
+                  
+            if(data['Data'][0].workplace_NAME!= null && data['Data'][0].workplace_NAME!= ''){
+               
                   for (var i = 0; i < data['Data'].length; i++) {
 
-                     var option = "<option class='1' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
-                           + data['Data'][i].dept_NAME
+                     var option = "<option class='1' value='" + data['Data'][i].pk_WORKPLACE_CODE + "'>"
+                           + data['Data'][i].workplace_NAME
                            + "</option>";
+                          
+                           
 
                      //대상 콤보박스에 추가
                      $('#DeptList').append(option);
 
                   }
+               }
+            
+            if(data['Data'][0].dept_NAME!= null && data['Data'][0].dept_NAME!= ''){
+               
+                for (var i = 0; i < data['Data'].length; i++) {
+
+                   var option = "<option class='1' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
+                         + data['Data'][i].dept_NAME
+                         + "</option>";
+                        
+                         
+
+                   //대상 콤보박스에 추가
+                   $('#DeptList').append(option);
+
+                }
+             }
+            
 
                },
 
@@ -378,6 +403,70 @@ function selectSite() {
                }
 
             });
+      } else { // 2일때 
+    	  $
+          .ajax({
+
+             url : "${contextPath}/pay/p0001/DeptList2.do",//목록을 조회 할 url
+
+             type : "POST",
+
+             data : {
+                "SiteList" : SiteList
+             },
+
+             dataType : "JSON",
+
+             success : function(data) {
+                $(".1").remove();
+                //$("select#DeptList option").append(x); // 이거 되는거 ㅎ
+                //$("#DeptList").append(data);
+                //var y="<option value="" selected>전체</option>";
+                //$("select#DeptList").find(".1").remove().end().append(y);
+                
+          if(data['Data'][0].workplace_NAME!= null && data['Data'][0].workplace_NAME!= ''){
+             
+                for (var i = 0; i < data['Data'].length; i++) {
+
+                   var option = "<option class='1' value='" + data['Data'][i].pk_WORKPLACE_CODE + "'>"
+                         + data['Data'][i].workplace_NAME
+                         + "</option>";
+                        
+                         
+
+                   //대상 콤보박스에 추가
+                   $('#DeptList').append(option);
+
+                }
+             }
+          
+          if(data['Data'][0].dept_NAME!= null && data['Data'][0].dept_NAME!= ''){
+             
+              for (var i = 0; i < data['Data'].length; i++) {
+
+                 var option = "<option class='1' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
+                       + data['Data'][i].dept_NAME
+                       + "</option>";
+                      
+                       
+
+                 //대상 콤보박스에 추가
+                 $('#DeptList').append(option);
+
+              }
+           }
+          
+
+             },
+
+             error : function(jqxhr, status, error) {
+
+                alert("에러");
+
+             }
+
+          });
+      }
 
    };
 </script>
@@ -574,10 +663,11 @@ function yearday() {
         
         <br>  
          <form class="form-inline_2">
-         <label for="SiteList">사업장</label>
-        &ensp;<select id="SiteList" onchange="selectDept()"  >
-         <option value="" selected>전체</option>
-      </select>
+         <label for="SiteList">조회조건</label>
+			        &ensp;<select id="SiteList" onchange="selectDept()">
+			        		 <option value="" selected>전체</option>
+			     		 </select>
+			     		 
       
       
       &ensp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp;

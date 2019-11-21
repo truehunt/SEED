@@ -197,26 +197,7 @@ var pageheightoffset = 200;
 			//mySheet.ReNumberSeq();
 		}
 	}
-<br>
-<br>
-<br> 외근보고서
-<br>
-<br> 휴가 구분
-<select name="HOLIDAY DIVISION">
-	<option value="">휴가구분</option>
-	<option value="연차휴가">연차휴가</option>
-	<option value="경조휴가">경조휴가</option>
-	<option value="기타휴가">기타휴가</option>
-</select> &emsp; 전일 /반일
-<select name="ALL DAY">
-	<option value="">전일 / 반일</option>
-	<option value="전일">전일</option>
-	<option value="반일">반일</option>
-</select>
-<BR>휴가기간
 <script type="text/javascript" src="/common/js/calendar.js"></script>
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script language="javascript">
 	$(function() {
 		// 시작일(fromDate)은 종료일(toDate) 이후 날짜 선택 불가
@@ -252,10 +233,29 @@ var pageheightoffset = 200;
 			}
 		});
 	});
+	
 </script>
 </head>
 
 <body>
+<br>
+<br>
+<br> 외근보고서
+<br>
+<br> 휴가 구분
+<select name="HOLIDAY DIVISION">
+	<option value="">휴가구분</option>
+	<option value="연차휴가">연차휴가</option>
+	<option value="경조휴가">경조휴가</option>
+	<option value="기타휴가">기타휴가</option>
+</select> &emsp; 전일 /반일
+<select name="ALL DAY">
+	<option value="">전일 / 반일</option>
+	<option value="전일">전일</option>
+	<option value="반일">반일</option>
+</select>
+<BR>휴가기간
+
 	<form>
 		<input type="text" name="fromDate" id="fromDate"> ~ <input
 			type="text" name="toDate" id="toDate">

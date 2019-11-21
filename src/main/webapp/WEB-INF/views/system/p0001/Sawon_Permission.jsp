@@ -39,19 +39,6 @@
 var selectedNode = null;
 
 $(function(){
-	$("#checkall").click(function(){
-        //클릭되었으면
-        if($("#checkall").prop("checked")){
-            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
-            $('#userlist > tbody > tr > td > input[name=chk]').prop("checked",true);
-            // $("input[name=chk]").prop("checked",true);
-            //클릭이 안되있으면
-        }else{
-            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
-            $('#userlist > tbody > tr > td > input[name=chk]').prop("checked", false);
-            // $("input[name=chk]").prop("checked",false);
-        }
-    })
 	
 	$("#tree").dynatree({
 		children: <c:out value="${treeStr}" escapeXml="false"/>,
@@ -60,20 +47,8 @@ $(function(){
     $("#tree").dynatree("getRoot").visit(function(node){
         node.expand(true);
     });
-    $("#photofile").change(function(){
-    	readImage(this);
-    });
 });
 
-    function readImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("#previewImg").attr("src", e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
 function TreenodeActivate(node) {
 	selectedNode = node; 
 	
@@ -85,74 +60,67 @@ function TreenodeActivate(node) {
     	data: { deptno : selectedNode.data.key }    	
     }).success(function(result){
     			$("#userlist").html(result);
+    			$("#deptno").val(selectedNode.data.key);
+    			
+    			//부서리스트를 불러온 후 성공하면, 체크박스 전체선택 이벤트가 활성화되도록함.
+    			$("#checkall").click(function(){
+    		        //클릭되었으면
+    		        var arrayParam = new Array();
+    		        
+    		        if($("#checkall").prop("checked")){
+    		            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+    		            $("input[name=chk]").prop("checked",true);
+    		            arrayParam.push($(this).val());
+    		            //클릭이 안되있으면
+    		        }else{
+    		            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+    		            $("input[name=chk]").prop("checked",false);
+    		            arrayParam.pop($(this).val());
+    		        }
+    		        
+    		        var arrayParam = $('input:checkbox[type=checkbox]:checked').map(function () {
+    		            return this.value;
+    		        }).get();
+    		        
+    		        $('#hiddenValue').val(arrayParam);
+    		    });
+    			
+    			//부서리스트 불러온 후, 체크박스 개별 선택 이벤트
+    			$("input[name=chk]").click(function(){
+    				var arrayParam = new Array();
+    				
+    		        //개별선택 - 값 넣기
+    		        if($("input[name=chk]").prop("checked")){
+    		        	arrayParam.push($(this).val());
+    		        }else{ //개별선택 - 값 빼기
+    		        	arrayParam.pop($(this).val());
+    		        }
+    		       	
+    		        var arrayParam = $('input:checkbox[type=checkbox]:checked').map(function () {
+    		            return this.value;
+    		        }).get();
+    		        
+    		        $('#hiddenValue').val(arrayParam);
+    			});
+    			
 		}    		
     );
 }
 
-$(document).ready(function(){
-    //최상단 체크박스 클릭
-    
-})
-
-function fn_addUser(){
-    if (selectedNode==null || selectedNode.data.key==0) {
-    	alert("<s:message code="msg.err.selectDept"/>");
-    	return;
-    }
-	$("#deptno").val("");	
-	$("#userno").val("");	
-	$("#userid").val("");
-    $("#userid").attr("readonly",false);
-	$("#usernm").val("");
-	$("#userpw").val("");
-	$("#userpw2").val("");
-	$('input:radio[name="userrole"][value="U"]').prop("checked", true);
-	$("#pwDiv").show("");
-	$("#photofile").val("");
-    $("#previewImg").attr("src","");
+function fn_SawonPermissionsUpdate(){
+	// if (!$("input[name=chk]").is(":checked"), "권한 변경을 할 사원을 선택해주세요!") return false;
 	
-	$("#myModal").modal("show");	
-}
-
-function fn_addUserSave(){
-	if ( ! chkInputValue("#userid", "<s:message code="common.id"/>")) return false;
-	if ( ! chkInputValue("#usernm", "<s:message code="common.name"/>")) return false;
-	if ( $("#userno").val() === ""){
-		if ( ! chkInputValue("#userpw", "<s:message code="common.password"/>")) return false;
-		if ( ! chkInputValue("#userpw2", "<s:message code="common.passwordRe"/>")) return false;
-		if ( $("#userpw").val() !== $("#userpw2").val()){
-			alert("<s:message code="msg.err.noMatchPW"/>");
-			return false;
-		}
-	}
-	
-	var file = $("input[type=file]")[0].files[0];
-	if (file) {
-		var formData = new FormData();
-		formData.append("userno", $("#userno").val());
-		formData.append("deptno", selectedNode.data.key);
-		formData.append("userid", $("#userid").val());
-		formData.append("usernm", $("#usernm").val());
-		formData.append("userpw", $("#userpw").val());
-		formData.append("userrole", $("#userrole").val());
-		formData.append("photofile", file); 
+		var PK_SAWON_CODE = $("#hiddenValue").val();
+		var SAWON_VIEW_PERMISSION = $('input[name="userrole"]:checked').val();
+		var FK_DEPT_CODE = $("#deptno").val();
 		$.ajax({
-			url: "adUserSave",
-		    contentType: false,
-		    processData: false,		
+			url: "adSawonPermissionsUpdate",
 			type:"post", 
-			data : formData,
+			data : {PK_SAWON_CODE : PK_SAWON_CODE,
+				SAWON_VIEW_PERMISSION : SAWON_VIEW_PERMISSION,
+				FK_DEPT_CODE : FK_DEPT_CODE
+			}
 		}).done(saveResult);
-	} else{
-		$("#deptno").val(selectedNode.data.key);	
-		var formData = $("#form1").serialize();
-		$.ajax({
-			url: "adUserSave",
-			type:"post", 
-			data : formData,
-		}).done(saveResult);
-	}
-	$("#myModal").modal("hide");	
 }
 
 function saveResult(result){
@@ -162,61 +130,6 @@ function saveResult(result){
 		$("#userlist").html(result);
 		alert("<s:message code="msg.boardSave"/>");
 	}	
-}
-
-function fn_chkUserid(){
-	if ( ! chkInputValue("#userid", "<s:message code="common.id"/>")) return false;
-	$.ajax({
-		url: "chkUserid", 
-		type:"post", 
-		data : {userid: $("#userid").val()},
-		success: function(result){
-			if (result) {
-				alert("<s:message code="msg.usedID"/>");
-			} else{
-				alert("<s:message code="msg.NoUsedID"/>");
-			}
-		}
-	})		
-}
-
-function fn_UserRead(userno){
-	$.ajax({
-		url: "adUserRead", 
-		type:"post", 
-		data : {userno:userno},
-		success: function(result){
-			$("#deptno").val(result.deptno);	
-			$("#userno").val(result.userno);
-			$("#userid").val(result.userid);	
-		    $("#userid").attr("readonly",true);
-			$("#usernm").val(result.usernm);
-			$('input:radio[name="userrole"][value="' + result.userrole + '"]').prop("checked", true);
-			$("#pwDiv").hide("");
-			$("#photofile").val("");
-			if (result.photo){
-		    	$("#previewImg").attr("src","fileDownload?downname="+result.photo);
-			} else {
-		    	$("#previewImg").attr("src","");
-			}
-
-			$("#myModal").modal("show");	
-		}
-	})		
-}
-
-function fn_UserDelete(userno){
-    if(!confirm("<s:message code="ask.Delete"/>")) return;
-
-	$.ajax({
-		url: "adUserDelete", 
-		type:"post", 
-		data : {userno:userno, deptno:selectedNode.data.key},
-		success: function(result){
-			$("#userlist").html(result);
-			alert("<s:message code="msg.boardDelete"/>");
-		}
-	})		
 }
 
 </script>    
@@ -255,7 +168,8 @@ function fn_UserDelete(userno){
 	            			<s:message code="common.userList"/>
 	                    </div>
 	                    <div class="panel-body" id="userlist">
-					    </div>    
+					    </div>
+					    <input type="hidden" name="hiddenValue" id="hiddenValue" value=""/>    
 					</div>
 				</div>
 				<!-- 권한설정 부분 -->
@@ -267,7 +181,7 @@ function fn_UserDelete(userno){
 	                    <div class="modal-body">
 		                	<form id="form1" name="form1">
 								<input type="hidden" name="userno" id="userno"> 
-								<input type="hidden" name="deptno" id="deptno"> 
+								<input type="hidden" name="deptno" id="deptno" value=""> 
 		                    	<div class="row form-group">
 		                            <div class="col-lg-1"></div>
 		                            <label class="col-lg-2">권한</label>
@@ -280,7 +194,7 @@ function fn_UserDelete(userno){
 		                	</form>        
 					    </div>
 					    <div class="modal-footer">
-		                    <button type="button" class="btn btn-primary" onclick="fn_addUserSave()"><s:message code="common.btnSave"/></button>
+		                    <button type="button" class="btn btn-primary" onclick="fn_SawonPermissionsUpdate()"><s:message code="common.btnSave"/></button>
 		                </div>    
 					</div>
 				</div>	

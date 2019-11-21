@@ -26,12 +26,8 @@ public class SawonSvc {
     /**
      * 사용자 저장.     
      */
-    public void insertUser(SawonVO param) {
-        if (param.getPK_SAWON_CODE() == null || "".equals(param.getPK_SAWON_CODE())) {
-             sqlSession.insert("insertUser", param);
-        } else {
-            sqlSession.insert("updateUser", param);
-        }
+    public void SawonPermissionsUpdate(SawonVO param) {
+            sqlSession.update("SawonPermissionsUpdate", param);
     }
     
     public String selectUserID(String param) {

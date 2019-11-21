@@ -112,10 +112,10 @@
 			// FORMAT 형식 법인/사업자 등록번호 - Format:["IdNo", "SaupNo"], 전화번호/FAX번호 - Format: "PhoneNo", 
 			
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
-			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50},
-			{Header:"사업장코드",Type:"Text",SaveName:"pk_workplace_code",MinWidth:100, KeyField:1},
+			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center"},
+			{Header:"사업장코드",Type:"Text",SaveName:"pk_workplace_code",MinWidth:100, Align:"Center", KeyField:1},
 			{Header:"회사코드",Type:"Text",SaveName:"fk_company_code",MinWidth:60, Hidden:1},			
-			{Header:"사업장명",Type:"Text",SaveName:"workplace_name",MinWidth:150, KeyField:1},
+			{Header:"사업장명",Type:"Text",SaveName:"workplace_name",MinWidth:150, Align:"Center", KeyField:1},
 			{Header:"사업자등록번호",Type:"Text",SaveName:"workplace_com_reg_num",MinWidth:150, KeyField:1, Hidden:1},
 			{Header:"법인등록번호",Type:"Text",SaveName:"workplace_corp_reg_num",MinWidth:150, Hidden:1},
 			{Header:"대표자명",Type:"Text",SaveName:"workplace_rep_name",MinWidth:80, KeyField:1, Hidden:1},
@@ -129,7 +129,7 @@
 			{Header:"개업년월일",Type:"Text",SaveName:"workplace_open_date",MinWidth:60, Hidden:1},
 			{Header:"폐업년월일",Type:"Text",SaveName:"workplace_closed_date",MinWidth:60, Hidden:1},
 			{Header:"본점여부",Type:"Combo", MinWidth:80, SaveName:"workplace_headoff_whe",MinWidth:60, Hidden:1},
-			{Header:"본점여부2",Type:"Text",SaveName:"fk_workplace_code2",MinWidth:80, Hidden:1},
+			{Header:"조회조건",Type:"Text",SaveName:"workplace_inquiry_code",MinWidth:80, Hidden:1},
 			{Header:"입력자",Type:"Text",SaveName:"workplace_int_user_id",MinWidth:80, Hidden:1},
 			{Header:"입력일시",Type:"Text",SaveName:"workplace_int_date",MinWidth:80, Hidden:1},
 			{Header:"수정자",Type:"Text",SaveName:"workplace_mod_user_id",MinWidth:80, Hidden:1},
@@ -162,9 +162,8 @@
      if (row == null || row <= 0) return; // row가 null 이거나 0보다 같거나 작으면 바로 리턴
     
      var pk = mySheet.GetCellValue(row,2); // 마우스로 클릭한 셀의 value를 가져와서 pk에 저장
-    
-     var colArr =  Object.keys(mySheet.rX); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 
-  											 // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
+     
+     var colArr =  Object.keys(mySheet.rX); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 										 // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
   	  
   	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
 	  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
@@ -186,7 +185,7 @@
 			case "부" :
 				console.log("본점여부 2 : "+ workplace_headoff_whe)
 				//mySheet.GetCellValue(t_row, colNum+1) = 2;
-				mySheet.SetCellValue(t_row, colNum+1, 2);
+				mySheet.SetCellValue(t_row, colNum+1, 1);
 				break;
 			case "여" :
 				console.log("본점여부 1 : "+ workplace_headoff_whe)
@@ -617,9 +616,9 @@
 	  		</td>
 	  	</tr>
 	  	<tr>
-	  		<td align="right" hidden='1'>본점 여부2 : </td>
+	  		<td align="right" hidden='1'>조회조건 : </td>
 	  			<td>
-	  				<input type="text" name="fk_workplace_code2" id="fk_workplace_code2" size="12px" hidden='1'>
+	  				<input type="text" name="workplace_inquiry_code" id="workplace_inquiry_code" size="12px" hidden='1'>
 	  			</td>
 	  	</tr>
 	  	

@@ -11,7 +11,7 @@ import oracle.sql.DATE;
 
 @Component("workEnroll_VO")
 public class WorkEnroll_VO {
-    
+
 	private String pk_workplace_code; // 사업장코드(PK)
 	private String fk_company_code; // 회사 코드(FK)
 	private String workplace_name; // 사업장 명
@@ -28,7 +28,7 @@ public class WorkEnroll_VO {
 	private String workplace_open_date; // 개업년월일
 	private String workplace_closed_date; // 폐업년월일
 	private String workplace_headoff_whe; // 본점 여부
-	private String fk_workplace_code2; // 근태 관련 본사 대리점 구분 여부
+	private String workplace_inquiry_code; // 조회조건
 	private String workplace_int_user_id; // 입력자
 	private Timestamp workplace_int_date; // 입력일시
 	private String workplace_mod_user_id; // 수정자
@@ -42,6 +42,7 @@ public class WorkEnroll_VO {
 	}
 
 	// 위의 선언 변수들의 GET, SET 정의 
+    
 	public String getPk_workplace_code() {
 		return pk_workplace_code;
 	}
@@ -169,13 +170,13 @@ public class WorkEnroll_VO {
 	public void setWorkplace_headoff_whe(String workplace_headoff_whe) {
 		this.workplace_headoff_whe = workplace_headoff_whe;
 	}
-	
-	public String getFk_workplace_code2() {
-		return fk_workplace_code2;
+
+	public String getWorkplace_inquiry_code() {
+		return workplace_inquiry_code;
 	}
 
-	public void setFk_workplace_code2(String fk_workplace_code2) {
-		this.fk_workplace_code2 = fk_workplace_code2;
+	public void setWorkplace_inquiry_code(String workplace_inquiry_code) {
+		this.workplace_inquiry_code = workplace_inquiry_code;
 	}
 
 	public String getWorkplace_int_user_id() {
@@ -217,5 +218,5 @@ public class WorkEnroll_VO {
 	public void setPk_company_code(String pk_company_code) {
 		this.pk_company_code = pk_company_code;
 	}
-	
+
 }

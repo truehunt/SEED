@@ -21,6 +21,12 @@ public class deptEnroll_DAOImpl implements deptEnroll_DAO {
       return list;
    }
    
+   @Override
+   public List<DeptEnroll_VO> searchList2(Map<String, Object> searchMap) throws DataAccessException {
+      List<DeptEnroll_VO> list2 = sqlSession.selectList("hr.system.p0001.DEsearchList2", searchMap);
+      return list2;
+   }
+   
     @Override
    public void insertData(Map<String, String> row) throws DataAccessException {
       sqlSession.update("hr.system.p0001.DEinsertData", row);

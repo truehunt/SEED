@@ -16,6 +16,7 @@ import project.common.TreeMaker;
 import project.common.UtilEtc;
 import project.common.DeptSvc;
 import project.common.EtcSvc;
+import hr.elect.p0002.vo.SignLinePathVO;
 import hr.system.p0001.service.SawonSvc;
 import hr.system.p0001.vo.SawonVO;
 
@@ -32,7 +33,7 @@ public class SawonCtr {
     private EtcSvc etcSvc;
     
     /**
-     * 리스트.
+     * 사용자 권한 설정 리스트.
      */
     @RequestMapping(value = "/adSawon_Permission")
        public String user(HttpServletRequest request, ModelMap modelMap) {
@@ -53,7 +54,7 @@ public class SawonCtr {
     }
     
     /**
-     * User 리스트.
+     * 부서를 선택했을때 그에 해당되는 사원 리스트.
      */
     @RequestMapping(value = "/adUserList")
     public String userList(HttpServletRequest request, ModelMap modelMap) {
@@ -74,28 +75,27 @@ public class SawonCtr {
         return "system/p0001/Sawon_List";
     }
     
-    /**
-     * 사용자 저장.
-     * 신규 사용자는 저장 전에 중복 확인 
-     
-    @RequestMapping(value = "/adUserSave")
-    public String userSave(HttpServletResponse response, ModelMap modelMap, SawonVO userInfo) {
+    /*
+     * 사용자 권한 변경 업데이트
+     * 
+     */
+    @RequestMapping(value = "/adSawonPermissionsUpdate")
+    public String SawonPermissionsUpdate(HttpServletResponse response, ModelMap modelMap, SawonVO userInfo) {
 
-        if (userInfo.getPK_SAWON_CODE() == null || "".equals(userInfo.getPK_SAWON_CODE())) {
-            String userid = sawonSvc.selectUserID(userInfo.getUserid());
-            if (userid != null) {
-                return "common/blank"; 
-            }
-        }
-        FileUtil fs = new FileUtil();
-        FileVO fileInfo = fs.saveFile(userInfo.getPhotofile());
-        if (fileInfo != null) {
-            userInfo.setPhoto(fileInfo.getRealname());
-        }
-        sawonSvc.insertUser(userInfo);
+    	// PK_SAWON_CODE = "on, 2019006, 2019007, 2019003, admin" 값 분해해서 각각 업데이트 치기
+    	String pk = userInfo.getPK_SAWON_CODE();
+			
+		String[] temp = pk.split("\\,");
+		
+		for(int temp_num=0 ; temp_num<temp.length; temp_num++) {
+			
+			String temp1 = temp[temp_num]; // temp[0] = on, temp[1] = 2019006
+			userInfo.setPK_SAWON_CODE(temp1);
+			sawonSvc.SawonPermissionsUpdate(userInfo);
+		}
 
-        return common_UserList(modelMap, userInfo.getDeptno());
-    } */
+        return common_UserList(modelMap, userInfo.getFK_DEPT_CODE());
+    }
     
     /**
      * ID 중복 확인.

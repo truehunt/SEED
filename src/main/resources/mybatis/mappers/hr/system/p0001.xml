@@ -485,7 +485,7 @@
 		<result property="workplace_open_date" column="workplace_open_date" />
 		<result property="workplace_closed_date" column="workplace_closed_date" />
 		<result property="workplace_headoff_whe" column="workplace_headoff_whe" />
-		<result property="fk_workplace_code2" column="fk_workplace_code2" />
+		<result property="workplace_inquiry_code" column="workplace_inquiry_code" />
 		
 		<result property="workplace_int_user_id" column="workplace_int_user_id" />
 		<result property="workplace_int_date" column="workplace_int_date" />
@@ -497,7 +497,7 @@
 			pk_workplace_code, fk_company_code, workplace_name, workplace_com_reg_num, workplace_corp_reg_num
 			, workplace_rep_name, workplace_zip, workplace_address, workplace_detail_address, workplace_tel
 			, workplace_fax, workplace_business, workplace_stocks, workplace_open_date, workplace_closed_date
-			, workplace_headoff_whe, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
+			, workplace_headoff_whe, workplace_inquiry_code, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
 			, workplace_mod_date, pk_company_code
 		 -->
 	</resultMap>
@@ -509,7 +509,7 @@
 				, workplace_fax, workplace_business, workplace_stocks
 				, TO_CHAR(TO_DATE(workplace_open_date),'YYYY-MM-DD') as workplace_open_date 
 				, TO_CHAR(TO_DATE(workplace_closed_date),'YYYY-MM-DD') as workplace_closed_date 
-				, workplace_headoff_whe, fk_workplace_code2, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
+				, workplace_headoff_whe, workplace_inquiry_code, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
 				, workplace_mod_date
          from   workplace
       ]]>
@@ -538,7 +538,7 @@
 		   , workplace_open_date = #{workplace_open_date,jdbcType=VARCHAR}
 		   , workplace_closed_date = #{workplace_closed_date,jdbcType=VARCHAR}
 		   , workplace_headoff_whe = #{workplace_headoff_whe,jdbcType=VARCHAR}
-		   , fk_workplace_code2 = #{fk_workplace_code2,jdbcType=VARCHAR}
+		   , workplace_inquiry_code = #{workplace_inquiry_code,jdbcType=VARCHAR}
 		   , workplace_int_user_id = #{workplace_int_user_id,jdbcType=VARCHAR}
 		   , workplace_int_date = #{workplace_int_date,jdbcType=TIMESTAMP}
 		   , workplace_mod_user_id = #{workplace_mod_user_id,jdbcType=VARCHAR}
@@ -548,16 +548,17 @@
 	</update>	
 	
 	<insert id="WEinsertData" parameterType="java.util.Map">
+							
 		insert into workplace(pk_workplace_code, fk_company_code, workplace_name, workplace_com_reg_num, workplace_corp_reg_num
 							, workplace_rep_name, workplace_zip, workplace_address, workplace_detail_address, workplace_tel
 							, workplace_fax, workplace_business, workplace_stocks, workplace_open_date, workplace_closed_date
-							, workplace_headoff_whe, fk_workplace_code2, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
+							, workplace_headoff_whe, workplace_inquiry_code, workplace_int_user_id, workplace_int_date, workplace_mod_user_id
 							, workplace_mod_date) 
 			   values(#{pk_workplace_code, jdbcType=VARCHAR},#{fk_company_code, jdbcType=VARCHAR},#{workplace_name, jdbcType=VARCHAR},#{workplace_com_reg_num, jdbcType=VARCHAR},
 			   		  #{workplace_corp_reg_num, jdbcType=VARCHAR},#{workplace_rep_name, jdbcType=VARCHAR},#{workplace_zip, jdbcType=VARCHAR},#{workplace_address, jdbcType=VARCHAR},
 			   		  #{workplace_detail_address, jdbcType=VARCHAR},#{workplace_tel, jdbcType=VARCHAR},#{workplace_fax, jdbcType=VARCHAR},#{workplace_business, jdbcType=VARCHAR},
 			   		  #{workplace_stocks, jdbcType=VARCHAR},#{workplace_open_date, jdbcType=VARCHAR},#{workplace_closed_date, jdbcType=VARCHAR},#{workplace_headoff_whe, jdbcType=VARCHAR},
-			   		  #{fk_workplace_code2, jdbcType=VARCHAR},#{workplace_int_user_id, jdbcType=VARCHAR},#{workplace_int_date, jdbcType=TIMESTAMP},#{workplace_mod_user_id, jdbcType=VARCHAR},
+			   		  #{workplace_inquiry_code, jdbcType=VARCHAR},#{workplace_int_user_id, jdbcType=VARCHAR},#{workplace_int_date, jdbcType=TIMESTAMP},#{workplace_mod_user_id, jdbcType=VARCHAR},
 			   		  #{workplace_mod_date, jdbcType=TIMESTAMP}
 					  )
 	</insert>
@@ -572,19 +573,19 @@
 	<resultMap id="s0003Result01" type="deptEnroll_VO">
 		<result property="pk_dept_code" column="pk_dept_code" /> 
 		<result property="dept_name" column="dept_name" />
-		<result property="workplace_code" column="fk_workplace_code" />
+		<result property="fk_workplace_code" column="fk_workplace_code" />
 		<result property="workplace_name" column="workplace_name" />
 		<result property="fk_sector_code" column="fk_sector_code" />
 		<result property="sector_name" column="sector_name" />
 		<result property="dept_priodof" column="dept_priodof" />
+		<result property="pk_sector_code" column="pk_sector_code" />
+		<result property="sector_priodof" column="sector_priodof" />
 		
 		<result property="dept_int_user_id" column="dept_int_user_id" />
 		<result property="dept_int_date" column="dept_int_date" />
 		<result property="dept_mod_user_id" column="dept_mod_user_id" />
 		<result property="dept_mod_date" column="dept_mod_date" />
-		
-		<result property="sector_priodof" column="sector_priodof" />
-		
+
 		<!--
 		<result property="pk_company_code" column="pk_company_code" />
 		 dept의 모든 칼럼 및 fk_company_code,fk_company_name, fk_sector_code, sector_name 가져옴
@@ -596,22 +597,30 @@
 
 	<select id="DEsearchList" resultMap="s0003Result01" parameterType="java.util.Map"> 
       <![CDATA[
-         select d.pk_dept_code, d.dept_name, d.workplace_code, w.workplace_name, d.fk_sector_code
-         , s.sector_name, d.dept_priodof
-         from   dept d, workplace w, sector s
+         select d.pk_dept_code, d.dept_name, d.fk_workplace_code, w.workplace_name, d.fk_sector_code, 
+         	    s.sector_name, TO_CHAR(TO_DATE(d.dept_priodof),'YYYY-MM-DD') as dept_priodof
+         from dept d, workplace w, sector s
       ]]>
 		<where>
-			d.workplace_code = w.pk_workplace_code
+			d.fk_workplace_code = w.pk_workplace_code
 			and d.fk_sector_code = s.pk_sector_code
 		</where>
 			order By d.pk_dept_code asc
+	</select>
+	
+	<select id="DEsearchList2" resultMap="s0003Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select pk_sector_code, sector_name, TO_CHAR(TO_DATE(sector_priodof),'YYYY-MM-DD') as sector_priodof
+         from sector 
+         order By pk_sector_code asc
+      ]]>
 	</select>
 	
 	<update id="DEupdateData" parameterType="java.util.Map">
 		update dept
 		set pk_dept_code = #{pk_dept_code,jdbcType=VARCHAR}
 		   , dept_name = #{dept_name,jdbcType=VARCHAR}
-		   , workplace_code = #{workplace_code,jdbcType=VARCHAR}
+		   , fk_workplace_code = #{fk_workplace_code,jdbcType=VARCHAR}
 		   , workplace_name = #{workplace_name,jdbcType=VARCHAR}
 		   , fk_sector_code = #{fk_sector_code,jdbcType=VARCHAR}
 		   , sector_name = #{sector_name,jdbcType=VARCHAR}
@@ -625,10 +634,10 @@
 	</update>	
 	
 	<insert id="DEinsertData" parameterType="java.util.Map">
-		insert into dept(pk_dept_code, dept_name, workplace_code, fk_sector_code
+		insert into dept(pk_dept_code, dept_name, fk_workplace_code, fk_sector_code
 							, dept_priodof, dept_int_user_id, dept_int_date
 							, dept_mod_user_id, dept_mod_date) 
-			   values(#{pk_dept_code, jdbcType=VARCHAR},#{dept_name, jdbcType=VARCHAR},#{workplace_code, jdbcType=VARCHAR},
+			   values(#{pk_dept_code, jdbcType=VARCHAR},#{dept_name, jdbcType=VARCHAR},#{fk_workplace_code, jdbcType=VARCHAR},
 			   		  #{fk_sector_code, jdbcType=VARCHAR},#{dept_priodof, jdbcType=VARCHAR},#{dept_int_user_id, jdbcType=VARCHAR},
 			   		  #{dept_int_date, jdbcType=TIMESTAMP},#{dept_mod_user_id, jdbcType=VARCHAR},#{dept_mod_date, jdbcType=TIMESTAMP}
 					  )
@@ -638,7 +647,7 @@
 		delete dept
 		where pk_dept_code = #{pk_dept_code}
 		and dept_name = #{dept_name}
-	</delete>	
+	</delete>		
 	
 	<!-- Sawon Enroll -->
 	<select id="SEsearchList" resultMap="p0001Result01" parameterType="java.util.Map"> 
@@ -678,5 +687,12 @@
 		delete SAWON
 		where PK_SAWON_CODE = #{pk_SAWON_CODE}
 	</delete>
+	
+	<!-- Sawon Permissions Update -->
+	<update id="SawonPermissionsUpdate" parameterType="hr.system.p0001.vo.SawonVO">
+		UPDATE SAWON
+		SET SAWON_VIEW_PERMISSION = #{SAWON_VIEW_PERMISSION,jdbcType=VARCHAR}
+		WHERE PK_SAWON_CODE = #{PK_SAWON_CODE, jdbcType=VARCHAR}
+	</update>
 	
 </mapper>

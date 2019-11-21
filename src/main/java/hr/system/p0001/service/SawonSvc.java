@@ -23,6 +23,14 @@ public class SawonSvc {
         return sqlSession.selectList("selectUserListWithDept", param);
     }
     
+    public Integer selectSearchMemberCount(SearchVO param) {
+        return sqlSession.selectOne("selectSearchMemberCount", param);
+    }
+    
+    public List<?> selectSearchMemberList(SearchVO param) {
+        return sqlSession.selectList("selectSearchMemberList", param);
+    }
+    
     /**
      * 사용자 저장.     
      */

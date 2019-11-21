@@ -41,6 +41,22 @@
 		and PK_SAWON_CODE = #{PK_SAWON_CODE}
 	</select>
 	
+    <select id="selectSearchMemberCount" parameterType="project.common.SearchVO" resultType="Integer" >
+        SELECT COUNT(*)
+          FROM SAWON CU
+         WHERE CU.SAWON_USER_STATUS='Y'
+           AND CU.SAWON_NAME LIKE '%'||#{SAWON_NAME}||'%'
+    </select> 
+    
+    <select id="selectSearchMemberList" parameterType="project.common.SearchVO" resultType="hr.system.p0001.vo.SawonVO" >
+        SELECT USERNO, USERID, USERNM, PHOTO, DEPTNM DEPTNO
+          FROM COM_USER CU
+         INNER JOIN COM_DEPT CD ON CD.DEPTNO=CU.DEPTNO
+         WHERE CU.DELETEFLAG='N' AND CD.DELETEFLAG='N'
+           AND CU.USERNM LIKE CONCAT('%', #{searchKeyword},'%')
+         LIMIT ${rowStart-1}, 10
+    </select>
+	
 	<select id="selectMember4Login" parameterType="hr.system.p0001.vo.LoginVO" resultType="hr.system.p0001.vo.SawonVO" >
         SELECT PK_SAWON_CODE, SAWON_NAME, SAWON_VIEW_PERMISSION
           FROM SAWON 

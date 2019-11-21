@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import project.common.FileUtil;
 import project.common.FileVO;
+import project.common.SearchVO;
 import project.common.TreeMaker;
 import project.common.UtilEtc;
 import project.common.DeptSvc;
@@ -95,6 +96,23 @@ public class SawonCtr {
 		}
 
         return common_UserList(modelMap, userInfo.getFK_DEPT_CODE());
+    }
+    
+    /**
+     * 직원조회.
+     */
+    @RequestMapping(value = "/searchMember")
+    public String searchMember(SearchVO searchVO, ModelMap modelMap) {
+        
+        if (searchVO.getSearchKeyword() != null & !"".equals(searchVO.getSearchKeyword())) {
+            searchVO.pageCalculate( sawonSvc.selectSearchMemberCount(searchVO) ); // startRow, endRow
+            
+            List<?> listview = sawonSvc.selectSearchMemberList(searchVO);
+        
+            modelMap.addAttribute("listview", listview);
+        }
+        modelMap.addAttribute("searchVO", searchVO);
+        return "system/p0001/searchSawon";
     }
     
     /**

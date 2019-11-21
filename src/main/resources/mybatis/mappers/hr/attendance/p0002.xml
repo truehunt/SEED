@@ -87,7 +87,8 @@
       <![CDATA[
           	select b.business_TRIP_APP_DATE,
 			s.sawon_name, s.rank_name, s.fk_dept_name,
-				
+				b.BUSINESS_TRIP_PUROSE,b.BUSINESS_TRIP_STR, b.BUSINESS_TRIP_END,
+				b.business_trip_
 			from business_trip b, sawon s
       ]]>
 
@@ -145,7 +146,7 @@
 		holiday_reason)
 		values(#{holiday_DIVISION,jdbcType=VARCHAR},
 		#{holiday_PAY,jdbcType=VARCHAR},
-		(to_char(sysdate,'yyyy.mm.dd')),
+		(to_char(sysdate,'YYYYMMDD')),
 		(select distinct pk_sawon_code
 		from sawon
 		where sawon_name =

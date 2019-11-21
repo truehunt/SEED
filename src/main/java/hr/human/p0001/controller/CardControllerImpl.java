@@ -176,8 +176,15 @@ public class CardControllerImpl implements CardController{
 					searchMap.put("pk_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
 
 					// 데이터 조회
-					List<CardVO> data = p0001Service.ISA_cha(searchMap);
-					resultMap.put("Data", data);
+					if("".equals(request.getParameter("fk_ISA_SAWON_CODE"))) {
+						List<CardVO> data = p0001Service.ISA_cha_N(searchMap);
+						resultMap.put("Data", data);
+					}else {
+						List<CardVO> data = p0001Service.ISA_cha(searchMap);
+						resultMap.put("Data", data);
+					}
+					
+					
 
 					return resultMap;
 				}

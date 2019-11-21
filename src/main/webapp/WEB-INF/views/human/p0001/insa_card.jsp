@@ -72,35 +72,35 @@
 		 	{Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:60,Align:"Center"},
 		 	{Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:50, Edit:0},
 		 	
-		 	{Header:"",Type:"Text",SaveName:"fk_ISA_SAWON_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_HANJA_NAME",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_HIRE_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_NUM",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_ADDRESS",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_PERMANENT_ADDR",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_MARRIAGE_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_HOUSE_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_LIVING_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_ESTATE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_MOVABLES",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_SUM",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_GEONPYEONG",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_SITE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_RELIGION_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_HOBBY_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_SPECIALTY_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"fk_ISA_SAWON_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_HANJA_NAME",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_HIRE_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_NUM",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_ADDRESS",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_PERMANENT_ADDR",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_MARRIAGE_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_HOUSE_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_LIVING_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_ESTATE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_MOVABLES",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_SUM",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_GEONPYEONG",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_SITE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_RELIGION_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_HOBBY_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_SPECIALTY_CODE",Width:60,Align:"Center", Hidden:1},
 		 	
-		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_MYEONJE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_MIL_NUM",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_MILI_STA_DATE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_MILI_END_DATE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_POS_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_GUNBYEOL_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_BOTS_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_YEBIGUN_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_DISCHARGE_CODE",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CLASS_CODE",Width:60,Align:"Center"}
+		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_MYEONJE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_MIL_NUM",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_MILI_STA_DATE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_MILI_END_DATE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_POS_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_GUNBYEOL_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_BOTS_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_YEBIGUN_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_DISCHARGE_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CLASS_CODE",Width:60,Align:"Center", Hidden:1}
 		 	
       	];
       	IBS_InitSheet(mySheet,initData);
@@ -311,15 +311,15 @@
 		ISA();
 		
 		
-		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
-		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
-		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
-		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
+// 		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
+// 		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
+// 		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
+// 		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
 		
 // 		//mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
-		mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
-		mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
-		mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
+// 		mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
+// 		mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
+// 		mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
 	}
 	
 	
@@ -547,6 +547,10 @@
 			dataType : "JSON",
 			data: {"fk_ISA_SAWON_CODE":y, "pk_SAWON_CODE":x},
 			success : function(data) {
+					for(var i = 0; i < data['Data'].length; i++){
+						mySheet.SetCellValue(i+1, 4,data['Data'][i].fk_ISA_SAWON_CODE);
+// 						alert(data['Data'][0].isa_HANJA_NAME);
+					}
 				 	$('input[id=ISA_HANJA_NAME]').val(data['Data'][0].isa_HANJA_NAME);
 				 	$('select[id=isa_HIRE_CODE]').val(data['Data'][0].isa_HIRE_CODE); // select
 				 	$('input[id=isa_NUM]').val(data['Data'][0].isa_NUM);

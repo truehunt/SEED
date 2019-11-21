@@ -53,6 +53,11 @@ public class CardDAOImpl implements CardDAO {
 		return list;
 	}
 	
+	@Override
+	public void ISA_cha_N(Map<String, Object> searchMap) throws DataAccessException {
+		sqlSession.selectList("hr.human.p0001.ISA_cha_N",searchMap);
+	}
+	
 	
 	//
 	@Override

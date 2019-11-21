@@ -49,22 +49,21 @@
     	SELECT i.fk_isa_sawon_code, s.pk_sawon_code, s.sawon_name
 		  FROM ISA i, sawon s
 		 WHERE i.fk_isa_sawon_code(+) = s.pk_sawon_code
-    </select> 	 
+		 ORDER BY s.pk_sawon_code ASC 
+    </select> 	  
+     
+    <select id="ISA_cha_N" resultMap="cardResult01" parameterType="java.util.Map"> 
+    	insert ALL into ISA(fk_isa_sawon_code)
+		values(pk_sawon_code)
+    		select pk_sawon_code
+    		from sawon s, isa i 
+    		where s.pk_sawon_code = i.fk_isa_sawon_code(+) 
+    		and i.fk_isa_sawon_code IS NULL
+    </select> 	
 	 
 	<select id="ISA_cha" resultMap="cardResult01" parameterType="java.util.Map"> 
-			<if test="fk_ISA_SAWON_CODE == '' and fk_ISA_SAWON_CODE == null">
-				<![CDATA[
-					insert ALL into ISA(fk_isa_sawon_code)
-					values(pk_sawon_code)
-	    				select pk_sawon_code
-    					from sawon s, isa i 
-    					where s.pk_sawon_code = i.fk_isa_sawon_code(+) 
-    					and i.fk_isa_sawon_code IS NULL
-    			]]> 
-			</if>		
-
 			<![CDATA[
-         		select fk_ISA_SAWON_CODE, isa_hanja_name, ISA_HIRE_CODE, ISA_NUM,
+         		select isa_hanja_name, ISA_HIRE_CODE, ISA_NUM,
 					ISA_ADDRESS, ISA_PERMANENT_ADDR, ISA_MARRIAGE_CODE,
 					ISA_HOUSE_CODE, ISA_LIVING_CODE, ISA_ESTATE,
 					ISA_MOVABLES, ISA_SUM, ISA_GEONPYEONG, ISA_SITE, 
@@ -72,10 +71,15 @@
 				from ISA
       		]]> 
 			<where>
-					fk_ISA_SAWON_CODE = #{fk_ISA_SAWON_CODE}
+				<choose>
+					<when test="fk_ISA_SAWON_CODE != '' and fk_ISA_SAWON_CODE != null">
+						fk_ISA_SAWON_CODE = #{fk_ISA_SAWON_CODE}
+					</when>
+					<otherwise>
+						fk_ISA_SAWON_CODE = #{pk_SAWON_CODE}
+					</otherwise>
+				</choose>
 			</where> 
-<!-- 		</if> -->
-      
 	</select>
 
 	<update id="updateData" parameterType="java.util.Map">

@@ -7,10 +7,6 @@ import org.springframework.dao.DataAccessException;
 
 import hr.pay.p0001.vo.TA_inputVO;
 
-
-
-
-
 public interface TA_inputDAO {
 	 public List<TA_inputVO> searchList(Map<String, Object> searchMap) throws DataAccessException;
 

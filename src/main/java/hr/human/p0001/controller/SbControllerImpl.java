@@ -16,31 +16,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import hr.human.p0001.service.ChjService;
-import hr.human.p0001.vo.ChjVO;
+import hr.human.p0001.service.SbService;
+import hr.human.p0001.vo.SbVO;
 
-@Controller("h_ChjController")
-public class ChjControllerImpl implements ChjController{
-	private static final Logger logger = LoggerFactory.getLogger(ChjControllerImpl.class);
+@Controller("h_SbController")
+public class SbControllerImpl implements SbController{
+	private static final Logger logger = LoggerFactory.getLogger(SbControllerImpl.class);
 	@Autowired
-	ChjService p0001Service;
+	SbService p0001Service;
 	@Autowired
-	ChjVO p0001VO;
+	SbVO p0001VO;
 	
 		
 	// 인사기록카드_학력_조회
 	@Override
-	@RequestMapping(value = "/human/p0001/ISA_chj.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/human/p0001/ISA_sb.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public Map ISA_chj(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map ISA_sb(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
 		// 검색조건설정
-		searchMap.put("fk_ASS_SAWON_CODE", request.getParameter("fk_ASS_SAWON_CODE")); 
+//		searchMap.put("fk_ASS_SAWON_CODE", request.getParameter("fk_ASS_SAWON_CODE")); 
 
 		//데이터 조회
-		List<ChjVO> data = p0001Service.ISA_chj(searchMap);
+		List<SbVO> data = p0001Service.ISA_sb(searchMap);
 	    resultMap.put("Data", data);
 	      
 	    return resultMap;
@@ -50,9 +50,9 @@ public class ChjControllerImpl implements ChjController{
 	
 	// 인사기록카드_출장
 		@Override
-		@RequestMapping(value = "/human/p0001/insertChj.do", method = { RequestMethod.GET, RequestMethod.POST })
+		@RequestMapping(value = "/human/p0001/insertSb.do", method = { RequestMethod.GET, RequestMethod.POST })
 		@ResponseBody
-		public Map saveDataChj(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		public Map saveDataSb(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			request.setCharacterEncoding("utf-8");
 			Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 저장할Daa
 			Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
@@ -64,11 +64,11 @@ public class ChjControllerImpl implements ChjController{
 				String[] values = request.getParameterValues(name);
 				dataMap.put(name, values);
 			}
-			String fk_CHJ_SAWON_CODE = request.getParameter("fk_CHJ_SAWON_CODE");
-			
+			String fk_SB_SAWON_CODE = request.getParameter("fk_SB_SAWON_CODE");
+			System.out.println(request.getParameter("fk_SB_SAWON_CODE"));
 			Map<String, String> result = new HashMap<String, String>();
 			try {
-				p0001Service.saveDataChj(dataMap, fk_CHJ_SAWON_CODE);
+				p0001Service.saveDataSb(dataMap, fk_SB_SAWON_CODE);
 				result.put("Code","0");
 				result.put("Message","저장되었습니다");
 			}catch(Exception e) {

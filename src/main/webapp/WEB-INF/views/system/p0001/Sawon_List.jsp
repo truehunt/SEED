@@ -24,8 +24,13 @@
 							<c:forEach var="listview" items="${listview}" varStatus="status">	
 								<tr>
 									<td><c:out value="${status.index+1}"/></td>
+<<<<<<< HEAD
 									<td><c:out value="${listview.PK_SAWON_CODE}"/></td>
 									<td><c:out value="${listview.SAWON_NAME}"/></td>
+=======
+									<td><a href="javascript:fn_UserRead(<c:out value="${listview.PK_SAWON_CODE}"/>)"><c:out value="${listview.PK_SAWON_CODE}"/></a></td>
+									<td><a href="javascript:fn_UserRead(<c:out value="${listview.PK_SAWON_CODE}"/>)"><c:out value="${listview.SAWON_NAME}"/></a></td>
+>>>>>>> refs/remotes/origin/master
 									<td><c:out value="${listview.SAWON_VIEW_PERMISSION}"/></td>
 									<td><input type="checkbox" name="chk" value="<c:out value="${listview.PK_SAWON_CODE}"/>"></td>
 								</tr>

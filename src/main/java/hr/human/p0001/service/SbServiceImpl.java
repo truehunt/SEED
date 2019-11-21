@@ -10,36 +10,36 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import hr.human.p0001.dao.ChjDAO;
-import hr.human.p0001.service.ChjService;
-import hr.human.p0001.vo.ChjVO;
+import hr.human.p0001.dao.SbDAO;
+import hr.human.p0001.service.SbService;
+import hr.human.p0001.vo.SbVO;
 
-@Service("h_ChjService")
+@Service("h_SbService")
 @Transactional(propagation = Propagation.REQUIRED)
-public class ChjServiceImpl implements ChjService {
+public class SbServiceImpl implements SbService {
 	@Autowired
-	private ChjDAO p0001DAO;
+	private SbDAO p0001DAO;
 
 	@Override
-	public List<ChjVO> ISA_chj(Map<String, Object> searchMap) throws DataAccessException {
-		List<ChjVO> list =  p0001DAO.ISA_chj(searchMap);
+	public List<SbVO> ISA_sb(Map<String, Object> searchMap) throws DataAccessException {
+		List<SbVO> list =  p0001DAO.ISA_sb(searchMap);
 		return list;
 	}
 	
 	//학력
 	@Override
-	public void saveDataChj(Map<String, String[]> dataMap, String fk_CHJ_SAWON_CODE)  throws DataAccessException  {
+	public void saveDataSb(Map<String, String[]> dataMap, String fk_SB_SAWON_CODE)  throws DataAccessException  {
 		String[] status = dataMap.get("STATUS");
 		int length = status.length; // row수
 		int i = 0;
 		for (String str : status) {
-			Map<String, String> row = getRow(dataMap, length, i, fk_CHJ_SAWON_CODE); // 현재 Index의 Row Map
+			Map<String, String> row = getRow(dataMap, length, i, fk_SB_SAWON_CODE); // 현재 Index의 Row Map
 			if ("I".equals(str)) { // 추가
-				p0001DAO.insertDataChj(row);
+				p0001DAO.insertDataSb(row);
 			} else if ("U".equals(str)) { // 수정
-				p0001DAO.updateDataChj(row);
+				p0001DAO.updateDataSb(row);
 			} else if ("D".equals(str)) { // 삭제
-				p0001DAO.deleteDataChj(row);
+				p0001DAO.deleteDataSb(row);
 			}
 			i++;
 		}

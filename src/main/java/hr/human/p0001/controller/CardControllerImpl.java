@@ -64,9 +64,10 @@ public class CardControllerImpl implements CardController{
 		request.setCharacterEncoding("utf-8");
 		ModelAndView main = new ModelAndView(viewName);
 		
-		
 		return main;
 	}
+	
+	
 	
 	//인사발령_페이지
 		@Override
@@ -163,6 +164,42 @@ public class CardControllerImpl implements CardController{
 
 			return resultMap;
 		}
+		
+//		// 인사기록카드_채용/거주_ json
+//				@Override
+//				@RequestMapping(value = "/human/p0001/ISA_cha.do", method = { RequestMethod.GET, RequestMethod.POST })
+//				@ResponseBody
+//				public Map ISA_cha(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//					request.setCharacterEncoding("utf-8");
+//					Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+//					Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+//					// 검색조건설정
+//
+//					// 데이터 조회
+//					List<CardVO> data = p0001Service.ISA_cha(searchMap);
+//					resultMap.put("Data", data);
+//
+//					return resultMap;
+//				}
+				
+				// 인사기록카드_채용/거주_ json
+				@Override
+				@RequestMapping(value = "/human/p0001/ISA_cha.do", method = { RequestMethod.GET, RequestMethod.POST })
+				@ResponseBody
+				public Map ISA_cha(HttpServletRequest request, HttpServletResponse response) throws Exception {
+					request.setCharacterEncoding("utf-8");
+					Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+					Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+					// 검색조건설정
+					System.out.println("1."+request.getParameter("isa_HIRE_CODE"));
+					System.out.println("2."+request.getParameter("ISA_NUM"));
+					System.out.println("3."+request.getParameter("isa_MARRIAGE_CODE"));
+					// 데이터 조회
+					List<CardVO> data = p0001Service.ISA_cha(searchMap);
+					resultMap.put("Data", data);
+
+					return resultMap;
+				}
 		
 	
 			

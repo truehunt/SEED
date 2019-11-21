@@ -46,6 +46,7 @@
 		<typeAlias alias="certVO" type="hr.human.p0001.vo.CertVO"/>
 		<typeAlias alias="assVO" type="hr.human.p0001.vo.AssVO"/>
 		<typeAlias alias="chjVO" type="hr.human.p0001.vo.ChjVO"/>
+		<typeAlias alias="sbVO" type="hr.human.p0001.vo.SbVO"/>
 
       <!-- 등록정보관리 - 회사등록 -->
       <typeAlias alias="comEnroll_VO" type="hr.system.p0001.vo.ComEnroll_VO"/>

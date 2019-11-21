@@ -26,6 +26,7 @@
 		}
 		document.getElementById("year").innerHTML = stryear
 	}
+	}
 </script>
 
 </head>

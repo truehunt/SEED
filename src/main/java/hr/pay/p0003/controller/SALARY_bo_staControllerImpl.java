@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import hr.pay.p0001.vo.TA_inputVO;
 import hr.pay.p0002.vo.SALARY_calculVO;
 import hr.pay.p0003.service.SALARY_bo_staService;
 import hr.pay.p0003.vo.SALARY_bo_staVO;
@@ -65,10 +66,10 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 	}
 	
 	@Override
-	@RequestMapping(value = "/pay/p0003/p0003.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_bo_sta/SALARY_bo_sta.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	request.setCharacterEncoding("utf-8");
-		ModelAndView main = new ModelAndView("pay/p0003/p0003");
+		ModelAndView main = new ModelAndView("pay/p0003/SALARY_bo_sta");
 		return main;
 	}
 	
@@ -88,7 +89,7 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0003/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_bo_sta/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -108,6 +109,7 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 
 		searchMap.put("pk_TA_WORKPLACE_CODE", request.getParameter("pk_TA_WORKPLACE_CODE"));
 		
+		searchMap.put("fk_SAWON_CODE", request.getParameter("fk_SAWON_CODE"));
 		
 		searchMap.put("TA_ATTRIBUTION", request.getParameter("TA_ATTRIBUTION"));
 		searchMap.put("TA_PAYMENTDAY", request.getParameter("TA_PAYMENTDAY"));
@@ -116,6 +118,10 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 		searchMap.put("FK_SAWON_WORKPLACE_CODE", request.getParameter("FK_SAWON_WORKPLACE_CODE"));
 		searchMap.put("PK_DEPT_CODE", request.getParameter("PK_DEPT_CODE"));
 		searchMap.put("FK_DEPT_CODE", request.getParameter("FK_DEPT_CODE"));
+		searchMap.put("PK_WORKPLACE_CODE", request.getParameter("PK_WORKPLACE_CODE"));
+		
+		
+		
 
 		//�뜝�럥�몥�뜝�럩逾졾뜝�럡�댉 �댖怨뚰��?�뤂
 		List<SALARY_bo_staVO> data = SALARY_bo_staService.searchList(searchMap);
@@ -127,7 +133,7 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 
 	
 	@Override
-	@RequestMapping(value = "/pay/p0003/SiteList.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_bo_sta/SiteList.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map SiteList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -140,7 +146,6 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 		searchMap.put("FK_SALARY_CAL_SAWON_CODE", request.getParameter("FK_SALARY_CAL_SAWON_CODE"));
 	
 		searchMap.put("SAL_INFO_ACC_NUM_ONE", request.getParameter("SAL_INFO_ACC_NUM_ONE"));
-		searchMap.put("SALARY_CAL_PAYMENTDAY", request.getParameter("SALARY_CAL_PAYMENTDAY"));
 		
 		
 		searchMap.put("FK_WORKPLACE_CODE", request.getParameter("FK_WORKPLACE_CODE"));
@@ -157,7 +162,7 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0003/DeptList.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_bo_sta/DeptList.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map DeptList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -178,7 +183,30 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0003/yearday.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_bo_sta/DeptList2.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map DeptList2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		
+		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
+		
+		searchMap.put("pk_WORKPLACE_CODE", request.getParameter("SiteList"));
+		searchMap.put("fk_DEPT_CODE", request.getParameter("SiteList"));
+		searchMap.put("workplace_INQUIRY_CODE", request.getParameter("SiteList"));
+		searchMap.put("dept_INQUIRY_CODE", request.getParameter("SiteList"));
+		
+		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
+		List<SALARY_bo_staVO> data = SALARY_bo_staService.DeptList2(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}
+	
+	
+	@Override
+	@RequestMapping(value = "/pay/SALARY_bo_sta/yearday.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map yearday(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -199,7 +227,7 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0003/yeardayd.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_bo_sta/yeardayd.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map yeardayd(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -209,6 +237,8 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
 		
 		searchMap.put("pk_D_B_PAYMENT_SEQ_CODE", request.getParameter("yearday"));
+		
+
 		
 		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
 		List<SALARY_bo_staVO> data = SALARY_bo_staService.yeardayd(searchMap);
@@ -222,7 +252,7 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0003/saveData.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_bo_sta/saveData.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");

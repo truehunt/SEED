@@ -40,6 +40,16 @@ public class SALARY_bo_staVO {
 	private String fk_DEPT_CODE;
 	
 	
+	private String pk_D_B_PAYMENT_SEQ_CODE;
+	private String ta_TOTAL_PAYMENTDAY;
+	private String pk_SAWON_WORKPLACE_CODE;
+	private String workplace_INQUIRY_CODE;
+	private String dept_INQUIRY_CODE;
+	
+	private String d_B_PAYMENT_DATE_ATTRIBUT;
+	private String d_B_PAYMENT_DT;
+	private String fk_SAWON_CODE;
+	
 	public SALARY_bo_staVO() {
 		System.out.println("SALARY_bo_staVO");
 	}
@@ -323,6 +333,86 @@ public class SALARY_bo_staVO {
 
 	public void setFk_DEPT_CODE(String fk_DEPT_CODE) {
 		this.fk_DEPT_CODE = fk_DEPT_CODE;
+	}
+
+
+	public String getPk_D_B_PAYMENT_SEQ_CODE() {
+		return pk_D_B_PAYMENT_SEQ_CODE;
+	}
+
+
+	public void setPk_D_B_PAYMENT_SEQ_CODE(String pk_D_B_PAYMENT_SEQ_CODE) {
+		this.pk_D_B_PAYMENT_SEQ_CODE = pk_D_B_PAYMENT_SEQ_CODE;
+	}
+
+
+	public String getTa_TOTAL_PAYMENTDAY() {
+		return ta_TOTAL_PAYMENTDAY;
+	}
+
+
+	public void setTa_TOTAL_PAYMENTDAY(String ta_TOTAL_PAYMENTDAY) {
+		this.ta_TOTAL_PAYMENTDAY = ta_TOTAL_PAYMENTDAY;
+	}
+
+
+	public String getPk_SAWON_WORKPLACE_CODE() {
+		return pk_SAWON_WORKPLACE_CODE;
+	}
+
+
+	public void setPk_SAWON_WORKPLACE_CODE(String pk_SAWON_WORKPLACE_CODE) {
+		this.pk_SAWON_WORKPLACE_CODE = pk_SAWON_WORKPLACE_CODE;
+	}
+
+
+	public String getWorkplace_INQUIRY_CODE() {
+		return workplace_INQUIRY_CODE;
+	}
+
+
+	public void setWorkplace_INQUIRY_CODE(String workplace_INQUIRY_CODE) {
+		this.workplace_INQUIRY_CODE = workplace_INQUIRY_CODE;
+	}
+
+
+	public String getDept_INQUIRY_CODE() {
+		return dept_INQUIRY_CODE;
+	}
+
+
+	public void setDept_INQUIRY_CODE(String dept_INQUIRY_CODE) {
+		this.dept_INQUIRY_CODE = dept_INQUIRY_CODE;
+	}
+
+
+	public String getD_B_PAYMENT_DATE_ATTRIBUT() {
+		return d_B_PAYMENT_DATE_ATTRIBUT;
+	}
+
+
+	public void setD_B_PAYMENT_DATE_ATTRIBUT(String d_B_PAYMENT_DATE_ATTRIBUT) {
+		this.d_B_PAYMENT_DATE_ATTRIBUT = d_B_PAYMENT_DATE_ATTRIBUT;
+	}
+
+
+	public String getD_B_PAYMENT_DT() {
+		return d_B_PAYMENT_DT;
+	}
+
+
+	public void setD_B_PAYMENT_DT(String d_B_PAYMENT_DT) {
+		this.d_B_PAYMENT_DT = d_B_PAYMENT_DT;
+	}
+
+
+	public String getFk_SAWON_CODE() {
+		return fk_SAWON_CODE;
+	}
+
+
+	public void setFk_SAWON_CODE(String fk_SAWON_CODE) {
+		this.fk_SAWON_CODE = fk_SAWON_CODE;
 	}
 
 

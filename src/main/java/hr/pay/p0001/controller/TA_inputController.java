@@ -24,6 +24,9 @@ public interface TA_inputController {
 	public Map searchList2(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map SiteList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map DeptList(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map DeptList2(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	
 	public Map yearday(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map yeardayd(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

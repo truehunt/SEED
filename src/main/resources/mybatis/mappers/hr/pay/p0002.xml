@@ -26,7 +26,9 @@
 		<result property="d_B_PAYMENT_DT" column="d_B_PAYMENT_DT"/>
 		
 		<result property="pk_D_B_PAYMENT_SEQ_CODE" column="pk_D_B_PAYMENT_SEQ_CODE"/>
-		
+		<result property="workplace_NAME" column="workplace_NAME"/>
+		<result property="workplace_INQUIRY_CODE" column="workplace_INQUIRY_CODE"/>
+		<result property="dept_INQUIRY_CODE" column="dept_INQUIRY_CODE"/>
 	</resultMap>
 	
 	
@@ -44,6 +46,9 @@
 		      <result property="pk_SALARY_CAL_INFO" column="pk_SALARY_CAL_INFO"/>
 			  <result property="salary_CAL_PAYMENTDAY" column="salary_CAL_PAYMENTDAY"/>
 	          <result property="d_B_PAYMENT_DT" column="d_B_PAYMENT_DT"/>
+	          <result property="salary_CAL_SALARY_ITEM" column="salary_CAL_SALARY_ITEM"/>
+	          
+	          
 	</resultMap>
 	
 	
@@ -53,19 +58,23 @@
 	<select id="searchList" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
 		<![CDATA[
 			select a.pk_sawon_code, a.sawon_name
-			from SAWON a, DEPT b
+			from SAWON a, DEPT b, workplace c
 			
 		]]>
 		<where>
-		      a.fk_dept_code = b.pk_dept_code
-		 and a.fk_sawon_workplace_code = b.fk_workplace_code
+		          a.fk_SAWON_WORKPLACE_CODE = c.pk_workplace_code
+            and   a.fk_dept_code = b.pk_dept_code
 		      
-				<if test="FK_WORKPLACE_CODE != null">
-				      and FK_SAWON_WORKPLACE_CODE = #{FK_WORKPLACE_CODE}
-			</if>
-				<if test="PK_DEPT_CODE != null">
-				      and FK_DEPT_CODE = #{PK_DEPT_CODE}
-			</if>
+				<if test="PK_WORKPLACE_CODE != null">
+				      and FK_SAWON_WORKPLACE_CODE = #{PK_WORKPLACE_CODE}
+<!-- 				      이거는 사업장 -->
+				</if>
+				
+				<if test="FK_DEPT_CODE != null">
+				      and FK_DEPT_CODE = #{FK_DEPT_CODE}
+<!-- 				      여기는 부서 -->
+<!-- 				   PK_DEPT_CODE 대신에    DEPT_WORKPLACE_CODE  -->
+				</if>
 			
 		</where>
 	</select>
@@ -74,17 +83,18 @@
 	
 	<select id="searchList2" resultMap="SALARY_calculResult02" parameterType="java.util.Map">
 		<![CDATA[
-			select b.pk_SALARY_CAL_INFO, b.fk_SALARY_CAL_SAWON_CODE, b.salary_CAL_SALARY_ITEM, b.salary_CAL_MONEY, b.salary_CAL_PAYMENTDAY
-			from SAWON a, SALARY_CAL b, D_B_PAYMENT c
+			select pk_SALARY_CAL_INFO,fk_SALARY_CAL_SAWON_CODE, salary_CAL_SALARY_ITEM, salary_CAL_MONEY, salary_CAL_PAYMENTDAY
+			from SALARY_CAL
 		]]>
 		<where>
-			   a.pk_sawon_code = b.fk_SALARY_CAL_SAWON_CODE
-		    and c.d_B_PAYMENT_DT = b.salary_CAL_PAYMENTDAY
-		    
-		<if test="PK_SAWON_CODE != null">
-				      and PK_SAWON_CODE = #{PK_SAWON_CODE}
+			     
+		    <if test="fk_SALARY_CAL_SAWON_CODE != null">
+				      and fk_SALARY_CAL_SAWON_CODE = #{fk_SALARY_CAL_SAWON_CODE, jdbcType=VARCHAR}
 			</if>
-		  and salary_CAL_PAYMENTDAY = #{SALARY_CAL_PAYMENTDAY, jdbcType=VARCHAR}
+			<if test="salary_CAL_PAYMENTDAY != null">
+				      and salary_CAL_PAYMENTDAY = #{salary_CAL_PAYMENTDAY, jdbcType=VARCHAR}
+			</if>
+		 
 				     
 		
 		</where>
@@ -98,18 +108,33 @@
 		]]>
 	</select>
 	
-	<select id="deptList" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
+<select id="deptList" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
 		<![CDATA[
-			select dept_name, PK_DEPT_CODE
-			from dept d, WORKPLACE w
+			select workplace_NAME, PK_WORKPLACE_CODE
+			  from WORKPLACE
 		]]>
 		<where>
-			FK_WORKPLACE_CODE = w.FK_WORKPLACE_CODE2
+			
 			<if test="pk_WORKPLACE_CODE != null">
-				and w.FK_WORKPLACE_CODE2 = #{pk_WORKPLACE_CODE}
+				workplace_INQUIRY_CODE = #{pk_WORKPLACE_CODE}
 			</if>
 		</where>
 	</select>
+	
+	
+	<select id="deptList2" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select dept_NAME, PK_DEPT_CODE
+			  from DEPT
+		]]>
+		<where>
+			
+			<if test="PK_DEPT_CODE != null">
+				dept_INQUIRY_CODE = #{PK_DEPT_CODE}
+			</if>
+		</where>
+	</select>
+	
 	
 	<select id="yearday" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
 		<![CDATA[
@@ -135,8 +160,8 @@
 		update SALARY_CAL
 		set   PK_SALARY_CAL_INFO = #{pk_SALARY_CAL_INFO, jdbcType=VARCHAR}
 		    , FK_SALARY_CAL_SAWON_CODE = #{fk_SALARY_CAL_SAWON_CODE, jdbcType=VARCHAR}
-		    , SALARY_CALCUL_ITEM = #{salary_CALCUL_ITEM, jdbcType=VARCHAR}
-			, SALARY_CALCUL_MONEY = #{salary_CALCUL_MONEY, jdbcType=VARCHAR}
+		    , SALARY_CAL_SALARY_ITEM = #{salary_CAL_SALARY_ITEM, jdbcType=VARCHAR}
+			, SALARY_CAL_MONEY = #{salary_CAL_MONEY, jdbcType=VARCHAR}
 			, SALARY_CAL_PAYMENTDAY = #{salary_CAL_PAYMENTDAY, jdbcType=VARCHAR}
 			
 			

@@ -40,7 +40,10 @@ public class SALARY_calculVO {
    private String pk_SAWON_WORKPLACE_CODE;
    private String workplace_INQUIRY_CODE;
    private String dept_INQUIRY_CODE;
+   private String fk_SAWON_WORKPLACE_CODE; 
+   private String fk_dept_code;
    
+  
 
    public SALARY_calculVO() {
       System.out.println("SALARY_calculVO");
@@ -458,6 +461,36 @@ public class SALARY_calculVO {
    public void setFk_SALARY_CAL_SAWON_CODE(String fk_SALARY_CAL_SAWON_CODE) {
       this.fk_SALARY_CAL_SAWON_CODE = fk_SALARY_CAL_SAWON_CODE;
    }
+
+
+
+
+public String getFk_SAWON_WORKPLACE_CODE() {
+	return fk_SAWON_WORKPLACE_CODE;
+}
+
+
+
+
+public void setFk_SAWON_WORKPLACE_CODE(String fk_SAWON_WORKPLACE_CODE) {
+	this.fk_SAWON_WORKPLACE_CODE = fk_SAWON_WORKPLACE_CODE;
+}
+
+
+
+
+public String getFk_dept_code() {
+	return fk_dept_code;
+}
+
+
+
+
+public void setFk_dept_code(String fk_dept_code) {
+	this.fk_dept_code = fk_dept_code;
+}
+
+
 
 
 

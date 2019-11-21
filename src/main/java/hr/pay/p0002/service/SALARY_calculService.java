@@ -24,6 +24,8 @@ public interface SALARY_calculService {
 
 	 public List<SALARY_calculVO> DeptList(Map<String, Object> searchMap) throws DataAccessException;
 
+	 public List<SALARY_calculVO> DeptList2(Map<String, Object> searchMap) throws DataAccessException;
+
 	 public List<SALARY_calculVO> yearday(Map<String, Object> searchMap) throws DataAccessException;
 
 	public List<SALARY_calculVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException;
@@ -33,6 +35,7 @@ public interface SALARY_calculService {
 	public void updateMember(Map<String, Object> dataMap);
 
 	public void insertMember(Map<String, Object> dataMap);
+
 
 	
 

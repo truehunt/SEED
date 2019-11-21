@@ -21,6 +21,8 @@ public interface SALARY_calculDAO {
 
 	 public List<SALARY_calculVO> DeptList(Map<String, Object> searchMap) throws DataAccessException;
 		
+	public List<SALARY_calculVO> DeptList2(Map<String, Object> searchMap) throws DataAccessException;
+
 	 public List<SALARY_calculVO> yearday(Map<String, Object> searchMap) throws DataAccessException;
 
 	public List<SALARY_calculVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException;
@@ -32,6 +34,7 @@ public interface SALARY_calculDAO {
 	public void updateData(Map<String, String> row) throws DataAccessException;
 
 	public void deleteData(Map<String, String> row) throws DataAccessException;
+
 
 
 

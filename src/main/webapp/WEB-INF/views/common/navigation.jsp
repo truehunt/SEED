@@ -81,14 +81,14 @@ $(document).ready(function(){
 		            } else if(url === "signImageForm"){ // 결재이미지 등록
 		            	urlToGo = "/SEED/signImageForm";
 		            // 급여관리
-		            } else if(url === "pay/p0001/p0001.do"){ // 근태 결과 입력
-		            	urlToGo = "pay/p0001/p0001.do";
-		            } else if(url === "pay/p0002/p0002.do"){
-		            	urlToGo = "pay/p0002/p0002.do";
-		            } else if(url === "pay/p0003/p0003.do"){
-		            	urlToGo = "pay/p0003/p0003.do";
-		            } else if(url === "pay/s0001/s0001.do"){
-		            	urlToGo = "pay/s0001/s0001.do";
+		            } else if(url === "pay/TA_input/TA_input.do"){ // 근태 결과 입력
+		            	urlToGo = "pay/TA_input/TA_input.do";
+		            } else if(url === "pay/SALARY_calcul/SALARY_calcul.do"){
+		            	urlToGo = "pay/SALARY_calcul/SALARY_calcul.do";
+		            } else if(url === "pay/SALARY_bo_sta/SALARY_bo_sta.do"){
+		            	urlToGo = "pay/SALARY_bo_sta/SALARY_bo_sta.do";
+		            } else if(url === "pay/SET_payday/SET_payday.do"){
+		            	urlToGo = "pay/SET_payday/SET_payday.do";
 		            // 근태관리
 		            } else if(url === "day_regist_sawon"){//사원 출퇴근
 		            	urlToGo = "/SEED/attendance/p0001/day_regist_sawon.do";
@@ -334,12 +334,12 @@ $(document).ready(function(){
                             <a href="#"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay"/><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
                                 <li>
-                                    <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay1"/>','chart','pay/p0001/p0001.do','pay/p0001/p0001.do'); return false"><s:message code="main.pay1"/></a>
+                                    <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay1"/>','chart','pay/TA_input/TA_input.do','pay/TA_input/TA_input.do'); return false"><s:message code="main.pay1"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay2"/>','chart','pay/p0002/p0002.do','pay/p0002/p0002.do'); return false"><s:message code="main.pay2"/></a>                                
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay2"/>','chart','pay/SALARY_calcul/SALARY_calcul.do','pay/SALARY_calcul/SALARY_calcul.do'); return false"><s:message code="main.pay2"/></a>                                
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay3"/>','chart','pay/p0003/p0003.do','pay/p0003/p0003.do'); return false"><s:message code="main.pay3"/></a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay3"/>','chart','pay/SALARY_bo_sta/SALARY_bo_sta.do','pay/SALARY_bo_sta/SALARY_bo_sta.do'); return false"><s:message code="main.pay3"/></a>
                                 </li>
 	                        </ul>                             
                         </li>
@@ -378,7 +378,7 @@ $(document).ready(function(){
 	                                </li>
 	                                <li>
 
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup2"/>','chart','pay/s0001/s0001.do','pay/s0001/s0001.do'); return false"><s:message code="main.setup2"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup2"/>','chart','pay/SET_payday/SET_payday.do','pay/SET_payday/SET_payday.do'); return false"><s:message code="main.setup2"/></a>
 
 	                                </li>
 	                                <li>

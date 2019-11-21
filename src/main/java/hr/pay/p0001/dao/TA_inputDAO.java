@@ -7,6 +7,10 @@ import org.springframework.dao.DataAccessException;
 
 import hr.pay.p0001.vo.TA_inputVO;
 
+
+
+
+
 public interface TA_inputDAO {
 	 public List<TA_inputVO> searchList(Map<String, Object> searchMap) throws DataAccessException;
 
@@ -17,6 +21,8 @@ public interface TA_inputDAO {
 
 	 public	List<TA_inputVO> DeptList(Map<String, Object> searchMap) throws DataAccessException;
 
+	public List<TA_inputVO> DeptList2(Map<String, Object> searchMap) throws DataAccessException;
+
 	 public List<TA_inputVO> yearday(Map<String, Object> searchMap) throws DataAccessException;
 
 	 public List<TA_inputVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException;
@@ -26,6 +32,7 @@ public interface TA_inputDAO {
 	public void updateData(Map<String, String> row) throws DataAccessException;
 
 	public void deleteData(Map<String, String> row) throws DataAccessException;
+
 
 	
 

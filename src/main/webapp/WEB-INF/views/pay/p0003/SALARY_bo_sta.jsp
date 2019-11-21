@@ -133,18 +133,23 @@ table.ui-datepicker-calendar { display:none; }
    function doAction(sAction) {
       switch(sAction) {
       case "search": //조회
-    		var xx = document.getElementById("yeardayd");
+      
+    	    var xx = document.getElementById("yeardayd");
 			var xy = xx.options[xx.selectedIndex].text; 
 			
 			var yy = document.getElementById("SiteList1");
 			var yz = yy.options[yy.selectedIndex].text;
-			
 		
-          var param = "D_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("yearday").value + "&SALARY_CAL_PAYMENTDAY=" + xy +"&PK_WORKPLACE_CODE=" + document.getElementById("SiteList").value + "&PK_DEPT_CODE=" + document.getElementById("DeptList").value + "&SAL_INFO_TRANS_AMOUNT_O=" + yz ;
-
- 
+			
+        if($("#SiteList").val() == "1"){
+        	var param = "D_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("yearday").value + "&SALARY_CAL_PAYMENTDAY=" + xy +"&FK_SAWON_WORKPLACE_CODE=" + $("#SiteList").val() + "&PK_WORKPLACE_CODE=" + document.getElementById("DeptList").value + "&SAL_INFO_TRANS_AMOUNT_O=" + yz ;      
+  }else if($("#SiteList").val() == "2"){
+        	 var param = "D_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("yearday").value + "&SALARY_CAL_PAYMENTDAY=" + xy +"&FK_SAWON_WORKPLACE_CODE=" + $("#SiteList").val() + "&FK_DEPT_CODE=" + document.getElementById("DeptList").value + "&SAL_INFO_TRANS_AMOUNT_O=" + yz ;
+        	 }
+        
+        
           console.log(param);
-         mySheet.DoSearch("${contextPath}/pay/p0003/searchList.do", param);
+         mySheet.DoSearch("${contextPath}/pay/SALARY_bo_sta/searchList.do", param);
          
          //mySheet.DoSearch("transaction_data2.json");
          break;
@@ -155,7 +160,7 @@ table.ui-datepicker-calendar { display:none; }
       case "save": // 저장
          //var tempStr = mySheet.GetSaveString();
          //alert("서버로 전달되는 문자열 확인 :"+tempStr);
-         mySheet.DoSave("${contextPath}/pay/p0003/saveData.do");
+         mySheet.DoSave("${contextPath}/pay/SALARY_bo_sta/saveData.do");
          break;         
       case "insert":
           mySheet.DataInsert(-1);
@@ -188,7 +193,7 @@ table.ui-datepicker-calendar { display:none; }
       
       console.log(x);
       fk_ta_sawon_code = mySheet.GetCellValue(row,2);
-      mySheet2.DoSearch("${pageContext.request.contextPath}/pay/p0003/searchList2.do",x);
+      mySheet2.DoSearch("${pageContext.request.contextPath}/pay/SALARY_bo_sta/searchList.do",x);
    }
    
    
@@ -253,224 +258,311 @@ function mySheet_OnSaveEnd(code,msg){
    
    <script>
 
-$(function(){	
-   	var cal = {
-   			closeText : "닫기",
-   			prevText : "이전달",
-   			nextText : "다음달",
-   			currentText : "오늘",
-   			changeMonth: true, // 월을 바꿀 수 있는 셀렉트 박스
-   			changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스
-   			monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
-   			monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월",	"9월", "10월", "11월", "12월" ],
-   			dayNames : [ "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일" ],
-   			dayNamesShort : [ "일", "월", "화", "수", "목", "금", "토" ],
-   			dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
-   			weekHeader : "주",
-   			firstDay : 0,
-   			isRTL : false,
-   			showMonthAfterYear : true, // 연,월,일 순으로
-   			yearSuffix : '',
-   			
-   			showOn: 'both', // 텍스트와 버튼을 함께 보여준다
-   			buttonImage:'https://www.shareicon.net/data/16x16/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
-   			buttonImageOnly: true,
-   			
-   			showButtonPanel: true
-   	};
-               cal.closeText = "선택"; 
-   	    cal.dateFormat = "yymm";
-   	    cal.onClose = function (dateText, inst) {
-   	        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-   	        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-   	        $(this).datepicker( "option", "defaultDate", new Date(year, month, 1) );
-   	        $(this).datepicker('setDate', new Date(year, month, 1));
-   	     	yeardayd();
-   	    }
-   	 
-   	    cal.beforeShow = function () {
-   	        var selectDate = $("#yearday").val().split("-");
-   	        var year = Number(selectDate[0]);
-   	        var month = Number(selectDate[1]) - 1;
-   	        $(this).datepicker( "option", "defaultDate", new Date(year, month, 1) );
-   	    }
+   $(function(){   
+	      var cal = {
+	            closeText : "닫기",
+	            prevText : "이전달",
+	            nextText : "다음달",
+	            currentText : "오늘",
+	            changeMonth: true, // 월을 바꿀 수 있는 셀렉트 박스
+	            changeYear: true, // 년을 바꿀 수 있는 셀렉트 박스
+	            monthNames : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ],
+	            monthNamesShort : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월",   "9월", "10월", "11월", "12월" ],
+	            dayNames : [ "일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일" ],
+	            dayNamesShort : [ "일", "월", "화", "수", "목", "금", "토" ],
+	            dayNamesMin : [ "일", "월", "화", "수", "목", "금", "토" ],
+	            weekHeader : "주",
+	            firstDay : 0,
+	            isRTL : false,
+	            showMonthAfterYear : true, // 연,월,일 순으로
+	            yearSuffix : '',
+	            
+	            showOn: 'both', // 텍스트와 버튼을 함께 보여준다
+	            buttonImage:'https://www.shareicon.net/data/16x16/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
+	            buttonImageOnly: true,
+	            
+	            showButtonPanel: true
+	      };
+	               cal.closeText = "선택"; 
+	          cal.dateFormat = "yymm";
+	          cal.onClose = function (dateText, inst) {
+	              var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+	              var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+	              $(this).datepicker( "option", "defaultDate", new Date(year, month, 1) );
+	              $(this).datepicker('setDate', new Date(year, month, 1));
+	              yeardayd();
+	          }
+	       
+	          
+	          cal.beforeShow = function () {
+	              var selectDate = $("#yearday").val().split("-");
+	              var year = Number(selectDate[0]);
+	              var month = Number(selectDate[1]) - 1;
+	              $(this).datepicker( "option", "defaultDate", new Date(year, month, 1) );
+	          }
 
-        $("#yearday").datepicker(cal);
+	        $("#yearday").datepicker(cal);
 
-        $('img.ui-datepicker-trigger').css({'cursor':'pointer', 'margin-left':'5px'});  //아이콘(icon) 위치	
-        $('img.ui-datepicker-trigger').attr('align', 'absmiddle');
-   });
-   
-   
-   
+	        $('img.ui-datepicker-trigger').css({'cursor':'pointer', 'margin-left':'5px'});  //아이콘(icon) 위치   
+	        $('img.ui-datepicker-trigger').attr('align', 'absmiddle');
+	   });
+	   
+	   
+	   
 
-function yearday() {
+	function yearday() {
 
-    $.ajax({
+	    $.ajax({
 
-             url : "${contextPath}/pay/p0001/yearday.do",//목록을 조회 할 url
+	             url : "${contextPath}/pay/SALARY_bo_sta/yearday.do",//목록을 조회 할 url
 
-             type : "POST",
+	             type : "POST",
 
-             dataType : "JSON",
+	             dataType : "JSON",
 
-             success : function(data) {
+	             success : function(data) {
 
-                for (var i = 0; i < data['Data'].length; i++) {
-                   
-                   
+	                for (var i = 0; i < data['Data'].length; i++) {
+	                   
+	                   
 
-                    var option = "<option class='' value='" + data['Data'][i].pk_D_B_PAYMENT_SEQ_CODE + "'>"
-                    + data['Data'][i].d_B_PAYMENT_DATE_ATTRIBUT 
-                    + "</option>";
-                   //대상 콤보박스에 추가
-             
-                   $('#yearday').append(option);
+	                    var option = "<option class='' value='" + data['Data'][i].pk_D_B_PAYMENT_SEQ_CODE + "'>"
+	                    + data['Data'][i].d_B_PAYMENT_DATE_ATTRIBUT 
+	                    + "</option>";
+	                   //대상 콤보박스에 추가
+	             
+	                   $('#yearday').append(option);
 
-                }
-                
-             },
+	                }
+	                
+	             },
 
-             error : function(jqxhr, status, error) {
+	             error : function(jqxhr, status, error) {
 
-                alert("에러");
+	                alert("에러");
 
-             }
+	             }
 
-          });
+	          });
 
- };
+	 };
 
- function yeardayd() {
+	 function yeardayd() {
 
-    var yearday = $('#yearday').val();
-    
-    //var x = $('#DeptList option[name='all']').find("option").val();
-    $
-          .ajax({
+	    var yearday = $('#yearday').val();
+	    
+	    //var x = $('#DeptList option[name='all']').find("option").val();
+	    $
+	          .ajax({
 
-             url : "${contextPath}/pay/p0001/yeardayd.do",//목록을 조회 할 url
+	             url : "${contextPath}/pay/SALARY_bo_sta/yeardayd.do",//목록을 조회 할 url
 
-             type : "POST",
+	             type : "POST",
 
-             data : {
-                "yearday" : yearday
-             },
+	             data : {
+	                "yearday" : yearday
+	             },
 
-             dataType : "JSON",
+	             dataType : "JSON",
 
-             success : function(data) {
-                //$(".1").remove();
-                //$("select#yeardayd option").append(x); // 이거 되는거 ㅎ
-                //$("#yeardayd").append(data);
-                //var y="<option value="" selected>전체</option>";
-                //$("select#DeptList").find(".1").remove().end().append(y);
+	             success : function(data) {
+	                //$(".1").remove();
+	                //$("select#yeardayd option").append(x); // 이거 되는거 ㅎ
+	                //$("#yeardayd").append(data);
+	                //var y="<option value="" selected>전체</option>";
+	                //$("select#DeptList").find(".1").remove().end().append(y);
 
-                for (var i = 0; i < data['Data'].length; i++)  {
+	                for (var i = 0; i < data['Data'].length; i++)  {
 
-                	   var option = "<option class='3' value='" + data['Data'][i].pk_D_B_PAYMENT_SEQ_CODE + "'>"
-                       + data['Data'][i].d_B_PAYMENT_DT
-                       + "</option>";
- 
-                   //대상 콤보박스에 추가
-                   $('#yeardayd').append(option);
+	                      var option = "<option class='3' value='" + data['Data'][i].pk_D_B_PAYMENT_SEQ_CODE + "'>"
+	                       + data['Data'][i].d_B_PAYMENT_DT
+	                       + "</option>";
+	 
+	                   //대상 콤보박스에 추가
+	                   $('#yeardayd').append(option);
 
-                }
+	                }
 
-             },
+	             },
 
-             error : function(jqxhr, status, error) {
+	             error : function(jqxhr, status, error) {
 
-                alert("에러");
+	                alert("에러");
 
-             }
+	             }
 
-          });
+	          });
 
- };
- 
+	 };
  </script>
   
 
    <script>
    function selectSite() {
-	   var info4;
-	   var info5;
-	   $.ajax({ // 인사기초코드 조회
-	         url : "${contextPath}/human/p0001/ISA_c.do",//목록을 조회 할 url
-	         type : "POST",
-	         dataType : "JSON",
-	         success : function(data) {
-	            for (var i = 0; i < data['Data'].length; i++) {
-	               var code_ = data['Data'][i].fk_PERSON_BC_CODE_NUM;
-	               
-	               var option = "<option class='1' value='" + data['Data'][i].pk_PERSON_BC_DETAI_CODE_NUM + "'>"
-                   + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME
-                   + "</option>";
-                   
-	               switch(code_){
-	                  case 'EL': // 
-	                	  $('#SiteList').append(option);
-	                     break;
+	      var info4;
+	      var info5;
+	      $.ajax({ // 인사기초코드 조회
+	            url : "${contextPath}/human/p0001/ISA_c.do",//목록을 조회 할 url
+	            type : "POST",
+	            dataType : "JSON",
+	            success : function(data) {
+	               for (var i = 0; i < data['Data'].length; i++) {
+	                  var code_ = data['Data'][i].fk_PERSON_BC_CODE_NUM;
+	                  
+	                  var option = "<option class='' value='" + data['Data'][i].pk_PERSON_BC_DETAI_CODE_NUM + "'>"
+	                + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME
+	                + "</option>";
+	                
+	                  switch(code_){
+	                     case 'EL': // 
+	                        $('#SiteList').append(option);
+	                        break;
+	                  }
+	                  
 	               }
-	               
+	              
+	            },
+	            error : function(jqxhr, status, error) {
+	               alert("에러");
 	            }
-	           
-	         },
-	         error : function(jqxhr, status, error) {
-	            alert("에러");
-	         }
-	      });
+	         });
+	      };
+	      
+
+	   function selectDept() {
+
+	      var SiteList = $('#SiteList').val();
+	      
+	      if(SiteList==1){
+	      //var x = $('#DeptList option[name='all']').find("option").val();
+	      $
+	            .ajax({
+
+	               url : "${contextPath}/pay/SALARY_bo_sta/DeptList.do",//목록을 조회 할 url
+
+	               type : "POST",
+
+	               data : {
+	                  "SiteList" : SiteList
+	               },
+
+	               dataType : "JSON",
+
+	               success : function(data) {
+	                  $(".1").remove();
+	                  //$("select#DeptList option").append(x); // 이거 되는거 ㅎ
+	                  //$("#DeptList").append(data);
+	                  //var y="<option value="" selected>전체</option>";
+	                  //$("select#DeptList").find(".1").remove().end().append(y);
+	                  
+	            if(data['Data'][0].workplace_NAME!= null && data['Data'][0].workplace_NAME!= ''){
+	               
+	                  for (var i = 0; i < data['Data'].length; i++) {
+
+	                     var option = "<option class='1' value='" + data['Data'][i].pk_WORKPLACE_CODE + "'>"
+	                           + data['Data'][i].workplace_NAME
+	                           + "</option>";
+	                          
+	                           
+
+	                     //대상 콤보박스에 추가
+	                     $('#DeptList').append(option);
+
+	                  }
+	               }
+	            
+	            if(data['Data'][0].dept_NAME!= null && data['Data'][0].dept_NAME!= ''){
+	               
+	                for (var i = 0; i < data['Data'].length; i++) {
+
+	                   var option = "<option class='1' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
+	                         + data['Data'][i].dept_NAME
+	                         + "</option>";
+	                        
+	                         
+
+	                   //대상 콤보박스에 추가
+	                   $('#DeptList').append(option);
+
+	                }
+	             }
+	            
+
+	               },
+
+	               error : function(jqxhr, status, error) {
+
+	                  alert("에러");
+
+	               }
+
+	            });
+	      } else { // 2일때 
+	    	  $
+	          .ajax({
+
+	             url : "${contextPath}/pay/SALARY_bo_sta/DeptList2.do",//목록을 조회 할 url
+
+	             type : "POST",
+
+	             data : {
+	                "SiteList" : SiteList
+	             },
+
+	             dataType : "JSON",
+
+	             success : function(data) {
+	                $(".1").remove();
+	                //$("select#DeptList option").append(x); // 이거 되는거 ㅎ
+	                //$("#DeptList").append(data);
+	                //var y="<option value="" selected>전체</option>";
+	                //$("select#DeptList").find(".1").remove().end().append(y);
+	                
+	          if(data['Data'][0].workplace_NAME!= null && data['Data'][0].workplace_NAME!= ''){
+	             
+	                for (var i = 0; i < data['Data'].length; i++) {
+
+	                   var option = "<option class='1' value='" + data['Data'][i].pk_WORKPLACE_CODE + "'>"
+	                         + data['Data'][i].workplace_NAME
+	                         + "</option>";
+	                        
+	                         
+
+	                   //대상 콤보박스에 추가
+	                   $('#DeptList').append(option);
+
+	                }
+	             }
+	          
+	          if(data['Data'][0].dept_NAME!= null && data['Data'][0].dept_NAME!= ''){
+	             
+	              for (var i = 0; i < data['Data'].length; i++) {
+
+	                 var option = "<option class='1' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
+	                       + data['Data'][i].dept_NAME
+	                       + "</option>";
+	                      
+	                       
+
+	                 //대상 콤보박스에 추가
+	                 $('#DeptList').append(option);
+
+	              }
+	           }
+	          
+
+	             },
+
+	             error : function(jqxhr, status, error) {
+
+	                alert("에러");
+
+	             }
+
+	          });
+	      }
+
 	   };
-	   
-	   
-
-   function selectDept() {
-
-      var SiteList = $('#SiteList').val();
-      //var x = $('#DeptList option[name='all']').find("option").val();
-      $
-            .ajax({
-
-               url : "${contextPath}/pay/p0003/DeptList.do",//목록을 조회 할 url
-
-               type : "POST",
-
-               data : {
-                  "SiteList" : SiteList
-               },
-
-               dataType : "JSON",
-
-               success : function(data) {
-                  $(".2").remove();
-                  //$("select#DeptList option").append(x); // 이거 되는거 ㅎ
-                  //$("#DeptList").append(data);
-                  //var y="<option value="" selected>전체</option>";
-                  //$("select#DeptList").find(".1").remove().end().append(y);
-
-                  for (var i = 0; i < data['Data'].length; i++) {
-
-                     var option = "<option class='2' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
-                           + data['Data'][i].dept_NAME
-                           + "</option>";
-
-                     //대상 콤보박스에 추가
-                     $('#DeptList').append(option);
-
-                  }
-
-               },
-
-               error : function(jqxhr, status, error) {
-
-                  alert("에러");
-
-               }
-
-            });
-
-   };
 	   </script>
    
    <script>
@@ -509,10 +601,16 @@ function yearday() {
 
 
 <body onload="LoadPage()">
-  <div class="page_title">
-    <span><a class="closeDepth" href="#">closeDepth</a></span> 
-    <span class="title">급여/퇴직정산관리> <b>급여이체현황</b></span>
-  </div>
+<div id="wrapper">
+
+        <div id="page-wrapper" style="margin: 0px;">
+            <div class="row">
+                <div class="col-lg-12">
+                <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 급여이체현황</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            
   <div class="main_content">
        <div class="exp_product"></div>
        <div class="exp_product">
@@ -587,6 +685,8 @@ function yearday() {
         <!--right단 정보입력 및 수정단 -->
       
       
+ </div>
+ </div>
  
           
    

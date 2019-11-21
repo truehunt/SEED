@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import hr.pay.p0001.vo.TA_inputVO;
 import hr.pay.p0002.vo.SALARY_calculVO;
 import hr.pay.p0003.dao.SALARY_bo_staDAO;
 import hr.pay.p0003.vo.SALARY_bo_staVO;
@@ -48,7 +49,11 @@ public class SALARY_bo_staServiceImpl implements SALARY_bo_staService {
 		return list;
 	}
 	
-	
+	@Override
+	public List<SALARY_bo_staVO> DeptList2(Map<String, Object> searchMap) throws DataAccessException {
+		List<SALARY_bo_staVO> list =  SALARY_bo_staDAO.DeptList2(searchMap); 
+		return list;
+	}
 	
 	@Override
 	public List<SALARY_bo_staVO> yearday(Map<String, Object> searchMap) throws DataAccessException {

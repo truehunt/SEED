@@ -64,10 +64,10 @@ public class SET_paydayControllerImpl implements SET_paydayController {
 	}
 	
 	@Override
-	@RequestMapping(value = "/pay/s0001/s0001.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SET_payday/SET_payday.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	request.setCharacterEncoding("utf-8");
-		ModelAndView main = new ModelAndView("system/p0001/s0001");
+		ModelAndView main = new ModelAndView("system/p0001/SET_payday");
 		return main;
 	}
 	
@@ -87,7 +87,7 @@ public class SET_paydayControllerImpl implements SET_paydayController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/s0001/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SET_payday/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -116,7 +116,7 @@ public class SET_paydayControllerImpl implements SET_paydayController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/s0001/saveData.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SET_payday/saveData.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");

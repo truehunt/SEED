@@ -2,165 +2,180 @@
 <!DOCTYPE mapper
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-   
+	
 <mapper namespace="hr.pay.p0001">
-   <resultMap id="TA_inputResult01" type="TA_inputVO">
-      <result property="pk_TA_CODE" column="pk_TA_CODE"/>
-      <result property="fk_TA_SAWON_CODE" column="fk_TA_SAWON_CODE"/>
-      <result property="ta_SAWON_NAME" column="ta_SAWON_NAME"/>
-      <result property="ta_ATTRIBUTION" column="ta_ATTRIBUTION"/>
-      <result property="ta_PAYMENTDAY" column="ta_PAYMENTDAY"/>
-      <result property="ta_WORKPLACE_CODE" column="ta_WORKPLACE_CODE"/>
-      <result property="ta_TOTAL_DIVI_CODE" column="ta_TOTAL_DIVI_CODE"/>
-      <result property="ta_TOTAL_DAY" column="ta_TOTAL_DAY"/>
-      <result property="ta_TOTAL_HOUR" column="ta_TOTAL_HOUR"/>
-   
-      
-      
-      <result property="pk_WORKPLACE_CODE" column="pk_WORKPLACE_CODE"/>
-      <result property="fk_WORKPLACE_CODE" column="fk_WORKPLACE_CODE"/>
-      <result property="fk_SAWON_WORKPLACE_CODE" column="fk_SAWON_WORKPLACE_CODE"/>
-      <result property="pk_SAWON_CODE" column="pk_SAWON_CODE"/>
-      <result property="sawon_NAME" column="sawon_NAME"/>
-      <result property="pk_DEPT_CODE" column="pk_DEPT_CODE"/>
-      <result property="fk_DEPT_CODE" column="fk_DEPT_CODE"/>
-      
-      <result property="d_B_PAYMENT_DATE_ATTRIBUT" column="d_B_PAYMENT_DATE_ATTRIBUT"/>
-      <result property="d_B_PAYMENT_DT" column="d_B_PAYMENT_DT"/>
-      
-      <result property="pk_D_B_PAYMENT_SEQ_CODE" column="pk_D_B_PAYMENT_SEQ_CODE"/>
-      <result property="workplace_NAME" column="workplace_NAME"/>
-      <result property="workplace_INQUIRY_CODE" column="workplace_INQUIRY_CODE"/>
-      
-      
-   </resultMap>
-   
-   
-      <resultMap id="TA_inputResult02" type="TA_inputVO">
-            <result property="fk_TA_SAWON_CODE" column="fk_TA_SAWON_CODE"/>
-            <result property="ta_TOTAL_DIVI_CODE" column="ta_TOTAL_DIVI_CODE"/>
-            <result property="ta_TOTAL_DAY" column="ta_TOTAL_DAY"/>
-            <result property="ta_TOTAL_HOUR" column="ta_TOTAL_HOUR"/>
-           <result property="pk_TOTAL_CODE" column="pk_TOTAL_CODE"/>
-      
-           <result property="pk_SAWON_CODE" column="pk_SAWON_CODE"/>
-           <result property="ta_TOTAL_PAYMENTDAY" column="ta_TOTAL_PAYMENTDAY"/>
-      
-   
-   </resultMap>
-   
-   
-   
-   
-   
-   <select id="searchList" resultMap="TA_inputResult01" parameterType="java.util.Map">
-      <![CDATA[
-         select a.pk_sawon_code, a.sawon_name
-         from SAWON a, DEPT b, workplace c
-         
-      ]]>
-      <where>
-                a.fk_SAWON_WORKPLACE_CODE = c.pk_workplace_code
-            and   a.fk_dept_code = b.pk_dept_code
-            
-            <if test="PK_WORKPLACE_CODE != null">
-                  and FK_SAWON_WORKPLACE_CODE = #{PK_WORKPLACE_CODE}
-<!--                   이거는 사업장 -->
-            </if>
-            
-            <if test="FK_DEPT_CODE != null">
-                  and FK_DEPT_CODE = #{FK_DEPT_CODE}
-<!--                   여기는 부서 -->
-<!--                PK_DEPT_CODE 대신에    DEPT_WORKPLACE_CODE  -->
-            </if>
-         
-      </where>
-   </select>
-   
-   
-   
-   <select id="searchList2" resultMap="TA_inputResult02" parameterType="java.util.Map">
-      <![CDATA[
-         select a.pk_sawon_code, b.ta_TOTAL_DIVI_CODE, b.ta_TOTAL_day, b.ta_TOTAL_hour, b.ta_TOTAL_PAYMENTDAY
-         from SAWON a,TA_TOTAL b
-      ]]>
-      <where>
-           a.pk_sawon_code = b.FK_TA_TOTAL_SAWON_CODE
-           
-         <if test="PK_SAWON_CODE != null">
-                  and PK_SAWON_CODE = #{PK_SAWON_CODE}
-         </if>
-         
-      
-      </where>
-   </select>
-   
-<select id="siteList" resultMap="TA_inputResult01" parameterType="java.util.Map">
-      <![CDATA[
-         select WORKPLACE_HEADOFF_WHE, PK_WORKPLACE_CODE
-         from WORKPLACE
-      ]]>
-   </select>
+	<resultMap id="TA_inputResult01" type="TA_inputVO">
+		<result property="ta_TOTAL_DIVI_CODE" column="ta_TOTAL_DIVI_CODE"/>
+		<result property="ta_TOTAL_DAY" column="ta_TOTAL_DAY"/>
+		<result property="ta_TOTAL_HOUR" column="ta_TOTAL_HOUR"/>
 
-   
-   <select id="deptList" resultMap="TA_inputResult01" parameterType="java.util.Map">
-      <![CDATA[
-         select workplace_NAME, PK_WORKPLACE_CODE
-           from WORKPLACE
-      ]]>
-      <where>
-         
-         <if test="pk_WORKPLACE_CODE != null">
-            workplace_INQUIRY_CODE = #{pk_WORKPLACE_CODE}
-         </if>
-      </where>
-   </select>
-   
-   
-      <select id="yearday" resultMap="TA_inputResult01" parameterType="java.util.Map">
-      <![CDATA[
-         select d_B_PAYMENT_DATE_ATTRIBUT,pk_D_B_PAYMENT_SEQ_CODE
-         from D_B_PAYMENT
-      ]]>
-   </select>
-   
-   <select id="yeardayd" resultMap="TA_inputResult01" parameterType="java.util.Map">
-      <![CDATA[
-         select d_B_PAYMENT_DT, pk_D_B_PAYMENT_SEQ_CODE
-         from D_B_PAYMENT
-      ]]>
-      <where>
-            
-         <if test="pk_D_B_PAYMENT_SEQ_CODE != null">
-            and d_B_PAYMENT_DATE_ATTRIBUT = #{pk_D_B_PAYMENT_SEQ_CODE}
-         </if>
-      </where>
-   </select>
-   
-   
-   
-   
-   <update id="updateData" parameterType="java.util.Map">
-      update TA_TOTAL
-      set   FK_TA_TOTAL_CODE = #{fk_TA_TOTAL_CODE, jdbcType=VARCHAR}
-          , FK_TA_TOTAL_SAWON_CODE = #{pk_SAWON_CODE, jdbcType=VARCHAR}
-          , TA_TOTAL_DIVI_CODE = #{ta_TOTAL_DIVI_CODE, jdbcType=VARCHAR}
-         , TA_TOTAL_DAY = #{ta_TOTAL_DAY, jdbcType=VARCHAR}
-         , TA_TOTAL_HOUR = #{ta_TOTAL_HOUR, jdbcType=VARCHAR}
-         , TA_TOTAL_PAYMENTDAY = #{ta_TOTAL_PAYMENTDAY, jdbcType=VARCHAR}
-         
-      where FK_TA_TOTAL_CODE = #{fk_TA_TOTAL_CODE, jdbcType=VARCHAR}
-   </update>   
-   
-   <insert id="insertData" parameterType="java.util.Map">
-      
-      insert into TA_TOTAL(FK_TA_TOTAL_CODE, FK_TA_TOTAL_SAWON_CODE, TA_TOTAL_DIVI_CODE, TA_TOTAL_DAY, TA_TOTAL_HOUR, ta_TOTAL_PAYMENTDAY) values(#{fk_TA_TOTAL_CODE, jdbcType=VARCHAR},#{pk_SAWON_CODE, jdbcType=VARCHAR}, #{ta_TOTAL_DIVI_CODE, jdbcType=VARCHAR}, #{ta_TOTAL_DAY, jdbcType=VARCHAR}, #{ta_TOTAL_HOUR, jdbcType=VARCHAR}, #{ta_TOTAL_PAYMENTDAY, jdbcType=VARCHAR})
-   
-   </insert>   
-   
-   <delete id="deleteData" parameterType="java.util.Map">
-        delete TA_TOTAL
-    
-       where TRIM(FK_TA_TOTAL_CODE) = #{fk_TA_TOTAL_CODE, jdbcType=VARCHAR}
-   </delete>
+		<result property="pk_WORKPLACE_CODE" column="pk_WORKPLACE_CODE"/>
+		<result property="fk_SAWON_WORKPLACE_CODE" column="fk_SAWON_WORKPLACE_CODE"/>
+		<result property="pk_SAWON_CODE" column="pk_SAWON_CODE"/>
+		<result property="sawon_NAME" column="sawon_NAME"/>
+		<result property="pk_DEPT_CODE" column="pk_DEPT_CODE"/>
+		<result property="fk_DEPT_CODE" column="fk_DEPT_CODE"/>
+		
+		<result property="d_B_PAYMENT_DATE_ATTRIBUT" column="d_B_PAYMENT_DATE_ATTRIBUT"/>
+		<result property="d_B_PAYMENT_DT" column="d_B_PAYMENT_DT"/>
+		<result property="pk_D_B_PAYMENT_SEQ_CODE" column="pk_D_B_PAYMENT_SEQ_CODE"/>
+		<result property="workplace_NAME" column="workplace_NAME"/>
+		<result property="workplace_INQUIRY_CODE" column="workplace_INQUIRY_CODE"/>
+		<result property="dept_INQUIRY_CODE" column="dept_INQUIRY_CODE"/>
+		
+		
+		
+	</resultMap>
+	
+	
+		<resultMap id="TA_inputResult02" type="TA_inputVO">
+		      <result property="ta_TOTAL_DIVI_CODE" column="ta_TOTAL_DIVI_CODE"/>
+		      <result property="ta_TOTAL_DAY" column="ta_TOTAL_DAY"/>
+		      <result property="ta_TOTAL_HOUR" column="ta_TOTAL_HOUR"/>
+			  <result property="pk_TOTAL_CODE" column="pk_TOTAL_CODE"/>
+		
+			  <result property="pk_SAWON_CODE" column="pk_SAWON_CODE"/>
+			  <result property="ta_TOTAL_PAYMENTDAY" column="ta_TOTAL_PAYMENTDAY"/>
+			  <result property="PK_TA_TOTAL_CODE" column="pk_TA_TOTAL_CODE"/>
+			  
+		
+	
+	</resultMap>
+	
+	
+	
+	
+	
+	<select id="searchList" resultMap="TA_inputResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select a.pk_sawon_code, a.sawon_name
+			from SAWON a, DEPT b, workplace c
+			
+		]]>
+		<where>
+		          a.fk_SAWON_WORKPLACE_CODE = c.pk_workplace_code
+            and   a.fk_dept_code = b.pk_dept_code
+		      
+				<if test="PK_WORKPLACE_CODE != null">
+				      and FK_SAWON_WORKPLACE_CODE = #{PK_WORKPLACE_CODE}
+<!-- 				      이거는 사업장 -->
+				</if>
+				
+				<if test="FK_DEPT_CODE != null">
+				      and FK_DEPT_CODE = #{FK_DEPT_CODE}
+<!-- 				      여기는 부서 -->
+<!-- 				   PK_DEPT_CODE 대신에    DEPT_WORKPLACE_CODE  -->
+				</if>
+			
+		</where>
+	</select>
+	
+	
+	
+	<select id="searchList2" resultMap="TA_inputResult02" parameterType="java.util.Map">
+		<![CDATA[
+			select b.PK_TA_TOTAL_CODE,a.pk_sawon_code, b.ta_TOTAL_DIVI_CODE, b.ta_TOTAL_day, b.ta_TOTAL_hour, b.ta_TOTAL_PAYMENTDAY
+			from SAWON a,TA_TOTAL b
+		]]>
+		<where>
+		     a.pk_sawon_code = b.FK_TA_TOTAL_SAWON_CODE
+		     
+			<if test="PK_SAWON_CODE != null">
+				      and PK_SAWON_CODE = #{PK_SAWON_CODE}
+			</if>
+			
+		
+		</where>
+	</select>
+	
+<select id="siteList" resultMap="TA_inputResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select WORKPLACE_HEADOFF_WHE, PK_WORKPLACE_CODE
+			from WORKPLACE
+		]]>
+	</select>
+
+	
+	<select id="deptList" resultMap="TA_inputResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select workplace_NAME, PK_WORKPLACE_CODE
+			  from WORKPLACE
+		]]>
+		<where>
+			
+			<if test="pk_WORKPLACE_CODE != null">
+				workplace_INQUIRY_CODE = #{pk_WORKPLACE_CODE}
+			</if>
+		</where>
+	</select>
+	
+	
+	<select id="deptList2" resultMap="TA_inputResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select dept_NAME, PK_DEPT_CODE
+			  from DEPT
+		]]>
+		<where>
+			
+			<if test="PK_DEPT_CODE != null">
+				dept_INQUIRY_CODE = #{PK_DEPT_CODE}
+			</if>
+		</where>
+	</select>
+	
+	
+	
+	
+		<select id="yearday" resultMap="TA_inputResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select d_B_PAYMENT_DATE_ATTRIBUT,pk_D_B_PAYMENT_SEQ_CODE
+			from D_B_PAYMENT
+		]]>
+	</select>
+	
+	<select id="yeardayd" resultMap="TA_inputResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select d_B_PAYMENT_DT, pk_D_B_PAYMENT_SEQ_CODE
+			from D_B_PAYMENT
+		]]>
+		<where>
+		      
+			<if test="pk_D_B_PAYMENT_SEQ_CODE != null">
+				and d_B_PAYMENT_DATE_ATTRIBUT = #{pk_D_B_PAYMENT_SEQ_CODE}
+			</if>
+		</where>
+	</select>
+	
+	
+	
+	
+	<update id="updateData" parameterType="java.util.Map">
+		update TA_TOTAL
+		set   PK_TA_TOTAL_CODE = #{pk_TA_TOTAL_CODE, jdbcType=VARCHAR}
+		    , FK_TA_TOTAL_SAWON_CODE = #{pk_SAWON_CODE, jdbcType=VARCHAR}
+		    , TA_TOTAL_DIVI_CODE = #{ta_TOTAL_DIVI_CODE, jdbcType=VARCHAR}
+			, TA_TOTAL_DAY = #{ta_TOTAL_DAY, jdbcType=VARCHAR}
+			, TA_TOTAL_HOUR = #{ta_TOTAL_HOUR, jdbcType=VARCHAR}
+			, TA_TOTAL_PAYMENTDAY = #{ta_TOTAL_PAYMENTDAY, jdbcType=VARCHAR}
+			
+		where FK_TA_TOTAL_SAWON_CODE = #{pk_SAWON_CODE, jdbcType=VARCHAR}
+		      and TA_TOTAL_DIVI_CODE = #{ta_TOTAL_DIVI_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertData" parameterType="java.util.Map">
+		
+		 <selectKey resultType="String" keyProperty="PK_TA_TOTAL_CODE" order="BEFORE">
+
+          SELECT NVL(MAX(PK_TA_TOTAL_CODE)+1, 1) FROM TA_TOTAL
+
+       </selectKey>
+		insert into TA_TOTAL(PK_TA_TOTAL_CODE, FK_TA_TOTAL_SAWON_CODE, TA_TOTAL_DIVI_CODE, TA_TOTAL_DAY, TA_TOTAL_HOUR, ta_TOTAL_PAYMENTDAY) values(#{pk_TA_TOTAL_CODE, jdbcType=VARCHAR},#{pk_SAWON_CODE, jdbcType=VARCHAR}, #{ta_TOTAL_DIVI_CODE, jdbcType=VARCHAR}, #{ta_TOTAL_DAY, jdbcType=VARCHAR}, #{ta_TOTAL_HOUR, jdbcType=VARCHAR}, #{ta_TOTAL_PAYMENTDAY, jdbcType=VARCHAR})
+	
+	</insert>	
+	
+	<delete id="deleteData" parameterType="java.util.Map">
+	     delete TA_TOTAL
+	 
+		 where TRIM(PK_TA_TOTAL_CODE) = #{pk_TA_TOTAL_CODE, jdbcType=VARCHAR}
+	</delete>
 </mapper>

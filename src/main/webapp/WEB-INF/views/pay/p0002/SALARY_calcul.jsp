@@ -67,7 +67,7 @@ table.ui-datepicker-calendar { display:none; }
       initData.Cfg = {SearchMode:smLazyLoad, Page:50,MergeSheet:msHeaderOnly,ChildPage:10,DragMode:1   };
       initData.Cols = [
       //{Header:"No",Type:"Seq", Align:"Center"},
-         {Header:"NO",Type:"Seq",SaveName:"pk_SALARY_CAL_INFO",  Align:"Center"},
+         {Header:"NO",Type:"pk_SALARY_CAL_INFO",SaveName:"pk_SALARY_CAL_INFO",  Align:"Center"},
          {Header:"상태",Type:"Status",Width:60,SaveName:"STATUS", Align:"Center"},
    	     {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
          {Header:"사원코드",Type:"Text",SaveName:"fk_SALARY_CAL_SAWON_CODE",Width:60,Align:"Center"},
@@ -154,11 +154,14 @@ table.ui-datepicker-calendar { display:none; }
    function doAction(sAction) {
       switch(sAction) {
       case "search": //조회
-          var param = "D_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("yearday").value + "&D_B_PAYMENT_DT=" + document.getElementById("yeardayd").value+"&PK_WORKPLACE_CODE=" + document.getElementById("SiteList").value + "&PK_DEPT_CODE=" + document.getElementById("DeptList").value;
-          
+    	  if(document.getElementById("SiteList").value == "1"){
+              var param = "D_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("yearday").value + "&D_B_PAYMENT_DT=" + document.getElementById("yeardayd").value +  "&PK_WORKPLACE_CODE=" + document.getElementById("DeptList").value;
+           }else if(document.getElementById("SiteList").value == "2"){
+              var param = "D_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("yearday").value + "&D_B_PAYMENT_DT=" + document.getElementById("yeardayd").value +  "&FK_DEPT_CODE=" + document.getElementById("DeptList").value;
+           }
 
           console.log(param);
-         mySheet.DoSearch("${contextPath}/pay/p0002/searchList.do", param);
+         mySheet.DoSearch("${contextPath}/pay/SALARY_calcul/searchList.do", param);
          
          //mySheet.DoSearch("transaction_data2.json");
          break;
@@ -169,7 +172,7 @@ table.ui-datepicker-calendar { display:none; }
       case "save": // 저장
          //var tempStr = mySheet.GetSaveString();
          //alert("서버로 전달되는 문자열 확인 :"+tempStr);
-         mySheet2.DoSave("${contextPath}/pay/p0002/saveData.do");
+         mySheet2.DoSave("${contextPath}/pay/SALARY_calcul/saveData.do");
          break;         
       case "insert":
           mySheet2.DataInsert(-1);
@@ -196,11 +199,11 @@ table.ui-datepicker-calendar { display:none; }
    function mySheet_OnSelectCell(oldrow,oldcol,row,col) {
 	   	var xx = document.getElementById("yeardayd");
 	   	var xy = xx.options[xx.selectedIndex].text;  
-		x = "PK_SAWON_CODE=" + mySheet.GetCellValue(row,2) + "&salary_CAL_PAYMENTDAY=" + xy;
-      
+		x = "fk_SALARY_CAL_SAWON_CODE=" + mySheet.GetCellValue(row,2) + "&salary_CAL_PAYMENTDAY=" + xy;
+    
       console.log(x);
       pk_sawon_code = mySheet.GetCellValue(row,2);
-      mySheet2.DoSearch("${pageContext.request.contextPath}/pay/p0002/searchList2.do",x);
+      mySheet2.DoSearch("${pageContext.request.contextPath}/pay/SALARY_calcul/searchList2.do",x);
    }
    
    
@@ -253,83 +256,170 @@ function mySheet_OnSaveEnd(code,msg){
    
 
    function selectSite() {
-	   var info4;
-	   var info5;
-	   $.ajax({ // 인사기초코드 조회
-	         url : "${contextPath}/human/p0001/ISA_c.do",//목록을 조회 할 url
-	         type : "POST",
-	         dataType : "JSON",
-	         success : function(data) {
-	            for (var i = 0; i < data['Data'].length; i++) {
-	               var code_ = data['Data'][i].fk_PERSON_BC_CODE_NUM;
-	               
-	               var option = "<option class='1' value='" + data['Data'][i].pk_PERSON_BC_DETAI_CODE_NUM + "'>"
-                   + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME
-                   + "</option>";
-                   
-	               switch(code_){
-	                  case 'EL': // 
-	                	  $('#SiteList').append(option);
-	                     break;
+	      var info4;
+	      var info5;
+	      $.ajax({ // 인사기초코드 조회
+	            url : "${contextPath}/human/p0001/ISA_c.do",//목록을 조회 할 url
+	            type : "POST",
+	            dataType : "JSON",
+	            success : function(data) {
+	               for (var i = 0; i < data['Data'].length; i++) {
+	                  var code_ = data['Data'][i].fk_PERSON_BC_CODE_NUM;
+	                  
+	                  var option = "<option class='' value='" + data['Data'][i].pk_PERSON_BC_DETAI_CODE_NUM + "'>"
+	                + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME
+	                + "</option>";
+	                
+	                  switch(code_){
+	                     case 'EL': // 
+	                        $('#SiteList').append(option);
+	                        break;
+	                  }
+	                  
 	               }
-	               
+	              
+	            },
+	            error : function(jqxhr, status, error) {
+	               alert("에러");
 	            }
-	           
-	         },
-	         error : function(jqxhr, status, error) {
-	            alert("에러");
-	         }
-	      });
+	         });
+	      };
+	      
+
+	   function selectDept() {
+
+	      var SiteList = $('#SiteList').val();
+	      
+	      if(SiteList==1){
+	      //var x = $('#DeptList option[name='all']').find("option").val();
+	      $
+	            .ajax({
+
+	               url : "${contextPath}/pay/SALARY_calcul/DeptList.do",//목록을 조회 할 url
+
+	               type : "POST",
+
+	               data : {
+	                  "SiteList" : SiteList
+	               },
+
+	               dataType : "JSON",
+
+	               success : function(data) {
+	                  $(".1").remove();
+	                  //$("select#DeptList option").append(x); // 이거 되는거 ㅎ
+	                  //$("#DeptList").append(data);
+	                  //var y="<option value="" selected>전체</option>";
+	                  //$("select#DeptList").find(".1").remove().end().append(y);
+	                  
+	            if(data['Data'][0].workplace_NAME!= null && data['Data'][0].workplace_NAME!= ''){
+	               
+	                  for (var i = 0; i < data['Data'].length; i++) {
+
+	                     var option = "<option class='1' value='" + data['Data'][i].pk_WORKPLACE_CODE + "'>"
+	                           + data['Data'][i].workplace_NAME
+	                           + "</option>";
+	                          
+	                           
+
+	                     //대상 콤보박스에 추가
+	                     $('#DeptList').append(option);
+
+	                  }
+	               }
+	            
+	            if(data['Data'][0].dept_NAME!= null && data['Data'][0].dept_NAME!= ''){
+	               
+	                for (var i = 0; i < data['Data'].length; i++) {
+
+	                   var option = "<option class='1' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
+	                         + data['Data'][i].dept_NAME
+	                         + "</option>";
+	                        
+	                         
+
+	                   //대상 콤보박스에 추가
+	                   $('#DeptList').append(option);
+
+	                }
+	             }
+	            
+
+	               },
+
+	               error : function(jqxhr, status, error) {
+
+	                  alert("에러");
+
+	               }
+
+	            });
+	      } else { // 2일때 
+	    	  $
+	          .ajax({
+
+	             url : "${contextPath}/pay/SALARY_calcul/DeptList2.do",//목록을 조회 할 url
+
+	             type : "POST",
+
+	             data : {
+	                "SiteList" : SiteList
+	             },
+
+	             dataType : "JSON",
+
+	             success : function(data) {
+	                $(".1").remove();
+	                //$("select#DeptList option").append(x); // 이거 되는거 ㅎ
+	                //$("#DeptList").append(data);
+	                //var y="<option value="" selected>전체</option>";
+	                //$("select#DeptList").find(".1").remove().end().append(y);
+	                
+	          if(data['Data'][0].workplace_NAME!= null && data['Data'][0].workplace_NAME!= ''){
+	             
+	                for (var i = 0; i < data['Data'].length; i++) {
+
+	                   var option = "<option class='1' value='" + data['Data'][i].pk_WORKPLACE_CODE + "'>"
+	                         + data['Data'][i].workplace_NAME
+	                         + "</option>";
+	                        
+	                         
+
+	                   //대상 콤보박스에 추가
+	                   $('#DeptList').append(option);
+
+	                }
+	             }
+	          
+	          if(data['Data'][0].dept_NAME!= null && data['Data'][0].dept_NAME!= ''){
+	             
+	              for (var i = 0; i < data['Data'].length; i++) {
+
+	                 var option = "<option class='1' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
+	                       + data['Data'][i].dept_NAME
+	                       + "</option>";
+	                      
+	                       
+
+	                 //대상 콤보박스에 추가
+	                 $('#DeptList').append(option);
+
+	              }
+	           }
+	          
+
+	             },
+
+	             error : function(jqxhr, status, error) {
+
+	                alert("에러");
+
+	             }
+
+	          });
+	      }
+
 	   };
-	   
-	   
-
-   function selectDept() {
-
-      var SiteList = $('#SiteList').val();
-      //var x = $('#DeptList option[name='all']').find("option").val();
-      $
-            .ajax({
-
-               url : "${contextPath}/pay/p0002/DeptList.do",//목록을 조회 할 url
-
-               type : "POST",
-
-               data : {
-                  "SiteList" : SiteList
-               },
-
-               dataType : "JSON",
-
-               success : function(data) {
-                  $(".2").remove();
-                  //$("select#DeptList option").append(x); // 이거 되는거 ㅎ
-                  //$("#DeptList").append(data);
-                  //var y="<option value="" selected>전체</option>";
-                  //$("select#DeptList").find(".1").remove().end().append(y);
-
-                  for (var i = 0; i < data['Data'].length; i++) {
-
-                     var option = "<option class='2' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
-                           + data['Data'][i].dept_NAME
-                           + "</option>";
-
-                     //대상 콤보박스에 추가
-                     $('#DeptList').append(option);
-
-                  }
-
-               },
-
-               error : function(jqxhr, status, error) {
-
-                  alert("에러");
-
-               }
-
-            });
-
-   };
 </script>
 
 
@@ -391,7 +481,7 @@ function yearday() {
 
     $.ajax({
 
-             url : "${contextPath}/pay/p0001/yearday.do",//목록을 조회 할 url
+             url : "${contextPath}/pay/SALARY_calcul/yearday.do",//목록을 조회 할 url
 
              type : "POST",
 
@@ -432,7 +522,7 @@ function yearday() {
     $
           .ajax({
 
-             url : "${contextPath}/pay/p0001/yeardayd.do",//목록을 조회 할 url
+             url : "${contextPath}/pay/SALARY_calcul/yeardayd.do",//목록을 조회 할 url
 
              type : "POST",
 
@@ -527,10 +617,15 @@ function yearday() {
 
 
 <body onload="LoadPage()">
-  <div class="page_title">
-    <span><a class="closeDepth" href="#">closeDepth</a></span> 
-    <span class="title">급여/퇴직정산관리> <b>급여입력및계산</b></span>
-  </div>
+<div id="wrapper">
+
+        <div id="page-wrapper" style="margin: 0px;">
+            <div class="row">
+                <div class="col-lg-12">
+                <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 급여입력 및 계산</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
   <div class="main_content">
        <div class="exp_product"></div>
        <div class="exp_product">
@@ -576,7 +671,7 @@ function yearday() {
            
              <label for="DeptList">구분</label>
       &ensp; <select id="DeptList" >
-         <option name="all" value="" selected>전체</option>
+         <option  value="" selected>전체</option>
       </select>
                </form>
              
@@ -594,21 +689,22 @@ function yearday() {
 <br><br>
       <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
-              <DIV class="ib_product" style="width:100%;float:left">
+              <DIV class="ib_product" style="width:70%;float:left">
 				<div style="height:100%;width:45%;float:left">
 					<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%");selectSite(); </script>
 				</div>
 			
 				
 				<div style="height:100%;width:50%;float:left">
-					<script type="text/javascript"> createIBSheet("mySheet2", "100%", "70%"); </script>
+					<script type="text/javascript"> createIBSheet("mySheet2", "200%", "70%"); </script>
 				</div>
 			</div>
                
       
         
         <!--right단 정보입력 및 수정단 -->
-      
+      </div>
+      </div>
       
  
           

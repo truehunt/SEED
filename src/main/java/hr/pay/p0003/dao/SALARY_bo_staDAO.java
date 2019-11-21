@@ -26,11 +26,15 @@ public interface SALARY_bo_staDAO {
 
 	public List<SALARY_bo_staVO> DeptList(Map<String, Object> searchMap) throws DataAccessException;
 
+	public List<SALARY_bo_staVO> DeptList2(Map<String, Object> searchMap) throws DataAccessException;
+
 
 	public List<SALARY_bo_staVO> yearday(Map<String, Object> searchMap) throws DataAccessException;
 
 
 	public List<SALARY_bo_staVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException;
+
+
 
 
 

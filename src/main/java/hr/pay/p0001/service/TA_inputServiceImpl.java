@@ -51,6 +51,12 @@ public class TA_inputServiceImpl implements TA_inputService {
 		return list;
 	}
 	
+	@Override
+	public List<TA_inputVO> DeptList2(Map<String, Object> searchMap) throws DataAccessException {
+		List<TA_inputVO> list =  TA_inputDAO.DeptList2(searchMap); 
+		return list;
+	}
+	
 	
 	@Override
 	public List<TA_inputVO> yearday(Map<String, Object> searchMap) throws DataAccessException {

@@ -95,11 +95,11 @@ $(document).ready(function(){
 		            } else if(url === "ad_day_regist"){//일일 마감관리
 		            	urlToGo = "/SEED/attendance/p0001/day_regist.do";
 		            } else if(url === "holiday"){//휴가
-		            	urlToGo = "/SEED/attendance/p0001/holiday.do";
+		            	urlToGo = "/SEED/attendance/p0002/holiday.do";
 		            } else if(url === "business"){//출장
-		            	urlToGo = "/SEED/attendance/p0001/business.do";
+		            	urlToGo = "/SEED/attendance/p0002/business.do";
 		            } else if(url === "outside"){//외근
-		            	urlToGo = "/SEED/attendance/p0001/outside.do"
+		            	urlToGo = "/SEED/attendance/p0002/outside.do"
 		            // 시스템환경설정
 		            } else if(url === "adcompany_Enroll"){ // 등록정보관리 - 회사등록
 		            	urlToGo = "/SEED/human/s0001/company_Enroll.do";

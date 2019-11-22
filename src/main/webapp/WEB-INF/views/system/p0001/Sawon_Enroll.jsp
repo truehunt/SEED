@@ -60,7 +60,6 @@
 			{Header:"부서명",Type:"Text",SaveName:"fk_DEPT_NAME",MinWidth:100},
 			{Header:"입사일",Type:"Date",SaveName:"sawon_JOIN_DATE",MinWidth:150, KeyField:1, format:"Ymd"},
 			{Header:"사용자여부",Type:"Combo",SaveName:"sawon_USER_STATUS",MinWidth:60, KeyField:1, ComboText:"Y|N", ComboCode:"Y|N"},
-			{Header:"조회권한",Type:"Combo",SaveName:"sawon_VIEW_PERMISSION",MinWidth:60, KeyField:1, ComboText:"A|B|C", ComboCode:"A|B|C"},
 			{Header:"이메일주소",Type:"Text",SaveName:"sawon_EMAIL",MinWidth:150, KeyField:1},
 		];   
 		IBS_InitSheet( mySheet , initSheet);

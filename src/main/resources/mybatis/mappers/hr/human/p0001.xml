@@ -455,8 +455,14 @@
          		   ass_CLASS, ass_NOTE,
          		   fk_ASS_PER_CODE, fk_ASS_SAWON_CODE, pk_ASS_CODE
 			from sawon s, ASS a
-			where s.pk_sawon_code = a.fk_ass_sawon_code
-      	]]>
+      	]]> 
+      	
+      	<where>
+			s.pk_sawon_code = a.fk_ass_sawon_code
+			<if test="fk_ASS_SAWON_CODE != '' and fk_ASS_SAWON_CODE != null">
+				and a.fk_ass_sawon_code = #{fk_ASS_SAWON_CODE, jdbcType=VARCHAR}
+			</if> 
+		</where>
 	</select>
 	
 	<update id="updateDataAss" parameterType="java.util.Map">
@@ -526,8 +532,13 @@
          		   chj_COMPANY, chj_OTHER, chj_TOTAL,
          		   chj_PURPOSE, fk_CHJ_SAWON_CODE, pk_CHJ_CODE
 			from sawon s, CHJ a
-			where s.pk_sawon_code = a.fk_chj_sawon_code
       	]]>
+      	<where>
+			s.pk_sawon_code = a.fk_chj_sawon_code
+			<if test="fk_CHJ_SAWON_CODE != '' and fk_CHJ_SAWON_CODE != null">
+				and a.fk_chj_sawon_code = #{fk_CHJ_SAWON_CODE, jdbcType=VARCHAR}
+			</if> 
+		</where>
 	</select>
 	
 	<update id="updateDataChj" parameterType="java.util.Map">
@@ -598,8 +609,13 @@
          		   sb_STA_DATE, sb_END_DATE, sb_NOTE,
          		   fk_SB_SAWON_CODE, pk_SB_CODE
 			from sawon s, Sb b
-			where s.pk_sawon_code = b.fk_SB_SAWON_CODE
       	]]>
+      	<where>
+			s.pk_sawon_code = b.fk_SB_SAWON_CODE
+			<if test="fk_SB_SAWON_CODE != '' and fk_SB_SAWON_CODE != null">
+				and b.fk_SB_SAWON_CODE = #{fk_SB_SAWON_CODE, jdbcType=VARCHAR}
+			</if> 
+		</where>
 	</select>
 	
 	<update id="updateDataSb" parameterType="java.util.Map">
@@ -647,7 +663,7 @@
 		<result property="codecd" column="codecd" />
 		<result property="codenm" column="codenm" />
 	</resultMap>
-	
+	 
 	<select id="COM_CODE" resultMap="cardResult03" parameterType="java.util.Map"> 
       <![CDATA[
          select classno, codenm

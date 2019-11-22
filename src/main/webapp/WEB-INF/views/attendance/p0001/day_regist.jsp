@@ -1,19 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <meta charset="UTF-8">
-<div class="page_title">
-	<span><a class="closeDepth" href="#">closeDepth</a></span> <span
-		class="title">근태/연차관리 > <b>일일 근태 관리</b></span>
-</div>
 <title>일일 근태 등록</title>
 
 <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
-<script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
+<script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
+
+<link
+	href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css"
+	rel="stylesheet">
+
+<script
+	src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
 
 <script language="javascript">
 	//시트 높이 계산용
@@ -124,10 +145,10 @@
 					+ "&PK_DAILY_TA_WORKING_DATE3="
 					+ document.getElementById("pk_DAILY_TA_WORKING_DATE3").value
 					+ "&sawon_num="
-					+ document.getElementById("sawon_num").value
-					+ "&option="
+					+ document.getElementById("sawon_num").value + "&option="
 					+ $('#select option:selected').val();
-			mySheet.DoSearch("${contextPath}/attendance/p0001/da_searchList.do", val1);
+			mySheet.DoSearch(
+					"${contextPath}/attendance/p0001/da_searchList.do", val1);
 			break;
 
 		case "reload": //초기화
@@ -146,46 +167,29 @@
 			mySheet.SetEditable(true);
 		}
 	}
-	
+
 	function select() {
 
-	    $.ajax({
-	             url : "${contextPath}/attendance/p0001/select.do",//목록을 조회 할 url
-	             type : "POST",
-	             dataType : "JSON",
-	             success : function(data) {
-	            	 console.log(data);
-	            	 /*
-	            	 var test1 = document.createElement('option');
-	            	 $(test1).prop('value','');
-	            	 $(test1).
-	            	 $('#select').append();
-	            	 */
-	                for (var i = 0; i < data.length; i++) {
-	   					
-	                    var option = "<option class='' value='" + data[i].DEPT_NAME + "'>"
-	                    + data[i].DEPT_NAME
-	                    + "</option>";
-	                   //대상 콤보박스에 추가
-	             
-	                   $('#select').append(option);
-					
-	                }  
-	            	 var option = "<option class='' value='" + "선택해주세요" + "' disabled selected>"
-                    + "선택해주세요"
-                    + "</option>";
-	            	 $('#select').append(option);
-	             },
+		$
+				.ajax({
+					url : "${contextPath}/attendance/p0001/select.do",//목록을 조회 할 url
+					type : "POST",
+					dataType : "JSON",
+					success : function(data) {
+						console.log(data);
+						for (var i = 0; i < data.length; i++) {
+							var option = "<option class='' value='" + data[i].DEPT_NAME + "'>"
+									+ data[i].DEPT_NAME + "</option>";
+							//대상 콤보박스에 추가
 
-	             error : function(jqxhr, status, error) {
-
-	                alert("에러");
-
-	             }
-
-	          });
-
-	 };
+							$('#select').append(option);
+						}
+					},
+					error : function(jqxhr, status, error) {
+						alert("에러");
+					}
+				});
+	};
 
 	// 조회완료 후 처리할 작업
 	function mySheet_OnSearchEnd() {
@@ -204,42 +208,65 @@
 </script>
 </head>
 <body onload="LoadPage()">
-	<div class="exp_product"></div>
-	<div class="ib_function float_right">
-		<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-		<a href="javascript:doAction('search')" class="f1_btn_gray lightgray">조회</a>
-		<a href="javascript:doAction('save')" class="f1_btn_gray lightgray">저장</a>
-		<a href="javascript:doAction('end')" class="f1_btn_gray lightgray">마감</a>
-	</div>
 <body>
-	부서명
-	
-	<select id="select">
-	
 
-	</select> &emsp;근무일자&emsp;
-	<input type="Date" name="pk_DAILY_TA_WORKING_DATE2"
-		id="pk_DAILY_TA_WORKING_DATE2">&emsp; ~&emsp;
-	<input type="Date" name="pk_DAILY_TA_WORKING_DATE3"
-		id="pk_DAILY_TA_WORKING_DATE3"> &emsp;사원번호&emsp;
-	<input type="text" name="sawon_num" id="sawon_num">
-	<div class="page_title"></div>
-	<!-- 구분 선 -->
-	<br>
-	<br>
-	<br>
+	<div id="wrapper">
 
-	<div class="clear hidden"></div>
-	<div class="ib_product">
-		<script>
-			createIBSheet("mySheet", "100%", "100%");
-		</script>
+		<div id="page-wrapper" style="margin: 0px;">
+
+			<!--tab 하단의 메인 타이틀(제목) 들어가는 부분 -->
+			<div class="row">
+				<div class="col-lg-12">
+					<!-- 해당 메뉴의 아이콘 -->
+					<!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
+					<h1 class="page-header">
+						<i class="fa fa-user fa-fw"></i>
+						<s:message code="main.monthlyCls" />
+					</h1>
+				</div>
+				<!-- /.col-lg-12 -->
+			</div>
+			<div class="exp_product"></div>
+			<div class="ib_function float_right">
+				<a href="javascript:doAction('insert')"
+					class="f1_btn_gray lightgray">추가</a> <a
+					href="javascript:doAction('search')" class="f1_btn_gray lightgray">조회</a>
+				<a href="javascript:doAction('save')" class="f1_btn_gray lightgray">저장</a>
+				<a href="javascript:doAction('end')" class="f1_btn_gray lightgray">마감</a>
+			</div>
+			<body>
+				부서명
+
+				<select id="select">
+					<option value="" selected="selected">부서명</option>
+
+				</select> &emsp;근무일자&emsp;
+				<input type="Date" name="pk_DAILY_TA_WORKING_DATE2"
+					id="pk_DAILY_TA_WORKING_DATE2">&emsp; ~&emsp;
+				<input type="Date" name="pk_DAILY_TA_WORKING_DATE3"
+					id="pk_DAILY_TA_WORKING_DATE3"> &emsp;사원번호&emsp;
+				<input type="text" name="sawon_num" id="sawon_num">
+				<div class="page_title"></div>
+				<!-- 구분 선 -->
+				<br>
+				<br>
+				<br>
+
+				<div class="clear hidden"></div>
+				<div class="ib_product">
+					<script>
+						createIBSheet("mySheet", "100%", "100%");
+					</script>
+				</div>
+				<!-- /#page-wrapper -->
+		</div>
+		<!-- /#wrapper -->
 </body>
 </html>
 
 
 
 
-<!-- 1. 부서명
+<!-- 1. 선택해주세요 조회
 	 2. 값 입력시 자동 계산  
 	 3. 마감 처리 -->

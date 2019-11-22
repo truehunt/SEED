@@ -18,7 +18,8 @@ public interface holiday_Controller {
 	
 	
 //	��� 
-	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map saveData_holi(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map saveData_busin(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map searchList_holi(HttpServletRequest request, HttpServletResponse response,  ModelMap modelMap) throws Exception;
 	public Map searchList_busin(HttpServletRequest request, HttpServletResponse response,  ModelMap modelMap) throws Exception;
 	

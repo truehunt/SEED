@@ -172,7 +172,7 @@ public class holiday_ControllerImpl implements holiday_Controller {
 		@Override
 		@RequestMapping(value = "attendance/p0002/insertData_holi.do", method = { RequestMethod.GET, RequestMethod.POST })
 		@ResponseBody
-		public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		public Map saveData_holi(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			request.setCharacterEncoding("utf-8");
 			Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ???��?��Daa
 			Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
@@ -190,7 +190,7 @@ public class holiday_ControllerImpl implements holiday_Controller {
 			Map<String, String> result = new HashMap<String, String>();
 			System.out.println("1. " + dataMap);
 			try {
-				holiday_Service.saveData(dataMap);
+				holiday_Service.saveData_holi(dataMap);
 				result.put("Code", "0");
 				result.put("Message", "???��?��?��?��?��?��");
 			} catch (Exception e) {
@@ -203,6 +203,41 @@ public class holiday_ControllerImpl implements holiday_Controller {
 			return resultMap;
 		}
 
+		
+		// �߰�<����x>
+		@Override
+		@RequestMapping(value = "attendance/p0002/insertData_busin.do", method = { RequestMethod.GET, RequestMethod.POST })
+		@ResponseBody
+		public Map saveData_busin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			request.setCharacterEncoding("utf-8");
+			Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ???��?��Daa
+			Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+
+			// ???�� Data 추출?���?
+			Enumeration enu = request.getParameterNames();
+			while (enu.hasMoreElements()) {
+				String name = (String) enu.nextElement();
+				String[] values = request.getParameterValues(name);
+				System.out.println("controller_name :" + name);
+				System.out.println("controller_values :" +values);
+				dataMap.put(name, values);
+			}
+
+			Map<String, String> result = new HashMap<String, String>();
+			System.out.println("1. " + dataMap);
+			try {
+				holiday_Service.saveData_busin(dataMap);
+				result.put("Code", "0");
+				result.put("Message", "???��?��?��?��?��?��");
+			} catch (Exception e) {
+				result.put("Code", "-1");
+				result.put("Message", "???��?�� ?��?��?��???��?��?��");
+				e.printStackTrace();
+			}
+
+			resultMap.put("Result", result);
+			return resultMap;
+		}
 
 
 	private String getViewName(HttpServletRequest request) throws Exception {

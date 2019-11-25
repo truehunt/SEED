@@ -44,56 +44,6 @@
 		<result property="isa_MILITARY_CLASS_CODE" column="isa_MILITARY_CLASS_CODE" />
 	</resultMap>
 
-	<select id="searchList" resultMap="cardResult01" parameterType="java.util.Map"> 
-      	<![CDATA[
-         	select PK_PERSON_BC_CODE_NUM, PERSON_BC_MNGEMENT_NAME, PERSON_BC_MODIFY_WHE
-         	from   PERSON_BC
-      	]]>
-		<where>
-			<if test="person_BC_OUTPUT != '' and person_BC_OUTPUT != null">
-				person_BC_OUTPUT = #{person_BC_OUTPUT}
-			</if>
-		</where>
-	</select>
-	
-	<!-- 인사기록카드 사원목록 -->
-   <select id="ISA" resultMap="cardResult01" parameterType="java.util.Map"> 
-       SELECT i.fk_isa_sawon_code, s.pk_sawon_code, s.sawon_name
-        FROM ISA i, sawon s
-       WHERE i.fk_isa_sawon_code(+) = s.pk_sawon_code
-       ORDER BY s.pk_sawon_code ASC 
-    </select>      
-     
-    <select id="ISA_cha_N" resultMap="cardResult01" parameterType="java.util.Map"> 
-       insert ALL into ISA(fk_isa_sawon_code)
-      values(pk_sawon_code)
-          select pk_sawon_code
-          from sawon s, isa i 
-          where s.pk_sawon_code = i.fk_isa_sawon_code(+) 
-          and i.fk_isa_sawon_code IS NULL
-    </select>    
-    
-   <select id="ISA_cha" resultMap="cardResult01" parameterType="java.util.Map"> 
-         <![CDATA[
-               select fk_ISA_SAWON_CODE, isa_hanja_name, ISA_HIRE_CODE, ISA_NUM,
-               ISA_ADDRESS, ISA_PERMANENT_ADDR, ISA_MARRIAGE_CODE,
-               ISA_HOUSE_CODE, ISA_LIVING_CODE, ISA_ESTATE,
-               ISA_MOVABLES, ISA_SUM, ISA_GEONPYEONG, ISA_SITE, 
-               ISA_RELIGION_CODE, ISA_HOBBY_CODE, ISA_SPECIALTY_CODE
-            from ISA
-            ]]> 
-         <where>
-            <choose>
-               <when test="fk_ISA_SAWON_CODE != '' and fk_ISA_SAWON_CODE != null">
-                  fk_ISA_SAWON_CODE = #{fk_ISA_SAWON_CODE}
-               </when>
-               <otherwise>
-                  fk_ISA_SAWON_CODE = #{pk_SAWON_CODE}
-               </otherwise>
-            </choose>
-         </where> 
-   </select>
-=======
 	<!-- 인사기록카드 사원목록 -->
 	<select id="ISA" resultMap="cardResult01" parameterType="java.util.Map"> 
     	SELECT i.fk_isa_sawon_code, s.pk_sawon_code, s.sawon_name
@@ -131,7 +81,6 @@
 				</choose>
 			</where> 
 	</select>
->>>>>>> refs/remotes/origin/master
 
 	<update id="updateData" parameterType="java.util.Map">
 		update ISA
@@ -506,22 +455,12 @@
          		   ass_CLASS, ass_NOTE,
          		   fk_ASS_PER_CODE, fk_ASS_SAWON_CODE, pk_ASS_CODE
 			from sawon s, ASS a
-<<<<<<< HEAD
-      	]]> 
-      	
-      	<where>
-			s.pk_sawon_code = a.fk_ass_sawon_code
-			<if test="fk_ASS_SAWON_CODE != '' and fk_ASS_SAWON_CODE != null">
-				and a.fk_ass_sawon_code = #{fk_ASS_SAWON_CODE, jdbcType=VARCHAR}
-			</if> 
-=======
       	]]>
       	<where>
 			s.pk_sawon_code =  a.fk_ass_sawon_code
 			<if test="fk_ASS_SAWON_CODE != '' and fk_ASS_SAWON_CODE != null">
 				and a.fk_ASS_SAWON_CODE = #{fk_ASS_SAWON_CODE, jdbcType=VARCHAR}
 			</if>
->>>>>>> refs/remotes/origin/master
 		</where>
 	</select>
 	
@@ -596,13 +535,8 @@
       	<where>
 			s.pk_sawon_code = a.fk_chj_sawon_code
 			<if test="fk_CHJ_SAWON_CODE != '' and fk_CHJ_SAWON_CODE != null">
-<<<<<<< HEAD
-				and a.fk_chj_sawon_code = #{fk_CHJ_SAWON_CODE, jdbcType=VARCHAR}
-			</if> 
-=======
 				and a.fk_CHJ_SAWON_CODE = #{fk_CHJ_SAWON_CODE, jdbcType=VARCHAR}
 			</if>
->>>>>>> refs/remotes/origin/master
 		</where>
 	</select>
 	
@@ -679,11 +613,7 @@
 			s.pk_sawon_code = b.fk_SB_SAWON_CODE
 			<if test="fk_SB_SAWON_CODE != '' and fk_SB_SAWON_CODE != null">
 				and b.fk_SB_SAWON_CODE = #{fk_SB_SAWON_CODE, jdbcType=VARCHAR}
-<<<<<<< HEAD
-			</if> 
-=======
 			</if>
->>>>>>> refs/remotes/origin/master
 		</where>
 	</select>
 	
@@ -732,7 +662,7 @@
 		<result property="codecd" column="codecd" />
 		<result property="codenm" column="codenm" />
 	</resultMap>
-	 
+	
 	<select id="COM_CODE" resultMap="cardResult03" parameterType="java.util.Map"> 
       <![CDATA[
          select classno, codenm

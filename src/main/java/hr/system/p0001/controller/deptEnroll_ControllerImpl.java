@@ -73,6 +73,7 @@ public class deptEnroll_ControllerImpl implements deptEnroll_Controller {
       return main;
    }
    
+   //부서 메인
    @Override
    @RequestMapping(value = "/human/s0003/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
    @ResponseBody
@@ -91,6 +92,7 @@ public class deptEnroll_ControllerImpl implements deptEnroll_Controller {
         return resultMap;
    }
    
+   //부문등록 popup, 부문코드도움 popup
    @Override
    @RequestMapping(value = "/human/s0003/searchList2.do", method = { RequestMethod.GET, RequestMethod.POST })
    @ResponseBody
@@ -109,10 +111,62 @@ public class deptEnroll_ControllerImpl implements deptEnroll_Controller {
         return resultMap;
    }
    
+   //사업장코드도움 popup
+   @Override
+   @RequestMapping(value = "/human/s0003/searchList3.do", method = { RequestMethod.GET, RequestMethod.POST })
+   @ResponseBody
+   public Map searchList3(HttpServletRequest request, HttpServletResponse response) throws Exception {
+      request.setCharacterEncoding("utf-8");
+      Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+      Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+      
+      // 검색조건설정
+      //searchMap.put("pk_company_code", request.getParameter("p_id"));
+      
+      //데이터 조회
+      List<DeptEnroll_VO> data = deptEnroll_Service.searchList3(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+   }
+   
    @Override
    @RequestMapping(value = "/human/s0003/insertData.do", method = { RequestMethod.GET, RequestMethod.POST })
    @ResponseBody
    public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+      request.setCharacterEncoding("utf-8");
+      Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 저장할Data
+      Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+      
+      System.out.println("c!!");
+      
+      // 저장 Data 추출하기
+      Enumeration enu = request.getParameterNames();
+      while (enu.hasMoreElements()) {
+         String name = (String) enu.nextElement();
+         String[] values = request.getParameterValues(name);
+         dataMap.put(name, values);
+      }
+      
+      Map<String, String> result = new HashMap<String, String>();
+      try {
+    	 deptEnroll_Service.saveData(dataMap);   
+         result.put("Code","0");
+         result.put("Message","저장되었습니다");
+      }catch(Exception e) {
+         result.put("Code","-1");
+         result.put("Message","저장에 실패하였습니다");
+         e.printStackTrace();
+      }
+      
+      resultMap.put("Result", result);         
+        return resultMap;
+   }
+   
+   @Override
+   @RequestMapping(value = "/human/s0003/insertData2.do", method = { RequestMethod.GET, RequestMethod.POST })
+   @ResponseBody
+   public Map saveData2(HttpServletRequest request, HttpServletResponse response) throws Exception {
       request.setCharacterEncoding("utf-8");
       Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 저장할Data
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
@@ -127,7 +181,7 @@ public class deptEnroll_ControllerImpl implements deptEnroll_Controller {
       
       Map<String, String> result = new HashMap<String, String>();
       try {
-    	 deptEnroll_Service.saveData(dataMap);   
+    	 deptEnroll_Service.saveData2(dataMap);   
          result.put("Code","0");
          result.put("Message","저장되었습니다");
       }catch(Exception e) {

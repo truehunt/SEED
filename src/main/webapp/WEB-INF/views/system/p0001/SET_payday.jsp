@@ -78,7 +78,7 @@ table.ui-datepicker-calendar { display:none; }
           var param = "d_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("d_B_PAYMENT_DATE_ATTRIBUT").value; 
                
           console.log(param);
-         mySheet.DoSearch("${contextPath}/pay/s0001/searchList.do", param);
+         mySheet.DoSearch("${contextPath}/pay/SET_payday/searchList.do", param);
          
          //mySheet.DoSearch("transaction_data2.json");
          break;
@@ -89,7 +89,7 @@ table.ui-datepicker-calendar { display:none; }
       case "save": // 저장
          //var tempStr = mySheet.GetSaveString();
          //alert("서버로 전달되는 문자열 확인 :"+tempStr);
-         mySheet.DoSave("${contextPath}/pay/s0001/saveData.do");
+         mySheet.DoSave("${contextPath}/pay/SET_payday/saveData.do");
          break;         
       case "insert":
          mySheet.DataInsert();

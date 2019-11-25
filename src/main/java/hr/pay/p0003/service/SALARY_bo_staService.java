@@ -22,6 +22,8 @@ public interface SALARY_bo_staService {
 
 	public List<SALARY_bo_staVO> DeptList(Map<String, Object> searchMap) throws DataAccessException;
 
+	public List<SALARY_bo_staVO> DeptList2(Map<String, Object> searchMap) throws DataAccessException;
+
 	 
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException ;
 
@@ -32,6 +34,7 @@ public interface SALARY_bo_staService {
 	public List<SALARY_bo_staVO> yearday(Map<String, Object> searchMap) throws DataAccessException;
 
 	public List<SALARY_bo_staVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException;
+
 
 
 

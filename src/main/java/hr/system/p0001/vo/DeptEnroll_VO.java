@@ -12,12 +12,12 @@ import oracle.sql.DATE;
 @Component("deptEnroll_VO")
 public class DeptEnroll_VO {
 
+	//Dept TABLE
 	private String pk_dept_code; // 부서코드
 	private String dept_name; // 부서 명
-	private String fk_workplace_code; // 사업장 코드
+	private String fk_workplace_code; // fk_사업장 코드
 	private String workplace_name; // 사업장 명
-	private String fk_sector_code; // 부문코드
-	private String sector_name; // 부문 명
+	private String fk_sector_code; // fk_부문코드
 	private String dept_priodof; // 사용기간
 	
 	private String dept_int_user_id; // 입력자
@@ -25,9 +25,14 @@ public class DeptEnroll_VO {
 	private String dept_mod_user_id; // 수정자
 	private Timestamp dept_mod_date; // 수정일시
 	
+	//Sector TABLE
 	private String pk_sector_code; // 부문코드 
+	private String sector_name; // 부문 명
 	private String sector_priodof; // 부문 사용기간
-
+	
+	//Company TABLE
+	private String pk_workplace_code; // 사업장코드
+	
 	public DeptEnroll_VO() {
 		System.out.println("DeptEnroll_VO 생성");
 	}
@@ -74,14 +79,6 @@ public class DeptEnroll_VO {
 		this.fk_sector_code = fk_sector_code;
 	}
 
-	public String getSector_name() {
-		return sector_name;
-	}
-
-	public void setSector_name(String sector_name) {
-		this.sector_name = sector_name;
-	}
-
 	public String getDept_priodof() {
 		return dept_priodof;
 	}
@@ -121,7 +118,7 @@ public class DeptEnroll_VO {
 	public void setDept_mod_date(Timestamp dept_mod_date) {
 		this.dept_mod_date = dept_mod_date;
 	}
-	
+
 	public String getPk_sector_code() {
 		return pk_sector_code;
 	}
@@ -130,12 +127,28 @@ public class DeptEnroll_VO {
 		this.pk_sector_code = pk_sector_code;
 	}
 
+	public String getSector_name() {
+		return sector_name;
+	}
+
+	public void setSector_name(String sector_name) {
+		this.sector_name = sector_name;
+	}
+
 	public String getSector_priodof() {
 		return sector_priodof;
 	}
 
 	public void setSector_priodof(String sector_priodof) {
 		this.sector_priodof = sector_priodof;
+	}
+
+	public String getPk_workplace_code() {
+		return pk_workplace_code;
+	}
+
+	public void setPk_workplace_code(String pk_workplace_code) {
+		this.pk_workplace_code = pk_workplace_code;
 	}
 
 }

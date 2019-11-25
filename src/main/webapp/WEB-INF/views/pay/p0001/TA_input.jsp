@@ -70,7 +70,7 @@ table.ui-datepicker-calendar { display:none; }
       mySheet2.InitHeaders(header,info);  
       
       var cols = [   
-        {Header:"NO",Type:"Seq",Width:20,SaveName:"fk_TA_TOTAL_CODE", Align:"Center"},
+        {Header:"NO",Type:"Seq",Width:20,SaveName:"pk_TA_TOTAL_CODE", Align:"Center"},
         {Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
          {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
           {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:50,Align:"Center"},
@@ -162,10 +162,10 @@ table.ui-datepicker-calendar { display:none; }
          }else if(document.getElementById("SiteList").value == "2"){
             var param = "D_B_PAYMENT_DATE_ATTRIBUT=" + document.getElementById("yearday").value + "&D_B_PAYMENT_DT=" + document.getElementById("yeardayd").value +  "&FK_DEPT_CODE=" + document.getElementById("DeptList").value;
          }
-         alert(param);
+       
           //"&FK_SAWON_WORKPLACE_CODE=" + document.getElementById("SiteList").value +
           console.log(param);
-         mySheet.DoSearch("${contextPath}/pay/p0001/searchList.do", param);
+         mySheet.DoSearch("${contextPath}/pay/TA_input/searchList.do", param);
          
          //mySheet.DoSearch("transaction_data2.json");
          break;
@@ -176,7 +176,7 @@ table.ui-datepicker-calendar { display:none; }
       case "save": // 저장
          //var tempStr = mySheet.GetSaveString();
          //alert("서버로 전달되는 문자열 확인 :"+tempStr);
-         mySheet2.DoSave("${contextPath}/pay/p0001/saveData.do");
+         mySheet2.DoSave("${contextPath}/pay/TA_input/saveData.do");
          break;         
       case "insert":
           mySheet2.DataInsert(-1);
@@ -208,7 +208,7 @@ table.ui-datepicker-calendar { display:none; }
       
       console.log(x);
       pk_sawon_code = mySheet.GetCellValue(row,2);
-      mySheet2.DoSearch("${pageContext.request.contextPath}/pay/p0001/searchList2.do",x);
+      mySheet2.DoSearch("${pageContext.request.contextPath}/pay/TA_input/searchList2.do",x);
    }
    
    
@@ -344,7 +344,7 @@ function selectSite() {
       $
             .ajax({
 
-               url : "${contextPath}/pay/p0001/DeptList.do",//목록을 조회 할 url
+               url : "${contextPath}/pay/TA_input/DeptList.do",//목록을 조회 할 url
 
                type : "POST",
 
@@ -407,7 +407,7 @@ function selectSite() {
     	  $
           .ajax({
 
-             url : "${contextPath}/pay/p0001/DeptList2.do",//목록을 조회 할 url
+             url : "${contextPath}/pay/TA_input/DeptList2.do",//목록을 조회 할 url
 
              type : "POST",
 
@@ -530,7 +530,7 @@ function yearday() {
 
     $.ajax({
 
-             url : "${contextPath}/pay/p0001/yearday.do",//목록을 조회 할 url
+             url : "${contextPath}/pay/TA_input/yearday.do",//목록을 조회 할 url
 
              type : "POST",
 
@@ -571,7 +571,7 @@ function yearday() {
     $
           .ajax({
 
-             url : "${contextPath}/pay/p0001/yeardayd.do",//목록을 조회 할 url
+             url : "${contextPath}/pay/TA_input/yeardayd.do",//목록을 조회 할 url
 
              type : "POST",
 
@@ -620,15 +620,21 @@ function yearday() {
 
 <body onload="LoadPage()">
 
+<div id="wrapper">
 
+        <div id="page-wrapper" style="margin: 0px;">
+            <div class="row">
+                <div class="col-lg-12">
+                <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 근태결과입력</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
   
-      
-  <div class="page_title">
-    <span><a class="closeDepth" href="#">closeDepth</a></span> 
-    <span class="title">급여/퇴직정산관리> <b>근태결과입력</b></span>
-  </div>
+ 
+  
+ 
   <div class="main_content">
-       <div class="exp_product"></div>
+       
        <div class="exp_product">
          
       </div>
@@ -692,24 +698,23 @@ function yearday() {
 <br><br>
       <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
-              <DIV class="ib_product" style="width:100%;float:left">
+              <DIV class="ib_product" style="width:70%;float:left">
             <div style="height:100%;width:45%;float:left">
                <script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); selectSite(); </script>
             </div>
          
             
             <div style="height:100%;width:45%;float:left">
-               <script type="text/javascript"> createIBSheet("mySheet2", "100%", "100%"); </script>
+               <script type="text/javascript"> createIBSheet("mySheet2", "200%", "100%"); </script>
             </div>
          </div>
                
       
         
         <!--right단 정보입력 및 수정단 -->
-      
-
-
     
+    </div>
+    </div>
    
     <!--main_content-->
 

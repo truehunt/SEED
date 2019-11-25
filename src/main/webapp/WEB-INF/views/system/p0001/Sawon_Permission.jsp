@@ -108,7 +108,7 @@ function TreenodeActivate(node) {
 }
 
 function fn_SawonPermissionsUpdate(){
-	// if (!$("input[name=chk]").is(":checked"), "권한 변경을 할 사원을 선택해주세요!") return false;
+	if (! chkInputValue("#hiddenValue", "권한 변경을 할 사원")) return false;
 	
 		var PK_SAWON_CODE = $("#hiddenValue").val();
 		var SAWON_VIEW_PERMISSION = $('input[name="userrole"]:checked').val();
@@ -120,16 +120,40 @@ function fn_SawonPermissionsUpdate(){
 				SAWON_VIEW_PERMISSION : SAWON_VIEW_PERMISSION,
 				FK_DEPT_CODE : FK_DEPT_CODE
 			}
-		}).done(saveResult);
-}
-
-function saveResult(result){
-	if (result==="") {
-		alert("<s:message code="msg.err.usedID"/>");
-	} else{
-		$("#userlist").html(result);
-		alert("<s:message code="msg.boardSave"/>");
-	}	
+		}).success(function(result){
+			$("#userlist").html(result);
+			alert("저장되었습니다.");
+			$("#hiddenValue").val(""); // hiddenValue에 넣은 값 초기화
+			
+			//업데이트 후 다시 변경 이벤트 활성화
+			$("#checkall").click(function(){
+		        var arrayParam = new Array();
+		        if($("#checkall").prop("checked")){
+		            $("input[name=chk]").prop("checked",true);
+		            arrayParam.push($(this).val());
+		        }else{
+		            $("input[name=chk]").prop("checked",false);
+		            arrayParam.pop($(this).val());
+		        }
+		        var arrayParam = $('input:checkbox[type=checkbox]:checked').map(function () {
+		            return this.value;
+		        }).get();
+		        $('#hiddenValue').val(arrayParam);
+		    });
+			
+			$("input[name=chk]").click(function(){
+				var arrayParam = new Array();
+		        if($("input[name=chk]").prop("checked")){
+		        	arrayParam.push($(this).val());
+		        }else{ //개별선택 - 값 빼기
+		        	arrayParam.pop($(this).val());
+		        }
+		        var arrayParam = $('input:checkbox[type=checkbox]:checked').map(function () {
+		            return this.value;
+		        }).get();
+		        $('#hiddenValue').val(arrayParam);
+			});
+		})
 }
 
 </script>    

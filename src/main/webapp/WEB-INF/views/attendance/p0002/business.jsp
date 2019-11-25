@@ -12,6 +12,7 @@
 <script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
+
 <link
 	href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css"
 	rel="stylesheet">
@@ -81,7 +82,8 @@
 				Header : "신청일",
 				Type : "Date",
 				SaveName : "business_TRIP_APP_DATE",
-				MinWidth : 100
+				MinWidth : 100,
+				edit : 0
 			}, {
 				Header : "성명",
 				Type : "Text",
@@ -116,12 +118,12 @@
 			},  {
 				Header : "전자결재 상태",
 				Type : "Text",
-				SaveName : "holiday_PAY",
+				SaveName : "business_TRIP_PAY",
 				MinWidth : 30
 			}, {
 				Header : "정산 상태",
 				Type : "Text",
-				SaveName : "holiday_PAY",
+				SaveName : "business_TRIP_PAYREGIST",
 				MinWidth : 30
 			}];
 			IBS_InitSheet(mySheet, initSheet);

@@ -99,32 +99,20 @@ public class SawonCtr {
     }
     
     /**
-     * 직원조회.
+     * 직원조회.(ESS)
      */
     @RequestMapping(value = "/searchMember")
     public String searchMember(SearchVO searchVO, ModelMap modelMap) {
         
-        if (searchVO.getSearchKeyword() != null & !"".equals(searchVO.getSearchKeyword())) {
+        // if (searchVO.getSearchKeyword() != null & !"".equals(searchVO.getSearchKeyword())) {
             searchVO.pageCalculate( sawonSvc.selectSearchMemberCount(searchVO) ); // startRow, endRow
             
             List<?> listview = sawonSvc.selectSearchMemberList(searchVO);
         
             modelMap.addAttribute("listview", listview);
-        }
+        // }
         modelMap.addAttribute("searchVO", searchVO);
         return "system/p0001/searchSawon";
-    }
-    
-    /**
-     * ID 중복 확인.
-     */
-    @RequestMapping(value = "/chkUserid")
-    public void chkUserid(HttpServletRequest request, HttpServletResponse response) {
-        String userid = request.getParameter("userid");
-
-        userid = sawonSvc.selectUserID(userid);
-
-        UtilEtc.responseJsonValue(response, userid);
     }
     
     /**
@@ -139,14 +127,4 @@ public class SawonCtr {
         UtilEtc.responseJsonValue(response, userInfo);
     }
     
-    /**
-     * 사용자 삭제.
-     */
-    @RequestMapping(value = "/adUserDelete")
-    public String userDelete(HttpServletRequest request, ModelMap modelMap, SawonVO userInfo) {
-        
-        sawonSvc.deleteUser(userInfo.getPK_SAWON_CODE());
-        
-        return common_UserList(modelMap, userInfo.getFK_DEPT_CODE());
-    }
 }

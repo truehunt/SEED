@@ -24,6 +24,8 @@ public interface TA_inputService {
 
 	 public	List<TA_inputVO> DeptList(Map<String, Object> searchMap) throws DataAccessException;
  
+	 public List<TA_inputVO> DeptList2(Map<String, Object> searchMap) throws DataAccessException;
+
 	 public List<TA_inputVO> yearday(Map<String, Object> searchMap) throws DataAccessException;
 
 	 public List<TA_inputVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException;
@@ -34,6 +36,7 @@ public interface TA_inputService {
 	public void updateMember(Map<String, Object> dataMap);
 
 	public void insertMember(Map<String, Object> dataMap);
+
 
 
 

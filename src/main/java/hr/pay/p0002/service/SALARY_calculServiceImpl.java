@@ -53,7 +53,11 @@ public class SALARY_calculServiceImpl implements SALARY_calculService {
 	}
 	
 	
-	
+	@Override
+	public List<SALARY_calculVO> DeptList2(Map<String, Object> searchMap) throws DataAccessException {
+		List<SALARY_calculVO> list =  SALARY_calculDAO.DeptList2(searchMap); 
+		return list;
+	}
 
 	@Override
 	public List<SALARY_calculVO> yearday(Map<String, Object> searchMap) throws DataAccessException {

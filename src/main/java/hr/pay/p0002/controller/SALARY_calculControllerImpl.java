@@ -65,10 +65,10 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	}
 	
 	@Override
-	@RequestMapping(value = "/pay/p0002/p0002.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_calcul/SALARY_calcul.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	request.setCharacterEncoding("utf-8");
-		ModelAndView main = new ModelAndView("pay/p0002/p0002");
+		ModelAndView main = new ModelAndView("pay/p0002/SALARY_calcul");
 		return main;
 	}
 	
@@ -88,7 +88,7 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0002/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_calcul/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
@@ -98,14 +98,15 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 		// �뇦猿볦삕�뜝�럡�돰�댖怨뚰�쀦뤃酉귥삕�땻類㏃삕?�젧
 		searchMap.put("TA_ATTRIBUTION", request.getParameter("TA_ATTRIBUTION"));
 		searchMap.put("TA_PAYMENTDAY", request.getParameter("TA_PAYMENTDAY"));
-
+		
+		searchMap.put("PK_WORKPLACE_CODE", request.getParameter("PK_WORKPLACE_CODE"));
 		searchMap.put("FK_WORKPLACE_CODE", request.getParameter("FK_WORKPLACE_CODE"));
 		searchMap.put("FK_SAWON_WORKPLACE_CODE", request.getParameter("FK_SAWON_WORKPLACE_CODE"));
 		searchMap.put("PK_DEPT_CODE", request.getParameter("PK_DEPT_CODE"));
 		searchMap.put("FK_DEPT_CODE", request.getParameter("FK_DEPT_CODE"));
 		
 		
-		//�뜝�럥�몥�뜝�럩逾졾뜝�럡�댉 �댖怨뚰��?�뤂
+	
 		List<SALARY_calculVO> data = SALARY_calculService.searchList(searchMap);
         resultMap.put("Data", data);
         
@@ -114,21 +115,21 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0002/searchList2.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_calcul/searchList2.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map searchList2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // �뇦猿볦삕�뜝�럡�돰�댖怨뚰�쀦뤃?
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // �댖怨뚰��?�뤂�뇦猿됲��?沅�
 		
-		// �뇦猿볦삕�뜝�럡�돰�댖怨뚰�쀦뤃酉귥삕�땻類㏃삕?�젧
+		
 		searchMap.put("PK_SAWON_CODE", request.getParameter("PK_SAWON_CODE"));
-		searchMap.put("SALARY_CAL_PAYMENTDAY", request.getParameter("salary_CAL_PAYMENTDAY"));
+		searchMap.put("salary_CAL_PAYMENTDAY", request.getParameter("salary_CAL_PAYMENTDAY"));
 		searchMap.put("D_B_PAYMENT_DT", request.getParameter("D_B_PAYMENT_DT"));
-
+		searchMap.put("fk_SALARY_CAL_SAWON_CODE", request.getParameter("fk_SALARY_CAL_SAWON_CODE"));
 		System.out.println("1" + request.getParameter("salary_CAL_PAYMENTDAY"));
 		
-		//�뜝�럥�몥�뜝�럩逾졾뜝�럡�댉 �댖怨뚰��?�뤂
+		
 		List<SALARY_calculVO> data = SALARY_calculService.searchList2(searchMap);
         resultMap.put("Data", data);
         
@@ -140,18 +141,18 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0002/SiteList.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_calcul/SiteList.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map SiteList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
 		
-		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
+	
 	
 
 		
-		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
+
 		List<SALARY_calculVO> data = SALARY_calculService.SiteList(searchMap);
         resultMap.put("Data", data);
         
@@ -161,19 +162,19 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0002/DeptList.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_calcul/DeptList.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map DeptList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
 		
-		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
+		
 		
 		searchMap.put("pk_WORKPLACE_CODE", request.getParameter("SiteList"));
 
 		
-		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
+		
 		List<SALARY_calculVO> data = SALARY_calculService.DeptList(searchMap);
         resultMap.put("Data", data);
         
@@ -183,18 +184,41 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0002/yearday.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_calcul/DeptList2.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map DeptList2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		
+	
+		
+		searchMap.put("pk_WORKPLACE_CODE", request.getParameter("SiteList"));
+		searchMap.put("fk_DEPT_CODE", request.getParameter("SiteList"));
+		searchMap.put("workplace_INQUIRY_CODE", request.getParameter("SiteList"));
+		searchMap.put("dept_INQUIRY_CODE", request.getParameter("SiteList"));
+		
+		
+		List<SALARY_calculVO> data = SALARY_calculService.DeptList2(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}
+	
+	
+	@Override
+	@RequestMapping(value = "/pay/SALARY_calcul/yearday.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map yearday(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
 		
-		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
+	
 	
 
 		
-		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
+	
 		List<SALARY_calculVO> data = SALARY_calculService.yearday(searchMap);
         resultMap.put("Data", data);
         
@@ -204,18 +228,18 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0002/yeardayd.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_calcul/yeardayd.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map yeardayd(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
 		
-		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
+		
 		
 		searchMap.put("pk_D_B_PAYMENT_SEQ_CODE", request.getParameter("yearday"));
 		
-		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
+		
 		List<SALARY_calculVO> data = SALARY_calculService.yeardayd(searchMap);
         resultMap.put("Data", data);
         
@@ -227,14 +251,14 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/p0002/saveData.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/SALARY_calcul/saveData.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // �뜝�룞�삕�뜝�럩�궋�뜝�럥留덬aa
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 嶺뚳퐣瑗�?遊븅뇦猿됲��?沅�
 		
-		// �뜝�룞�삕�뜝�럩�궋 Data ?鍮딃겫�슧�긷뜝�럥由��뼨�먯삕
+		
 		Enumeration enu = request.getParameterNames();
 		while (enu.hasMoreElements()) {
 			String name = (String) enu.nextElement();

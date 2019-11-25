@@ -45,6 +45,13 @@ public class SALARY_bo_staDAOImpl implements SALARY_bo_staDAO {
 	
 	
 	@Override
+	public List<SALARY_bo_staVO> DeptList2(Map<String, Object> searchMap) throws DataAccessException {
+		List<SALARY_bo_staVO> list = sqlSession.selectList("hr.pay.p0003.deptList2", searchMap);
+		System.out.println(searchMap);
+		return list;
+	}
+	
+	@Override
 	public List<SALARY_bo_staVO> yearday(Map<String, Object> searchMap) throws DataAccessException {
 		List<SALARY_bo_staVO> list = sqlSession.selectList("hr.pay.p0003.yearday", searchMap);
 		System.out.println(searchMap);
@@ -53,7 +60,7 @@ public class SALARY_bo_staDAOImpl implements SALARY_bo_staDAO {
 	
 	@Override
 	public List<SALARY_bo_staVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException {
-		List<SALARY_bo_staVO> list = sqlSession.selectList("hr.pay.p0003.salary_CAL_PAYMENTDAY", searchMap);
+		List<SALARY_bo_staVO> list = sqlSession.selectList("hr.pay.p0003.yeardayd", searchMap);
 		System.out.println(searchMap);
 		return list;
 	}

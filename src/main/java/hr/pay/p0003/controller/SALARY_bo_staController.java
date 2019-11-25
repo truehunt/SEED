@@ -24,6 +24,7 @@ public interface SALARY_bo_staController {
 	
 	public Map SiteList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map DeptList(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map DeptList2(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	public Map yearday(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map yeardayd(HttpServletRequest request, HttpServletResponse response) throws Exception;

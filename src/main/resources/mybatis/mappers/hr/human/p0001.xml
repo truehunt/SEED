@@ -93,25 +93,76 @@
             </choose>
          </where> 
    </select>
+=======
+	<!-- 인사기록카드 사원목록 -->
+	<select id="ISA" resultMap="cardResult01" parameterType="java.util.Map"> 
+    	SELECT i.fk_isa_sawon_code, s.pk_sawon_code, s.sawon_name
+		  FROM ISA i, sawon s
+		 WHERE i.fk_isa_sawon_code(+) = s.pk_sawon_code
+		 ORDER BY s.pk_sawon_code ASC 
+    </select> 	  
+     
+    <select id="ISA_cha_N" resultMap="cardResult01" parameterType="java.util.Map"> 
+    	insert ALL into ISA(fk_isa_sawon_code)
+		values(pk_sawon_code)
+    		select pk_sawon_code
+    		from sawon s, isa i 
+    		where s.pk_sawon_code = i.fk_isa_sawon_code(+) 
+    		and i.fk_isa_sawon_code IS NULL
+    </select> 	
+	 
+	<select id="ISA_cha" resultMap="cardResult01" parameterType="java.util.Map"> 
+			<![CDATA[
+         		select fk_ISA_SAWON_CODE, isa_hanja_name, ISA_HIRE_CODE, ISA_NUM,
+					ISA_ADDRESS, ISA_PERMANENT_ADDR, ISA_MARRIAGE_CODE,
+					ISA_HOUSE_CODE, ISA_LIVING_CODE, ISA_ESTATE,
+					ISA_MOVABLES, ISA_SUM, ISA_GEONPYEONG, ISA_SITE, 
+					ISA_RELIGION_CODE, ISA_HOBBY_CODE, ISA_SPECIALTY_CODE
+				from ISA
+      		]]> 
+			<where>
+				<choose>
+					<when test="fk_ISA_SAWON_CODE != '' and fk_ISA_SAWON_CODE != null">
+						fk_ISA_SAWON_CODE = #{fk_ISA_SAWON_CODE}
+					</when>
+					<otherwise>
+						fk_ISA_SAWON_CODE = #{pk_SAWON_CODE}
+					</otherwise>
+				</choose>
+			</where> 
+	</select>
+>>>>>>> refs/remotes/origin/master
 
 	<update id="updateData" parameterType="java.util.Map">
-		update PERSON_BC_DETAI
-		set  pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM,jdbcType=VARCHAR}
-		   , person_BC_DETAI_MNGEMENT_NAME = #{person_BC_DETAI_MNGEMENT_NAME,jdbcType=VARCHAR}
-		   , person_BC_DETAI_REMARKS = #{person_BC_DETAI_REMARKS,jdbcType=VARCHAR}
-		   , person_BC_DETAI_NOT_USE = #{person_BC_DETAI_NOT_USE,jdbcType=VARCHAR}
-		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM, jdbcType=VARCHAR}
+		update ISA
+		set  isa_HANJA_NAME = #{isa_HANJA_NAME,jdbcType=VARCHAR}
+		   , isa_HIRE_CODE = #{isa_HIRE_CODE,jdbcType=VARCHAR}
+		   , isa_NUM = #{isa_NUM,jdbcType=VARCHAR}
+		   , isa_ADDRESS = #{isa_ADDRESS,jdbcType=VARCHAR}
+		   , isa_PERMANENT_ADDR = #{isa_PERMANENT_ADDR,jdbcType=VARCHAR}
+		   , isa_MARRIAGE_CODE = #{isa_MARRIAGE_CODE,jdbcType=VARCHAR}
+		   , isa_HOUSE_CODE = #{isa_HOUSE_CODE,jdbcType=VARCHAR}
+		   , isa_LIVING_CODE = #{isa_LIVING_CODE,jdbcType=VARCHAR}
+		   , isa_ESTATE = #{isa_ESTATE,jdbcType=VARCHAR}
+		   , isa_MOVABLES = #{isa_MOVABLES,jdbcType=VARCHAR}
+		   , isa_SUM = #{isa_SUM,jdbcType=VARCHAR}
+		   , isa_GEONPYEONG = #{isa_GEONPYEONG,jdbcType=VARCHAR}
+		   , isa_SITE = #{isa_SITE,jdbcType=VARCHAR}
+		   , isa_RELIGION_CODE = #{isa_RELIGION_CODE,jdbcType=VARCHAR}
+		   , isa_HOBBY_CODE = #{isa_HOBBY_CODE,jdbcType=VARCHAR}
+		   , isa_SPECIALTY_CODE = #{isa_SPECIALTY_CODE,jdbcType=VARCHAR}
+		where fk_ISA_SAWON_CODE = #{fk_ISA_SAWON_CODE, jdbcType=VARCHAR}
 	</update>	
 	
-	<insert id="insertData" parameterType="java.util.Map">
-		insert into PERSON_BC_DETAI(PK_PERSON_BC_DETAI_CODE_NUM, PERSON_BC_DETAI_MNGEMENT_NAME, PERSON_BC_DETAI_REMARKS, PERSON_BC_DETAI_NOT_USE, FK_PERSON_BC_CODE_NUM) 
-		values(#{pk_PERSON_BC_DETAI_CODE_NUM,jdbcType=VARCHAR}, #{person_BC_DETAI_MNGEMENT_NAME,jdbcType=VARCHAR}, #{person_BC_DETAI_REMARKS,jdbcType=VARCHAR}, #{person_BC_DETAI_NOT_USE,jdbcType=VARCHAR},#{fk_PERSON_BC_CODE_NUM, jdbcType=VARCHAR})
-	</insert>	
+<!-- 	<insert id="insertData" parameterType="java.util.Map"> -->
+<!-- 		insert into PERSON_BC_DETAI(PK_PERSON_BC_DETAI_CODE_NUM, PERSON_BC_DETAI_MNGEMENT_NAME, PERSON_BC_DETAI_REMARKS, PERSON_BC_DETAI_NOT_USE, FK_PERSON_BC_CODE_NUM)  -->
+<!-- 		values(#{pk_PERSON_BC_DETAI_CODE_NUM,jdbcType=VARCHAR}, #{person_BC_DETAI_MNGEMENT_NAME,jdbcType=VARCHAR}, #{person_BC_DETAI_REMARKS,jdbcType=VARCHAR}, #{person_BC_DETAI_NOT_USE,jdbcType=VARCHAR},#{fk_PERSON_BC_CODE_NUM, jdbcType=VARCHAR}) -->
+<!-- 	</insert>	 -->
 	
-	<delete id="deleteData" parameterType="java.util.Map">
-		delete PERSON_BC_DETAI
-		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM}
-	</delete>	
+<!-- 	<delete id="deleteData" parameterType="java.util.Map"> -->
+<!-- 		delete PERSON_BC_DETAI -->
+<!-- 		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM} -->
+<!-- 	</delete>	 -->
 	
 	
 	<!-- 인사기록카드_가족 -->
@@ -455,6 +506,7 @@
          		   ass_CLASS, ass_NOTE,
          		   fk_ASS_PER_CODE, fk_ASS_SAWON_CODE, pk_ASS_CODE
 			from sawon s, ASS a
+<<<<<<< HEAD
       	]]> 
       	
       	<where>
@@ -462,6 +514,14 @@
 			<if test="fk_ASS_SAWON_CODE != '' and fk_ASS_SAWON_CODE != null">
 				and a.fk_ass_sawon_code = #{fk_ASS_SAWON_CODE, jdbcType=VARCHAR}
 			</if> 
+=======
+      	]]>
+      	<where>
+			s.pk_sawon_code =  a.fk_ass_sawon_code
+			<if test="fk_ASS_SAWON_CODE != '' and fk_ASS_SAWON_CODE != null">
+				and a.fk_ASS_SAWON_CODE = #{fk_ASS_SAWON_CODE, jdbcType=VARCHAR}
+			</if>
+>>>>>>> refs/remotes/origin/master
 		</where>
 	</select>
 	
@@ -536,8 +596,13 @@
       	<where>
 			s.pk_sawon_code = a.fk_chj_sawon_code
 			<if test="fk_CHJ_SAWON_CODE != '' and fk_CHJ_SAWON_CODE != null">
+<<<<<<< HEAD
 				and a.fk_chj_sawon_code = #{fk_CHJ_SAWON_CODE, jdbcType=VARCHAR}
 			</if> 
+=======
+				and a.fk_CHJ_SAWON_CODE = #{fk_CHJ_SAWON_CODE, jdbcType=VARCHAR}
+			</if>
+>>>>>>> refs/remotes/origin/master
 		</where>
 	</select>
 	
@@ -614,7 +679,11 @@
 			s.pk_sawon_code = b.fk_SB_SAWON_CODE
 			<if test="fk_SB_SAWON_CODE != '' and fk_SB_SAWON_CODE != null">
 				and b.fk_SB_SAWON_CODE = #{fk_SB_SAWON_CODE, jdbcType=VARCHAR}
+<<<<<<< HEAD
 			</if> 
+=======
+			</if>
+>>>>>>> refs/remotes/origin/master
 		</where>
 	</select>
 	
@@ -671,4 +740,18 @@
       ]]>
 	</select>
 	
+	<!-- 사원 이미지 -->
+	
+    <select id="selectSawonImageOne" parameterType="String" resultType="hr.elect.p0002.vo.SignImageVO">
+        SELECT PK_SAWON_CODE, photo   
+          FROM SAWON
+         WHERE PK_SAWON_CODE=#{PK_SAWON_CODE}
+    </select>       
+	
+    <update id="updateSawonImage" parameterType="hr.elect.p0002.vo.SignImageVO">
+        UPDATE SAWON
+           SET sawon_photo=#{photo}
+         WHERE PK_SAWON_CODE=#{PK_SAWON_CODE}
+    </update>   
+    
 </mapper>

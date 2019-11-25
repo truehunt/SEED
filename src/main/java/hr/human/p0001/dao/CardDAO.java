@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.dao.DataAccessException;
 
-import hr.human.p0001.vo.CarVO;
+import hr.elect.p0002.vo.SignImageVO;
 import hr.human.p0001.vo.CardVO;
 import hr.human.p0001.vo.Com_codeVO;
 
@@ -21,6 +21,20 @@ public interface CardDAO {
 	public void insertData(Map<String, String> row) throws DataAccessException;
 	public void updateData(Map<String, String> row) throws DataAccessException;
 	public void deleteData(Map<String, String> row) throws DataAccessException;
+	
+	
+	 /**
+     * 결재이미지 등록화면
+     */
+    public SignImageVO selectSignImageOne(String param);
+    /**
+     * 결재이미지 저장, 업데이트.
+     */
+    public void updateSignImage(SignImageVO param);
+    /**
+     * 등록된 결재 이미지 삭제
+     */
+    public void deleteSignImage(String param);
 	
 	
 }

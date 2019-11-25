@@ -14,7 +14,7 @@
 
 <style>
 	.frame {
-		  width : 1300px;
+		  width : 1365px;
 		  margin: 0px;
 	}
 
@@ -152,6 +152,7 @@
 		
 		mySheet.DoSearch("${contextPath}/human/s0001/searchList.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 	
+		console.log(mySheet);
 		//콤보박스에 값 불러오기 -> searchList.do 뒤에 실행 
 		selectDivision();
 
@@ -169,9 +170,10 @@
      
       var pk = mySheet.GetCellValue(row,2); // 마우스로 클릭한 셀의 value를 가져와서 pk에 저장
      
-      var colArr =  Object.keys(mySheet.rX); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 
-   											 // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
+      var colArr =  Object.keys(mySheet.SaveNameInfo); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 
+   											 // 배열순서는 일반반복문을 사용할 때와 동일 , SaveNameInfo는 매핑되려는 칼럼의 이름을 들고있다.
    	  
+   	 
    	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
 	  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 	  })
@@ -190,7 +192,7 @@
    }
 	 	 
 	 $(document).on('change', 'input', function(e) { // 수정할시에 state에 문구 저장 및 SetCellValue 실행
-		  var colArr =  Object.keys(mySheet.rX);
+		  var colArr =  Object.keys(mySheet.SaveNameInfo);
 		  var colNum = colArr.indexOf(e.target.id);	 	 
 		
 	 	mySheet.SetCellValue(t_row, colNum ,e.target.value);
@@ -550,7 +552,7 @@
 	<div id="page-wrapper" style="margin: 0px;">
 		<div class="row">
 	        <div class="col-lg-12">
-	            <h1 class="page-header"><i class="fa fa-folder fa-fw"></i> 회사 등록</h1>
+	            <h1 class="page-header"><i class="fa fa-folder fa-fw"></i><s:message code="main.enroll1"/></h1>
 	        </div>
    	 	</div>
 	
@@ -561,6 +563,12 @@
 		 --%>
   <div class="frame">
     <%-- //header 및 container 시작--%>
+    	<div class="ib_function float_right">
+		  <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
+		  <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
+		  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
+		  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
+		</div>
   <div class="container" style="padding:0px; margin-left:0px;">
 	<%-- nav (왼쪽 layout)시작 --%>
 
@@ -569,12 +577,6 @@
 	  <div class="main_content">
 	    <div class="exp_product">
 	    </div>
-	    <div class="ib_function float_left">
-		  <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-		  <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-		  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-		  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
-		</div>
 		<!-- ibsheet 뿌려주는 부분  -->
 		<div class="clear hidden"></div>
 		<div class="ib_product"><script>createIBSheet("mySheet", "58%", "58%");</script></div>

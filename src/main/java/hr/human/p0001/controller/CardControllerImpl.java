@@ -22,25 +22,31 @@ import hr.human.p0001.service.CardService;
 import hr.human.p0001.vo.CardVO;
 import hr.human.p0001.vo.Com_codeVO;
 import hr.human.p0001.vo.CardFamVO;
+import hr.human.p0001.dao.CardDAO;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import org.springframework.ui.ModelMap;
+
+import hr.elect.p0002.vo.SignImageVO;
+
+import project.common.FileUtil;
+import project.common.FileVO;
 
 @Controller("h_insaCardController")
 public class CardControllerImpl implements CardController{
 	private static final Logger logger = LoggerFactory.getLogger(CardControllerImpl.class);
+	
+	@Autowired
+	private CardDAO CardDAO;
+	
 	@Autowired
 	CardService p0001Service;
 	@Autowired
 	CardVO p0001VO;
 	@Autowired
 	CardFamVO CardFamVO;
-	
-	@Resource(name = "uploadPath") // upload위치
-	private String uploadPath;
-	
-	//upload 페이지
-	@RequestMapping(value = "/human/p0001/form.do")
-		public String form() {
-		return "uploadForm";
-	}
 	
 	//test페이지
 	@Override
@@ -67,31 +73,29 @@ public class CardControllerImpl implements CardController{
 		return main;
 	}
 	
-	
-	
-	//인사발령_페이지
-		@Override
-		@RequestMapping(value = "/human/p0001/insa_ballyeong.do", method = { RequestMethod.GET, RequestMethod.POST })
-		public ModelAndView insaBal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-			String viewName = getViewName(request);
-			viewName = "/human/p0001/insa_ballyeong";
-			request.setCharacterEncoding("utf-8");
-			ModelAndView main = new ModelAndView(viewName);
-			return main;
-		}
+//	//인사발령_페이지
+//		@Override
+//		@RequestMapping(value = "/human/p0001/insa_ballyeong.do", method = { RequestMethod.GET, RequestMethod.POST })
+//		public ModelAndView insaBal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//			String viewName = getViewName(request);
+//			viewName = "/human/p0001/insa_ballyeong";
+//			request.setCharacterEncoding("utf-8");
+//			ModelAndView main = new ModelAndView(viewName);
+//			return main;
+//		}
 		
 
-	// 팝업
-		@Override
-		@RequestMapping(value = "/popupHL", method = { RequestMethod.GET, RequestMethod.POST })
-		public ModelAndView popupHL(HttpServletRequest request, HttpServletResponse response) throws Exception {
-			String viewName = getViewName(request);
-			viewName = "human/p0001/popupHL";
-			request.setCharacterEncoding("utf-8");
-			//ModelAndView main = new ModelAndView("hr/p0001_init");
-			ModelAndView main = new ModelAndView(viewName);
-			return main;
-		}
+//	// 팝업
+//		@Override
+//		@RequestMapping(value = "/popupHL", method = { RequestMethod.GET, RequestMethod.POST })
+//		public ModelAndView popupHL(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//			String viewName = getViewName(request);
+//			viewName = "human/p0001/popupHL";
+//			request.setCharacterEncoding("utf-8");
+//			//ModelAndView main = new ModelAndView("hr/p0001_init");
+//			ModelAndView main = new ModelAndView(viewName);
+//			return main;
+//		}
 		
 	
 	@Override
@@ -101,7 +105,6 @@ public class CardControllerImpl implements CardController{
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
-		System.out.println("1. "+request.getParameter("person_BC_OUTPUT"));
 		// 검색조건설정
 		searchMap.put("person_BC_OUTPUT", request.getParameter("person_BC_OUTPUT"));
 		
@@ -142,7 +145,6 @@ public class CardControllerImpl implements CardController{
 			//데이터 조회
 			List<CardVO> data = p0001Service.ISA_c(searchMap);
 	        resultMap.put("Data", data);
-	        System.out.println(resultMap);
 	        return resultMap;
 		}
 		
@@ -252,5 +254,77 @@ public class CardControllerImpl implements CardController{
 		}
 		return viewName;
 	}
+	
+	
+	/**
+   * 결재이미지 등록화면
+   */
+  @RequestMapping(value = "/human/p0001/image.do")
+  @ResponseBody
+  public Map memberForm(HttpServletRequest request, HttpServletResponse response) {
+	  Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+	  String save = request.getParameter("save");
+      String userno = request.getParameter("PK_SAWON_CODE").toString();
+      System.out.println("일단 확인중입니다 ㅅㅂ 이제 제발 됬으면");
+      
+      SignImageVO signImageInfo = CardDAO.selectSignImageOne(userno);
+      String data = signImageInfo.getPhoto(); 
+      resultMap.put("Data", data);
+
+      return resultMap;
+  }
+	
+
+    
+    /**
+     * 결재이미지 저장, 업데이트.
+     */
+    @RequestMapping(value = "/human/p0001/imageSave")
+    public String imageSave(HttpServletRequest request, ModelMap modelMap, SignImageVO signImageInfo) {
+        String userno = request.getParameter("PK_SAWON_CODE").toString();
+
+        signImageInfo.setPK_SAWON_CODE(userno);
+        
+        FileUtil fs = new FileUtil();
+        FileVO fileInfo = fs.saveImage(signImageInfo.getPhotofile());
+        if (fileInfo != null) {
+        	signImageInfo.setPhoto(fileInfo.getRealname());
+        }
+        CardDAO.updateSignImage(signImageInfo);
+
+        return "redirect:/human/p0001/insa_card.do?save=OK";
+    }
+    
+    /**
+     * 결재이미지 삭제
+	 * @throws
+     */
+	@Override
+    @RequestMapping(value = "/signImageDelete2")
+    public void deleteSignImage(HttpServletRequest request, HttpServletResponse response, String IMAGENO) throws IOException {
+    	
+		response.setContentType("text/html;charset=utf-8");
+  		PrintWriter out = response.getWriter();
+		
+  		try {
+  			CardDAO.deleteSignImage(IMAGENO);
+        
+        out.print("등록된 서명이미지를 삭제하였습니다.");
+  		} catch (Exception e) {
+ 			System.out.println("파일삭제 실패 : " + e);
+ 		}
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

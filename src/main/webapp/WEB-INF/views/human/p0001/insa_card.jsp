@@ -1,13 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags"%> 
-<c:set var="contextPath"  value="${pageContext.request.contextPath}" />   
+<c:set var="contextPath"  value="${pageContext.request.contextPath}" />
+   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<title><s:message code="common.pageTitle"/></title>
 <script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
@@ -72,6 +74,7 @@
 		 	{Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:60,Align:"Center"},
 		 	{Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:50, Edit:0},
 		 	
+<<<<<<< HEAD
 		 	{Header:"",Type:"Text",SaveName:"fk_ISA_SAWON_CODE",Width:60,Align:"Center",Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_HANJA_NAME",Width:60,Align:"Center",Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_HIRE_CODE",Width:60,Align:"Center",Hidden:1},
@@ -89,6 +92,25 @@
 		 	{Header:"",Type:"Text",SaveName:"isa_RELIGION_CODE",Width:60,Align:"Center",Hidden:1 },
 		 	{Header:"",Type:"Text",SaveName:"isa_HOBBY_CODE",Width:60,Align:"Center" ,Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_SPECIALTY_CODE",Width:60,Align:"Center" ,Hidden:1},
+=======
+		 	{Header:"",Type:"Text",SaveName:"fk_ISA_SAWON_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_HANJA_NAME",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_HIRE_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_NUM",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_ADDRESS",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_PERMANENT_ADDR",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_MARRIAGE_CODE",Width:60,Align:"Center" },
+		 	{Header:"",Type:"Text",SaveName:"isa_HOUSE_CODE",Width:60,Align:"Center" },
+		 	{Header:"",Type:"Text",SaveName:"isa_LIVING_CODE",Width:60,Align:"Center" },
+		 	{Header:"",Type:"Text",SaveName:"isa_ESTATE",Width:60,Align:"Center" },
+		 	{Header:"",Type:"Text",SaveName:"isa_MOVABLES",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_SUM",Width:60,Align:"Center" },
+		 	{Header:"",Type:"Text",SaveName:"isa_GEONPYEONG",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_SITE",Width:60,Align:"Center" },
+		 	{Header:"",Type:"Text",SaveName:"isa_RELIGION_CODE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_HOBBY_CODE",Width:60,Align:"Center" },
+		 	{Header:"",Type:"Text",SaveName:"isa_SPECIALTY_CODE",Width:60,Align:"Center"},
+>>>>>>> refs/remotes/origin/master
 		 	
 		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CODE",Width:60,Align:"Center", Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_MYEONJE",Width:60,Align:"Center", Hidden:1},
@@ -105,6 +127,25 @@
       	];
       	IBS_InitSheet(mySheet,initData);
       	mySheet.SetDataAutoTrim(0);
+//       	mySheet.SetColHidden([
+// 			{Col: 4, Hidden:1}, // pk값
+// 			{Col: 5, Hidden:1},
+// 			{Col: 6, Hidden:1},
+// 			{Col: 7, Hidden:1},
+// 			{Col: 8, Hidden:1},
+// 			{Col: 9, Hidden:1},
+// 			{Col: 10, Hidden:1},
+// 			{Col: 11, Hidden:1},
+// 			{Col: 12, Hidden:1},
+// 			{Col: 13, Hidden:1},
+// 			{Col: 14, Hidden:1},
+// 			{Col: 15, Hidden:1},
+// 			{Col: 16, Hidden:1},
+// 			{Col: 17, Hidden:1},
+// 			{Col: 18, Hidden:1},
+// 			{Col: 19, Hidden:1},
+// 			{Col: 20, Hidden:1}
+//   	    ]);
       	doAction("list");
 		
    		//mySheet4 //가족
@@ -311,16 +352,34 @@
 		mySheetRow = row;
 		ISA();
 		
+<<<<<<< HEAD
 		
 		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
 		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
 		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
 		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
+=======
+		IMAGE();
+>>>>>>> refs/remotes/origin/master
 		
+<<<<<<< HEAD
 // 		//mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
 		mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
 		mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
 		mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
+=======
+		document.getElementById('PK_SAWON_CODE').value = x;
+		
+// 		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
+// 		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
+// 		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
+// 		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
+		
+// // 		//mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
+// 		mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
+// 		mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
+// 		mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
+>>>>>>> refs/remotes/origin/master
 	}
 	
 	
@@ -337,12 +396,32 @@
 	            mySheet.RemoveAll();
 	            break;
 	         case "save":
+<<<<<<< HEAD
 	            //mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/upload.do");
 	             mySheet.SetCellValue(mySheetRow, 5, document.getElementById("ISA_HANJA_NAME").value);
 				mySheet.SetCellValue(mySheetRow, 6, document.getElementById("isa_HIRE_CODE").value);
 				alert(document.getElementById("ISA_NUM").value);
 				mySheet.SetCellValue(mySheetRow, 7, document.getElementById("isa_NUM").value);
 	            mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/insertData.do");
+=======
+				mySheet.SetCellValue(mySheetRow, 5, document.getElementById("isa_HANJA_NAME").value);
+	 			mySheet.SetCellValue(mySheetRow, 6, document.getElementById("isa_HIRE_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 7, document.getElementById("isa_NUM").value);
+	 			mySheet.SetCellValue(mySheetRow, 8, document.getElementById("isa_ADDRESS").value);
+	 			mySheet.SetCellValue(mySheetRow, 9, document.getElementById("isa_PERMANENT_ADDR").value);
+	 			mySheet.SetCellValue(mySheetRow, 10, document.getElementById("isa_MARRIAGE_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 11, document.getElementById("isa_LIVING_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 12, document.getElementById("isa_ESTATE").value);
+	 			mySheet.SetCellValue(mySheetRow, 13, document.getElementById("isa_MOVABLES").value);
+	 			mySheet.SetCellValue(mySheetRow, 14, document.getElementById("isa_SUM").value);
+	 			mySheet.SetCellValue(mySheetRow, 15, document.getElementById("isa_GEONPYEONG").value);
+	 			mySheet.SetCellValue(mySheetRow, 16, document.getElementById("isa_SITE").value);
+	 			mySheet.SetCellValue(mySheetRow, 17, document.getElementById("isa_RELIGION_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 18, document.getElementById("isa_HOBBY_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 19, document.getElementById("isa_SPECIALTY_CODE").value);
+	        	 
+	        	mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/insertData.do");
+>>>>>>> refs/remotes/origin/master
 	            
 // 	        	mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
 // 	        	mySheet5.DoSave("${pageContext.request.contextPath}/human/p0001/insertHL.do", fk_hl_sawon_code);
@@ -562,9 +641,14 @@
 			success : function(data) {
 					for(var i = 0; i < data['Data'].length; i++){
 						mySheet.SetCellValue(i+1, 4,data['Data'][i].fk_ISA_SAWON_CODE);
+<<<<<<< HEAD
 // 						alert(data['Data'][0].isa_HANJA_NAME);
 					}
 				 	$('input[id=ISA_HANJA_NAME]').val(data['Data'][0].isa_HANJA_NAME);
+=======
+					}
+				 	$('input[id=isa_HANJA_NAME]').val(data['Data'][0].isa_HANJA_NAME);
+>>>>>>> refs/remotes/origin/master
 				 	$('select[id=isa_HIRE_CODE]').val(data['Data'][0].isa_HIRE_CODE); // select
 				 	$('input[id=isa_NUM]').val(data['Data'][0].isa_NUM);
 				 	$('input[id=isa_ADDRESS]').val(data['Data'][0].isa_ADDRESS);
@@ -686,6 +770,66 @@
 	    } // 주소 api function end
 	    
 		
+	    
+	    
+	    
+	    // 이미지 업로드
+// 	    <!-- 미리 보기 불러오는 곳 바뀔때마다 바뀜-->
+	    $(function(){
+	        $("#photofile").change(function(){
+	        	readImage(this);
+	        });
+	    });
+
+// 	    <!-- 미리 보기 불러오는 function -->
+	    function readImage(input) {
+	        if (input.files && input.files[0]) {
+	            var reader = new FileReader();
+	            reader.onload = function (e) {
+	                $('#previewImg').attr('src', e.target.result);
+	            }
+	            reader.readAsDataURL(input.files[0]);
+	        }
+	    }
+
+	    function fn_formSubmit(){ // 저장 및 업데이트
+	    	$("#form1").submit();
+	    } 
+
+	    function IMAGE(){
+			alert(x);
+			$.ajax({
+    	        url: "${contextPath}/human/p0001/image.do",
+    	        type:"POST", 
+    	        dataType : "JSON",
+    	        data: { "PK_SAWON_CODE" : x},
+    			success: function(data){
+    				var image = data[0];
+    			},error : function(jqxhr, status, error) {
+    				alert("에러면 에러다 왜 말을 못해!" + error);
+    			}
+    	    })
+		}
+
+	    function fn_formSubmit2(IMAGENO){ // 삭제
+	    	if (confirm("삭제 하시겠습니까?(삭제시 복구되지 않습니다!!!)")) {
+	    		$.ajax({
+	    	        url: "signImageDelete",
+	    	        type:"POST", 
+	    	        data: { IMAGENO : IMAGENO,
+	    	        	},
+	    			success: function(result){
+	    				alert(result);
+	    			}
+	    	    })
+	    		
+	    	}
+	    }
+	    
+// 	    function upload_flie(){
+// 		    $('input[type=file]').click();
+// 		}
+	    
 </script>
 <body onload="LoadPage()">
   
@@ -711,20 +855,32 @@
 		
 		<div class="clear hidden"></div>
 		
+		
+		<!-- /.row -->
+            
+            <button type="button" class="btn btn-primary" onclick="fn_formSubmit()"><s:message code="common.btnSave"/></button>
+<%--             <button type="button" class="btn btn-primary" onclick="fn_formSubmit2(<c:out value="${signImageInfo.IMAGENO}"/>)"><s:message code="common.btnDelete"/></button> --%>
+
+            <!-- /.row -->
+		
 		<div class="ib_product" style="width:100%;float:left">
 			<!-- left 사원리스트 -->
 			<div style="height:100%;width:45%;float:left">
-				<form name="image">
-					<table class="tb01" style="width:25%; height:50%">
-						<tr>
-							<td class="bg02_c"">
-								<img id="thumbnail" src="" width="100" height="100">
-								<input type="file" id="file" name="file" accept="image/*" style="visibility: hidden" />
-								<img id="iim" src="../../resources/image/bu_file_add.jpg" onclick="upload_flie()" />
-							</td>
-						</tr>
-					</table>
-				</form>
+				<div class="row">
+					<div class="col-lg-7">
+						<form id="form1" name="form1" role="form" action="imageSave" method="post" enctype="multipart/form-data"  >
+							<div class="row form-group">
+								<div class="col-sm-3"><!-- 이미지 미리보기 되는 곳 -->
+									<br> 																												
+									<img id="previewImg" style="width:100%; height: 120px; max-width: 100px;" src="fileDownload?downname=<c:out value="${signImageInfo.photo}"/>">
+									<br><br>
+									<input type="file" name="photofile" id="photofile" accept='image/*'/>
+									<input type="hidden" name="PK_SAWON_CODE" id="PK_SAWON_CODE" value="" />
+								</div>
+							</div>  
+						</form>
+					</div>	  
+				</div>
 				<br><br>
 				<script>createIBSheet("mySheet", "100%", "100%");</script>
 			</div>
@@ -757,7 +913,7 @@
 								</colgroup>
 								<tr>
 									<td class="bg01_r">한자이름</td><!-- 이름 변경해야함 -->
-									<td class="bg02_l"><input type="text" id="ISA_HANJA_NAME" style="width: 98%; "></td>
+									<td class="bg02_l"><input type="text" id="isa_HANJA_NAME" style="width: 98%; "></td>
 									<td class="bg01_r">채용구분</td>
 									<td class="bg02_l">
 										<select id="isa_HIRE_CODE" style="width: 80px;" class="select_02">
@@ -765,7 +921,7 @@
 										</select>
 									</td>
 									<td class="bg01_r">기수</td>
-									<td class="bg02_l"><input type="text" id="ISA_NUM" style="width: 98%; "></td>
+									<td class="bg02_l"><input type="text" id="isa_NUM" style="width: 98%; "></td>
 								</tr>
 								
 								<tr>
@@ -787,7 +943,7 @@
 								<tr>
 									<td class="bg01_r">등록기준지</td><!-- 이름 변경해야함 -->
 									<td>
-										<input type="text" id="ISA_PERMANENT_ADDR" size="10px">
+										<input type="text" id="isa_PERMANENT_ADDR" size="10px">
 										<img src='${contextPath}/resources/image/search_icon.png;' onclick='Postcode2();' style='cursor:pointer;' />
 									</td>
 									<td class="bg02_l" colspan="5"><input type="text" name="company_address2" id="company_address2" size="50px" style="width:100%;"></td>
@@ -821,18 +977,18 @@
 
 								<tr>
 									<td class="bg01_r">부동산</td>
-									<td class="bg02_l"><input type="text" id="ISA_ESTATE" style="width: 98%; "></td>
+									<td class="bg02_l"><input type="text" id="isa_ESTATE" style="width: 98%; "></td>
 									<td class="bg01_r">동산</td>
-									<td class="bg02_l"><input type="text" id="ISA_MOVABLES" style="width: 98%; "></td>
+									<td class="bg02_l"><input type="text" id="isa_MOVABLES" style="width: 98%; "></td>
 									<td class="bg01_r">합계</td>
-									<td class="bg02_l"><input type="text" id="ISA_SUM" style="width: 98%; "></td>
+									<td class="bg02_l"><input type="text" id="isa_SUM" style="width: 98%; "></td>
 								</tr>
 							
 								<tr>
 									<td class="bg01_r">건평</td>
-									<td class="bg02_l"><input type="text" id="ISA_GEONPYEONG" style="width: 98%; "></td>
+									<td class="bg02_l"><input type="text" id="isa_GEONPYEONG" style="width: 98%; "></td>
 									<td class="bg01_r">대지</td>
-									<td class="bg02_l"><input type="text" id="ISA_SITE" style="width: 98%; "></td>
+									<td class="bg02_l"><input type="text" id="isa_SITE" style="width: 98%; "></td>
 								</tr>
 								
 								<tr>
@@ -941,46 +1097,4 @@
 	</div>
 	</div>
 </body>
-<script>
-	var file = document.querySelector('#file');
-
-	file.onchange = function() {
-		var fileList = file.files;
-		// 읽기
-		var reader = new FileReader();
-		reader.readAsDataURL(fileList[0]);
-
-		//로드 한 후
-		reader.onload = function() {
-			//로컬 이미지를 보여주기
-			//document.querySelector('#preview').src = reader.result;
-
-			//썸네일 이미지 생성
-			var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
-			tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
-			tempImage.onload = function() {
-				//리사이즈를 위해 캔버스 객체 생성
-				var canvas = document.createElement('canvas');
-				var canvasContext = canvas.getContext("2d");
-
-				//캔버스 크기 설정
-				canvas.width = 100; //가로 100px
-				canvas.height = 100; //세로 100px
-
-				//이미지를 캔버스에 그리기
-				canvasContext.drawImage(this, 0, 0, 100, 100);
-				//캔버스에 그린 이미지를 다시 data-uri 형태로 변환
-				var dataURI = canvas.toDataURL("image/jpeg");
-
-				//썸네일 이미지 보여주기
-				document.querySelector('#thumbnail').src = dataURI;
-				console.log(dataURI);
-				//썸네일 이미지를 다운로드할 수 있도록 링크 설정
-				//document.querySelector('#download').href = dataURI;
-				
-			};
-		};
-	};
-</script>
-
 </html>

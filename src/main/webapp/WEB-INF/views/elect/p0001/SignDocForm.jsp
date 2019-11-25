@@ -59,6 +59,19 @@ function fn_tempSubmit(){
 	$("#form1").submit();
 } 
 
+// 첨부파일 용량 제한 & 갯수 제한
+function checkSize(input) {
+    if (input.files && input.files[0].size > (50 * 1024 * 1024)) {
+        alert("파일 사이즈가 50MB 를 넘습니다.");
+        input.value = null;
+    }
+    
+    if (input.files && input.files.length > 10) {
+        alert("파일 첨부 갯수가 10개를 넘습니다.");
+        input.value = null;
+    }
+}
+
 // 결재 경로
 function fn_signPath(){
     $.ajax({
@@ -235,9 +248,12 @@ function fn_fileDelete(fileno) {
 									</div>
 									</c:forEach>
 									
-									<input type="file" name="uploadfile" multiple="multiple" />
+									<input type="file" name="uploadfile" multiple="multiple" onchange="checkSize(this)"/>
 									<br>
-									<div style="color: red;">※ 첨부파일을 여러개 업로드시 마우스를 이용해 동시에 선택하거나, shift키를 이용해 파일을 동시에 선택해서 업로드해주세요</div> 
+									<div style="color: red;">※ 첨부파일을 여러개 업로드시 마우스를 이용해 동시에 선택하거나, shift키를 이용해 파일을 동시에 선택해서 업로드해주세요<br>
+									※ 첨부파일 용량은 50MB를 초과 할 수 없습니다.<br>
+									※ 첨부파일 갯수는 10개를 초과 할 수 없습니다.
+									</div> 
 	                            </div>
 	                        </div> 
 	                    </div>

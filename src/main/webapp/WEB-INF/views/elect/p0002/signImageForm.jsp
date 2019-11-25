@@ -52,6 +52,23 @@ function readImage(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+//첨부파일 용량 제한 & 확장자 제한
+function checkSize(input) {
+	
+	var fileDir = input.value;
+	
+    if (input.files && input.files[0].size > (1024 * 1024)) {
+        alert("파일 사이즈가 1MB 를 넘습니다.");
+        input.value = null;
+        $('#previewImg').attr('src', null);
+    } else if(fileDir.substring(fileDir.lastIndexOf(".")+1,fileDir.length).search("png") == -1){
+   		alert("지정된 확장자의 파일만 업로드 가능합니다!");
+   	  	input.value = null;
+   	 	$('#previewImg').attr('src', null);
+	}
+}
+
 function fn_formSubmit(){ // 저장 및 업데이트
 	// if ( ! chkInputValue("#usernm", "<s:message code="common.name"/>")) return false;
 	
@@ -89,15 +106,15 @@ function fn_formSubmit2(IMAGENO){ // 삭제
             
             <!-- /.row -->
             <div class="row">
-            	<div class="col-lg-7">
+            	<div class="col-lg-10">
 					<form id="form1" name="form1" role="form" action="imageSave" method="post" enctype="multipart/form-data"  >
                    		<div class="row form-group">
                            <div class="col-lg-1"></div>
                            <label class="col-lg-2">유의사항</label>
                            <div class="col-lg-5">
-                           		이미지 권장 크기는 가로*세로<br>
-                           		확장자는 ~<br>
-                           		이미지명은~
+                           		이미지 권장 크기는 가로(35px)*세로(35px) 입니다.<br>
+                           		확장자는 이미지 파일(.png)만 업로드 가능합니다.<br>
+                           		용량은 1MB를 초과 할 수 없습니다.
                            </div>
                        	</div>
                    		<div class="row form-group">
@@ -107,7 +124,7 @@ function fn_formSubmit2(IMAGENO){ // 삭제
                            	<img id="previewImg" style="width:100%; height: 120px; max-width: 100px;" src="fileDownload?downname=<c:out value="${signImageInfo.photo}"/>">
                            </div>
                            <div class="col-lg-5">
-							<input type="file" name="photofile" id="photofile" accept='image/*'/>
+							<input type="file" name="photofile" id="photofile" accept='image/*' onchange="checkSize(this)"/>
                            </div>
                        	</div>  
 					</form>

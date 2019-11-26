@@ -60,6 +60,68 @@
 	
 	.pop-layer .btn-r {
 	  width: 100%;
+<<<<<<< HEAD
+	  margin: 10px 0 20px;
+	  padding-top: 50px;
+	  border-top: 1px solid #DDD;
+	  text-align: right;
+	}
+	
+	.pop-layer {
+	  display: none;
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  width: 410px;
+	  height: auto;
+	  background-color: #fff;
+	  border: 5px solid #3571B5;
+	  z-index: 10;
+	}
+	
+	.dim-layer {
+	  display: none;
+	  position: fixed;
+	  _position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  z-index: 100;
+	}
+	
+	.dim-layer .dimBg {
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background: #000;
+	  opacity: .5;
+	  filter: alpha(opacity=50);
+	}
+	
+	.dim-layer .pop-layer {
+	  display: block;
+	}
+	
+	a.btn-layerClose {
+	  display: inline-block;
+	  height: 25px;
+	  padding: 0 14px 0;
+	  border: 1px solid #304a8a;
+	  background-color: #3f5a9d;
+	  font-size: 13px;
+	  color: #fff;
+	  line-height: 25px;
+	}
+	
+	a.btn-layerClose:hover {
+	  border: 1px solid #091940;
+	  background-color: #1f326a;
+	  color: #fff;
+	}
+=======
 	  margin: 50px 0 20px;
 	  padding-top: 70px;
 	  border-top: 1px solid #DDD;
@@ -137,6 +199,7 @@
 
 	
 	
+>>>>>>> refs/remotes/origin/master
 </style>
 
 
@@ -175,7 +238,11 @@
 	function LoadPage() {
 		mySheet.RemoveAll();
 		mySheet2.RemoveAll();
+<<<<<<< HEAD
+
+=======
 		
+>>>>>>> refs/remotes/origin/master
 		//아이비시트 초기화
 		var initdata = {};
 		initdata.Cfg = {SearchMode:smLazyLoad,Page:50};
@@ -219,6 +286,78 @@
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center"},
 			{Header:"부문코드",Type:"Text",SaveName:"pk_sector_code",MinWidth:60, Align:"Center"},
+<<<<<<< HEAD
+			{Header:"부문 명",Type:"Text",SaveName:"sector_name",MinWidth:60, Align:"Center" },			
+			{Header:"사용기간",Type:"Date",SaveName:"sector_priodof",MinWidth:100, Align:"Center", format:""},
+			{Header:"입력자",Type:"Text",SaveName:"dept_int_user_id",MinWidth:80, Align:"Center", Hidden:1},
+			{Header:"입력일시",Type:"Text",SaveName:"dept_int_date",MinWidth:80, Align:"Center", Hidden:1},
+			{Header:"수정자",Type:"Text",SaveName:"dept_mod_user_id",MinWidth:80, Align:"Center", Hidden:1},
+			{Header:"수정일시",Type:"Text",SaveName:"dept_mod_date",MinWidth:80, Align:"Center", Hidden:1},
+		];
+		
+		IBS_InitSheet( mySheet2 , initdata);
+		
+		//ibSheet 에서 col 지정해서 숨김
+		mySheet2.SetColHidden([
+	      {Col: 0, Hidden:1}, //상태
+	    ]);
+		
+		var initdata = {};
+		
+		initdata.Cfg = {SearchMode:smLazyLoad, Page:50};
+		initdata.HeaderMode = {Sort:1,ColMove:1,ColResize:1,HeaderCheck:1};
+		initdata.Cols =[
+			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
+			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center"},
+			{Header:"부문코드",Type:"Text",SaveName:"pk_sector_code",MinWidth:60, Align:"Center"},
+			{Header:"부문 명",Type:"Text",SaveName:"sector_name",MinWidth:60, Align:"Center" },
+			{Header:"사용기간",Type:"Date",SaveName:"sector_priodof",MinWidth:100, Align:"Center", format:""},
+			
+		];
+		
+		IBS_InitSheet( mySheet3 , initdata);
+		
+		//ibSheet 에서 col 지정해서 숨김
+		mySheet3.SetColHidden([
+	      {Col: 0, Hidden:1}, //상태
+	      {Col: 1, Hidden:1}, //삭제
+	    ]);
+		
+		var initdata = {};
+		
+		initdata.Cfg = {SearchMode:smLazyLoad, Page:50};
+		initdata.HeaderMode = {Sort:1,ColMove:1,ColResize:1,HeaderCheck:1};
+		initdata.Cols =[
+			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
+			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center"},
+			{Header:"사업장코드",Type:"Text",SaveName:"pk_workplace_code",MinWidth:100, Align:"Center"},
+			{Header:"사업장 명",Type:"Text",SaveName:"workplace_name",MinWidth:150, Align:"Center" },			
+			
+		];
+				
+		IBS_InitSheet( mySheet4 , initdata);
+		
+		//ibSheet 에서 col 지정해서 숨김
+		mySheet4.SetColHidden([
+	      {Col: 0, Hidden:1}, //상태
+	      {Col: 1, Hidden:1}, //삭제
+	    ]);		
+		
+		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
+		mySheet2.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
+		mySheet3.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
+		mySheet4.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
+		
+		mySheet.DoSearch("${contextPath}/human/s0003/searchList.do"); // 부서등록 페이지로 가면 자동으로 searchList.do 실행 
+		mySheet2.DoSearch("${contextPath}/human/s0003/searchList2.do"); // 부서등록 페이지로 가면 자동으로 searchList2.do 실행	
+		mySheet3.DoSearch("${contextPath}/human/s0003/searchList2.do"); // 부서등록 페이지로 가면 자동으로 searchList2.do 실행(속성이 동일하므로 같이 사용)
+		mySheet4.DoSearch("${contextPath}/human/s0003/searchList3.do"); // 부서등록 페이지로 가면 자동으로 searchList3.do 실행
+		
+		//숨김
+		//mySheet.SetColHidden([
+	    //  {Col: 0, Hidden:1}, //상태
+	    //]);
+=======
 			{Header:"부문 명",Type:"Text",SaveName:"sector_name",MinWidth:100, Align:"Center" },			
 			{Header:"사용기간",Type:"Date",SaveName:"sector_priodof",MinWidth:120, Align:"Center", format:""},
 			{Header:"입력자",Type:"Text",SaveName:"dept_int_user_id",MinWidth:80, Align:"Center", Hidden:1},
@@ -319,6 +458,7 @@
 
 		//self.close();
 		return false; // 창을 닫는 경우에는 false를 리턴해 줘야 함
+>>>>>>> refs/remotes/origin/master
 	}
 	
 	/*Sheet 각종 처리*/
@@ -327,7 +467,21 @@
 			case "search": //조회
 				//var param = FormQueryStringEnc(document.frm);
 				//alert(param);
+<<<<<<< HEAD
+				//mySheet.DoSearch("${contextPath}/human/s0001/searchList.do", param);
+				/* 
+				var jsonStr = mySheet.GetSearchData("./multisave_data.json");
+				
+				//String 을 object로 변환
+				var A = new Function("return" + jsonStr.replace(/^[^\<\{]*\{/, '{').replace(/\}[^\}]*$/, '}'));
+				A = A();
+				
+				mySheet.LoadSearchData(A.sheet1);
+				mySheet.LoadSearchData(A.sheet2);
+				*/
+=======
 
+>>>>>>> refs/remotes/origin/master
 				mySheet.DoSearch("${contextPath}/human/s0003/searchList.do");
 				mySheet2.DoSearch("${contextPath}/human/s0003/searchList2.do");
 				mySheet3.DoSearch("${contextPath}/human/s0003/searchList2.do");
@@ -386,7 +540,10 @@
 				break;
 		}
 	}
+<<<<<<< HEAD
+=======
 	
+>>>>>>> refs/remotes/origin/master
 	// 조회완료 후 처리할 작업
 	function mySheet_OnSearchEnd() {
 		
@@ -445,6 +602,43 @@
 		<!-- 부문등록 레이어 -->
 		<div class="dim-layer">
    			<div class="dimBg"></div>
+<<<<<<< HEAD
+			<div id="layer" class="pop-layer">
+			<div class="pop-container">
+        	<div class="pop-conts">
+       	 	<!--content //-->
+				<div class="ib_product" style="margin-left:10px;">
+					<div class="ib_function float_right">
+					  <a href="javascript:doAction2('reload')" class="f1_btn_gray lightgray">초기화</a>
+					  <a href="javascript:doAction2('insert')" class="f1_btn_gray lightgray">추가</a>
+					  <a href="javascript:doAction2('search')" class="f1_btn_white gray">조회</a>
+					  <a href="javascript:doAction2('save')" class="f1_btn_white gray">저장</a>
+					</div>	
+					<script> createIBSheet("mySheet2", "100%", "50%"); </script>
+					
+					<div class="btn-r">
+						<a href="#" class="btn-layerClose">Close</a>
+		            </div>
+            	</div><!--// content-->
+        </div>
+        </div></div></div> <!-- //layer 끝 -->
+        
+					<div class="clear hidden"></div>
+	<!-- 	<a href="#layer2" class="btn-example">딤처리 팝업레이어 2</a>		
+		<div class="dim-layer">
+   			<div class="dimBg"></div>
+			<div id="layer2" class="pop-layer">
+			<div class="pop-container">
+        	<div class="pop-conts">
+       	 	content // -->
+				<div class="ib_product" style="margin-left:10px;">	
+					<script> createIBSheet("mySheet3", "100%", "50%"); </script>
+					<div style="height:10px"></div>
+				</div>
+				<div>
+					<script> createIBSheet("mySheet4", "100%", "50%"); </script>
+				</div>
+=======
 			<div id="layerSectorEnroll" class="pop-layer">
 			<div class="pop-container">
         	<div class="pop-conts">
@@ -505,10 +699,51 @@
         </div>
         </div></div></div> <!-- //layer 끝 -->
         
+>>>>>>> refs/remotes/origin/master
   </div><!-- //container -->
   </div><!-- //frame -->
   </div><!-- //page-wrapper -->
   </div><!-- //wrap -->
+  <script>
+
+$('.btn-example').click(function(){
+    var $href = $(this).attr('href');
+    layer_popup($href);
+});
+function layer_popup(el){
+
+    var $el = $(el);		//레이어의 id를 $el 변수에 저장
+    var isDim = $el.prev().hasClass('dimBg');	//dimmed 레이어를 감지하기 위한 boolean 변수
+
+    isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+
+    var $elWidth = ~~($el.outerWidth()),
+        $elHeight = ~~($el.outerHeight()),
+        docWidth = $(document).width(),
+        docHeight = $(document).height();
+
+    // 화면의 중앙에 레이어를 띄운다.
+    if ($elHeight < docHeight || $elWidth < docWidth) {
+        $el.css({
+            marginTop: -$elHeight /2,
+            marginLeft: -$elWidth/2
+        })
+    } else {
+        $el.css({top: 0, left: 0});
+    }
+
+    $el.find('a.btn-layerClose').click(function(){
+        isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+        return false;
+    });
+
+    $('.layer .dimBg').click(function(){
+        $('.dim-layer').fadeOut();
+        return false;
+    });
+
+}
+</script>
   
 <script>  
   

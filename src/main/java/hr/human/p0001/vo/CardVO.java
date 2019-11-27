@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class CardVO {
 	private String pk_SAWON_CODE;
 	private String sawon_NAME;
+	private String photo;
 	
 	private String pk_ISA_CODE;
 	private String fk_ISA_SAWON_CODE;
@@ -32,17 +33,17 @@ public class CardVO {
 	private String isa_HOBBY_CODE;
 	private String isa_SPECIALTY_CODE;
 	
-	private String isa_MILITARY_CODE;
-	private String isa_MYEONJE;
-	private String isa_MIL_NUM;
-	private String isa_MILI_STA_DATE;
-	private String isa_MILI_END_DATE;
-	private String isa_POS_CODE;
-	private String isa_GUNBYEOL_CODE;
-	private String isa_BOTS_CODE;
-	private String isa_YEBIGUN_CODE;
-	private String isa_DISCHARGE_CODE;
-	private String isa_MILITARY_CLASS_CODE;
+	private String isa_MILITARY_CODE; // 병역구분
+	private String isa_MYEONJE; // 면제사유
+	private String isa_MIL_NUM; // 군번
+	private String isa_MILI_STA_DATE; // 복무시작일
+	private String isa_MILI_END_DATE; // 복무종료일
+	private String isa_POS_CODE; // 복무기간포함여부
+	private String isa_GUNBYEOL_CODE; // 군별
+	private String isa_BOTS_CODE; // 병과
+	private String isa_YEBIGUN_CODE; // 예비군
+	private String isa_DISCHARGE_CODE; // 제대구분
+	private String isa_MILITARY_CLASS_CODE; // 계급
 	
 	public CardVO() {
 		System.out.println("CardVO 메서드 호출");
@@ -50,6 +51,14 @@ public class CardVO {
 
 	
 	
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
 	public String getPk_SAWON_CODE() {
 		return pk_SAWON_CODE;
 	}

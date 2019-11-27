@@ -78,12 +78,12 @@ public class CardDAOImpl implements CardDAO {
 	}
 	
 	
-	/**
-     * 결재이미지 등록화면
-     */
-    public SignImageVO selectSignImageOne(String param) {
-        return sqlSession.selectOne("selectSawonImageOne", param);
-    }
+//	/**
+//     * 결재이미지 등록화면
+//     */
+//    public SignImageVO selectSignImageOne(String param) {
+//        return sqlSession.selectOne("selectSawonImageOne", param);
+//    }
     
     /**
      * 결재이미지 저장, 업데이트.

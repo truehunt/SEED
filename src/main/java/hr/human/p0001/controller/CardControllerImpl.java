@@ -256,23 +256,25 @@ public class CardControllerImpl implements CardController{
 	}
 	
 	
-	/**
-   * 결재이미지 등록화면
-   */
-  @RequestMapping(value = "/human/p0001/image.do")
-  @ResponseBody
-  public Map memberForm(HttpServletRequest request, HttpServletResponse response) {
-	  Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
-	  String save = request.getParameter("save");
-      String userno = request.getParameter("PK_SAWON_CODE").toString();
-      System.out.println("일단 확인중입니다 ㅅㅂ 이제 제발 됬으면");
-      
-      SignImageVO signImageInfo = CardDAO.selectSignImageOne(userno);
-      String data = signImageInfo.getPhoto(); 
-      resultMap.put("Data", data);
-
-      return resultMap;
-  }
+//	/**
+//   * 결재이미지 등록화면
+//   */
+//  @RequestMapping(value = "/human/p0001/image.do")
+//  @ResponseBody
+//  public Map memberForm(HttpServletRequest request, HttpServletResponse response) {
+//	  Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+//	  String save = request.getParameter("save");
+//      String userno = request.getParameter("PK_SAWON_CODE");
+//      System.out.println(userno);
+//      System.out.println("일단 확인중입니다 ㅅㅂ 이제 제발 됬으면");
+//      
+//      SignImageVO signImageInfo = CardDAO.selectSignImageOne(userno);
+//      String data = signImageInfo.getPhoto(); 
+//      System.out.println(data);
+//      resultMap.put("Data", data);
+//
+//      return resultMap;
+//  }
 	
 
     
@@ -289,6 +291,7 @@ public class CardControllerImpl implements CardController{
         FileVO fileInfo = fs.saveImage(signImageInfo.getPhotofile());
         if (fileInfo != null) {
         	signImageInfo.setPhoto(fileInfo.getRealname());
+        	System.out.println(signImageInfo);
         }
         CardDAO.updateSignImage(signImageInfo);
 

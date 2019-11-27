@@ -34,6 +34,15 @@ public class IndexSvc {
         return sqlSession.selectList("selectSignList", param);
     }
     
+    // 인덱스 게시판 & 공지사항
+    public List<?> selectRecentNews() {
+        return sqlSession.selectList("selectRecentNews");
+    }
+    
+    public List<?> selectNoticeListTop5() {
+        return sqlSession.selectList("selectNoticeListTop5");
+    }
+    
     /**
      * 접속자가 결재해야할 문서 check.
      */

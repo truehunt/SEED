@@ -8,6 +8,7 @@
 	<resultMap id="cardResult01" type="cardVO">
 		<result property="pk_SAWON_CODE" column="pk_SAWON_CODE" />
 		<result property="sawon_NAME" column="sawon_NAME" />
+		<result property="photo" column="photo" />
 		
 		<result property="pk_ISA_CODE" column="pk_ISA_CODE" />
 		<result property="fk_ISA_SAWON_CODE" column="fk_ISA_SAWON_CODE" />
@@ -31,6 +32,7 @@
 		<result property="isa_RELIGION_CODE" column="isa_RELIGION_CODE" />
 		<result property="isa_HOBBY_CODE" column="isa_HOBBY_CODE" />
 		<result property="isa_SPECIALTY_CODE" column="isa_SPECIALTY_CODE" />
+		
 		<result property="isa_MILITARY_CODE" column="isa_MILITARY_CODE" />
 		<result property="isa_MYEONJE" column="isa_MYEONJE" />
 		<result property="isa_MIL_NUM" column="isa_MIL_NUM" />
@@ -46,7 +48,7 @@
 
 	<!-- 인사기록카드 사원목록 -->
 	<select id="ISA" resultMap="cardResult01" parameterType="java.util.Map"> 
-    	SELECT i.fk_isa_sawon_code, s.pk_sawon_code, s.sawon_name
+    	SELECT i.fk_isa_sawon_code, s.pk_sawon_code, s.sawon_name, photo
 		  FROM ISA i, sawon s
 		 WHERE i.fk_isa_sawon_code(+) = s.pk_sawon_code
 		 ORDER BY s.pk_sawon_code ASC 
@@ -67,7 +69,12 @@
 					ISA_ADDRESS, ISA_PERMANENT_ADDR, ISA_MARRIAGE_CODE,
 					ISA_HOUSE_CODE, ISA_LIVING_CODE, ISA_ESTATE,
 					ISA_MOVABLES, ISA_SUM, ISA_GEONPYEONG, ISA_SITE, 
-					ISA_RELIGION_CODE, ISA_HOBBY_CODE, ISA_SPECIALTY_CODE
+					ISA_RELIGION_CODE, ISA_HOBBY_CODE, ISA_SPECIALTY_CODE,
+					
+					isa_MILITARY_CODE, isa_MYEONJE, isa_MIL_NUM,
+					isa_MILI_STA_DATE, isa_MILI_END_DATE, isa_POS_CODE,
+					isa_GUNBYEOL_CODE, isa_BOTS_CODE, isa_YEBIGUN_CODE,  
+					isa_DISCHARGE_CODE, isa_MILITARY_CLASS_CODE
 				from ISA
       		]]> 
 			<where>
@@ -100,6 +107,18 @@
 		   , isa_RELIGION_CODE = #{isa_RELIGION_CODE,jdbcType=VARCHAR}
 		   , isa_HOBBY_CODE = #{isa_HOBBY_CODE,jdbcType=VARCHAR}
 		   , isa_SPECIALTY_CODE = #{isa_SPECIALTY_CODE,jdbcType=VARCHAR}
+		   
+		   , isa_MILITARY_CODE = #{isa_MILITARY_CODE,jdbcType=VARCHAR}
+		   , isa_MYEONJE = #{isa_MYEONJE,jdbcType=VARCHAR}
+		   , isa_MIL_NUM = #{isa_MIL_NUM,jdbcType=VARCHAR}
+		   , isa_MILI_STA_DATE = #{isa_MILI_STA_DATE,jdbcType=VARCHAR}
+		   , isa_MILI_END_DATE = #{isa_MILI_END_DATE,jdbcType=VARCHAR}
+		   , isa_POS_CODE = #{isa_POS_CODE,jdbcType=VARCHAR}
+		   , isa_GUNBYEOL_CODE = #{isa_GUNBYEOL_CODE,jdbcType=VARCHAR}
+		   , isa_BOTS_CODE = #{isa_BOTS_CODE,jdbcType=VARCHAR}
+		   , isa_YEBIGUN_CODE = #{isa_YEBIGUN_CODE,jdbcType=VARCHAR}
+		   , isa_DISCHARGE_CODE = #{isa_DISCHARGE_CODE,jdbcType=VARCHAR}
+		   , isa_MILITARY_CLASS_CODE = #{isa_MILITARY_CLASS_CODE,jdbcType=VARCHAR}
 		where fk_ISA_SAWON_CODE = #{fk_ISA_SAWON_CODE, jdbcType=VARCHAR}
 	</update>	
 	
@@ -680,8 +699,8 @@
 	
     <update id="updateSawonImage" parameterType="hr.elect.p0002.vo.SignImageVO">
         UPDATE SAWON
-           SET sawon_photo=#{photo}
+           SET photo=#{photo}
          WHERE PK_SAWON_CODE=#{PK_SAWON_CODE}
     </update>   
-    
+     
 </mapper>

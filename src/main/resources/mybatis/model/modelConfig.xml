@@ -17,6 +17,12 @@
 		<typeAlias type="hr.system.p0001.vo.SawonVO"  alias="sawonVO" />
 		<typeAlias type="hr.system.p0001.vo.SignDocTypeVO"  alias="signDocTypeVO" />
 		
+		<!-- 시스템 - 게시판 -->
+		<typeAlias type="hr.system.p0003.vo.BoardVO"  alias="boardVO" />
+		<typeAlias type="hr.system.p0003.vo.BoardSearchVO"  alias="boardSearchVO" />
+		<typeAlias type="hr.system.p0003.vo.BoardReplyVO"  alias="boardReplyVO" />
+		<typeAlias type="hr.system.p0003.vo.BoardGroupVO"  alias="boardGroupVO" />
+		
 		<!-- 시스템 - 메인화면 -->
 		<typeAlias type="hr.system.p0003.vo.CalendarVO"  alias="calendarVO" />
 		<typeAlias type="hr.system.p0003.vo.MonthVO"  alias="monthVO" />

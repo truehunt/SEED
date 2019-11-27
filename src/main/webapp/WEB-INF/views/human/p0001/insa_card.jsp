@@ -7,7 +7,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
 
 <title><s:message code="common.pageTitle"/></title>
 <script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
@@ -68,9 +71,9 @@
       	initData.Cfg = {SearchMode:smLazyLoad, Page:50,MergeSheet:msHeaderOnly,ChildPage:10,DragMode:1,SearchSync:1};
       	initData.Cols = [
       	//{Header:"No",Type:"Seq", Align:"Center"},
+      		{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
          	{Header:"NO",Type:"Seq", Align:"Center"},
          	{Header:"",Type:"DummyCheck", SaveName:"chk", Width:35, Align:"Center",Edit:1,HeaderCheck:1},
-         	//{Header: "이미지", Type: "Image",SaveName:"productImage",Width:100,  Align: "Center",ImgWidth:60,ImgHeight:20},
 		 	{Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:60,Align:"Center"},
 		 	{Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:50, Edit:0},
 		 	
@@ -102,11 +105,6 @@
 		 	{Header:"",Type:"Text",SaveName:"isa_MARRIAGE_CODE",Width:60,Align:"Center" },
 		 	{Header:"",Type:"Text",SaveName:"isa_HOUSE_CODE",Width:60,Align:"Center" },
 		 	{Header:"",Type:"Text",SaveName:"isa_LIVING_CODE",Width:60,Align:"Center" },
-		 	{Header:"",Type:"Text",SaveName:"isa_ESTATE",Width:60,Align:"Center" },
-		 	{Header:"",Type:"Text",SaveName:"isa_MOVABLES",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_SUM",Width:60,Align:"Center" },
-		 	{Header:"",Type:"Text",SaveName:"isa_GEONPYEONG",Width:60,Align:"Center"},
-		 	{Header:"",Type:"Text",SaveName:"isa_SITE",Width:60,Align:"Center" },
 		 	{Header:"",Type:"Text",SaveName:"isa_RELIGION_CODE",Width:60,Align:"Center"},
 		 	{Header:"",Type:"Text",SaveName:"isa_HOBBY_CODE",Width:60,Align:"Center" },
 		 	{Header:"",Type:"Text",SaveName:"isa_SPECIALTY_CODE",Width:60,Align:"Center"},
@@ -122,30 +120,31 @@
 		 	{Header:"",Type:"Text",SaveName:"isa_BOTS_CODE",Width:60,Align:"Center", Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_YEBIGUN_CODE",Width:60,Align:"Center", Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_DISCHARGE_CODE",Width:60,Align:"Center", Hidden:1},
-		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CLASS_CODE",Width:60,Align:"Center", Hidden:1}
+		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CLASS_CODE",Width:60,Align:"Center", Hidden:1},
 		 	
+		 	{Header:"사진",Type:"Text",SaveName:"photo",Width:50, Edit:0}
       	];
       	IBS_InitSheet(mySheet,initData);
       	mySheet.SetDataAutoTrim(0);
-//       	mySheet.SetColHidden([
-// 			{Col: 4, Hidden:1}, // pk값
-// 			{Col: 5, Hidden:1},
-// 			{Col: 6, Hidden:1},
-// 			{Col: 7, Hidden:1},
-// 			{Col: 8, Hidden:1},
-// 			{Col: 9, Hidden:1},
-// 			{Col: 10, Hidden:1},
-// 			{Col: 11, Hidden:1},
-// 			{Col: 12, Hidden:1},
-// 			{Col: 13, Hidden:1},
-// 			{Col: 14, Hidden:1},
-// 			{Col: 15, Hidden:1},
-// 			{Col: 16, Hidden:1},
-// 			{Col: 17, Hidden:1},
-// 			{Col: 18, Hidden:1},
-// 			{Col: 19, Hidden:1},
-// 			{Col: 20, Hidden:1}
-//   	    ]);
+      	mySheet.SetColHidden([
+			{Col: 5, Hidden:1},
+			{Col: 6, Hidden:1},
+			{Col: 7, Hidden:1},
+			{Col: 8, Hidden:1},
+			{Col: 9, Hidden:1},
+			{Col: 10, Hidden:1},
+			{Col: 11, Hidden:1},
+			{Col: 12, Hidden:1},
+			{Col: 13, Hidden:1},
+			{Col: 14, Hidden:1},
+			{Col: 15, Hidden:1},
+			{Col: 16, Hidden:1},
+			{Col: 17, Hidden:1},
+			{Col: 18, Hidden:1},
+			{Col: 19, Hidden:1},
+			{Col: 20, Hidden:1},
+			{Col: 'photo', Hidden:1}
+  	    ]);
       	doAction("list");
 		
    		//mySheet4 //가족
@@ -333,25 +332,32 @@
 		createIBSheet2($("#ib-container8")[0],"mySheet11", "100%", "300px");
 		IBS_InitSheet(mySheet11,initData);
 		
+		
+		$("#selboxDirect").hide();
    }
 
 	// 기타 이벤트 //마우스 클릭시
 	function mySheet_OnSelectCell(oldrow, oldcol, row, col) {
-		fk_fam_sawon_code = "fk_FAM_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
-		fk_hl_sawon_code = "fk_HL_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
-		fk_car_sawon_code = "fk_CAR_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
-		fk_cert_sawon_code = "fk_CERTIFICATE_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
+		fk_fam_sawon_code = "fk_FAM_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
+		fk_hl_sawon_code = "fk_HL_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
+		fk_car_sawon_code = "fk_CAR_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
+		fk_cert_sawon_code = "fk_CERTIFICATE_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
 		
-		fk_ass_sawon_code = "fk_ASS_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
-		fk_chj_sawon_code = "fk_CHJ_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
-		fk_sb_sawon_code = "fk_SB_SAWON_CODE=" + mySheet.GetCellValue(row, 2); // mysheet에 있는 사원코드
+		fk_ass_sawon_code = "fk_ASS_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
+		fk_chj_sawon_code = "fk_CHJ_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
+		fk_sb_sawon_code = "fk_SB_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
 		// fk_sawon_code로 줄이고 controller - service 에서도 고칠 것
 		
-		x = mySheet.GetCellValue(row, 2);
-		y = mySheet.GetCellValue(row, 4);
+		x = mySheet.GetCellValue(row, 3);
+		y = mySheet.GetCellValue(row,5);
+		
+		var image = "/SEED/fileDownload?downname=" + mySheet.GetCellValue(row, 'photo');
+		$("#previewImg").attr("src", image);
+		
 		mySheetRow = row;
 		ISA();
 		
+<<<<<<< HEAD
 <<<<<<< HEAD
 		
 		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
@@ -368,20 +374,28 @@
 		mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
 		mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
 =======
+=======
+>>>>>>> refs/remotes/origin/master
 		document.getElementById('PK_SAWON_CODE').value = x;
 		
-// 		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
-// 		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
-// 		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
-// 		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
+		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
+		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
+		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
+		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
 		
+<<<<<<< HEAD
 // // 		//mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
 // 		mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
 // 		mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
 // 		mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
 >>>>>>> refs/remotes/origin/master
+=======
+// 		//mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
+		mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
+		mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
+		mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
+>>>>>>> refs/remotes/origin/master
 	}
-	
 	
 	
 	 /*Sheet 각종 처리*/
@@ -396,6 +410,7 @@
 	            mySheet.RemoveAll();
 	            break;
 	         case "save":
+<<<<<<< HEAD
 <<<<<<< HEAD
 	            //mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/upload.do");
 	             mySheet.SetCellValue(mySheetRow, 5, document.getElementById("ISA_HANJA_NAME").value);
@@ -419,6 +434,32 @@
 	 			mySheet.SetCellValue(mySheetRow, 17, document.getElementById("isa_RELIGION_CODE").value);
 	 			mySheet.SetCellValue(mySheetRow, 18, document.getElementById("isa_HOBBY_CODE").value);
 	 			mySheet.SetCellValue(mySheetRow, 19, document.getElementById("isa_SPECIALTY_CODE").value);
+=======
+				mySheet.SetCellValue(mySheetRow, 'isa_HANJA_NAME', document.getElementById("isa_HANJA_NAME").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_HIRE_CODE', document.getElementById("isa_HIRE_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_NUM', document.getElementById("isa_NUM").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_ADDRESS', document.getElementById("isa_ADDRESS").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_PERMANENT_ADDR', document.getElementById("isa_PERMANENT_ADDR").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_MARRIAGE_CODE', document.getElementById("isa_MARRIAGE_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_HOUSE_CODE', document.getElementById("isa_HOUSE_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_LIVING_CODE', document.getElementById("isa_LIVING_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_RELIGION_CODE', document.getElementById("isa_RELIGION_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_HOBBY_CODE', document.getElementById("isa_HOBBY_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_SPECIALTY_CODE', document.getElementById("isa_SPECIALTY_CODE").value);
+	 			
+	 			mySheet.SetCellValue(mySheetRow, 'isa_MILITARY_CODE', document.getElementById("isa_MILITARY_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_MYEONJE', document.getElementById("isa_MYEONJE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_MIL_NUM', document.getElementById("isa_MIL_NUM").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_MILI_STA_DATE', document.getElementById("isa_MILI_STA_DATE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_MILI_END_DATE', document.getElementById("isa_MILI_END_DATE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_POS_CODE', document.getElementById("isa_POS_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_GUNBYEOL_CODE', document.getElementById("isa_GUNBYEOL_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_BOTS_CODE', document.getElementById("isa_BOTS_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_YEBIGUN_CODE', document.getElementById("isa_YEBIGUN_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_DISCHARGE_CODE', document.getElementById("isa_DISCHARGE_CODE").value);
+	 			mySheet.SetCellValue(mySheetRow, 'isa_MILITARY_CLASS_CODE', document.getElementById("isa_MILITARY_CLASS_CODE").value);
+	        	
+>>>>>>> refs/remotes/origin/master
 	        	 
 	        	mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/insertData.do");
 >>>>>>> refs/remotes/origin/master
@@ -464,6 +505,7 @@
 	        	 break;
 	      }
 	   }
+<<<<<<< HEAD
 	 
 	   function mySheet_OnBeforeSave() { 
 		  
@@ -481,6 +523,9 @@
 			mySheet.SetCellValue(mySheetRow, 19, document.getElementById("isa_SPECIALTY_CODE").value);
 	   } 
 	 
+=======
+		
+>>>>>>> refs/remotes/origin/master
 	// mySheet 조회 끝나기 직전 이벤트 
 	function mySheet4_OnSearchEnd() { // 가족
 		mySheet4.DataInsert(-1); 
@@ -561,7 +606,7 @@
 						case 'R1': // 본분교구분
 							info13 = info13 + info1;
 							break;
-			//---------------------------------------------------------------------	
+			//--------------------------------------------------------------------- 채용	
 						case 'HT': // 채용구분
 							$('#isa_HIRE_CODE').append(MNGEMENT_NAME);
 							break;
@@ -579,6 +624,28 @@
 							break;
 						case 'HV': // 특기
 							$('#isa_SPECIALTY_CODE').append(MNGEMENT_NAME);
+							break;
+			//---------------------------------------------------------------------	병역
+						case 'HJ':
+							$('#isa_MILITARY_CODE').append(MNGEMENT_NAME); // 병역구분
+							break;
+						case 'S6':
+							$('#isa_POS_CODE').append(MNGEMENT_NAME); // 복무기간포함여부
+							break;
+						case 'H6':
+							$('#isa_GUNBYEOL_CODE').append(MNGEMENT_NAME); // 군별
+							break;
+						case 'H7':
+							$('#isa_BOTS_CODE').append(MNGEMENT_NAME); // 병과
+							break;
+						case 'HL':
+							$('#isa_YEBIGUN_CODE').append(MNGEMENT_NAME); // 예비군
+							break;
+						case 'HK':	
+							$('#isa_DISCHARGE_CODE').append(MNGEMENT_NAME); // 제대구분
+							break;
+						case 'H2':
+							$('#isa_MILITARY_CLASS_CODE').append(MNGEMENT_NAME); // 계급
 							break;
 					}
 				}
@@ -639,6 +706,7 @@
 			dataType : "JSON",
 			data: {"fk_ISA_SAWON_CODE":y, "pk_SAWON_CODE":x},
 			success : function(data) {
+				if(data['Data'].length != 1){
 					for(var i = 0; i < data['Data'].length; i++){
 						mySheet.SetCellValue(i+1, 4,data['Data'][i].fk_ISA_SAWON_CODE);
 <<<<<<< HEAD
@@ -647,6 +715,7 @@
 				 	$('input[id=ISA_HANJA_NAME]').val(data['Data'][0].isa_HANJA_NAME);
 =======
 					}
+				}
 				 	$('input[id=isa_HANJA_NAME]').val(data['Data'][0].isa_HANJA_NAME);
 >>>>>>> refs/remotes/origin/master
 				 	$('select[id=isa_HIRE_CODE]').val(data['Data'][0].isa_HIRE_CODE); // select
@@ -656,14 +725,22 @@
 				 	$('select[id=isa_MARRIAGE_CODE]').val(data['Data'][0].isa_MARRIAGE_CODE);
 				 	$('select[id=isa_HOUSE_CODE]').val(data['Data'][0].isa_HOUSE_CODE);
 				 	$('select[id=isa_LIVING_CODE]').val(data['Data'][0].isa_LIVING_CODE);
-				 	$('input[id=isa_ESTATE]').val(data['Data'][0].isa_ESTATE);
-				 	$('input[id=isa_MOVABLES]').val(data['Data'][0].isa_MOVABLES);
-				 	$('input[id=isa_SUM]').val(data['Data'][0].isa_SUM);
-				 	$('input[id=isa_GEONPYEONG]').val(data['Data'][0].isa_GEONPYEONG);
-				 	$('input[id=isa_SITE]').val(data['Data'][0].isa_SITE);
 				 	$('select[id=isa_RELIGION_CODE]').val(data['Data'][0].isa_RELIGION_CODE);
 				 	$('select[id=isa_HOBBY_CODE]').val(data['Data'][0].isa_HOBBY_CODE);
 				 	$('select[id=isa_SPECIALTY_CODE]').val(data['Data'][0].isa_SPECIALTY_CODE);
+				 	
+				 	$('select[id=isa_MILITARY_CODE]').val(data['Data'][0].isa_MILITARY_CODE);
+				 	$('input[id=isa_MYEONJE]').val(data['Data'][0].isa_MYEONJE); // select
+				 	$('input[id=isa_MIL_NUM]').val(data['Data'][0].isa_MIL_NUM);
+				 	$('input[id=isa_MILI_STA_DATE]').val(data['Data'][0].isa_MILI_STA_DATE);
+				 	$('input[id=isa_MILI_END_DATE]').val(data['Data'][0].isa_MILI_END_DATE);
+				 	$('select[id=isa_POS_CODE]').val(data['Data'][0].isa_POS_CODE);
+				 	$('select[id=isa_GUNBYEOL_CODE]').val(data['Data'][0].isa_GUNBYEOL_CODE);
+				 	$('select[id=isa_BOTS_CODE]').val(data['Data'][0].isa_BOTS_CODE);
+				 	$('select[id=isa_YEBIGUN_CODE]').val(data['Data'][0].isa_YEBIGUN_CODE);
+				 	$('select[id=isa_DISCHARGE_CODE]').val(data['Data'][0].isa_DISCHARGE_CODE);
+				 	$('select[id=isa_MILITARY_CLASS_CODE]').val(data['Data'][0].isa_MILITARY_CLASS_CODE);
+				 	
 			},
 			error : function(jqxhr, status, error) {
 				alert("aaaaaaaaaaaa");
@@ -749,13 +826,13 @@
 	                    extraRoadAddr = ' (' + extraRoadAddr + ')';
 	                }
 	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-	                document.getElementById('company_zip').value = data.zonecode; // 우편번호
+	                document.getElementById('isa_ADDR_ZIP').value = data.zonecode; // 우편번호
 	                document.getElementById('isa_ADDRESS').value = roadAddr; // 도로명주소
 	                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
 	                if(roadAddr !== ''){ // 상세주소
-	                    document.getElementById('company_detail_address').value = extraRoadAddr;
+	                    document.getElementById('isa_ADDR_DETAIL').value = extraRoadAddr;
 	                } else {
-	                    document.getElementById('company_detail_address').value = '';
+	                    document.getElementById('isa_ADDR_DETAIL').value = '';
 	                }
 	                
 	                var guideTextBox = document.getElementById("guide");
@@ -769,7 +846,47 @@
 	        }).open();
 	    } // 주소 api function end
 	    
-		
+	    function Postcode2() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var roadAddr = data.roadAddress; // 도로명 주소 변수
+	                var extraRoadAddr = ''; // 참고 항목 변수
+	                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                    extraRoadAddr += data.bname;
+	                }
+	                // 건물명이 있고, 공동주택일 경우 추가한다.
+	                if(data.buildingName !== '' && data.apartment === 'Y'){
+	                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                }
+	                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                if(extraRoadAddr !== ''){
+	                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+	                }
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('isa_PER_ADDR_ZIP').value = data.zonecode; // 우편번호
+	                document.getElementById('isa_PERMANENT_ADDR').value = roadAddr; // 도로명주소
+	                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+	                if(roadAddr !== ''){ // 상세주소
+	                    document.getElementById('isa_PER_ADDR_DETAIL').value = extraRoadAddr;
+	                } else {
+	                    document.getElementById('isa_PER_ADDR_DETAIL').value = '';
+	                }
+	                
+	                var guideTextBox = document.getElementById("guide");
+	                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+	                if(data.autoRoadAddress) {
+	                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+	                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+	                    guideTextBox.style.display = 'block';
+	            	}
+	            }
+	        }).open();
+	    } // 주소 api function end
 	    
 	    
 	    
@@ -796,21 +913,6 @@
 	    	$("#form1").submit();
 	    } 
 
-	    function IMAGE(){
-			alert(x);
-			$.ajax({
-    	        url: "${contextPath}/human/p0001/image.do",
-    	        type:"POST", 
-    	        dataType : "JSON",
-    	        data: { "PK_SAWON_CODE" : x},
-    			success: function(data){
-    				var image = data[0];
-    			},error : function(jqxhr, status, error) {
-    				alert("에러면 에러다 왜 말을 못해!" + error);
-    			}
-    	    })
-		}
-
 	    function fn_formSubmit2(IMAGENO){ // 삭제
 	    	if (confirm("삭제 하시겠습니까?(삭제시 복구되지 않습니다!!!)")) {
 	    		$.ajax({
@@ -826,10 +928,14 @@
 	    	}
 	    }
 	    
-// 	    function upload_flie(){
-// 		    $('input[type=file]').click();
-// 		}
-	    
+	    function direct(dir) {
+			if(dir == "direct") {
+				$("#selboxDirect").show();
+			}  else {
+				$("#selboxDirect").hide();
+			}
+		};
+		
 </script>
 <body onload="LoadPage()">
   
@@ -872,7 +978,7 @@
 							<div class="row form-group">
 								<div class="col-sm-3"><!-- 이미지 미리보기 되는 곳 -->
 									<br> 																												
-									<img id="previewImg" style="width:100%; height: 120px; max-width: 100px;" src="fileDownload?downname=<c:out value="${signImageInfo.photo}"/>">
+									<img id="previewImg" style="width:100%; height: 120px; max-width: 100px;">
 									<br><br>
 									<input type="file" name="photofile" id="photofile" accept='image/*'/>
 									<input type="hidden" name="PK_SAWON_CODE" id="PK_SAWON_CODE" value="" />
@@ -926,9 +1032,8 @@
 								
 								<tr>
 									<td class="bg01_r">현주소</td>
-									<!-- 이름 변경해야함 -->
 									<td>
-										<input type="text" id="company_zip" name="company_zip" size="10px">
+										<input type="text" id="isa_ADDR_ZIP" size="10px">
 										<img src='${contextPath}/resources/image/search_icon.png;' onclick='Postcode();' style='cursor:pointer;' />
 									</td>
 									<td class="bg02_l" colspan="4">
@@ -937,20 +1042,20 @@
 								</tr>
 	   							<tr>
 		   							<td class="bg01_r"></td><!-- 이름 변경해야함 -->
-		   							<td class="bg02_l" colspan="5"><input type="text" name="company_detail_address" id="company_detail_address" size="50px" style="width:100%;"></td>
+		   							<td class="bg02_l" colspan="5"><input type="text" id="isa_ADDR_DETAIL" size="50px" style="width:100%;"></td>
 	   							</tr>
 	   							
 								<tr>
 									<td class="bg01_r">등록기준지</td><!-- 이름 변경해야함 -->
 									<td>
-										<input type="text" id="isa_PERMANENT_ADDR" size="10px">
+										<input type="text" id="isa_PER_ADDR_ZIP" size="10px">
 										<img src='${contextPath}/resources/image/search_icon.png;' onclick='Postcode2();' style='cursor:pointer;' />
 									</td>
-									<td class="bg02_l" colspan="5"><input type="text" name="company_address2" id="company_address2" size="50px" style="width:100%;"></td>
+									<td class="bg02_l" colspan="5"><input type="text" id="isa_PERMANENT_ADDR" size="50px" style="width:100%;"></td>
 								</tr>
 								<tr><!-- 이름 변경해야함 -->
 									<td class="bg01_r"></td><!-- 이름 변경해야함 -->
-									<td class="bg02_l" colspan="5"><input type="text" name="company_detail_address2" id="company_detail_address2" size="50px" style="width:100%;"></td>
+									<td class="bg02_l" colspan="5"><input type="text" id="isa_PER_ADDR_DETAIL" size="50px" style="width:100%;"></td>
 								</tr>
 								<tr>
 									<td class="bg01_r">결혼여부</td>
@@ -976,22 +1081,6 @@
 								</tr>
 
 								<tr>
-									<td class="bg01_r">부동산</td>
-									<td class="bg02_l"><input type="text" id="isa_ESTATE" style="width: 98%; "></td>
-									<td class="bg01_r">동산</td>
-									<td class="bg02_l"><input type="text" id="isa_MOVABLES" style="width: 98%; "></td>
-									<td class="bg01_r">합계</td>
-									<td class="bg02_l"><input type="text" id="isa_SUM" style="width: 98%; "></td>
-								</tr>
-							
-								<tr>
-									<td class="bg01_r">건평</td>
-									<td class="bg02_l"><input type="text" id="isa_GEONPYEONG" style="width: 98%; "></td>
-									<td class="bg01_r">대지</td>
-									<td class="bg02_l"><input type="text" id="isa_SITE" style="width: 98%; "></td>
-								</tr>
-								
-								<tr>
 									<td class="bg01_r">종교</td>
 									<td class="bg02_l">
 										<select id="isa_RELIGION_CODE" style="width: 80px;" class="select_02">
@@ -1016,12 +1105,13 @@
 								<tr>
 									<td class="bg01_r">특기</td>
 									<td class="bg02_l">
-										<select id="isa_SPECIALTY_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_SPECIALTY_CODE" style="width: 80px;" class="select_02" onchange="direct(this.value)">
 											<option value=""></option>
-											<option value="기타">기타</option>
+											<option value="direct">기타</option>
 										</select>
 									</td>
 									<td colspan="4" class="bg02_l" id="EMP_ADDRESS">
+										<input type="text" id="selboxDirect" name="selboxDirect"/>
 										<!-- if문을 사용하여 option 값이 기타일 경우 input type=text를 사용하게끔 -->
 									</td>
 								</tr>
@@ -1031,7 +1121,84 @@
 					
 					<!-- 병역 -->
 					<div class="ib-tab-contents__item">
-						
+						<form name='frm'>
+							<table class="tb01" style="width: 100%; min-width:400px">
+								<colgroup>
+									<col style="width: 12%;"></col>
+									<col style="width: 22%;"></col>
+									<col style="width: 11%;"></col>
+									<col style="width: 22%;"></col>
+									<col style="width: 11%;"></col>
+									<col style="width: 22%;"></col>
+								</colgroup>
+								<tr>
+									<td class="bg01_r">병역구분</td><!-- 이름 변경해야함 -->
+									<td class="bg02_l">
+										<select id="isa_MILITARY_CODE" style="width: 80px;" class="select_02">
+												<option value=""></option>
+										</select>
+									</td>
+									<td class="bg01_r">면제사유</td>
+									<td class="bg02_l">
+										<input type="text" id="isa_MYEONJE" style="width: 98%; ">	
+									</td>
+									<td class="bg01_r">군번</td>
+									<td class="bg02_l"><input type="text" id="isa_MIL_NUM" style="width: 98%; "></td>
+								</tr>
+								
+								<tr>
+									<td class="bg01_r">복무시작일</td>
+									<td class="bg02_l"><input type="text" id="isa_MILI_STA_DATE" style="width: 98%; "></td>
+									
+									<td class="bg01_r">복무종료일</td>
+									<td class="bg02_l"><input type="text" id="isa_MILI_END_DATE" style="width: 98%; "></td>
+									
+									<td class="bg01_r">복무기간포함</td>
+									<td class="bg02_l">
+										<select id="isa_POS_CODE" style="width: 80px;" class="select_02">
+												<option value=""></option>
+										</select>
+									</td>
+								</tr>
+	   							
+								<tr>
+									<td class="bg01_r">군별</td>
+									<td class="bg02_l">
+										<select id="isa_GUNBYEOL_CODE" style="width: 80px;" class="select_02">
+												<option value=""></option>
+										</select>
+									</td>
+									<td class="bg01_r">병과</td>
+									<td class="bg02_l">
+										<select id="isa_BOTS_CODE" style="width: 80px;" class="select_02">
+												<option value=""></option>
+										</select>
+									</td>
+									<td class="bg01_r">예비군</td>
+									<td class="bg02_l">
+										<select id="isa_YEBIGUN_CODE" style="width: 80px;" class="select_02">
+												<option value=""></option>
+										</select>
+									</td>
+								</tr>
+
+								<tr>
+									<td class="bg01_r">제대구분</td>
+									<td class="bg02_l">
+										<select id="isa_DISCHARGE_CODE" style="width: 80px;" class="select_02">
+											<option value=""></option>
+										</select>
+									</td>
+									
+									<td class="bg01_r">계급</td>
+									<td class="bg02_l">
+										<select id="isa_MILITARY_CLASS_CODE" style="width: 80px;" class="select_02">
+											<option value=""></option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</form>
 					</div>
 					
 					<!-- 가족 -->

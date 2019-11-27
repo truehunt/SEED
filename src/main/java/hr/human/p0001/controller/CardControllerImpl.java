@@ -255,79 +255,32 @@ public class CardControllerImpl implements CardController{
 		return viewName;
 	}
 	
-	
-//	/**
-//   * 결재이미지 등록화면
-//   */
-//  @RequestMapping(value = "/human/p0001/image.do")
-//  @ResponseBody
-//  public Map memberForm(HttpServletRequest request, HttpServletResponse response) {
-//	  Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
-//	  String save = request.getParameter("save");
-//      String userno = request.getParameter("PK_SAWON_CODE");
-//      System.out.println(userno);
-//      System.out.println("일단 확인중입니다 ㅅㅂ 이제 제발 됬으면");
-//      
-//      SignImageVO signImageInfo = CardDAO.selectSignImageOne(userno);
-//      String data = signImageInfo.getPhoto(); 
-//      System.out.println(data);
-//      resultMap.put("Data", data);
-//
-//      return resultMap;
-//  }
-	
-
-    
     /**
      * 결재이미지 저장, 업데이트.
      */
-    @RequestMapping(value = "/human/p0001/imageSave")
-    public String imageSave(HttpServletRequest request, ModelMap modelMap, SignImageVO signImageInfo) {
-        String userno = request.getParameter("PK_SAWON_CODE").toString();
-
-        signImageInfo.setPK_SAWON_CODE(userno);
-        
-        FileUtil fs = new FileUtil();
-        FileVO fileInfo = fs.saveImage(signImageInfo.getPhotofile());
-        if (fileInfo != null) {
-        	signImageInfo.setPhoto(fileInfo.getRealname());
-        	System.out.println(signImageInfo);
-        }
-        CardDAO.updateSignImage(signImageInfo);
-
-        return "redirect:/human/p0001/insa_card.do?save=OK";
-    }
-    
-    /**
-     * 결재이미지 삭제
-	 * @throws
-     */
-	@Override
-    @RequestMapping(value = "/signImageDelete2")
-    public void deleteSignImage(HttpServletRequest request, HttpServletResponse response, String IMAGENO) throws IOException {
-    	
+	@RequestMapping(value = "/human/p0001/imageSave")
+	@ResponseBody
+    public String imageSave(HttpServletRequest request,  HttpServletResponse response , SignImageVO signImageInfo)  throws IOException  {
 		response.setContentType("text/html;charset=utf-8");
-  		PrintWriter out = response.getWriter();
 		
-  		try {
-  			CardDAO.deleteSignImage(IMAGENO);
+		System.out.println("1");
+  		String userno = request.getParameter("PK_SAWON_CODE");
+  	        
+  		signImageInfo.setPK_SAWON_CODE(userno);
+  	        
+  		FileUtil fs = new FileUtil();
+  	       
+  		FileVO fileInfo = fs.saveImage(signImageInfo.getPhotofile());
+  		if (fileInfo != null) {
+  			signImageInfo.setPhoto(fileInfo.getRealname());
+  	        CardDAO.updateSignImage(signImageInfo);
+  		}
+  		
+  		String photo = signImageInfo.getPhoto();
+        System.out.println(photo);
         
-        out.print("등록된 서명이미지를 삭제하였습니다.");
-  		} catch (Exception e) {
- 			System.out.println("파일삭제 실패 : " + e);
- 		}
+  		return photo;
     }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }

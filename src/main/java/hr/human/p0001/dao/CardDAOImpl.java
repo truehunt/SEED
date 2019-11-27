@@ -89,14 +89,14 @@ public class CardDAOImpl implements CardDAO {
      * 결재이미지 저장, 업데이트.
      */
     public void updateSignImage(SignImageVO param) {
-    	sqlSession.delete("updateSawonImage", param);
+    	sqlSession.insert("updateSawonImage", param);
     }
     
     /**
      * 등록된 결재 이미지 삭제
      */
     public void deleteSignImage(String param) {
-        sqlSession.insert("deleteSawonImage", param);
+        sqlSession.delete("deleteSawonImage", param);
 	}
 	
 

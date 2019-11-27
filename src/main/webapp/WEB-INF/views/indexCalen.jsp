@@ -150,6 +150,71 @@ function calendarDayMouseout(){
      
      <div class="calendarTooltip"></div>
      
+     
+     <!-- 게시판 & 공지사항  -->
+    		<h1 class="page-header"> <i class="fa fa-send fa-fw"></i> <s:message code="main.board"/></h1>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-send fa-fw"></i> 최신글
+                            <div class="pull-right"><a href="boardList">more</a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-lg-12">
+                                <div class="listHead">
+                                    <div class="listHiddenField pull-right field100"><s:message code="board.locate"/></div>
+                                    <div class="listHiddenField pull-right field100"><s:message code="board.date"/></div>
+                                    <div class="listHiddenField pull-right field100"><s:message code="board.writer"/></div>
+                                    <div class="listTitle"><s:message code="board.title"/></div>
+                                </div>
+                                <c:forEach var="listview" items="${listview}" varStatus="status">    
+                                    <c:url var="link" value="boardRead">
+                                        <c:param name="brdno" value="${listview.brdno}" />
+                                    </c:url>        
+                                    <div class="listBody">
+                                        <div class="listHiddenField pull-right field100"><c:out value="${listview.bgname}"/></div>
+                                        <div class="listHiddenField pull-right field100"  style="font-size:11px;"><c:out value="${listview.brddate}"/></div>
+                                        <div class="listHiddenField pull-right field100"><c:out value="${listview.brdwriter}"/></div>
+                                        <div class="listTitle" title="<c:out value="${listview.brdtitle}"/>">
+                                            <a href="${link}"><c:out value="${listview.brdtitle}"/></a>
+                                            <c:if test="${listview.replycnt>0}">
+                                                (<c:out value="${listview.replycnt}"/>)
+                                            </c:if>                                                
+                                        </div>
+                                        <div class="showField text-muted small">
+                                            <c:out value="${listview.brdwriter}"/> <c:out value="${listview.brddate}"/>
+                                        </div>
+                                    </div>
+                                </c:forEach>    
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-volume-up fa-fw"></i> <s:message code="common.notice"/>
+                        </div>
+                        <div class="panel-body maxHeight400">
+                            <c:forEach var="noticeList" items="${noticeList}" varStatus="status">    
+                                <c:url var="link" value="boardRead">
+                                    <c:param name="brdno" value="${noticeList.brdno}" />
+                                </c:url>    
+                                <a href="${link}">
+                                <div class="listBody listTitle">
+                                    <c:out value="${noticeList.brdtitle}"/>
+                                </div>    
+                                </a>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </div>
+          </div>
+     
+     
      <h1 class="page-header"> <i class="fa fa-edit fa-fw"></i> <s:message code="main.signHeader"/></h1>
      		<c:if test="${null eq listview2}">
 				<div id="develop2">
@@ -179,17 +244,21 @@ function calendarDayMouseout(){
             	</div>    
             </div>
          
-     
-     <h1 class="page-header"> <i class="fa fa-tasks fa-fw"></i> <s:message code="main.taHeader"/></h1>
-     <div class="row">
-        <div class="col-lg-5">
-                      <div id="morris-bar-chart"></div>
-          </div>
+		     <!-- 부서별 근태현황  -->
+		     <h1 class="page-header"> <i class="fa fa-tasks fa-fw"></i> <s:message code="main.taHeader"/></h1>
+		     <div class="row">
+		        <div class="col-lg-5">
+		                      <div id="morris-bar-chart"></div>
+		          </div>
+		    
+		        <div class="col-lg-5">
+		                      <div id="morris-donut-chart"></div>
+		          </div>
+		    </div>
     
-        <div class="col-lg-5">
-                      <div id="morris-donut-chart"></div>
-          </div>
-    </div>
+    		
+    		
+               
     
 </div>
      

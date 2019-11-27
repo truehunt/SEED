@@ -69,6 +69,13 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/adCodeList"; 
 		            } else if(url === "searchMember"){ // 사원조회(ESS)
 		            	urlToGo = "searchMember";
+		            } else if(url === "boardList"){ // 게시판(공지사항)
+		            	urlToGo = "boardList";
+		            } else if(url === "fn_search"){ // 검색바 검색
+		            	if ($("#globalKeyword").val()!=="") {
+                    		$("#searchForm").submit();
+                    		urlToGo = "boardList";
+                		}
 		            // 전자결재
 		            } else if(url === "adSignDocTypeList"){ // 결재문서양식관리
 		            	urlToGo = "/SEED/adSignDocTypeList";
@@ -250,20 +257,13 @@ $(document).ready(function(){
 								<div class="input-group custom-search-form">
 	                                <input class="form-control" type="text" name="globalKeyword" id="globalKeyword" placeholder="<s:message code="main.search"/>">
 	                                <span class="input-group-btn">
-	                                    <button class="btn btn-default" type="button" onclick="fn_search()">
+	                                    <button class="btn btn-default" type="button" onclick="doAction(myTab,'검색','chart','fn_search','fn_search'); return false">
 	                                        <i class="fa fa-search"></i>
 	                                    </button>
 	                                </span>
 	                            </div>                           	
                             </form>
-	                                <script>
-	                                	function fn_search(){
-	                                		if ($("#globalKeyword").val()!=="") {
-		                                		$("#searchForm").submit();
-	                                		}
-	                                	}
-	                                	
-	                                </script>                            <!-- /input-group -->
+	                                
                         </li>
                         <!-- 일반 사원 단 조회 가능메뉴들 -->
                         <li>
@@ -279,7 +279,11 @@ $(document).ready(function(){
                         </li>
                         <!-- 일정관리 -->             
                         <li>
-                            <a href='#' onClick="doAction(myTab,'<s:message code="main.cal"/>','chart','ib-chart-0','schList'); return false"><i class="fa fa-calendar fa-fw"></i> <s:message code="main.cal"/></a>
+                            <a href='#' onClick="doAction(myTab,'<s:message code="main.cal"/>','chart','schList','schList'); return false"><i class="fa fa-calendar fa-fw"></i> <s:message code="main.cal"/></a>
+                        </li>
+                        <!-- 게시판(공지사항) -->             
+                        <li>
+                            <a href='#' onClick="doAction(myTab,'<s:message code="main.board"/>','chart','boardList','boardList'); return false"><i class="fa fa-send fa-fw"></i> <s:message code="main.board"/></a>
                         </li>
                         <!-- 전자결재 -->
                         <li>

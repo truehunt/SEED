@@ -47,7 +47,7 @@
    /*Sheet 기본 설정 */
    	function LoadPage() {
 	   //ibtab 생성
-		createIBTab($('#tab1')[0], $('#tab_contents')[0], 'myTabs', {
+		createIBTab($('#tab1')[0], $('#tab_contents')[0], 'myTabs1', {
 			themes: {
 				tabs: "simple_under_blue",
 		       	contents: "simple_under_blue",
@@ -55,9 +55,15 @@
 		    },
 			allowCloseBTN: false
 		});
-		
+	   
+// 		myTab.setEventListener("beforeGoTo", function(event){ 
+// 			console.log("beforeGoTo"); 
+// 			return true; 
+// 		})
+// 		myTab.tabs.items(0).setTitle("제목"); 
+			
 		//ibtab2 생성
-		createIBTab($('#tab2')[0], $('#tab_contents_2')[0], 'myTabs', {
+		createIBTab($('#tab2')[0], $('#tab_contents_2')[0], 'myTabs2', {
 		    themes: {
 		        tabs: "simple_under_blue",
 		        contents: "simple_under_blue",
@@ -81,17 +87,29 @@
 		 	{Header:"",Type:"Text",SaveName:"isa_HANJA_NAME",Width:60,Align:"Center"},
 		 	{Header:"",Type:"Text",SaveName:"isa_HIRE_CODE",Width:60,Align:"Center"},
 		 	{Header:"",Type:"Text",SaveName:"isa_NUM",Width:60,Align:"Center"},
+		 	
+		 	{Header:"",Type:"Text",SaveName:"isa_ADDR_ZIP",Width:60,Align:"Center"},
 		 	{Header:"",Type:"Text",SaveName:"isa_ADDRESS",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_ADDR_DETAIL",Width:60,Align:"Center"},
+		 	
+		 	{Header:"",Type:"Text",SaveName:"isa_PER_ADDR_ZIP",Width:60,Align:"Center"},
 		 	{Header:"",Type:"Text",SaveName:"isa_PERMANENT_ADDR",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_PER_ADDR_DETAIL",Width:60,Align:"Center"},
+		 	
 		 	{Header:"",Type:"Text",SaveName:"isa_MARRIAGE_CODE",Width:60,Align:"Center" },
 		 	{Header:"",Type:"Text",SaveName:"isa_HOUSE_CODE",Width:60,Align:"Center" },
 		 	{Header:"",Type:"Text",SaveName:"isa_LIVING_CODE",Width:60,Align:"Center" },
+		 	
 		 	{Header:"",Type:"Text",SaveName:"isa_RELIGION_CODE",Width:60,Align:"Center"},
 		 	{Header:"",Type:"Text",SaveName:"isa_HOBBY_CODE",Width:60,Align:"Center" },
 		 	{Header:"",Type:"Text",SaveName:"isa_SPECIALTY_CODE",Width:60,Align:"Center"},
 		 	
+		 	{Header:"",Type:"Text",SaveName:"religion_DETAI",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"hobby_DETAI",Width:60,Align:"Center" },
+		 	{Header:"",Type:"Text",SaveName:"specialty_DETAI",Width:60,Align:"Center"},
+		 	
 		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CODE",Width:60,Align:"Center", Hidden:1},
-		 	{Header:"",Type:"Text",SaveName:"isa_MYEONJE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_MYEONJE",Width:60,Align:"Center"},
 		 	{Header:"",Type:"Text",SaveName:"isa_MIL_NUM",Width:60,Align:"Center", Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_MILI_STA_DATE",Width:60,Align:"Center", Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_MILI_END_DATE",Width:60,Align:"Center", Hidden:1},
@@ -106,25 +124,28 @@
       	];
       	IBS_InitSheet(mySheet,initData);
       	mySheet.SetDataAutoTrim(0);
-      	mySheet.SetColHidden([
-			{Col: 5, Hidden:1},
-			{Col: 6, Hidden:1},
-			{Col: 7, Hidden:1},
-			{Col: 8, Hidden:1},
-			{Col: 9, Hidden:1},
-			{Col: 10, Hidden:1},
-			{Col: 11, Hidden:1},
-			{Col: 12, Hidden:1},
-			{Col: 13, Hidden:1},
-			{Col: 14, Hidden:1},
-			{Col: 15, Hidden:1},
-			{Col: 16, Hidden:1},
-			{Col: 17, Hidden:1},
-			{Col: 18, Hidden:1},
-			{Col: 19, Hidden:1},
-			{Col: 20, Hidden:1},
-			{Col: 'photo', Hidden:1}
-  	    ]);
+//       	mySheet.SetColHidden([
+// 			{Col: 5, Hidden:1},
+// 			{Col: 6, Hidden:1},
+// 			{Col: 7, Hidden:1},
+// 			{Col: 8, Hidden:1},
+// 			{Col: 9, Hidden:1},
+// 			{Col: 10, Hidden:1},
+// 			{Col: 11, Hidden:1},
+// 			{Col: 12, Hidden:1},
+// 			{Col: 13, Hidden:1},
+// 			{Col: 14, Hidden:1},
+// 			{Col: 15, Hidden:1},
+// 			{Col: 16, Hidden:1},
+// 			{Col: 17, Hidden:1},
+// 			{Col: 18, Hidden:1},
+// 			{Col: 19, Hidden:1},
+// 			{Col: 20, Hidden:1},
+// 			{Col: 'religion_DETAI', Hidden:1},
+// 			{Col: 'hobby_DETAI', Hidden:1},
+// 			{Col: 'specialty_DETAI', Hidden:1}
+// // 			{Col: 'photo', Hidden:1}
+//   	    ]);
       	doAction("list");
 		
    		//mySheet4 //가족
@@ -146,7 +167,8 @@
           	{Header:"졸업구분",Type:"Combo", SaveName:"fam_GRADUATION_CODE", Width:60, Align:"Center"},
           	{Header:"직업",Type:"Text", SaveName:"fam_JOB", Width:60, Align:"Center"},
           	{Header:"직장명",Type:"Text", SaveName:"fam_WORK_NAME", Width:60, Align:"Center"},
-          	{Header:"직위",Type:"Text", SaveName:"fam_POSITION", Width:60, Align:"Center"}
+          	{Header:"직위",Type:"Text", SaveName:"fam_POSITION", Width:60, Align:"Center"},
+          	{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
        	];
 		
 		createIBSheet2($("#ib-container1")[0],"mySheet4", "100%", "300px");
@@ -174,6 +196,7 @@
             {Header:"학위구분",Type:"Text", SaveName:"hl_DEGREE", Width:60, Align:"Center"},
             {Header:"주야",Type:"Combo", SaveName:"hl_JUYA_CODE", Width:60, Align:"Center"},
             {Header:"본교",Type:"Combo", SaveName:"hl_MAIN_CODE", Width:60, Align:"Center"},
+            {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
         ];
 	
        	createIBSheet2($("#ib-container2")[0],"mySheet5", "100%", "300px");
@@ -200,6 +223,7 @@
             {Header:"급여",Type:"Int", SaveName:"car_SALARY", "Format": "#,### 원", Width:60, Align:"Center"},
             {Header:"퇴직사유",Type:"Text", SaveName:"car_RESIGN", Width:60, Align:"Center"},
             {Header:"근속기",Type:"Text", SaveName:"car_GEUNSOG_CODE", Width:60, Align:"Center"},
+            {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
         ];
          
         createIBSheet2($("#ib-container3")[0],"mySheet6", "100%", "300px");
@@ -223,6 +247,7 @@
             {Header:"자격증번호",Type:"Text", SaveName:"certificate_NUM", Width:60, Align:"Center"},
             {Header:"발행기관",Type:"Text", SaveName:"certificate_ISSUER_CODE", Width:60, Align:"Center"},
             {Header:"수당",Type:"Text", SaveName:"certificate_SUDANG_CODE", Width:60, Align:"Center"},
+            {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
         ];
           
         createIBSheet2($("#ib-container4")[0],"mySheet7", "100%", "300px");
@@ -265,7 +290,8 @@
 			{Header:"반영률",Type:"Text", SaveName:"ass_REFLECTANCE", Width:60, Align:"Center"},
 			{Header:"점수",Type:"Text", SaveName:"ass_SCORE", Width:60, Align:"Center"},
 			{Header:"등급",Type:"Text", SaveName:"ass_CLASS", Width:60, Align:"Center"},
-			{Header:"비고",Type:"Text", SaveName:"ass_NOTE", Width:60, Align:"Center"}
+			{Header:"비고",Type:"Text", SaveName:"ass_NOTE", Width:60, Align:"Center"},
+			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
 		];
            
 		createIBSheet2($("#ib-container6")[0],"mySheet9", "100%", "300px");
@@ -287,6 +313,7 @@
 			{Header:"기타비용",Type:"Text", SaveName:"chj_OTHER", Width:60, Align:"Center"},
 			{Header:"총비용",Type:"Text", SaveName:"chj_TOTAL", Width:60, Align:"Center"},
 			{Header:"목적",Type:"Text", SaveName:"chj_PURPOSE", Width:60, Align:"Center"},
+			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
 		];
            
 		createIBSheet2($("#ib-container7")[0],"mySheet10", "100%", "300px");
@@ -306,15 +333,59 @@
 			{Header:"금액",Type:"Text", SaveName:"sb_AMOUNT", Width:60, Align:"Center"},
 			{Header:"징계시작일",Type:"Text", SaveName:"sb_STA_DATE", Width:100, Align:"Center"},
 			{Header:"징계종료일",Type:"Text", SaveName:"sb_END_DATE", Width:100, Align:"Center"},
-			{Header:"비고",Type:"Text", SaveName:"sb_NOTE", Width:60, Align:"Center"}
+			{Header:"비고",Type:"Text", SaveName:"sb_NOTE", Width:60, Align:"Center"},
+			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
 		];
            
 		createIBSheet2($("#ib-container8")[0],"mySheet11", "100%", "300px");
 		IBS_InitSheet(mySheet11,initData);
 		
 		
-		$("#selboxDirect").hide();
-   }
+		$("#religion_DETAI").hide();
+		$("#hobby_DETAI").hide();
+		$("#specialty_DETAI").hide();
+		
+		// tab 이동전에 발생
+	 	myTabs1.setEvents({ 
+			beforeGoToTab: function(event) {
+				var index = event.indexActive;
+// 				var sRow = mySheet.FindStatusRow('U|I'); // Status 상태가 I나 U인 것의 row를 구한다. 
+				switch(index){
+					case 0:
+						SetValue();
+// 						console.log(mySheet.FindStatusRow('U|I'));
+						if(mySheet.FindStatusRow('U|I') != "")
+							mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/insertData.do");
+						break;
+					case 1:
+						SetValue();
+						if(mySheet.FindStatusRow('U|I') != "")
+							mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/insertData.do");
+						break;
+					case 2:
+						if(mySheet4.FindStatusRow('U|I') != "")
+						mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
+						break;
+					case 3:
+						if(mySheet5.FindStatusRow('U|I') != "")
+						mySheet5.DoSave("${pageContext.request.contextPath}/human/p0001/insertHL.do", fk_hl_sawon_code);
+						break;
+					case 4:
+						if(mySheet6.FindStatusRow('U|I') != "")
+						mySheet6.DoSave("${pageContext.request.contextPath}/human/p0001/insertCar.do", fk_car_sawon_code);
+						break;
+					case 5:
+						if(mySheet7.FindStatusRow('U|I') != "")
+						mySheet7.DoSave("${pageContext.request.contextPath}/human/p0001/insertCert.do", fk_cert_sawon_code);
+						break;
+				}
+					
+	   			return true; 
+			} 
+	   	});
+	}
+  
+  
 
 	// 기타 이벤트 //마우스 클릭시
 	function mySheet_OnSelectCell(oldrow, oldcol, row, col) {
@@ -332,10 +403,10 @@
 		y = mySheet.GetCellValue(row,5);
 		
 		var image = "/SEED/fileDownload?downname=" + mySheet.GetCellValue(row, 'photo');
-		$("#previewImg").attr("src", image);
+		$("#previewImg").attr("src", image); // 이미지
 		
 		mySheetRow = row;
-		ISA();
+		ISA(); // 채용/거주, 병역을 셋팅한다.
 		
 		document.getElementById('PK_SAWON_CODE').value = x;
 		
@@ -348,6 +419,7 @@
 		mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
 		mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
 		mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
+		
 	}
 	
 	
@@ -363,31 +435,7 @@
 	            mySheet.RemoveAll();
 	            break;
 	         case "save":
-				mySheet.SetCellValue(mySheetRow, 'isa_HANJA_NAME', document.getElementById("isa_HANJA_NAME").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_HIRE_CODE', document.getElementById("isa_HIRE_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_NUM', document.getElementById("isa_NUM").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_ADDRESS', document.getElementById("isa_ADDRESS").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_PERMANENT_ADDR', document.getElementById("isa_PERMANENT_ADDR").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_MARRIAGE_CODE', document.getElementById("isa_MARRIAGE_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_HOUSE_CODE', document.getElementById("isa_HOUSE_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_LIVING_CODE', document.getElementById("isa_LIVING_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_RELIGION_CODE', document.getElementById("isa_RELIGION_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_HOBBY_CODE', document.getElementById("isa_HOBBY_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_SPECIALTY_CODE', document.getElementById("isa_SPECIALTY_CODE").value);
-	 			
-	 			mySheet.SetCellValue(mySheetRow, 'isa_MILITARY_CODE', document.getElementById("isa_MILITARY_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_MYEONJE', document.getElementById("isa_MYEONJE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_MIL_NUM', document.getElementById("isa_MIL_NUM").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_MILI_STA_DATE', document.getElementById("isa_MILI_STA_DATE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_MILI_END_DATE', document.getElementById("isa_MILI_END_DATE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_POS_CODE', document.getElementById("isa_POS_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_GUNBYEOL_CODE', document.getElementById("isa_GUNBYEOL_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_BOTS_CODE', document.getElementById("isa_BOTS_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_YEBIGUN_CODE', document.getElementById("isa_YEBIGUN_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_DISCHARGE_CODE', document.getElementById("isa_DISCHARGE_CODE").value);
-	 			mySheet.SetCellValue(mySheetRow, 'isa_MILITARY_CLASS_CODE', document.getElementById("isa_MILITARY_CLASS_CODE").value);
-	        	
-	        	 
+	        	SetValue(); // 저장 전에 테이블에 있는 값을 ibSheet에 셋팅해준다. 
 	        	mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/insertData.do");
 	            
 // 	        	mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
@@ -410,14 +458,6 @@
 				mySheet10.DataInsert(-1);
 				mySheet11.DataInsert(-1);
 				
-				var i = mySheet4.RowCount();
-				mySheet4.CellComboItem(i,5,H1); // 관계
-				mySheet4.CellComboItem(i,13,HB); // 학력
-				mySheet4.CellComboItem(i,14,HW); // 졸업구분
-				mySheet4.CellComboItem(i,6,S1); // 함/안함
-				mySheet4.CellComboItem(i,8,S2); // 해당/비해당
-				mySheet4.CellComboItem(i,12,S3); // 양/음
-				
 				var j = mySheet5.RowCount();
 				mySheet5.CellComboItem(j,4,HX); // 학교명
 				mySheet5.CellComboItem(j,7,HW); // 졸업구분
@@ -431,10 +471,21 @@
 	        	 break;
 	      }
 	   }
-		
+	 
+	function mySheet_OnSearchEnd(){
+		SetValue();
+		mySheet.SetCellValue()
+	}
+	
+	 
+	 
+	//--------------------------- mySheet4_ -------------------------------	
 	// mySheet 조회 끝나기 직전 이벤트 
 	function mySheet4_OnSearchEnd() { // 가족
-		mySheet4.DataInsert(-1); 
+		if(mySheet4.RowCount() == 0){	
+			mySheet4.DataInsert(-1);
+		} // 조회시 조회내용이 없으면 한줄 추가
+	 
 		for(var i = 1; i<=mySheet4.RowCount(); i++ ){
 			mySheet4.CellComboItem(i,5,H1); // 관계
 			mySheet4.CellComboItem(i,13,HB); // 학력
@@ -444,9 +495,42 @@
 			mySheet4.CellComboItem(i,8,S2); // 해당/비해당
 			mySheet4.CellComboItem(i,12,S3); // 양/음
 		}
+		mySheet4.SetCellValue(mySheet4.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		if(mySheet4.GetCellValue(mySheet4.RowCount(),'STATUS') == 'U' )
+			mySheet4.SetCellValue(mySheet4.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+		
 	}
 	
+	// 추가버튼 누를시 현제 row에 있는 추가버튼을 없애고, 다음 Row에 추가버튼을 추가한다.
+	function mySheet4_OnButtonClick(Row, Col) {  
+		mySheet4.SetCellValue(Row, Col, "");
+		mySheet4.DataInsert(-1);
+		
+		mySheet4.CellComboItem(Row+1,5,H1); // 관계
+		mySheet4.CellComboItem(Row+1,13,HB); // 학력
+		mySheet4.CellComboItem(Row+1,14,HW); // 졸업구분
+		mySheet4.CellComboItem(Row+1,6,S1); // 함/안함
+		mySheet4.CellComboItem(Row+1,8,S2); // 해당/비해당
+		mySheet4.CellComboItem(Row+1,12,S3); // 양/음
+		
+		mySheet4.SetCellValue(Row+1, Col, "추가");
+		
+	} 
+	
+	
+	// 새로 추가된 row중 마지막 row가 삭제될시 추가버튼을 이전 row에 추가한다.
+	function mySheet4_OnRowDelete(row, api) {
+		if(row == mySheet4.RowCount()){
+			mySheet4.SetCellValue((row-1), mySheet4.LastCol(),"추가");
+		}
+	} 
+	
+	//---------------------   mySheet5_  ----------------------
+	
 	function mySheet5_OnSearchEnd() { // 학력
+		if(mySheet5.RowCount() == 0){	
+			mySheet5.DataInsert(-1);
+		} // 조회시 조회내용이 없으면 한줄 추가
 		for(var i = 1; i<=mySheet5.RowCount(); i++ ){
 			mySheet5.CellComboItem(i,4,HX); // 학교명
 			mySheet5.CellComboItem(i,7,HW); // 졸업구분
@@ -455,18 +539,41 @@
 			mySheet5.CellComboItem(i,12,HZ); // 주야구분
 			mySheet5.CellComboItem(i,13,R1); // 본분교구분
 		}
-		selectSite();
+		
+		selectSite(); // 
+		
+		mySheet5.SetCellValue(mySheet5.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		if(mySheet5.GetCellValue(mySheet5.RowCount(),'STATUS') == 'U' )
+			mySheet5.SetCellValue(mySheet5.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
 	}
 	
-	//마지막 col / row 에서 입력이 되었을 때 한줄이 추가된다.  
-	function mySheet4_OnChange(Row, Col, Value, OldValue, RaiseFlag) {
-			if (Col == mySheet4.LastCol() && Row == mySheet4.RowCount()) { 
-				mySheet4.DataInsert(-1);
-			}
-	}
+	// 추가버튼 누를시 현제 row에 있는 추가버튼을 없애고, 다음 Row에 추가버튼을 추가한다.
+	function mySheet5_OnButtonClick(Row, Col) {  
+		mySheet5.SetCellValue(Row, Col, "");
+		mySheet5.DataInsert(-1);
+		
+		mySheet5.CellComboItem(Row+1,4,HX); // 관계
+		mySheet5.CellComboItem(Row+1,7,HW); // 학력
+		mySheet5.CellComboItem(Row+1,9,HY); // 졸업구분
+		mySheet5.CellComboItem(Row+1,10,HY); // 함/안함
+		mySheet5.CellComboItem(Row+1,12,HZ); // 해당/비해당
+		mySheet5.CellComboItem(Row+1,13,R1); // 양/음
+		
+		mySheet5.SetCellValue(Row+1, Col, "추가");
+		
+	} 
 	
 	
+	// 새로 추가된 row중 마지막 row가 삭제될시 추가버튼을 이전 row에 추가한다.
+	function mySheet5_OnRowDelete(row, api) {
+		if(row == mySheet5.RowCount()){
+			mySheet5.SetCellValue((row-1), mySheet5.LastCol(),"추가");
+		}
+	} 
+	//----------------------------------------------------------------------------------
 	
+	
+	// 조회 이전에 테이블/ibSheet에 checkBox 값을 넣어준다.
 	function mySheet_OnBeforeSearch() {  
 		var info4 = ""; // 관계
 		var info5 = ""; // 졸업
@@ -564,7 +671,7 @@
 				R1 = {'ComboCode':info13,'ComboText':info13}; // 본분교구분
 			},
 			error : function(jqxhr, status, error) {
-				alert("에러_ㅅㅂ");
+				alert("에러 : mySheet_OnBeforeSearch");
 			}
 		});
 		$.ajax({ // 공통코드조회
@@ -597,14 +704,14 @@
 				S3 = {'ComboCode':info9,'ComboText':info9}; // 양음구분(양/음)
 			},
 			error : function(jqxhr, status, error) {
-				alert("에러_");
+				alert("에러 : mySheet_OnBeforeSearch_2");
 			}
 		});
 	};
 	
 	
 	
-	 // tqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtqtq
+	 // table에 값을 넣는다. 
 	function ISA(){
 		$.ajax({ // 
 			url : "${contextPath}/human/p0001/ISA_cha.do",//목록을 조회 할 url
@@ -620,15 +727,28 @@
 				 	$('input[id=isa_HANJA_NAME]').val(data['Data'][0].isa_HANJA_NAME);
 				 	$('select[id=isa_HIRE_CODE]').val(data['Data'][0].isa_HIRE_CODE); // select
 				 	$('input[id=isa_NUM]').val(data['Data'][0].isa_NUM);
+				 	
+				 	$('input[id=isa_ADDR_ZIP]').val(data['Data'][0].isa_ADDR_ZIP);
 				 	$('input[id=isa_ADDRESS]').val(data['Data'][0].isa_ADDRESS);
+				 	$('input[id=isa_ADDR_DETAIL]').val(data['Data'][0].isa_ADDR_DETAIL);
+				 	
+				 	$('input[id=isa_PER_ADDR_ZIP]').val(data['Data'][0].isa_PER_ADDR_ZIP);
 				 	$('input[id=isa_PERMANENT_ADDR]').val(data['Data'][0].isa_PERMANENT_ADDR);
+				 	$('input[id=isa_PER_ADDR_DETAIL]').val(data['Data'][0].isa_PER_ADDR_DETAIL);
+				 	
 				 	$('select[id=isa_MARRIAGE_CODE]').val(data['Data'][0].isa_MARRIAGE_CODE);
 				 	$('select[id=isa_HOUSE_CODE]').val(data['Data'][0].isa_HOUSE_CODE);
 				 	$('select[id=isa_LIVING_CODE]').val(data['Data'][0].isa_LIVING_CODE);
+				 	
 				 	$('select[id=isa_RELIGION_CODE]').val(data['Data'][0].isa_RELIGION_CODE);
 				 	$('select[id=isa_HOBBY_CODE]').val(data['Data'][0].isa_HOBBY_CODE);
 				 	$('select[id=isa_SPECIALTY_CODE]').val(data['Data'][0].isa_SPECIALTY_CODE);
 				 	
+				 	$('input[id=religion_DETAI]').val(data['Data'][0].religion_DETAI);
+				 	$('input[id=hobby_DETAI]').val(data['Data'][0].hobby_DETAI);
+				 	$('input[id=specialty_DETAI]').val(data['Data'][0].specialty_DETAI);
+				 	
+				 	//--------------------------------------------------- 병역
 				 	$('select[id=isa_MILITARY_CODE]').val(data['Data'][0].isa_MILITARY_CODE);
 				 	$('input[id=isa_MYEONJE]').val(data['Data'][0].isa_MYEONJE); // select
 				 	$('input[id=isa_MIL_NUM]').val(data['Data'][0].isa_MIL_NUM);
@@ -641,15 +761,62 @@
 				 	$('select[id=isa_DISCHARGE_CODE]').val(data['Data'][0].isa_DISCHARGE_CODE);
 				 	$('select[id=isa_MILITARY_CLASS_CODE]').val(data['Data'][0].isa_MILITARY_CLASS_CODE);
 				 	
+				 	
+				 	if(data['Data'][0].isa_RELIGION_CODE == 'religion')
+				 		$("#religion_DETAI").show();
+				 	if(data['Data'][0].isa_HOBBY_CODE == 'hobby')
+				 		$("#hobby_DETAI").show();
+				 	if(data['Data'][0].isa_SPECIALTY_CODE == 'specialty')
+				 		$("#specialty_DETAI").show();
+				 	
+				 	SetValue(); // 채용/거주, 병역에 있는값을 다시 mySheet에 담는다.
+				 	mySheet.SetCellValue(mySheetRow, 'STATUS' ,'R'); // 위에 SetValue 때문에 'U'가 된것을 다시 'R'로 변경해준다.
 			},
 			error : function(jqxhr, status, error) {
-				alert("aaaaaaaaaaaa");
+				alert("ISA_에러");
 			}
 		});
 	}
 	
 	
-	
+	 function SetValue(){
+			mySheet.SetCellValue(mySheetRow, 'isa_HANJA_NAME', document.getElementById("isa_HANJA_NAME").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_HIRE_CODE', document.getElementById("isa_HIRE_CODE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_NUM', document.getElementById("isa_NUM").value);
+			
+			mySheet.SetCellValue(mySheetRow, 'isa_ADDR_ZIP', document.getElementById("isa_ADDR_ZIP").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_ADDRESS', document.getElementById("isa_ADDRESS").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_ADDR_DETAIL', document.getElementById("isa_ADDR_DETAIL").value);
+			
+			mySheet.SetCellValue(mySheetRow, 'isa_PER_ADDR_ZIP', document.getElementById("isa_PER_ADDR_ZIP").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_PERMANENT_ADDR', document.getElementById("isa_PERMANENT_ADDR").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_PER_ADDR_DETAIL', document.getElementById("isa_PER_ADDR_DETAIL").value);
+			
+			mySheet.SetCellValue(mySheetRow, 'isa_MARRIAGE_CODE', document.getElementById("isa_MARRIAGE_CODE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_HOUSE_CODE', document.getElementById("isa_HOUSE_CODE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_LIVING_CODE', document.getElementById("isa_LIVING_CODE").value);
+			
+			mySheet.SetCellValue(mySheetRow, 'isa_RELIGION_CODE', document.getElementById("isa_RELIGION_CODE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_HOBBY_CODE', document.getElementById("isa_HOBBY_CODE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_SPECIALTY_CODE', document.getElementById("isa_SPECIALTY_CODE").value);
+			
+			mySheet.SetCellValue(mySheetRow, 'religion_DETAI', document.getElementById("religion_DETAI").value);
+			mySheet.SetCellValue(mySheetRow, 'hobby_DETAI', document.getElementById("hobby_DETAI").value);
+			mySheet.SetCellValue(mySheetRow, 'specialty_DETAI', document.getElementById("specialty_DETAI").value);
+			
+			mySheet.SetCellValue(mySheetRow, 'isa_MILITARY_CODE', document.getElementById("isa_MILITARY_CODE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_MYEONJE', document.getElementById("isa_MYEONJE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_MIL_NUM', document.getElementById("isa_MIL_NUM").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_MILI_STA_DATE', document.getElementById("isa_MILI_STA_DATE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_MILI_END_DATE', document.getElementById("isa_MILI_END_DATE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_POS_CODE', document.getElementById("isa_POS_CODE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_GUNBYEOL_CODE', document.getElementById("isa_GUNBYEOL_CODE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_BOTS_CODE', document.getElementById("isa_BOTS_CODE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_YEBIGUN_CODE', document.getElementById("isa_YEBIGUN_CODE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_DISCHARGE_CODE', document.getElementById("isa_DISCHARGE_CODE").value);
+			mySheet.SetCellValue(mySheetRow, 'isa_MILITARY_CLASS_CODE', document.getElementById("isa_MILITARY_CLASS_CODE").value);
+			
+	 }
 	
 	
 	
@@ -694,7 +861,7 @@
 				
 			},
 			error : function(jqxhr, status, error) {
-				alert("에러_?");
+				alert("selectSite_에러");
 			}
 		});
 	}
@@ -810,31 +977,61 @@
 	    }
 
 	    function fn_formSubmit(){ // 저장 및 업데이트
-	    	$("#form1").submit();
-	    } 
-
-	    function fn_formSubmit2(IMAGENO){ // 삭제
-	    	if (confirm("삭제 하시겠습니까?(삭제시 복구되지 않습니다!!!)")) {
+	    	var form = $("#form1")[0];
+	    	var formData = new FormData(form);
+	    	if(document.getElementById('photofile').value != ''){
 	    		$.ajax({
-	    	        url: "signImageDelete",
-	    	        type:"POST", 
-	    	        data: { IMAGENO : IMAGENO,
-	    	        	},
-	    			success: function(result){
-	    				alert(result);
-	    			}
-	    	    })
-	    		
+		    		cache : false,
+		    		url: "${contextPath}/human/p0001/imageSave",
+		            processData: false,
+		            contentType: false,
+			        type:"POST", 
+			        data: formData,
+					success: function(result){
+						mySheet.SetCellValue(mySheetRow, 'photo', result);
+						document.getElementById('photofile').value = '';
+						var Status = mySheet.GetCellValue(mySheetRow, 'STATUS');
+						
+						if(Status == "U"){
+							mySheet.SetCellValue(mySheetRow, "STATUS", "R");
+						}
+					},error:function(request,status,error){
+						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+				    },complete : function(data) {
+				    	//  실패했어도 완료가 되었을 때 처리
+					}
+			    })
 	    	}
-	    }
+	    	
+		    
+	    } 
 	    
+	    // 	특기 -> 직접입력을 선택시 보여짐 
 	    function direct(dir) {
-			if(dir == "direct") {
-				$("#selboxDirect").show();
-			}  else {
-				$("#selboxDirect").hide();
+			if(dir == "specialty") {
+				$("#specialty_DETAI").show();
+			}else {
+				$("#specialty_DETAI").hide();
 			}
 		};
+		
+		 // 종교 -> 직접입력을 선택시 보여짐
+		function direct_religion(dir){
+			if(dir == "religion"){
+				$("#religion_DETAI").show();
+			} else {
+				$("#religion_DETAI").hide();
+			}
+		}
+		 // 취미 -> 직접입력을 선택시 보여짐
+		function direct_hobby(dir){
+			if(dir == "hobby"){
+				$("#hobby_DETAI").show();
+			} else{
+				$("#hobby_DETAI").hide();
+			}
+		}
+		
 		
 </script>
 <body onload="LoadPage()">
@@ -853,20 +1050,16 @@
   <div class="main_content">
 		<!-- 버튼 -->
 		<div class="ib_function float_right">
-			<a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
 			<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-			<a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-			<a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
+			<a href="javascript:fn_formSubmit(); doAction('save'); " class="f1_btn_white gray">저장</a>
 		</div>
-		
+<!-- 		; fn_formSubmit() -->
 		<div class="clear hidden"></div>
 		
 		
 		<!-- /.row -->
             
             <button type="button" class="btn btn-primary" onclick="fn_formSubmit()"><s:message code="common.btnSave"/></button>
-<%--             <button type="button" class="btn btn-primary" onclick="fn_formSubmit2(<c:out value="${signImageInfo.IMAGENO}"/>)"><s:message code="common.btnDelete"/></button> --%>
-
             <!-- /.row -->
 		
 		<div class="ib_product" style="width:100%;float:left">
@@ -874,11 +1067,11 @@
 			<div style="height:100%;width:45%;float:left">
 				<div class="row">
 					<div class="col-lg-7">
-						<form id="form1" name="form1" role="form" action="imageSave" method="post" enctype="multipart/form-data"  >
+						<form id="form1" name="form1" role="form" action="imageSave" method="post" enctype="multipart/form-data" >
 							<div class="row form-group">
 								<div class="col-sm-3"><!-- 이미지 미리보기 되는 곳 -->
 									<br> 																												
-									<img id="previewImg" style="width:100%; height: 120px; max-width: 100px;">
+									<img id="previewImg" style="width:100%; height: 120px; max-width: 100px;"> 
 									<br><br>
 									<input type="file" name="photofile" id="photofile" accept='image/*'/>
 									<input type="hidden" name="PK_SAWON_CODE" id="PK_SAWON_CODE" value="" />
@@ -983,22 +1176,26 @@
 								<tr>
 									<td class="bg01_r">종교</td>
 									<td class="bg02_l">
-										<select id="isa_RELIGION_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_RELIGION_CODE" style="width: 80px;" class="select_02" onchange="direct_religion(this.value)">
 											<option value=""></option>
+											<option value="religion">직접입력</option>
 										</select>
 									</td>
-									<td colspan="4" class="bg02_l" id="EMP_ADDRESS">
+									<td colspan="4" class="bg02_l">
+										<input type="text" id="religion_DETAI" />
 									</td>
 								</tr>
 							
 								<tr>
 									<td class="bg01_r">취미</td>
 									<td class="bg02_l">
-										<select id="isa_HOBBY_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_HOBBY_CODE" style="width: 80px;" class="select_02" onchange="direct_hobby(this.value)">
 											<option value=""></option>
+											<option value="hobby">직접입력</option>
 										</select>
 									</td>
-									<td colspan="4" class="bg02_l" id="EMP_ADDRESS">
+									<td colspan="4" class="bg02_l">
+										<input type="text" id="hobby_DETAI" />
 									</td>
 								</tr>
 							
@@ -1007,12 +1204,12 @@
 									<td class="bg02_l">
 										<select id="isa_SPECIALTY_CODE" style="width: 80px;" class="select_02" onchange="direct(this.value)">
 											<option value=""></option>
-											<option value="direct">기타</option>
+											<option value="specialty">직접입력</option>
 										</select>
 									</td>
-									<td colspan="4" class="bg02_l" id="EMP_ADDRESS">
-										<input type="text" id="selboxDirect" name="selboxDirect"/>
-										<!-- if문을 사용하여 option 값이 기타일 경우 input type=text를 사용하게끔 -->
+									<!-- 처음 불러올 때 숨겨둔다. -->
+									<td colspan="4" class="bg02_l" >
+										<input type="text" id="specialty_DETAI" />
 									</td>
 								</tr>
 							</table>

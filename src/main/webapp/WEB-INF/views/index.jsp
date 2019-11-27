@@ -44,17 +44,8 @@
 			
 					<jsp:include page="common/navigation.jsp" />
 			        
-			        <div id="page-wrapper">
-		           <!--
-			           <div id="calenDiv" class="row">
-			                <jsp:include page="indexCalen.jsp" />
-			            </div>
-			
-			            <div class="row">
-			                <div class="col-lg-12">
-			                    &nbsp;
-			                </div>
-			                -->
+			        	<div id="page-wrapper">
+
 			                <div id='ib-tabs' class="row"></div>
 									<div id='ib-contents' class="row"></div>  
 			            </div>
@@ -63,7 +54,6 @@
 		            </div>
 			        <!-- /#page-wrapper -->
 			
-			    </div>
 			    <!-- /#wrapper -->
 			    <div class="calendarTooltip"></div>
 

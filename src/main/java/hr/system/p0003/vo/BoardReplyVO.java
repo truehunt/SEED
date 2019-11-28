@@ -4,6 +4,7 @@ import project.common.UtilEtc;
 
 public class BoardReplyVO {
 
+	private Integer reorder;
     private String brdno;
     private String reno;
     private String rewriter;
@@ -11,8 +12,7 @@ public class BoardReplyVO {
     private String redate;
     private String reparent;
     private String redepth;
-    private Integer reorder;
-    private String PK_SAWON_CODE;
+    private String FK_SAWON_CODE;
     private String photo;
 
     public String getRememoByHTML() {
@@ -76,19 +76,19 @@ public class BoardReplyVO {
     }
 
     public Integer getReorder() {
-        return reorder;
-    }
-
-    public void setReorder(Integer reorder) {
-        this.reorder = reorder;
-    }
-
-    public String getPK_SAWON_CODE() {
-		return PK_SAWON_CODE;
+		return reorder;
 	}
 
-	public void setPK_SAWON_CODE(String pK_SAWON_CODE) {
-		PK_SAWON_CODE = pK_SAWON_CODE;
+	public void setReorder(Integer reorder) {
+		this.reorder = reorder;
+	}
+
+	public String getFK_SAWON_CODE() {
+		return FK_SAWON_CODE;
+	}
+
+	public void setFK_SAWON_CODE(String fK_SAWON_CODE) {
+		FK_SAWON_CODE = fK_SAWON_CODE;
 	}
 
 	public String getPhoto() {

@@ -372,16 +372,16 @@
             SELECT NVL(MAX(BRDNO),0)+1 FROM BOARD
         </selectKey>
         INSERT INTO BOARD(BGNO, BRDNO, BRDTITLE, FK_SAWON_CODE, BRDMEMO, BRDNOTICE, BRDDATE, BRDDELETEFLAG)
-        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{PK_SAWON_CODE}, #{brdmemo}, #{brdnotice, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
+        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{FK_SAWON_CODE}, #{brdmemo}, #{brdnotice, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
     </insert>
     
     <update id="updateBoard" parameterType="hr.system.p0003.vo.BoardVO">
         UPDATE BOARD
            SET BRDTITLE=#{brdtitle}
              , BRDMEMO=#{brdmemo} 
-             , BRDNOTICE=#{brdnotice}
+             , BRDNOTICE=#{brdnotice, jdbcType=VARCHAR}
              , MOD_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
-             , MOD_USER_ID=#{PK_SAWON_CODE}
+             , MOD_USER_ID=#{FK_SAWON_CODE}
          WHERE BRDDELETEFLAG='N'
            AND BRDNO=#{brdno}
     </update> 
@@ -401,23 +401,23 @@
         SELECT BRDNO
           FROM BOARD
          WHERE BRDDELETEFLAG='N'
-           AND BRDNO=#{brdno} AND FK_SAWON_CODE=#{PK_SAWON_CODE}
+           AND BRDNO=#{brdno} AND FK_SAWON_CODE=#{FK_SAWON_CODE}
     </select> 
 
     <update id="updateBoardRead" parameterType="project.common.Field3VO"> 
-        MERGE INTO BOARDREAD USING dual ON (BRDNO = #{field1})
+        MERGE INTO BOARDREAD USING dual ON (BRDNO = #{field1} AND FK_SAWON_CODE = #{field2})
 	    WHEN MATCHED THEN UPDATE SET READDATE = to_char(sysdate,'yyyy.mm.dd hh24:mi')
 	    WHEN NOT MATCHED THEN INSERT(BRDNO, FK_SAWON_CODE, READDATE) VALUES(#{field1}, #{field2}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
     </update> 
 
     <insert id="insertBoardLike" parameterType="project.common.Field3VO">
-        INSERT INTO BOARDLIKE(BRDNO, FK_SAWON_CODE, BLDATE)
-              VALUES (#{field1}, #{field2}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
+        INSERT INTO BOARDLIKE(BLNO, BRDNO, FK_SAWON_CODE, BLDATE)
+              VALUES (BLNO.NEXTVAL, #{field1}, #{field2}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
     </insert> 
 
     <insert id="updateBoard4Like" parameterType="project.common.Field3VO"> 
         UPDATE BOARD
-           SET BRDLIKE = BRDLIKE + 1 
+           SET BRDLIKE = NVL(MAX(BRDLIKE),0)+1 
          WHERE BRDNO=#{field1}
     </insert> 
 
@@ -438,8 +438,8 @@
     </select> 
 
     <insert id="insertBoardFile" parameterType="project.common.FileVO" >
-        INSERT INTO BOARDFILE (BRDNO, FILENAME, REALNAME, FILESIZE)
-        VALUES (#{parentPK}, #{filename}, #{realname}, #{filesize})
+        INSERT INTO BOARDFILE (FILENO, BRDNO, FILENAME, REALNAME, FILESIZE)
+        VALUES (FILENO.NEXTVAL, #{parentPK}, #{filename}, #{realname}, #{filesize})
     </insert>
     
     <delete id="deleteBoardFile" parameterType="hashmap"> 
@@ -467,7 +467,7 @@
         </selectKey>
     
         INSERT INTO BOARDREPLY(BRDNO, RENO, FK_SAWON_CODE, REDELETEFLAG, REMEMO, REDATE, REORDER, REPARENT, REDEPTH)
-        VALUES (#{brdno}, #{reno}, #{PK_SAWON_CODE}, 'N', #{rememo}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{reorder},
+        VALUES (#{brdno}, #{reno}, #{FK_SAWON_CODE}, 'N', #{rememo, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{reorder},
                    <choose>
                        <when test="reparent==null">#{reno}, 0</when>
                        <otherwise>#{reparent}, #{redepth}</otherwise>
@@ -483,15 +483,16 @@
     </select>
 
     <select id="selectBoardReplyParent" resultType="hr.system.p0003.vo.BoardReplyVO" parameterType="String">
-        SELECT BRDNO, REDEPTH+1 REDEPTH, NVL((SELECT MAX(REORDER) FROM BOARDREPLY WHERE REPARENT=TB.RENO), TB.REORDER) REORDER
+        SELECT BRDNO, REDEPTH+1 REDEPTH, COALESCE((SELECT MAX(REORDER) FROM BOARDREPLY WHERE REPARENT=TB.RENO), TB.REORDER) reorder
           FROM BOARDREPLY TB
          WHERE RENO=#{reparent}
     </select>
- 
-    <update id="updateBoardReplyOrder" parameterType="hr.system.p0003.vo.BoardReplyVO"> 
+    
+    <update id="updateBoardReplyOrder" parameterType="java.util.Map" > 
         UPDATE BOARDREPLY
-           SET REORDER = REORDER + 1 
-         WHERE BRDNO=#{brdno} AND REORDER>#{reorder}       
+           SET REORDER = REORDER + 1
+         WHERE REORDER>${reorder}
+           AND BRDNO=${brdno}
     </update> 
 
     <select id="selectBoardReplyMaxOrder" resultType="Integer" parameterType="String">
@@ -510,7 +511,7 @@
         SELECT RENO
           FROM BOARDREPLY
          WHERE REDELETEFLAG='N'
-           AND RENO=#{reno} AND FK_SAWON_CODE=#{PK_SAWON_CODE}
+           AND RENO=#{reno} AND FK_SAWON_CODE=#{FK_SAWON_CODE}
     </select> 
     
     <update id="deleteBoardReply" parameterType="String"> 
@@ -523,16 +524,19 @@
      
     <update id="updateBoardReplyOrder4Delete" parameterType="hr.system.p0003.vo.BoardReplyVO"> 
         UPDATE BOARDREPLY TBR1
-         INNER JOIN BOARDREPLY TBR2 ON TBR2.BRDNO=TBR1.BRDNO AND TBR1.REORDER >TBR2.REORDER AND TBR1.REDELETEFLAG='N'
-           SET TBR1.REORDER = TBR1.REORDER - 1 
-         WHERE TBR2.RENO=#{reno} 
+			SET REORDER = REORDER - 1
+		  WHERE RENO=#{reno} 
+			AND EXISTS (SELECT TBR1.REORDER, TBR2.RENO
+			    FROM BOARDREPLY TBR1, BOARDREPLY TBR2
+			    WHERE TBR2.BRDNO=TBR1.BRDNO AND TBR1.REORDER >TBR2.REORDER AND TBR1.REDELETEFLAG='N'
+			    ) 
     </update>
      
     <update id="updateBoardReply" parameterType="hr.system.p0003.vo.BoardReplyVO">
         UPDATE BOARDREPLY
            SET REMEMO=#{rememo} 
              , MOD_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
-             , MOD_USER_ID=#{PK_SAWON_CODE}
+             , MOD_USER_ID=#{FK_SAWON_CODE}
          WHERE RENO=#{reno}
     </update>
 

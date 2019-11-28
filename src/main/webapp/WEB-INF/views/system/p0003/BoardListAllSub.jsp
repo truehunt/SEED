@@ -26,7 +26,7 @@
 		</div>
 		<div class="listHiddenField pull-right field60 textCenter"><c:out value="${listitem.brdhit}"/></div>
 		<div class="listHiddenField pull-right field100 textCenter" style="font-size:11px;"><c:out value="${listitem.brddate}"/></div>
-		<div class="listHiddenField pull-right field100 textCenter"><a href="list4User?FK_SAWON_CODE=<c:out value="${listitem.PK_SAWON_CODE}"/>"><c:out value="${listitem.brdwriter}"/></a></div>
+		<div class="listHiddenField pull-right field100 textCenter"><a href="list4User?FK_SAWON_CODE=<c:out value="${listitem.FK_SAWON_CODE}"/>"><c:out value="${listitem.brdwriter}"/></a></div>
 		<div class="listTitle" title="<c:out value="${listitem.brdtitle}"/>">
 			<a href="${link}" <c:if test="${listitem.brdnotice=='Y'}">class="notice"</c:if>><c:out value="${listitem.brdtitle}"/></a>
 			<c:if test="${listitem.replycnt>0}">

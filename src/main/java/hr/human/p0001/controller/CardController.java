@@ -17,7 +17,7 @@ public interface CardController {
 	public ModelAndView sample(HttpServletRequest request, HttpServletResponse response) throws Exception;
 //	public ModelAndView popupHL(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map saveData(HttpServletRequest request, HttpServletResponse response ) throws Exception;
 	
 	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map ISA(HttpServletRequest request, HttpServletResponse response) throws Exception;
@@ -25,8 +25,6 @@ public interface CardController {
 	public Map COM_CODE(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map ISA_cha(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	public String imageSave(HttpServletRequest request, ModelMap modelMap, SignImageVO signImageInfo);
-    public void deleteSignImage(HttpServletRequest request, HttpServletResponse response, String IMAGENO) throws IOException;
-	
+	public String imageSave(HttpServletRequest request, HttpServletResponse response, SignImageVO signImageInfo)  throws IOException ;
 	
 }

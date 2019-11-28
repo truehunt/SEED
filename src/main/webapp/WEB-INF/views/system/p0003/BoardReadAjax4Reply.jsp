@@ -20,7 +20,7 @@
 	    <div class="photoTitle">
 			<div> 
 				<c:out value="${replyInfo.rewriter}"/> <c:out value="${replyInfo.redate}"/>
-				<c:if test='${replyInfo.PK_SAWON_CODE==sessionScope.PK_SAWON_CODE}' >
+				<c:if test='${replyInfo.FK_SAWON_CODE==sessionScope.PK_SAWON_CODE}' >
 					<a href="javascript:fn_replyDelete('<c:out value="${replyInfo.reno}"/>')" title="<s:message code="common.btnDelete"/>" ><span class="text-muted"><i class="fa fa-times fa-fw"></i></span></span></a>
 					<a href="javascript:fn_replyUpdate('<c:out value="${replyInfo.reno}"/>')" title="<s:message code="common.btnUpdate"/>" ><span class="text-muted"><i class="fa fa-edit fa-fw"></i></span></a>
 				</c:if>

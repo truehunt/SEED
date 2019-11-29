@@ -72,10 +72,9 @@ $(document).ready(function(){
 		            } else if(url === "boardList"){ // 게시판(공지사항)
 		            	urlToGo = "boardList";
 		            } else if(url === "fn_search"){ // 검색바 검색
-		            	if ($("#globalKeyword").val()!=="") {
-                    		$("#searchForm").submit();
-                    		urlToGo = "boardList";
-                		}
+		            	var search = $("#globalKeyword").val();
+		            	var searchType = "brdtitle,brdmemo";
+                   		urlToGo = "boardList?globalKeyword=" + search +"&searchType="+ searchType;
 		            // 전자결재
 		            } else if(url === "adSignDocTypeList"){ // 결재문서양식관리
 		            	urlToGo = "/SEED/adSignDocTypeList";
@@ -88,14 +87,14 @@ $(document).ready(function(){
 		            } else if(url === "signImageForm"){ // 결재이미지 등록
 		            	urlToGo = "/SEED/signImageForm";
 		            // 급여관리
-		            } else if(url === "pay/TA_input/TA_input.do"){ // 근태 결과 입력
-		            	urlToGo = "pay/TA_input/TA_input.do";
-		            } else if(url === "pay/SALARY_calcul/SALARY_calcul.do"){
-		            	urlToGo = "pay/SALARY_calcul/SALARY_calcul.do";
-		            } else if(url === "pay/SALARY_bo_sta/SALARY_bo_sta.do"){
-		            	urlToGo = "pay/SALARY_bo_sta/SALARY_bo_sta.do";
-		            } else if(url === "pay/SET_payday/SET_payday.do"){
-		            	urlToGo = "pay/SET_payday/SET_payday.do";
+		            } else if(url === "TA_input"){ // 근태 결과 입력
+		            	urlToGo = "/SEED/pay/p0001/TA_input.do";
+		            } else if(url === "SALARY_calcul"){
+		            	urlToGo = "/SEED/pay/p0002/SALARY_calcul.do";
+		            } else if(url === "SALARY_bo_sta"){
+		            	urlToGo = "/SEED/pay/p0003/SALARY_bo_sta.do";
+		            } else if(url === "SET_payday"){
+		            	urlToGo = "/SEED/system/p0001/SET_payday.do";
 		            // 근태관리
 		            } else if(url === "day_regist_sawon"){//사원 출퇴근
 		            	urlToGo = "/SEED/attendance/p0001/day_regist_sawon.do";
@@ -197,8 +196,14 @@ $(document).ready(function(){
 	                <li class="dropdown">
 	                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
 	                    	<span class="fa-stack fa-lg"> 
-							<i class="fa fa-circle fa-stack-2x"></i> 
-							<i class="fa fa-user fa-stack-1x fa-inverse"></i>
+										<c:choose>
+										    <c:when test="${sessionScope.PHOTO==null}">
+													<i class="glyphicon glyphicon-user noPhoto" style="height:37.33px; width:37.33px;"></i>
+										    </c:when>
+										    <c:otherwise>
+										    	<img class="img-circle" src="fileDownload?downname=<c:out value="${sessionScope.PHOTO}"/>" style="height:37.33px; width:37.33px;"/>
+										    </c:otherwise>
+										</c:choose>
 							</span>
 							<c:out value="${sessionScope.SAWON_NAME}"/> 님
 	                        <i class="fa fa-caret-down"></i>
@@ -252,7 +257,7 @@ $(document).ready(function(){
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                           	<form id="searchForm" name="searchForm"  method="post" action="boardList">
+                           	<form id="searchForm" name="searchForm"  method="post" onsubmit="return false;">
                                 <input type="hidden" name="searchType" value="brdtitle,brdmemo">
 								<div class="input-group custom-search-form">
 	                                <input class="form-control" type="text" name="globalKeyword" id="globalKeyword" placeholder="<s:message code="main.search"/>">
@@ -311,25 +316,10 @@ $(document).ready(function(){
                                     <a href='#' onClick="doAction(myTab,'<s:message code="main.dailyReg"/>','chart','day_regist_sawon','day_regist_sawon'); return false"><s:message code="main.dailyReg"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.monthlyCls"/>','chart','ad_day_regist','ad_day_regist'); return false"><s:message code="main.monthlyCls"/></a>
-                                </li>
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.monthlyCls2"/>','chart','dd','dd'); return false"><s:message code="main.monthlyCls2"/></a>
-                                </li>
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.nightShift"/>','chart','ee','ee'); return false"><s:message code="main.nightShift"/></a>
-                                </li>
-                                <li>
                                     <a href='#' onClick="doAction(myTab,'<s:message code="main.findHoliday"/>','chart','holiday','holiday'); return false"><s:message code="main.findHoliday"/></a>
                                 </li>
                                 <li>
                                     <a href='#' onClick="doAction(myTab,'<s:message code="main.findBT"/>','chart','business','business'); return false"><s:message code="main.findBT"/></a>
-                                </li>
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.writeDoc"/>','chart','outside','outside'); return false"><s:message code="main.writeDoc"/></a>
-                                </li>
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.calHoliday"/>','chart','holiday_calc','holiday_calc'); return false"><s:message code="main.calHoliday"/></a>
                                 </li>
 	                        </ul>                             
                         </li> 
@@ -347,6 +337,36 @@ $(document).ready(function(){
                                 </li>
 	                        </ul>                             
                         </li>
+                        <!-- 부서장메뉴 --> 
+                        <c:if test='${sessionScope.SAWON_VIEW_PERMISSION == "A" or sessionScope.SAWON_VIEW_PERMISSION == "B"}'>  
+	                        <li>
+	                            <a href="#"> MSS</a>
+	                        </li>
+	                         <!-- 근태/연차 관리 -->
+	                        <li>
+	                            <a href="#"><i class="fa fa-user fa-fw"></i> <s:message code="main.T&A"/><span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+									<li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.dayCls"/>','chart','ad_day_regist','ad_day_regist'); return false"><s:message code="main.dayCls"/></a> 
+	                                </li>
+	                                <li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.monthlyCls2"/>','chart','dd','dd'); return false"><s:message code="main.monthlyCls2"/></a>
+	                                </li>
+	                                <li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.nightShift"/>','chart','ee','ee'); return false"><s:message code="main.nightShift"/></a>
+	                                </li>
+	                                <li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.calHoliday"/>','chart','holiday_calc','holiday_calc'); return false"><s:message code="main.calHoliday"/></a>
+	                                </li>
+	                                <li>
+                                    	<a href='#' onClick="doAction(myTab,'<s:message code="main.findHoliday2"/>','chart','ff','ff'); return false"><s:message code="main.findHoliday2"/></a>
+                                	</li>
+                                	<li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.findBT2"/>','chart','business','business'); return false"><s:message code="main.findBT2"/></a>
+	                                </li>
+                                </ul>
+                            </li>
+	                    </c:if>
                         <!-- 관리자메뉴 --> 
                         <c:if test='${sessionScope.SAWON_VIEW_PERMISSION == "A"}'>  
 	                        <li>

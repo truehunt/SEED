@@ -66,7 +66,7 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 	}
 	
 	@Override
-	@RequestMapping(value = "/pay/SALARY_bo_sta/SALARY_bo_sta.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/p0003/SALARY_bo_sta.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	request.setCharacterEncoding("utf-8");
 		ModelAndView main = new ModelAndView("pay/p0003/SALARY_bo_sta");

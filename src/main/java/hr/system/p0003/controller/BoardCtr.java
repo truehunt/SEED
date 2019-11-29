@@ -42,6 +42,7 @@ public class BoardCtr {
     @RequestMapping(value = "/boardList")
     public String boardList(HttpServletRequest request, BoardSearchVO searchVO, ModelMap modelMap) {
         String globalKeyword = request.getParameter("globalKeyword");  // it's search from left side bar
+        searchVO.setSearchType(request.getParameter("searchType"));
         if (globalKeyword!=null & !"".equals(globalKeyword)) {
             searchVO.setSearchKeyword(globalKeyword);
         }        
@@ -266,6 +267,24 @@ public class BoardCtr {
         } else {
             UtilEtc.responseJsonValue(response, "OK");
         }
+    }
+    
+    /**
+     * alert 리스트 전체. - 글쓴이 목록 불러오기
+     */
+    @RequestMapping(value = "/list4User")
+    public String list4User(HttpServletRequest request, BoardSearchVO searchVO, ModelMap modelMap) {
+        String userno = request.getParameter("FK_SAWON_CODE");
+        searchVO.setSearchExt1(userno);
+        
+        searchVO.pageCalculate(etcSvc.selectList4UserCount(searchVO) ); // startRow, endRow
+        
+        List<?> listview   = etcSvc.selectList4User(searchVO);
+
+        modelMap.addAttribute("listview", listview);
+        modelMap.addAttribute("searchVO", searchVO);
+        
+        return "system/p0003/list4User";
     }
    
 }

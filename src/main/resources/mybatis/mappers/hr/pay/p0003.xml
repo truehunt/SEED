@@ -58,25 +58,22 @@
             and d.fk_salary_cal_sawon_code = e.fk_sawon_code
             and c.pk_workplace_code = d.salary_cal_workplace_code
            
-            
-            and fk_SAWON_WORKPLACE_CODE = #{FK_SAWON_WORKPLACE_CODE ,jdbcType=VARCHAR}
-            and salary_CAL_PAYMENTDAY = #{SALARY_CAL_PAYMENTDAY, jdbcType=VARCHAR}
-			and sal_INFO_TRANS_AMOUNT_O = #{SAL_INFO_TRANS_AMOUNT_O, jdbcType=VARCHAR}
+
                   	
-			<if test="fk_SALARY_CAL_SAWON_CODE != null ">
-				      and fk_SALARY_CAL_SAWON_CODE = #{FK_SALARY_CAL_SAWON_CODE}
+			<if test="PK_WORKPLACE_CODE  != null ">
+				      and fk_SAWON_WORKPLACE_CODE  = #{PK_WORKPLACE_CODE }
 			</if>
 			
-					<if test="salary_CAL_PAYMENTDAY != null">
+					<if test="SALARY_CAL_PAYMENTDAY != null">
 				      and salary_CAL_PAYMENTDAY = #{SALARY_CAL_PAYMENTDAY}
 			</if>
 			
-				<if test="sal_INFO_TRANS_AMOUNT_O != null">
+				<if test="SAL_INFO_TRANS_AMOUNT_O != null">
 				      and sal_INFO_TRANS_AMOUNT_O = #{SAL_INFO_TRANS_AMOUNT_O}
 			</if>
 			    
-			   <if test="PK_WORKPLACE_CODE != null">
-				      and FK_DEPT_CODE = #{PK_WORKPLACE_CODE}
+			   <if test="FK_DEPT_CODE != null">
+				      and FK_DEPT_CODE = #{FK_DEPT_CODE}
 				      
 				</if>
 				

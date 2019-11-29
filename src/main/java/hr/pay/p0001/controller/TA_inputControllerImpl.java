@@ -77,7 +77,7 @@ public class TA_inputControllerImpl implements TA_inputController {
 	
 	
 	@Override
-	@RequestMapping(value = "/pay/TA_input/TA_input.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/p0001/TA_input.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	request.setCharacterEncoding("utf-8");
 		ModelAndView main = new ModelAndView("pay/p0001/TA_input");

@@ -359,20 +359,21 @@
           FROM BOARD TB
          INNER JOIN SAWON CU ON TB.FK_SAWON_CODE=CU.PK_SAWON_CODE
          INNER JOIN BOARDGROUP TBG ON TBG.BGNO=TB.BGNO
+         WHERE BRDDELETEFLAG='N' AND BRDNOTICE='Y'
         <if test="bgno!=null and bgno!=''">
             AND TB.BGNO=#{bgno}
         </if>  
          ORDER BY BRDNO DESC
          ) A 
-         WHERE A.NO BETWEEN 1 AND 3
+         WHERE A.NO BETWEEN 1 AND 5
     </select> 
         
     <insert id="insertBoard" parameterType="hr.system.p0003.vo.BoardVO" >
         <selectKey resultType="String" keyProperty="brdno" order="BEFORE">
             SELECT NVL(MAX(BRDNO),0)+1 FROM BOARD
         </selectKey>
-        INSERT INTO BOARD(BGNO, BRDNO, BRDTITLE, FK_SAWON_CODE, BRDMEMO, BRDNOTICE, BRDDATE, BRDDELETEFLAG)
-        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{FK_SAWON_CODE}, #{brdmemo}, #{brdnotice, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
+        INSERT INTO BOARD(BGNO, BRDNO, BRDTITLE, FK_SAWON_CODE, BRDMEMO, BRDNOTICE, BRDDATE, BRDLIKE, BRDDELETEFLAG)
+        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{FK_SAWON_CODE}, #{brdmemo}, #{brdnotice, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), 0, 'N')
     </insert>
     
     <update id="updateBoard" parameterType="hr.system.p0003.vo.BoardVO">
@@ -417,13 +418,14 @@
 
     <insert id="updateBoard4Like" parameterType="project.common.Field3VO"> 
         UPDATE BOARD
-           SET BRDLIKE = NVL(MAX(BRDLIKE),0)+1 
+           SET BRDLIKE = BRDLIKE + 1 
          WHERE BRDNO=#{field1}
     </insert> 
 
     <delete id="deleteBoardOne" parameterType="String">
         UPDATE BOARD
            SET BRDDELETEFLAG='Y'
+           	 , BRDNOTICE='N'
              , MOD_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
              , MOD_USER_ID=#{PK_SAWON_CODE}
          WHERE BRDNO=#{brdno}
@@ -539,5 +541,41 @@
              , MOD_USER_ID=#{FK_SAWON_CODE}
          WHERE RENO=#{reno}
     </update>
+    
+    <!-- 게시판 글쓴이 목록 불러오기 -->
+    <select id="selectList4UserCount" parameterType="hr.system.p0003.vo.BoardSearchVO" resultType="Integer">
+        SELECT sum(C.cnt) from
+			(SELECT COUNT(*) cnt
+			                 FROM BOARD TB
+			                 WHERE BRDDELETEFLAG='N' AND TB.FK_SAWON_CODE=#{searchExt1}
+			                 UNION ALL
+			SELECT COUNT(*) cnt
+					         FROM BOARDREPLY TBR
+					       	 WHERE TBR.REDELETEFLAG='N' AND TBR.FK_SAWON_CODE=#{searchExt1})C
+     </select>        
+    <select id="selectList4User" parameterType="hr.system.p0003.vo.BoardSearchVO" resultType="hr.system.p0003.vo.BoardVO">
+        SELECT *
+		FROM (SELECT ROWNUM as NO, DS.BRDNO, DS.BRDDATE, DS.TYPE as extfield1
+		             , TB.BRDTITLE, BGNAME, CU.SAWON_NAME BRDWRITER
+		             , (SELECT COUNT(*) FROM BOARDREAD WHERE BRDNO=TB.BRDNO) BRDHIT
+		             , (SELECT COUNT(*) FROM BOARDREPLY WHERE BRDNO=TB.BRDNO AND REDELETEFLAG='N') REPLYCNT
+		          FROM (
+		                SELECT TB.BRDNO, BRDDATE, 'files-o' as TYPE
+		                  FROM BOARD TB
+		                 WHERE BRDDELETEFLAG='N' AND TB.FK_SAWON_CODE=#{searchExt1}
+		                UNION ALL
+		                SELECT BRDNO, TBR.REDATE BRDDATE, 'comments' as TYPE
+		                  FROM BOARDREPLY TBR
+		                 WHERE TBR.REDELETEFLAG='N' AND TBR.FK_SAWON_CODE=#{searchExt1}
+		                 ORDER BY BRDDATE DESC
+		        ) DS
+		        INNER JOIN BOARD TB ON DS.BRDNO=TB.BRDNO
+		        INNER JOIN BOARDGROUP TBG ON TBG.BGNO=TB.BGNO    
+		        INNER JOIN SAWON CU ON CU.PK_SAWON_CODE=TB.FK_SAWON_CODE
+		    ) A
+		<if test="rowStart != null">
+			WHERE A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+         </if>         
+     </select>
 
 </mapper>

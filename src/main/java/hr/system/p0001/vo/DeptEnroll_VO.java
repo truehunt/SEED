@@ -19,7 +19,8 @@ public class DeptEnroll_VO {
 	private String workplace_name; // 사업장 명
 	private String fk_sector_code; // fk_부문코드
 	private String dept_priodof; // 사용기간
-	
+	private String dept_inquiry_code;// 구분 코드 - 삽입시 항상 2값 들어감
+
 	private String dept_int_user_id; // 입력자
 	private Timestamp dept_int_date; // 입력일시
 	private String dept_mod_user_id; // 수정자

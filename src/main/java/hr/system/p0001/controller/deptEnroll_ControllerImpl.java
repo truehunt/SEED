@@ -83,7 +83,8 @@ public class deptEnroll_ControllerImpl implements deptEnroll_Controller {
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
       
       // 검색조건설정
-      //searchMap.put("pk_company_code", request.getParameter("p_id"));
+      searchMap.put("code", request.getParameter("code"));
+      System.out.println(searchMap);
       
       //데이터 조회
       List<DeptEnroll_VO> data = deptEnroll_Service.searchList(searchMap);

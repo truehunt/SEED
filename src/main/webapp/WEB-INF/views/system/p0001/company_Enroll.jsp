@@ -117,7 +117,7 @@
 			// FORMAT 형식 법인/사업자 등록번호 - Format:["IdNo", "SaupNo"], 전화번호/FAX번호 - Format: "PhoneNo", 
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50},
-			{Header:"코드",Type:"Text",SaveName:"pk_company_code",MinWidth:50,Align:"Center", KeyField:1},
+			{Header:"코드",Type:"Text",SaveName:"pk_company_code",MinWidth:50,Align:"Center", KeyField:1, UpdateEdit:0},
 			{Header:"회사명",Type:"Text",SaveName:"company_name",MinWidth:150,Align:"Center", KeyField:1},			
 			{Header:"구분", Type:"Combo", MinWidth:60, SaveName:"company_division",Edit: 1, Align:"Center",KeyField:1},
 			{Header:"회계년도1",Type:"Text",SaveName:"company_fiscal_year_o", KeyField:1, Hidden:1},

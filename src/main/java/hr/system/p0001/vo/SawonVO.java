@@ -22,6 +22,7 @@ public class SawonVO {
 	private String SAWON_MOD_DATE;
 	private String RANK_NAME; // 직급명
 	private String FK_DEPT_NAME; // 부서명
+	private String PHOTO; // 부서명
 	
 	public SawonVO() {
 		System.out.println("SAWON VO 생성");
@@ -153,6 +154,14 @@ public class SawonVO {
 
 	public void setFK_DEPT_NAME(String fK_DEPT_NAME) {
 		FK_DEPT_NAME = fK_DEPT_NAME;
+	}
+
+	public String getPHOTO() {
+		return PHOTO;
+	}
+
+	public void setPHOTO(String pHOTO) {
+		PHOTO = pHOTO;
 	}
 	
 }

@@ -92,7 +92,7 @@ function TreenodeActivate(node) {
         <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-send fa-fw"></i> <c:out value="${bgInfo.bgname}"/></h1>
+                    <h1 class="page-header"><i class="fa fa-send fa-fw"></i> 게시판</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -167,7 +167,7 @@ function TreenodeActivate(node) {
 		                        </label>
 		                   </div>
 		                   <div class="input-group custom-search-form col-lg-3">
-	                                <input class="form-control" placeholder="Search..." type="text" name="searchKeyword" 
+	                                <input class="form-control" placeholder="<s:message code="main.search"/>" type="text" name="searchKeyword" 
 	                                	   value='<c:out value="${searchVO.searchKeyword}"/>' >
 	                                <span class="input-group-btn">
 	                                <button class="btn btn-default" onclick="fn_formSubmit()">

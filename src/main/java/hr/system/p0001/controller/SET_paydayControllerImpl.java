@@ -64,7 +64,7 @@ public class SET_paydayControllerImpl implements SET_paydayController {
 	}
 	
 	@Override
-	@RequestMapping(value = "/pay/SET_payday/SET_payday.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/system/p0001/SET_payday.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	request.setCharacterEncoding("utf-8");
 		ModelAndView main = new ModelAndView("system/p0001/SET_payday");

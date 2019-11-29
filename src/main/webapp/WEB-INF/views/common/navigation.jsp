@@ -27,8 +27,8 @@ $(document).ready(function(){
 	
 		        createIBTab(tabBar, contents, "myTab", {
 		            widthTabBar: "100%", // 탭바 너비
-		            widthContents: "100%", // 콘탠츠 너비
-		            heightContents: "886px", // 콘텐츠 높이
+		            widthContents: "1620px", // 콘탠츠 너비
+		            heightContents: "1650px", // 콘텐츠 높이
 		            themes: {
 		                tabs: "simple_under_blue", // 탭바 테마
 		                contents: "simple_under_blue", // 콘텐츠 테마
@@ -208,7 +208,8 @@ $(document).ready(function(){
 	                    	<span class="fa-stack fa-lg"> 
 										<c:choose>
 										    <c:when test="${sessionScope.PHOTO==null}">
-													<i class="glyphicon glyphicon-user noPhoto" style="height:37.33px; width:37.33px;"></i>
+													<i class="fa fa-circle fa-stack-2x"></i> 
+													<i class="fa fa-user fa-stack-1x fa-inverse"></i>
 										    </c:when>
 										    <c:otherwise>
 										    	<img class="img-circle" src="fileDownload?downname=<c:out value="${sessionScope.PHOTO}"/>" style="height:37.33px; width:37.33px;"/>
@@ -376,6 +377,18 @@ $(document).ready(function(){
 	                                </li>
                                 </ul>
                             </li>
+                            <!-- 인사관리 -->
+	                        <li>
+	                            <a href="#"><i class="fa fa-users fa-fw"></i> <s:message code="main.per"/><span class="fa arrow"></span></a>
+	                            <ul class="nav nav-second-level">
+	                            	<li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per8"/>','chart','education_evaluation','education_evaluation'); return false"><s:message code="main.per8"/></a>
+	                                </li>
+	                                <li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per9"/>','chart','education_status','education_status'); return false"><s:message code="main.per9"/></a>
+	                                </li>
+	                            </ul>
+                            </li>
 	                    </c:if>
                         <!-- 관리자메뉴 --> 
                         <c:if test='${sessionScope.SAWON_VIEW_PERMISSION == "A"}'>  
@@ -447,12 +460,6 @@ $(document).ready(function(){
 	                                </li>
 	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per7"/>','chart','education','education'); return false"><s:message code="main.per7"/></a>
-	                                </li>
-	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per8"/>','chart','education_evaluation','education_evaluation'); return false"><s:message code="main.per8"/></a>
-	                                </li>
-	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per9"/>','chart','education_status','education_status'); return false"><s:message code="main.per9"/></a>
 	                                </li>
 	                            </ul>
 	                        </li>

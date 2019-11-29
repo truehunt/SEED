@@ -124,7 +124,17 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/system/p0001/insa_code.do"
 		            } else if(url === "card"){	// 인사기록카드
 		            	urlToGo = "/SEED/human/p0001/insa_card.do"
+		            }else if(url === "education"){	// 교육관리
+		            	urlToGo = " /SEED/human/p0007/tab_education_manage.do"
+		            }else if(url === "education_evaluation"){	// 교육관리
+		            	urlToGo = " /SEED/human/p0008/education_evaluation.do"
+		            }else if(url === "education_status"){	// 교육관리
+		            	urlToGo = " /SEED/human/p0009/tab_education_status.do"
 		            }
+		           
+		            
+		            
+		           
 	
 		            Tab = elId.findTabId(id);
 	
@@ -328,12 +338,12 @@ $(document).ready(function(){
                             <a href="#"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay"/><span class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
                                 <li>
-                                    <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay1"/>','chart','pay/TA_input/TA_input.do','pay/TA_input/TA_input.do'); return false"><s:message code="main.pay1"/></a>
+                                    <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay1"/>','chart','TA_input','TA_input'); return false"><s:message code="main.pay1"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay2"/>','chart','pay/SALARY_calcul/SALARY_calcul.do','pay/SALARY_calcul/SALARY_calcul.do'); return false"><s:message code="main.pay2"/></a>                                
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay2"/>','chart','SALARY_calcul','SALARY_calcul'); return false"><s:message code="main.pay2"/></a>                                
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay3"/>','chart','pay/SALARY_bo_sta/SALARY_bo_sta.do','pay/SALARY_bo_sta/SALARY_bo_sta.do'); return false"><s:message code="main.pay3"/></a>
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay3"/>','chart','SALARY_bo_sta','SALARY_bo_sta'); return false"><s:message code="main.pay3"/></a>
                                 </li>
 	                        </ul>                             
                         </li>
@@ -402,7 +412,7 @@ $(document).ready(function(){
 	                                </li>
 	                                <li>
 
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup2"/>','chart','pay/SET_payday/SET_payday.do','pay/SET_payday/SET_payday.do'); return false"><s:message code="main.setup2"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup2"/>','chart','SET_payday','SET_payday'); return false"><s:message code="main.setup2"/></a>
 
 	                                </li>
 	                                <li>
@@ -436,13 +446,13 @@ $(document).ready(function(){
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per6"/>','chart','a3','a3'); return false"><s:message code="main.per6"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per7"/>','chart','mm','mm'); return false"><s:message code="main.per7"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per7"/>','chart','education','education'); return false"><s:message code="main.per7"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per8"/>','chart','nn','nn'); return false"><s:message code="main.per8"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per8"/>','chart','education_evaluation','education_evaluation'); return false"><s:message code="main.per8"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per9"/>','chart','oo','oo'); return false"><s:message code="main.per9"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per9"/>','chart','education_status','education_status'); return false"><s:message code="main.per9"/></a>
 	                                </li>
 	                            </ul>
 	                        </li>

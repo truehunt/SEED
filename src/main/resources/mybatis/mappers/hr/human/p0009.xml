@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.human.p0009">
+	<!-- WorkEnroll -->
+   <resultMap id="p0009Result01" type="education_statusVO">
+      <result property="pk_EDUCATION_MANA_CODE" column="pk_EDUCATION_MANA_CODE" />
+      <result property="education_MANA_NAME" column="education_MANA_NAME" />
+      <result property="education_MANA_STA" column="education_MANA_STA" />
+      <result property="education_MANA_END" column="education_MANA_END" />
+      <result property="education_MANA_DAYS"  column="education_MANA_DAYS" />
+      <result property="education_MANA_PUR" column="education_MANA_PUR" />
+      <result property="education_MANA_LOCA" column="education_MANA_LOCA" />
+      <result property="education_MANA_TEA" column="education_MANA_TEA" />
+      <result property="education_MANA_AGENCY" column="education_MANA_AGENCY" />
+      <result property="education_MANA_TIMES" column="education_MANA_TIMES" />
+      
+      <result property="education_MANA_SAWON_CODE" column="education_MANA_SAWON_CODE" />
+      <result property="education_MANA_SAWON_NAME" column="education_MANA_SAWON_NAME" />
+      <result property="education_MANA_DEPT" column="education_MANA_DEPT" />
+      <result property="education_MANA_POSITION" column="education_MANA_POSITION" />
+      
+      
+      <result property="fk_EDUCATION_ADD_CODE" column="fk_EDUCATION_ADD_CODE" />
+      <result property="pk_EDUCATION_ADD_SAWON_CODE" column="pk_EDUCATION_ADD_SAWON_CODE" />
+      <result property="education_ADD_SAWON_NAME" column="education_MANA_SAWON_NAME" />
+      <result property="education_ADD_DEPT" column="education_MANA_DEPT" />
+      <result property="education_ADD_POSITION" column="education_MANA_POSITION" />
+      
+      
+      <result property="education_EVAL_EDU_CODE" column="education_EVAL_EDU_CODE" />
+      <result property="pk_EDUCATION_EVAL_SAWON_CODE" column="pk_EDUCATION_EVAL_SAWON_CODE" />
+      <result property="fk_EDUCATION_EVAL_SAWON_NAME" column="fk_EDUCATION_EVAL_SAWON_NAME" />
+      <result property="education_EVAL_DEPT" column="education_EVAL_DEPT" />
+      <result property="education_EVAL_POSITION" column="education_EVAL_POSITION" />
+      
+      
+      
+      
+      
+      <result property="education_MANA_int_user_id" column="education_MANA_int_user_id" />
+      <result property="education_MANA_int_date" column="education_MANA_int_date" />
+      <result property="education_MANA_user_id" column="education_MANA_user_id" />
+      <result property="education_MANA_mod_date" column="education_MANA_mod_date" />
+
+   </resultMap>
+
+   <select id="searchList" resultMap="p0009Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select pk_EDUCATION_MANA_CODE, education_MANA_NAME
+              , TO_CHAR(TO_DATE(education_MANA_STA),'YYYY-MM-DD') as education_MANA_STA 
+              , TO_CHAR(TO_DATE(education_MANA_END),'YYYY-MM-DD') as education_MANA_END 
+              , education_MANA_DAYS, education_MANA_PUR, education_MANA_LOCA 
+              , education_MANA_TEA, education_MANA_AGENCY, education_MANA_TIMES
+  
+         from   EDUCATION_MANA
+      ]]>
+     
+            order By pk_EDUCATION_MANA_CODE ASC
+   </select>
+   
+   
+   
+   
+      <select id="searchList2" resultMap="p0009Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select pk_EDUCATION_MANA_CODE, education_MANA_SAWON_CODE, education_MANA_SAWON_NAME, education_MANA_DEPT, education_MANA_POSITION
+  
+         from   EDUCATION_MANA
+         
+          
+      ]]>
+     
+           
+   </select>
+   
+   
+   
+      <select id="searchList3" resultMap="p0009Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select a.pk_EDUCATION_MANA_CODE, b.pk_education_ADD_SAWON_CODE, b.education_ADD_SAWON_NAME, b.education_ADD_DEPT, b.education_ADD_POSITION
+         from   EDUCATION_MANA a, EDUCATION_ADD b
+         
+          
+      ]]>
+     <where>
+     
+            a.pk_EDUCATION_MANA_CODE = b.fk_EDUCATION_ADD_CODE
+            
+            <if test="PK_EDUCATION_MANA_CODE != null ">
+				      and PK_EDUCATION_MANA_CODE = #{PK_EDUCATION_MANA_CODE, jdbcType=VARCHAR}
+			</if>
+                   
+     </where>
+           
+   </select>
+   
+   
+   
+   
+   
+   
+   <update id="updateData" parameterType="java.util.Map">
+      update EDUCATION_MANA
+      set pk_EDUCATION_MANA_CODE = #{pk_EDUCATION_MANA_CODE,jdbcType=VARCHAR}
+         , education_MANA_NAME = #{education_MANA_NAME,jdbcType=VARCHAR}
+         , education_MANA_STA = #{education_MANA_STA,jdbcType=VARCHAR}
+         , education_MANA_END = #{education_MANA_END,jdbcType=VARCHAR}
+         , education_MANA_DAYS = #{education_MANA_DAYS,jdbcType=VARCHAR}
+         , education_MANA_PUR = #{education_MANA_PUR,jdbcType=VARCHAR}
+         , education_MANA_LOCA = #{education_MANA_LOCA,jdbcType=VARCHAR}
+         , education_MANA_TEA = #{education_MANA_TEA,jdbcType=VARCHAR}
+         , education_MANA_AGENCY = #{education_MANA_AGENCY,jdbcType=VARCHAR}
+         , education_MANA_TIMES = #{education_MANA_TIMES,jdbcType=VARCHAR}
+         
+         
+      where pk_EDUCATION_MANA_CODE = #{pk_EDUCATION_MANA_CODE, jdbcType=VARCHAR}
+   </update>   
+   
+   
+   
+   
+      
+   <update id="updateData2" parameterType="java.util.Map">
+      update EDUCATION_ADD
+      set fk_EDUCATION_ADD_CODE = #{fk_EDUCATION_ADD_CODE,jdbcType=VARCHAR}
+         , pk_EDUCATION_ADD_SAWON_CODE = #{pk_EDUCATION_ADD_SAWON_CODE,jdbcType=VARCHAR}
+         , education_ADD_SAWON_NAME = #{education_ADD_SAWON_NAME,jdbcType=VARCHAR}
+         , education_ADD_DEPT = #{education_ADD_DEPT,jdbcType=VARCHAR}
+         , education_ADD_POSITION = #{education_ADD_POSITION,jdbcType=VARCHAR}
+       
+         
+      where pk_EDUCATION_ADD_SAWON_CODE = #{pk_EDUCATION_ADD_SAWON_CODE, jdbcType=VARCHAR}
+   </update>   
+   
+   
+   
+   
+   
+   <insert id="insertData" parameterType="java.util.Map">
+                     
+      insert into EDUCATION_MANA(pk_EDUCATION_MANA_CODE, education_MANA_NAME, education_MANA_STA, education_MANA_END, education_MANA_DAYS,
+                                 education_MANA_PUR, education_MANA_LOCA, education_MANA_TEA, education_MANA_AGENCY, education_MANA_TIMES) 
+            values(#{pk_EDUCATION_MANA_CODE, jdbcType=VARCHAR}, #{education_MANA_NAME, jdbcType=VARCHAR}
+                 , #{education_MANA_STA, jdbcType=VARCHAR}, #{education_MANA_END, jdbcType=VARCHAR}
+                 , #{education_MANA_DAYS, jdbcType=VARCHAR}, #{education_MANA_PUR, jdbcType=VARCHAR}
+                 , #{education_MANA_LOCA, jdbcType=VARCHAR}, #{education_MANA_TEA, jdbcType=VARCHAR}
+                 , #{education_MANA_AGENCY, jdbcType=VARCHAR}, #{education_MANA_TIMES, jdbcType=VARCHAR} )
+   </insert>
+   
+   
+   
+    <insert id="insertData2" parameterType="java.util.Map">
+                     
+      insert into EDUCATION_ADD(fk_EDUCATION_ADD_CODE,pk_EDUCATION_ADD_SAWON_CODE, education_ADD_SAWON_NAME, education_ADD_DEPT, education_ADD_POSITION) 
+            values(#{pk_EDUCATION_MANA_CODE, jdbcType=VARCHAR},#{pk_EDUCATION_ADD_SAWON_CODE, jdbcType=VARCHAR}, 
+                   #{education_ADD_SAWON_NAME, jdbcType=VARCHAR}, #{education_ADD_DEPT, jdbcType=VARCHAR}, 
+                   #{education_ADD_POSITION, jdbcType=VARCHAR})
+   </insert>
+   
+   
+       <insert id="insertData3" parameterType="java.util.Map">
+                     
+      insert into EDUCATION_EVAL(education_EVAL_EDU_CODE,pk_EDUCATION_EVAL_SAWON_CODE, fk_EDUCATION_EVAL_SAWON_NAME, education_EVAL_DEPT, education_EVAL_POSITION) 
+            values(#{pk_EDUCATION_MANA_CODE, jdbcType=VARCHAR},#{pk_EDUCATION_ADD_SAWON_CODE, jdbcType=VARCHAR}, 
+                   #{education_ADD_SAWON_NAME, jdbcType=VARCHAR}, #{education_ADD_DEPT, jdbcType=VARCHAR}, 
+                   #{education_ADD_POSITION, jdbcType=VARCHAR})
+   </insert>
+   
+   
+   
+   <delete id="deleteData" parameterType="java.util.Map">
+      delete EDUCATION_MANA
+      where pk_EDUCATION_MANA_CODE = #{pk_EDUCATION_MANA_CODE,jdbcType=VARCHAR}
+    
+   </delete>   
+   
+    <delete id="deleteData2" parameterType="java.util.Map">
+      delete EDUCATION_ADD
+      where pk_EDUCATION_ADD_SAWON_CODE = #{pk_EDUCATION_ADD_SAWON_CODE,jdbcType=VARCHAR}
+    
+   </delete>   
+   </mapper>

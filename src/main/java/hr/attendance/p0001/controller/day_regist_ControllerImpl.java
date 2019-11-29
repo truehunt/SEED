@@ -1,22 +1,34 @@
 package hr.attendance.p0001.controller;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,6 +36,7 @@ import hr.attendance.p0001.service.day_regist_Service;
 import hr.attendance.p0001.vo.day_regist_VO;
 import project.common.DateVO;
 import project.common.Field3VO;
+import project.common.Util4calen;
 
 @Controller("day_regist_Controller")
 public class day_regist_ControllerImpl implements day_regist_Controller {
@@ -121,7 +134,57 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	
+	// �ް���û
+	@Override
+	@RequestMapping(value = "attendance/p0001/holiday.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView holiday(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = getViewName(request);
+		viewName = "/attendance/p0001/holiday";
+		request.setCharacterEncoding("utf-8");
+		// ModelAndView main = new ModelAndView("hr/p0001_init");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
+
+	// �����û
+	@Override
+	@RequestMapping(value = "attendance/p0001/business.do", method = { RequestMethod.GET, RequestMethod.POST })
+	// impl �̸� = business
+	public ModelAndView business(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = getViewName(request);
+		viewName = "/attendance/p0001/business";
+		request.setCharacterEncoding("utf-8");
+		// ModelAndView main = new ModelAndView("hr/p0001_init");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
+
+	// �ܱٽ�û
+	@Override
+	@RequestMapping(value = "attendance/p0001/outside.do", method = { RequestMethod.GET, RequestMethod.POST })
+	// impl �̸� = business
+	public ModelAndView outside(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = getViewName(request);
+		viewName = "/attendance/p0001/outside";
+		request.setCharacterEncoding("utf-8");
+		// ModelAndView main = new ModelAndView("hr/p0001_init");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
+
+	// �ް��ϼ� ���
+	@Override
+	@RequestMapping(value = "attendance/p0001/holiday_calc.do", method = { RequestMethod.GET, RequestMethod.POST })
+	// impl �̸� = business
+	public ModelAndView holiday_calc(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = getViewName(request);
+		viewName = "/attendance/p0001/holiday_calc";
+		request.setCharacterEncoding("utf-8");
+		// ModelAndView main = new ModelAndView("hr/p0001_init");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
+
 	@Override
 	@RequestMapping(value = "attendance/p0001/deadline.do", method = { RequestMethod.GET, RequestMethod.POST })
 	// impl �̸� = business
@@ -164,10 +227,13 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		System.out.println("11." + request.getParameter("PK_DAILY_TA_WORKING_DATE").toString());
+		System.out.println("12. " + userno);
 
 		// �??��조건?��?��
 		searchMap.put("PK_DAILY_TA_WORKING_DATE", request.getParameter("PK_DAILY_TA_WORKING_DATE"));
 		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
+		System.out.println("sawon_1: " + request.getParameter("pk_SAWON_CODE"));
 		// ?��?��?�� 조회
 		List<day_regist_VO> data = day_regist_Service.searchList(searchMap);
 		List<DateVO> calenList = new ArrayList<DateVO>();
@@ -175,6 +241,8 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		fld.setField1(userno);
 		resultMap.put("Data", data);
 		resultMap.put("calenList", calenList);
+		System.out.println("1-2" + request.getParameter("pk_SAWON_CODE"));
+		System.out.println("searchMap: " + searchMap);
 		
 		return resultMap;
 	}
@@ -194,6 +262,7 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 
 		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
 		searchMap.put("pk_DAILY_TA_WORKING_DATE", request.getParameter("PK_DAILY_TA_WORKING_DATE"));
+		System.out.println("sawon_work_1: " + request.getParameter("PK_DAILY_TA_WORKING_DATE"));
 
 		// ?��?��?�� 조회
 		List<day_regist_VO> data = day_regist_Service.searchList_sawon(searchMap);
@@ -272,15 +341,15 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return resultMap;
 	}
 
-//	@RequestMapping(value = "common/ajaxTest", produces = "application/json", method = { RequestMethod.GET,
-//			RequestMethod.POST })
-//	@ResponseBody
-//	public Map<String, Object> ajaxTest() {
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("id", "hong");
-//		map.put("name", "ȫ�浿");
-//		return map;
-//	}
+	@RequestMapping(value = "common/ajaxTest", produces = "application/json", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public Map<String, Object> ajaxTest() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", "hong");
+		map.put("name", "ȫ�浿");
+		return map;
+	}
 
 	private String getViewName(HttpServletRequest request) throws Exception {
 		String contextPath = request.getContextPath();

@@ -14,6 +14,7 @@
 <script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
+
 <link
 	href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css"
 	rel="stylesheet">
@@ -90,7 +91,7 @@
 				SaveName : "holiday_REGIST",
 				MinWidth : 80,
 				Edit : 0
-			}, {
+			}, { 
 				Header : "성명",
 				Type : "Text",
 				SaveName : "sawon_NAME",
@@ -185,7 +186,6 @@
                   mySheet.SetCellValue(1,4,NAME_CODE);
                   mySheet.SetCellValue(1,5,DEPT_CODE);
                   mySheet.SetCellValue(1,6,RANK_CODE);
-                  mySheet.SetCellValue(1,2,"대기");
                   
             }
             alert(NAME_CODE);

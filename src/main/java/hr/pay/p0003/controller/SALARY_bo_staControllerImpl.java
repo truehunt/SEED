@@ -66,7 +66,7 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 	}
 	
 	@Override
-	@RequestMapping(value = "/pay/SALARY_bo_sta/SALARY_bo_sta.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "/pay/p0003/SALARY_bo_sta.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
 	request.setCharacterEncoding("utf-8");
 		ModelAndView main = new ModelAndView("pay/p0003/SALARY_bo_sta");
@@ -141,7 +141,9 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
 		
 		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
-	
+		
+		searchMap.put("FK_SAWON_WORKPLACE_CODE", request.getParameter("FK_SAWON_WORKPLACE_CODE"));
+
 		searchMap.put("SAL_INFO_TRANS_AMOUNT_O", request.getParameter("SAL_INFO_TRANS_AMOUNT_O"));
 		searchMap.put("FK_SALARY_CAL_SAWON_CODE", request.getParameter("FK_SALARY_CAL_SAWON_CODE"));
 	

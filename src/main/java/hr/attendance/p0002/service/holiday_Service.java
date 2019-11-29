@@ -18,8 +18,9 @@ public interface holiday_Service {
 	public List<business_VO> searchList_busin(Map<String, Object> searchMap) throws DataAccessException;
 	
 	public List<holiday_VO> searchList_holi(Map<String, Object> searchMap) throws DataAccessException;
-	
-	public void saveData(Map<String, String[]> dataMap) throws DataAccessException;
+	public void saveData_holi(Map<String, String[]> dataMap) throws DataAccessException;
+
+	public void saveData_busin(Map<String, String[]> dataMap) throws DataAccessException;
 
 	public void updateMember(Map<String, Object> dataMap);
 

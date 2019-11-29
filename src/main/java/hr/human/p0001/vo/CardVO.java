@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class CardVO {
 	private String pk_SAWON_CODE;
 	private String sawon_NAME;
+	private String photo;
 	
 	private String pk_ISA_CODE;
 	private String fk_ISA_SAWON_CODE;
@@ -18,33 +19,65 @@ public class CardVO {
 	private String isa_HANJA_NAME;
 	private String isa_HIRE_CODE;
 	private String isa_NUM;
+	
+	private String isa_ADDR_ZIP;
 	private String isa_ADDRESS;
+	private String isa_ADDR_DETAIL;
+	
+	private String isa_PER_ADDR_ZIP;
 	private String isa_PERMANENT_ADDR;
+	private String isa_PER_ADDR_DETAIL;
+	
 	private String isa_MARRIAGE_CODE;
 	private String isa_HOUSE_CODE;
 	private String isa_LIVING_CODE;
-	private String isa_ESTATE;
-	private String isa_MOVABLES;
-	private String isa_SUM;
-	private String isa_GEONPYEONG;
-	private String isa_SITE;
+
 	private String isa_RELIGION_CODE;
 	private String isa_HOBBY_CODE;
 	private String isa_SPECIALTY_CODE;
-	private String isa_MILITARY_CODE;
-	private String isa_MYEONJE;
-	private String isa_MIL_NUM;
-	private String isa_MILI_STA_DATE;
-	private String isa_MILI_END_DATE;
-	private String isa_POS_CODE;
-	private String isa_GUNBYEOL_CODE;
-	private String isa_BOTS_CODE;
-	private String isa_YEBIGUN_CODE;
-	private String isa_DISCHARGE_CODE;
-	private String isa_MILITARY_CLASS_CODE;
+	
+	private String religion_DETAI;
+	private String hobby_DETAI;
+	private String specialty_DETAI;
+	
+	private String isa_MILITARY_CODE; // 병역구분
+	private String isa_MYEONJE; // 면제사유
+	private String isa_MIL_NUM; // 군번
+	private String isa_MILI_STA_DATE; // 복무시작일
+	private String isa_MILI_END_DATE; // 복무종료일
+	private String isa_POS_CODE; // 복무기간포함여부
+	private String isa_GUNBYEOL_CODE; // 군별
+	private String isa_BOTS_CODE; // 병과
+	private String isa_YEBIGUN_CODE; // 예비군
+	private String isa_DISCHARGE_CODE; // 제대구분
+	private String isa_MILITARY_CLASS_CODE; // 계급
 	
 	public CardVO() {
 		System.out.println("CardVO 메서드 호출");
+	}
+
+	public String getPk_SAWON_CODE() {
+		return pk_SAWON_CODE;
+	}
+
+	public void setPk_SAWON_CODE(String pk_SAWON_CODE) {
+		this.pk_SAWON_CODE = pk_SAWON_CODE;
+	}
+
+	public String getSawon_NAME() {
+		return sawon_NAME;
+	}
+
+	public void setSawon_NAME(String sawon_NAME) {
+		this.sawon_NAME = sawon_NAME;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 	public String getPk_ISA_CODE() {
@@ -119,6 +152,14 @@ public class CardVO {
 		this.isa_NUM = isa_NUM;
 	}
 
+	public String getIsa_ADDR_ZIP() {
+		return isa_ADDR_ZIP;
+	}
+
+	public void setIsa_ADDR_ZIP(String isa_ADDR_ZIP) {
+		this.isa_ADDR_ZIP = isa_ADDR_ZIP;
+	}
+
 	public String getIsa_ADDRESS() {
 		return isa_ADDRESS;
 	}
@@ -127,12 +168,36 @@ public class CardVO {
 		this.isa_ADDRESS = isa_ADDRESS;
 	}
 
+	public String getIsa_ADDR_DETAIL() {
+		return isa_ADDR_DETAIL;
+	}
+
+	public void setIsa_ADDR_DETAIL(String isa_ADDR_DETAIL) {
+		this.isa_ADDR_DETAIL = isa_ADDR_DETAIL;
+	}
+
+	public String getIsa_PER_ADDR_ZIP() {
+		return isa_PER_ADDR_ZIP;
+	}
+
+	public void setIsa_PER_ADDR_ZIP(String isa_PER_ADDR_ZIP) {
+		this.isa_PER_ADDR_ZIP = isa_PER_ADDR_ZIP;
+	}
+
 	public String getIsa_PERMANENT_ADDR() {
 		return isa_PERMANENT_ADDR;
 	}
 
 	public void setIsa_PERMANENT_ADDR(String isa_PERMANENT_ADDR) {
 		this.isa_PERMANENT_ADDR = isa_PERMANENT_ADDR;
+	}
+
+	public String getIsa_PER_ADDR_DETAIL() {
+		return isa_PER_ADDR_DETAIL;
+	}
+
+	public void setIsa_PER_ADDR_DETAIL(String isa_PER_ADDR_DETAIL) {
+		this.isa_PER_ADDR_DETAIL = isa_PER_ADDR_DETAIL;
 	}
 
 	public String getIsa_MARRIAGE_CODE() {
@@ -159,46 +224,6 @@ public class CardVO {
 		this.isa_LIVING_CODE = isa_LIVING_CODE;
 	}
 
-	public String getIsa_ESTATE() {
-		return isa_ESTATE;
-	}
-
-	public void setIsa_ESTATE(String isa_ESTATE) {
-		this.isa_ESTATE = isa_ESTATE;
-	}
-
-	public String getIsa_MOVABLES() {
-		return isa_MOVABLES;
-	}
-
-	public void setIsa_MOVABLES(String isa_MOVABLES) {
-		this.isa_MOVABLES = isa_MOVABLES;
-	}
-
-	public String getIsa_SUM() {
-		return isa_SUM;
-	}
-
-	public void setIsa_SUM(String isa_SUM) {
-		this.isa_SUM = isa_SUM;
-	}
-
-	public String getIsa_GEONPYEONG() {
-		return isa_GEONPYEONG;
-	}
-
-	public void setIsa_GEONPYEONG(String isa_GEONPYEONG) {
-		this.isa_GEONPYEONG = isa_GEONPYEONG;
-	}
-
-	public String getIsa_SITE() {
-		return isa_SITE;
-	}
-
-	public void setIsa_SITE(String isa_SITE) {
-		this.isa_SITE = isa_SITE;
-	}
-
 	public String getIsa_RELIGION_CODE() {
 		return isa_RELIGION_CODE;
 	}
@@ -221,6 +246,30 @@ public class CardVO {
 
 	public void setIsa_SPECIALTY_CODE(String isa_SPECIALTY_CODE) {
 		this.isa_SPECIALTY_CODE = isa_SPECIALTY_CODE;
+	}
+
+	public String getReligion_DETAI() {
+		return religion_DETAI;
+	}
+
+	public void setReligion_DETAI(String religion_DETAI) {
+		this.religion_DETAI = religion_DETAI;
+	}
+
+	public String getHobby_DETAI() {
+		return hobby_DETAI;
+	}
+
+	public void setHobby_DETAI(String hobby_DETAI) {
+		this.hobby_DETAI = hobby_DETAI;
+	}
+
+	public String getSpecialty_DETAI() {
+		return specialty_DETAI;
+	}
+
+	public void setSpecialty_DETAI(String specialty_DETAI) {
+		this.specialty_DETAI = specialty_DETAI;
 	}
 
 	public String getIsa_MILITARY_CODE() {
@@ -310,5 +359,6 @@ public class CardVO {
 	public void setIsa_MILITARY_CLASS_CODE(String isa_MILITARY_CLASS_CODE) {
 		this.isa_MILITARY_CLASS_CODE = isa_MILITARY_CLASS_CODE;
 	}
+	
 	
 }

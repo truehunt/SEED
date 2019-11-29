@@ -17,6 +17,12 @@
 		<typeAlias type="hr.system.p0001.vo.SawonVO"  alias="sawonVO" />
 		<typeAlias type="hr.system.p0001.vo.SignDocTypeVO"  alias="signDocTypeVO" />
 		
+		<!-- 시스템 - 게시판 -->
+		<typeAlias type="hr.system.p0003.vo.BoardVO"  alias="boardVO" />
+		<typeAlias type="hr.system.p0003.vo.BoardSearchVO"  alias="boardSearchVO" />
+		<typeAlias type="hr.system.p0003.vo.BoardReplyVO"  alias="boardReplyVO" />
+		<typeAlias type="hr.system.p0003.vo.BoardGroupVO"  alias="boardGroupVO" />
+		
 		<!-- 시스템 - 메인화면 -->
 		<typeAlias type="hr.system.p0003.vo.CalendarVO"  alias="calendarVO" />
 		<typeAlias type="hr.system.p0003.vo.MonthVO"  alias="monthVO" />
@@ -30,6 +36,11 @@
       <typeAlias type="hr.pay.p0002.vo.SALARY_calculVO"  alias="SALARY_calculVO" />
       <typeAlias type="hr.pay.p0003.vo.SALARY_bo_staVO"  alias="SALARY_bo_staVO" />
       <typeAlias type="hr.system.p0001.vo.SET_paydayVO"  alias="SET_paydayVO" />
+      
+       <typeAlias type="hr.human.p0007.vo.education_manageVO"  alias="education_manageVO" />
+       <typeAlias type="hr.human.p0008.vo.education_evaluationVO"  alias="education_evaluationVO" />
+       <typeAlias type="hr.human.p0009.vo.education_statusVO"  alias="education_statusVO" />
+      
 
 		<!-- 인사코드 -->
 		<typeAlias alias="insaCodeVO" type="hr.system.p0001.vo.InsaCodeVO"/>
@@ -47,6 +58,9 @@
 		<typeAlias alias="assVO" type="hr.human.p0001.vo.AssVO"/>
 		<typeAlias alias="chjVO" type="hr.human.p0001.vo.ChjVO"/>
 		<typeAlias alias="sbVO" type="hr.human.p0001.vo.SbVO"/>
+		
+		
+		
 
       <!-- 등록정보관리 - 회사등록 -->
       <typeAlias alias="comEnroll_VO" type="hr.system.p0001.vo.ComEnroll_VO"/>

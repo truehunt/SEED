@@ -8,6 +8,7 @@
 	<resultMap id="cardResult01" type="cardVO">
 		<result property="pk_SAWON_CODE" column="pk_SAWON_CODE" />
 		<result property="sawon_NAME" column="sawon_NAME" />
+		<result property="photo" column="photo" />
 		
 		<result property="pk_ISA_CODE" column="pk_ISA_CODE" />
 		<result property="fk_ISA_SAWON_CODE" column="fk_ISA_SAWON_CODE" />
@@ -18,19 +19,27 @@
 		<result property="isa_HANJA_NAME" column="isa_HANJA_NAME" />
 		<result property="isa_HIRE_CODE" column="isa_HIRE_CODE" />
 		<result property="isa_NUM" column="isa_NUM" />
+		
+		<result property="isa_ADDR_ZIP" column="isa_ADDR_ZIP" />
 		<result property="isa_ADDRESS" column="isa_ADDRESS" />
+		<result property="isa_ADDR_DETAIL" column="isa_ADDR_DETAIL" />
+		
+		<result property="isa_PER_ADDR_ZIP" column="isa_PER_ADDR_ZIP" />
 		<result property="isa_PERMANENT_ADDR" column="isa_PERMANENT_ADDR" />
+		<result property="isa_PER_ADDR_DETAIL" column="isa_PER_ADDR_DETAIL" />
+		
 		<result property="isa_MARRIAGE_CODE" column="isa_MARRIAGE_CODE" />
 		<result property="isa_HOUSE_CODE" column="isa_HOUSE_CODE" />
 		<result property="isa_LIVING_CODE" column="isa_LIVING_CODE" />
-		<result property="isa_ESTATE" column="isa_ESTATE" />
-		<result property="isa_MOVABLES" column="isa_MOVABLES" />
-		<result property="isa_SUM" column="isa_SUM" />
-		<result property="isa_GEONPYEONG" column="isa_GEONPYEONG" />
-		<result property="isa_SITE" column="isa_SITE" />
+	
 		<result property="isa_RELIGION_CODE" column="isa_RELIGION_CODE" />
 		<result property="isa_HOBBY_CODE" column="isa_HOBBY_CODE" />
 		<result property="isa_SPECIALTY_CODE" column="isa_SPECIALTY_CODE" />
+		
+		<result property="religion_DETAI" column="religion_DETAI" />
+		<result property="hobby_DETAI" column="hobby_DETAI" />
+		<result property="specialty_DETAI" column="specialty_DETAI" />
+		
 		<result property="isa_MILITARY_CODE" column="isa_MILITARY_CODE" />
 		<result property="isa_MYEONJE" column="isa_MYEONJE" />
 		<result property="isa_MIL_NUM" column="isa_MIL_NUM" />
@@ -43,80 +52,100 @@
 		<result property="isa_DISCHARGE_CODE" column="isa_DISCHARGE_CODE" />
 		<result property="isa_MILITARY_CLASS_CODE" column="isa_MILITARY_CLASS_CODE" />
 	</resultMap>
-
-	<select id="searchList" resultMap="cardResult01" parameterType="java.util.Map"> 
-      	<![CDATA[
-         	select PK_PERSON_BC_CODE_NUM, PERSON_BC_MNGEMENT_NAME, PERSON_BC_MODIFY_WHE
-         	from   PERSON_BC
-      	]]>
-		<where>
-			<if test="person_BC_OUTPUT != '' and person_BC_OUTPUT != null">
-				person_BC_OUTPUT = #{person_BC_OUTPUT}
-			</if>
-		</where>
-	</select>
-	
-	<select id="outPut" resultMap="cardResult01" parameterType="java.util.Map"> 
-      <![CDATA[
-         select PK_PERSON_BC_CODE_NUM, PERSON_BC_MNGEMENT_NAME, PERSON_BC_MODIFY_WHE
-         from   PERSON_BC
-      ]]>
-		<where>
-			<if test="person_BC_OUTPUT != '' and person_BC_OUTPUT != null">
-				person_BC_OUTPUT = #{person_BC_OUTPUT}
-			</if>
-		</where>
-		<![CDATA[
-			ORDER BY pk_PERSON_BC_CODE_NUM asc
-		]]>
-	</select>
-	
-	<select id="deTai" resultMap="cardResult01" parameterType="java.util.Map"> 
-      <![CDATA[
-         select PK_PERSON_BC_DETAI_CODE_NUM, PERSON_BC_DETAI_MNGEMENT_NAME, PERSON_BC_DETAI_REMARKS, PERSON_BC_DETAI_NOT_USE, fk_PERSON_BC_CODE_NUM
-         from   PERSON_BC_DETAI
-      ]]>
-		<where>
-			<if test="fk_PERSON_BC_CODE_NUM != '' and fk_PERSON_BC_CODE_NUM != null">
-				fk_PERSON_BC_CODE_NUM = #{fk_PERSON_BC_CODE_NUM}
-			</if>
-		</where>
-	</select>
+ 
+	<!-- 인사기록카드 사원목록 -->
+	<select id="ISA" resultMap="cardResult01" parameterType="java.util.Map"> 
+    	SELECT i.fk_isa_sawon_code, s.pk_sawon_code, s.sawon_name, photo
+		  FROM ISA i, sawon s
+		 WHERE i.fk_isa_sawon_code(+) = s.pk_sawon_code
+		 ORDER BY s.pk_sawon_code ASC 
+    </select> 	  
+     
+    <select id="ISA_cha_N" resultMap="cardResult01" parameterType="java.util.Map"> 
+    	insert ALL into ISA(fk_isa_sawon_code)
+		values(pk_sawon_code)
+    		select pk_sawon_code
+    		from sawon s, isa i 
+    		where s.pk_sawon_code = i.fk_isa_sawon_code(+) 
+    		and i.fk_isa_sawon_code IS NULL
+    </select> 	
 	 
 	<select id="ISA_cha" resultMap="cardResult01" parameterType="java.util.Map"> 
-      <![CDATA[
-         select isa_hanja_name, ISA_HIRE_CODE, ISA_NUM,
-			ISA_ADDRESS, ISA_PERMANENT_ADDR, ISA_MARRIAGE_CODE,
-			ISA_HOUSE_CODE, ISA_LIVING_CODE, ISA_ESTATE,
-			ISA_MOVABLES, ISA_SUM, ISA_GEONPYEONG, ISA_SITE, 
-			ISA_RELIGION_CODE, ISA_HOBBY_CODE, ISA_SPECIALTY_CODE
-			from ISA
-      ]]>
-		<where>
-			<if test="fk_PERSON_BC_CODE_NUM != '' and fk_PERSON_BC_CODE_NUM != null">
-				fk_PERSON_BC_CODE_NUM = #{fk_PERSON_BC_CODE_NUM}
-			</if>
-		</where>
+			<![CDATA[
+         		select fk_ISA_SAWON_CODE, isa_hanja_name, ISA_HIRE_CODE, ISA_NUM,
+					isa_ADDR_ZIP, ISA_ADDRESS, isa_ADDR_DETAIL,
+					isa_PER_ADDR_ZIP, ISA_PERMANENT_ADDR, isa_PER_ADDR_DETAIL, 
+					ISA_MARRIAGE_CODE, ISA_HOUSE_CODE, ISA_LIVING_CODE,
+					ISA_RELIGION_CODE, ISA_HOBBY_CODE, ISA_SPECIALTY_CODE,
+					religion_DETAI, hobby_DETAI, specialty_DETAI,
+					
+					isa_MILITARY_CODE, isa_MYEONJE, isa_MIL_NUM,
+					isa_MILI_STA_DATE, isa_MILI_END_DATE, isa_POS_CODE,
+					isa_GUNBYEOL_CODE, isa_BOTS_CODE, isa_YEBIGUN_CODE,  
+					isa_DISCHARGE_CODE, isa_MILITARY_CLASS_CODE
+				from ISA
+      		]]> 
+			<where>
+				<choose>
+					<when test="fk_ISA_SAWON_CODE != '' and fk_ISA_SAWON_CODE != null">
+						fk_ISA_SAWON_CODE = #{fk_ISA_SAWON_CODE}
+					</when>
+					<otherwise>
+						fk_ISA_SAWON_CODE = #{pk_SAWON_CODE}
+					</otherwise>
+				</choose>
+			</where> 
 	</select>
 
 	<update id="updateData" parameterType="java.util.Map">
-		update PERSON_BC_DETAI
-		set  pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM,jdbcType=VARCHAR}
-		   , person_BC_DETAI_MNGEMENT_NAME = #{person_BC_DETAI_MNGEMENT_NAME,jdbcType=VARCHAR}
-		   , person_BC_DETAI_REMARKS = #{person_BC_DETAI_REMARKS,jdbcType=VARCHAR}
-		   , person_BC_DETAI_NOT_USE = #{person_BC_DETAI_NOT_USE,jdbcType=VARCHAR}
-		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM, jdbcType=VARCHAR}
+		update ISA
+		set  isa_HANJA_NAME = #{isa_HANJA_NAME,jdbcType=VARCHAR}
+		   , isa_HIRE_CODE = #{isa_HIRE_CODE,jdbcType=VARCHAR}
+		   , isa_NUM = #{isa_NUM,jdbcType=VARCHAR}
+		   
+		   , isa_ADDR_ZIP = #{isa_ADDR_ZIP,jdbcType=VARCHAR}
+		   , isa_ADDRESS = #{isa_ADDRESS,jdbcType=VARCHAR}
+		   , isa_ADDR_DETAIL = #{isa_ADDR_DETAIL,jdbcType=VARCHAR}
+		   
+		   , isa_PER_ADDR_ZIP = #{isa_PER_ADDR_ZIP,jdbcType=VARCHAR}
+		   , isa_PERMANENT_ADDR = #{isa_PERMANENT_ADDR,jdbcType=VARCHAR}
+		   , isa_PER_ADDR_DETAIL = #{isa_PER_ADDR_DETAIL,jdbcType=VARCHAR}
+		   
+		   , isa_MARRIAGE_CODE = #{isa_MARRIAGE_CODE,jdbcType=VARCHAR}
+		   , isa_HOUSE_CODE = #{isa_HOUSE_CODE,jdbcType=VARCHAR}
+		   , isa_LIVING_CODE = #{isa_LIVING_CODE,jdbcType=VARCHAR}
+		   
+		   , isa_RELIGION_CODE = #{isa_RELIGION_CODE,jdbcType=VARCHAR}
+		   , isa_HOBBY_CODE = #{isa_HOBBY_CODE,jdbcType=VARCHAR}
+		   , isa_SPECIALTY_CODE = #{isa_SPECIALTY_CODE,jdbcType=VARCHAR}
+		   
+		   , religion_DETAI = #{religion_DETAI,jdbcType=VARCHAR}
+		   , hobby_DETAI = #{hobby_DETAI,jdbcType=VARCHAR}
+		   , specialty_DETAI = #{specialty_DETAI,jdbcType=VARCHAR}
+		   
+		   , isa_MILITARY_CODE = #{isa_MILITARY_CODE,jdbcType=VARCHAR}
+		   , isa_MYEONJE = #{isa_MYEONJE,jdbcType=VARCHAR}
+		   , isa_MIL_NUM = #{isa_MIL_NUM,jdbcType=VARCHAR}
+		   , isa_MILI_STA_DATE = #{isa_MILI_STA_DATE,jdbcType=VARCHAR}
+		   , isa_MILI_END_DATE = #{isa_MILI_END_DATE,jdbcType=VARCHAR}
+		   , isa_POS_CODE = #{isa_POS_CODE,jdbcType=VARCHAR}
+		   , isa_GUNBYEOL_CODE = #{isa_GUNBYEOL_CODE,jdbcType=VARCHAR}
+		   , isa_BOTS_CODE = #{isa_BOTS_CODE,jdbcType=VARCHAR}
+		   , isa_YEBIGUN_CODE = #{isa_YEBIGUN_CODE,jdbcType=VARCHAR}
+		   , isa_DISCHARGE_CODE = #{isa_DISCHARGE_CODE,jdbcType=VARCHAR}
+		   , isa_MILITARY_CLASS_CODE = #{isa_MILITARY_CLASS_CODE,jdbcType=VARCHAR}
+		where fk_ISA_SAWON_CODE = #{fk_ISA_SAWON_CODE, jdbcType=VARCHAR}
 	</update>	
 	
-	<insert id="insertData" parameterType="java.util.Map">
-		insert into PERSON_BC_DETAI(PK_PERSON_BC_DETAI_CODE_NUM, PERSON_BC_DETAI_MNGEMENT_NAME, PERSON_BC_DETAI_REMARKS, PERSON_BC_DETAI_NOT_USE, FK_PERSON_BC_CODE_NUM) 
-		values(#{pk_PERSON_BC_DETAI_CODE_NUM,jdbcType=VARCHAR}, #{person_BC_DETAI_MNGEMENT_NAME,jdbcType=VARCHAR}, #{person_BC_DETAI_REMARKS,jdbcType=VARCHAR}, #{person_BC_DETAI_NOT_USE,jdbcType=VARCHAR},#{fk_PERSON_BC_CODE_NUM, jdbcType=VARCHAR})
-	</insert>	
+<!-- 	<insert id="insertData" parameterType="java.util.Map"> -->
+<!-- 		insert into PERSON_BC_DETAI(PK_PERSON_BC_DETAI_CODE_NUM, PERSON_BC_DETAI_MNGEMENT_NAME, PERSON_BC_DETAI_REMARKS, PERSON_BC_DETAI_NOT_USE, FK_PERSON_BC_CODE_NUM)  -->
+<!-- 		values(#{pk_PERSON_BC_DETAI_CODE_NUM,jdbcType=VARCHAR}, #{person_BC_DETAI_MNGEMENT_NAME,jdbcType=VARCHAR}, #{person_BC_DETAI_REMARKS,jdbcType=VARCHAR}, #{person_BC_DETAI_NOT_USE,jdbcType=VARCHAR},#{fk_PERSON_BC_CODE_NUM, jdbcType=VARCHAR}) -->
+<!-- 	</insert>	 -->
 	
-	<delete id="deleteData" parameterType="java.util.Map">
-		delete PERSON_BC_DETAI
-		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM}
-	</delete>	
+<!-- 	<delete id="deleteData" parameterType="java.util.Map"> -->
+<!-- 		delete PERSON_BC_DETAI -->
+<!-- 		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM} -->
+<!-- 	</delete>	 -->
 	
 	
 	<!-- 인사기록카드_가족 -->
@@ -460,8 +489,13 @@
          		   ass_CLASS, ass_NOTE,
          		   fk_ASS_PER_CODE, fk_ASS_SAWON_CODE, pk_ASS_CODE
 			from sawon s, ASS a
-			where s.pk_sawon_code = a.fk_ass_sawon_code
       	]]>
+      	<where>
+			s.pk_sawon_code =  a.fk_ass_sawon_code
+			<if test="fk_ASS_SAWON_CODE != '' and fk_ASS_SAWON_CODE != null">
+				and a.fk_ASS_SAWON_CODE = #{fk_ASS_SAWON_CODE, jdbcType=VARCHAR}
+			</if>
+		</where>
 	</select>
 	
 	<update id="updateDataAss" parameterType="java.util.Map">
@@ -531,8 +565,13 @@
          		   chj_COMPANY, chj_OTHER, chj_TOTAL,
          		   chj_PURPOSE, fk_CHJ_SAWON_CODE, pk_CHJ_CODE
 			from sawon s, CHJ a
-			where s.pk_sawon_code = a.fk_chj_sawon_code
       	]]>
+      	<where>
+			s.pk_sawon_code = a.fk_chj_sawon_code
+			<if test="fk_CHJ_SAWON_CODE != '' and fk_CHJ_SAWON_CODE != null">
+				and a.fk_CHJ_SAWON_CODE = #{fk_CHJ_SAWON_CODE, jdbcType=VARCHAR}
+			</if>
+		</where>
 	</select>
 	
 	<update id="updateDataChj" parameterType="java.util.Map">
@@ -603,8 +642,13 @@
          		   sb_STA_DATE, sb_END_DATE, sb_NOTE,
          		   fk_SB_SAWON_CODE, pk_SB_CODE
 			from sawon s, Sb b
-			where s.pk_sawon_code = b.fk_SB_SAWON_CODE
       	]]>
+      	<where>
+			s.pk_sawon_code = b.fk_SB_SAWON_CODE
+			<if test="fk_SB_SAWON_CODE != '' and fk_SB_SAWON_CODE != null">
+				and b.fk_SB_SAWON_CODE = #{fk_SB_SAWON_CODE, jdbcType=VARCHAR}
+			</if>
+		</where>
 	</select>
 	
 	<update id="updateDataSb" parameterType="java.util.Map">
@@ -660,4 +704,18 @@
       ]]>
 	</select>
 	
+	<!-- 사원 이미지 -->
+	
+    <select id="selectSawonImageOne" parameterType="String" resultType="hr.elect.p0002.vo.SignImageVO">
+        SELECT PK_SAWON_CODE, photo   
+          FROM SAWON
+         WHERE PK_SAWON_CODE=#{PK_SAWON_CODE}
+    </select>       
+	
+    <update id="updateSawonImage" parameterType="hr.elect.p0002.vo.SignImageVO">
+        UPDATE SAWON
+           SET photo=#{photo, jdbcType=VARCHAR} 
+         WHERE PK_SAWON_CODE=#{PK_SAWON_CODE}
+    </update>   
+     
 </mapper>

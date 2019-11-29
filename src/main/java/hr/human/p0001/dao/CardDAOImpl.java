@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import hr.elect.p0002.vo.SignImageVO;
 import hr.human.p0001.dao.CardDAO;
 import hr.human.p0001.vo.CardVO;
 import hr.human.p0001.vo.Com_codeVO;
@@ -62,17 +63,41 @@ public class CardDAOImpl implements CardDAO {
 	//
 	@Override
 	public void insertData(Map<String, String> row) throws DataAccessException {
+		System.out.println(row);
 		sqlSession.update("hr.human.p0001.insertData", row);
 	}
 	@Override
 	public void updateData(Map<String, String> row) throws DataAccessException {
+		System.out.println(row);
 		sqlSession.update("hr.human.p0001.updateData", row);
 	}
 	@Override
 	public void deleteData(Map<String, String> row) throws DataAccessException {
+		System.out.println(row);
 		sqlSession.update("hr.human.p0001.deleteData", row);
 	}
 	
-
+	
+//	/**
+//     * 결재이미지 등록화면
+//     */
+//    public SignImageVO selectSignImageOne(String param) {
+//        return sqlSession.selectOne("selectSawonImageOne", param);
+//    }
+    
+    /**
+     * 결재이미지 저장, 업데이트.
+     */
+    public void updateSignImage(SignImageVO param) {
+    	sqlSession.insert("updateSawonImage", param);
+    }
+    
+    /**
+     * 등록된 결재 이미지 삭제
+     */
+    public void deleteSignImage(String param) {
+        sqlSession.delete("deleteSawonImage", param);
+	}
+	
 
 }

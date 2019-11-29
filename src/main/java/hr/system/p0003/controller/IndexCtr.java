@@ -34,20 +34,7 @@ public class IndexCtr {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
         modelMap.addAttribute(userno, modelMap);
 
-        Date today = Util4calen.getToday(); 
-
-        calCalen(userno, today, modelMap);
-        
-        
-        // List<?> listview = indexSvc.selectRecentNews();
-        // List<?> noticeList = indexSvc.selectNoticeListTop5();
-        //List<?> listtime = indexSvc.selectTimeLine();
-        
-        // modelMap.addAttribute("listview", listview);
-        // modelMap.addAttribute("noticeList", noticeList);
-        // modelMap.addAttribute("listtime", listtime);
-
-        return "/index";
+        return "index";
     }
     
     /**
@@ -66,6 +53,13 @@ public class IndexCtr {
         List<?> listview3 = indexSvc.selectBoardGroupCount4Statistic();
         modelMap.addAttribute("listview3", listview3);
         
+        //게시판 & 공지사항
+        List<?> listview = indexSvc.selectRecentNews();
+        List<?> noticeList = indexSvc.selectNoticeListTop5();
+        
+        modelMap.addAttribute("listview", listview);
+        modelMap.addAttribute("noticeList", noticeList);
+        
         // 전자결재
         // 접속자가 전자결재해야할 문서가 있을경우만 아래가 실행됨.
         if(indexSvc.checkSignDoc(userno)!=0) {
@@ -80,29 +74,10 @@ public class IndexCtr {
         // -----------------------------------------
         
         
-        // List<?> listview = indexSvc.selectRecentNews();
-        // List<?> noticeList = indexSvc.selectNoticeListTop5();
-        //List<?> listtime = indexSvc.selectTimeLine();
         
-        // modelMap.addAttribute("listview", listview);
-        // modelMap.addAttribute("noticeList", noticeList);
+        //List<?> listtime = indexSvc.selectTimeLine();
         // modelMap.addAttribute("listtime", listtime);
         }
-        return "indexCalen";
-    }
-    
-    /**
-     * week calendar in main page. 
-     * Ajax.
-     */
-    @RequestMapping(value = "/moveDate")
-    public String moveDate(HttpServletRequest request, ModelMap modelMap) {
-        String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
-        String date = request.getParameter("date");
-
-        Date today = Util4calen.getToday(date);
-        
-        calCalen(userno, today, modelMap);
         
         return "indexCalen";
     }

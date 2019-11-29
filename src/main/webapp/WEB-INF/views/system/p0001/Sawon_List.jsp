@@ -26,7 +26,13 @@
 									<td><c:out value="${status.index+1}"/></td>
 									<td><c:out value="${listview.PK_SAWON_CODE}"/></td>
 									<td><c:out value="${listview.SAWON_NAME}"/></td>
-									<td><c:out value="${listview.SAWON_VIEW_PERMISSION}"/></td>
+									<td>
+										<c:choose>
+											<c:when test="${listview.SAWON_VIEW_PERMISSION eq 'A'}">관리자</c:when>
+											<c:when test="${listview.SAWON_VIEW_PERMISSION eq 'B'}">부서장</c:when>
+											<c:when test="${listview.SAWON_VIEW_PERMISSION eq 'C'}">사원</c:when>
+										</c:choose>
+									</td>
 									<td><input type="checkbox" name="chk" value="<c:out value="${listview.PK_SAWON_CODE}"/>"></td>
 								</tr>
 							</c:forEach>

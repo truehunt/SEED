@@ -58,6 +58,7 @@
 		<result property="CODENM" column="CODENM" />
 	</resultMap>
 	
+	<!-- 일정관리 -->
     <select id="selectCalendar" resultType="hr.system.p0003.vo.CalendarVO" parameterType="hr.system.p0003.vo.MonthVO">
 		SELECT CDDATE, CDDD, CDDAYOFWEEK
 		  FROM COM_DATE CD
@@ -163,6 +164,7 @@
          WHERE SSNO=#{SSNO} 
     </delete>
     
+    <!-- 공통코드관리 -->
     <select id="selectClassCode" parameterType="String"  resultType="hr.system.p0003.vo.ClassCodeVO">
         SELECT CODECD, CODENM 
           FROM COM_CODE 
@@ -255,5 +257,287 @@
         FROM AD
         WHERE AD_DELETEFLAG='N'
     </select>
+    
+    <!-- 게시판 & 공지사항 -->
+    <select id="selectRecentNews" resultType="hr.system.p0003.vo.BoardVO">
+    <![CDATA[
+        SELECT *
+		FROM (SELECT ROWNUM as NO, BRDNO, BRDTITLE, BRDDATE
+             , TB.FK_SAWON_CODE, CU.SAWON_NAME BRDWRITER, BGNAME, TB.BGNO
+             , (SELECT COUNT(*) FROM BOARDREPLY WHERE BRDNO=TB.BRDNO AND REDELETEFLAG='N') REPLYCNT
+          FROM BOARD TB
+         INNER JOIN SAWON CU ON TB.FK_SAWON_CODE=CU.PK_SAWON_CODE
+         INNER JOIN BOARDGROUP TBG ON TBG.BGNO=TB.BGNO
+         WHERE BRDDELETEFLAG='N' AND TBG.BGDELETEFLAG='N'
+         ) A
+         WHERE A.NO <= 5
+         ]]>
+         ORDER BY BRDNO DESC
+    </select> 
+    
+    <select id="selectNoticeListTop5" parameterType="hr.system.p0003.vo.BoardSearchVO" resultType="hr.system.p0003.vo.BoardVO">
+    	<![CDATA[
+        SELECT *
+		FROM (SELECT ROWNUM as NO, BRDNO, BRDTITLE, BRDDATE, BRDNOTICE, TB.FK_SAWON_CODE, CU.SAWON_NAME BRDWRITER
+          FROM BOARD TB
+         INNER JOIN SAWON CU ON TB.FK_SAWON_CODE=CU.PK_SAWON_CODE
+         WHERE BRDDELETEFLAG='N' AND BRDNOTICE='Y'
+         ) A
+         WHERE A.NO <= 6
+         ]]>
+         ORDER BY BRDNO DESC 
+    </select>
+    
+    <select id="selectBoardGroupOne4Used" parameterType="String" resultType="hr.system.p0003.vo.BoardGroupVO">
+        SELECT BGNO, BGNAME, BGUSED, BGREPLY, BGREADONLY, BGNOTICE
+          FROM BOARDGROUP
+         WHERE BGDELETEFLAG='N' AND BGNO=#{bgno} AND BGUSED='Y'
+    </select> 
+    
+    <select id="selectBoardGroupList" resultType="project.common.TreeVO" >
+		SELECT BGNO KEY, BGNAME TITLE, BGPARENT PARENT
+		FROM BOARDGROUP
+		WHERE BGDELETEFLAG='N'
+		ORDER BY BGNO
+	</select>
+
+    <sql id="includeBoard">
+        WHERE BRDDELETEFLAG='N' AND TBG.BGDELETEFLAG='N'
+        <if test="bgno!=null and bgno!=''">
+            AND TB.BGNO=#{bgno}
+        </if>  
+        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+                 ${item} LIKE '%'||#{searchKeyword}||'%'
+            </foreach>
+        </if>               
+    </sql>
+
+    <select id="selectBoardCount" resultType="Integer" parameterType="hr.system.p0003.vo.BoardSearchVO">
+        SELECT COUNT(*)
+          FROM BOARD TB
+         INNER JOIN BOARDGROUP TBG ON TBG.BGNO=TB.BGNO
+         INNER JOIN SAWON CU ON TB.FK_SAWON_CODE=CU.PK_SAWON_CODE
+         <include refid="includeBoard"/>
+    </select> 
+    
+    <select id="selectBoardList" resultType="hr.system.p0003.vo.BoardVO" parameterType="hr.system.p0003.vo.BoardSearchVO">
+         SELECT *
+       	 FROM (SELECT ROWNUM as NO, BRDNO, BRDTITLE, BRDDATE, BRDLIKE
+             , TB.FK_SAWON_CODE, CU.SAWON_NAME BRDWRITER, BGNAME, TB.BGNO
+             , (SELECT COUNT(*) FROM BOARDREAD WHERE BRDNO=TB.BRDNO) BRDHIT
+             , (SELECT COUNT(*) FROM BOARDFILE WHERE BRDNO=TB.BRDNO) FILECNT
+             , (SELECT COUNT(*) FROM BOARDREPLY WHERE BRDNO=TB.BRDNO AND REDELETEFLAG='N') REPLYCNT
+            FROM BOARD TB
+            INNER JOIN SAWON CU ON TB.FK_SAWON_CODE=CU.PK_SAWON_CODE
+            INNER JOIN BOARDGROUP TBG ON TBG.BGNO=TB.BGNO
+            WHERE BRDDELETEFLAG='N' AND TBG.BGDELETEFLAG='N'
+            <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
+	            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
+	                 ${item} LIKE '%'||#{searchKeyword}||'%'
+	            </foreach>
+	        </if>
+            ORDER BY BRDNO DESC
+            )A
+         WHERE 1=1
+        <if test="bgno!=null and bgno!=''">
+            AND A.BGNO=#{bgno}
+        </if>  
+         <if test="rowStart != null">
+             AND A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+         </if>
+         ORDER BY BRDNO DESC 
+    </select> 
+
+    <select id="selectNoticeList" resultType="hr.system.p0003.vo.BoardVO" parameterType="hr.system.p0003.vo.BoardSearchVO">
+        SELECT *
+         FROM (SELECT ROWNUM as NO, BRDNO, BRDTITLE, BRDDATE, BRDNOTICE, BRDLIKE
+             , TB.FK_SAWON_CODE, CU.SAWON_NAME BRDWRITER, BGNAME, TB.BGNO
+             , (SELECT COUNT(*) FROM BOARDREAD WHERE BRDNO=TB.BRDNO) BRDHIT
+             , (SELECT COUNT(*) FROM BOARDFILE WHERE BRDNO=TB.BRDNO) FILECNT
+             , (SELECT COUNT(*) FROM BOARDREPLY WHERE BRDNO=TB.BRDNO AND REDELETEFLAG='N') REPLYCNT
+          FROM BOARD TB
+         INNER JOIN SAWON CU ON TB.FK_SAWON_CODE=CU.PK_SAWON_CODE
+         INNER JOIN BOARDGROUP TBG ON TBG.BGNO=TB.BGNO
+        <if test="bgno!=null and bgno!=''">
+            AND TB.BGNO=#{bgno}
+        </if>  
+         ORDER BY BRDNO DESC
+         ) A 
+         WHERE A.NO BETWEEN 1 AND 3
+    </select> 
+        
+    <insert id="insertBoard" parameterType="hr.system.p0003.vo.BoardVO" >
+        <selectKey resultType="String" keyProperty="brdno" order="BEFORE">
+            SELECT NVL(MAX(BRDNO),0)+1 FROM BOARD
+        </selectKey>
+        INSERT INTO BOARD(BGNO, BRDNO, BRDTITLE, FK_SAWON_CODE, BRDMEMO, BRDNOTICE, BRDDATE, BRDDELETEFLAG)
+        VALUES (#{bgno}, #{brdno}, #{brdtitle}, #{FK_SAWON_CODE}, #{brdmemo}, #{brdnotice, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
+    </insert>
+    
+    <update id="updateBoard" parameterType="hr.system.p0003.vo.BoardVO">
+        UPDATE BOARD
+           SET BRDTITLE=#{brdtitle}
+             , BRDMEMO=#{brdmemo} 
+             , BRDNOTICE=#{brdnotice, jdbcType=VARCHAR}
+             , MOD_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
+             , MOD_USER_ID=#{FK_SAWON_CODE}
+         WHERE BRDDELETEFLAG='N'
+           AND BRDNO=#{brdno}
+    </update> 
+        
+    <select id="selectBoardOne" parameterType="project.common.Field3VO" resultType="hr.system.p0003.vo.BoardVO">
+        SELECT BGNO, BRDNO, BRDTITLE, CU.SAWON_NAME BRDWRITER, BRDMEMO, BRDNOTICE, BRDLIKE
+             , BRDDATE, TB.FK_SAWON_CODE
+             , (SELECT COUNT(*) FROM BOARDREAD WHERE BRDNO=TB.BRDNO) BRDHIT
+             , (SELECT 1 FROM BOARDLIKE WHERE BRDNO=TB.BRDNO AND FK_SAWON_CODE=#{field2}) BRDLIKECHK
+          FROM BOARD TB
+         INNER JOIN SAWON CU ON TB.FK_SAWON_CODE=CU.PK_SAWON_CODE
+         WHERE BRDDELETEFLAG='N'
+           AND BRDNO=#{field1}
+    </select> 
+    
+    <select id="selectBoardAuthChk" parameterType="hr.system.p0003.vo.BoardVO" resultType="String">
+        SELECT BRDNO
+          FROM BOARD
+         WHERE BRDDELETEFLAG='N'
+           AND BRDNO=#{brdno} AND FK_SAWON_CODE=#{FK_SAWON_CODE}
+    </select> 
+
+    <update id="updateBoardRead" parameterType="project.common.Field3VO"> 
+        MERGE INTO BOARDREAD USING dual ON (BRDNO = #{field1} AND FK_SAWON_CODE = #{field2})
+	    WHEN MATCHED THEN UPDATE SET READDATE = to_char(sysdate,'yyyy.mm.dd hh24:mi')
+	    WHEN NOT MATCHED THEN INSERT(BRDNO, FK_SAWON_CODE, READDATE) VALUES(#{field1}, #{field2}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
+    </update> 
+
+    <insert id="insertBoardLike" parameterType="project.common.Field3VO">
+        INSERT INTO BOARDLIKE(BLNO, BRDNO, FK_SAWON_CODE, BLDATE)
+              VALUES (BLNO.NEXTVAL, #{field1}, #{field2}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
+    </insert> 
+
+    <insert id="updateBoard4Like" parameterType="project.common.Field3VO"> 
+        UPDATE BOARD
+           SET BRDLIKE = NVL(MAX(BRDLIKE),0)+1 
+         WHERE BRDNO=#{field1}
+    </insert> 
+
+    <delete id="deleteBoardOne" parameterType="String">
+        UPDATE BOARD
+           SET BRDDELETEFLAG='Y'
+             , MOD_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
+             , MOD_USER_ID=#{PK_SAWON_CODE}
+         WHERE BRDNO=#{brdno}
+    </delete> 
+    
+    <!-- =============================================================================== -->
+    <select id="selectBoardFileList" resultType="project.common.FileVO" parameterType="String">
+        SELECT FILENO, FILENAME, REALNAME, FILESIZE
+          FROM BOARDFILE
+         WHERE BRDNO=#{brdno}
+         ORDER BY FILENO DESC 
+    </select> 
+
+    <insert id="insertBoardFile" parameterType="project.common.FileVO" >
+        INSERT INTO BOARDFILE (FILENO, BRDNO, FILENAME, REALNAME, FILESIZE)
+        VALUES (FILENO.NEXTVAL, #{parentPK}, #{filename}, #{realname}, #{filesize})
+    </insert>
+    
+    <delete id="deleteBoardFile" parameterType="hashmap"> 
+        DELETE 
+          FROM BOARDFILE
+         WHERE FILENO IN (
+              <foreach item="item" index="index" collection="fileno" separator=",">
+                     ${item}
+              </foreach>  
+        )             
+    </delete> 
+
+    <!-- =============================================================================== -->
+    <select id="selectBoardReplyList" resultType="hr.system.p0003.vo.BoardReplyVO" parameterType="String">
+        SELECT BRDNO, RENO, CU.SAWON_NAME REWRITER, REDELETEFLAG, REMEMO, REDATE, REPARENT, REDEPTH, REORDER, TBR.FK_SAWON_CODE, CU.PHOTO
+          FROM BOARDREPLY TBR
+         INNER JOIN SAWON CU ON TBR.FK_SAWON_CODE=CU.PK_SAWON_CODE
+         WHERE BRDNO=#{brdno} AND REDELETEFLAG='N'
+         ORDER BY REORDER
+    </select>
+        
+    <insert id="insertBoardReply" parameterType="hr.system.p0003.vo.BoardReplyVO" >
+        <selectKey resultType="String" keyProperty="reno" order="BEFORE">
+            SELECT NVL(MAX(RENO),0)+1 FROM BOARDREPLY
+        </selectKey>
+    
+        INSERT INTO BOARDREPLY(BRDNO, RENO, FK_SAWON_CODE, REDELETEFLAG, REMEMO, REDATE, REORDER, REPARENT, REDEPTH)
+        VALUES (#{brdno}, #{reno}, #{FK_SAWON_CODE}, 'N', #{rememo, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{reorder},
+                   <choose>
+                       <when test="reparent==null">#{reno}, 0</when>
+                       <otherwise>#{reparent}, #{redepth}</otherwise>
+                   </choose>
+               )
+    </insert>
+
+    <select id="selectBoardReplyOne" resultType="hr.system.p0003.vo.BoardReplyVO" parameterType="String">
+        SELECT BRDNO, RENO, CU.SAWON_NAME REWRITER, REDELETEFLAG, REMEMO, REDATE, REPARENT, REDEPTH, REORDER, TBR.FK_SAWON_CODE, CU.PHOTO
+          FROM BOARDREPLY TBR
+         INNER JOIN SAWON CU ON TBR.FK_SAWON_CODE=CU.PK_SAWON_CODE
+         WHERE REDELETEFLAG='N' AND RENO=#{reno}
+    </select>
+
+    <select id="selectBoardReplyParent" resultType="hr.system.p0003.vo.BoardReplyVO" parameterType="String">
+        SELECT BRDNO, REDEPTH+1 REDEPTH, COALESCE((SELECT MAX(REORDER) FROM BOARDREPLY WHERE REPARENT=TB.RENO), TB.REORDER) reorder
+          FROM BOARDREPLY TB
+         WHERE RENO=#{reparent}
+    </select>
+    
+    <update id="updateBoardReplyOrder" parameterType="java.util.Map" > 
+        UPDATE BOARDREPLY
+           SET REORDER = REORDER + 1
+         WHERE REORDER>${reorder}
+           AND BRDNO=${brdno}
+    </update> 
+
+    <select id="selectBoardReplyMaxOrder" resultType="Integer" parameterType="String">
+        SELECT NVL(MAX(REORDER),0)+1
+          FROM BOARDREPLY
+         WHERE BRDNO=#{brdno}
+    </select> 
+
+    <select id="selectBoardReplyChild" resultType="Integer" parameterType="String">
+        SELECT COUNT(*)
+          FROM BOARDREPLY
+         WHERE REPARENT=#{reparent} AND RENO!=#{reparent} AND REDELETEFLAG='N'
+    </select>
+
+    <select id="selectBoardReplyAuthChk" parameterType="hr.system.p0003.vo.BoardReplyVO" resultType="String">
+        SELECT RENO
+          FROM BOARDREPLY
+         WHERE REDELETEFLAG='N'
+           AND RENO=#{reno} AND FK_SAWON_CODE=#{FK_SAWON_CODE}
+    </select> 
+    
+    <update id="deleteBoardReply" parameterType="String"> 
+        UPDATE BOARDREPLY
+           SET REDELETEFLAG='Y' 
+             , MOD_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
+             , MOD_USER_ID=#{PK_SAWON_CODE}
+         WHERE RENO=#{reno}       
+    </update>
+     
+    <update id="updateBoardReplyOrder4Delete" parameterType="hr.system.p0003.vo.BoardReplyVO"> 
+        UPDATE BOARDREPLY TBR1
+			SET REORDER = REORDER - 1
+		  WHERE RENO=#{reno} 
+			AND EXISTS (SELECT TBR1.REORDER, TBR2.RENO
+			    FROM BOARDREPLY TBR1, BOARDREPLY TBR2
+			    WHERE TBR2.BRDNO=TBR1.BRDNO AND TBR1.REORDER >TBR2.REORDER AND TBR1.REDELETEFLAG='N'
+			    ) 
+    </update>
+     
+    <update id="updateBoardReply" parameterType="hr.system.p0003.vo.BoardReplyVO">
+        UPDATE BOARDREPLY
+           SET REMEMO=#{rememo} 
+             , MOD_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi')
+             , MOD_USER_ID=#{FK_SAWON_CODE}
+         WHERE RENO=#{reno}
+    </update>
 
 </mapper>

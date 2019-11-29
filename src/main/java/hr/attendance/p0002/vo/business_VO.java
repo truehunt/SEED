@@ -17,7 +17,9 @@ public class business_VO {
 	private String business_TRIP_END;
 	private String business_TRIP_PAY;
 	private String business_TRIP_PURPOSE;
-	private String business_TRIP_STATUS;
+	private String business_TRIP_PAYREGIST;
+	private String business_TRIP_APP_DATE;
+	private String fk_BUSINESS_TRIP_SAWON_CODE;
 	public String getBusiness_TRIP_DATE() {
 		return business_TRIP_DATE;
 	}
@@ -66,11 +68,26 @@ public class business_VO {
 	public void setBusiness_TRIP_PURPOSE(String business_TRIP_PURPOSE) {
 		this.business_TRIP_PURPOSE = business_TRIP_PURPOSE;
 	}
-	public String getBusiness_TRIP_STATUS() {
-		return business_TRIP_STATUS;
+	public String getBusiness_TRIP_PAYREGIST() {
+		return business_TRIP_PAYREGIST;
 	}
-	public void setBusiness_TRIP_STATUS(String business_TRIP_STATUS) {
-		this.business_TRIP_STATUS = business_TRIP_STATUS;
+	public void setBusiness_TRIP_PAYREGIST(String business_TRIP_PAYREGIST) {
+		this.business_TRIP_PAYREGIST = business_TRIP_PAYREGIST;
 	}
+	public String getBusiness_TRIP_APP_DATE() {
+		return business_TRIP_APP_DATE;
+	}
+	public void setBusiness_TRIP_APP_DATE(String business_TRIP_APP_DATE) {
+		this.business_TRIP_APP_DATE = business_TRIP_APP_DATE;
+	}
+	public String getFk_BUSINESS_TRIP_SAWON_CODE() {
+		return fk_BUSINESS_TRIP_SAWON_CODE;
+	}
+	public void setFk_BUSINESS_TRIP_SAWON_CODE(String fk_BUSINESS_TRIP_SAWON_CODE) {
+		this.fk_BUSINESS_TRIP_SAWON_CODE = fk_BUSINESS_TRIP_SAWON_CODE;
+	}
+	
+	
+
 
 }

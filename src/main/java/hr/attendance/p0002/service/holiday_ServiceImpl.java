@@ -35,6 +35,28 @@ public class holiday_ServiceImpl implements holiday_Service {
 	}
 	
 	
+	
+	//데이터 저장
+	@Override
+	public void saveData_busin(Map<String, String[]> dataMap)  throws DataAccessException  {
+		String[] status = dataMap.get("STATUS");
+		int length = status.length; // row��
+		int i = 0;
+		
+		for(String str : status) {
+			Map<String, String> row = getRow(dataMap, length, i); // ���� Index�� Row Map
+			if("I".equals(str)) { // �߰�
+				p0002DAO.insertData_busin(row);
+			}else if("U".equals(str)) { // ����
+				p0002DAO.updateData_busin(row);
+			}else if("D".equals(str)) { // ����
+				p0002DAO.deleteData_busin(row);
+			}
+			i++;
+		}
+	}
+	
+	
 	//조회
 	public List<holiday_VO> searchList_holi(Map<String, Object> searchMap) throws DataAccessException {
 		System.out.println("service_searchList_holi: "+searchMap);
@@ -44,17 +66,11 @@ public class holiday_ServiceImpl implements holiday_Service {
 		return list;
 	}
 	
-	
-	//select문
-	public List<HashMap<String,String>> select() throws DataAccessException {
-		List<HashMap<String,String>> list =  p0002DAO.select(); 
-		return list;
-	}
 
 
 	//데이터 저장
 	@Override
-	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
+	public void saveData_holi(Map<String, String[]> dataMap)  throws DataAccessException  {
 		String[] status = dataMap.get("STATUS");
 		int length = status.length; // row��
 		int i = 0;
@@ -64,13 +80,15 @@ public class holiday_ServiceImpl implements holiday_Service {
 			if("I".equals(str)) { // �߰�
 				p0002DAO.insertData_holi(row);
 			}else if("U".equals(str)) { // ����
-				p0002DAO.updateData(row);
+				p0002DAO.updateData_holi(row);
 			}else if("D".equals(str)) { // ����
-				p0002DAO.deleteData(row);
+				p0002DAO.deleteData_holi(row);
 			}
 			i++;
 		}
 	}
+	
+//----------------------------------------------------------------------------------------------------	
 	private Map getRow(Map<String, String[]> dataMap, int length, int index) {
 		Map<String, String> row = new HashMap<String, String>();
 		for(String name : dataMap.keySet()) {
@@ -82,6 +100,15 @@ public class holiday_ServiceImpl implements holiday_Service {
 		return row;
 	}
 
+	//select문
+	public List<HashMap<String,String>> select() throws DataAccessException {
+		List<HashMap<String,String>> list =  p0002DAO.select(); 
+		return list;
+	}
+
+//-------------------------------------------------------------------------------------	
+	
+	
 	@Override
 	public void updateMember(Map<String, Object> dataMap) {
 		// TODO Auto-generated method stub

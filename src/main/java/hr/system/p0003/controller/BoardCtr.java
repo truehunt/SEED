@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import hr.system.p0003.service.BoardSvc;
 import hr.system.p0003.vo.BoardGroupVO;
@@ -41,6 +42,7 @@ public class BoardCtr {
     @RequestMapping(value = "/boardList")
     public String boardList(HttpServletRequest request, BoardSearchVO searchVO, ModelMap modelMap) {
         String globalKeyword = request.getParameter("globalKeyword");  // it's search from left side bar
+        searchVO.setSearchType(request.getParameter("searchType"));
         if (globalKeyword!=null & !"".equals(globalKeyword)) {
             searchVO.setSearchKeyword(globalKeyword);
         }        
@@ -81,12 +83,13 @@ public class BoardCtr {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
         
         // etcSvc.setCommonAttribute(userno, modelMap);
+        modelMap.addAttribute("PK_SAWON_CODE", userno);
         
         String bgno = request.getParameter("bgno");
         String brdno = request.getParameter("brdno");
         
         if (brdno != null) {
-            BoardVO boardInfo = boardSvc.selectBoardOne(new Field3VO(brdno, null, null));
+            BoardVO boardInfo = boardSvc.selectBoardOne(new Field3VO(brdno, userno, null));
             List<?> listview = boardSvc.selectBoardFileList(brdno);
         
             modelMap.addAttribute("boardInfo", boardInfo);
@@ -110,7 +113,7 @@ public class BoardCtr {
     @RequestMapping(value = "/boardSave")
     public String boardSave(HttpServletRequest request, BoardVO boardInfo) {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
-        boardInfo.setPK_SAWON_CODE(userno);
+        boardInfo.setFK_SAWON_CODE(userno);
 
         if (boardInfo.getBrdno() != null && !"".equals(boardInfo.getBrdno())) {    // check auth for update
             String chk = boardSvc.selectBoardAuthChk(boardInfo);
@@ -136,6 +139,7 @@ public class BoardCtr {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
         
         // etcSvc.setCommonAttribute(userno, modelMap);
+        modelMap.addAttribute("PK_SAWON_CODE", userno);
         
         String bgno = request.getParameter("bgno");
         String brdno = request.getParameter("brdno");
@@ -172,7 +176,7 @@ public class BoardCtr {
 
         BoardVO boardInfo = new BoardVO();        // check auth for delete
         boardInfo.setBrdno(brdno);
-        boardInfo.setPK_SAWON_CODE(userno);
+        boardInfo.setFK_SAWON_CODE(userno);
         String chk = boardSvc.selectBoardAuthChk(boardInfo);
         if (chk == null) {
             return "common/noAuth";
@@ -224,7 +228,7 @@ public class BoardCtr {
     @RequestMapping(value = "/boardReplySave")
     public String boardReplySave(HttpServletRequest request, HttpServletResponse response, BoardReplyVO boardReplyInfo, ModelMap modelMap) {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
-        boardReplyInfo.setPK_SAWON_CODE(userno);
+        boardReplyInfo.setFK_SAWON_CODE(userno);
 
         if (boardReplyInfo.getReno() != null && !"".equals(boardReplyInfo.getReno())) {    // check auth for update
             String chk = boardSvc.selectBoardReplyAuthChk(boardReplyInfo);
@@ -248,7 +252,7 @@ public class BoardCtr {
     @RequestMapping(value = "/boardReplyDelete")
     public void boardReplyDelete(HttpServletRequest request, HttpServletResponse response, BoardReplyVO boardReplyInfo) {
         String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
-        boardReplyInfo.setPK_SAWON_CODE(userno);
+        boardReplyInfo.setFK_SAWON_CODE(userno);
 
         if (boardReplyInfo.getReno() != null && !"".equals(boardReplyInfo.getReno())) {    // check auth for update
             String chk = boardSvc.selectBoardReplyAuthChk(boardReplyInfo);
@@ -263,6 +267,24 @@ public class BoardCtr {
         } else {
             UtilEtc.responseJsonValue(response, "OK");
         }
+    }
+    
+    /**
+     * alert 리스트 전체. - 글쓴이 목록 불러오기
+     */
+    @RequestMapping(value = "/list4User")
+    public String list4User(HttpServletRequest request, BoardSearchVO searchVO, ModelMap modelMap) {
+        String userno = request.getParameter("FK_SAWON_CODE");
+        searchVO.setSearchExt1(userno);
+        
+        searchVO.pageCalculate(etcSvc.selectList4UserCount(searchVO) ); // startRow, endRow
+        
+        List<?> listview   = etcSvc.selectList4User(searchVO);
+
+        modelMap.addAttribute("listview", listview);
+        modelMap.addAttribute("searchVO", searchVO);
+        
+        return "system/p0003/list4User";
     }
    
 }

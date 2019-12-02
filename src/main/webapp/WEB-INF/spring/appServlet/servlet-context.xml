@@ -37,7 +37,7 @@
 	       <beans:bean class="project.common.LoginInterceptor"/>
 	    </mvc:interceptor>
 	    <mvc:interceptor>
-	       <mvc:mapping path="/ad*"/>  
+	       <mvc:mapping path="/ad*"/>
 	       <beans:bean class="project.common.AdminInterceptor"/>
 	    </mvc:interceptor>
 	</mvc:interceptors>

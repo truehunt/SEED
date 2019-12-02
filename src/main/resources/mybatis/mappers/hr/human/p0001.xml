@@ -413,6 +413,8 @@
 		<result property="certificate_INT_DATE" column="certificate_INT_DATE" />
 		<result property="certificate_MOD_USER_ID" column="certificate_MOD_USER_ID" />
 		<result property="certificate_MOD_DATE" column="certificate_MOD_DATE" />
+		
+		<result property="count_num" column="count_num" />
 	</resultMap>
 	
 	<select id="ISA_cert" resultMap="cardResult06" parameterType="java.util.Map"> 
@@ -446,7 +448,7 @@
 			(pk_CERTIFICATE_CODE, fk_CERTIFICATE_SAWON_CODE, certificate_SORT_CODE,
 			 certificate_STA_DATE, certificate_END_DATE, certificate_NUM,
 			 certificate_ISSUER_CODE, certificate_SUDANG_CODE)
-		values(#{pk_CERTIFICATE_CODE, jdbcType=VARCHAR},
+		values((select trim(to_char(NVL(MAX(pk_certificate_code),'1')+'1','0000'))from certificate),
 			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
 			   #{certificate_SORT_CODE, jdbcType=VARCHAR},
 			   #{certificate_STA_DATE, jdbcType=VARCHAR},
@@ -455,6 +457,28 @@
 			   #{certificate_ISSUER_CODE, jdbcType=VARCHAR},
 			   #{certificate_SUDANG_CODE, jdbcType=VARCHAR})
 	</insert>	
+	 
+	
+	<insert id="SORT_insert" parameterType="java.util.Map">
+			INSERT INTO person_bc_detai 
+				(pk_person_bc_detai_code_num, person_bc_detai_mngement_name, person_bc_detai_remarks, fk_person_bc_code_num, person_bc_detai_not_use)
+			VALUES((SELECT NVL(MAX(pk_person_bc_detai_code_num),100)+100 FROM person_bc_detai WHERE fk_person_bc_code_num = 'H9')
+				, #{certificate_SORT_CODE, jdbcType=VARCHAR}
+				, ''
+				, 'H9'
+				, '사용')
+	</insert>
+	
+	<select id="SORT_select" resultMap="cardResult06" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	SELECT count(*) as count_num
+			FROM   person_bc_detai
+			WHERE  person_bc_detai_mngement_name = #{certificate_SORT_CODE, jdbcType=VARCHAR} 
+			AND    fk_person_bc_code_num = 'H9'
+      	]]>
+	</select>
+	
+	
 	
 	<delete id="deleteDataCert" parameterType="java.util.Map">
 		delete CERTIFICATE
@@ -596,7 +620,7 @@
 				   chj_AREA, chj_STA_YMD, chj_END_YMD,
          		   chj_AIRFARE, chj_OWN, chj_COMPANY,
          		   chj_OTHER, chj_TOTAL, chj_PURPOSE)
-		values(#{pk_CHJ_CODE, jdbcType=VARCHAR},
+		values((select trim(to_char(NVL(MAX(fk_CHJ_SAWON_CODE),'0')+'1','0000'))from CHJ),
 			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
 			   #{chj_COUNTRY_CODE, jdbcType=VARCHAR},
 			   #{chj_AREA, jdbcType=VARCHAR},
@@ -609,6 +633,30 @@
 			   #{chj_TOTAL, jdbcType=VARCHAR},
 			   #{chj_PURPOSE, jdbcType=VARCHAR})
 	</insert>	 
+	
+
+	<select id="COUNTRY_select" resultMap="cardResult06" parameterType="java.util.Map"> 
+      	<![CDATA[
+          	SELECT count(*) as count_num 
+ 			FROM   person_bc_detai 
+ 			WHERE  person_bc_detai_mngement_name = #{chj_COUNTRY_CODE, jdbcType=VARCHAR} 
+ 			AND    fk_person_bc_code_num = 'H5' 
+       	]]> 
+	</select>
+
+
+	<insert id="COUNTRY_insert" parameterType="java.util.Map">
+			INSERT INTO person_bc_detai 
+				(pk_person_bc_detai_code_num, person_bc_detai_mngement_name, person_bc_detai_remarks, fk_person_bc_code_num, person_bc_detai_not_use)
+			VALUES((SELECT NVL(MAX(pk_person_bc_detai_code_num),0)+100 FROM person_bc_detai WHERE fk_person_bc_code_num = 'H5')
+				, #{chj_COUNTRY_CODE, jdbcType=VARCHAR}
+				, ''
+				, 'H5'
+				, '사용')
+	</insert>
+	
+	
+	
 	
 	<delete id="deleteDataChj" parameterType="java.util.Map">
 		delete CHJ

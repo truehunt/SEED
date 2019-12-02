@@ -74,7 +74,7 @@ function fn_formSubmit(){
 							<div class="listHiddenField pull-right field60"><c:out value="${listview.brdlike}"/></div>
 							<div class="listHiddenField pull-right field60 textCenter"><c:out value="${listview.brdhit}"/></div>
 							<div class="listHiddenField pull-right field130 textCenter"><c:out value="${listview.brddate}"/></div>
-							<div class="listHiddenField pull-right field100 textCenter"><a href="boardList?bgno=<c:out value="${searchVO.bgno}"/>&searchExt1=<c:out value="${listview.PK_SAWON_CODE}"/>"><c:out value="${listview.brdwriter}"/></a></div>
+							<div class="listHiddenField pull-right field100 textCenter"><a href="boardList?bgno=<c:out value="${searchVO.bgno}"/>&searchExt1=<c:out value="${listview.FK_SAWON_CODE}"/>"><c:out value="${listview.brdwriter}"/></a></div>
 							<div class="listTitle" title="<c:out value="${listview.brdtitle}"/>">
 								<div class="pull-left field30">
 							    	<i class="fa fa-<c:out value="${listview.extfield1}"/> fa-fw"></i> 

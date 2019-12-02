@@ -21,6 +21,7 @@
 		<result property="SAWON_INT_DATE" column="SAWON_INT_DATE" />
 		<result property="SAWON_MOD_USER_ID" column="SAWON_MOD_USER_ID" />
 		<result property="SAWON_MOD_DATE" column="SAWON_MOD_DATE" />
+		<result property="PHOTO" column="PHOTO" />
 	</resultMap>
 	
 	<!-- 비밀번호찾기 - 비밀번호 변경 -->
@@ -63,7 +64,7 @@
     </select>
 	
 	<select id="selectMember4Login" parameterType="hr.system.p0001.vo.LoginVO" resultType="hr.system.p0001.vo.SawonVO" >
-        SELECT PK_SAWON_CODE, SAWON_NAME, SAWON_VIEW_PERMISSION
+        SELECT PK_SAWON_CODE, SAWON_NAME, SAWON_VIEW_PERMISSION, PHOTO
           FROM SAWON 
          WHERE SAWON_USER_STATUS='Y' 
            AND PK_SAWON_CODE = #{ PK_SAWON_CODE } AND SAWON_PASSWORD = #{ SAWON_PASSWORD }
@@ -483,7 +484,6 @@
 		where pk_company_code = #{pk_company_code}
 		and company_name = #{company_name}
 	</delete>	
-	
 	<!-- WorkEnroll -->
 	<resultMap id="s0002Result01" type="workEnroll_VO">
 		<result property="pk_workplace_code" column="pk_workplace_code" />
@@ -597,6 +597,7 @@
 		<result property="dept_priodof" column="dept_priodof" />
 		<result property="pk_sector_code" column="pk_sector_code" />
 		<result property="sector_priodof" column="sector_priodof" />
+		<result property="dept_inquiry_code" column="dept_inquiry_code" />
 		
 		<result property="dept_int_user_id" column="dept_int_user_id" />
 		<result property="dept_int_date" column="dept_int_date" />
@@ -607,22 +608,29 @@
 		<result property="pk_company_code" column="pk_company_code" />
 		 dept의 모든 칼럼 및 fk_company_code,fk_company_name, fk_sector_code, sector_name 가져옴
 			pk_dept_code, dept_name, fk_workplace_code, workplace_name, fk_sector_code
-			, sector_name, dept_priodof, dept_int_user_id, dept_int_date, dept_mod_user_id
-			, dept_mod_date
+			, sector_name, dept_priodof, dept_inquiry_code, dept_int_user_id, dept_int_date
+			, dept_mod_user_id, dept_mod_date
 		 -->
 	</resultMap>
 
 	<select id="DEsearchList" resultMap="s0003Result01" parameterType="java.util.Map"> 
       <![CDATA[
          select d.pk_dept_code, d.dept_name, d.fk_workplace_code, w.workplace_name, d.fk_sector_code, 
-         	    s.sector_name, TO_CHAR(TO_DATE(d.dept_priodof),'YYYY-MM-DD') as dept_priodof
+         	    s.sector_name, TO_CHAR(TO_DATE(d.dept_priodof),'YYYY-MM-DD') as dept_priodof, d.dept_inquiry_code
          from dept d, workplace w, sector s
       ]]>
-		<where>
+		 <where>
 			d.fk_workplace_code = w.pk_workplace_code
 			and d.fk_sector_code = s.pk_sector_code
+			
+			<if test="code != '' and code != null">
+				<!-- and fk_workplace_code = #{code,jdbcType=VARCHAR}  -->
+				 and (fk_workplace_code like '%'|| #{code,jdbcType=VARCHAR} ||'%' or w.workplace_name like '%'|| #{code,jdbcType=VARCHAR} ||'%')
+				<!-- and w.workplace_name like '%'|| #{code,jdbcType=VARCHAR} ||'%' -->
+				<!-- and fk_workplace_code like '%'|| #{code,jdbcType=VARCHAR} ||'%' -->
+			</if>
 		</where>
-			order By d.pk_dept_code asc
+			order By d.pk_dept_code asc 
 	</select>
 	
 	<update id="DEupdateData" parameterType="java.util.Map">
@@ -634,6 +642,8 @@
 		   , fk_sector_code = #{fk_sector_code,jdbcType=VARCHAR}
 		   <!-- , sector_name = #{sector_name,jdbcType=VARCHAR} -->
 		   , dept_priodof = #{dept_priodof,jdbcType=VARCHAR}
+		   , dept_inquiry_code = #{dept_inquiry_code,jdbcType=VARCHAR}
+		   
 		   , dept_int_user_id = #{dept_int_user_id,jdbcType=VARCHAR}
 		   , dept_int_date = #{dept_int_date,jdbcType=TIMESTAMP}
 		   , dept_mod_user_id = #{dept_mod_user_id,jdbcType=VARCHAR}
@@ -644,11 +654,12 @@
 	
 	<insert id="DEinsertData" parameterType="java.util.Map">
 		insert into dept(pk_dept_code, dept_name, fk_workplace_code, fk_sector_code
-							, dept_priodof, dept_int_user_id, dept_int_date
+							, dept_priodof, dept_inquiry_code, dept_int_user_id, dept_int_date
 							, dept_mod_user_id, dept_mod_date) 
 			   values(#{pk_dept_code, jdbcType=VARCHAR},#{dept_name, jdbcType=VARCHAR},#{fk_workplace_code, jdbcType=VARCHAR},
-			   		  #{fk_sector_code, jdbcType=VARCHAR},#{dept_priodof, jdbcType=VARCHAR},#{dept_int_user_id, jdbcType=VARCHAR},
-			   		  #{dept_int_date, jdbcType=TIMESTAMP},#{dept_mod_user_id, jdbcType=VARCHAR},#{dept_mod_date, jdbcType=TIMESTAMP}
+			   		  #{fk_sector_code, jdbcType=VARCHAR},#{dept_priodof, jdbcType=VARCHAR},#{dept_inquiry_code, jdbcType=VARCHAR},
+			   		  #{dept_int_user_id, jdbcType=VARCHAR},#{dept_int_date, jdbcType=TIMESTAMP},#{dept_mod_user_id, jdbcType=VARCHAR},
+			   		  #{dept_mod_date, jdbcType=TIMESTAMP}
 					  )
 	</insert>	
 	
@@ -698,7 +709,7 @@
          from workplace 
          order By pk_workplace_code asc
       ]]>
-	</select>		
+	</select>				
 	
 	<!-- Sawon Enroll -->
 	<select id="SEsearchList" resultMap="p0001Result01" parameterType="java.util.Map"> 

@@ -117,6 +117,7 @@ public class LoginControllerImpl implements LoginController {
         session.setAttribute("PK_SAWON_CODE", mdo.getPK_SAWON_CODE());
         session.setAttribute("SAWON_VIEW_PERMISSION",mdo.getSAWON_VIEW_PERMISSION());
         session.setAttribute("SAWON_NAME",  mdo.getSAWON_NAME());
+        session.setAttribute("PHOTO",  mdo.getPHOTO());
         
         if ("Y".equals(loginInfo.getRemember())) {
             set_cookie("sid", loginInfo.getPK_SAWON_CODE(), response);

@@ -15,25 +15,10 @@ import hr.human.p0001.vo.CertVO;
 public class CertDAOImpl implements CertDAO {
 	@Autowired
 	private SqlSession sqlSession;
-	private String num;
-	private int cert_code;
-
 	
 	@Override
 	public List<CertVO> ISA_cert(Map<String, Object> searchMap) throws DataAccessException {
-		
 		List<CertVO> list = sqlSession.selectList("hr.human.p0001.ISA_cert",searchMap);
-		
-		for(int i=0; i<list.size(); i++){
-			num = list.get(i).getPk_CERTIFICATE_CODE();
-		}
-		
-		if(num != null && num != "") {
-			cert_code = Integer.parseInt(num);
-		}else if(num == null ) {
-			cert_code = 1;
-		}
-		
 		return list;
 	}
 	
@@ -41,20 +26,27 @@ public class CertDAOImpl implements CertDAO {
 		@Override
 		public void insertDataCert(Map<String, String> row) throws DataAccessException {
 			System.out.println(row);
-			cert_code++;
-			if(cert_code < 10 ) {
-				row.put("pk_CERTIFICATE_CODE", "000"+cert_code);
-			}else if(cert_code >= 10 && cert_code < 100 ) {
-				row.put("pk_CERTIFICATE_CODE", "00"+cert_code);
-			}else if(cert_code >= 100 && cert_code < 1000) {
-				row.put("pk_CERTIFICATE_CODE", "0"+cert_code);
+			sqlSession.update("hr.human.p0001.insertDataCert", row); // insert
+			
+			List<CertVO> listMap = sqlSession.selectList("hr.human.p0001.SORT_select",row); // count_num이 0인지 아닌지를 조회
+			int count_num = (int) listMap.get(0).getCount_num(); // 조회한 count_num을 변수 a에 저장 
+			
+			if(count_num == 0) { // 만약 자격종류가 기초코드에 없는 것일 경우 
+				sqlSession.update("hr.human.p0001.SORT_insert", row); // 기초코드에 추가시킨다.
 			}
-			sqlSession.update("hr.human.p0001.insertDataCert", row);
 		}
-		@Override
 		
+		@Override
 		public void updateDataCert(Map<String, String> row) throws DataAccessException {
+			System.out.println(row);
 			sqlSession.update("hr.human.p0001.updateDataCert", row);
+			
+			List<CertVO> listMap = sqlSession.selectList("hr.human.p0001.SORT_select",row); // count_num이 0인지 아닌지를 조회
+			int count_num = (int) listMap.get(0).getCount_num(); // 조회한 count_num을 변수 a에 저장 
+			
+			if(count_num == 0) { // 만약 자격종류가 기초코드에 없는 것일 경우 
+				sqlSession.update("hr.human.p0001.SORT_insert", row); // 기초코드에 추가시킨다.
+			}
 		}
 		@Override
 		public void deleteDataCert(Map<String, String> row) throws DataAccessException {

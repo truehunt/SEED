@@ -74,7 +74,7 @@
 		 
 		 
 		var initData = {};
-      	initData.Cfg = {SearchMode:smLazyLoad, Page:50,MergeSheet:msHeaderOnly,ChildPage:10,DragMode:1,SearchSync:1};
+      	initData.Cfg = {SearchMode:smLazyLoad, Page:50,MergeSheet:msHeaderOnly,ChildPage:10,DragMode:1,SearchSync:1,ComboMaxHeight:50};
       	initData.Cols = [
       	//{Header:"No",Type:"Seq", Align:"Center"},
       		{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
@@ -214,15 +214,15 @@
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
         	{Header:"경력코드",Type:"Text",SaveName:"pk_CAR_CODE", Align:"Center"},
-            {Header:"직장명",Type:"Text", SaveName:"car_NAME", Width:150, Align:"Center"},
-            {Header:"입사일",Type:"Text", SaveName:"car_STA_DATE", Width:60, Align:"Center"},
-            {Header:"퇴사일",Type:"Text", SaveName:"car_END_DATE", Width:60, Align:"Center"},
-            {Header:"근무년한",Type:"Text", SaveName:"car_DATE", Width:60, Align:"Center"},
-            {Header:"담당업무",Type:"Text", SaveName:"car_DANDANG", Width:60, Align:"Center"},
-            {Header:"직위",Type:"Text", SaveName:"car_POSITION", Width:60, Align:"Center"},
-            {Header:"급여",Type:"Int", SaveName:"car_SALARY", "Format": "#,### 원", Width:60, Align:"Center"},
-            {Header:"퇴직사유",Type:"Text", SaveName:"car_RESIGN", Width:60, Align:"Center"},
-            {Header:"근속기",Type:"Text", SaveName:"car_GEUNSOG_CODE", Width:60, Align:"Center"},
+            {Header:"직장명",Type:"Text", SaveName:"car_NAME", Width:120, Align:"Center"},
+            {Header:"입사일",Type:"Date", SaveName:"car_STA_DATE", Width:120, Align:"Center"},
+            {Header:"퇴사일",Type:"Date", SaveName:"car_END_DATE", Width:120, Align:"Center"},
+//             {Header:"근무년한",Type:"Text", SaveName:"car_DATE", Format:"##년/##월", Width:60, Align:"Center"},
+            {Header:"담당업무",Type:"Text", SaveName:"car_DANDANG", Width:100, Align:"Center"},
+            {Header:"직위",Type:"Text", SaveName:"car_POSITION", Width:100, Align:"Center"},
+            {Header:"급여",Type:"Int", SaveName:"car_SALARY", "Format": "#,### 원", Width:100, Align:"Center"},
+            {Header:"퇴직사유",Type:"Text", SaveName:"car_RESIGN", Width:120, Align:"Center"},
+            {Header:"근속기",Type:"Combo", SaveName:"car_GEUNSOG_CODE", Width:60, Align:"Center"},
             {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
         ];
          
@@ -241,12 +241,12 @@
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
         	{Header:"자격코드",Type:"Text",SaveName:"pk_CERTIFICATE_CODE", Align:"Center"},
-            {Header:"자격종류",Type:"Text", SaveName:"certificate_SORT_CODE", Width:150, Align:"Left"},
-            {Header:"취득일",Type:"Text", SaveName:"certificate_STA_DATE", Width:60, Align:"Center"},
-            {Header:"만료일",Type:"Text", SaveName:"certificate_END_DATE", Width:60, Align:"Center"},
+            {Header:"자격종류",Type:"ComboEdit", SaveName:"certificate_SORT_CODE", Width:150, Align:"Left"},
+            {Header:"취득일",Type:"Date", SaveName:"certificate_STA_DATE", Width:60, Align:"Center"},
+            {Header:"만료일",Type:"Date", SaveName:"certificate_END_DATE", Width:60, Align:"Center"},
             {Header:"자격증번호",Type:"Text", SaveName:"certificate_NUM", Width:60, Align:"Center"},
-            {Header:"발행기관",Type:"Text", SaveName:"certificate_ISSUER_CODE", Width:60, Align:"Center"},
-            {Header:"수당",Type:"Text", SaveName:"certificate_SUDANG_CODE", Width:60, Align:"Center"},
+            {Header:"발행기관",Type:"ComboEdit", SaveName:"certificate_ISSUER_CODE", Width:60, Align:"Center"},
+            {Header:"수당",Type:"Combo", SaveName:"certificate_SUDANG_CODE", Width:60, Align:"Center"},
             {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
         ];
           
@@ -282,13 +282,13 @@
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
         	{Header:"고과코드",Type:"Text",SaveName:"pk_ASS_CODE", Align:"Center"},
-			{Header:"고과명",Type:"Text", SaveName:"ass_NAME", Width:60, Align:"Center"},
-			{Header:"평가시작일",Type:"Text", SaveName:"ass_STA_DATE", Width:60, Align:"Center"},
-			{Header:"평가종료일",Type:"Text", SaveName:"ass_END_DATE", Width:60, Align:"Center"},
-			{Header:"고과일",Type:"Text", SaveName:"ass_DATE", Width:60, Align:"Center"},
+			{Header:"고과명",Type:"Text", SaveName:"ass_NAME", Width:60, Align:"Center"}, // Combo를...
+			{Header:"평가시작일",Type:"Date", SaveName:"ass_STA_DATE", Width:60, Align:"Center"},
+			{Header:"평가종료일",Type:"Date", SaveName:"ass_END_DATE", Width:60, Align:"Center"},
+			{Header:"고과일",Type:"Date", SaveName:"ass_DATE", Width:60, Align:"Center"},
 			{Header:"고과자",Type:"Text", SaveName:"fk_ASS_PER_CODE", Width:60, Align:"Center"},
-			{Header:"반영률",Type:"Text", SaveName:"ass_REFLECTANCE", Width:60, Align:"Center"},
-			{Header:"점수",Type:"Text", SaveName:"ass_SCORE", Width:60, Align:"Center"},
+			{Header:"반영률",Type:"Float", SaveName:"ass_REFLECTANCE", Width:60, Align:"Center", Format:"#,##0.00"},
+			{Header:"점수",Type:"Float", SaveName:"ass_SCORE", Width:60, Align:"Center", Format:"#,##0.00"},
 			{Header:"등급",Type:"Text", SaveName:"ass_CLASS", Width:60, Align:"Center"},
 			{Header:"비고",Type:"Text", SaveName:"ass_NOTE", Width:60, Align:"Center"},
 			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
@@ -303,15 +303,15 @@
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
         	{Header:"출장코드",Type:"Text",SaveName:"pk_CHJ_CODE", Align:"Center"},
-			{Header:"출장국가",Type:"Text", SaveName:"chj_COUNTRY_CODE", Width:60, Align:"Center"},
+			{Header:"출장국가",Type:"ComboEdit", SaveName:"chj_COUNTRY_CODE", Width:60, Align:"Center"},
 			{Header:"출장지",Type:"Text", SaveName:"chj_AREA", Width:60, Align:"Center"},
-			{Header:"시작일",Type:"Text", SaveName:"chj_STA_YMD", Width:60, Align:"Center"},
-			{Header:"종료일",Type:"Text", SaveName:"chj_END_YMD", Width:60, Align:"Center"},
-			{Header:"항공료",Type:"Text", SaveName:"chj_AIRFARE", Width:60, Align:"Center"},
-			{Header:"본인부담",Type:"Text", SaveName:"chj_OWN", Width:60, Align:"Center"},
-			{Header:"회사부담",Type:"Text", SaveName:"chj_COMPANY", Width:60, Align:"Center"},
-			{Header:"기타비용",Type:"Text", SaveName:"chj_OTHER", Width:60, Align:"Center"},
-			{Header:"총비용",Type:"Text", SaveName:"chj_TOTAL", Width:60, Align:"Center"},
+			{Header:"시작일",Type:"Date", SaveName:"chj_STA_YMD", Width:60, Align:"Center"},
+			{Header:"종료일",Type:"Date", SaveName:"chj_END_YMD", Width:60, Align:"Center"},
+			{Header:"항공료",Type:"Int", SaveName:"chj_AIRFARE", Width:60, Align:"Center",Format:"#,###원"},
+			{Header:"본인부담",Type:"Int", SaveName:"chj_OWN", Width:60, Align:"Center",Format:"#,###원"},
+			{Header:"회사부담",Type:"Int", SaveName:"chj_COMPANY", Width:60, Align:"Center",Format:"#,###원"},
+			{Header:"기타비용",Type:"Int", SaveName:"chj_OTHER", Width:60, Align:"Center",Format:"#,###원"},
+			{Header:"총비용",Type:"Int", SaveName:"chj_TOTAL", Width:60, Align:"Center",CalcLogic:"|chj_AIRFARE|+|chj_OWN|+|chj_COMPANY|+|chj_OTHER|", Format:"#,###원"},
 			{Header:"목적",Type:"Text", SaveName:"chj_PURPOSE", Width:60, Align:"Center"},
 			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
 		];
@@ -325,14 +325,14 @@
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
         	{Header:"상벌코드",Type:"Text",SaveName:"pk_SB_CODE", Align:"Center"},
-			{Header:"구분",Type:"Text", SaveName:"sb_DIVISION", Width:60, Align:"Center"},
-			{Header:"포상/징계명",Type:"Text", SaveName:"sb_NAME", Width:100, Align:"Center"},
-			{Header:"포상/징계일",Type:"Text", SaveName:"sb_DATE", Width:100, Align:"Center"},
+			{Header:"구분",Type:"Combo", SaveName:"sb_DIVISION", Width:60, Align:"Center", ComboText:"|포상|징계", ComboCode:"|포상|징계"},
+			{Header:"포상/징계명",Type:"Text", SaveName:"sb_NAME", Width:100, Align:"Center"}, // Combo를 쓸 필요가 있나..?
+			{Header:"포상/징계일",Type:"Date", SaveName:"sb_DATE", Width:100, Align:"Center"},
 			{Header:"포상/징계내역",Type:"Text", SaveName:"sb_DETAILS", Width:100, Align:"Center"},
 			{Header:"시행처",Type:"Text", SaveName:"sb_SIHAENGCHEO", Width:60, Align:"Center"},
-			{Header:"금액",Type:"Text", SaveName:"sb_AMOUNT", Width:60, Align:"Center"},
-			{Header:"징계시작일",Type:"Text", SaveName:"sb_STA_DATE", Width:100, Align:"Center"},
-			{Header:"징계종료일",Type:"Text", SaveName:"sb_END_DATE", Width:100, Align:"Center"},
+			{Header:"금액",Type:"Int", SaveName:"sb_AMOUNT", Width:60, Align:"Center",Format:"#,###원"},
+			{Header:"징계시작일",Type:"Date", SaveName:"sb_STA_DATE", Width:100, Align:"Center"},
+			{Header:"징계종료일",Type:"Date", SaveName:"sb_END_DATE", Width:100, Align:"Center"},
 			{Header:"비고",Type:"Text", SaveName:"sb_NOTE", Width:60, Align:"Center"},
 			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
 		];
@@ -349,33 +349,31 @@
 	 	myTabs1.setEvents({ 
 			beforeGoToTab: function(event) {
 				var index = event.indexActive;
-// 				var sRow = mySheet.FindStatusRow('U|I'); // Status 상태가 I나 U인 것의 row를 구한다. 
 				switch(index){
 					case 0:
 						SetValue();
-// 						console.log(mySheet.FindStatusRow('U|I'));
-						if(mySheet.FindStatusRow('U|I') != "")
+						if(mySheet.FindStatusRow('U|I|D') != "")
 							mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/insertData.do");
 						break;
 					case 1:
 						SetValue();
-						if(mySheet.FindStatusRow('U|I') != "")
+						if(mySheet.FindStatusRow('U|I|D') != "")
 							mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/insertData.do");
 						break;
 					case 2:
-						if(mySheet4.FindStatusRow('U|I') != "")
+						if(mySheet4.FindStatusRow('U|I|D') != "")
 						mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
 						break;
 					case 3:
-						if(mySheet5.FindStatusRow('U|I') != "")
+						if(mySheet5.FindStatusRow('U|I|D') != "")
 						mySheet5.DoSave("${pageContext.request.contextPath}/human/p0001/insertHL.do", fk_hl_sawon_code);
 						break;
 					case 4:
-						if(mySheet6.FindStatusRow('U|I') != "")
+						if(mySheet6.FindStatusRow('U|I|D') != "")
 						mySheet6.DoSave("${pageContext.request.contextPath}/human/p0001/insertCar.do", fk_car_sawon_code);
 						break;
 					case 5:
-						if(mySheet7.FindStatusRow('U|I') != "")
+						if(mySheet7.FindStatusRow('U|I|D') != "")
 						mySheet7.DoSave("${pageContext.request.contextPath}/human/p0001/insertCert.do", fk_cert_sawon_code);
 						break;
 				}
@@ -383,6 +381,29 @@
 	   			return true; 
 			} 
 	   	});
+	 // tab 이동전에 발생
+	 	myTabs2.setEvents({ 
+			beforeGoToTab: function(event) {
+				var index = event.indexActive;
+				switch(index){
+					case 1:
+						if(mySheet9.FindStatusRow('U|I|D') != "")
+							mySheet9.DoSave("${pageContext.request.contextPath}/human/p0001/insertAss.do", fk_ass_sawon_code);
+						break;
+// 					case 2:
+// 						if(mySheet10.FindStatusRow('U|I|D') != "")
+// 						mySheet10.DoSave("${pageContext.request.contextPath}/human/p0001/insertChj.do", fk_chj_sawon_code);
+// 						break;
+// 					case 3:
+// 						if(mySheet11.FindStatusRow('U|I|D') != "")
+// 						mySheet11.DoSave("${pageContext.request.contextPath}/human/p0001/insertSb.do", fk_sb_sawon_code);
+// 						break;
+				}
+					
+	   			return true; 
+			} 
+	   	});
+		
 	}
   
   
@@ -426,46 +447,6 @@
 	 /*Sheet 각종 처리*/
 	   function doAction(sAction) {
 	      switch(sAction) {
-	         case "search":
-	        	var param = FormQueryStringEnc(document.frm);
-				console.log(param);
-				//mySheet.DoSearch("${contextPath}/hm/s0002/searchList.do", param);
-	            break;
-	         case "reload":
-	            mySheet.RemoveAll();
-	            break;
-	         case "save":
-	        	SetValue(); // 저장 전에 테이블에 있는 값을 ibSheet에 셋팅해준다. 
-	        	mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/insertData.do");
-	            
-// 	        	mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
-// 	        	mySheet5.DoSave("${pageContext.request.contextPath}/human/p0001/insertHL.do", fk_hl_sawon_code);
-// 	        	mySheet6.DoSave("${pageContext.request.contextPath}/human/p0001/insertCar.do", fk_car_sawon_code);
-// 	        	mySheet7.DoSave("${pageContext.request.contextPath}/human/p0001/insertCert.do", fk_cert_sawon_code);
-
-// 	        	mySheet9.DoSave("${pageContext.request.contextPath}/human/p0001/insertAss.do", fk_ass_sawon_code);
-// 	        	mySheet10.DoSave("${pageContext.request.contextPath}/human/p0001/insertChj.do", fk_chj_sawon_code);
-// 	        	mySheet11.DoSave("${pageContext.request.contextPath}/human/p0001/insertSb.do", fk_sb_sawon_code);
-	        	
-	           break;
-	         case "insert":
-				mySheet4.DataInsert(-1); 
-				mySheet5.DataInsert(-1);
-				mySheet6.DataInsert(-1);
-				mySheet7.DataInsert(-1);
-				
-				mySheet9.DataInsert(-1);
-				mySheet10.DataInsert(-1);
-				mySheet11.DataInsert(-1);
-				
-				var j = mySheet5.RowCount();
-				mySheet5.CellComboItem(j,4,HX); // 학교명
-				mySheet5.CellComboItem(j,7,HW); // 졸업구분
-	 			mySheet5.CellComboItem(j,9,HY); // 전공코드
-				mySheet5.CellComboItem(j,10,HY); // 전공코드
-				mySheet5.CellComboItem(j,12,HZ); // 주야구분
-				mySheet5.CellComboItem(j,13,R1); // 본분교구분
-	            break; 
 	         case "list":
 	             mySheet.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA.do");
 	        	 break;
@@ -474,7 +455,6 @@
 	 
 	function mySheet_OnSearchEnd(){
 		SetValue();
-		mySheet.SetCellValue()
 	}
 	
 	 
@@ -491,8 +471,8 @@
 			mySheet4.CellComboItem(i,13,HB); // 학력
 			mySheet4.CellComboItem(i,14,HW); // 졸업구분
 			
-			mySheet4.CellComboItem(i,6,S1); // 함/안함
-			mySheet4.CellComboItem(i,8,S2); // 해당/비해당
+			mySheet4.CellComboItem(i,6,S2); // 함/안함
+			mySheet4.CellComboItem(i,8,S1); // 해당/비해당
 			mySheet4.CellComboItem(i,12,S3); // 양/음
 		}
 		mySheet4.SetCellValue(mySheet4.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
@@ -509,8 +489,8 @@
 		mySheet4.CellComboItem(Row+1,5,H1); // 관계
 		mySheet4.CellComboItem(Row+1,13,HB); // 학력
 		mySheet4.CellComboItem(Row+1,14,HW); // 졸업구분
-		mySheet4.CellComboItem(Row+1,6,S1); // 함/안함
-		mySheet4.CellComboItem(Row+1,8,S2); // 해당/비해당
+		mySheet4.CellComboItem(Row+1,6,S2); // 함/안함
+		mySheet4.CellComboItem(Row+1,8,S1); // 해당/비해당
 		mySheet4.CellComboItem(Row+1,12,S3); // 양/음
 		
 		mySheet4.SetCellValue(Row+1, Col, "추가");
@@ -540,7 +520,7 @@
 			mySheet5.CellComboItem(i,13,R1); // 본분교구분
 		}
 		
-		selectSite(); // 
+		ISA_hl_Select(); // 
 		
 		mySheet5.SetCellValue(mySheet5.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
 		if(mySheet5.GetCellValue(mySheet5.RowCount(),'STATUS') == 'U' )
@@ -570,9 +550,187 @@
 			mySheet5.SetCellValue((row-1), mySheet5.LastCol(),"추가");
 		}
 	} 
-	//----------------------------------------------------------------------------------
+	//--------------------------- mySheet6_ 경력 -------------------------------------------------------
+		
+	// 조회끝날시 발생
+	function mySheet6_OnSearchEnd() { // 경력
+		if(mySheet6.RowCount() == 0){	
+			mySheet6.DataInsert(-1);
+		} // 조회시 조회내용이 없으면 한줄 추가
+		for(var i = 1; i<=mySheet6.RowCount(); i++ ){
+			mySheet6.CellComboItem(i,'car_GEUNSOG_CODE',S1); // 해당여부 - /해당/비해당/ : 조회된 곳에 COMBO를 집어넣는다.
+		}
+		
+		mySheet6.SetCellValue(mySheet6.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		if(mySheet6.GetCellValue(mySheet6.RowCount(),'STATUS') == 'U' )
+			mySheet6.SetCellValue(mySheet6.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+	}
+	
+	// 추가버튼 누를시 현재 row에 있는 추가버튼을 없애고,
+	// 다음 Row에 추가버튼을 추가한다.
+	function mySheet6_OnButtonClick(Row, Col) {  
+		mySheet6.SetCellValue(Row, Col, "");
+		mySheet6.DataInsert(-1);
+		
+		mySheet6.CellComboItem(Row+1,'car_GEUNSOG_CODE',S1); // 해당여부 - /해당/비해당
+		
+		mySheet6.SetCellValue(Row+1, Col, "추가");
+		
+	} 
 	
 	
+	// 새로 추가된 row중 마지막 row가 삭제될시 추가버튼을 이전 row에 추가한다.
+	function mySheet6_OnRowDelete(row, api) {
+		if(row == mySheet6.RowCount()){
+			mySheet6.SetCellValue((row-1), mySheet6.LastCol(),"추가");
+		}
+	} 
+	//---------------------mySheet7_ 면허/자격------------------------
+	
+	// 조회끝날시 발생
+	function mySheet7_OnSearchEnd() { // 경력
+		if(mySheet7.RowCount() == 0){	
+			mySheet7.DataInsert(-1);
+		} // 조회시 조회내용이 없으면 한줄 추가
+		for(var i = 1; i<=mySheet7.RowCount(); i++ ){
+			mySheet7.CellComboItem(i,'certificate_SORT_CODE',H9); // 면허/자격
+			mySheet7.CellComboItem(i,'certificate_ISSUER_CODE',RO); // 발행기관
+			mySheet7.CellComboItem(i,'certificate_SUDANG_CODE',S1); // 해당여부 - /해당/비해당/
+		}
+		
+		ISA_cert_Select();
+		
+		mySheet7.SetCellValue(mySheet7.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		if(mySheet7.GetCellValue(mySheet7.RowCount(),'STATUS') == 'U' )
+			mySheet7.SetCellValue(mySheet7.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+	}
+	
+	// 추가버튼 누를시 현재 row에 있는 추가버튼을 없애고,
+	// 다음 Row에 추가버튼을 추가한다.
+	function mySheet7_OnButtonClick(Row, Col) {  
+		mySheet7.SetCellValue(Row, Col, "");
+		mySheet7.DataInsert(-1);
+		
+		mySheet7.CellComboItem(Row+1,'certificate_SORT_CODE',H9); // 면허/자격
+		mySheet7.CellComboItem(Row+1,'certificate_ISSUER_CODE',RO); // 발행기관
+		mySheet7.CellComboItem(Row+1,'certificate_SUDANG_CODE',S1); // 해당여부 - /해당/비해당
+		
+		mySheet7.SetCellValue(Row+1, Col, "추가");
+		
+	} 
+	
+	// 새로 추가된 row중 마지막 row가 삭제될시 추가버튼을 이전 row에 추가한다.
+	function mySheet7_OnRowDelete(row, api) {
+		if(row == mySheet7.RowCount()){
+			mySheet7.SetCellValue((row-1), mySheet7.LastCol(),"추가");
+		}
+	}
+	
+	//--------------------- mySheet8_ 인사발령 ------------------------
+	
+	//--------------------- mySheet9_ 인사고과 ------------------------
+		
+	// 조회끝날시 발생
+	function mySheet9_OnSearchEnd() { // 경력
+		if(mySheet9.RowCount() == 0){	
+			mySheet9.DataInsert(-1);
+		} // 조회시 조회내용이 없으면 한줄 추가
+		
+// 		for(var i = 1; i<=mySheet9.RowCount(); i++ ){
+//			combo가 들어갈시 넣어주면 됩니다.
+// 		}
+		
+		mySheet9.SetCellValue(mySheet9.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		if(mySheet9.GetCellValue(mySheet9.RowCount(),'STATUS') == 'U' )
+			mySheet9.SetCellValue(mySheet9.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+	}
+	
+	// 추가버튼 누를시 현재 row에 있는 추가버튼을 없애고,
+	// 다음 Row에 추가버튼을 추가한다.
+	function mySheet9_OnButtonClick(Row, Col) {  
+		mySheet9.SetCellValue(Row, Col, "");
+		mySheet9.DataInsert(-1);
+		
+		mySheet9.SetCellValue(Row+1, Col, "추가");
+		
+	} 
+	
+	// 새로 추가된 row중 마지막 row가 삭제될시 추가버튼을 이전 row에 추가한다.
+	function mySheet9_OnRowDelete(row, api) {
+		if(row == mySheet9.RowCount()){
+			mySheet9.SetCellValue((row-1), mySheet9.LastCol(),"추가");
+		}
+	} 
+	//--------------------- mySheet10_ 출장 ------------------------
+		
+	// 조회끝날시 발생
+	function mySheet10_OnSearchEnd() { // 경력
+		if(mySheet10.RowCount() == 0){	
+			mySheet10.DataInsert(-1);
+		} // 조회시 조회내용이 없으면 한줄 추가
+		for(var i = 1; i<=mySheet10.RowCount(); i++ ){
+			mySheet10.CellComboItem(i,'chj_COUNTRY_CODE',H5); // 출장국가를 넣어준다.
+		}
+		
+		mySheet10.SetCellValue(mySheet10.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		if(mySheet10.GetCellValue(mySheet10.RowCount(),'STATUS') == 'U' )
+			mySheet10.SetCellValue(mySheet10.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+	}
+	
+	// 추가버튼 누를시 현재 row에 있는 추가버튼을 없애고,
+	// 다음 Row에 추가버튼을 추가한다.
+	function mySheet10_OnButtonClick(Row, Col) {  
+		mySheet10.SetCellValue(Row, Col, "");
+		mySheet10.DataInsert(-1);
+		
+		mySheet10.CellComboItem(Row+1,'car_GEUNSOG_CODE',S1); // 해당여부 - /해당/비해당
+		
+		mySheet10.SetCellValue(Row+1, Col, "추가");
+		
+	} 
+	
+	
+	// 새로 추가된 row중 마지막 row가 삭제될시 추가버튼을 이전 row에 추가한다.
+	function mySheet10_OnRowDelete(row, api) {
+		if(row == mySheet10.RowCount()){
+			mySheet10.SetCellValue((row-1), mySheet10.LastCol(),"추가");
+		}
+	} 
+	//--------------------- mySheet11_ 상벌관리 ------------------------
+		
+	// 조회끝날시 발생
+	function mySheet11_OnSearchEnd() { // 경력
+		if(mySheet11.RowCount() == 0){	
+			mySheet11.DataInsert(-1);
+		} // 조회시 조회내용이 없으면 한줄 추가
+// 		for(var i = 1; i<=mySheet11.RowCount(); i++ ){
+// 			
+// 		}
+		
+		mySheet11.SetCellValue(mySheet11.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		if(mySheet11.GetCellValue(mySheet11.RowCount(),'STATUS') == 'U' )
+			mySheet11.SetCellValue(mySheet11.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+	}
+	
+	// 추가버튼 누를시 현재 row에 있는 추가버튼을 없애고,
+	// 다음 Row에 추가버튼을 추가한다.
+	function mySheet11_OnButtonClick(Row, Col) {  
+		mySheet11.SetCellValue(Row, Col, "");
+		mySheet11.DataInsert(-1);
+		
+		mySheet11.SetCellValue(Row+1, Col, "추가");
+	} 
+	
+	
+	// 새로 추가된 row중 마지막 row가 삭제될시 추가버튼을 이전 row에 추가한다.
+	function mySheet11_OnRowDelete(row, api) {
+		if(row == mySheet11.RowCount()){
+			mySheet11.SetCellValue((row-1), mySheet11.LastCol(),"추가");
+		}
+	}
+	//-------------------------------------------------------------
+	
+	 
 	// 조회 이전에 테이블/ibSheet에 checkBox 값을 넣어준다.
 	function mySheet_OnBeforeSearch() {  
 		var info4 = ""; // 관계
@@ -582,6 +740,11 @@
 		var info11 = ""; // 전공코드
 		var info12 = ""; // 주야구분
 		var info13 = ""; // 본분교구분
+		var info14 = ""; // 면허/자격
+		var info15 = ""; // 발행기관
+// 		var info16 = ""; // 고과명
+		var info17 = ""; // 출장국가
+// 		var info18 = ""; // 상벌
 		
 		var info7 = ""; //여부코드(함/안함)
 		var info8 = ""; //여부코드(해당/비해당)
@@ -619,6 +782,29 @@
 						case 'R1': // 본분교구분
 							info13 = info13 + info1;
 							break;
+			//--------------------------------------------------------------------- 경력
+						case 'S1': // 해당여부 - 해당/비해당
+							info8 = info8 + info1;
+							break;	
+			//--------------------------------------------------------------------- 경력
+						case 'H9': // 면허/자격
+							info14 = info14 + info1;
+							break;
+						case 'RO': // 발행기관
+							info15 = info15 + info1;
+							break;	
+			//--------------------------------------------------------------------- 인사고과
+// 						case 'H3': // 고과명 
+// 							info16 = info16 + info1;
+// 							break;
+			//--------------------------------------------------------------------- 출장
+						case 'H5': // 출장국가
+							info17 = info17 + info1
+							break;
+			//--------------------------------------------------------------------- 상벌관리
+// 						case 'H8': // 징계/포상명 - 상벌
+// 							info18 = info18 + info1;
+// 							break;	
 			//--------------------------------------------------------------------- 채용	
 						case 'HT': // 채용구분
 							$('#isa_HIRE_CODE').append(MNGEMENT_NAME);
@@ -669,6 +855,12 @@
 				HY = {'ComboCode':info11,'ComboText':info11}; // 전공코드
 				HZ = {'ComboCode':info12,'ComboText':info12}; // 주야구분
 				R1 = {'ComboCode':info13,'ComboText':info13}; // 본분교구분
+				S1 = {'ComboCode':info8,'ComboText':info8}; // 여부코드(해당/비해당)
+				H9 = {'ComboCode':info14,'ComboText':info14}; // 여부코드(해당/비해당)
+				RO = {'ComboCode':info15,'ComboText':info15}; // 여부코드(해당/비해당)
+// 				H3 = {'ComboCode':info16,'ComboText':info16}; // 고과명
+				H5 = {'ComboCode':info17,'ComboText':info17}; // 출장국가
+// 				H8 = {'ComboCode':info18,'ComboText':info18}; // 포상/징계명
 			},
 			error : function(jqxhr, status, error) {
 				alert("에러 : mySheet_OnBeforeSearch");
@@ -687,9 +879,6 @@
 						case '7': // 여부코드(함/안함)
 							info7 = info7 + info1;
 							break;
-						case '8': // 여부코드(해당/비해당)
-							info8 = info8 + info1;
-							break;
 						case '10': // 양음구분코드(양/음)
 							info9 = info9 + info1;
 							break;
@@ -699,8 +888,7 @@
 				this.Action();
 			},
 			Action: function(){	 // combo를 넣는 곳
-				S1 = {'ComboCode':info7,'ComboText':info7}; // 여부코드(함/안함)
-				S2 = {'ComboCode':info8,'ComboText':info8}; // 여부코드(해당/비해당)
+				S2 = {'ComboCode':info7,'ComboText':info7}; // 여부코드(함/안함)
 				S3 = {'ComboCode':info9,'ComboText':info9}; // 양음구분(양/음)
 			},
 			error : function(jqxhr, status, error) {
@@ -819,8 +1007,8 @@
 	 }
 	
 	
-	
-	function selectSite() {
+	// 학력 ComboEdit에 값이 선택됨
+	function ISA_hl_Select() {
 		$.ajax({ // 
 			url : "${contextPath}/human/p0001/ISA_hl.do",//목록을 조회 할 url
 			type : "POST",
@@ -835,27 +1023,14 @@
 						MAJOR_CODE = MAJOR_CODE + "|" + data['Data'][i].hl_MAJOR_CODE;
 						MINOR_CODE = MINOR_CODE + "|" + data['Data'][i].hl_MINOR_CODE;
 					}
-				var school = SCHOOL_CODE.split("|");
-				var major = MAJOR_CODE.split("|");
-				var minor = MINOR_CODE.split("|");
+				var school = SCHOOL_CODE.split("|"); var major = MAJOR_CODE.split("|");	var minor = MINOR_CODE.split("|");
 				for(var i in school){
-					arr1 = school[i].split(",");
-					arr2 = major[i].split(",");
-					arr3 = minor[i].split(",");
+					arr1 = school[i].split(","); arr2 = major[i].split(","); arr3 = minor[i].split(",");
 					if(i != 0){
-						console.log(arr2);
-						if(arr1[0] == "null" ){ 
-							arr1[0] = "" 
-						};
-						if(arr2[0] == "null" ){ 
-							arr2[0] = "" 
-						};
-						if(arr3[0] == "null" ){
-							arr3[0] = "" 
-						};
-						mySheet5.SetCellValue(i,4,arr1[0]);
-						mySheet5.SetCellValue(i,9,arr2[0]);
-						mySheet5.SetCellValue(i,10,arr3[0]);
+						if(arr1[0] == "null" ){ arr1[0] = "" };
+						if(arr2[0] == "null" ){ arr2[0] = "" };
+						if(arr3[0] == "null" ){	arr3[0] = "" };
+						mySheet5.SetCellValue(i,4,arr1[0]);	mySheet5.SetCellValue(i,9,arr2[0]);	mySheet5.SetCellValue(i,10,arr3[0]); // 
 					}
 				}
 				
@@ -866,6 +1041,60 @@
 		});
 	}
 	
+	// 면허/자격 ComboEdit에 값이 선택됨
+	function ISA_cert_Select() {
+		$.ajax({ // 
+			url : "${contextPath}/human/p0001/ISA_cert.do",//목록을 조회 할 url
+			type : "POST", dataType : "JSON", data : {"fk_CERTIFICATE_SAWON_CODE":x},
+			success : function(data) {
+				var SORT_CODE = ""; // 자격종류
+				var ISSUER_CODE = ""; // 발행기관
+				for (var i = 0; i < data['Data'].length; i++) {
+					SORT_CODE = SORT_CODE + "|" + data['Data'][i].certificate_SORT_CODE;
+					ISSUER_CODE = ISSUER_CODE + "|" + data['Data'][i].certificate_ISSUER_CODE;
+				}
+				var sort = SORT_CODE.split("|"); var issuer = ISSUER_CODE.split("|");
+				for(var i in sort){
+					arr1 = sort[i].split(","); arr2 = issuer[i].split(",");
+					if(i != 0){
+						if(arr1[0] == "null" ){ arr1[0] = "" };
+						if(arr2[0] == "null" ){ arr2[0] = "" };
+						mySheet7.SetCellValue(i,'certificate_SORT_CODE',arr1[0]);	mySheet5.SetCellValue(i,'certificate_ISSUER_CODE',arr2[0]); 
+					}
+				}
+				
+			},
+			error : function(jqxhr, status, error) {
+				alert("selectSite_에러");
+			}
+		});
+	}
+	
+	// 출장 - 출장국가
+	function ISA_chj_Select(){
+		$.ajax({ // 
+			url : "${contextPath}/human/p0001/ISA_chj.do",//목록을 조회 할 url
+			type : "POST", dataType : "JSON", data : {"fk_CHJ_SAWON_CODE":x},
+			success : function(data) {
+				var chj_COUNTRY_CODE = ""; // 자격종류
+				for (var i = 0; i < data['Data'].length; i++) {
+					chj_COUNTRY_CODE = chj_COUNTRY_CODE + "|" + data['Data'][i].chj_COUNTRY_CODE;
+				}
+				var COUNTRY = chj_COUNTRY_CODE.split("|");
+				for(var i in COUNTRY){
+					arr1 = COUNTRY[i].split(",");
+					if(i != 0){
+						if(arr1[0] == "null" ){ arr1[0] = "" };
+						mySheet10.SetCellValue(i,'chj_COUNTRY_CODE',arr1[0]);
+					}
+				}
+				
+			},
+			error : function(jqxhr, status, error) {
+				alert("selectSite_에러");
+			}
+		});
+	}
 	
 	
 	

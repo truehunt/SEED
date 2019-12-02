@@ -221,7 +221,7 @@
 					<!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
 					<h1 class="page-header">
 						<i class="fa fa-user fa-fw"></i>
-						<s:message code="main.monthlyCls" />
+						<s:message code="main.dayCls" />
 					</h1>
 				</div>
 				<!-- /.col-lg-12 -->

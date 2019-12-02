@@ -113,7 +113,7 @@
 			
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center"},
-			{Header:"사업장코드",Type:"Text",SaveName:"pk_workplace_code",MinWidth:100, Align:"Center", KeyField:1},
+			{Header:"사업장코드",Type:"Text",SaveName:"pk_workplace_code",MinWidth:100, Align:"Center", KeyField:1, UpdateEdit:0},
 			{Header:"회사코드",Type:"Text",SaveName:"fk_company_code",MinWidth:60, Hidden:1},			
 			{Header:"사업장명",Type:"Text",SaveName:"workplace_name",MinWidth:150, Align:"Center", KeyField:1},
 			{Header:"사업자등록번호",Type:"Text",SaveName:"workplace_com_reg_num",MinWidth:150, KeyField:1, Hidden:1},
@@ -162,7 +162,7 @@
      if (row == null || row <= 0) return; // row가 null 이거나 0보다 같거나 작으면 바로 리턴
     
      var pk = mySheet.GetCellValue(row,2); // 마우스로 클릭한 셀의 value를 가져와서 pk에 저장
-
+     
      var colArr =  Object.keys(mySheet.SaveNameInfo); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 										 // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
   	  
   	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 

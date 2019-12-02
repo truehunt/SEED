@@ -2,6 +2,7 @@ package hr.system.p0003.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -143,10 +144,21 @@ public class BoardSvc {
     public BoardReplyVO insertBoardReply(BoardReplyVO param) {
         if (param.getReno() == null || "".equals(param.getReno())) {
             if (param.getReparent() != null) {
-                BoardReplyVO replyInfo = sqlSession.selectOne("selectBoardReplyParent", param.getReparent());
+                /*// 원래 소스
+            	BoardReplyVO replyInfo = sqlSession.selectOne("selectBoardReplyParent", param.getReparent());
                 param.setRedepth(replyInfo.getRedepth());
                 param.setReorder(replyInfo.getReorder() + 1);
-                sqlSession.selectOne("updateBoardReplyOrder", replyInfo);
+                System.out.println("============================" + replyInfo.getReorder());
+                sqlSession.selectOne("updateBoardReplyOrder", replyInfo);*/
+            	
+                // map으로 넣어보기
+            	BoardReplyVO replyInfo = sqlSession.selectOne("selectBoardReplyParent", param.getReparent());
+            	param.setRedepth(replyInfo.getRedepth());
+            	param.setReorder(replyInfo.getReorder() + 1);
+                Map<String, Object> parameters = new HashMap<String, Object>();
+                parameters.put("brdno", replyInfo.getBrdno());
+                parameters.put("reorder", replyInfo.getReorder().intValue());
+                sqlSession.selectOne("updateBoardReplyOrder", parameters);
             } else {
                 Integer reorder = sqlSession.selectOne("selectBoardReplyMaxOrder", param.getBrdno());
                 param.setReorder(reorder);

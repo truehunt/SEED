@@ -16,7 +16,7 @@ public class BoardVO {
     private String brddeleteflag; 
     private String filecnt;
     private String replycnt;
-    private String PK_SAWON_CODE;
+    private String FK_SAWON_CODE;
     private String brdnotice;
     private String brdlike;
     private String brdlikechk;          // like button click check
@@ -121,12 +121,12 @@ public class BoardVO {
         this.replycnt = replycnt;
     }
 
-    public String getPK_SAWON_CODE() {
-		return PK_SAWON_CODE;
+	public String getFK_SAWON_CODE() {
+		return FK_SAWON_CODE;
 	}
 
-	public void setPK_SAWON_CODE(String pK_SAWON_CODE) {
-		PK_SAWON_CODE = pK_SAWON_CODE;
+	public void setFK_SAWON_CODE(String fK_SAWON_CODE) {
+		FK_SAWON_CODE = fK_SAWON_CODE;
 	}
 
 	public String getBrdnotice() {

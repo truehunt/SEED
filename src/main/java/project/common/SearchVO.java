@@ -8,6 +8,8 @@ public class SearchVO extends PageVO  {
     private String[] searchTypeArr;            // 검색 필드를 배열로 변환
     private String searchExt1 = "";            // 검색 확장 필드  
     private String PK_SAWON_CODE;
+    private String startday; // 기간검색 위한 VO
+    private String endday;	// 기간검색 위한 VO
     
     public String getSearchKeyword() {
         return searchKeyword;
@@ -47,6 +49,22 @@ public class SearchVO extends PageVO  {
 
 	public void setSearchTypeArr(String[] searchTypeArr) {
 		this.searchTypeArr = searchTypeArr;
+	}
+
+	public String getStartday() {
+		return startday;
+	}
+
+	public void setStartday(String startday) {
+		this.startday = startday;
+	}
+
+	public String getEndday() {
+		return endday;
+	}
+
+	public void setEndday(String endday) {
+		this.endday = endday;
 	}
 
 }

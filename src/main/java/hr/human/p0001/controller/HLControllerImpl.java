@@ -40,7 +40,6 @@ public class HLControllerImpl implements HLController{
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
 		// 검색조건설정
 		searchMap.put("fk_HL_SAWON_CODE", request.getParameter("fk_HL_SAWON_CODE"));
-		System.out.println(request.getParameter("fk_HL_SAWON_CODE"));
 		//데이터 조회
 		List<HlVO> data = p0001Service.ISA_hl(searchMap);
 	    resultMap.put("Data", data);

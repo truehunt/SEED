@@ -20,6 +20,7 @@ public interface education_statusDAO {
 	
 	public List<education_statusVO> searchList3(Map<String, Object> searchMap) throws DataAccessException;
 
+	public List<education_statusVO> searchList4(Map<String, Object> searchMap) throws DataAccessException;
 	
 	public void insertData(Map<String, String> row) throws DataAccessException;
 

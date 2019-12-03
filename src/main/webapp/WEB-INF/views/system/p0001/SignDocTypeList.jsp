@@ -46,7 +46,7 @@ function fn_formSubmit(){
         <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-edit fa-fw"></i> 결재문서양식</h1>
+                    <h1 class="page-header"><i class="fa fa-files-o fa-fw"></i> <s:message code="main.adSign"/></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

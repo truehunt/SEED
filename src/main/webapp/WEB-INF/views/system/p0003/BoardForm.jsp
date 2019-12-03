@@ -45,6 +45,35 @@ function fn_formSubmit(){
 	
 	$("#form1").submit();
 } 
+
+//첨부파일 용량 제한 & 갯수 제한
+function checkSize(input) {
+    if (input.files && input.files[0].size > (50 * 1024 * 1024)) {
+        alert("파일 사이즈가 50MB 를 넘습니다.");
+        input.value = null;
+    }
+    
+    if (input.files && input.files.length > 10) {
+        alert("파일 첨부 갯수가 10개를 넘습니다.");
+        input.value = null;
+    }
+}
+
+function fn_fileDelete(fileno) {
+	if (confirm("삭제 하시겠습니까?(삭제시 복구되지 않습니다!!!)")) {
+		$.ajax({
+	        url: "deleteBoardFile",
+	        type:"POST", 
+	        data: { fileno : fileno },
+			success: function(result){
+				alert(result);
+			}
+	    })
+		
+		$(".div"+fileno).remove();
+	}
+}
+
 </script>
     
 </head>
@@ -88,12 +117,21 @@ function fn_formSubmit(){
 	                            <label class="col-lg-1"><s:message code="board.file"/></label>
 	                            <div class="col-lg-9">
 	                            	<c:forEach var="listview" items="${listview}" varStatus="status">
+	                            	<div class="div<c:out value="${listview.fileno}"/>">
 										<input type="checkbox" name="fileno" value="<c:out value="${listview.fileno}"/>">	
 				            			<a href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>"> 							 
-										<c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>
+										<c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/>
+										<a href='javascript:fn_fileDelete(<c:out value="${listview.fileno}"/>)'><i class='fa fa-times fa-fw'></i></a>
+										<br/>
+									</div>
 									</c:forEach>					
 									
-									<input type="file" name="uploadfile" multiple="multiple" />
+									<input type="file" name="uploadfile" multiple="multiple" onchange="checkSize(this)"/>
+									<br>
+									<div style="color: red;">※ 첨부파일을 여러개 업로드시 마우스를 이용해 동시에 선택하거나, shift키를 이용해 파일을 동시에 선택해서 업로드해주세요<br>
+									※ 첨부파일 용량은 50MB를 초과 할 수 없습니다.<br>
+									※ 첨부파일 갯수는 10개를 초과 할 수 없습니다.
+									</div>
 	                            </div>
 	                        </div>  
 	                    </div>

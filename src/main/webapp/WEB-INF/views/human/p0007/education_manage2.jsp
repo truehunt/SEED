@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>교육관리</title>
+<title>교육대상자등록</title>
 
 <style>
 

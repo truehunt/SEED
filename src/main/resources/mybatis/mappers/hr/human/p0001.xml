@@ -413,6 +413,8 @@
 		<result property="certificate_INT_DATE" column="certificate_INT_DATE" />
 		<result property="certificate_MOD_USER_ID" column="certificate_MOD_USER_ID" />
 		<result property="certificate_MOD_DATE" column="certificate_MOD_DATE" />
+		
+		<result property="count_num" column="count_num" />
 	</resultMap>
 	
 	<select id="ISA_cert" resultMap="cardResult06" parameterType="java.util.Map"> 

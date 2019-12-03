@@ -157,7 +157,7 @@ function TreenodeActivate(node) {
 		                        	<s:message code="board.title"/>
 		                        </label>
 							 	<label class="pull-right">
-							 		<input type="checkbox" name="searchType" value="usernm" <c:if test="${fn:indexOf(searchVO.searchType, 'usernm')!=-1}">checked="checked"</c:if>/>
+							 		<input type="checkbox" name="searchType" value=CU.SAWON_NAME <c:if test="${fn:indexOf(searchVO.searchType, 'CU.SAWON_NAME')!=-1}">checked="checked"</c:if>/>
 		                        	<s:message code="board.writer"/>
 		                        </label>
 		                   </div>

@@ -18,7 +18,10 @@ public class CertVO {
 	private String certificate_INT_DATE;
 	private String certificate_MOD_USER_ID;
 	private String certificate_MOD_DATE;
-
+	
+	private int count_num;
+	
+	
 	public CertVO() {
 		System.out.println("CertVO 메서드 호출");
 	}
@@ -118,6 +121,15 @@ public class CertVO {
 	public void setCertificate_MOD_DATE(String certificate_MOD_DATE) {
 		this.certificate_MOD_DATE = certificate_MOD_DATE;
 	}
+
+	public int getCount_num() {
+		return count_num;
+	}
+
+	public void setCount_num(int count_num) {
+		this.count_num = count_num;
+	}
+
 
 
 }

@@ -1,6 +1,7 @@
 package hr.system.p0003.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -148,9 +149,11 @@ public class BoardCtr {
         
         boardSvc.updateBoardRead(f3);
         BoardVO boardInfo = boardSvc.selectBoardOne(f3);
+        // 파일 정보 읽기
         List<?> listview = boardSvc.selectBoardFileList(brdno);
+        // 댓글 정보 읽기
         List<?> replylist = boardSvc.selectBoardReplyList(brdno);
-
+        
         BoardGroupVO bgInfo = boardSvc.selectBoardGroupOne4Used(boardInfo.getBgno());
         if (bgInfo == null) {
             return "system/p0003/BoardGroupFail";
@@ -185,6 +188,25 @@ public class BoardCtr {
         boardSvc.deleteBoardOne(brdno);
         
         return "redirect:/boardList?bgno=" + bgno;
+    }
+    
+    /**
+     * 수정화면에서 첨부파일 삭제
+	 * @throws
+     */
+	@RequestMapping(value = "/deleteBoardFile")
+    public void deleteBoardFile(HttpServletRequest request, HttpServletResponse response, String fileno) throws IOException {
+    	
+		response.setContentType("text/html;charset=utf-8");
+  		PrintWriter out = response.getWriter();
+		
+  		try {
+  			boardSvc.deleteBoardFile(fileno);
+        
+        out.print("파일을 삭제하였습니다.");
+  		} catch (Exception e) {
+ 			System.out.println("파일삭제 실패 : " + e);
+ 		}
     }
 
     /**

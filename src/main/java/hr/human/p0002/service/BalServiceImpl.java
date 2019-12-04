@@ -1,4 +1,4 @@
-package hr.human.p0001.service;
+package hr.human.p0002.service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,39 +10,51 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import hr.human.p0001.dao.FamDAO;
-import hr.human.p0001.service.FamService;
 import hr.human.p0001.vo.CardFamVO;
+import hr.human.p0002.dao.BalDAO;
+import hr.human.p0002.service.BalService;
+import hr.human.p0002.vo.BalVO;
+import hr.system.p0001.vo.InsaCodeVO;
 
-@Service("h_FamService")
+@Service("h_BalService")
 @Transactional(propagation = Propagation.REQUIRED)
-public class FamServiceImpl implements FamService {
+public class BalServiceImpl implements BalService {
 	@Autowired
-	private FamDAO p0001DAO;
+	private BalDAO p0002DAO;
 
 	@Override
-	public List<CardFamVO> ISA_fam(Map<String, Object> searchMap) throws DataAccessException {
-		List<CardFamVO> list =  p0001DAO.ISA_fam(searchMap); 
+	public List<BalVO> searchList(Map<String, Object> searchMap) throws DataAccessException {
+		List<BalVO> list =  p0002DAO.searchList(searchMap); 
 		return list;
 	}
 	
-	//가족
 	@Override
-	public void saveDataFam(Map<String, String[]> dataMap, String fk_FAM_SAWON_CODE)  throws DataAccessException  {
+	public List<InsaCodeVO> Code(Map<String, Object> searchMap) {
+		List<InsaCodeVO> list =  p0002DAO.Code(searchMap); 
+		return list;
+	}
+	
+	@Override
+	public List<BalVO> Ballyeong(Map<String, Object> searchMap) {
+		List<BalVO> list =  p0002DAO.Ballyeong(searchMap); 
+		return list;
+	}
+	
+	//
+	@Override
+	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
 		String[] status = dataMap.get("STATUS");
-		
 		int length = status.length; // row수
-		
 		int i = 0;
-			
+		
 		for (String str : status) {
-			Map<String, String> row = getRow(dataMap, length, i, fk_FAM_SAWON_CODE); // 현재 Index의 Row Map
+			Map<String, String> row = getRow2(dataMap, length, i); // 현재 Index의 Row Map
 			if ("I".equals(str)) { // 추가
-				p0001DAO.insertDataFam(row);
+				p0002DAO.insertData(row);
 			} else if ("U".equals(str)) { // 수정
-				p0001DAO.updateDataFam(row);
+				p0002DAO.updateData(row);
 			} else if ("D".equals(str)) { // 삭제
-				p0001DAO.deleteDataFam(row);
+				p0002DAO.deleteData(row);
 			}
 			i++;
 		}
@@ -70,5 +82,10 @@ public class FamServiceImpl implements FamService {
 		}		
 		return row;
 	}
+
+	
+
+
+	
 
 }

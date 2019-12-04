@@ -263,9 +263,8 @@ public class CardControllerImpl implements CardController{
     public String imageSave(HttpServletRequest request,  HttpServletResponse response , SignImageVO signImageInfo)  throws IOException  {
 		response.setContentType("text/html;charset=utf-8");
 		
-		System.out.println("1");
   		String userno = request.getParameter("PK_SAWON_CODE");
-  	        
+  	    
   		signImageInfo.setPK_SAWON_CODE(userno);
   	        
   		FileUtil fs = new FileUtil();
@@ -282,5 +281,17 @@ public class CardControllerImpl implements CardController{
   		return photo;
     }
 
+	
+	@RequestMapping(value = "/human/p0001/imageDelete")
+	@ResponseBody
+    public void imageDelete(HttpServletRequest request,  HttpServletResponse response , SignImageVO signImageInfo)  throws IOException  {
+		response.setContentType("text/html;charset=utf-8");
+		
+  		String userno = request.getParameter("PK_SAWON_CODE");
+  		System.out.println("확인중..." + userno);
+        CardDAO.deleteSignImage(signImageInfo);
+        
+    }
+	
 	
 }

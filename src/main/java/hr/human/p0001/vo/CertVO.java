@@ -20,7 +20,7 @@ public class CertVO {
 	private String certificate_MOD_DATE;
 	
 	private int count_num;
-	
+	private String name;
 	
 	public CertVO() {
 		System.out.println("CertVO 메서드 호출");
@@ -130,6 +130,13 @@ public class CertVO {
 		this.count_num = count_num;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 
 }

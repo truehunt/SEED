@@ -118,13 +118,15 @@ public class SawonCtr {
     /**
      * 사용자 조회.
      */
-    @RequestMapping(value = "/adUserRead")
-    public void userRead(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "/myinfo")
+    public String userRead(HttpServletRequest request, HttpServletResponse response) {
         String userno = request.getParameter("PK_SAWON_CODE");
         
-        SawonVO userInfo = sawonSvc.selectUserOne(userno);
+        // SawonVO userInfo = sawonSvc.selectUserOne(userno);
 
-        UtilEtc.responseJsonValue(response, userInfo);
+        // UtilEtc.responseJsonValue(response, userInfo);
+        
+        return "system/p0001/Sawon_Myinfo";
     }
     
 }

@@ -55,6 +55,8 @@ $(document).ready(function(){
 		                width:"0px"
 	             	}	
 		        });
+		        
+		      	
 });
 
 		    function doAction(elId, title, type, id, url) {
@@ -62,9 +64,11 @@ $(document).ready(function(){
 		            idxTab = 0,
 		            urlToGo = "",
 		            bFindTab = false;
-		        if (elId) {
+		        if (elId) { 
 		            if (url === "schList") { // 일정관리
 		                urlToGo = "/SEED/schList"; 
+		            } else if(url === "myinfo"){ // 내정보보기
+		            	urlToGo = "myinfo"; 
 		            } else if(url === "adCodeList"){ // 공통코드관리
 		            	urlToGo = "/SEED/adCodeList"; 
 		            } else if(url === "searchMember"){ // 사원조회(ESS)
@@ -163,6 +167,13 @@ $(document).ready(function(){
 		                    }
 		                });
 		            }
+		            
+		          	//전체 열린 탭의 개수가 12개 이상이면 경고 발생
+			        if(myTab.tabs.getCountTab()>12){
+			           if(confirm("탭이 너무 많습니다. 하나 닫을까요?")){
+			        	   myTab.removeTab(1);      
+			           }
+			        }
 		        }
 		    }
 </script>
@@ -224,7 +235,7 @@ $(document).ready(function(){
 	                        <i class="fa fa-caret-down"></i>
 	                    </a>
 	                    <ul class="dropdown-menu dropdown-user">
-	                        <li><a href="memberForm"><i class="fa fa-user fa-fw"></i> 내 정보 보기</a></li>
+	                        <li><a href='#' onClick="doAction(myTab,'<s:message code="main.myinfo"/>','chart','myinfo','myinfo'); return false"><i class="fa fa-info-circle fa-fw"></i> 내 정보 보기</a></li>
 	                    </ul>
                     </li>
                     
@@ -291,7 +302,7 @@ $(document).ready(function(){
                         </li>
                         <!-- 내정보보기 -->
                         <li>
-                            <a href='#' onClick="doAction(myTab,'<s:message code="main.myinfo"/>','chart','aa','aa'); return false"><i class="fa fa-info-circle fa-fw"></i> <s:message code="main.myinfo"/></a>
+                            <a href='#' onClick="doAction(myTab,'<s:message code="main.myinfo"/>','chart','myinfo','myinfo'); return false"><i class="fa fa-info-circle fa-fw"></i> <s:message code="main.myinfo"/></a>
                         </li>
                         <!-- 사원조회 -->
                         <li>
@@ -367,9 +378,6 @@ $(document).ready(function(){
 	                                </li>
 	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.monthlyCls2"/>','chart','dd','dd'); return false"><s:message code="main.monthlyCls2"/></a>
-	                                </li>
-	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.nightShift"/>','chart','ee','ee'); return false"><s:message code="main.nightShift"/></a>
 	                                </li>
 	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.calHoliday"/>','chart','holiday_calc','holiday_calc'); return false"><s:message code="main.calHoliday"/></a>

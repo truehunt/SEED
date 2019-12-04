@@ -80,6 +80,7 @@ function fn_signSave(){
 							        				<div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div>
 				        				</c:when>
 							        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'><img src="${pageContext.request.contextPath}/resources/image/disagree.jpg" height="35px;" width="75px;" style="position:relative; margin:0 auto;"/><div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div></c:when>
+							        	<c:when test='${signlist.APPROVAL_SSRESULT == "3"}'><img src="${pageContext.request.contextPath}/resources/image/power_agree.jpg" height="35px;" width="75px;" style="position:relative; margin:0 auto;"/><div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div></c:when>
 							         	<c:otherwise></c:otherwise>
 							      </c:choose>								
 								</div>
@@ -114,6 +115,7 @@ function fn_signSave(){
 							        				<div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div>
 				        				</c:when>
 							        	<c:when test='${signlist.APPROVAL_SSRESULT == "2"}'><img src="${pageContext.request.contextPath}/resources/image/disagree.jpg" height="35px;" width="75px;" style="position:relative; margin:0 auto;"/><div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div></c:when>
+							        	<c:when test='${signlist.APPROVAL_SSRESULT == "3"}'><img src="${pageContext.request.contextPath}/resources/image/power_agree.jpg" height="35px;" width="75px;" style="position:relative; margin:0 auto;"/><div style="font-size:3px; position:relative; z-index:1;"><c:out value="${signlist.APPROVAL_SIGN_DATE}"/></div></c:when>
 							         	<c:otherwise></c:otherwise>
 								      </c:choose>								
 									</div>
@@ -198,6 +200,7 @@ function fn_signSave(){
 			            	<div class="col-lg-2" ></div> 
 			            	<div class="col-lg-10" >
 							 	<label><input name="APPROVAL_SSRESULT" id="APPROVAL_SSRESULT" type="radio" checked="checked" value="1">승인</label>
+							 	<label><input name="APPROVAL_SSRESULT" id="APPROVAL_SSRESULT" type="radio" value="3">전결</label>
 							 	<label><input name="APPROVAL_SSRESULT" id="APPROVAL_SSRESULT" type="radio" value="2">반려</label>
 			                </div> 
 			            </div> 

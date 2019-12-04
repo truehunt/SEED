@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.human.p0002">
+	<resultMap id="BaldResult" type="balVO">
+		<result property="pk_BAL_CODE" column="pk_BAL_CODE" />
+		<result property="fk_BAL_CODE" column="fk_BAL_CODE" />
+		<result property="fk_BAL_SAWON_CODE" column="fk_BAL_SAWON_CODE" />
+		<result property="bal_TITLE" column="bal_TITLE" />
+		<result property="bal_NUM" column="bal_NUM" />
+		<result property="bal_DIV_CODE" column="bal_DIV_CODE" />
+		<result property="bal_DATE" column="bal_DATE" />
+		<result property="bal_DETAILS" column="bal_DETAILS" />
+		<result property="bal_INFO" column="bal_INFO" />
+		<result property="bal_BEF_INFO" column="bal_BEF_INFO" />
+		<result property="bal_AFT_INFO" column="bal_AFT_INFO" />
+		<result property="bal_APPL_DATE" column="bal_APPL_DATE" />
+		<result property="bal_LONELY" column="bal_LONELY" />
+		<result property="bal_DEPT_NAME" column="bal_DEPT_NAME" />
+		<result property="bal_POSITION_NAME" column="bal_POSITION_NAME" />
+		<result property="bal_INT_USER_ID" column="bal_INT_USER_ID" />
+		<result property="bal_INT_DATE" column="bal_INT_DATE" />
+		<result property="bal_MOD_USER_ID" column="bal_MOD_USER_ID" />
+		<result property="bal_MOD_DATE" column="bal_MOD_DATE" />
+		
+	</resultMap>
+	
+	<select id="Ballyeong" resultMap="BaldResult" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select bal_num, bal_title, bal_div_code, bal_date
+			from bal
+      	]]>
+	</select>
+	
+	<update id="updateDataFam" parameterType="java.util.Map">
+		update FAM
+		set  FAM_NAME = #{fam_NAME , jdbcType=VARCHAR},
+			 FAM_RELATIONS = #{fam_RELATIONS , jdbcType=VARCHAR},
+			 FAM_LIVE = #{fam_LIVE , jdbcType=VARCHAR},
+			 FAM_RES_NUM = #{fam_RES_NUM , jdbcType=VARCHAR},
+			 FAM_SUDANG = #{fam_SUDANG , jdbcType=VARCHAR},
+			 FAM_DISABLED_CODE = #{fam_DISABLED_CODE , jdbcType=VARCHAR},
+			 FAM_LOCAL_CODE = #{fam_LOCAL_CODE , jdbcType=VARCHAR},
+			 FAM_BIRTH_DATE = #{fam_BIRTH_DATE , jdbcType=VARCHAR},
+			 FAM_SOLAR_CODE = #{fam_SOLAR_CODE , jdbcType=VARCHAR},
+			 FAM_HAGLYEOG_CODE = #{fam_HAGLYEOG_CODE , jdbcType=VARCHAR},
+			 FAM_GRADUATION_CODE = #{fam_GRADUATION_CODE , jdbcType=VARCHAR},
+			 FAM_JOB = #{fam_JOB, jdbcType=VARCHAR},
+			 FAM_WORK_NAME = #{fam_WORK_NAME, jdbcType=VARCHAR},
+			 FAM_POSITION = #{fam_POSITION, jdbcType=VARCHAR}
+		where PK_FAM_CODE = #{pk_FAM_CODE, jdbcType=VARCHAR}
+	</update>	
+	 
+	<insert id="insertDataFam" parameterType="java.util.Map">
+		insert into FAM
+			(PK_FAM_CODE,
+			 FK_FAM_SAWON_CODE,
+			 FAM_NAME,
+			 FAM_RELATIONS,
+			 FAM_LIVE,
+			 FAM_RES_NUM,
+			 FAM_SUDANG,
+			 FAM_DISABLED_CODE,
+			 FAM_LOCAL_CODE,
+			 FAM_BIRTH_DATE,
+			 FAM_SOLAR_CODE,
+			 FAM_HAGLYEOG_CODE,
+			 FAM_GRADUATION_CODE,
+			 FAM_JOB,
+			 FAM_WORK_NAME,
+			 FAM_POSITION)
+		values(#{pk_FAM_CODE, jdbcType=VARCHAR},
+			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
+			   #{fam_NAME, jdbcType=VARCHAR},
+			   #{fam_RELATIONS, jdbcType=VARCHAR},
+			   #{fam_LIVE, jdbcType=VARCHAR},
+			   #{fam_RES_NUM, jdbcType=VARCHAR},
+			   #{fam_SUDANG, jdbcType=VARCHAR},
+			   #{fam_DISABLED_CODE, jdbcType=VARCHAR},
+			   #{fam_LOCAL_CODE, jdbcType=VARCHAR},
+			   #{fam_BIRTH_DATE, jdbcType=VARCHAR},
+			   #{fam_SOLAR_CODE, jdbcType=VARCHAR},
+			   #{fam_HAGLYEOG_CODE, jdbcType=VARCHAR},
+			   #{fam_GRADUATION_CODE, jdbcType=VARCHAR},
+			   #{fam_JOB, jdbcType=VARCHAR},
+			   #{fam_WORK_NAME, jdbcType=VARCHAR},
+			   #{fam_POSITION, jdbcType=VARCHAR})
+	</insert>	
+	
+	<delete id="deleteDataFam" parameterType="java.util.Map">
+		delete FAM
+		where PK_FAM_CODE = #{pk_FAM_CODE}
+	</delete>
+     
+</mapper>

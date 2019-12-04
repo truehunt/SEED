@@ -18,7 +18,7 @@ public interface education_statusController {
 	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map searchList2(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map searchList3(HttpServletRequest request, HttpServletResponse response) throws Exception;
-
+	public Map searchList4(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public ModelAndView tab_education_status(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView education_status(HttpServletRequest request, HttpServletResponse response) throws Exception;
@@ -27,6 +27,7 @@ public interface education_statusController {
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map saveData2(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map saveData3(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
 	
 	
 }

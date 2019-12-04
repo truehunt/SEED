@@ -94,6 +94,13 @@ public class BoardSvc {
     public BoardVO selectBoardOne(Field3VO param) {
         return sqlSession.selectOne("selectBoardOne", param);
     }
+    
+    /**
+     * 수정화면에서 첨부파일 삭제
+     */
+    public void deleteBoardFile(String param) {
+        sqlSession.insert("deleteBoardFile2", param);
+	}
 
     /**
      * 게시판 수정/삭제 권한 확인. 

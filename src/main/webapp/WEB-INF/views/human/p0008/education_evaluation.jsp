@@ -111,14 +111,14 @@
 		initdata.HeaderMode = {Sort:1,ColMove:1,ColResize:1,HeaderCheck:1};
 		initdata.Cols = [
 			 {Header:"교육코드",Type:"Text",SaveName:"pk_EDUCATION_MANA_CODE",MinWidth:80, Align:"Center", Edit:0},
-			 {Header:"교육명",Type:"Text",SaveName:"education_MANA_NAME",MinWidth:100, Align:"Center"},
-	         {Header:"시작일",Type:"Date",SaveName:"education_MANA_STA",MinWidth:110, Align:"Center"},
+			 {Header:"교육명",Type:"Text",SaveName:"education_MANA_NAME",MinWidth:100, Align:"Center", Edit:0},
+	         {Header:"시작일",Type:"Date",SaveName:"education_MANA_STA",MinWidth:110, Align:"Center", Edit:0},
 	         {Header:"종료일",Type:"Date",SaveName:"education_MANA_END",MinWidth:110, Align:"Center"},
-	         {Header:"교육일수",Type:"Text",SaveName:"education_MANA_DAYS",MinWidth:100, Align:"Center", DateDiff:"(d, |education_MANA_STA|, |education_MANA_END|)"},
-	         {Header:"교육장소",Type:"Text",SaveName:"education_MANA_LOCA",MinWidth:150, Align:"Center"},
-	         {Header:"담당강사",Type:"Text",SaveName:"education_MANA_TEA",MinWidth:100, Align:"Center"},
-	         {Header:"교육기관",Type:"Text",SaveName:"education_MANA_AGENCY",MinWidth:150, Align:"Center"},
-	         {Header:"교육시간",Type:"Text",SaveName:"education_MANA_TIMES",MinWidth:100, Align:"Center"}
+	         {Header:"교육일수",Type:"Text",SaveName:"education_MANA_DAYS",MinWidth:100, Align:"Center", DateDiff:"(d, |education_MANA_STA|, |education_MANA_END|)", Edit:0},
+	         {Header:"교육장소",Type:"Text",SaveName:"education_MANA_LOCA",MinWidth:150, Align:"Center", Edit:0},
+	         {Header:"담당강사",Type:"Text",SaveName:"education_MANA_TEA",MinWidth:100, Align:"Center", Edit:0},
+	         {Header:"교육기관",Type:"Text",SaveName:"education_MANA_AGENCY",MinWidth:150, Align:"Center", Edit:0},
+	         {Header:"교육시간",Type:"Text",SaveName:"education_MANA_TIMES",MinWidth:100, Align:"Center", Edit:0}
 		];
 		IBS_InitSheet(mySheet,initdata);
 		

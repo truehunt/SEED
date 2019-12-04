@@ -56,11 +56,6 @@
 			allowCloseBTN: false
 		});
 	   
-// 		myTab.setEventListener("beforeGoTo", function(event){ 
-// 			console.log("beforeGoTo"); 
-// 			return true; 
-// 		})
-// 		myTab.tabs.items(0).setTitle("제목"); 
 			
 		//ibtab2 생성
 		createIBTab($('#tab2')[0], $('#tab_contents_2')[0], 'myTabs2', {
@@ -109,7 +104,7 @@
 		 	{Header:"",Type:"Text",SaveName:"specialty_DETAI",Width:60,Align:"Center"},
 		 	
 		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CODE",Width:60,Align:"Center", Hidden:1},
-		 	{Header:"",Type:"Text",SaveName:"isa_MYEONJE",Width:60,Align:"Center"},
+		 	{Header:"",Type:"Text",SaveName:"isa_MYEONJE",Width:60,Align:"Center", Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_MIL_NUM",Width:60,Align:"Center", Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_MILI_STA_DATE",Width:60,Align:"Center", Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_MILI_END_DATE",Width:60,Align:"Center", Hidden:1},
@@ -120,32 +115,33 @@
 		 	{Header:"",Type:"Text",SaveName:"isa_DISCHARGE_CODE",Width:60,Align:"Center", Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CLASS_CODE",Width:60,Align:"Center", Hidden:1},
 		 	
-		 	{Header:"사진",Type:"Text",SaveName:"photo",Width:50, Edit:0}
+		 	{Header:"사진",Type:"Text",SaveName:"photo",Width:50, Edit:0},
+		 	{Header:"사진삭제",Type:"Button",SaveName:"photo_delete",Width:50}
       	];
       	IBS_InitSheet(mySheet,initData);
       	mySheet.SetDataAutoTrim(0);
-//       	mySheet.SetColHidden([
-// 			{Col: 5, Hidden:1},
-// 			{Col: 6, Hidden:1},
-// 			{Col: 7, Hidden:1},
-// 			{Col: 8, Hidden:1},
-// 			{Col: 9, Hidden:1},
-// 			{Col: 10, Hidden:1},
-// 			{Col: 11, Hidden:1},
-// 			{Col: 12, Hidden:1},
-// 			{Col: 13, Hidden:1},
-// 			{Col: 14, Hidden:1},
-// 			{Col: 15, Hidden:1},
-// 			{Col: 16, Hidden:1},
-// 			{Col: 17, Hidden:1},
-// 			{Col: 18, Hidden:1},
-// 			{Col: 19, Hidden:1},
-// 			{Col: 20, Hidden:1},
-// 			{Col: 'religion_DETAI', Hidden:1},
-// 			{Col: 'hobby_DETAI', Hidden:1},
-// 			{Col: 'specialty_DETAI', Hidden:1}
-// // 			{Col: 'photo', Hidden:1}
-//   	    ]);
+      	mySheet.SetColHidden([
+			{Col: 5, Hidden:1},
+			{Col: 6, Hidden:1},
+			{Col: 7, Hidden:1},
+			{Col: 8, Hidden:1},
+			{Col: 9, Hidden:1},
+			{Col: 10, Hidden:1},
+			{Col: 11, Hidden:1},
+			{Col: 12, Hidden:1},
+			{Col: 13, Hidden:1},
+			{Col: 14, Hidden:1},
+			{Col: 15, Hidden:1},
+			{Col: 16, Hidden:1},
+			{Col: 17, Hidden:1},
+			{Col: 18, Hidden:1},
+			{Col: 19, Hidden:1},
+			{Col: 20, Hidden:1},
+			{Col: 'religion_DETAI', Hidden:1},
+			{Col: 'hobby_DETAI', Hidden:1},
+			{Col: 'specialty_DETAI', Hidden:1}
+// 			{Col: 'photo', Hidden:1}
+  	    ]);
       	doAction("list");
 		
    		//mySheet4 //가족
@@ -390,14 +386,14 @@
 						if(mySheet9.FindStatusRow('U|I|D') != "")
 							mySheet9.DoSave("${pageContext.request.contextPath}/human/p0001/insertAss.do", fk_ass_sawon_code);
 						break;
-// 					case 2:
-// 						if(mySheet10.FindStatusRow('U|I|D') != "")
-// 						mySheet10.DoSave("${pageContext.request.contextPath}/human/p0001/insertChj.do", fk_chj_sawon_code);
-// 						break;
-// 					case 3:
-// 						if(mySheet11.FindStatusRow('U|I|D') != "")
-// 						mySheet11.DoSave("${pageContext.request.contextPath}/human/p0001/insertSb.do", fk_sb_sawon_code);
-// 						break;
+					case 2:
+						if(mySheet10.FindStatusRow('U|I|D') != "")
+						mySheet10.DoSave("${pageContext.request.contextPath}/human/p0001/insertChj.do", fk_chj_sawon_code);
+						break;
+					case 3:
+						if(mySheet11.FindStatusRow('U|I|D') != "")
+						mySheet11.DoSave("${pageContext.request.contextPath}/human/p0001/insertSb.do", fk_sb_sawon_code);
+						break;
 				}
 					
 	   			return true; 
@@ -405,8 +401,9 @@
 	   	});
 		
 	}
-  
-  
+  	
+   
+  	
 
 	// 기타 이벤트 //마우스 클릭시
 	function mySheet_OnSelectCell(oldrow, oldcol, row, col) {
@@ -427,6 +424,7 @@
 		$("#previewImg").attr("src", image); // 이미지
 		
 		mySheetRow = row;
+		mySheetCol = col;
 		ISA(); // 채용/거주, 병역을 셋팅한다.
 		
 		document.getElementById('PK_SAWON_CODE').value = x;
@@ -454,10 +452,18 @@
 	   }
 	 
 	function mySheet_OnSearchEnd(){
-		SetValue();
+		for(var i=0; i<=mySheet.RowCount(); i++){
+			mySheet.SetCellValue(i+1, 'photo_delete', '삭제');
+			mySheet.SetCellValue(i+1, 'STATUS', 'R');
+		}
+		
 	}
 	
-	 
+	function mySheet_OnButtonClick(Row, Col) {  
+		mySheet.SetCellValue(Row, 'photo', "");
+		document.getElementById('PK_SAWON_CODE').value = mySheet.GetCellValue(Row, 3);
+		fn_formDelete();
+	} 
 	 
 	//--------------------------- mySheet4_ -------------------------------	
 	// mySheet 조회 끝나기 직전 이벤트 
@@ -471,7 +477,7 @@
 			mySheet4.CellComboItem(i,13,HB); // 학력
 			mySheet4.CellComboItem(i,14,HW); // 졸업구분
 			
-			mySheet4.CellComboItem(i,6,S2); // 함/안함
+			mySheet4.CellComboItem(i,6,S6); // 함/안함
 			mySheet4.CellComboItem(i,8,S1); // 해당/비해당
 			mySheet4.CellComboItem(i,12,S3); // 양/음
 		}
@@ -489,12 +495,11 @@
 		mySheet4.CellComboItem(Row+1,5,H1); // 관계
 		mySheet4.CellComboItem(Row+1,13,HB); // 학력
 		mySheet4.CellComboItem(Row+1,14,HW); // 졸업구분
-		mySheet4.CellComboItem(Row+1,6,S2); // 함/안함
+		mySheet4.CellComboItem(Row+1,6,S6); // 함/안함
 		mySheet4.CellComboItem(Row+1,8,S1); // 해당/비해당
 		mySheet4.CellComboItem(Row+1,12,S3); // 양/음
 		
 		mySheet4.SetCellValue(Row+1, Col, "추가");
-		
 	} 
 	
 	
@@ -671,6 +676,7 @@
 		for(var i = 1; i<=mySheet10.RowCount(); i++ ){
 			mySheet10.CellComboItem(i,'chj_COUNTRY_CODE',H5); // 출장국가를 넣어준다.
 		}
+		ISA_chj_Select();
 		
 		mySheet10.SetCellValue(mySheet10.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
 		if(mySheet10.GetCellValue(mySheet10.RowCount(),'STATUS') == 'U' )
@@ -683,7 +689,7 @@
 		mySheet10.SetCellValue(Row, Col, "");
 		mySheet10.DataInsert(-1);
 		
-		mySheet10.CellComboItem(Row+1,'car_GEUNSOG_CODE',S1); // 해당여부 - /해당/비해당
+		mySheet10.CellComboItem(Row+1,'chj_COUNTRY_CODE',H5); // 출장국가
 		
 		mySheet10.SetCellValue(Row+1, Col, "추가");
 		
@@ -785,7 +791,13 @@
 			//--------------------------------------------------------------------- 경력
 						case 'S1': // 해당여부 - 해당/비해당
 							info8 = info8 + info1;
-							break;	
+							break;
+						case 'S6': // 여부코드(함/안함)
+							info7 = info7 + info1;
+							break;
+						case 'S3': // 양음구분코드(양/음)
+							info9 = info9 + info1;
+							break;
 			//--------------------------------------------------------------------- 경력
 						case 'H9': // 면허/자격
 							info14 = info14 + info1;
@@ -861,38 +873,11 @@
 // 				H3 = {'ComboCode':info16,'ComboText':info16}; // 고과명
 				H5 = {'ComboCode':info17,'ComboText':info17}; // 출장국가
 // 				H8 = {'ComboCode':info18,'ComboText':info18}; // 포상/징계명
-			},
-			error : function(jqxhr, status, error) {
-				alert("에러 : mySheet_OnBeforeSearch");
-			}
-		});
-		$.ajax({ // 공통코드조회
-			url : "${contextPath}/human/p0001/COM_CODE.do",//목록을 조회 할 url
-			type : "POST",
-			dataType : "JSON",
-			success : function(data) {
-				for (var i = 0; i < data['Data'].length; i++) {
-					var info1 = '|' + data['Data'][i].codenm;
-					
-					var code_ = data['Data'][i].classno;
-					switch(code_){
-						case '7': // 여부코드(함/안함)
-							info7 = info7 + info1;
-							break;
-						case '10': // 양음구분코드(양/음)
-							info9 = info9 + info1;
-							break;
-					
-					}
-				}
-				this.Action();
-			},
-			Action: function(){	 // combo를 넣는 곳
-				S2 = {'ComboCode':info7,'ComboText':info7}; // 여부코드(함/안함)
+				S6 = {'ComboCode':info7,'ComboText':info7}; // 여부코드(함/안함)
 				S3 = {'ComboCode':info9,'ComboText':info9}; // 양음구분(양/음)
 			},
 			error : function(jqxhr, status, error) {
-				alert("에러 : mySheet_OnBeforeSearch_2");
+				alert("에러 : mySheet_OnBeforeSearch");
 			}
 		});
 	};
@@ -1231,9 +1216,43 @@
 					}
 			    })
 	    	}
-	    	
-		    
 	    } 
+	    
+	    function fn_formDelete(){ // 저장 및 업데이트
+	    	var form = $("#form1")[0];
+	    	var formData = new FormData(form);
+	    		$.ajax({
+		    		cache : false,
+		    		url: "${contextPath}/human/p0001/imageDelete",
+		            processData: false,
+		            contentType: false,
+			        type:"POST", 
+			        data: formData,
+					success: function(result){
+						
+					},error:function(request,status,error){
+						alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+				    },complete : function(data) {
+				    	//  실패했어도 완료가 되었을 때 처리
+					}
+			    })
+	    }
+	    
+	  //첨부파일 용량 제한 & 확장자 제한
+	    function checkSize(input) {
+	    	
+	    	var fileDir = input.value;
+	    	
+	        if (input.files && input.files[0].size > (1024 * 1024)) {
+	            alert("파일 사이즈가 1MB 를 넘습니다.");
+	            input.value = null;
+	            $('#previewImg').attr('src', null);
+	        } else if(fileDir.substring(fileDir.lastIndexOf(".")+1,fileDir.length).search("png") == -1){
+	       		alert("지정된 확장자의 파일만 업로드 가능합니다!");
+	       	  	input.value = null;
+	       	 	$('#previewImg').attr('src', null);
+	    	}
+	    }
 	    
 	    // 	특기 -> 직접입력을 선택시 보여짐 
 	    function direct(dir) {
@@ -1286,9 +1305,7 @@
 		<div class="clear hidden"></div>
 		
 		
-		<!-- /.row -->
             
-            <button type="button" class="btn btn-primary" onclick="fn_formSubmit()"><s:message code="common.btnSave"/></button>
             <!-- /.row -->
 		
 		<div class="ib_product" style="width:100%;float:left">
@@ -1298,13 +1315,18 @@
 					<div class="col-lg-7">
 						<form id="form1" name="form1" role="form" action="imageSave" method="post" enctype="multipart/form-data" >
 							<div class="row form-group">
-								<div class="col-sm-3"><!-- 이미지 미리보기 되는 곳 -->
-									<br> 																												
-									<img id="previewImg" style="width:100%; height: 120px; max-width: 100px;"> 
-									<br><br>
-									<input type="file" name="photofile" id="photofile" accept='image/*'/>
+<!-- 								이미지 미리보기 되는 곳 -->
+								<div class="col-sm-3">
+									<br> 	
+									<img id="previewImg" style="width:100%; height: 120px; max-width: 100px;" align="left">
+									<input type="file" name="photofile" id="photofile" accept='image/*' onchange="checkSize(this)" />
 									<input type="hidden" name="PK_SAWON_CODE" id="PK_SAWON_CODE" value="" />
 								</div>
+								<div style="margin:16px">
+									<p>이미지 권장 크기는 가로(35px)*세로(35px) 입니다.</p>
+                           			<p>확장자는 이미지 파일(.png)만 업로드 가능합니다.</p>
+                           			<p>용량은 1MB를 초과 할 수 없습니다.</p>
+                           		</div>
 							</div>  
 						</form>
 					</div>	  

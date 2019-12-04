@@ -102,20 +102,27 @@ public class SignServiceImpl implements SignService {
         TransactionStatus status = txManager.getTransaction(def);
         
         try {
-	        sqlSession.update("updateSign", param);
-	        
-	        // signdoc의 상태 변경: docstatus 변수를 사용해야 하나 그냥 ssresult로 사용
-	        if ("2".equals(param.getAPPROVAL_SSRESULT())){	// 반려 - 결재 종료
-        		param.setAPPROVAL_SSRESULT("3");
-	        } else {
-	        	String chk = sqlSession.selectOne("selectChkRemainSign", param);
-	        	if (chk!=null) { // 다음 심사가 있으면 심사 단계 설정
-	        		param.setAPPROVAL_SSSTEP("1");
-	        		param.setAPPROVAL_SSRESULT("2");
-	        	} else {
-	        		param.setAPPROVAL_SSRESULT("4");
-	        	}
-	        }
+        	// 전결
+        	if ("3".equals(param.getAPPROVAL_SSRESULT())){	// 전결 - 결재 종료
+        		sqlSession.update("updateSign2", param);
+        		param.setAPPROVAL_SSRESULT("4");
+        	} else {
+        		// 전결이 아니면
+		        sqlSession.update("updateSign", param);
+		        
+		        // signdoc의 상태 변경: docstatus 변수를 사용해야 하나 그냥 ssresult로 사용
+		        if ("2".equals(param.getAPPROVAL_SSRESULT())){	// 반려 - 결재 종료
+	        		param.setAPPROVAL_SSRESULT("3");
+		        } else {
+		        	String chk = sqlSession.selectOne("selectChkRemainSign", param);
+		        	if (chk!=null) { // 다음 심사가 있으면 심사 단계 설정
+		        		param.setAPPROVAL_SSSTEP("1");
+		        		param.setAPPROVAL_SSRESULT("2");
+		        	} else {
+		        		param.setAPPROVAL_SSRESULT("4");
+		        	}
+		        }
+        	}
         	sqlSession.update("updateSignDocStatus", param);
         	
             txManager.commit(status);

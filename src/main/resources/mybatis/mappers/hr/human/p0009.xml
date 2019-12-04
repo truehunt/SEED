@@ -33,11 +33,18 @@
       <result property="education_EVAL_EDU_CODE" column="education_EVAL_EDU_CODE" />
       <result property="pk_EDUCATION_EVAL_SAWON_CODE" column="pk_EDUCATION_EVAL_SAWON_CODE" />
       <result property="fk_EDUCATION_EVAL_SAWON_NAME" column="fk_EDUCATION_EVAL_SAWON_NAME" />
-      <result property="education_EVAL_DEPT" column="education_EVAL_DEPT" />
-      <result property="education_EVAL_POSITION" column="education_EVAL_POSITION" />
       
-      
-      
+      <result property="education_EVAL_EDU_CODE" column="education_EVAL_EDU_CODE" />
+      <result property="education_EVAL_NAME" column="education_EVAL_NAME" />
+      <result property="education_EVAL_STA" column="education_EVAL_STA" />
+      <result property="education_EVAL_END" column="education_EVAL_END" />
+      <result property="education_EVAL_TIMES" column="education_EVAL_TIMES" />
+      <result property="education_EVAL_DAYS" column="education_EVAL_DAYS" />
+      <result property="education_EVAL_COMP" column="education_EVAL_COMP" />
+      <result property="education_EVAL_ATTE" column="education_EVAL_ATTE" />
+       <result property="education_EVAL_ATTI" column="education_EVAL_ATTI" />
+      <result property="education_EVAL_SCORE" column="education_EVAL_SCORE" />
+       <result property="education_EVAL_SUM" column="education_EVAL_SUM" />
       
       
       <result property="education_MANA_int_user_id" column="education_MANA_int_user_id" />
@@ -49,53 +56,63 @@
 
    <select id="searchList" resultMap="p0009Result01" parameterType="java.util.Map"> 
       <![CDATA[
-         select pk_EDUCATION_MANA_CODE, education_MANA_NAME
-              , TO_CHAR(TO_DATE(education_MANA_STA),'YYYY-MM-DD') as education_MANA_STA 
-              , TO_CHAR(TO_DATE(education_MANA_END),'YYYY-MM-DD') as education_MANA_END 
-              , education_MANA_DAYS, education_MANA_PUR, education_MANA_LOCA 
-              , education_MANA_TEA, education_MANA_AGENCY, education_MANA_TIMES
-  
-         from   EDUCATION_MANA
+               select pk_EDUCATION_EVAL_SAWON_CODE, fk_EDUCATION_EVAL_SAWON_NAME
+               from education_eval
       ]]>
      
-            order By pk_EDUCATION_MANA_CODE ASC
    </select>
-   
-   
    
    
       <select id="searchList2" resultMap="p0009Result01" parameterType="java.util.Map"> 
       <![CDATA[
-         select pk_EDUCATION_MANA_CODE, education_MANA_SAWON_CODE, education_MANA_SAWON_NAME, education_MANA_DEPT, education_MANA_POSITION
-  
-         from   EDUCATION_MANA
-         
+               select a.pk_EDUCATION_MANA_CODE, a.education_MANA_NAME, a.education_MANA_STA, a.education_MANA_END, a.education_MANA_TIMES, a.education_MANA_DAYS,
+                      b.education_EVAL_COMP, b.education_EVAL_ATTE, b.education_EVAL_ATTI, b.education_EVAL_SCORE, b.education_EVAL_SUM
+               from   education_mana a, education_eval b
           
       ]]>
-     
-           
-   </select>
-   
-   
-   
-      <select id="searchList3" resultMap="p0009Result01" parameterType="java.util.Map"> 
-      <![CDATA[
-         select a.pk_EDUCATION_MANA_CODE, b.pk_education_ADD_SAWON_CODE, b.education_ADD_SAWON_NAME, b.education_ADD_DEPT, b.education_ADD_POSITION
-         from   EDUCATION_MANA a, EDUCATION_ADD b
-         
-          
-      ]]>
-     <where>
-     
-            a.pk_EDUCATION_MANA_CODE = b.fk_EDUCATION_ADD_CODE
+              
+      <where>
+                a.pk_EDUCATION_MANA_CODE = b.education_EVAL_EDU_CODE
+                
+                 <if test="PK_EDUCATION_EVAL_SAWON_CODE != null ">
+				      and PK_EDUCATION_EVAL_SAWON_CODE = #{PK_EDUCATION_EVAL_SAWON_CODE, jdbcType=VARCHAR}
+			     </if>
+      </where>
             
-            <if test="PK_EDUCATION_MANA_CODE != null ">
-				      and PK_EDUCATION_MANA_CODE = #{PK_EDUCATION_MANA_CODE, jdbcType=VARCHAR}
-			</if>
-                   
-     </where>
-           
+               order By pk_EDUCATION_MANA_CODE ASC
    </select>
+   
+ 
+ 
+ <select id="searchList3" resultMap="p0009Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+               select pk_EDUCATION_MANA_CODE, education_MANA_NAME
+               from education_mana
+      ]]>
+     
+   </select>
+   
+   
+      <select id="searchList4" resultMap="p0009Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+               select a.pk_EDUCATION_EVAL_SAWON_CODE, a.fk_EDUCATION_EVAL_SAWON_NAME, b.education_MANA_STA, b.education_MANA_END, b.education_MANA_TIMES, b.education_MANA_DAYS,
+                      a.education_EVAL_COMP, a.education_EVAL_ATTE, a.education_EVAL_ATTI, a.education_EVAL_SCORE, a.education_EVAL_SUM
+                 from education_eval a, education_mana b
+          
+      ]]>
+              
+      <where>
+                a.education_EVAL_EDU_CODE = b.pk_EDUCATION_MANA_CODE
+                
+                 <if test="PK_EDUCATION_MANA_CODE != null ">
+				      and PK_EDUCATION_MANA_CODE = #{PK_EDUCATION_MANA_CODE, jdbcType=VARCHAR}
+			     </if>
+      </where>
+            
+               order By pk_EDUCATION_MANA_CODE ASC
+   </select>
+   
+  
    
    
    

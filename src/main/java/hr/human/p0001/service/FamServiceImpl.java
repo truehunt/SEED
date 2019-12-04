@@ -22,7 +22,6 @@ public class FamServiceImpl implements FamService {
 
 	@Override
 	public List<CardFamVO> ISA_fam(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("2. "+searchMap);
 		List<CardFamVO> list =  p0001DAO.ISA_fam(searchMap); 
 		return list;
 	}

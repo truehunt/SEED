@@ -132,11 +132,8 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/system/p0001/insa_code.do"
 		            }else if(url === "card"){	// 인사기록카드
 		            	urlToGo = "/SEED/human/p0001/insa_card.do"
-<<<<<<< HEAD
-=======
 		            }else if(url === "ballyeong"){	// 인사발령
 		            	urlToGo = "/SEED/human/p0002/insa_ballyeong.do"
->>>>>>> refs/remotes/origin/master
 		            }else if(url === "education"){	// 교육관리
 		            	urlToGo = " /SEED/human/p0007/tab_education_manage.do"
 		            }else if(url === "education_evaluation"){	// 교육관리
@@ -385,12 +382,6 @@ $(document).ready(function(){
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.monthlyCls2"/>','chart','dd','dd'); return false"><s:message code="main.monthlyCls2"/></a>
 	                                </li>
 	                                <li>
-<<<<<<< HEAD
-=======
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.nightShift"/>','chart','ee','ee'); return false"><s:message code="main.nightShift"/></a>
-	                                </li>
-	                                <li>
->>>>>>> refs/remotes/origin/master
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.calHoliday"/>','chart','holiday_calc','holiday_calc'); return false"><s:message code="main.calHoliday"/></a>
 	                                </li>
 	                                <li>

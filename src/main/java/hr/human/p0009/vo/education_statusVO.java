@@ -69,7 +69,7 @@ public class education_statusVO {
 	
 	
 	public education_statusVO() {
-		System.out.println("education_statusVO ����");
+		System.out.println("education_statusVO 생성");
 	}
 
 	//==========================educaton_status======================================

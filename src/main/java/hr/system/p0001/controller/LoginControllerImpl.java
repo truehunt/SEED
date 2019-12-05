@@ -141,7 +141,8 @@ public class LoginControllerImpl implements LoginController {
         
         session.removeAttribute("PK_SAWON_CODE"); 
         session.removeAttribute("SAWON_VIEW_PERMISSION");        
-        session.removeAttribute("SAWON_NAME");        
+        session.removeAttribute("SAWON_NAME");    
+        session.removeAttribute("PHOTO");
         
         return "redirect:/login.do";
     }

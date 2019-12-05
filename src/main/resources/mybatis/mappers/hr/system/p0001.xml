@@ -29,6 +29,19 @@
 		update SAWON set SAWON_PASSWORD = #{SAWON_PASSWORD} where PK_SAWON_CODE = #{PK_SAWON_CODE}
 	</update>
 	
+	<!-- 내정보보기 - 비밀번호 유효성 검사 -->
+	<select id="check_pw" parameterType="hr.system.p0001.vo.SawonVO" resultType="String">
+		select PK_SAWON_CODE
+		  from SAWON
+		 where PK_SAWON_CODE = #{PK_SAWON_CODE}
+		   AND SAWON_PASSWORD = #{SAWON_PASSWORD}
+	</select>
+	
+	<!-- 내정보보기 - 비밀번호 변경 -->
+	<update id="update_pw2" parameterType="hr.system.p0001.vo.SawonVO">
+		update SAWON set SAWON_PASSWORD = #{newpw} where PK_SAWON_CODE = #{PK_SAWON_CODE}
+	</update>
+	
 	<!-- 비밀번호찾기 - 아이디 유효성 검사 -->
 	<select id="check_id" parameterType="String" resultType="String">
 		select PK_SAWON_CODE from SAWON where PK_SAWON_CODE = #{PK_SAWON_CODE}
@@ -755,5 +768,14 @@
 		SET SAWON_VIEW_PERMISSION = #{SAWON_VIEW_PERMISSION,jdbcType=VARCHAR}
 		WHERE PK_SAWON_CODE = #{PK_SAWON_CODE, jdbcType=VARCHAR}
 	</update>
+	
+	<!-- 인사기록카드 내정보보기 -->
+	<select id="myISA" resultType="hr.human.p0001.vo.CardVO" parameterType="java.util.Map"> 
+    	SELECT i.fk_isa_sawon_code, s.pk_sawon_code, s.sawon_name, s.fk_dept_name, s.rank_name, s.sawon_join_date, s.sawon_password, photo
+		  FROM ISA i, sawon s
+		 WHERE i.fk_isa_sawon_code(+) = s.pk_sawon_code
+		   AND s.pk_sawon_code = #{PK_SAWON_CODE}
+		 ORDER BY s.pk_sawon_code ASC 
+    </select> 
 	
 </mapper>

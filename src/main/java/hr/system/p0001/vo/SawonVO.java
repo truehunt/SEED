@@ -24,6 +24,8 @@ public class SawonVO {
 	private String FK_DEPT_NAME; // 부서명
 	private String PHOTO; // 부서명
 	
+	private String newpw; // 비밀번호 바꾸기 - 새로운 비밀번호
+	
 	public SawonVO() {
 		System.out.println("SAWON VO 생성");
 	}
@@ -162,6 +164,14 @@ public class SawonVO {
 
 	public void setPHOTO(String pHOTO) {
 		PHOTO = pHOTO;
+	}
+
+	public String getNewpw() {
+		return newpw;
+	}
+
+	public void setNewpw(String newpw) {
+		this.newpw = newpw;
 	}
 	
 }

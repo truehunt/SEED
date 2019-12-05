@@ -119,7 +119,7 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/human/s0001/company_Enroll.do";
 		            } else if(url === "adworkplace_Enroll"){// 등록정보관리 - 사업장등록
 		            	urlToGo = "/SEED/human/s0002/workplace_Enroll.do";
-		            } else if(url === "addept_Enroll"){
+		            } else if(url === "addept_Enroll"){// 등록정보관리 - 부서등록
 		            	urlToGo = "/SEED/human/s0003/dept_Enroll.do";
 		            } else if(url === "adSawon_Enroll"){ // 사원등록
 		            	urlToGo = "adSawon_Enroll";
@@ -132,6 +132,8 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/system/p0001/insa_code.do"
 		            }else if(url === "card"){	// 인사기록카드
 		            	urlToGo = "/SEED/human/p0001/insa_card.do"
+		            }else if(url === "adInsa_infoEnroll"){	// 인사 정보 등록
+		            	urlToGo = " /SEED/system/p0002/Insa_infoEnroll.do"
 		            }else if(url === "ballyeong"){	// 인사발령
 		            	urlToGo = "/SEED/human/p0002/insa_ballyeong.do"
 		            }else if(url === "education"){	// 교육관리

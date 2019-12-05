@@ -158,8 +158,7 @@ function fn_formSubmit(){
 								<div class="col-lg-3 pull-left">
 									<label class="pull-right">
 										<select name="searchType" id="selectbox" class="form-control">
-									        <option selected="selected">검색조건</option>
-									        <option value="AD_TITLE, AD_CONTENT" <c:if test="${fn:indexOf(searchVO.searchType, 'AD_TITLE, AD_CONTENT')!=-1}">selected="selected"</c:if>>제목+내용</option>
+									        <option selected="selected" value="AD_TITLE, AD_CONTENT" <c:if test="${fn:indexOf(searchVO.searchType, 'AD_TITLE, AD_CONTENT')!=-1}">selected="selected"</c:if>>제목+내용</option>
 									        <option value="AD_TITLE" <c:if test="${fn:indexOf(searchVO.searchType, 'AD_TITLE')!=-1}">selected="selected"</c:if>>제목</option>
 									        <option value="AD_CONTENT" <c:if test="${fn:indexOf(searchVO.searchType, 'AD_CONTENT')!=-1}">selected="selected"</c:if>>내용</option>
 									    </select>

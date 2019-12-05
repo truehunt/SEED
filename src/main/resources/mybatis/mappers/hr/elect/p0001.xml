@@ -66,7 +66,7 @@
 	        <if test="searchExt1==2">AND SD.AD_DOCSTATUS IN (1,2)</if>        
 	        <if test="searchExt1!=2">AND SD.AD_DOCSTATUS=${searchExt1}</if>        
         </if>        
-         <if test="searchType=='day,검색조건'">
+         <if test="searchType=='day,AD_TITLE, AD_CONTENT'">
 	                <![CDATA[
 					   and (
 					   	to_date(SD.AD_INT_DATE,'yyyy.mm.dd hh24:mi') >=to_date(#{startday}, 'yyyy.mm.dd hh24:mi' )

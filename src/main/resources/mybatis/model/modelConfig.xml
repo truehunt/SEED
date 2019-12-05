@@ -32,14 +32,14 @@
 		<typeAlias type="hr.system.p0003.vo.ClassCodeVO"  alias="classCodeVO" />
 		
 		<!-- 급여관리 -->
-      <typeAlias type="hr.pay.p0001.vo.TA_inputVO"  alias="TA_inputVO" />
-      <typeAlias type="hr.pay.p0002.vo.SALARY_calculVO"  alias="SALARY_calculVO" />
-      <typeAlias type="hr.pay.p0003.vo.SALARY_bo_staVO"  alias="SALARY_bo_staVO" />
-      <typeAlias type="hr.system.p0001.vo.SET_paydayVO"  alias="SET_paydayVO" />
+      	<typeAlias type="hr.pay.p0001.vo.TA_inputVO"  alias="TA_inputVO" />
+      	<typeAlias type="hr.pay.p0002.vo.SALARY_calculVO"  alias="SALARY_calculVO" />
+      	<typeAlias type="hr.pay.p0003.vo.SALARY_bo_staVO"  alias="SALARY_bo_staVO" />
+      	<typeAlias type="hr.system.p0001.vo.SET_paydayVO"  alias="SET_paydayVO" />
       
-       <typeAlias type="hr.human.p0007.vo.education_manageVO"  alias="education_manageVO" />
-       <typeAlias type="hr.human.p0008.vo.education_evaluationVO"  alias="education_evaluationVO" />
-       <typeAlias type="hr.human.p0009.vo.education_statusVO"  alias="education_statusVO" />
+       	<typeAlias type="hr.human.p0007.vo.education_manageVO"  alias="education_manageVO" />
+       	<typeAlias type="hr.human.p0008.vo.education_evaluationVO"  alias="education_evaluationVO" />
+       	<typeAlias type="hr.human.p0009.vo.education_statusVO"  alias="education_statusVO" />
       
 
 		<!-- 인사코드 -->

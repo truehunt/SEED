@@ -48,4 +48,16 @@
     <servlet-name>default</servlet-name>
     <url-pattern>*.jpg</url-pattern>
   </servlet-mapping>
+  
+	  <!-- 캡챠 -->
+	<servlet>
+	    <display-name>CaptchaGenServlet</display-name>
+	    <servlet-name>CaptchaGenServlet</servlet-name>
+	    <servlet-class>hr.system.p0001.controller.CaptchaGenServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	    <servlet-name>CaptchaGenServlet</servlet-name>
+	    <url-pattern>/captcha</url-pattern>
+	</servlet-mapping>
+
 </web-app>

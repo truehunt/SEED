@@ -9,6 +9,7 @@ public class CardVO {
 	private String pk_SAWON_CODE;
 	private String sawon_NAME;
 	private String photo;
+	private String fk_DEPT_NAME, rank_NAME, sawon_JOIN_DATE, sawon_PASSWORD;
 	
 	private String pk_ISA_CODE;
 	private String fk_ISA_SAWON_CODE;
@@ -359,6 +360,37 @@ public class CardVO {
 	public void setIsa_MILITARY_CLASS_CODE(String isa_MILITARY_CLASS_CODE) {
 		this.isa_MILITARY_CLASS_CODE = isa_MILITARY_CLASS_CODE;
 	}
-	
+
+	public String getFk_DEPT_NAME() {
+		return fk_DEPT_NAME;
+	}
+
+	public void setFk_DEPT_NAME(String fk_DEPT_NAME) {
+		this.fk_DEPT_NAME = fk_DEPT_NAME;
+	}
+
+	public String getRank_NAME() {
+		return rank_NAME;
+	}
+
+	public void setRank_NAME(String rank_NAME) {
+		this.rank_NAME = rank_NAME;
+	}
+
+	public String getSawon_JOIN_DATE() {
+		return sawon_JOIN_DATE;
+	}
+
+	public void setSawon_JOIN_DATE(String sawon_JOIN_DATE) {
+		this.sawon_JOIN_DATE = sawon_JOIN_DATE;
+	}
+
+	public String getSawon_PASSWORD() {
+		return sawon_PASSWORD;
+	}
+
+	public void setSawon_PASSWORD(String sawon_PASSWORD) {
+		this.sawon_PASSWORD = sawon_PASSWORD;
+	}
 	
 }

@@ -726,7 +726,7 @@ function layer_popup(el){
     // 화면의 중앙에 레이어를 띄운다.
     if ($elHeight < docHeight || $elWidth < docWidth) {
         $el.css({
-            marginTop: -$elHeight /2,
+            marginTop: -$elHeight /1,
             marginLeft: -$elWidth/2
         })
     } else {

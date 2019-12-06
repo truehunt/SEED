@@ -770,12 +770,106 @@
 	</update>
 	
 	<!-- 인사기록카드 내정보보기 -->
-	<select id="myISA" resultType="hr.human.p0001.vo.CardVO" parameterType="java.util.Map"> 
-    	SELECT i.fk_isa_sawon_code, s.pk_sawon_code, s.sawon_name, s.fk_dept_name, s.rank_name, s.sawon_join_date, s.sawon_password, photo
-		  FROM ISA i, sawon s
-		 WHERE i.fk_isa_sawon_code(+) = s.pk_sawon_code
-		   AND s.pk_sawon_code = #{PK_SAWON_CODE}
-		 ORDER BY s.pk_sawon_code ASC 
+	<select id="myISA" resultType="hr.system.p0001.vo.SawonVO" parameterType="String"> 
+    	SELECT FK_DEPT_NAME, RANK_NAME, SAWON_JOIN_DATE, SAWON_PASSWORD
+		  FROM SAWON
+	  	 WHERE PK_SAWON_CODE = #{PK_SAWON_CODE}
     </select> 
+    
+    <select id="myISA_fam" resultType="hr.human.p0001.vo.CardFamVO" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select PK_FAM_CODE, FK_FAM_SAWON_CODE, FAM_NAME, FAM_RELATIONS, FAM_LIVE,
+			 		FAM_RES_NUM, FAM_SUDANG, FAM_DISABLED_CODE, FAM_LOCAL_CODE, FAM_BIRTH_DATE,
+			 		FAM_SOLAR_CODE, FAM_HAGLYEOG_CODE, FAM_GRADUATION_CODE, FAM_JOB, FAM_WORK_NAME, FAM_POSITION
+         	from   sawon s, fam f
+      	]]>
+		<where>
+			s.pk_sawon_code = f.fk_fam_sawon_code
+			and fk_FAM_SAWON_CODE = #{PK_SAWON_CODE}
+		</where>
+	</select>
+	
+	<select id="myISA_hl" resultType="hr.human.p0001.vo.HlVO" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select HL_SCHOOL_CODE, HL_STA_DATE, HL_END_DATE,
+         		   HL_SORT_CODE, HL_LOCATION, HL_MAJOR_CODE,
+         		   HL_MINOR_CODE, HL_DEGREE, HL_JUYA_CODE,
+         		   HL_MAIN_CODE, FK_HL_SAWON_CODE, PK_HL_CODE
+			from sawon s, hl h
+      	]]>
+		<where>
+			s.pk_sawon_code = h.fk_hl_sawon_code
+				and h.fk_hl_sawon_code = #{PK_SAWON_CODE}
+		</where>
+	</select>
+	
+	<select id="myISA_car" resultType="hr.human.p0001.vo.CarVO" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select pk_car_code, fk_car_sawon_code, car_name,
+         		   car_sta_date, car_end_date, car_date, 
+         		   car_dandang, car_position, car_salary,
+         		   car_resign, car_geunsog_code
+			from sawon s, car c
+      	]]>
+		<where>
+			s.pk_sawon_code = c.fk_car_sawon_code
+				and c.fk_car_sawon_code = #{PK_SAWON_CODE}
+		</where>
+	</select>
+	
+	<select id="myISA_cert" resultType="hr.human.p0001.vo.CertVO" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select certificate_SORT_CODE, certificate_STA_DATE, certificate_END_DATE,
+         		   certificate_NUM, certificate_ISSUER_CODE, certificate_SUDANG_CODE,
+         		   fk_CERTIFICATE_SAWON_CODE, pk_CERTIFICATE_CODE
+			from sawon s, CERTIFICATE c
+      	]]>
+		<where>
+			s.pk_sawon_code = c.fk_CERTIFICATE_SAWON_CODE
+				and c.fk_CERTIFICATE_SAWON_CODE = #{PK_SAWON_CODE}
+		</where>
+	</select>
+	
+	<select id="myISA_ass" resultType="hr.human.p0001.vo.AssVO" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select ass_NAME, ass_STA_DATE, ass_END_DATE,
+         		   ass_DATE, ass_REFLECTANCE, ass_SCORE,
+         		   ass_CLASS, ass_NOTE,
+         		   fk_ASS_PER_CODE, fk_ASS_SAWON_CODE, pk_ASS_CODE
+			from sawon s, ASS a
+      	]]>
+      	<where>
+			s.pk_sawon_code =  a.fk_ass_sawon_code
+				and a.fk_ASS_SAWON_CODE = #{PK_SAWON_CODE}
+		</where>
+	</select>
+	
+	<select id="myISA_chj" resultType="hr.human.p0001.vo.ChjVO" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select chj_COUNTRY_CODE, chj_AREA, chj_STA_YMD,
+         		   chj_END_YMD, chj_AIRFARE, chj_OWN,
+         		   chj_COMPANY, chj_OTHER, chj_TOTAL,
+         		   chj_PURPOSE, fk_CHJ_SAWON_CODE, pk_CHJ_CODE
+			from sawon s, CHJ a
+      	]]>
+      	<where>
+			s.pk_sawon_code = a.fk_chj_sawon_code
+				and a.fk_CHJ_SAWON_CODE = #{PK_SAWON_CODE}
+		</where>
+	</select>
+	
+	<select id="myISA_sb" resultType="hr.human.p0001.vo.SbVO" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select sb_DIVISION, sb_NAME, sb_DATE,
+         		   sb_DETAILS, sb_SIHAENGCHEO, sb_AMOUNT,
+         		   sb_STA_DATE, sb_END_DATE, sb_NOTE,
+         		   fk_SB_SAWON_CODE, pk_SB_CODE
+			from sawon s, Sb b
+      	]]>
+      	<where>
+			s.pk_sawon_code = b.fk_SB_SAWON_CODE
+				and b.fk_SB_SAWON_CODE = #{PK_SAWON_CODE}
+		</where>
+	</select>
 	
 </mapper>

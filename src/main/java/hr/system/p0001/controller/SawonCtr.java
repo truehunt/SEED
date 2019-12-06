@@ -19,7 +19,14 @@ import project.common.SearchVO;
 import project.common.TreeMaker;
 import project.common.DeptSvc;
 import project.common.EtcSvc;
+import hr.human.p0001.vo.AssVO;
+import hr.human.p0001.vo.CarVO;
+import hr.human.p0001.vo.CardFamVO;
 import hr.human.p0001.vo.CardVO;
+import hr.human.p0001.vo.CertVO;
+import hr.human.p0001.vo.ChjVO;
+import hr.human.p0001.vo.HlVO;
+import hr.human.p0001.vo.SbVO;
 import hr.system.p0001.service.SawonSvc;
 import hr.system.p0001.vo.SawonVO;
 
@@ -123,36 +130,139 @@ public class SawonCtr {
     @RequestMapping(value = "/myinfo")
     public String myInfo(HttpServletRequest request, ModelMap modelMap) {
         
-    	String userno = request.getParameter("PK_SAWON_CODE");
+    	String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
         
         modelMap.addAttribute("PK_SAWON_CODE", userno);
         
-        // SawonVO userInfo = sawonSvc.selectUserOne(userno);
-
-        // UtilEtc.responseJsonValue(response, userInfo);
+        //데이터 조회
+  		List<?> listview = sawonSvc.myISA(userno);
+  		modelMap.addAttribute("listview", listview);
         
         return "system/p0001/Sawon_Myinfo";
     }
     
-	// 내정보보기
-	@RequestMapping(value = "/myISA", method = { RequestMethod.GET, RequestMethod.POST })
+    // 내정보보기_가족_조회
+	@RequestMapping(value = "/myISA_fam", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public Map ISA(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("utf-8");
+	public Map myISA_fam(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+		
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		// 검색조건설정
+		searchMap.put("PK_SAWON_CODE", userno);
+		//데이터 조회
+		List<CardFamVO> data = sawonSvc.myISA_fam(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}
+	
+	// 내정보보기_학력_조회
+	@RequestMapping(value = "/myISA_hl", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map ISA_hl(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+		
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		// 검색조건설정
+		searchMap.put("PK_SAWON_CODE", userno);
+		//데이터 조회
+		List<HlVO> data = sawonSvc.myISA_hl(searchMap);
+	    resultMap.put("Data", data);
+	      
+	    return resultMap;
+	}
+	
+	// 내정보보기_경력_조회
+	@RequestMapping(value = "/myISA_car", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map ISA_car(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+		
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		// 검색조건설정
+		searchMap.put("PK_SAWON_CODE", userno);
+		//데이터 조회
+		List<CarVO> data = sawonSvc.myISA_car(searchMap);
+	    resultMap.put("Data", data);
+	      
+	    return resultMap;
+	}
+	
+	// 내정보보기_면허/자격_조회
+	@RequestMapping(value = "/myISA_cert", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map ISA_cert(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		// 검색조건설정
+		searchMap.put("PK_SAWON_CODE", userno);
+		//데이터 조회
+		List<CertVO> data = sawonSvc.myISA_cert(searchMap);
+		resultMap.put("Data", data);
+			      
+		return resultMap;
+	}
+	
+	// 내정보보기_고과_조회
+	@RequestMapping(value = "/myISA_ass", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map ISA_ass(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		// 검색조건설정
+		searchMap.put("PK_SAWON_CODE", userno);
+
+		//데이터 조회
+		List<AssVO> data = sawonSvc.myISA_ass(searchMap);
+		
+	    resultMap.put("Data", data);
+	    return resultMap;
+	    
+	}
+	
+	// 내정보보기_출장_조회
+	@RequestMapping(value = "/myISA_chj", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map ISA_chj(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
 		
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
 		// 검색조건설정
-		
-		searchMap.put("PK_SAWON_CODE", userno);
-		
+		searchMap.put("PK_SAWON_CODE", userno); 
+
+		//데이터 조회 
+		List<ChjVO> data = sawonSvc.myISA_chj(searchMap);
+	    resultMap.put("Data", data);
+	      
+	    return resultMap;
+	}
+	
+	// 내정보보기_상벌_조회
+	@RequestMapping(value = "/myISA_sb", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map ISA_sb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		// 검색조건설정
+		searchMap.put("PK_SAWON_CODE", userno); 
+
 		//데이터 조회
-		List<CardVO> data = sawonSvc.myISA(searchMap);
-        resultMap.put("Data", data);
-        
-        return resultMap;
+		List<SbVO> data = sawonSvc.myISA_sb(searchMap);
+	    resultMap.put("Data", data);
+	      
+	    return resultMap;
 	}
 	
 	/**
@@ -170,7 +280,17 @@ public class SawonCtr {
         
         sawonSvc.updateUserPassword(response, userInfo);
 
-        // UtilEtc.responseJsonValue(response,"OK");
+    }
+    
+    /**
+     * 캡차값 가져오기
+     */
+    @RequestMapping(value = "/getCAPTCHA", method = { RequestMethod.GET, RequestMethod.POST })
+    @ResponseBody
+    public String getCAPTCHA(HttpServletRequest request) {
+        
+    	String answer = request.getSession().getAttribute("CAPTCHA").toString();
+        return answer;
     }
     
     

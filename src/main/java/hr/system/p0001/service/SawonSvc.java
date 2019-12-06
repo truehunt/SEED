@@ -14,7 +14,14 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import project.common.SearchVO;
+import hr.human.p0001.vo.AssVO;
+import hr.human.p0001.vo.CarVO;
+import hr.human.p0001.vo.CardFamVO;
 import hr.human.p0001.vo.CardVO;
+import hr.human.p0001.vo.CertVO;
+import hr.human.p0001.vo.ChjVO;
+import hr.human.p0001.vo.HlVO;
+import hr.human.p0001.vo.SbVO;
 import hr.system.p0001.vo.SawonVO;
 
 @Service
@@ -68,9 +75,36 @@ public class SawonSvc {
     }
     
     /*내정보보기 */
-    public List<CardVO> myISA(Map<String, Object> searchMap) throws DataAccessException {
-		List<CardVO> list = sqlSession.selectList("myISA",searchMap);
-		return list;
+    public List<?> myISA(String param) throws DataAccessException {
+		return sqlSession.selectList("myISA",param);
+	}
+    
+    public List<CardFamVO> myISA_fam(Map<String, Object> searchMap) throws DataAccessException {
+    	return sqlSession.selectList("myISA_fam", searchMap);
+	}
+    
+    public List<HlVO> myISA_hl(Map<String, Object> searchMap) throws DataAccessException {
+    	return sqlSession.selectList("myISA_hl", searchMap);
+	}
+    
+	public List<CarVO> myISA_car(Map<String, Object> searchMap) throws DataAccessException {
+		return sqlSession.selectList("myISA_car", searchMap);
+	}
+	
+	public List<CertVO> myISA_cert(Map<String, Object> searchMap) throws DataAccessException {
+		return sqlSession.selectList("myISA_cert", searchMap);
+	}
+	
+	public List<AssVO> myISA_ass(Map<String, Object> searchMap) throws DataAccessException {
+		return sqlSession.selectList("myISA_ass", searchMap);
+	}
+	
+	public List<ChjVO> myISA_chj(Map<String, Object> searchMap) throws DataAccessException {
+		return sqlSession.selectList("myISA_chj", searchMap);
+	}
+	
+	public List<SbVO> myISA_sb(Map<String, Object> searchMap) throws DataAccessException {
+		return sqlSession.selectList("myISA_sb", searchMap);
 	}
 
 }

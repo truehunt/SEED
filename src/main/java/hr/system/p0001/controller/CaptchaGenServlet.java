@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +53,7 @@ public class CaptchaGenServlet extends HttpServlet {
 	
 	private void generateCaptcha(HttpServletRequest request, HttpServletResponse response){
 		try {
+			
 			// 알파벳 숫자섞인 5자리 문자열 생성
 			// String randomString = RandomStringUtils.randomAlphanumeric(5).toUpperCase();
 			String randomString = "";

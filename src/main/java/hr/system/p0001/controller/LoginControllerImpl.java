@@ -143,6 +143,7 @@ public class LoginControllerImpl implements LoginController {
         session.removeAttribute("SAWON_VIEW_PERMISSION");        
         session.removeAttribute("SAWON_NAME");    
         session.removeAttribute("PHOTO");
+        session.removeAttribute("CAPTCHA");
         
         return "redirect:/login.do";
     }

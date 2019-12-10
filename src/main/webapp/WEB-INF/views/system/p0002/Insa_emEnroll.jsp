@@ -121,17 +121,17 @@
 			
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center"},
-			{Header:"No",Type:"Text",SaveName:"pk_em_info_uniq_num",MinWidth:50, Align:"Center"},
+			{Header:"No",Type:"Seq",SaveName:"pk_em_info_uniq_num",MinWidth:50, Align:"Center"},
 			{Header:"사원 코드",Type:"Text",SaveName:"fk_sawon_code",MinWidth:90, Align:"Center"},			
-			{Header:"입사일",Type:"Date",SaveName:"em_info_join_date",MinWidth:100, Align:"Center"},
-			{Header:"퇴직일",Type:"Date",SaveName:"em_info_resi_date",MinWidth:100, Align:"Center"},
+			{Header:"입사일",Type:"Text",SaveName:"em_info_join_date",MinWidth:100, Align:"Center"},
+			{Header:"퇴직일",Type:"Text",SaveName:"em_info_resi_date",MinWidth:100, Align:"Center"},
 			{Header:"재직구분",Type:"Combo",SaveName:"em_info_offi_division",MinWidth:60, Align:"Center"},
-			{Header:"중도퇴사일",Type:"Date",SaveName:"em_info_date_retire",MinWidth:100, Align:"Center"},
+			{Header:"중도퇴사일",Type:"Text",SaveName:"em_info_date_retire",MinWidth:100, Align:"Center"},
 			{Header:"수습적용",Type:"Combo",SaveName:"em_info_prob_appli",MinWidth:60, Align:"Center"},
-			{Header:"수습만료일",Type:"Date",SaveName:"em_info_prob_expi_date",MinWidth:100, Align:"Center"},
+			{Header:"수습만료일",Type:"Text",SaveName:"em_info_prob_expi_date",MinWidth:100, Align:"Center"},
 			{Header:"근속기간포함",Type:"Combo",SaveName:"em_info_includ_work_peri",MinWidth:60, Align:"Center"},			
-			{Header:"휴직기간1",Type:"Date",SaveName:"em_info_lea_absence_o",MinWidth:100, Align:"Center"},
-			{Header:"휴직기간2",Type:"Date",SaveName:"em_info_lea_absence_t",MinWidth:100, Align:"Center"},
+			{Header:"휴직기간1",Type:"Text",SaveName:"em_info_lea_absence_o",MinWidth:100, Align:"Center"},
+			{Header:"휴직기간2",Type:"Text",SaveName:"em_info_lea_absence_t",MinWidth:100, Align:"Center"},
 			{Header:"부서코드",Type:"Text",SaveName:"fk_dept_code",MinWidth:60, Align:"Center"},			
 			{Header:"부서명",Type:"Text",SaveName:"dept_name",MinWidth:80, Align:"Center"},
 			{Header:"고용형태 코드",Type:"Text",SaveName:"em_info_emply_form_cd",MinWidth:60, Align:"Center"},
@@ -305,17 +305,17 @@
 							case 'HE': // 재직 구분 -> input box
 								em1 = em1+info1; // 그리드에 저장
 								$('#em_info_offi_division').append(MNGEMENT_NAME);//input box에 저장
-								console.log(em1);
+								//console.log(em1);
 								break;
 							case 'S2': // 수습 적용 -> input box
 								em2 = em2+info1; // 그리드에 저장
 								$('#em_info_prob_appli').append(MNGEMENT_NAME);//input box에 저장
-								console.log(em2);
+								//console.log(em2);
 								break;
 							case 'S6': // 근속기간 포함 -> input box
 								em3 = em3+info1; // 그리드에 저장
 								$('#em_info_includ_work_peri').append(MNGEMENT_NAME);//input box에 저장
-								console.log(em3);
+								//console.log(em3);
 								break;
 						}
 						
@@ -329,7 +329,7 @@
 					S6 = {'ComboCode':em3,'ComboText':em3}; // 근속기간 포함
 					
 					for(var i = 1; i<=mySheet.RowCount(); i++){ // 조회할때 갯수 세어서 거기에 전부 넣기위해서 for문 돌립니다.
-						console.log(i);
+						//console.log(i);
 						mySheet.CellComboItem(i,6,HE); // 재직 구분 ( 재직 , 파견 , 휴직 , 대기 , 퇴직  )
 						mySheet.CellComboItem(i,8,S2); // 수습 적용 ( 부 , 여 )
 						mySheet.CellComboItem(i,10,S6); // 근속기간 포함 ( 안함 , 함 )
@@ -412,8 +412,6 @@
 		<div class="hidden">
 		
 			<div class="ib_function float_light">
-				  <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-				  <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
 				  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
 				  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
 			</div>

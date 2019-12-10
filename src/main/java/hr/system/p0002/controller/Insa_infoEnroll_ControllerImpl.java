@@ -138,8 +138,10 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
       Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
       
+      System.out.println("sawonController1 : "+ request.getParameter("sawon_code"));
       // 검색조건설정
-      //searchMap.put("pk_company_code", request.getParameter("p_id"));
+      searchMap.put("sawon_code", request.getParameter("sawon_code"));
+      System.out.println("sawonController2 ="+searchMap);
       
       //데이터 조회
       List<Insa_personEnroll_VO> data = Insa_infoEnroll_Service.searchList2(searchMap);

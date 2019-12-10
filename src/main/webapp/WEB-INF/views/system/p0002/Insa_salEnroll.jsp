@@ -127,7 +127,7 @@
 			
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center"},
-			{Header:"No",Type:"Text",SaveName:"pk_sal_info_unique_num",MinWidth:100, Align:"Center"},
+			{Header:"No",Type:"Seq",SaveName:"pk_sal_info_unique_num",MinWidth:100, Align:"Center"},
 			{Header:"사원 코드",Type:"Text",SaveName:"fk_sawon_code",MinWidth:60, Align:"Center"},			
 			{Header:"호봉 코드",Type:"Text",SaveName:"fk_hobong_code",MinWidth:150, Align:"Center"},
 			{Header:"계정유형코드",Type:"Text",SaveName:"sal_info_acc_type_code",MinWidth:150, Align:"Center"},
@@ -285,8 +285,8 @@
 							
 							$('#sal_info_deduction').append(MNGEMENT_NAME);//input box에 저장
 							
-							console.log(sal1);
-							console.log(sal2);
+							//console.log(sal1);
+							//console.log(sal2);
 							break;
 					}
 					
@@ -300,7 +300,7 @@
 
 				
 				for(var i = 1; i<=mySheet.RowCount(); i++){ // 조회할때 갯수 세어서 거기에 전부 넣기위해서 for문 돌립니다.
-					console.log(i);
+					//console.log(i);
 					mySheet.CellComboItem(i,15,S1); // 배우자 공제 ( 비해당 , 해당 )
 					mySheet.CellComboItem(i,16,S1); // 부녀자 공제 ( 비해당 , 해당 )
 
@@ -347,8 +347,6 @@
 		<div class="hidden">
 		
 			<div class="ib_function float_light">
-				  <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-				  <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
 				  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
 				  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
 			</div>

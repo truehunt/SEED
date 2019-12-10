@@ -161,19 +161,19 @@
       ]]>
 		<where>
 			p.fk_sawon_code = s.pk_sawon_code
-			<!-- 
-				<if test=" p_id != ''  and  p_id != null">
-					fk_sawon_code = #{p_id}
+			
+				<if test="sawon_code != ''  and  sawon_code != null">
+					and p.fk_sawon_code = #{sawon_code,jdbcType=VARCHAR}
 				</if>
-			 -->
+			 
 		</where>
 	</select>
 
 	<update id="PSupdateData" parameterType="java.util.Map">
 		update PERSON_INFO
-		set pk_person_info_unique_num = #{pk_person_info_unique_num,jdbcType=VARCHAR}
-		   , fk_sawon_code = #{fk_sawon_code,jdbcType=VARCHAR}
-		   , person_info_picture = #{person_info_picture,jdbcType=VARCHAR}
+		set <!-- pk_person_info_unique_num = #{pk_person_info_unique_num,jdbcType=VARCHAR}
+		   , fk_sawon_code = #{fk_sawon_code,jdbcType=VARCHAR}  -->
+		   person_info_picture = #{person_info_picture,jdbcType=VARCHAR}
 		   , person_info_eng_name = #{person_info_eng_name,jdbcType=VARCHAR}
 		   , person_info_domes_forei_pop = #{person_info_domes_forei_pop,jdbcType=VARCHAR}
 		   , person_info_res_reg_num = #{person_info_res_reg_num,jdbcType=VARCHAR}

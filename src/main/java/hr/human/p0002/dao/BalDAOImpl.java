@@ -38,20 +38,51 @@ public class BalDAOImpl implements BalDAO {
 	}
 	
 	@Override
+	public List<BalVO> Sawon(Map<String, Object> searchMap) {
+		List<BalVO> list = sqlSession.selectList("hr.human.p0002.Sawon",searchMap);
+		return list;
+	}
+	
+	@Override
+	public List<BalVO> DeptList(Map<String, Object> searchMap) {
+		List<BalVO> list = sqlSession.selectList("hr.human.p0002.DeptList",searchMap);
+		return list;
+	}
+	
+	@Override
+	public List<BalVO> Sawon_NC(Map<String, Object> searchMap) {
+		List<BalVO> list = sqlSession.selectList("hr.human.p0002.Sawon_NC_1",searchMap);
+		return list;
+	}
+	
+
+	@Override
+	public List<BalVO> Sawon_Add_Search(Map<String, Object> searchMap) {
+		System.out.println(searchMap);
+		List<BalVO> list = sqlSession.selectList("hr.human.p0002.Sawon_Add_Search",searchMap);
+		return list;
+	}
+
+	@Override
 	public void insertData(Map<String, String> row) throws DataAccessException {
 		System.out.println(row);
-		sqlSession.update("hr.human.p0002.insertData", row);
+		sqlSession.update("hr.human.p0002.insertDataBal", row);
 	}
+	@Override
+	public void insertData2(Map<String, String> row) {
+		System.out.println("2. "+row);
+		sqlSession.update("hr.human.p0002.insertDataBal2", row);
+	}
+	
 	@Override
 	public void updateData(Map<String, String> row) throws DataAccessException {
 		System.out.println(row);
-		sqlSession.update("hr.human.p0002.updateData", row);
+		sqlSession.update("hr.human.p0002.updateDataBal", row);
 	}
 	@Override
 	public void deleteData(Map<String, String> row) throws DataAccessException {
 		System.out.println(row);
-		sqlSession.update("hr.human.p0002.deleteData", row);
+		sqlSession.update("hr.human.p0002.deleteDataBal", row);
 	}
-
 
 }

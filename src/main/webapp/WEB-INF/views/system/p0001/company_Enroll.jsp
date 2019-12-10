@@ -153,7 +153,7 @@
 		
 		mySheet.DoSearch("${contextPath}/human/s0001/searchList.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 	
-		console.log(mySheet);
+		//console.log(mySheet);
 		//콤보박스에 값 불러오기 -> searchList.do 뒤에 실행 
 		selectDivision();
 

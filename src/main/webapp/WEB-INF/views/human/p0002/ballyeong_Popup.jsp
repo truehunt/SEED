@@ -45,9 +45,10 @@
 	}
 
 	function fn_DeptSelected() {
+		container1 = $("#ib-container1").detach();
 		var codenm = codename;
 		fn_selectDept(codenm);
-	}
+	}  
    
 </script>
 

@@ -24,74 +24,137 @@
 		<result property="bal_INT_DATE" column="bal_INT_DATE" />
 		<result property="bal_MOD_USER_ID" column="bal_MOD_USER_ID" />
 		<result property="bal_MOD_DATE" column="bal_MOD_DATE" />
-		
+		<result property="pk_SAWON_CODE" column="pk_SAWON_CODE" />
+		<result property="sawon_NAME" column="sawon_NAME" />
+		<result property="workplace_NAME" column="workplace_NAME" />
+		<result property="dept_NAME" column="dept_NAME" />
+		<result property="pk_DEPT_CODE" column="pk_DEPT_CODE" />
+		<result property="rank_NAME" column="rank_NAME" />
 	</resultMap>
 	
 	<select id="Ballyeong" resultMap="BaldResult" parameterType="java.util.Map"> 
       	<![CDATA[
-         	select bal_num, bal_title, bal_div_code, bal_date
+         	select DISTINCT bal_num, bal_title, bal_div_code, bal_date, fk_BAL_CODE
 			from bal
       	]]>
+	</select> 
+	
+	<select id="Sawon" resultMap="BaldResult" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select pk_sawon_code, sawon_name, dept_name, c.workplace_name
+			from SAWON a, DEPT b, workplace c
+      	]]>
+      	<where>
+      		a.fk_SAWON_WORKPLACE_CODE = c.pk_workplace_code
+			and   a.fk_dept_code = b.pk_dept_code
+			<if test="FK_DEPT_CODE != '' and FK_DEPT_CODE != null">
+				and FK_DEPT_CODE = #{FK_DEPT_CODE, jdbcType=VARCHAR}
+			</if>
+			<if test="fk_BAL_CODE != '' and fk_BAL_CODE != null">
+				and pk_sawon_code = #{fk_BAL_CODE, jdbcType=VARCHAR}
+			</if>
+      	</where>
+	</select>
+	 
+	<select id="DeptList" resultMap="BaldResult" parameterType="java.util.Map"> 
+     	 <![CDATA[
+			select dept_NAME, PK_DEPT_CODE
+			from DEPT
+		]]>
 	</select>
 	
-	<update id="updateDataFam" parameterType="java.util.Map">
-		update FAM
-		set  FAM_NAME = #{fam_NAME , jdbcType=VARCHAR},
-			 FAM_RELATIONS = #{fam_RELATIONS , jdbcType=VARCHAR},
-			 FAM_LIVE = #{fam_LIVE , jdbcType=VARCHAR},
-			 FAM_RES_NUM = #{fam_RES_NUM , jdbcType=VARCHAR},
-			 FAM_SUDANG = #{fam_SUDANG , jdbcType=VARCHAR},
-			 FAM_DISABLED_CODE = #{fam_DISABLED_CODE , jdbcType=VARCHAR},
-			 FAM_LOCAL_CODE = #{fam_LOCAL_CODE , jdbcType=VARCHAR},
-			 FAM_BIRTH_DATE = #{fam_BIRTH_DATE , jdbcType=VARCHAR},
-			 FAM_SOLAR_CODE = #{fam_SOLAR_CODE , jdbcType=VARCHAR},
-			 FAM_HAGLYEOG_CODE = #{fam_HAGLYEOG_CODE , jdbcType=VARCHAR},
-			 FAM_GRADUATION_CODE = #{fam_GRADUATION_CODE , jdbcType=VARCHAR},
-			 FAM_JOB = #{fam_JOB, jdbcType=VARCHAR},
-			 FAM_WORK_NAME = #{fam_WORK_NAME, jdbcType=VARCHAR},
-			 FAM_POSITION = #{fam_POSITION, jdbcType=VARCHAR}
-		where PK_FAM_CODE = #{pk_FAM_CODE, jdbcType=VARCHAR}
+	<select id="Sawon_NC_1" resultMap="BaldResult" parameterType="java.util.Map"> 
+     	 <![CDATA[
+			select s.pk_sawon_code, s.sawon_name, d.dept_name, p.person_bc_detai_mngement_name as rank_name
+			  from sawon s, dept d, person_bc_detai p
+			   
+		]]>
+		<where>
+			       s.fk_dept_code = d.pk_dept_code
+			   and s.rank_name = p.person_bc_detai_mngement_name
+			   and p.fk_person_bc_code_num = 'G4'
+			   <if test="pk_DEPT_CODE != null and pk_DEPT_CODE != ''">
+					and d.pk_dept_code=#{pk_DEPT_CODE, jdbcType=VARCHAR}
+			   </if>
+			   <if test="rank_NAME !=null and rank_NAME != ''">
+					and s.rank_name=#{rank_NAME, jdbcType=VARCHAR}
+			   </if>
+		</where>
+	</select>
+	
+	
+	<select id="Sawon_Add_Search" resultMap="BaldResult" parameterType="java.util.Map"> 
+     	 <![CDATA[
+			select fk_BAL_SAWON_CODE,
+		   		(select sawon_NAME
+   			  	   from sawon
+  			 	  where pk_SAWON_CODE = fk_BAL_SAWON_CODE) as sawon_NAME,
+		   		(select dept_NAME
+   			  	   from dept
+  			 	  where pk_dept_code = (select fk_dept_code
+                          			 	  from sawon
+                         				 where pk_SAWON_CODE = fk_BAL_SAWON_CODE)) as dept_NAME,
+		   		(select rank_NAME
+   			  	   from sawon
+  			 	  where pk_SAWON_CODE = fk_BAL_SAWON_CODE) as rank_NAME, 
+  			 	  fk_BAL_CODE, bal_TITLE, bal_NUM, bal_DIV_CODE, bal_DATE
+			from BAL
+		]]>
+		<where>
+			bal_NUM = #{bal_NUM , jdbcType=VARCHAR}
+			and bal_DIV_CODE = #{bal_DIV_CODE , jdbcType=VARCHAR}
+		</where>
+	</select>
+	
+	<update id="updateDataBal" parameterType="java.util.Map">
+		update BAL
+		set  bal_num = #{bal_NUM , jdbcType=VARCHAR},
+			 bal_title = #{bal_TITLE , jdbcType=VARCHAR},
+			 bal_div_code = #{bal_DIV_CODE , jdbcType=VARCHAR},
+			 bal_date = #{bal_DATE , jdbcType=VARCHAR},
+			 fk_BAL_CODE = #{fk_BAL_CODE , jdbcType=VARCHAR}
+		where pk_bal_code = (select pk_bal_code
+							   from bal 
+							  where fk_bal_code IS NULL
+								and bal_num = #{bal_NUM , jdbcType=VARCHAR}
+								and bal_title = #{bal_TITLE , jdbcType=VARCHAR}
+								and bal_div_code = #{bal_DIV_CODE , jdbcType=VARCHAR}
+								and bal_date = #{bal_DATE , jdbcType=VARCHAR})
 	</update>	
 	 
-	<insert id="insertDataFam" parameterType="java.util.Map">
-		insert into FAM
-			(PK_FAM_CODE,
-			 FK_FAM_SAWON_CODE,
-			 FAM_NAME,
-			 FAM_RELATIONS,
-			 FAM_LIVE,
-			 FAM_RES_NUM,
-			 FAM_SUDANG,
-			 FAM_DISABLED_CODE,
-			 FAM_LOCAL_CODE,
-			 FAM_BIRTH_DATE,
-			 FAM_SOLAR_CODE,
-			 FAM_HAGLYEOG_CODE,
-			 FAM_GRADUATION_CODE,
-			 FAM_JOB,
-			 FAM_WORK_NAME,
-			 FAM_POSITION)
-		values(#{pk_FAM_CODE, jdbcType=VARCHAR},
-			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
-			   #{fam_NAME, jdbcType=VARCHAR},
-			   #{fam_RELATIONS, jdbcType=VARCHAR},
-			   #{fam_LIVE, jdbcType=VARCHAR},
-			   #{fam_RES_NUM, jdbcType=VARCHAR},
-			   #{fam_SUDANG, jdbcType=VARCHAR},
-			   #{fam_DISABLED_CODE, jdbcType=VARCHAR},
-			   #{fam_LOCAL_CODE, jdbcType=VARCHAR},
-			   #{fam_BIRTH_DATE, jdbcType=VARCHAR},
-			   #{fam_SOLAR_CODE, jdbcType=VARCHAR},
-			   #{fam_HAGLYEOG_CODE, jdbcType=VARCHAR},
-			   #{fam_GRADUATION_CODE, jdbcType=VARCHAR},
-			   #{fam_JOB, jdbcType=VARCHAR},
-			   #{fam_WORK_NAME, jdbcType=VARCHAR},
-			   #{fam_POSITION, jdbcType=VARCHAR})
+	<insert id="insertDataBal" parameterType="java.util.Map">
+		INSERT INTO BAL(pk_bal_code, 
+                		bal_num, 
+                		bal_title, 
+                		bal_div_code, 
+                		bal_date)
+		VALUES(  (select trim(to_char(NVL(MAX(pk_bal_code),'0')+'1','0000'))from BAL),
+        		#{bal_NUM, jdbcType=VARCHAR},
+        		#{bal_TITLE, jdbcType=VARCHAR},
+        		#{bal_DIV_CODE, jdbcType=VARCHAR},
+        		#{bal_DATE, jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="insertDataBal2" parameterType="java.util.Map">
+			INSERT INTO BAL(pk_bal_code,
+                			fk_BAL_CODE,
+                			bal_TITLE,
+                			bal_NUM, 
+			                bal_DIV_CODE, 
+                			bal_DATE,
+                			fk_BAL_SAWON_CODE)
+		VALUES(  (select trim(to_char(NVL(MAX(pk_bal_code),'0')+'1','0000'))from BAL),
+				#{fk_BAL_CODE, jdbcType=VARCHAR},
+				#{bal_TITLE, jdbcType=VARCHAR},
+        		#{bal_NUM, jdbcType=VARCHAR},
+        		#{bal_DIV_CODE, jdbcType=VARCHAR},
+        		#{bal_DATE, jdbcType=VARCHAR},
+        		#{fk_BAL_SAWON_CODE, jdbcType=VARCHAR})
 	</insert>	
 	
-	<delete id="deleteDataFam" parameterType="java.util.Map">
-		delete FAM
-		where PK_FAM_CODE = #{pk_FAM_CODE}
+	<delete id="deleteDataBal" parameterType="java.util.Map">
+		delete BAL
+		where pk_BAL_CODE = #{pk_BAL_CODE}
 	</delete>
      
 </mapper>

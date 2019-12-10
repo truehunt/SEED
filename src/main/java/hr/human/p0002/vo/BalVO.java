@@ -24,6 +24,13 @@ public class BalVO {
 	private String bal_MOD_USER_ID;
 	private String bal_MOD_DATE;
 	
+	private String pk_SAWON_CODE;
+	private String sawon_NAME;
+	private String dept_NAME;
+	private String workplace_NAME;
+	private String pk_DEPT_CODE;
+	private String rank_NAME;
+	
 	public BalVO() {
 		System.out.println("BalVO 메서드호출");
 	}
@@ -180,5 +187,52 @@ public class BalVO {
 		this.bal_MOD_DATE = bal_MOD_DATE;
 	}
 
-	
+	public String getPk_SAWON_CODE() {
+		return pk_SAWON_CODE;
+	}
+
+	public void setPk_SAWON_CODE(String pk_SAWON_CODE) {
+		this.pk_SAWON_CODE = pk_SAWON_CODE;
+	}
+
+	public String getSawon_NAME() {
+		return sawon_NAME;
+	}
+
+	public void setSawon_NAME(String sawon_NAME) {
+		this.sawon_NAME = sawon_NAME;
+	}
+
+	public String getDept_NAME() {
+		return dept_NAME;
+	}
+
+	public void setDept_NAME(String dept_NAME) {
+		this.dept_NAME = dept_NAME;
+	}
+
+	public String getWorkplace_NAME() {
+		return workplace_NAME;
+	}
+
+	public void setWorkplace_NAME(String workplace_NAME) {
+		this.workplace_NAME = workplace_NAME;
+	}
+
+	public String getPk_DEPT_CODE() {
+		return pk_DEPT_CODE;
+	}
+
+	public void setPk_DEPT_CODE(String pk_DEPT_CODE) {
+		this.pk_DEPT_CODE = pk_DEPT_CODE;
+	}
+
+	public String getRank_NAME() {
+		return rank_NAME;
+	}
+
+	public void setRank_NAME(String rank_NAME) {
+		this.rank_NAME = rank_NAME;
+	}
+
 }

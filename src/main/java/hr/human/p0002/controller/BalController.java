@@ -16,4 +16,12 @@ public interface BalController {
 	public Map Code(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	Map ballyeong(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	Map Sawon(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	Map DeptList(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	Map Sawon_NC(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	Map Sawon_Add_Search(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

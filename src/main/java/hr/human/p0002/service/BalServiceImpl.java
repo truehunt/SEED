@@ -39,6 +39,30 @@ public class BalServiceImpl implements BalService {
 		List<BalVO> list =  p0002DAO.Ballyeong(searchMap); 
 		return list;
 	}
+	@Override
+	public List<BalVO> Sawon(Map<String, Object> searchMap) {
+		List<BalVO> list =  p0002DAO.Sawon(searchMap); 
+		return list;
+	}
+	
+	@Override
+	public List<BalVO> DeptList(Map<String, Object> searchMap) {
+		List<BalVO> list =  p0002DAO.DeptList(searchMap); 
+		return list;
+	}
+	
+	@Override
+	public List<BalVO> Sawon_NC(Map<String, Object> searchMap) {
+		List<BalVO> list =  p0002DAO.Sawon_NC(searchMap);
+		return list;
+	}
+	
+	@Override
+	public List<BalVO> Sawon_Add_Search(Map<String, Object> searchMap) {
+		List<BalVO> list =  p0002DAO.Sawon_Add_Search(searchMap);
+		return list;
+	}
+
 	
 	//
 	@Override
@@ -50,7 +74,11 @@ public class BalServiceImpl implements BalService {
 		for (String str : status) {
 			Map<String, String> row = getRow2(dataMap, length, i); // 현재 Index의 Row Map
 			if ("I".equals(str)) { // 추가
-				p0002DAO.insertData(row);
+				if(row.get("fk_BAL_SAWON_CODE") != null) {
+					p0002DAO.insertData2(row);
+				}else {
+					p0002DAO.insertData(row);
+				}
 			} else if ("U".equals(str)) { // 수정
 				p0002DAO.updateData(row);
 			} else if ("D".equals(str)) { // 삭제
@@ -82,10 +110,5 @@ public class BalServiceImpl implements BalService {
 		}		
 		return row;
 	}
-
-	
-
-
-	
 
 }

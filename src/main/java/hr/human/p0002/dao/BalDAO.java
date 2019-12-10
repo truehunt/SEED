@@ -16,5 +16,10 @@ public interface BalDAO {
 	 
 	public List<InsaCodeVO> Code(Map<String, Object> searchMap);
 	public List<BalVO> Ballyeong(Map<String, Object> searchMap);
+	public List<BalVO> Sawon(Map<String, Object> searchMap);
+	public List<BalVO> DeptList(Map<String, Object> searchMap);
+	public List<BalVO> Sawon_NC(Map<String, Object> searchMap);
+	public void insertData2(Map<String, String> row);
+	public List<BalVO> Sawon_Add_Search(Map<String, Object> searchMap);
 	
 }

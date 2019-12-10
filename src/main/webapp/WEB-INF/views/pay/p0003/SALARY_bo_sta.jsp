@@ -53,10 +53,11 @@ table.ui-datepicker-calendar { display:none; }
       //{Header:"No",Type:"Seq", Align:"Center"},
          {Header:"상태",Type:"Status",Width:60,SaveName:"STATUS", Align:"Center"},
    	     {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
-         {Header:"은행",Type:"Text",Width:80,SaveName:"sal_INFO_TRANS_AMOUNT_O",  Align:"Center"},
-   	     {Header:"사원코드",Type:"Text",SaveName:"fk_SALARY_CAL_SAWON_CODE",Width:80,Align:"Center"},
-         {Header:"사원명",Type:"Text",SaveName:"sal_INFO_ACC_HOLD_ONE",Width:80,Align:"Center"},
+         {Header:"은행",Type:"Text",Width:110,SaveName:"sal_INFO_TRANS_AMOUNT_O",  Align:"Center"},
+   	     {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:80,Align:"Center"},
+         {Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:80,Align:"Center"},
          {Header:"계좌번호",Type:"Text",SaveName:"sal_INFO_ACC_NUM_ONE",Width:220,Align:"Center"},
+         {Header:"지급항목",Type:"Text",SaveName:"salary_CAL_SALARY_ITEM",Width:100,Align:"Center"},
          {Header:"실지급액",Type:"AutoSum",Width:150,Format:"#,### 만원",SaveName:"salary_CAL_MONEY"},   
          {Header:"지급일자",Type:"Text",SaveName:"salary_CAL_PAYMENTDAY",Width:130,Align:"Center"}
        ];
@@ -471,24 +472,7 @@ function mySheet_OnSaveEnd(code,msg){
 
 	                  }
 	               }
-	            
-	            if(data['Data'][0].dept_NAME!= null && data['Data'][0].dept_NAME!= ''){
-	               
-	                for (var i = 0; i < data['Data'].length; i++) {
-
-	                   var option = "<option class='1' value='" + data['Data'][i].pk_DEPT_CODE + "'>"
-	                         + data['Data'][i].dept_NAME
-	                         + "</option>";
-	                        
-	                         
-
-	                   //대상 콤보박스에 추가
-	                   $('#DeptList').append(option);
-
-	                }
-	             }
-	            
-
+	   
 	               },
 
 	               error : function(jqxhr, status, error) {
@@ -519,22 +503,6 @@ function mySheet_OnSaveEnd(code,msg){
 	                //var y="<option value="" selected>전체</option>";
 	                //$("select#DeptList").find(".1").remove().end().append(y);
 	                
-	          if(data['Data'][0].workplace_NAME!= null && data['Data'][0].workplace_NAME!= ''){
-	             
-	                for (var i = 0; i < data['Data'].length; i++) {
-
-	                   var option = "<option class='1' value='" + data['Data'][i].pk_WORKPLACE_CODE + "'>"
-	                         + data['Data'][i].workplace_NAME
-	                         + "</option>";
-	                        
-	                         
-
-	                   //대상 콤보박스에 추가
-	                   $('#DeptList').append(option);
-
-	                }
-	             }
-	          
 	          if(data['Data'][0].dept_NAME!= null && data['Data'][0].dept_NAME!= ''){
 	             
 	              for (var i = 0; i < data['Data'].length; i++) {
@@ -613,59 +581,68 @@ function mySheet_OnSaveEnd(code,msg){
             </div>
             
   <div class="main_content">
-       <div class="exp_product"></div>
-       <div class="exp_product">
-         
-      </div>
-      <div class="ib_function float_right">
-         <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-         <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
+    <div class="exp_product">
+     <div class="ib_function float_left">
+         <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
+         <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
          </div>
+     </div>
+      
+   
          <br>      <br>
          
-         <div>
-            <br>
-    <form class="form-inline">
-  <div class="form-group">
-    <label for="yearday">귀속연월</label>
-<input type="text" class="form-control" id="yearday" onchange="yeardayd()"> 
-         </div>
-  
-  &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; &emsp;
-  
-  <div class="form-group">
-    <label for="yeardayd">지급일</label>
-<select id="yeardayd" >
-         <option value="" id="yeardayd" selected>전체</option>
-      </select>  </div>
-  </form>
       
+            <br>
+       <form class="form-inline">
+                     <div class="row">
+                                <label for="yearday" class="pull-left">
+                               &ensp;&ensp;    귀속연월 &ensp;
+                                </label>
+                         
+                                  <input type="text" class="form-control" id="yearday" onchange="yeardayd()"> 
+                             
+                      
+                     
+                                 <label>
+      &emsp; &emsp;&emsp;&ensp;&emsp;  &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;        지급일 &ensp;
+                                </label>
+                            <div class="input-group custom-search-form col-lg-3">
+                                 <div class="input-group">
+                                 <select id="yeardayd"  class="form-control">
+                                       <option value="" id="yeardayd" selected>전체</option>
+                                 </select>
+                                
+                                 </div>
+                                        
+                             </div>
+                         </div>
+                         </form>
+      &emsp;&emsp;&ensp;
          <br>
-        <form class="form-inline2">
+        <form class="form-inline">
           <label for="SiteList1">은행코드</label>
-          &ensp;<select name="SiteList1" id="SiteList1">
+          &ensp;<select name="SiteList1" id="SiteList1" class="form-control">
                <option value="" selected>전체</option>
                        
                            </select>
                          
-       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&emsp;
        
-         <label for="SiteList">사업장</label>
-        &ensp;<select id="SiteList"   onchange="selectDept()" >
+         <label for="SiteList">조회조건</label>
+        &ensp;<select id="SiteList"   onchange="selectDept()" class="form-control" >
          <option value="" selected>전체</option>
       </select>   
-       &emsp;&emsp;&ensp;&emsp;&emsp;
+       &emsp;&emsp;&ensp;&emsp;&emsp;&emsp;   
       
        <label for="DeptList">구분</label>
-      &ensp; <select id="DeptList" >
-         <option name="all" value="" selected>전체</option>
+      &ensp; <select id="DeptList"  class="form-control">
+         <option value="" selected>전체</option>
       </select>
             </form>
                  
              
              
          
-             </div>
              
              </div>
    

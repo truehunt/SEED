@@ -27,9 +27,21 @@ public class day_regist_ServiceImpl implements day_regist_Service {
 
 	//사원 조회
 	public List<day_regist_VO> searchList(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("sawon_2: "+searchMap);
 		List<day_regist_VO> list =  p0001DAO.searchList(searchMap); 
 		
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		return list;
+	}
+	
+	//월마감관리
+	public List<day_regist_VO> searchList_month(Map<String, Object> searchMap) throws DataAccessException {
+		List<day_regist_VO> list =  p0001DAO.searchList_month(searchMap); 
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		return list;
+	}
+	
+	public List<day_regist_VO> searchList_month_click(Map<String, Object> searchMap) throws DataAccessException {
+		List<day_regist_VO> list =  p0001DAO.searchList_month_click(searchMap); 
 		List<DateVO> calenList = new ArrayList<DateVO>();
 		return list;
 	}
@@ -37,7 +49,6 @@ public class day_regist_ServiceImpl implements day_regist_Service {
 	
 	//사원 출근시 사원정보
 	public List<day_regist_VO> searchList_sawon(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("sawon2_2: "+searchMap);
 		List<day_regist_VO> list =  p0001DAO.searchList_sawon(searchMap); 
 		
 		List<DateVO> calenList = new ArrayList<DateVO>();
@@ -79,6 +90,26 @@ public class day_regist_ServiceImpl implements day_regist_Service {
 			i++;
 		}
 	}
+	//데이터 저장
+	@Override
+	public void saveData_da(Map<String, String[]> dataMap)  throws DataAccessException  {
+		String[] status = dataMap.get("STATUS");
+		int length = status.length; // row��
+		int i = 0;
+		
+		for(String str : status) {
+			Map<String, String> row = getRow(dataMap, length, i); // ���� Index�� Row Map
+			if("I".equals(str)) { // �߰�
+				p0001DAO.insertData(row);
+			}else if("U".equals(str)) { // ����
+				p0001DAO.updateData_da(row);
+			}else if("D".equals(str)) { // ����
+				p0001DAO.deleteData(row);
+			}
+			i++;
+		}
+	}
+	
 	private Map getRow(Map<String, String[]> dataMap, int length, int index) {
 		Map<String, String> row = new HashMap<String, String>();
 		for(String name : dataMap.keySet()) {

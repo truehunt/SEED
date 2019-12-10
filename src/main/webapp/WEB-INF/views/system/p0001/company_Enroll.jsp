@@ -97,6 +97,7 @@
 	//시트 높이 계산용
 	var pageheightoffset = 200;
 	
+	//Combo값 위한 초기화
 	var RA="";
 	var HG="";
 	

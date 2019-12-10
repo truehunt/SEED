@@ -64,11 +64,12 @@
 			Header : "상태",
 			Type : "Status",
 			SaveName : "STATUS",
-			MinWidth : 40
+			MinWidth : 40,
+			edit : 0
 		}, {
 			Header : "마감",
 			Type : "Text",
-			SaveName : "Daily_End",
+			SaveName : "daily_TA_END",
 			MinWidth : 30
 		}, {
 			Header : "삭제",
@@ -83,19 +84,19 @@
 		}, {
 			Header : "성명",
 			Type : "Text",
-			SaveName : "daily_TA_SAWON_NAME",
+			SaveName : "sawon_NAME",
 			MinWidth : 80
 		}, {
 			Header : "직급",
 			Type : "Text",
-			SaveName : "daily_TA_RANK",
-			MinWidth : 80
+			SaveName : "rank_NAME",
+			MinWidth : 80,
+			editable : 0
 		}, {
 			Header : "부서",
 			Type : "Text",
-			SaveName : "daily_TA_DEPT_NAME",
-			MinWidth : 80,
-			Wrap : 1
+			SaveName : "fk_RANK_NAME",
+			MinWidth : 80
 		}, {
 			Header : "출근시각",
 			Type : "Text",
@@ -126,13 +127,21 @@
 			Type : "Text",
 			SaveName : "daily_TA_LEAVE_TIME",
 			MinWidth : 60
-		} ];
+		}, {
+			Header : "순번",
+			Type : "Text",
+			SaveName : "num",
+			MinWidth : 60,
+			Hidden :1
+		}];
+		
 		IBS_InitSheet(mySheet, initSheet);
+
 		//mySheet.SetEditable(false);
 		//InitSheet.SetRowEditable(5, 1);//5번째 행을 수정할수 있게해줌
 		//mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
-		select();
+// 		select2();
 	}
 
 	/*Sheet 각종 처리*/
@@ -156,7 +165,15 @@
 			break;
 
 		case "save": // 저장
-			mySheet.DoSave("${contextPath}/attendance/p0001/insertData.do");
+			mySheet.DoSave("${contextPath}/attendance/p0001/insertData_da.do");
+			function mySheet_OnRowSearchEnd(Row){
+				
+				if (mySheet.GetCellValue(Row, 2) == "Y") {
+					mySheet.SetRowEditable(Row, 0)
+				}else {
+					
+				}
+			}			
 			break;
 
 		case "insert": //신규행 추가
@@ -164,46 +181,51 @@
 			break;
 
 		case "end": //마감관리
-			mySheet.SetEditable(true);
+			var select_row = mySheet.GetSelectRow();
+		
+		if(mySheet.GetCellValue(select_row, 1) =='Y'){
+			mySheet.SetCellValue(select_row, 1, '')
+		}else {
+			mySheet.SetCellValue(select_row, 1, 'Y')
 		}
+		}// 마감을 누를시 Y가 들어감
 	}
 
-	function select() {
+// 	function select1() {
 
-		$
-				.ajax({
-					url : "${contextPath}/attendance/p0001/select.do",//목록을 조회 할 url
-					type : "POST",
-					dataType : "JSON",
-					success : function(data) {
-						console.log(data);
-						for (var i = 0; i < data.length; i++) {
-							var option = "<option class='' value='" + data[i].DEPT_NAME + "'>"
-									+ data[i].DEPT_NAME + "</option>";
-							//대상 콤보박스에 추가
+// 		$.ajax({
+// 					url : "${contextPath}/attendance/p0001/select.do",//목록을 조회 할 url
+// 					type : "POST",
+// 					dataType : "JSON",
+// 					success : function(data) {
+// 						console.log(data);
+// 						for (var i = 0; i < data.length; i++) {
+// 							var option = "<option class='' value='" + data[i].DEPT_NAME + "'>"
+// 									+ data[i].DEPT_NAME + "</option>";
+// 							//대상 콤보박스에 추가
 
-							$('#select').append(option);
-						}
-					},
-					error : function(jqxhr, status, error) {
-						alert("에러");
-					}
-				});
-	};
+// 							$('#select').append(option);
+// 						}
+// 					},
+// 					error : function(jqxhr, status, error) {
+// 					}
+// 				});
+// 	};
 
-	// 조회완료 후 처리할 작업
+	// 조회완료 후 처리할 작업 //마감여부에 Y가 체크시 수정불가
 	function mySheet_OnSearchEnd() {
 
 	}
 
+	function mySheet_OnRowSearchEnd(Row) {
+		if (mySheet.GetCellValue(Row, 1) == "Y") {
+			mySheet.SetRowEditable(Row, 0);
+		}
+	}
 	// 저장완료 후 처리할 작업
 	// code: 0(저장성공), -1(저장실패)
-	function mySheet_OnSaveEnd(code, msg) {
-		if (msg != "") {
-			alert(msg);
-			//번호 다시 매기기
-			//mySheet.ReNumberSeq();
-		}
+	function mySheet_OnSaveEnd(Row) {
+		mySheet.DoSearch("${contextPath}/attendance/p0001/da_searchList.do");
 	}
 </script>
 </head>
@@ -216,16 +238,11 @@
 
 			<!--tab 하단의 메인 타이틀(제목) 들어가는 부분 -->
 			<div class="row">
-				<div class="col-lg-12">
-					<!-- 해당 메뉴의 아이콘 -->
-					<!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
-					<h1 class="page-header">
-						<i class="fa fa-user fa-fw"></i>
-						<s:message code="main.dayCls" />
-					</h1>
-				</div>
-				<!-- /.col-lg-12 -->
-			</div>
+                <div class="col-lg-12">        <!-- 해당 메뉴의 아이콘 -->        <!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
+                    <h1 class="page-header"><i class="fa fa-user fa-fw"></i> <s:message code="main.dayCls"/></h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
 			<div class="exp_product"></div>
 			<div class="ib_function float_right">
 				<a href="javascript:doAction('insert')"
@@ -235,19 +252,23 @@
 				<a href="javascript:doAction('end')" class="f1_btn_gray lightgray">마감</a>
 			</div>
 			<body>
-				부서명
-
+				선택조건
+	
 				<select id="select">
-					<option value="" selected="selected">부서명</option>
-
-				</select> &emsp;근무일자&emsp;
+					<option value="" selected="selected">선택</option>
+					<option value="dept_name">부서명</option>
+					<option value="sawon_name" >사원명</option>
+					<option value="sawon_code" >사원코드</option>
+				</select>	
+				<input type="text" name="sawon_num" id="sawon_num">
+			
+					
+				 </select>&emsp;근무일자&emsp;
 				<input type="Date" name="pk_DAILY_TA_WORKING_DATE2"
 					id="pk_DAILY_TA_WORKING_DATE2">&emsp; ~&emsp;
 				<input type="Date" name="pk_DAILY_TA_WORKING_DATE3"
-					id="pk_DAILY_TA_WORKING_DATE3"> &emsp;사원번호&emsp;
-				<input type="text" name="sawon_num" id="sawon_num">
-				<div class="page_title"></div>
-				<!-- 구분 선 -->
+					id="pk_DAILY_TA_WORKING_DATE3"> 
+				
 				<br>
 				<br>
 				<br>

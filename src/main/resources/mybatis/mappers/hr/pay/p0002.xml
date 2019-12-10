@@ -29,6 +29,14 @@
 		<result property="workplace_NAME" column="workplace_NAME"/>
 		<result property="workplace_INQUIRY_CODE" column="workplace_INQUIRY_CODE"/>
 		<result property="dept_INQUIRY_CODE" column="dept_INQUIRY_CODE"/>
+		
+		<result property="fk_HOBONG_CODE" column="fk_HOBONG_CODE"/>
+		<result property="fk_RANK_CODE" column="fk_RANK_CODE"/>
+		<result property="hobong_TABLE_START_DATE_APPLI" column="hobong_TABLE_START_DATE_APPLI"/>
+		
+		
+		
+		
 	</resultMap>
 	
 	
@@ -47,7 +55,7 @@
 			  <result property="salary_CAL_PAYMENTDAY" column="salary_CAL_PAYMENTDAY"/>
 	          <result property="d_B_PAYMENT_DT" column="d_B_PAYMENT_DT"/>
 	          <result property="salary_CAL_SALARY_ITEM" column="salary_CAL_SALARY_ITEM"/>
-	          
+	          <result property="ta_TOTAL_HOUR" column="ta_TOTAL_HOUR"/>
 	          
 	</resultMap>
 	
@@ -156,6 +164,49 @@
 		</where>
 	</select>
 	
+	
+	
+		<select id="payList" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select ta_TOTAL_HOUR*8350 AS salary_CAL_MONEY
+			from ta_total
+		]]>
+		<where>
+		<if test="pk_SAWON_CODE != null">
+				      and FK_TA_TOTAL_SAWON_CODE = #{pk_SAWON_CODE, jdbcType=VARCHAR}
+			</if>
+		
+		</where>
+		
+	</select>
+	
+	
+		<select id="payList2" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
+		<![CDATA[
+			select a.hobong_table_price AS salary_CAL_MONEY
+              from HOBONG_TABLE a, em_info b, sal_info c
+             where a.fk_rank_code = b.EM_INFO_POSITION_CODE
+               and a.FK_HOBONG_CODE = c.FK_HOBONG_CODE 
+		]]>
+		
+		 <where>
+		      
+			<if test="FK_HOBONG_CODE != null">
+				and FK_HOBONG_CODE = #{FK_HOBONG_CODE}
+			</if>
+			
+			<if test="FK_RANK_CODE != null">
+				and FK_RANK_CODE = #{FK_RANK_CODE}
+			</if>
+			
+			<if test="HOBONG_TABLE_START_DATE_APPLI != null">
+				and HOBONG_TABLE_START_DATE_APPLI = #{HOBONG_TABLE_START_DATE_APPLI}
+			</if>
+		</where>
+		
+	</select>
+	
+	
 	<update id="updateData" parameterType="java.util.Map">
 		update SALARY_CAL
 		set   PK_SALARY_CAL_INFO = #{pk_SALARY_CAL_INFO, jdbcType=VARCHAR}
@@ -183,6 +234,6 @@
 	<delete id="deleteData" parameterType="java.util.Map">
 	     delete from SALARY_CAL
 	 
-		 where FK_SALARY_CAL_SAWON_CODE = #{fk_SALARY_CAL_SAWON_CODE, jdbcType=VARCHAR}
+		 where pk_SALARY_CAL_INFO = #{pk_SALARY_CAL_INFO, jdbcType=VARCHAR}
 	</delete>
 </mapper>

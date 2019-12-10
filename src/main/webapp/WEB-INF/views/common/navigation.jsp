@@ -90,19 +90,19 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/signListTo";
 		            } else if(url === "signImageForm"){ // 결재이미지 등록
 		            	urlToGo = "/SEED/signImageForm";
-		            // 급여관리
-		            } else if(url === "TA_input"){ // 근태 결과 입력
-		            	urlToGo = "/SEED/pay/p0001/TA_input.do";
-		            } else if(url === "SALARY_calcul"){
-		            	urlToGo = "/SEED/pay/p0002/SALARY_calcul.do";
-		            } else if(url === "SALARY_bo_sta"){
-		            	urlToGo = "/SEED/pay/p0003/SALARY_bo_sta.do";
-		            } else if(url === "SET_payday"){
-		            	urlToGo = "/SEED/system/p0001/SET_payday.do";
-		            } else if(url === "mm"){ // 급여명세
-		            	urlToGo = "mm";
-		            } else if(url === "nn"){ // 연간급여현황
-		            	urlToGo = "nn";
+	            	// 급여관리
+                  	} else if(url === "TA_input"){ // 근태 결과 입력
+                     	urlToGo = "/SEED/pay/p0001/TA_input.do";
+                  	} else if(url === "SALARY_calcul"){
+                     	urlToGo = "/SEED/pay/p0002/SALARY_calcul.do";
+                 	} else if(url === "SALARY_bo_sta"){
+                     	urlToGo = "/SEED/pay/p0003/SALARY_bo_sta.do";
+                  	} else if(url === "SALARY_spec"){ // 급여명세
+                     	urlToGo = "/SEED/pay/p0004/SALARY_spec.do";
+                  	} else if(url === "nn"){ // 연간급여현황
+                     	urlToGo = "nn";
+                  	} else if(url === "SET_payday"){
+                      	urlToGo = "/SEED/system/p0001/SET_payday.do";
 		            // 근태관리
 		            } else if(url === "day_regist_sawon"){//사원 출퇴근
 		            	urlToGo = "/SEED/attendance/p0001/day_regist_sawon.do";
@@ -411,8 +411,8 @@ $(document).ready(function(){
 	                            <a href="#"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay"/><span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
 	                                <li>
-	                                    <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay4"/>','chart','mm','mm'); return false"><s:message code="main.pay4"/></a>
-	                                </li>
+                                       <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay4"/>','chart','SALARY_spec','SALARY_spec'); return false"><s:message code="main.pay4"/></a>
+                                   </li>
 	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay5"/>','chart','nn','nn'); return false"><s:message code="main.pay5"/></a>                                
 	                                </li>

@@ -42,7 +42,7 @@ public class SALARY_calculVO {
    private String dept_INQUIRY_CODE;
    private String fk_SAWON_WORKPLACE_CODE; 
    private String fk_dept_code;
-   
+   private String ta_TOTAL_HOUR;
   
 
    public SALARY_calculVO() {
@@ -488,6 +488,20 @@ public String getFk_dept_code() {
 
 public void setFk_dept_code(String fk_dept_code) {
 	this.fk_dept_code = fk_dept_code;
+}
+
+
+
+
+public String getTa_TOTAL_HOUR() {
+	return ta_TOTAL_HOUR;
+}
+
+
+
+
+public void setTa_TOTAL_HOUR(String ta_TOTAL_HOUR) {
+	this.ta_TOTAL_HOUR = ta_TOTAL_HOUR;
 }
 
 

@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<h4>마감관리</h4>
 <br>
 </head>
 <body>
@@ -17,16 +16,15 @@
 		<option value="A">A</option>
 		<option value="B">B</option>
 		<option value="C">C</option>
-	</select> &emsp; 근무일자 &emsp; 사원 번호
-	<a class="f1_btn_gray lightgray" style="float: right;">검색</a>
-	<div class="page_title"></div>
+	</select> &emsp; 근무년월
+	<td><select id="year" name="year"> &emsp; 사원 번호
+			<a class="f1_btn_gray lightgray" style="float: right;">검색</a>
+			<div class="page_title"></div>
+	</select></td>
 	<!-- 구분 선 -->
 	<br>
 	<br>
 	<br>
-	<h4>일 근태 마감관리</h4>
-	<meta charset="UTF-8">
-	<title>일일 근태 등록</title>
 	<link rel="stylesheet" href="${contextPath}/resources/css/style.css">
 	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
@@ -34,6 +32,7 @@
 	<script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 
 	<script language="javascript">
+		var pageheightoffset = 200;
 		//시트 높이 계산용
 
 		/*Sheet 기본 설정 */
@@ -138,7 +137,7 @@
 				MinWidth : 60
 			}, ];
 			IBS_InitSheet(mySheet, initSheet);
-
+			mySheet.SetEditable(false);
 			mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
 			//mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 			//doAction('search');
@@ -155,8 +154,7 @@
 				break;
 			case "save": // 저장
 				//var tempStr = mySheet.GetSaveString();
-				//alert("서버로 전달되는 문자열 확인 :"+tempStr);
-				mySheet.DoSave("${contextPath}/attendance/p0001/insertData.do");
+			mySheet.DoSave("${contextPath}/attendance/p0001/insertData.do");
 				break;
 			case "insert": //신규행 추가
 				var row = mySheet.DataInsert();
@@ -177,7 +175,6 @@
 		// code: 0(저장성공), -1(저장실패)
 		function mySheet_OnSaveEnd(code, msg) {
 			if (msg != "") {
-				alert(msg);
 				//번호 다시 매기기
 				//mySheet.ReNumberSeq();
 			}
@@ -187,11 +184,12 @@
 <body onload="LoadPage()">
 	<div class="exp_product"></div>
 	<div class="ib_function float_right">
-	<!-- doActioon명은 위에 doAction Function명의 이름과 같아야함 -->
-		<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-		<a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-		<a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
-		<a href="javascript:doAction('dead')" class="f1_btn_white gray">마감</a>
+		<!-- doActioon명은 위에 doAction Function명의 이름과 같아야함 -->
+		<div class="ib_function float_right">
+			<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
+			<a href="javascript:doAction('search')" class="f1_btn_gray lightgray">조회</a>
+			<a href="javascript:doAction('save')" class="f1_btn_gray lightgray">저장</a>
+		</div>
 	</div>
 
 	<div class="clear hidden"></div>

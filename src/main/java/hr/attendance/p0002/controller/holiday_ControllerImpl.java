@@ -1,5 +1,6 @@
 package hr.attendance.p0002.controller;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -21,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import hr.attendance.p0002.vo.business_VO;
 import hr.attendance.p0002.vo.holiday_VO;
-import hr.attendance.p0001.vo.day_regist_VO;
 import hr.attendance.p0002.service.holiday_Service;
 import project.common.DateVO;
 import project.common.Field3VO;
@@ -36,13 +36,24 @@ public class holiday_ControllerImpl implements holiday_Controller {
 	business_VO business_VO;
 
 	// ��ü ���� ȭ��
-	
+
 	// �ް���û
 	@Override
 	@RequestMapping(value = "attendance/p0002/holiday.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView holiday(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
 		viewName = "attendance/p0002/holiday";
+		request.setCharacterEncoding("utf-8");
+		// ModelAndView main = new ModelAndView("hr/p0001_init");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
+
+	@Override
+	@RequestMapping(value = "Aholiday_da", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView holiday_da(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = getViewName(request);
+		viewName = "attendance/p0002/holiday_da";
 		request.setCharacterEncoding("utf-8");
 		// ModelAndView main = new ModelAndView("hr/p0001_init");
 		ModelAndView main = new ModelAndView(viewName);
@@ -62,13 +73,24 @@ public class holiday_ControllerImpl implements holiday_Controller {
 		return main;
 	}
 
+	@Override
+	@RequestMapping(value = "Abusiness_da", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView business_da(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = getViewName(request);
+		viewName = "attendance/p0002/business_da";
+		request.setCharacterEncoding("utf-8");
+		// ModelAndView main = new ModelAndView("hr/p0001_init");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
+
 	// �ܱٽ�û
 	@Override
-	@RequestMapping(value = "attendance/p0002/outside.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "Along_time", method = { RequestMethod.GET, RequestMethod.POST })
 	// impl �̸� = business
 	public ModelAndView outside(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
-		viewName = "attendance/p0002/outside";
+		viewName = "attendance/p0002/long_time";
 		request.setCharacterEncoding("utf-8");
 		// ModelAndView main = new ModelAndView("hr/p0001_init");
 		ModelAndView main = new ModelAndView(viewName);
@@ -77,7 +99,7 @@ public class holiday_ControllerImpl implements holiday_Controller {
 
 	// �ް��ϼ� ���
 	@Override
-	@RequestMapping(value = "attendance/p0002/holiday_calc.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "Aholiday_calc", method = { RequestMethod.GET, RequestMethod.POST })
 	// impl �̸� = business
 	public ModelAndView holiday_calc(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
@@ -88,19 +110,19 @@ public class holiday_ControllerImpl implements holiday_Controller {
 		return main;
 	}
 
-
 	@ResponseBody
-	@RequestMapping(value = "attendance/p0002/select.do", method = { RequestMethod.GET, RequestMethod.POST },produces="application/text;charset=utf-8")
+	@RequestMapping(value = "attendance/p0002/select.do", method = { RequestMethod.GET,
+			RequestMethod.POST }, produces = "application/text;charset=utf-8")
 	// impl �̸� = business
 	public String select(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//String viewName = getViewName(request);
-		//viewName = "/attendance/p0001/select";
+		// String viewName = getViewName(request);
+		// viewName = "/attendance/p0001/select";
 		request.setCharacterEncoding("utf-8");
-		List<HashMap<String,String>> result = holiday_Service.select();
+		List<HashMap<String, String>> result = holiday_Service.select();
 		ObjectMapper mapper = new ObjectMapper();
-		String resultJson=mapper.writeValueAsString(result);
+		String resultJson = mapper.writeValueAsString(result);
+		System.out.println(resultJson);
 		return resultJson;
-		//return main;
 	}
 
 	// ============================================================================================================
@@ -117,8 +139,9 @@ public class holiday_ControllerImpl implements holiday_Controller {
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
-
 		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
+		searchMap.put("HOLIDAY_PAY", request.getParameter("HOLIDAY_PAY"));
+		searchMap.put("fd_year", request.getParameter("fd_year")+"%");
 
 		// ?��?��?�� 조회
 		List<business_VO> data = holiday_Service.searchList_busin(searchMap);
@@ -127,18 +150,69 @@ public class holiday_ControllerImpl implements holiday_Controller {
 		fld.setField1(userno);
 		resultMap.put("Data", data);
 		resultMap.put("calenList", calenList);
-		System.out.println("business_con: " + request.getParameter("pk_SAWON_CODE"));
 		System.out.println("searchMap: " + searchMap);
 		System.out.println("resultMap : " + resultMap);
 
 		return resultMap;
 
 	}
+
+	// 출장 관리자 조회화면
+	@Override
+	@RequestMapping(value = "attendance/p0002/searchList_busin_da.do", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public Map searchList_busin_da(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
+			throws Exception {
+
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		searchMap.put("fd_year", request.getParameter("fd_year")+request.getParameter("fd_month")+"%");
+		searchMap.put("sawon_num", request.getParameter("sawon_num"));
+		searchMap.put("option", request.getParameter("option"));
+		searchMap.put("HOLIDAY_PAY", request.getParameter("HOLIDAY_PAY"));
+		System.out.println("11111111"+searchMap.put("HOLIDAY_PAY", request.getParameter("HOLIDAY_PAY")));
+		// ?��?��?�� 조회
+		List<business_VO> data = holiday_Service.searchList_busin_da(searchMap);
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		Field3VO fld = new Field3VO();
+		resultMap.put("Data", data);
+		resultMap.put("calenList", calenList);
+		System.out.println("controller");
+		return resultMap;
+
+	}
 	
 	
+	//휴가계산화면 조회
+		@Override
+		@RequestMapping(value = "attendance/p0002/searchList_calc.do", method = { RequestMethod.GET,
+				RequestMethod.POST })
+		@ResponseBody
+		public Map searchList_calc(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
+				throws Exception {
 
+			request.setCharacterEncoding("utf-8");
+			Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
+			Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+			searchMap.put("fd_year", request.getParameter("fd_year"));
+			searchMap.put("sawon_num", request.getParameter("sawon_num"));
+			searchMap.put("option", request.getParameter("option"));
+			System.out.println(searchMap.put("fd_year", request.getParameter("fd_year")));
+			
+			// ?��?��?�� 조회
+			List<holiday_VO> data = holiday_Service.searchList_calc(searchMap);
+			List<DateVO> calenList = new ArrayList<DateVO>();
+			Field3VO fld = new Field3VO();
+			resultMap.put("Data", data);
+			resultMap.put("calenList", calenList);
+			System.out.println("controller");
+			return resultMap;
 
-
+		}
+	
+//휴가 사원화면 조회
 	@Override
 	@RequestMapping(value = "attendance/p0002/searchList_holi.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
@@ -151,64 +225,196 @@ public class holiday_ControllerImpl implements holiday_Controller {
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
 
 		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
+		searchMap.put("HOLIDAY_PAY", request.getParameter("HOLIDAY_PAY"));
+		searchMap.put("fd_year", request.getParameter("fd_year")+"%");
+		System.out.println(searchMap.put("HOLIDAY_PAY", request.getParameter("HOLIDAY_PAY")));
 
 		// ?��?��?�� 조회
-				List<holiday_VO> data = holiday_Service.searchList_holi(searchMap);
-				List<DateVO> calenList = new ArrayList<DateVO>();
-				Field3VO fld = new Field3VO();
-				fld.setField1(userno);
-				resultMap.put("Data", data);
-//				resultMap.put("calenList", calenList);
-				System.out.println("holiday_controller: " + request.getParameter("pk_SAWON_CODE"));
-				System.out.println("searchMap: " + searchMap);
-				System.out.println("resultMap : " + data);
-				return resultMap;
+		List<holiday_VO> data = holiday_Service.searchList_holi(searchMap);
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		Field3VO fld = new Field3VO();
+		fld.setField1(userno);
+		resultMap.put("Data", data);
+		System.out.println("holiday_controller: " + request.getParameter("pk_SAWON_CODE"));
+		System.out.println("searchMap: " + searchMap);
+		System.out.println("resultMap : " + data);
+		return resultMap;
 
-			}
-
-
+	}
 	
-		// �߰�<����x>
-		@Override
-		@RequestMapping(value = "attendance/p0002/insertData_holi.do", method = { RequestMethod.GET, RequestMethod.POST })
-		@ResponseBody
-		public Map saveData_holi(HttpServletRequest request, HttpServletResponse response) throws Exception {
-			request.setCharacterEncoding("utf-8");
-			Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ???��?��Daa
-			Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+	//휴가 관리자화면 조회
+	@Override
+	@RequestMapping(value = "attendance/p0002/searchList_holi_da.do", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public Map searchList_holi_da(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
+			throws Exception {
 
-			// ???�� Data 추출?���?
-			Enumeration enu = request.getParameterNames();
-			while (enu.hasMoreElements()) {
-				String name = (String) enu.nextElement();
-				String[] values = request.getParameterValues(name);
-				System.out.println("controller_name :" + name);
-				System.out.println("controller_values :" +values);
-				dataMap.put(name, values);
-			}
-
-			Map<String, String> result = new HashMap<String, String>();
-			System.out.println("1. " + dataMap);
-			try {
-				holiday_Service.saveData_holi(dataMap);
-				result.put("Code", "0");
-				result.put("Message", "???��?��?��?��?��?��");
-			} catch (Exception e) {
-				result.put("Code", "-1");
-				result.put("Message", "???��?�� ?��?��?��???��?��?��");
-				e.printStackTrace();
-			}
-
-			resultMap.put("Result", result);
-			return resultMap;
-		}
-
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		searchMap.put("fd_year", request.getParameter("fd_year")+request.getParameter("fd_month")+"%");
+		searchMap.put("sawon_num", request.getParameter("sawon_num"));
+		searchMap.put("option", request.getParameter("option"));
+		searchMap.put("HOLIDAY_PAY", request.getParameter("HOLIDAY_PAY"));
 		
-		// �߰�<����x>
+		// ?��?��?�� 조회
+		List<holiday_VO> data = holiday_Service.searchList_holi_da(searchMap);
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		Field3VO fld = new Field3VO();
+		resultMap.put("Data", data);
+		resultMap.put("calenList", calenList);
+		System.out.println("controller");
+		return resultMap;
+
+	}
+
+	//사원휴가화면 추가
+	@Override
+	@RequestMapping(value = "attendance/p0002/insertData_holi.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map saveData_holi(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		request.setCharacterEncoding("utf-8");
+		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ???��?��Daa
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+
+		// ???�� Data 추출?���?
+		Enumeration enu = request.getParameterNames();
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			String[] values = request.getParameterValues(name);
+			System.out.println("controller_name :" + name);
+			System.out.println("controller_values :" + values);
+			dataMap.put(name, values);
+		}
+
+		Map<String, String> result = new HashMap<String, String>();
+		System.out.println("1. " + dataMap);
+		try {
+			holiday_Service.saveData_holi(dataMap);
+			result.put("Code", "0");
+			result.put("Message", "???��?��?��?��?��?��");
+		} catch (Exception e) {
+			result.put("Code", "-1");
+			result.put("Message", "???��?�� ?��?��?��???��?��?��");
+			e.printStackTrace();
+		}
+
+		resultMap.put("Result", result);
+		return resultMap;
+	}
+
+	//휴가 관리자화면 추가
+	@Override
+	@RequestMapping(value = "attendance/p0002/insertData_holi_da.do", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public Map saveData_holi_da(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ???��?��Daa
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+
+		// ???�� Data 추출?���?
+		Enumeration enu = request.getParameterNames();
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			String[] values = request.getParameterValues(name);
+			dataMap.put(name, values);
+		}
+
+		Map<String, String> result = new HashMap<String, String>();
+		System.out.println("1. " + dataMap);
+		try {
+			holiday_Service.saveData_holi_da(dataMap);
+			result.put("Code", "0");
+			result.put("Message", "???��?��?��?��?��?��");
+		} catch (Exception e) {
+			result.put("Code", "-1");
+			result.put("Message", "???��?�� ?��?��?��???��?��?��");
+			e.printStackTrace();
+		}
+
+		resultMap.put("Result", result);
+		return resultMap;
+	}
+
+	//출장화면 추가
+	@Override
+	@RequestMapping(value = "attendance/p0002/insertData_busin.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map saveData_busin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ???��?��Daa
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+
+		// ???�� Data 추출?���?
+		Enumeration enu = request.getParameterNames();
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			String[] values = request.getParameterValues(name);
+			System.out.println("controller_name :" + name);
+			System.out.println("controller_values :" + values);
+			dataMap.put(name, values);
+		}
+
+		Map<String, String> result = new HashMap<String, String>();
+		System.out.println("1. " + dataMap);
+		try {
+			holiday_Service.saveData_busin(dataMap);
+			result.put("Code", "0");
+			result.put("Message", "???��?��?��?��?��?��");
+		} catch (Exception e) {
+			result.put("Code", "-1");
+			result.put("Message", "???��?�� ?��?��?��???��?��?��");
+			e.printStackTrace();
+		}
+
+		resultMap.put("Result", result);
+		return resultMap;
+	}
+
+	//휴가 관리자화면 추가
+	@Override
+	@RequestMapping(value = "attendance/p0002/insertData_busin_da.do", method = { RequestMethod.GET,
+			RequestMethod.POST })
+	@ResponseBody
+	public Map saveData_busin_da(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ???��?��Daa
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+
+		// ???�� Data 추출?���?
+		Enumeration enu = request.getParameterNames();
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			String[] values = request.getParameterValues(name);
+			dataMap.put(name, values);
+		}
+
+		Map<String, String> result = new HashMap<String, String>();
+		System.out.println("1. " + dataMap);
+		try {
+			holiday_Service.saveData_busin_da(dataMap);
+			result.put("Code", "0");
+			result.put("Message", "???��?��?��?��?��?��");
+		} catch (Exception e) {
+			result.put("Code", "-1");
+			result.put("Message", "???��?�� ?��?��?��???��?��?��");
+			e.printStackTrace();
+		}
+
+		resultMap.put("Result", result);
+		return resultMap;
+	}
+	
+	
+	//휴가계산 화면 추가
 		@Override
-		@RequestMapping(value = "attendance/p0002/insertData_busin.do", method = { RequestMethod.GET, RequestMethod.POST })
+		@RequestMapping(value = "attendance/p0002/insertData_calc.do", method = { RequestMethod.GET,
+				RequestMethod.POST })
 		@ResponseBody
-		public Map saveData_busin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		public Map saveData_calc(HttpServletRequest request, HttpServletResponse response) throws Exception {
 			request.setCharacterEncoding("utf-8");
 			Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ???��?��Daa
 			Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
@@ -218,15 +424,13 @@ public class holiday_ControllerImpl implements holiday_Controller {
 			while (enu.hasMoreElements()) {
 				String name = (String) enu.nextElement();
 				String[] values = request.getParameterValues(name);
-				System.out.println("controller_name :" + name);
-				System.out.println("controller_values :" +values);
 				dataMap.put(name, values);
 			}
 
 			Map<String, String> result = new HashMap<String, String>();
 			System.out.println("1. " + dataMap);
 			try {
-				holiday_Service.saveData_busin(dataMap);
+				holiday_Service.saveData_calc(dataMap);
 				result.put("Code", "0");
 				result.put("Message", "???��?��?��?��?��?��");
 			} catch (Exception e) {
@@ -238,7 +442,7 @@ public class holiday_ControllerImpl implements holiday_Controller {
 			resultMap.put("Result", result);
 			return resultMap;
 		}
-
+	
 
 	private String getViewName(HttpServletRequest request) throws Exception {
 		String contextPath = request.getContextPath();

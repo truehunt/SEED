@@ -7,7 +7,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일일 근태 등록</title>
 <!----------------------------------------------------------------------------------------->
 <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>

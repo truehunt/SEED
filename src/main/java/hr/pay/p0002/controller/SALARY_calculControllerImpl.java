@@ -247,8 +247,47 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	}
 	
 	
+	@Override
+	@RequestMapping(value = "/pay/SALARY_calcul/payList.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map payList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		
+		searchMap.put("salary_CAL_MONEY", request.getParameter("salary_CAL_MONEY"));
+		searchMap.put("fk_SALARY_CAL_SAWON_CODE", request.getParameter("fk_SALARY_CAL_SAWON_CODE"));
+		searchMap.put("FK_TA_TOTAL_SAWON_CODE", request.getParameter("FK_TA_TOTAL_SAWON_CODE"));
+
+		
+		List<SALARY_calculVO> data = SALARY_calculService.payList(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}
 	
-	
+	@Override
+	@RequestMapping(value = "/pay/SALARY_calcul/payList2.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map payList2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		
+		searchMap.put("salary_CAL_MONEY", request.getParameter("salary_CAL_MONEY"));
+		
+		searchMap.put("FK_HOBONG_CODE", request.getParameter("FK_HOBONG_CODE"));
+		searchMap.put("FK_RANK_CODE", request.getParameter("FK_RANK_CODE"));
+		searchMap.put("HOBONG_TABLE_START_DATE_APPLI", request.getParameter("HOBONG_TABLE_START_DATE_APPLI"));
+		
+		searchMap.put("FK_TA_TOTAL_SAWON_CODE", request.getParameter("FK_TA_TOTAL_SAWON_CODE"));
+		
+		
+		List<SALARY_calculVO> data = SALARY_calculService.payList2(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}	
 	
 	@Override
 	@RequestMapping(value = "/pay/SALARY_calcul/saveData.do", method = { RequestMethod.GET, RequestMethod.POST })

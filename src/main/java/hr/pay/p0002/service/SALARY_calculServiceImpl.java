@@ -72,6 +72,19 @@ public class SALARY_calculServiceImpl implements SALARY_calculService {
 		return list;
 	}
 	
+	
+	@Override
+	public List<SALARY_calculVO> payList(Map<String, Object> searchMap) throws DataAccessException {
+		List<SALARY_calculVO> list =  SALARY_calculDAO.payList(searchMap); 
+		return list;
+	}
+	
+	@Override
+	public List<SALARY_calculVO> payList2(Map<String, Object> searchMap) throws DataAccessException {
+		List<SALARY_calculVO> list =  SALARY_calculDAO.payList2(searchMap); 
+		return list;
+	}
+	
 	@Override
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
 		String[] status = dataMap.get("STATUS");

@@ -20,6 +20,13 @@ public class business_VO {
 	private String business_TRIP_PAYREGIST;
 	private String business_TRIP_APP_DATE;
 	private String fk_BUSINESS_TRIP_SAWON_CODE;
+	private String business_TRIP_NUM;
+	public String getBusiness_TRIP_NUM() {
+		return business_TRIP_NUM;
+	}
+	public void setBusiness_TRIP_NUM(String business_TRIP_NUM) {
+		this.business_TRIP_NUM = business_TRIP_NUM;
+	}
 	public String getBusiness_TRIP_DATE() {
 		return business_TRIP_DATE;
 	}

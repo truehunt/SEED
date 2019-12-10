@@ -9,13 +9,12 @@ import com.ibleaders.utility.ib_jxl.write.DateTime;
 
 @Component("Day_regist_VO")
 public class day_regist_VO {
-	private String fk_dept_NAME;
+	private String fk_DEPT_NAME;
 	private String rank_NAME;
 	private String sawon_NAME;
 	private String fk_DAILY_TA_SAWON_CODE;
 	private String fk_DAILY_TA_DEPT_CODE;
 	private String pk_DAILY_TA_WORKING_DATE;
-	private String daily_TA_SAWON_NAME;
 	private String daily_TA_RANK;
 	private String daily_TA_DEPT_NAME;
 	private String daily_TA_TA;
@@ -31,11 +30,90 @@ public class day_regist_VO {
 	private DateTime daily_TA_INT_DATE;
 	private String daily_TA_MOD_USER_ID;
 	private DateTime daily_TA_MOD_DATE;
+	private String daily_TA_END;
+	private String num;
+	private String note;
+	private String total_date;
+	private String holiday_date;
+	private String business_date;
+	private String total;
+	private String longtime;
+	private String late;
+	private String early;
+	private String pk_SAWON_CODE;
+	public String getFk_DEPT_NAME() {
+		return fk_DEPT_NAME;
+	}
+	public void setFk_DEPT_NAME(String fk_DEPT_NAME) {
+		this.fk_DEPT_NAME = fk_DEPT_NAME;
+	}
+	public String getTotal_date() {
+		return total_date;
+	}
+	public void setTotal_date(String total_date) {
+		this.total_date = total_date;
+	}
+	public String getHoliday_date() {
+		return holiday_date;
+	}
+	public void setHoliday_date(String holiday_date) {
+		this.holiday_date = holiday_date;
+	}
+	public String getBusiness_date() {
+		return business_date;
+	}
+	public void setBusiness_date(String business_date) {
+		this.business_date = business_date;
+	}
+	public String getTotal() {
+		return total;
+	}
+	public void setTotal(String total) {
+		this.total = total;
+	}
+	public String getLongtime() {
+		return longtime;
+	}
+	public void setLongtime(String longtime) {
+		this.longtime = longtime;
+	}
+	public String getLate() {
+		return late;
+	}
+	public void setLate(String late) {
+		this.late = late;
+	}
+	public String getEarly() {
+		return early;
+	}
+	public void setEarly(String early) {
+		this.early = early;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	private String date;
+	
+	public String getNum() {
+		return num;
+	}
+	public void setNum(String num) {
+		this.num = num;
+	}
+	public String getDaily_TA_END() {
+		return daily_TA_END;
+	}
+	public void setDaily_TA_END(String daily_TA_END) {
+		this.daily_TA_END = daily_TA_END;
+	}
 	public String getFk_RANK_NAME() {
-		return fk_dept_NAME;
+		return fk_DEPT_NAME;
 	}
 	public void setFk_RANK_NAME(String fk_RANK_NAME) {
-		this.fk_dept_NAME = fk_RANK_NAME;
+		this.fk_DEPT_NAME = fk_RANK_NAME;
 	}
 	public String getRank_NAME() {
 		return rank_NAME;
@@ -66,12 +144,6 @@ public class day_regist_VO {
 	}
 	public void setPk_DAILY_TA_WORKING_DATE(String pk_DAILY_TA_WORKING_DATE) {
 		this.pk_DAILY_TA_WORKING_DATE = pk_DAILY_TA_WORKING_DATE;
-	}
-	public String getDaily_TA_SAWON_NAME() {
-		return daily_TA_SAWON_NAME;
-	}
-	public void setDaily_TA_SAWON_NAME(String daily_TA_SAWON_NAME) {
-		this.daily_TA_SAWON_NAME = daily_TA_SAWON_NAME;
 	}
 	public String getDaily_TA_RANK() {
 		return daily_TA_RANK;
@@ -162,5 +234,17 @@ public class day_regist_VO {
 	}
 	public void setDaily_TA_MOD_DATE(DateTime daily_TA_MOD_DATE) {
 		this.daily_TA_MOD_DATE = daily_TA_MOD_DATE;
+	}
+	public String getNote() {
+		return note;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
+	public String getPk_SAWON_CODE() {
+		return pk_SAWON_CODE;
+	}
+	public void setPk_SAWON_CODE(String pk_SAWON_CODE) {
+		this.pk_SAWON_CODE = pk_SAWON_CODE;
 	}
 }

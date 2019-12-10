@@ -53,12 +53,12 @@ public class IndexCtr {
         List<?> listview3 = indexSvc.selectBoardGroupCount4Statistic();
         modelMap.addAttribute("listview3", listview3);
         
-        //게시판 & 공지사항
-        List<?> listview = indexSvc.selectRecentNews();
+        // 공지사항 & 생일자 & 경조사
         List<?> noticeList = indexSvc.selectNoticeListTop5();
+        List<?> birthday = indexSvc.selectBirthday();
         
-        modelMap.addAttribute("listview", listview);
         modelMap.addAttribute("noticeList", noticeList);
+        modelMap.addAttribute("birthday", birthday);
         
         // 전자결재
         // 접속자가 전자결재해야할 문서가 있을경우만 아래가 실행됨.

@@ -244,7 +244,7 @@ $(document).ready(function(){
 										    </c:otherwise>
 										</c:choose>
 							</span>
-							<c:out value="${sessionScope.SAWON_NAME}"/> 님
+							<c:out value="${sessionScope.SAWON_NAME}"/> <s:message code="main.login"/>
 	                        <i class="fa fa-caret-down"></i>
 	                    </a>
 	                    <ul class="dropdown-menu dropdown-user">

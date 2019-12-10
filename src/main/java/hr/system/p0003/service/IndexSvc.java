@@ -39,6 +39,10 @@ public class IndexSvc {
         return sqlSession.selectList("selectRecentNews");
     }
     
+    public List<?> selectBirthday() {
+        return sqlSession.selectList("selectBirthday");
+    }
+    
     public List<?> selectNoticeListTop5() {
         return sqlSession.selectList("selectNoticeListTop5");
     }

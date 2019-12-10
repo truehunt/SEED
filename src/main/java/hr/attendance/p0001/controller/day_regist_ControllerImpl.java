@@ -46,31 +46,21 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 	@Autowired
 	day_regist_VO day_regist_VO;
 
-	// ��ü ���� ȭ��
+	
+	
+
+	// ���ϱ���Ȯ��_(���)
 	@Override
-	@RequestMapping(value = "attendance/p0001/init.do", method = { RequestMethod.GET, RequestMethod.POST }) // ���� �ּ�
-	public ModelAndView searchInit(HttpServletRequest request, HttpServletResponse response) throws Exception {// ��Ʈ�ѷ���
-																												// ����
-																												// �̸�
+	@RequestMapping(value = "Amonth", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView month(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/init";// jsp���� ��
+		viewName = "/attendance/p0001/month";
 		request.setCharacterEncoding("utf-8");
 		// ModelAndView main = new ModelAndView("hr/p0001_init");
 		ModelAndView main = new ModelAndView(viewName);
 		return main;
 	}
 
-	// ibsheet ���� ȭ��
-	@Override
-	@RequestMapping(value = "attendance/p0001/ibsheet.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/ibsheet_basic";
-		request.setCharacterEncoding("utf-8");
-		// ModelAndView main = new ModelAndView("hr/p0001_init");
-		ModelAndView main = new ModelAndView(viewName);
-		return main;
-	}
 
 	// ���ϱ���Ȯ��_(���)
 	@Override
@@ -84,9 +74,11 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
+	
+	
 	// ���ϱ��µ��_��üȭ��(������)
 	@Override
-	@RequestMapping(value = "attendance/p0001/day_regist.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "Aday_regist", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView day_regist(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
 		viewName = "/attendance/p0001/day_regist";
@@ -108,20 +100,7 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	// ����������
-	@Override
-	@RequestMapping(value = "attendance/p0001/mon_deadline.do", method = { RequestMethod.GET, RequestMethod.POST }) // ���θ�(������
-																													// �ּ�)
-	public ModelAndView mon_deadline(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/mon_deadline";// �����̸�
-		request.setCharacterEncoding("utf-8");
-		// ModelAndView main = new ModelAndView("hr/p0001_init");
-		ModelAndView main = new ModelAndView(viewName);
-		return main;
-	}
-
-	// ����/����/�߰� �ٹ���ȸ
+	// ����/����/�߰� �ٹ���ȸ//연장 근무 조회
 	@Override
 	@RequestMapping(value = "attendance/p0001/inquery.do", method = { RequestMethod.GET, RequestMethod.POST }) // ���θ�(������
 																												// �ּ�)
@@ -134,69 +113,6 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	// �ް���û
-	@Override
-	@RequestMapping(value = "attendance/p0001/holiday.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView holiday(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/holiday";
-		request.setCharacterEncoding("utf-8");
-		// ModelAndView main = new ModelAndView("hr/p0001_init");
-		ModelAndView main = new ModelAndView(viewName);
-		return main;
-	}
-
-	// �����û
-	@Override
-	@RequestMapping(value = "attendance/p0001/business.do", method = { RequestMethod.GET, RequestMethod.POST })
-	// impl �̸� = business
-	public ModelAndView business(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/business";
-		request.setCharacterEncoding("utf-8");
-		// ModelAndView main = new ModelAndView("hr/p0001_init");
-		ModelAndView main = new ModelAndView(viewName);
-		return main;
-	}
-
-	// �ܱٽ�û
-	@Override
-	@RequestMapping(value = "attendance/p0001/outside.do", method = { RequestMethod.GET, RequestMethod.POST })
-	// impl �̸� = business
-	public ModelAndView outside(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/outside";
-		request.setCharacterEncoding("utf-8");
-		// ModelAndView main = new ModelAndView("hr/p0001_init");
-		ModelAndView main = new ModelAndView(viewName);
-		return main;
-	}
-
-	// �ް��ϼ� ���
-	@Override
-	@RequestMapping(value = "attendance/p0001/holiday_calc.do", method = { RequestMethod.GET, RequestMethod.POST })
-	// impl �̸� = business
-	public ModelAndView holiday_calc(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/holiday_calc";
-		request.setCharacterEncoding("utf-8");
-		// ModelAndView main = new ModelAndView("hr/p0001_init");
-		ModelAndView main = new ModelAndView(viewName);
-		return main;
-	}
-
-	@Override
-	@RequestMapping(value = "attendance/p0001/deadline.do", method = { RequestMethod.GET, RequestMethod.POST })
-	// impl �̸� = business
-	public ModelAndView deadline(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/deadline";
-		request.setCharacterEncoding("utf-8");
-		// ModelAndView main = new ModelAndView("hr/p0001_init");
-		ModelAndView main = new ModelAndView(viewName);
-		return main;
-	}
-	
 	
 	@ResponseBody
 	@RequestMapping(value = "attendance/p0001/select.do", method = { RequestMethod.GET, RequestMethod.POST },produces="application/text;charset=utf-8")
@@ -211,10 +127,61 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return resultJson;
 		//return main;
 	}
+	
+
 
 	// ============================================================================================================
 	// ��� ����
 
+	// 조회화면
+		@Override
+		@RequestMapping(value = "attendance/p0001/searchList_month.do", method = { RequestMethod.GET, RequestMethod.POST })
+		@ResponseBody
+		public Map month(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
+				throws Exception {
+			request.setCharacterEncoding("utf-8");
+			Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
+			Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+			// �??��조건?��?��
+			searchMap.put("fd_year", request.getParameter("fd_year"));
+			searchMap.put("option", request.getParameter("option"));
+			searchMap.put("sawon_num", request.getParameter("sawon_num"));
+			
+			// ?��?��?�� 조회
+			
+			List<day_regist_VO> data = day_regist_Service.searchList_month(searchMap);
+			List<DateVO> calenList = new ArrayList<DateVO>();
+			Field3VO fld = new Field3VO();
+			resultMap.put("Data", data);
+			resultMap.put("calenList", calenList);
+			return resultMap;
+			
+		}
+
+		// 조회화면
+		@Override
+		@RequestMapping(value = "attendance/p0001/searchList_month_click.do", method = { RequestMethod.GET, RequestMethod.POST })
+		@ResponseBody
+		public Map month_click(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
+				throws Exception {
+			request.setCharacterEncoding("utf-8");
+			Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
+			Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+			// �??��조건?��?��
+			searchMap.put("sawon_code", request.getParameter("sawon_code"));
+			searchMap.put("fd_year", request.getParameter("fd_year"));
+			searchMap.put("option", request.getParameter("option"));
+			// ?��?��?�� 조회
+			System.out.println("aaaaaa: "+request.getParameter("sawon_code"));
+			List<day_regist_VO> data = day_regist_Service.searchList_month_click(searchMap);
+			List<DateVO> calenList = new ArrayList<DateVO>();
+			Field3VO fld = new Field3VO();
+			resultMap.put("Data", data);
+			resultMap.put("calenList", calenList);
+			return resultMap;
+			
+		}
+		
 	// 조회화면
 	@Override
 	@RequestMapping(value = "attendance/p0001/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -227,27 +194,27 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
-		System.out.println("11." + request.getParameter("PK_DAILY_TA_WORKING_DATE").toString());
-		System.out.println("12. " + userno);
 
 		// �??��조건?��?��
 		searchMap.put("PK_DAILY_TA_WORKING_DATE", request.getParameter("PK_DAILY_TA_WORKING_DATE"));
 		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
-		System.out.println("sawon_1: " + request.getParameter("pk_SAWON_CODE"));
+		searchMap.put("work", request.getParameter("work"));
+		System.out.println("11111"+searchMap.put("work", request.getParameter("work")));// 왜 널값?
+		
 		// ?��?��?�� 조회
+		
+		
 		List<day_regist_VO> data = day_regist_Service.searchList(searchMap);
 		List<DateVO> calenList = new ArrayList<DateVO>();
 		Field3VO fld = new Field3VO();
 		fld.setField1(userno);
 		resultMap.put("Data", data);
 		resultMap.put("calenList", calenList);
-		System.out.println("1-2" + request.getParameter("pk_SAWON_CODE"));
 		System.out.println("searchMap: " + searchMap);
 		
 		return resultMap;
 	}
 
-	// 출근을 누를시 사원정보 들어감
 
 	@Override
 	@RequestMapping(value = "attendance/p0001/searchList_sawon.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -292,6 +259,7 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		// �??��조건?��?��
 		searchMap.put("PK_DAILY_TA_WORKING_DATE2", request.getParameter("PK_DAILY_TA_WORKING_DATE2"));// VO 값 => 넘겨주는 값
 		searchMap.put("PK_DAILY_TA_WORKING_DATE3", request.getParameter("PK_DAILY_TA_WORKING_DATE3"));// NO
+		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
 		searchMap.put("sawon_num", request.getParameter("sawon_num"));// NO
 		searchMap.put("option",request.getParameter("option"));
 		
@@ -330,16 +298,51 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		try {
 			day_regist_Service.saveData(dataMap);
 			result.put("Code", "0");
-			result.put("Message", "???��?��?��?��?��?��");
+			result.put("Message", "저장을 완료하였습니다");
 		} catch (Exception e) {
 			result.put("Code", "-1");
-			result.put("Message", "???��?�� ?��?��?��???��?��?��");
+			result.put("Message", "저장을 완료하지 못하였습니다");
 			e.printStackTrace();
 		}
 
 		resultMap.put("Result", result);
 		return resultMap;
 	}
+	
+	// �߰�<����x>
+		@Override
+		@RequestMapping(value = "attendance/p0001/insertData_da.do", method = { RequestMethod.GET, RequestMethod.POST })
+		@ResponseBody
+		public Map saveData_da(HttpServletRequest request, HttpServletResponse response) throws Exception {
+			request.setCharacterEncoding("utf-8");
+			Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ???��?��Daa
+			Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+
+			// ???�� Data 추출?���?
+			Enumeration enu = request.getParameterNames();
+			while (enu.hasMoreElements()) {
+				String name = (String) enu.nextElement();
+				String[] values = request.getParameterValues(name);
+				System.out.println(name);
+				System.out.println(values);
+				dataMap.put(name, values);
+			}
+
+			Map<String, String> result = new HashMap<String, String>();
+			System.out.println("1. " + dataMap);
+			try {
+				day_regist_Service.saveData_da(dataMap);
+				result.put("Code", "0");
+				result.put("Message", "저장을 완료하였습니다");
+			} catch (Exception e) {
+				result.put("Code", "-1");
+				result.put("Message", "저장을 완료하지 못하였습니다");
+				e.printStackTrace();
+			}
+
+			resultMap.put("Result", result);
+			return resultMap;
+		}
 
 	@RequestMapping(value = "common/ajaxTest", produces = "application/json", method = { RequestMethod.GET,
 			RequestMethod.POST })

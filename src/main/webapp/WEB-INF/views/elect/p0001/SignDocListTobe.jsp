@@ -19,6 +19,7 @@
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/resources/js/dynatree/ui.dynatree.css" rel="stylesheet" id="skinSheet"/>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/daterangepicker/daterangepicker.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,8 +32,25 @@
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/project9.js"></script>    
+	<script src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/datepicker/bootstrap-datepicker.js"></script> 
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/daterangepicker/moment.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/daterangepicker/daterangepicker.js"></script>
+	    
 <script>
+window.onload = function() {
+	$(function() {
+		  $("#dateRangePicker").daterangepicker({
+		  	autoUpdateInput:false, // 초기값 오늘날짜로 지정안되게하기 -> placeholder 보이게됨.
+		    opens: 'center' // 달력선택시 중앙에서 팝업
+		  }, function(start, end, label) {
+			$('#dateRangePicker').val(start.format('YYYY-MM-DD') + '   ~   ' + end.format('YYYY-MM-DD')); // autoUpdateInput:false 이기 때문에 지정해줘야함. 
+		    $('#startday').val(start.format('YYYY-MM-DD'));
+		    $('#endday').val(end.format('YYYY-MM-DD'));
+		  });
+		});
+}
+
 function fn_formSubmit(){
 	document.form1.submit();	
 }
@@ -113,24 +131,48 @@ function fn_formSubmit(){
 					    <jsp:include page="../../common/pagingforSubmit.jsp" />
 				    
 						<div class="form-group">
-							<div class="checkbox col-lg-3 pull-left">
-							 	<label class="pull-right">
-							 		<input type="checkbox" name="searchType" value="AD_TITLE" <c:if test="${fn:indexOf(searchVO.searchType, 'AD_TITLE')!=-1}">checked="checked"</c:if>/>
-		                        	제목
-		                        </label>
-							 	<label class="pull-right">
-							 		<input type="checkbox" name="searchType" value="AD_CONTENT" <c:if test="${fn:indexOf(searchVO.searchType, 'AD_CONTENT')!=-1}">checked="checked"</c:if>/>
-		                        	내용
-		                        </label>
+							<div class="row">
+								<div class="checkbox col-lg-3 pull-left">
+			                        <label class="pull-right">
+	                                	<input type="checkbox" name="searchType" value="day" <c:if test="${fn:indexOf(searchVO.searchType, 'day')!=-1}">checked="checked"</c:if>/>
+				                      	기간
+				                    </label>
+			                   </div>
+			                   <div class="input-group custom-search-form col-lg-3">
+											<div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-calendar bigger-110"></i>
+											</span>
+											<input class="form-control" type="text" name="date-range-picker" id="dateRangePicker" placeholder="날짜를 선택하세요" value="" style="width:313px;" readonly>
+											<input class="form-control" type="hidden" name="startday" id="startday" value="<c:out value="${searchVO.startday}"/>">
+											<input class="form-control" type="hidden" name="endday" id="endday" value="<c:out value="${searchVO.endday}"/>">
+											</div>
+			                                <span class="input-group-btn">
+				                                <button class="btn btn-default" onclick="fn_formSubmit()">
+				                                    <i class="fa fa-search"></i>
+				                                </button>
+				                            </span>
+		                       </div>
 		                   </div>
-		                   <div class="input-group custom-search-form col-lg-3">
-	                                <input class="form-control" placeholder="검색어를 입력하세요" type="text" name="searchKeyword" 
-	                                	   value='<c:out value="${searchVO.searchKeyword}"/>' >
-	                                <span class="input-group-btn">
-	                                <button class="btn btn-default" onclick="fn_formSubmit()">
-	                                    <i class="fa fa-search"></i>
-	                                </button>
-	                            </span>
+							<div class="row">
+								<div class="col-lg-3 pull-left">
+									<label class="pull-right">
+										<select name="searchType" id="selectbox" class="form-control">
+									        <option selected="selected" value="AD_TITLE, AD_CONTENT" <c:if test="${fn:indexOf(searchVO.searchType, 'AD_TITLE, AD_CONTENT')!=-1}">selected="selected"</c:if>>제목+내용</option>
+									        <option value="AD_TITLE" <c:if test="${fn:indexOf(searchVO.searchType, 'AD_TITLE')!=-1}">selected="selected"</c:if>>제목</option>
+									        <option value="AD_CONTENT" <c:if test="${fn:indexOf(searchVO.searchType, 'AD_CONTENT')!=-1}">selected="selected"</c:if>>내용</option>
+									    </select>
+								    </label>
+			                   </div>
+			                   <div class="input-group custom-search-form col-lg-3">
+		                                <input class="form-control" placeholder="검색어를 입력하세요" type="text" name="searchKeyword" 
+		                                	   value='<c:out value="${searchVO.searchKeyword}"/>' >
+		                                <span class="input-group-btn">
+		                                <button class="btn btn-default" onclick="fn_formSubmit()">
+		                                    <i class="fa fa-search"></i>
+		                                </button>
+		                            </span>
+		                       </div>
 	                       </div>
 						</div>
             	</div>    

@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hr.system.p0002">
+		<!-- Insa_infoEnroll -->
+		<resultMap id="p0002Result01" type="sawonVO">
+		<result property="PK_SAWON_CODE" column="PK_SAWON_CODE" />
+		<result property="SAWON_NAME" column="SAWON_NAME" />
+		<result property="SAWON_ENG_NAME" column="SAWON_ENG_NAME" />
+		<result property="SAWON_JOIN_DATE" column="SAWON_JOIN_DATE" />
+		<result property="SAWON_RESIGNATION_DATE" column="SAWON_RESIGNATION_DATE" />
+		<result property="SAWON_USER_STATUS" column="SAWON_USER_STATUS" />
+		<result property="SAWON_PASSWORD" column="SAWON_PASSWORD" />
+		<result property="SAWON_VIEW_PERMISSION" column="SAWON_VIEW_PERMISSION" />
+		<result property="SAWON_EMAIL" column="SAWON_EMAIL" />
+		<result property="FK_DEPT_CODE" column="FK_DEPT_CODE" />
+		<result property="FK_DEPT_NAME" column="FK_DEPT_NAME" />
+		<result property="RANK_NAME" column="RANK_NAME" />
+		<result property="SAWON_INT_USER_ID" column="SAWON_INT_USER_ID" />
+		<result property="SAWON_INT_DATE" column="SAWON_INT_DATE" />
+		<result property="SAWON_MOD_USER_ID" column="SAWON_MOD_USER_ID" />
+		<result property="SAWON_MOD_DATE" column="SAWON_MOD_DATE" />
+		
+			<!-- 사원의 모든 칼럼 
+				PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME, SAWON_JOIN_DATE, SAWON_RESIGNATION_DATE
+				, SAWON_USER_STATUS, SAWON_PASSWORD, SAWON_VIEW_PERMISSION, SAWON_EMAIL, FK_DEPT_CODE
+				, FK_DEPT_NAME, RANK_NAME, SAWON_INT_USER_ID, SAWON_INT_DATE, SAWON_MOD_USER_ID
+				, SAWON_MOD_DATE, 
+				
+				%참고% TO_CHAR(TO_DATE(workplace_open_date),'YYYY-MM-DD') as workplace_open_date
+			-->
+		</resultMap>
+	<select id="searchList" resultMap="p0002Result01" parameterType="java.util.Map"> 
+      <![CDATA[
+         select PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME
+		        , TO_CHAR(TO_DATE(SAWON_JOIN_DATE),'YYYY-MM-DD') as SAWON_JOIN_DATE
+		        , TO_CHAR(TO_DATE(SAWON_RESIGNATION_DATE),'YYYY-MM-DD') as SAWON_RESIGNATION_DATE
+		        , SAWON_USER_STATUS, SAWON_PASSWORD, SAWON_VIEW_PERMISSION, FK_DEPT_NAME, SAWON_EMAIL
+		        , SAWON_INT_USER_ID, SAWON_INT_DATE, SAWON_MOD_USER_ID, SAWON_MOD_DATE
+         from sawon
+      ]]>
+		 <where>
+			 PK_SAWON_CODE IS NOT NULL 
+			<!-- 
+			<if test="code != '' and code != null">
+				 and fk_workplace_code = #{code,jdbcType=VARCHAR}  
+				 and (fk_workplace_code like '%'|| #{code,jdbcType=VARCHAR} ||'%' or w.workplace_name like '%'|| #{code,jdbcType=VARCHAR} ||'%')
+				 and w.workplace_name like '%'|| #{code,jdbcType=VARCHAR} ||'%' 
+				 and fk_workplace_code like '%'|| #{code,jdbcType=VARCHAR} ||'%' 
+			</if>
+			 -->
+		</where>
+			order By PK_SAWON_CODE ASC 
+	</select>
+
+	<update id="updateData" parameterType="java.util.Map">
+		update SAWON
+		set  SAWON_NAME = #{sawon_NAME,jdbcType=VARCHAR}
+		   , SAWON_ENG_NAME = #{sawon_ENG_NAME,jdbcType=VARCHAR}
+		   , SAWON_JOIN_DATE = #{sawon_JOIN_DATE,jdbcType=VARCHAR}
+		   , SAWON_RESIGNATION_DATE = #{sawon_RESIGNATION_DATE,jdbcType=VARCHAR}
+		   , SAWON_USER_STATUS = #{sawon_USER_STATUS,jdbcType=VARCHAR}
+		   , SAWON_PASSWORD = #{sawon_PASSWORD,jdbcType=VARCHAR}
+		   , SAWON_VIEW_PERMISSION = #{sawon_VIEW_PERMISSION,jdbcType=VARCHAR}
+		   , SAWON_EMAIL = #{sawon_EMAIL,jdbcType=VARCHAR}
+		   , FK_DEPT_CODE = #{fk_DEPT_CODE,jdbcType=VARCHAR}
+		   , FK_DEPT_NAME = #{fk_DEPT_NAME,jdbcType=VARCHAR}
+		   , RANK_NAME = #{rank_NAME,jdbcType=VARCHAR}
+		   
+		   , SAWON_INT_USER_ID = #{sawon_INT_USER_ID,jdbcType=VARCHAR}
+		   , SAWON_INT_DATE = #{sawon_INT_DATE,jdbcType=TIMESTAMP}
+		   , SAWON_MOD_USER_ID = #{sawon_MOD_USER_ID,jdbcType=VARCHAR}
+		   , SAWON_MOD_DATE = #{sawon_MOD_DATE,jdbcType=TIMESTAMP}
+		   
+		where PK_SAWON_CODE = #{pk_SAWON_CODE, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="insertData" parameterType="java.util.Map">
+		insert into SAWON(PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME, SAWON_JOIN_DATE, SAWON_RESIGNATION_DATE
+							, SAWON_USER_STATUS, SAWON_PASSWORD, SAWON_VIEW_PERMISSION, SAWON_EMAIL
+							, FK_DEPT_CODE, FK_DEPT_NAME, RANK_NAME, SAWON_INT_USER_ID, SAWON_INT_DATE
+							, SAWON_MOD_USER_ID, SAWON_MOD_DATE) 
+			   values(#{pk_SAWON_CODE, jdbcType=VARCHAR},#{sawon_NAME, jdbcType=VARCHAR},#{sawon_ENG_NAME, jdbcType=VARCHAR},
+			   		  #{sawon_JOIN_DATE, jdbcType=VARCHAR},#{sawon_RESIGNATION_DATE, jdbcType=VARCHAR},#{sawon_USER_STATUS, jdbcType=VARCHAR},
+			   		  #{sawon_PASSWORD, jdbcType=VARCHAR},#{sawon_VIEW_PERMISSION, jdbcType=TIMESTAMP},#{sawon_EMAIL, jdbcType=VARCHAR},
+			   		  #{fk_DEPT_CODE, jdbcType=TIMESTAMP},#{fk_DEPT_NAME, jdbcType=VARCHAR},#{rank_NAME, jdbcType=VARCHAR},
+			   		  #{sawon_INT_USER_ID, jdbcType=VARCHAR},#{sawon_INT_DATE, jdbcType=VARCHAR},#{sawon_MOD_USER_ID, jdbcType=VARCHAR},
+			   		  #{sawon_MOD_DATE, jdbcType=VARCHAR}
+					  )
+	</insert>	
+	
+	<delete id="deleteData" parameterType="java.util.Map">
+		delete SAWON
+		where PK_SAWON_CODE = #{pk_SAWON_CODE}
+		and SAWON_NAME = #{sawon_NAME}
+	</delete>	
+	
+	<!-- Insa_personEnroll(인적정보) -->
+
+		<resultMap id="psResult01" type="Insa_personEnroll_VO">
+		<result property="pk_person_info_unique_num" column="pk_person_info_unique_num" />
+		<result property="fk_sawon_code" column="fk_sawon_code" />
+		<result property="person_info_picture" column="person_info_picture" />
+		<result property="person_info_eng_name" column="person_info_eng_name" />
+		<result property="person_info_domes_forei_pop" column="person_info_domes_forei_pop" />
+		<result property="person_info_res_reg_num" column="person_info_res_reg_num" />
+		<result property="person_info_forei_reg_num" column="person_info_forei_reg_num" />
+		<result property="person_info_gender" column="person_info_gender" />
+		<result property="person_info_date_birth" column="person_info_date_birth" />
+		<result property="person_info_tel" column="person_info_tel" />
+		<result property="person_info_emerg_call" column="person_info_emerg_call" />
+		<result property="person_info_final_edu_code" column="person_info_final_edu_code" />
+		<result property="person_info_final_edu_name" column="person_info_final_edu_name" />
+		<result property="person_info_zip" column="person_info_zip" />
+		<result property="person_info_resi_reg_address" column="person_info_resi_reg_address" />
+		<result property="person_info_detail_address" column="person_info_detail_address" />
+		<result property="person_info_eng_address" column="person_info_eng_address" />
+		<result property="person_info_email" column="person_info_email" />
+		<result property="person_info_access_card_no" column="person_info_access_card_no" />
+		<result property="person_info_head_household" column="person_info_head_household" />
+		<result property="person_info_dis_classifi" column="person_info_dis_classifi" />
+		<result property="person_info_nation_mngement" column="person_info_nation_mngement" />
+		<result property="person_info_nation_report_cd" column="person_info_nation_report_cd" />
+		<result property="person_info_nation_report_nm" column="person_info_nation_report_nm" />
+		<result property="person_info_resident_classifi" column="person_info_resident_classifi" />
+		<result property="person_info_coun_resi_code" column="person_info_coun_resi_code" />
+		<result property="person_info_coun_resi_name" column="person_info_coun_resi_name" />
+		
+		<result property="pk_sawon_code" column="pk_sawon_code" /><!-- 조건 주기 위한 칼럼 -->
+		
+		<result property="person_info_int_user_id" column="person_info_int_user_id" />
+		<result property="person_info_int_date" column="person_info_int_date" />
+		<result property="person_info_mod_user_id" column="person_info_mod_user_id" />
+		<result property="person_info_mod_date" column="person_info_mod_date" />
+		<!--
+		     Insa_personEnroll의 모든 칼럼 -> pk_sawon_code는 조건을 위해 추가
+			pk_person_info_unique_num, fk_sawon_code, person_info_picture, person_info_eng_name, person_info_domes_forei_pop
+			, person_info_res_reg_num, person_info_forei_reg_num, person_info_gender, person_info_date_birth, person_info_tel
+			, person_info_emerg_call, person_info_final_edu_code, person_info_final_edu_name, person_info_zip, person_info_resi_reg_address
+			, person_info_detail_address, person_info_eng_address, person_info_email, person_info_access_card_no, person_info_head_household
+			, person_info_dis_classifi, person_info_nation_mngement, person_info_nation_report_cd, person_info_nation_report_nm
+			, person_info_resident_classifi, person_info_coun_resi_code, person_info_coun_resi_name, pk_sawon_code, person_info_int_user_id
+			, person_info_int_date, person_info_mod_user_id, person_info_mod_date
+		 -->
+	</resultMap>
+
+	<select id="PSsearchList" resultMap="psResult01" parameterType="java.util.Map"> 
+	<!-- 지금은 조건 없이 테스트.. -->
+      <![CDATA[
+		 select p.pk_person_info_unique_num, p.fk_sawon_code, p.person_info_picture, p.person_info_eng_name, p.person_info_domes_forei_pop
+				, p.person_info_res_reg_num, p.person_info_forei_reg_num, p.person_info_gender, TO_CHAR(TO_DATE(p.person_info_date_birth),'YYYY-MM-DD') as person_info_date_birth 
+				, p.person_info_tel, p.person_info_emerg_call, p.person_info_final_edu_code, p.person_info_final_edu_name, p.person_info_zip, p.person_info_resi_reg_address 
+				, p.person_info_detail_address, p.person_info_eng_address, p.person_info_email, p.person_info_access_card_no, p.person_info_head_household 
+				, p.person_info_dis_classifi, p.person_info_nation_mngement, p.person_info_nation_report_cd, p.person_info_nation_report_nm, p.person_info_resident_classifi
+				, p.person_info_coun_resi_code, p.person_info_coun_resi_name, s.pk_sawon_code, p.person_info_int_user_id, p.person_info_int_date, p.person_info_mod_user_id
+				, p.person_info_mod_date
+				
+         from   PERSON_INFO p, SAWON s
+      ]]>
+		<where>
+			p.fk_sawon_code = s.pk_sawon_code
+			<!-- 
+				<if test=" p_id != ''  and  p_id != null">
+					fk_sawon_code = #{p_id}
+				</if>
+			 -->
+		</where>
+	</select>
+
+	<update id="PSupdateData" parameterType="java.util.Map">
+		update PERSON_INFO
+		set pk_person_info_unique_num = #{pk_person_info_unique_num,jdbcType=VARCHAR}
+		   , fk_sawon_code = #{fk_sawon_code,jdbcType=VARCHAR}
+		   , person_info_picture = #{person_info_picture,jdbcType=VARCHAR}
+		   , person_info_eng_name = #{person_info_eng_name,jdbcType=VARCHAR}
+		   , person_info_domes_forei_pop = #{person_info_domes_forei_pop,jdbcType=VARCHAR}
+		   , person_info_res_reg_num = #{person_info_res_reg_num,jdbcType=VARCHAR}
+		   , person_info_forei_reg_num = #{person_info_forei_reg_num,jdbcType=VARCHAR}
+		   , person_info_gender = #{person_info_gender,jdbcType=VARCHAR}
+		   , person_info_date_birth = #{person_info_date_birth,jdbcType=VARCHAR}
+		   , person_info_tel = #{person_info_tel,jdbcType=VARCHAR}
+		   , person_info_emerg_call = #{person_info_emerg_call,jdbcType=VARCHAR}
+		   , person_info_final_edu_code = #{person_info_final_edu_code,jdbcType=VARCHAR}
+		   , person_info_final_edu_name = #{person_info_final_edu_name,jdbcType=VARCHAR}
+		   , person_info_zip = #{person_info_zip,jdbcType=VARCHAR}
+		   , person_info_resi_reg_address = #{person_info_resi_reg_address,jdbcType=VARCHAR}
+		   , person_info_detail_address = #{person_info_detail_address,jdbcType=VARCHAR}
+		   , person_info_eng_address = #{person_info_eng_address,jdbcType=VARCHAR}
+		   , person_info_email = #{person_info_email,jdbcType=VARCHAR}
+		   , person_info_access_card_no = #{person_info_access_card_no,jdbcType=VARCHAR}
+		   , person_info_head_household = #{person_info_head_household,jdbcType=VARCHAR}
+		   , person_info_dis_classifi = #{person_info_dis_classifi,jdbcType=VARCHAR}
+		   , person_info_nation_mngement = #{person_info_nation_mngement,jdbcType=VARCHAR}
+		   , person_info_nation_report_cd = #{person_info_nation_report_cd,jdbcType=VARCHAR}
+		   , person_info_nation_report_nm = #{person_info_nation_report_nm,jdbcType=VARCHAR}
+		   , person_info_resident_classifi = #{person_info_resident_classifi,jdbcType=VARCHAR}
+		   , person_info_coun_resi_code = #{person_info_coun_resi_code,jdbcType=VARCHAR}
+		   , person_info_coun_resi_name = #{person_info_coun_resi_name,jdbcType=VARCHAR}
+		   
+		   , person_info_int_user_id = #{person_info_int_user_id,jdbcType=VARCHAR}
+		   , person_info_int_date = #{person_info_int_date,jdbcType=TIMESTAMP}
+		   , person_info_mod_user_id = #{person_info_mod_user_id,jdbcType=VARCHAR}
+		   , person_info_mod_date = #{person_info_mod_date,jdbcType=TIMESTAMP}
+		   
+		where fk_sawon_code = #{fk_sawon_code, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="PSinsertData" parameterType="java.util.Map">
+				
+		insert into PERSON_INFO(pk_person_info_unique_num, fk_sawon_code, person_info_picture, person_info_eng_name, person_info_domes_forei_pop
+								, person_info_res_reg_num, person_info_forei_reg_num, person_info_gender, person_info_date_birth, person_info_tel
+								, person_info_emerg_call, person_info_final_edu_code, person_info_final_edu_name, person_info_zip, person_info_resi_reg_address
+								, person_info_detail_address, person_info_eng_address, person_info_email, person_info_access_card_no, person_info_head_household
+								, person_info_dis_classifi, person_info_nation_mngement, person_info_nation_report_cd, person_info_nation_report_nm
+								, person_info_resident_classifi, person_info_coun_resi_code, person_info_coun_resi_name, person_info_int_user_id
+								, person_info_int_date, person_info_mod_user_id, person_info_mod_date
+								) 
+			   values(#{pk_person_info_unique_num, jdbcType=VARCHAR},#{fk_sawon_code, jdbcType=VARCHAR},#{person_info_picture, jdbcType=VARCHAR},#{person_info_eng_name, jdbcType=VARCHAR},
+			   		  #{person_info_domes_forei_pop, jdbcType=VARCHAR},#{person_info_res_reg_num, jdbcType=VARCHAR},#{person_info_forei_reg_num, jdbcType=VARCHAR},#{person_info_gender, jdbcType=VARCHAR},
+			   		  #{person_info_date_birth, jdbcType=VARCHAR},#{person_info_tel, jdbcType=VARCHAR},#{person_info_emerg_call, jdbcType=VARCHAR},#{person_info_final_edu_code, jdbcType=VARCHAR},
+			   		  #{person_info_final_edu_name, jdbcType=VARCHAR},#{person_info_zip, jdbcType=VARCHAR},#{person_info_resi_reg_address, jdbcType=VARCHAR},#{person_info_detail_address, jdbcType=VARCHAR},
+			   		  #{person_info_eng_address, jdbcType=VARCHAR},#{person_info_email, jdbcType=VARCHAR},#{person_info_access_card_no, jdbcType=VARCHAR},#{person_info_head_household, jdbcType=VARCHAR},
+			   		  #{person_info_dis_classifi, jdbcType=VARCHAR},#{person_info_nation_mngement, jdbcType=VARCHAR},#{person_info_nation_report_cd, jdbcType=VARCHAR},#{person_info_nation_report_nm, jdbcType=VARCHAR},
+			   		  #{person_info_resident_classifi, jdbcType=VARCHAR},#{person_info_coun_resi_code, jdbcType=VARCHAR},#{person_info_coun_resi_name, jdbcType=VARCHAR},#{person_info_int_user_id, jdbcType=VARCHAR},
+			   		  #{person_info_int_date, jdbcType=TIMESTAMP},#{person_info_mod_user_id, jdbcType=VARCHAR},#{person_info_mod_date, jdbcType=TIMESTAMP}
+					  )
+	</insert>
+	
+	<delete id="PSdeleteData" parameterType="java.util.Map">
+		delete PERSON_INFO
+		where fk_sawon_code = #{fk_sawon_code}
+		and person_info_res_reg_num = #{person_info_res_reg_num}
+	</delete>	
+	
+	<!-- Insa_emEnroll(재직정보)-->
+
+		<resultMap id="emResult01" type="Insa_emEnroll_VO">
+		<result property="pk_em_info_uniq_num" column="pk_em_info_uniq_num" />
+		<result property="fk_sawon_code" column="fk_sawon_code" />
+		<result property="em_info_join_date" column="em_info_join_date" />
+		<result property="em_info_resi_date" column="em_info_resi_date" />
+		<result property="em_info_offi_division" column="em_info_offi_division" />
+		<result property="em_info_date_retire" column="em_info_date_retire" />
+		<result property="em_info_prob_appli" column="em_info_prob_appli" />
+		<result property="em_info_prob_expi_date" column="em_info_prob_expi_date" />
+		<result property="em_info_includ_work_peri" column="em_info_includ_work_peri" />
+		<result property="em_info_lea_absence_o" column="em_info_lea_absence_o" />
+		<result property="em_info_lea_absence_t" column="em_info_lea_absence_t" />
+		<result property="fk_dept_code" column="fk_dept_code" />
+		<result property="dept_name" column="dept_name" />
+		<result property="em_info_emply_form_cd" column="em_info_emply_form_cd" />
+		<result property="em_info_emply_form_nm" column="em_info_emply_form_nm" />
+		<result property="fk_occupation_code" column="fk_occupation_code" />
+		<result property="occupation_name" column="occupation_name" />
+		<result property="fk_pay_form_code" column="fk_pay_form_code" />
+		<result property="pay_form_name" column="pay_form_name" />
+		<result property="em_info_project_code" column="em_info_project_code" />
+		<result property="em_info_project_name" column="em_info_project_name" />
+		<result property="em_info_work_group_cd" column="em_info_work_group_cd" />
+		<result property="em_info_work_group_nm" column="em_info_work_group_nm" />
+		<result property="fk_rank_code" column="fk_rank_code" />
+		<result property="rank_name" column="rank_name" />
+		<result property="em_info_position_code" column="em_info_position_code" />
+		<result property="em_info_position_name" column="em_info_position_name" />
+		<result property="em_info_duty_code" column="em_info_duty_code" />
+		<result property="em_info_duty_name" column="em_info_duty_name" />
+		<result property="em_info_classifi_code" column="em_info_classifi_code" />
+		<result property="em_info_classifi_name" column="em_info_classifi_name" />
+		<result property="em_info_retire_reason_code" column="em_info_retire_reason_code" />
+		<result property="em_info_retire_reason_name" column="em_info_retire_reason_name" />
+		<result property="em_info_attri" column="em_info_attri" />
+		
+		<result property="pk_sawon_code" column="pk_sawon_code" /><!-- 조건 주기 위한 칼럼 -->
+		<result property="pk_dept_code" column="pk_dept_code" /><!-- 조건 주기 위한 칼럼 -->
+		
+		<result property="em_info_int_user_id" column="em_info_int_user_id" />
+		<result property="em_info_int_date" column="em_info_int_date" />
+		<result property="em_info_mod_user_id" column="em_info_mod_user_id" />
+		<result property="em_info_mod_date" column="em_info_mod_date" />
+		<!--
+		     Insa_emEnroll의 모든 칼럼 -> pk_sawon_code는 조건을 위해 추가
+			pk_em_info_uniq_num, fk_sawon_code, em_info_join_date, em_info_resi_date, em_info_offi_division, em_info_date_retire
+			, em_info_prob_appli, em_info_prob_expi_date, em_info_includ_work_peri, em_info_lea_absence_o, em_info_lea_absence_t
+			, fk_dept_code, dept_name, em_info_emply_form_cd, em_info_emply_form_nm, fk_occupation_code, occupation_name
+			, fk_pay_form_code, pay_form_name, em_info_project_code, em_info_project_name, em_info_work_group_cd
+			, em_info_work_group_nm, fk_rank_code, rank_name, em_info_position_code, em_info_position_name, em_info_duty_code
+			, em_info_duty_name, em_info_classifi_code, em_info_classifi_name, em_info_retire_reason_code, em_info_retire_reason_name
+			, em_info_attri, pk_sawon_code, pk_dept_code, em_info_int_user_id, em_info_int_date, em_info_mod_user_id, em_info_mod_date
+		 -->
+	</resultMap>
+
+	<select id="EMsearchList" resultMap="emResult01" parameterType="java.util.Map"> 
+	<!-- 지금은 조건 없이 테스트.. -->
+      <![CDATA[
+		 select e.pk_em_info_uniq_num, e.fk_sawon_code
+		 		, TO_CHAR(TO_DATE(e.em_info_join_date),'YYYY-MM-DD') as em_info_join_date
+		 		, TO_CHAR(TO_DATE(e.em_info_resi_date),'YYYY-MM-DD') as em_info_resi_date, e.em_info_offi_division
+		 		, TO_CHAR(TO_DATE(e.em_info_date_retire),'YYYY-MM-DD') as em_info_date_retire
+				, e.em_info_prob_appli, TO_CHAR(TO_DATE(e.em_info_prob_expi_date),'YYYY-MM-DD') as em_info_prob_expi_date
+				, e.em_info_includ_work_peri, TO_CHAR(TO_DATE(e.em_info_lea_absence_o),'YYYY-MM-DD') as em_info_lea_absence_o
+				, TO_CHAR(TO_DATE(e.em_info_lea_absence_t),'YYYY-MM-DD') as em_info_lea_absence_t
+				, e.fk_dept_code, e.dept_name, e.em_info_emply_form_cd, e.em_info_emply_form_nm, e.fk_occupation_code, e.occupation_name 
+				, e.fk_pay_form_code, e.pay_form_name, e.em_info_project_code, e.em_info_project_name, e.em_info_work_group_cd 
+				, e.em_info_work_group_nm, e.fk_rank_code, e.rank_name, e.em_info_position_code, e.em_info_position_name
+				, e.em_info_duty_code, e.em_info_duty_name, e.em_info_classifi_code, e.em_info_classifi_name, e.em_info_retire_reason_code
+				, e.em_info_retire_reason_name, e.em_info_attri, s.pk_sawon_code, d.pk_dept_code
+				, e.em_info_int_user_id, e.em_info_int_date, e.em_info_mod_user_id, e.em_info_mod_date
+				
+         from   EM_INFO e, SAWON s, DEPT d
+      ]]>
+		<where>
+			e.fk_sawon_code = s.pk_sawon_code
+			and e.fk_dept_code = d.pk_dept_code
+			<!-- 
+				<if test=" p_id != ''  and  p_id != null">
+					fk_sawon_code = #{p_id}
+				</if>
+			 -->
+		</where>
+	</select>
+
+	<update id="EMupdateData" parameterType="java.util.Map">
+		update EM_INFO
+		set  pk_em_info_uniq_num = #{pk_em_info_uniq_num,jdbcType=VARCHAR}
+		   , fk_sawon_code = #{fk_sawon_code,jdbcType=VARCHAR}
+		   , em_info_join_date = #{em_info_join_date,jdbcType=VARCHAR}
+		   , em_info_resi_date = #{em_info_resi_date,jdbcType=VARCHAR}
+		   , em_info_offi_division = #{em_info_offi_division,jdbcType=VARCHAR}
+		   , em_info_date_retire = #{em_info_date_retire,jdbcType=VARCHAR}
+		   , em_info_prob_appli = #{em_info_prob_appli,jdbcType=VARCHAR}
+		   , em_info_prob_expi_date = #{em_info_prob_expi_date,jdbcType=VARCHAR}
+		   , em_info_includ_work_peri = #{em_info_includ_work_peri,jdbcType=VARCHAR}
+		   , em_info_lea_absence_o = #{em_info_lea_absence_o,jdbcType=VARCHAR}
+		   , em_info_lea_absence_t = #{em_info_lea_absence_t,jdbcType=VARCHAR}
+		   , fk_dept_code = #{fk_dept_code,jdbcType=VARCHAR}
+		   , dept_name = #{dept_name,jdbcType=VARCHAR}
+		   , em_info_emply_form_cd = #{em_info_emply_form_cd,jdbcType=VARCHAR}
+		   , em_info_emply_form_nm = #{em_info_emply_form_nm,jdbcType=VARCHAR}
+		   , fk_occupation_code = #{fk_occupation_code,jdbcType=VARCHAR}
+		   , occupation_name = #{occupation_name,jdbcType=VARCHAR}
+		   , fk_pay_form_code = #{fk_pay_form_code,jdbcType=VARCHAR}
+		   , pay_form_name = #{pay_form_name,jdbcType=VARCHAR}
+		   , em_info_project_code = #{em_info_project_code,jdbcType=VARCHAR}
+		   , em_info_project_name = #{em_info_project_name,jdbcType=VARCHAR}
+		   , em_info_work_group_cd = #{em_info_work_group_cd,jdbcType=VARCHAR}
+		   , em_info_work_group_nm = #{em_info_work_group_nm,jdbcType=VARCHAR}
+		   , fk_rank_code = #{fk_rank_code,jdbcType=VARCHAR}
+		   , rank_name = #{rank_name,jdbcType=VARCHAR}
+		   , em_info_position_code = #{em_info_position_code,jdbcType=VARCHAR}
+		   , em_info_position_name = #{em_info_position_name,jdbcType=VARCHAR}
+		   , em_info_duty_code = #{em_info_duty_code,jdbcType=VARCHAR}
+		   , em_info_duty_name = #{em_info_duty_name,jdbcType=VARCHAR}
+		   , em_info_classifi_code = #{em_info_classifi_code,jdbcType=VARCHAR}
+		   , em_info_classifi_name = #{em_info_classifi_name,jdbcType=VARCHAR}
+		   , em_info_retire_reason_code = #{em_info_retire_reason_code,jdbcType=VARCHAR}
+		   , em_info_retire_reason_name = #{em_info_retire_reason_name,jdbcType=VARCHAR}
+		   , em_info_attri = #{em_info_attri,jdbcType=VARCHAR}
+
+		   , em_info_int_user_id = #{em_info_int_user_id,jdbcType=VARCHAR}
+		   , em_info_int_date = #{em_info_int_date,jdbcType=TIMESTAMP}
+		   , em_info_mod_user_id = #{em_info_mod_user_id,jdbcType=VARCHAR}
+		   , em_info_mod_date = #{em_info_mod_date,jdbcType=TIMESTAMP}
+		   
+		where fk_sawon_code = #{fk_sawon_code, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="EMinsertData" parameterType="java.util.Map">
+
+		insert into EM_INFO(pk_em_info_uniq_num, fk_sawon_code, em_info_join_date, em_info_resi_date, em_info_offi_division
+								, em_info_date_retire, em_info_prob_appli, em_info_prob_expi_date, em_info_includ_work_peri, em_info_lea_absence_o
+								, em_info_lea_absence_t, fk_dept_code, dept_name, em_info_emply_form_cd, em_info_emply_form_nm
+								, fk_occupation_code, occupation_name, fk_pay_form_code, pay_form_name, em_info_project_code, em_info_project_name
+								, em_info_work_group_cd, em_info_work_group_nm, fk_rank_code, rank_name, em_info_position_code, em_info_position_name
+								, em_info_duty_code, em_info_duty_name, em_info_classifi_code, em_info_classifi_name, em_info_retire_reason_code
+								, em_info_retire_reason_name, em_info_attri, em_info_int_user_id, em_info_int_date, em_info_mod_user_id, em_info_mod_date
+								) 
+			   values(#{pk_em_info_uniq_num, jdbcType=VARCHAR},#{fk_sawon_code, jdbcType=VARCHAR},#{em_info_join_date, jdbcType=VARCHAR},#{em_info_resi_date, jdbcType=VARCHAR},
+			   		  #{em_info_offi_division, jdbcType=VARCHAR},#{em_info_date_retire, jdbcType=VARCHAR},#{em_info_prob_appli, jdbcType=VARCHAR},#{em_info_prob_expi_date, jdbcType=VARCHAR},
+			   		  #{em_info_includ_work_peri, jdbcType=VARCHAR},#{em_info_lea_absence_o, jdbcType=VARCHAR},#{em_info_lea_absence_t, jdbcType=VARCHAR},#{fk_dept_code, jdbcType=VARCHAR},
+			   		  #{dept_name, jdbcType=VARCHAR},#{em_info_emply_form_cd, jdbcType=VARCHAR},#{em_info_emply_form_nm, jdbcType=VARCHAR},#{fk_occupation_code, jdbcType=VARCHAR},
+			   		  #{occupation_name, jdbcType=VARCHAR},#{fk_pay_form_code, jdbcType=VARCHAR},#{pay_form_name, jdbcType=VARCHAR},#{em_info_project_code, jdbcType=VARCHAR},
+			   		  #{em_info_project_name, jdbcType=VARCHAR},#{em_info_work_group_cd, jdbcType=VARCHAR},#{em_info_work_group_nm, jdbcType=VARCHAR},#{fk_rank_code, jdbcType=VARCHAR},
+			   		  #{rank_name, jdbcType=VARCHAR},#{em_info_position_code, jdbcType=VARCHAR},#{em_info_position_name, jdbcType=VARCHAR},
+			   		  #{em_info_duty_code, jdbcType=VARCHAR},#{em_info_duty_name, jdbcType=VARCHAR},#{em_info_classifi_code, jdbcType=VARCHAR},
+			   		  #{em_info_classifi_name, jdbcType=VARCHAR},#{em_info_retire_reason_code, jdbcType=VARCHAR},#{em_info_retire_reason_name, jdbcType=VARCHAR},
+			   		  #{em_info_attri, jdbcType=VARCHAR},#{em_info_int_user_id, jdbcType=VARCHAR},#{em_info_int_date, jdbcType=TIMESTAMP},
+			   		  #{em_info_mod_user_id, jdbcType=VARCHAR},#{em_info_mod_date, jdbcType=TIMESTAMP}
+					  )
+	</insert>
+	
+	<delete id="EMdeleteData" parameterType="java.util.Map">
+		delete EM_INFO
+		where fk_sawon_code = #{fk_sawon_code}
+		and em_info_join_date = #{em_info_join_date}
+	</delete>	
+	
+	<!-- Insa_salEnroll(급여정보) -->
+
+		<resultMap id="salResult01" type="Insa_salEnroll_VO">
+		<result property="pk_sal_info_unique_num" column="pk_sal_info_unique_num" />
+		<result property="fk_sawon_code" column="fk_sawon_code" />
+		<result property="fk_hobong_code" column="fk_hobong_code" />
+		<result property="sal_info_acc_type_code" column="sal_info_acc_type_code" />
+		<result property="sal_info_acc_type_name" column="sal_info_acc_type_name" />
+		<result property="sal_info_trans_amount_o_code" column="sal_info_trans_amount_o_code" />
+		<result property="sal_info_trans_amount_o" column="sal_info_trans_amount_o" />
+		<result property="sal_info_acc_num_one" column="sal_info_acc_num_one" />
+		<result property="sal_info_acc_hold_one" column="sal_info_acc_hold_one" />
+		<result property="sal_info_trans_amount_t_code" column="sal_info_trans_amount_t_code" />
+		<result property="sal_info_trans_amount_t" column="sal_info_trans_amount_t" />
+		<result property="sal_info_acc_num_two" column="sal_info_acc_num_two" />
+		<result property="sal_info_acc_hold_two" column="sal_info_acc_hold_two" />
+		<result property="sal_info_spouse_ded" column="sal_info_spouse_ded" />
+		<result property="sal_info_deduction" column="sal_info_deduction" />
+		<result property="sal_info_under_age_twen" column="sal_info_under_age_twen" />
+		<result property="sal_info_depend_60years_older" column="sal_info_depend_60years_older" />
+		<result property="sal_info_disabled_person" column="sal_info_disabled_person" />
+		<result property="sal_info_reci_foster_child" column="sal_info_reci_foster_child" />
+		<result property="sal_info_multi_child_ded" column="sal_info_multi_child_ded" />
+		
+		<result property="pk_sawon_code" column="pk_sawon_code" /><!-- 조건 주기 위한 칼럼 -->
+		
+		<result property="sal_info_int_user_id" column="sal_info_int_user_id" />
+		<result property="sal_info_int_date" column="sal_info_int_date" />
+		<result property="sal_info_mod_user_id" column="sal_info_mod_user_id" />
+		<result property="sal_info_mod_date" column="sal_info_mod_date" />
+		<!--
+		     Insa_salEnroll의 모든 칼럼 -> pk_sawon_code는 조건을 위해 추가
+			pk_sal_info_unique_num, fk_sawon_code, fk_hobong_code, sal_info_acc_type_code, sal_info_acc_type_name
+			, sal_info_trans_amount_o_code, sal_info_trans_amount_o,  sal_info_acc_num_one, sal_info_acc_hold_one
+			, sal_info_trans_amount_t_code, sal_info_trans_amount_t,  sal_info_acc_num_two, sal_info_acc_hold_two
+			, sal_info_spouse_ded, sal_info_deduction, sal_info_under_age_twen, sal_info_depend_60years_older
+			, sal_info_disabled_person, sal_info_reci_foster_child, sal_info_multi_child_ded, pk_sawon_code
+			, sal_info_int_user_id, sal_info_int_date, sal_info_mod_user_id, sal_info_mod_date
+		 -->
+	</resultMap>
+
+	<select id="SALsearchList" resultMap="salResult01" parameterType="java.util.Map"> 
+	<!-- 지금은 조건 없이 테스트.. -->
+      <![CDATA[
+		 select i.pk_sal_info_unique_num, i.fk_sawon_code, i.fk_hobong_code, i.sal_info_acc_type_code, i.sal_info_acc_type_name
+				, i.sal_info_trans_amount_o_code, i.sal_info_trans_amount_o,  i.sal_info_acc_num_one, i.sal_info_acc_hold_one
+				, i.sal_info_trans_amount_t_code, i.sal_info_trans_amount_t,  i.sal_info_acc_num_two, i.sal_info_acc_hold_two
+				, i.sal_info_spouse_ded, i.sal_info_deduction, i.sal_info_under_age_twen, i.sal_info_depend_60years_older
+				, i.sal_info_disabled_person, i.sal_info_reci_foster_child, i.sal_info_multi_child_ded, s.pk_sawon_code
+				, i.sal_info_int_user_id, i.sal_info_int_date, i.sal_info_mod_user_id, i.sal_info_mod_date
+				
+         from   SAL_INFO i, SAWON s
+      ]]>
+		<where>
+			i.fk_sawon_code = s.pk_sawon_code
+			<!-- 
+				<if test=" p_id != ''  and  p_id != null">
+					fk_sawon_code = #{p_id}
+				</if>
+			 -->
+		</where>
+	</select>
+
+	<update id="SALupdateData" parameterType="java.util.Map">
+
+		update SAL_INFO
+		set pk_sal_info_unique_num = #{pk_sal_info_unique_num,jdbcType=VARCHAR}
+		   , fk_sawon_code = #{fk_sawon_code,jdbcType=VARCHAR}
+		   , fk_hobong_code = #{fk_hobong_code,jdbcType=VARCHAR}
+		   , sal_info_acc_type_code = #{sal_info_acc_type_code,jdbcType=VARCHAR}
+		   , sal_info_acc_type_name = #{sal_info_acc_type_name,jdbcType=VARCHAR}
+		   , sal_info_trans_amount_o_code = #{sal_info_trans_amount_o_code,jdbcType=VARCHAR}
+		   , sal_info_trans_amount_o = #{sal_info_trans_amount_o,jdbcType=VARCHAR}
+		   , sal_info_acc_num_one = #{sal_info_acc_num_one,jdbcType=VARCHAR}
+		   , sal_info_acc_hold_one = #{sal_info_acc_hold_one,jdbcType=VARCHAR}
+		   , sal_info_trans_amount_t_code = #{sal_info_trans_amount_t_code,jdbcType=VARCHAR}
+		   , sal_info_trans_amount_t = #{sal_info_trans_amount_t,jdbcType=VARCHAR}
+		   , sal_info_acc_num_two = #{sal_info_acc_num_two,jdbcType=VARCHAR}
+		   , sal_info_acc_hold_two = #{sal_info_acc_hold_two,jdbcType=VARCHAR}
+		   , sal_info_spouse_ded = #{sal_info_spouse_ded,jdbcType=VARCHAR}
+		   , sal_info_deduction = #{sal_info_deduction,jdbcType=VARCHAR}
+		   , sal_info_under_age_twen = #{sal_info_under_age_twen,jdbcType=VARCHAR}
+		   , sal_info_depend_60years_older = #{sal_info_depend_60years_older,jdbcType=VARCHAR}
+		   , sal_info_disabled_person = #{sal_info_disabled_person,jdbcType=VARCHAR}
+		   , sal_info_reci_foster_child = #{sal_info_reci_foster_child,jdbcType=VARCHAR}
+		   , sal_info_multi_child_ded = #{sal_info_multi_child_ded,jdbcType=VARCHAR}
+		   
+		   , sal_info_int_user_id = #{sal_info_int_user_id,jdbcType=VARCHAR}
+		   , sal_info_int_date = #{sal_info_int_date,jdbcType=TIMESTAMP}
+		   , sal_info_mod_user_id = #{sal_info_mod_user_id,jdbcType=VARCHAR}
+		   , sal_info_mod_date = #{sal_info_mod_date,jdbcType=TIMESTAMP}
+		   
+		where fk_sawon_code = #{fk_sawon_code, jdbcType=VARCHAR}
+	</update>	
+	
+	<insert id="SALinsertData" parameterType="java.util.Map">
+
+		insert into SAL_INFO(pk_sal_info_unique_num, fk_sawon_code, fk_hobong_code, sal_info_acc_type_code, sal_info_acc_type_name
+								, sal_info_trans_amount_o_code, sal_info_trans_amount_o, sal_info_acc_num_one, sal_info_acc_hold_one
+								, sal_info_trans_amount_t_code, sal_info_trans_amount_t, sal_info_acc_num_two, sal_info_acc_hold_two
+								, sal_info_spouse_ded, sal_info_deduction, sal_info_under_age_twen, sal_info_depend_60years_older
+								, sal_info_disabled_person, sal_info_reci_foster_child, sal_info_multi_child_ded
+								, sal_info_int_user_id, sal_info_int_date, sal_info_mod_user_id, sal_info_mod_date
+								) 
+			   values(#{pk_sal_info_unique_num, jdbcType=VARCHAR},#{fk_sawon_code, jdbcType=VARCHAR},#{fk_hobong_code, jdbcType=VARCHAR},#{sal_info_acc_type_code, jdbcType=VARCHAR},
+			   		  #{sal_info_acc_type_name, jdbcType=VARCHAR},#{sal_info_trans_amount_o_code, jdbcType=VARCHAR},#{sal_info_trans_amount_o, jdbcType=VARCHAR},#{sal_info_acc_num_one, jdbcType=VARCHAR},
+			   		  #{sal_info_acc_hold_one, jdbcType=VARCHAR},#{sal_info_trans_amount_t_code, jdbcType=VARCHAR},#{sal_info_trans_amount_t, jdbcType=VARCHAR},#{sal_info_acc_num_two, jdbcType=VARCHAR},
+			   		  #{sal_info_acc_hold_two, jdbcType=VARCHAR},#{sal_info_spouse_ded, jdbcType=VARCHAR},#{sal_info_deduction, jdbcType=VARCHAR},#{sal_info_under_age_twen, jdbcType=VARCHAR},
+			   		  #{sal_info_depend_60years_older, jdbcType=VARCHAR},#{sal_info_disabled_person, jdbcType=VARCHAR},#{sal_info_reci_foster_child, jdbcType=VARCHAR},
+			   		  #{sal_info_multi_child_ded, jdbcType=VARCHAR},#{sal_info_int_user_id, jdbcType=VARCHAR},#{sal_info_int_date, jdbcType=TIMESTAMP},#{sal_info_mod_user_id, jdbcType=VARCHAR},
+			   		  #{sal_info_mod_date, jdbcType=TIMESTAMP}
+					  )
+	</insert>
+	
+	<delete id="SALdeleteData" parameterType="java.util.Map">
+		delete SAL_INFO
+		where fk_sawon_code = #{fk_sawon_code}
+		and sal_info_acc_hold_one = #{sal_info_acc_hold_one}
+	</delete>	
+	
+</mapper>

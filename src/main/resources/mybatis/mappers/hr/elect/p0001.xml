@@ -13,11 +13,28 @@
 	        <if test="searchExt1!='signed'">AND SS.APPROVAL_SSRESULT=0 AND SS.APPROVAL_SSSTEP=SD.AD_DOCSTEP</if>
 	    </if>        
         WHERE SD.AD_DELETEFLAG='N' -- AND SD.AD_DOCSTATUS IN (1,2)
+        <if test="searchType=='day'">
+	                <![CDATA[
+					   and (
+					   	to_date(SD.AD_INT_DATE,'yyyy.mm.dd hh24:mi') >=to_date(#{startday}, 'yyyy.mm.dd hh24:mi' )
+					    and to_date(SD.AD_INT_DATE,'yyyy.mm.dd hh24:mi') < to_date(#{endday}, 'yyyy.mm.dd hh24:mi')
+					    )
+					]]>
+        </if>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
-            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-                 ${item} LIKE '%'||#{searchKeyword}||'%'
-            </foreach>
-        </if>               
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" AND " open="AND (" close=")">
+					<if test="item!='day'">
+						${item} LIKE '%'||#{searchKeyword}||'%'
+					</if>
+					<if test="item=='day'">
+						<![CDATA[
+						   	to_date(SD.AD_INT_DATE,'yyyy.mm.dd hh24:mi') >=to_date(#{startday}, 'yyyy.mm.dd hh24:mi' )
+						    and to_date(SD.AD_INT_DATE,'yyyy.mm.dd hh24:mi') < to_date(#{endday}, 'yyyy.mm.dd hh24:mi')
+						]]>
+					</if>
+			</foreach>
+        </if>
+
     </sql>
 
     <select id="selectSignDocCount" resultType="Integer" parameterType="project.common.SearchVO">
@@ -49,12 +66,27 @@
 	        <if test="searchExt1==2">AND SD.AD_DOCSTATUS IN (1,2)</if>        
 	        <if test="searchExt1!=2">AND SD.AD_DOCSTATUS=${searchExt1}</if>        
         </if>        
-        
+         <if test="searchType=='day,AD_TITLE, AD_CONTENT'">
+	                <![CDATA[
+					   and (
+					   	to_date(SD.AD_INT_DATE,'yyyy.mm.dd hh24:mi') >=to_date(#{startday}, 'yyyy.mm.dd hh24:mi' )
+					    and to_date(SD.AD_INT_DATE,'yyyy.mm.dd hh24:mi') < to_date(#{endday}, 'yyyy.mm.dd hh24:mi')
+					    )
+					]]>
+        </if>
         <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
-            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-                 ${item} LIKE '%'||#{searchKeyword}||'%'
-            </foreach>
-        </if>               
+            <foreach item="item" index="index" collection="searchTypeArr" separator=" AND " open="AND (" close=")">
+					<if test="item!='day'">
+						${item} LIKE '%'||#{searchKeyword}||'%'
+					</if>
+					<if test="item=='day'">
+						<![CDATA[
+						   	to_date(SD.AD_INT_DATE,'yyyy.mm.dd hh24:mi') >=to_date(#{startday}, 'yyyy.mm.dd hh24:mi' )
+						    and to_date(SD.AD_INT_DATE,'yyyy.mm.dd hh24:mi') < to_date(#{endday}, 'yyyy.mm.dd hh24:mi')
+						]]>
+					</if>
+			</foreach>
+        </if>         
     </sql>
 
     <select id="selectSignDocTobeCount" resultType="Integer" parameterType="project.common.SearchVO">
@@ -183,6 +215,17 @@
     </delete>
   
 	<!-- 결재 -->    
+	<update id="updateSign2" parameterType="hr.elect.p0001.vo.SignVO" >  
+        UPDATE 
+		(SELECT APPROVAL_SSRESULT, APPROVAL_SIGN_DATE, APPROVAL_SSCOMMENT
+		FROM AD SD, APPROVAL SS
+		WHERE SD.PK_AD_NUM=SS.FK_AD_NUM
+		AND SD.AD_DOCSTEP<![CDATA[<=]]>SS.APPROVAL_SSSTEP
+		AND SS.FK_AD_NUM=#{PK_AD_NUM, jdbcType=VARCHAR} 
+		)
+		SET APPROVAL_SSRESULT= #{APPROVAL_SSRESULT}, APPROVAL_SIGN_DATE=to_char(sysdate,'yyyy.mm.dd hh24:mi'), APPROVAL_SSCOMMENT= #{APPROVAL_SSCOMMENT}
+    </update>
+	
     <update id="updateSign" parameterType="hr.elect.p0001.vo.SignVO" >  
         UPDATE 
 		(SELECT APPROVAL_SSRESULT, APPROVAL_SIGN_DATE, APPROVAL_SSCOMMENT

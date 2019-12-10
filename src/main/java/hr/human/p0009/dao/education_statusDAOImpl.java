@@ -39,6 +39,13 @@ public class education_statusDAOImpl implements education_statusDAO {
       return list;
    }
    
+   @Override
+   public List<education_statusVO> searchList4(Map<String, Object> searchMap) throws DataAccessException {
+      List<education_statusVO> list = sqlSession.selectList("hr.human.p0009.searchList4", searchMap);
+      return list;
+   }
+ 
+   
    
     @Override
    public void insertData(Map<String, String> row) throws DataAccessException {

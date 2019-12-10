@@ -139,12 +139,12 @@
 
 <body  onload='PageLoad()'>
       
-        <div class="row">
-		<div class="col-lg-12">        <!-- 해당 메뉴의 아이콘 -->        <!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
-			<h1 class="page-header"><i class="fa fa-users fa-fw"></i>교육현황</h1>
-		</div>
-		<!-- /.col-lg-12 -->
-	</div>
+         <div class="row">
+                <div class="col-lg-12">
+                <h1 class="page-header"><i class="fa fa-users fa-fw"></i><s:message code="main.per9"/></h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
   
     
         

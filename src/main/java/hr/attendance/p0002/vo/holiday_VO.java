@@ -26,7 +26,21 @@ public class holiday_VO {
 	private String rank_NAME;
 	private String sawon_NAME;
 	private String fk_DEPT_NAME;
+	private String holiday_NUM;
+	private String holiday_CALC_LEFT_ANNUAL;
+	private String sawon_JOIN_DATE;
+	private String holiday_CALC_SERVICE_YEAR;
+	private String holiday_CALC_LONGEVITY;
+	private String holiday_CALC_ANNUAL_USE;
+	private String fk_holiday_calc_sawon_code;
+	private String sum_HOLIDAY;
 	
+	public String getHoliday_NUM() {
+		return holiday_NUM;
+	}
+	public void setHoliday_NUM(String holiday_NUM) {
+		this.holiday_NUM = holiday_NUM;
+	}
 	public String getHoliday_DIVISION() {
 		return holiday_DIVISION;
 	}
@@ -128,6 +142,48 @@ public class holiday_VO {
 	}
 	public void setFk_DEPT_NAME(String fk_DEPT_NAME) {
 		this.fk_DEPT_NAME = fk_DEPT_NAME;
+	}
+	public String getHoliday_CALC_LEFT_ANNUAL() {
+		return holiday_CALC_LEFT_ANNUAL;
+	}
+	public void setHoliday_CALC_LEFT_ANNUAL(String holiday_CALC_LEFT_ANNUAL) {
+		this.holiday_CALC_LEFT_ANNUAL = holiday_CALC_LEFT_ANNUAL;
+	}
+	public String getSawon_JOIN_DATE() {
+		return sawon_JOIN_DATE;
+	}
+	public void setSawon_JOIN_DATE(String sawon_JOIN_DATE) {
+		this.sawon_JOIN_DATE = sawon_JOIN_DATE;
+	}
+	public String getHoliday_CALC_SERVICE_YEAR() {
+		return holiday_CALC_SERVICE_YEAR;
+	}
+	public void setHoliday_CALC_SERVICE_YEAR(String holiday_CALC_SERVICE_YEAR) {
+		this.holiday_CALC_SERVICE_YEAR = holiday_CALC_SERVICE_YEAR;
+	}
+	public String getHoliday_CALC_LONGEVITY() {
+		return holiday_CALC_LONGEVITY;
+	}
+	public void setHoliday_CALC_LONGEVITY(String holiday_CALC_LONGEVITY) {
+		this.holiday_CALC_LONGEVITY = holiday_CALC_LONGEVITY;
+	}
+	public String getHoliday_CALC_ANNUAL_USE() {
+		return holiday_CALC_ANNUAL_USE;
+	}
+	public void setHoliday_CALC_ANNUAL_USE(String holiday_CALC_ANNUAL_USE) {
+		this.holiday_CALC_ANNUAL_USE = holiday_CALC_ANNUAL_USE;
+	}
+	public String getFk_holiday_calc_sawon_code() {
+		return fk_holiday_calc_sawon_code;
+	}
+	public void setFk_holiday_calc_sawon_code(String fk_holiday_calc_sawon_code) {
+		this.fk_holiday_calc_sawon_code = fk_holiday_calc_sawon_code;
+	}
+	public String getSum_HOLIDAY() {
+		return sum_HOLIDAY;
+	}
+	public void setSum_HOLIDAY(String sum_HOLIDAY) {
+		this.sum_HOLIDAY = sum_HOLIDAY;
 	}
 
 }

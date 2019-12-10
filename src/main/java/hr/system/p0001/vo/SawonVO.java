@@ -3,6 +3,7 @@ package hr.system.p0001.vo;
 import java.sql.Date;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component("sawonVO")
 public class SawonVO {
@@ -23,6 +24,21 @@ public class SawonVO {
 	private String RANK_NAME; // 직급명
 	private String FK_DEPT_NAME; // 부서명
 	private String PHOTO; // 부서명
+	
+	private String newpw; // 비밀번호 바꾸기 - 새로운 비밀번호
+	
+	/* 
+     * 사진 
+     */
+    private MultipartFile photofile;
+    
+    public MultipartFile getPhotofile() {
+		return photofile;
+	}
+
+	public void setPhotofile(MultipartFile photofile) {
+		this.photofile = photofile;
+	}
 	
 	public SawonVO() {
 		System.out.println("SAWON VO 생성");
@@ -162,6 +178,14 @@ public class SawonVO {
 
 	public void setPHOTO(String pHOTO) {
 		PHOTO = pHOTO;
+	}
+
+	public String getNewpw() {
+		return newpw;
+	}
+
+	public void setNewpw(String newpw) {
+		this.newpw = newpw;
 	}
 	
 }

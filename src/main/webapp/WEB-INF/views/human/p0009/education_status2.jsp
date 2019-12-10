@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>교육관리</title>
+<title>교육별 사원현황</title>
 
 <style>
 

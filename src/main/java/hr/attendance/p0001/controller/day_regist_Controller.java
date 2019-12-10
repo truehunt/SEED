@@ -15,26 +15,22 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 public interface day_regist_Controller {
 	//ȭ��
-	public ModelAndView searchInit(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView day_regist_sawon(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView day_regist(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView day_deadline(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView mon_deadline(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView deadline(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView inquery(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView holiday(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView holiday_calc(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView business(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView outside(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	//public ModelAndView select(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	
+	public ModelAndView month(HttpServletRequest request, HttpServletResponse response) throws Exception;	
+	public String select(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	//��� 
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map saveData_da(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map searchList(HttpServletRequest request, HttpServletResponse response,  ModelMap modelMap) throws Exception;
 	public Map da_searchList(HttpServletRequest request, HttpServletResponse response,  ModelMap modelMap) throws Exception;
 	public Map searchList_Sawon(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception;
+	public Map month(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception;
+	public Map month_click(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception;
+
 	
 	
 }

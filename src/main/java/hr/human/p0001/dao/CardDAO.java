@@ -34,7 +34,7 @@ public interface CardDAO {
     /**
      * 등록된 결재 이미지 삭제
      */
-    public void deleteSignImage(String param);
+    public void deleteSignImage(SignImageVO signImageInfo);
 	
 	
 }

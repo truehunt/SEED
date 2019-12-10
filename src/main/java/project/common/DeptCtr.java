@@ -51,7 +51,7 @@ public class DeptCtr {
        public void departmentRead(HttpServletRequest request, HttpServletResponse response) {
         
         String deptno = request.getParameter("deptno");
-        
+
         DepartmentVO deptInfo = deptSvc.selectDepartmentOne(deptno);
         
         UtilEtc.responseJsonValue(response, deptInfo);

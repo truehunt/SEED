@@ -105,15 +105,15 @@ public class education_statusControllerImpl implements education_statusControlle
    @ResponseBody
    public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception {
       request.setCharacterEncoding("utf-8");
-      Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
-      Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+      Map<String, Object> searchMap = new HashMap<String, Object>(); // �˻�����
+      Map<String, Object> resultMap = new HashMap<String, Object>(); // ��ȸ���
       
-      // 검색조건설정
-      searchMap.put("PK_EDUCATION_MANA_CODE", request.getParameter("PK_EDUCATION_MANA_CODE"));
+      // �˻����Ǽ���
+      searchMap.put("PK_EDUCATION_EVAL_SAWON_CODE", request.getParameter("PK_EDUCATION_EVAL_SAWON_CODE"));
       searchMap.put("education_MANA_END", request.getParameter("education_MANA_END"));
 
       
-      //데이터 조회
+      //������ ��ȸ
       List<education_statusVO> data = education_statusService.searchList(searchMap);
         resultMap.put("Data", data);
         
@@ -128,51 +128,82 @@ public class education_statusControllerImpl implements education_statusControlle
    @ResponseBody
    public Map searchList2(HttpServletRequest request, HttpServletResponse response) throws Exception {
       request.setCharacterEncoding("utf-8");
-      Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
-      Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+      Map<String, Object> searchMap = new HashMap<String, Object>(); // �˻�����
+      Map<String, Object> resultMap = new HashMap<String, Object>(); // ��ȸ���
       
-      // 검색조건설정
+      // �˻����Ǽ���
+      searchMap.put("PK_EDUCATION_EVAL_SAWON_CODE", request.getParameter("PK_EDUCATION_EVAL_SAWON_CODE"));
       searchMap.put("PK_EDUCATION_MANA_CODE", request.getParameter("PK_EDUCATION_MANA_CODE"));
       searchMap.put("education_MANA_END", request.getParameter("education_MANA_END"));
 
       
-      //데이터 조회
+      //������ ��ȸ
       List<education_statusVO> data = education_statusService.searchList2(searchMap);
         resultMap.put("Data", data);
         
         return resultMap;
    }
    
-
+   //=================================================================================================
+   
+   
    @Override
    @RequestMapping(value = "/human/p0009/searchList3.do", method = { RequestMethod.GET, RequestMethod.POST })
    @ResponseBody
    public Map searchList3(HttpServletRequest request, HttpServletResponse response) throws Exception {
       request.setCharacterEncoding("utf-8");
-      Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
-      Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+      Map<String, Object> searchMap = new HashMap<String, Object>(); // �˻�����
+      Map<String, Object> resultMap = new HashMap<String, Object>(); // ��ȸ���
       
-      // 검색조건설정
-      searchMap.put("fk_EDUCATION_ADD_CODE", request.getParameter("FK_EDUCATION_ADD_CODE"));
+      // �˻����Ǽ���
+      searchMap.put("PK_EDUCATION_EVAL_SAWON_CODE", request.getParameter("PK_EDUCATION_EVAL_SAWON_CODE"));
       searchMap.put("PK_EDUCATION_MANA_CODE", request.getParameter("PK_EDUCATION_MANA_CODE"));
-System.out.println(request.getParameter("PK_EDUCATION_MANA_CODE"));
+
       
-      //데이터 조회
+      //������ ��ȸ
       List<education_statusVO> data = education_statusService.searchList3(searchMap);
         resultMap.put("Data", data);
         
         return resultMap;
    }
    
+   
+   
+   
+   @Override
+   @RequestMapping(value = "/human/p0009/searchList4.do", method = { RequestMethod.GET, RequestMethod.POST })
+   @ResponseBody
+   public Map searchList4(HttpServletRequest request, HttpServletResponse response) throws Exception {
+      request.setCharacterEncoding("utf-8");
+      Map<String, Object> searchMap = new HashMap<String, Object>(); // �˻�����
+      Map<String, Object> resultMap = new HashMap<String, Object>(); // ��ȸ���
+      
+      // �˻����Ǽ���
+      searchMap.put("PK_EDUCATION_EVAL_SAWON_CODE", request.getParameter("PK_EDUCATION_EVAL_SAWON_CODE"));
+      searchMap.put("PK_EDUCATION_MANA_CODE", request.getParameter("PK_EDUCATION_MANA_CODE"));
+      searchMap.put("education_MANA_END", request.getParameter("education_MANA_END"));
+
+      
+      //������ ��ȸ
+      List<education_statusVO> data = education_statusService.searchList4(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+   }
+   
+   
+
+
+   
    @Override
    @RequestMapping(value = "/human/p0009/insertData.do", method = { RequestMethod.GET, RequestMethod.POST })
    @ResponseBody
    public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
       request.setCharacterEncoding("utf-8");
-      Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 저장할Data
-      Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+      Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ������Data
+      Map<String, Object> resultMap = new HashMap<String, Object>(); // ó�����
       
-      // 저장 Data 추출하기
+      // ���� Data �����ϱ�
       Enumeration enu = request.getParameterNames();
       while (enu.hasMoreElements()) {
          String name = (String) enu.nextElement();
@@ -184,10 +215,10 @@ System.out.println(request.getParameter("PK_EDUCATION_MANA_CODE"));
       try {
     	  education_statusService.saveData(dataMap);   
          result.put("Code","0");
-         result.put("Message","저장되었습니다");
+         result.put("Message","����Ǿ����ϴ�");
       }catch(Exception e) {
          result.put("Code","-1");
-         result.put("Message","저장에 실패하였습니다");
+         result.put("Message","���忡 �����Ͽ����ϴ�");
          e.printStackTrace();
       }
       
@@ -203,10 +234,10 @@ System.out.println(request.getParameter("PK_EDUCATION_MANA_CODE"));
    @ResponseBody
    public Map saveData2(HttpServletRequest request, HttpServletResponse response) throws Exception {
       request.setCharacterEncoding("utf-8");
-      Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 저장할Data
-      Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+      Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ������Data
+      Map<String, Object> resultMap = new HashMap<String, Object>(); // ó�����
       
-      // 저장 Data 추출하기
+      // ���� Data �����ϱ�
       Enumeration enu = request.getParameterNames();
       while (enu.hasMoreElements()) {
          String name = (String) enu.nextElement();
@@ -218,10 +249,10 @@ System.out.println(request.getParameter("PK_EDUCATION_MANA_CODE"));
       try {
     	  education_statusService.saveData2(dataMap);   
          result.put("Code","0");
-         result.put("Message","저장되었습니다");
+         result.put("Message","����Ǿ����ϴ�");
       }catch(Exception e) {
          result.put("Code","-1");
-         result.put("Message","저장에 실패하였습니다");
+         result.put("Message","���忡 �����Ͽ����ϴ�");
          e.printStackTrace();
       }
       
@@ -235,10 +266,10 @@ System.out.println(request.getParameter("PK_EDUCATION_MANA_CODE"));
    @ResponseBody
    public Map saveData3(HttpServletRequest request, HttpServletResponse response) throws Exception {
       request.setCharacterEncoding("utf-8");
-      Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 저장할Data
-      Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
+      Map<String, String[]> dataMap = new HashMap<String, String[]>(); // ������Data
+      Map<String, Object> resultMap = new HashMap<String, Object>(); // ó�����
       
-      // 저장 Data 추출하기
+      // ���� Data �����ϱ�
       Enumeration enu = request.getParameterNames();
       while (enu.hasMoreElements()) {
          String name = (String) enu.nextElement();
@@ -250,10 +281,10 @@ System.out.println(request.getParameter("PK_EDUCATION_MANA_CODE"));
       try {
     	  education_statusService.saveData3(dataMap);   
          result.put("Code","0");
-         result.put("Message","저장되었습니다");
+         result.put("Message","����Ǿ����ϴ�");
       }catch(Exception e) {
          result.put("Code","-1");
-         result.put("Message","저장에 실패하였습니다");
+         result.put("Message","���忡 �����Ͽ����ϴ�");
          e.printStackTrace();
       }
       

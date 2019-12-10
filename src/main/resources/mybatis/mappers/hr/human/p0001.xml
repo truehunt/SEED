@@ -543,7 +543,7 @@
          		   ass_DATE, ass_REFLECTANCE, ass_SCORE,
          		   ass_CLASS, ass_NOTE,
          		   fk_ASS_PER_CODE)
-		values(#{pk_ASS_CODE, jdbcType=VARCHAR},
+		values((select trim(to_char(NVL(MAX(pk_ASS_CODE),'1')+'1','0000'))from ASS), 
 			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
 			   #{ass_NAME, jdbcType=VARCHAR},
 			   #{ass_STA_DATE, jdbcType=VARCHAR},
@@ -620,12 +620,12 @@
 				   chj_AREA, chj_STA_YMD, chj_END_YMD,
          		   chj_AIRFARE, chj_OWN, chj_COMPANY,
          		   chj_OTHER, chj_TOTAL, chj_PURPOSE)
-		values((select trim(to_char(NVL(MAX(fk_CHJ_SAWON_CODE),'0')+'1','0000'))from CHJ),
+		values((select trim(to_char(NVL(MAX(pk_CHJ_CODE),'0')+'1','0000'))from CHJ),
 			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
 			   #{chj_COUNTRY_CODE, jdbcType=VARCHAR},
 			   #{chj_AREA, jdbcType=VARCHAR},
 			   #{chj_STA_YMD, jdbcType=VARCHAR},
-			   #{chj_END_YMD, jdbcType=VARCHAR},
+			   #{chj_END_YMD, jdbcType=VARCHAR}, 
 			   #{chj_AIRFARE, jdbcType=VARCHAR},
 			   #{chj_OWN, jdbcType=VARCHAR},
 			   #{chj_COMPANY, jdbcType=VARCHAR},
@@ -637,7 +637,7 @@
 
 	<select id="COUNTRY_select" resultMap="cardResult06" parameterType="java.util.Map"> 
       	<![CDATA[
-          	SELECT count(*) as count_num 
+          	SELECT person_bc_detai_mngement_name as name
  			FROM   person_bc_detai 
  			WHERE  person_bc_detai_mngement_name = #{chj_COUNTRY_CODE, jdbcType=VARCHAR} 
  			AND    fk_person_bc_code_num = 'H5' 
@@ -720,7 +720,7 @@
 				   sb_NAME, sb_DATE, sb_DETAILS,
          		   sb_SIHAENGCHEO, sb_AMOUNT, sb_STA_DATE,
          		   sb_END_DATE, sb_NOTE)
-		values(#{pk_SB_CODE, jdbcType=VARCHAR},
+		values((select trim(to_char(NVL(MAX(pk_SB_CODE),'1')+'1','0000'))from Sb),
 			   (select pk_sawon_code from SAWON where pk_sawon_code = #{fk_SAWON_CODE, jdbcType=VARCHAR}),
 			   #{sb_DIVISION, jdbcType=VARCHAR},
 			   #{sb_NAME, jdbcType=VARCHAR},

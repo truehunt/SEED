@@ -7,9 +7,7 @@
   request.setCharacterEncoding("UTF-8");
 %>
 
-
-
-  		<link href="${pageContext.request.contextPath}/resources/ibsheet/tab/ibtab-style.css" rel="stylesheet">
+  	<link href="${pageContext.request.contextPath}/resources/ibsheet/tab/ibtab-style.css" rel="stylesheet">
 	<script src="${pageContext.request.contextPath}/resources/ibsheet/ibleaders.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/ibsheet/ibsheet.js"></script>
@@ -55,6 +53,8 @@ $(document).ready(function(){
 		                width:"0px"
 	             	}	
 		        });
+		        
+		      	
 });
 
 		    function doAction(elId, title, type, id, url) {
@@ -62,9 +62,11 @@ $(document).ready(function(){
 		            idxTab = 0,
 		            urlToGo = "",
 		            bFindTab = false;
-		        if (elId) {
+		        if (elId) { 
 		            if (url === "schList") { // 일정관리
 		                urlToGo = "/SEED/schList"; 
+		            } else if(url === "myinfo"){ // 내정보보기
+		            	urlToGo = "myinfo"; 
 		            } else if(url === "adCodeList"){ // 공통코드관리
 		            	urlToGo = "/SEED/adCodeList"; 
 		            } else if(url === "searchMember"){ // 사원조회(ESS)
@@ -73,7 +75,7 @@ $(document).ready(function(){
 		            	urlToGo = "boardList";
 		            } else if(url === "fn_search"){ // 검색바 검색
 		            	var search = $("#globalKeyword").val();
-		            	var searchType = "brdtitle,brdmemo";
+		            	var searchType = "brdtitle,brdmemo,CU.SAWON_NAME";
                    		urlToGo = "boardList?globalKeyword=" + search +"&searchType="+ searchType;
 		            // 전자결재
 		            } else if(url === "adSignDocTypeList"){ // 결재문서양식관리
@@ -95,6 +97,10 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/pay/p0003/SALARY_bo_sta.do";
 		            } else if(url === "SET_payday"){
 		            	urlToGo = "/SEED/system/p0001/SET_payday.do";
+		            } else if(url === "mm"){ // 급여명세
+		            	urlToGo = "mm";
+		            } else if(url === "nn"){ // 연간급여현황
+		            	urlToGo = "nn";
 		            // 근태관리
 		            } else if(url === "day_regist_sawon"){//사원 출퇴근
 		            	urlToGo = "/SEED/attendance/p0001/day_regist_sawon.do";
@@ -111,19 +117,25 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/human/s0001/company_Enroll.do";
 		            } else if(url === "adworkplace_Enroll"){// 등록정보관리 - 사업장등록
 		            	urlToGo = "/SEED/human/s0002/workplace_Enroll.do";
-		            } else if(url === "addept_Enroll"){
+		            } else if(url === "addept_Enroll"){// 등록정보관리 - 부서등록
 		            	urlToGo = "/SEED/human/s0003/dept_Enroll.do";
 		            } else if(url === "adSawon_Enroll"){ // 사원등록
 		            	urlToGo = "adSawon_Enroll";
 		            } else if(url === "adSawon_Permission"){ // 사용자권한
 		            	urlToGo = "adSawon_Permission";
 		            // 인적자원관리
-		            } else if(url === "hobong"){
+		            }else if(url === "hobong"){
 		            	urlToGo = "/SEED/system/p0001/hobong.do";
-		            }	else if(url === "code"){ // 인사기초코드 등록
+		            }else if(url === "code"){ // 인사기초코드 등록
 		            	urlToGo = "/SEED/system/p0001/insa_code.do"
-		            } else if(url === "card"){	// 인사기록카드
+		            }else if(url === "card"){	// 인사기록카드
 		            	urlToGo = "/SEED/human/p0001/insa_card.do"
+		            }else if(url === "adInsa_infoEnroll"){	// 인사 정보 등록
+		            	urlToGo = " /SEED/system/p0002/Insa_infoEnroll.do"
+		            }else if(url === "ballyeong"){	// 인사발령
+		            	urlToGo = "/SEED/human/p0002/insa_ballyeong.do"
+		            }else if(url === "ballyeong_sawon"){	// 인사발령(사원별)
+				     	urlToGo = "/SEED/human/p0002/insa_ballyeong_Sawon.do" 
 		            }else if(url === "education"){	// 교육관리
 		            	urlToGo = " /SEED/human/p0007/tab_education_manage.do"
 		            }else if(url === "education_evaluation"){	// 교육관리
@@ -159,6 +171,13 @@ $(document).ready(function(){
 		                    }
 		                });
 		            }
+		            
+		          	//전체 열린 탭의 개수가 12개 이상이면 경고 발생
+			        if(myTab.tabs.getCountTab()>12){
+			           if(confirm("탭이 너무 많습니다. 하나 닫을까요?")){
+			        	   myTab.removeTab(1);      
+			           }
+			        }
 		        }
 		    }
 </script>
@@ -220,7 +239,7 @@ $(document).ready(function(){
 	                        <i class="fa fa-caret-down"></i>
 	                    </a>
 	                    <ul class="dropdown-menu dropdown-user">
-	                        <li><a href="memberForm"><i class="fa fa-user fa-fw"></i> 내 정보 보기</a></li>
+	                        <li><a href='#' onClick="doAction(myTab,'<s:message code="main.myinfo"/>','chart','myinfo','myinfo'); return false"><i class="fa fa-info-circle fa-fw"></i> 내 정보 보기</a></li>
 	                    </ul>
                     </li>
                     
@@ -287,7 +306,7 @@ $(document).ready(function(){
                         </li>
                         <!-- 내정보보기 -->
                         <li>
-                            <a href='#' onClick="doAction(myTab,'<s:message code="main.myinfo"/>','chart','aa','aa'); return false"><i class="fa fa-info-circle fa-fw"></i> <s:message code="main.myinfo"/></a>
+                            <a href='#' onClick="doAction(myTab,'<s:message code="main.myinfo"/>','chart','myinfo','myinfo'); return false"><i class="fa fa-info-circle fa-fw"></i> <s:message code="main.myinfo"/></a>
                         </li>
                         <!-- 사원조회 -->
                         <li>
@@ -342,7 +361,8 @@ $(document).ready(function(){
                                     <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay1"/>','chart','TA_input','TA_input'); return false"><s:message code="main.pay1"/></a>
                                 </li>
                                 <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay2"/>','chart','SALARY_calcul','SALARY_calcul'); return false"><s:message code="main.pay2"/></a>                                
+                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay2"/>','chart','SALARY_calcul','SALARY_calcul'); return false"><s:message code="main.pay2"/></a>
+                                </li>                                
                                 <li>
                                     <a href='#' onClick="doAction(myTab,'<s:message code="main.pay3"/>','chart','SALARY_bo_sta','SALARY_bo_sta'); return false"><s:message code="main.pay3"/></a>
                                 </li>
@@ -358,22 +378,19 @@ $(document).ready(function(){
 	                            <a href="#"><i class="fa fa-user fa-fw"></i> <s:message code="main.T&A"/><span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
 									<li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.dayCls"/>','chart','ad_day_regist','ad_day_regist'); return false"><s:message code="main.dayCls"/></a> 
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.dayCls"/>','chart','Aday_regist','Aday_regist'); return false"><s:message code="main.dayCls"/></a> 
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.monthlyCls2"/>','chart','dd','dd'); return false"><s:message code="main.monthlyCls2"/></a>
-	                                </li>
-	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.nightShift"/>','chart','ee','ee'); return false"><s:message code="main.nightShift"/></a>
+	                                <a href='#' onClick="doAction(myTab,'<s:message code="main.monthlyCls2"/>','chart','Amonth','Amonth'); return false"><s:message code="main.monthlyCls2"/></a>
 	                                </li>
 	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.calHoliday"/>','chart','holiday_calc','holiday_calc'); return false"><s:message code="main.calHoliday"/></a>
 	                                </li>
 	                                <li>
-                                    	<a href='#' onClick="doAction(myTab,'<s:message code="main.findHoliday2"/>','chart','ff','ff'); return false"><s:message code="main.findHoliday2"/></a>
+     	<a href='#' onClick="doAction(myTab,'<s:message code="main.findHoliday2"/>','chart','Aholiday_da','Aholiday_da'); return false"><s:message code="main.findHoliday2"/></a>
                                 	</li>
                                 	<li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.findBT2"/>','chart','business','business'); return false"><s:message code="main.findBT2"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.findBT2"/>','chart','Abusiness_da','Abusiness_da'); return false"><s:message code="main.findBT2"/></a>
 	                                </li>
                                 </ul>
                             </li>
@@ -389,6 +406,18 @@ $(document).ready(function(){
 	                                </li>
 	                            </ul>
                             </li>
+                            <!-- 급여관리 -->
+	                        <li>
+	                            <a href="#"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay"/><span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+	                                <li>
+	                                    <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay4"/>','chart','mm','mm'); return false"><s:message code="main.pay4"/></a>
+	                                </li>
+	                                <li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay5"/>','chart','nn','nn'); return false"><s:message code="main.pay5"/></a>                                
+	                                </li>
+		                        </ul>                             
+	                        </li>
 	                    </c:if>
                         <!-- 관리자메뉴 --> 
                         <c:if test='${sessionScope.SAWON_VIEW_PERMISSION == "A"}'>  
@@ -444,13 +473,13 @@ $(document).ready(function(){
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per1"/>','chart','card','card'); return false"><s:message code="main.per1"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per2"/>','chart','yy','yy'); return false"><s:message code="main.per2"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per2"/>','chart','adInsa_infoEnroll','adInsa_infoEnroll'); return false"><s:message code="main.per2"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per3"/>','chart','zz','zz'); return false"><s:message code="main.per3"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per3"/>','chart','ballyeong','ballyeong'); return false"><s:message code="main.per3"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per4"/>','chart','a1','a1'); return false"><s:message code="main.per4"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per4"/>','chart','ballyeong_sawon','ballyeong_sawon'); return false"><s:message code="main.per4"/></a>
 	                                </li>
 	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per5"/>','chart','a2','a2'); return false"><s:message code="main.per5"/></a>

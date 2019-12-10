@@ -28,6 +28,12 @@ public interface day_regist_DAO {
 
 	public void da_insertData(Map<String, String> row) throws DataAccessException;
 
+	public void updateData_da(Map<String, String> row)throws DataAccessException;
+
+	public List<day_regist_VO> searchList_month(Map<String, Object> searchMap) throws DataAccessException;
+	
+	public List<day_regist_VO> searchList_month_click(Map<String, Object> searchMap) throws DataAccessException;
+
 
 
 	

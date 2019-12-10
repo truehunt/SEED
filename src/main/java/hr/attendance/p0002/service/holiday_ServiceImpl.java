@@ -34,6 +34,13 @@ public class holiday_ServiceImpl implements holiday_Service {
 		return list;
 	}
 	
+public List<business_VO> searchList_busin_da(Map<String, Object> searchMap) throws DataAccessException {
+		
+		List<business_VO> list =  p0002DAO.searchList_busin_da(searchMap);
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		return list;
+	}
+	
 	
 	
 	//데이터 저장
@@ -56,7 +63,25 @@ public class holiday_ServiceImpl implements holiday_Service {
 		}
 	}
 	
-	
+	@Override
+	public void saveData_busin_da(Map<String, String[]> dataMap)  throws DataAccessException  {
+		String[] status = dataMap.get("STATUS");
+		int length = status.length; // row��
+		int i = 0;
+		
+		for(String str : status) {
+			Map<String, String> row = getRow(dataMap, length, i); // ���� Index�� Row Map
+			if("I".equals(str)) { // �߰�
+				p0002DAO.insertData_busin(row);
+			}else if("U".equals(str)) { // ����
+				p0002DAO.updateData_busin_da(row);
+				System.out.println("service");
+			}else if("D".equals(str)) { // ����
+				p0002DAO.deleteData_busin(row);
+			}
+			i++;
+		}
+	}
 	//조회
 	public List<holiday_VO> searchList_holi(Map<String, Object> searchMap) throws DataAccessException {
 		System.out.println("service_searchList_holi: "+searchMap);
@@ -66,6 +91,24 @@ public class holiday_ServiceImpl implements holiday_Service {
 		return list;
 	}
 	
+	
+	public List<holiday_VO> searchList_holi_da(Map<String, Object> searchMap) throws DataAccessException {
+		System.out.println("service_searchList_holi: "+searchMap);
+		List<holiday_VO> list =  p0002DAO.searchList_holi_da(searchMap);
+		
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		return list;
+	}
+	
+	//조회
+	public List<holiday_VO> searchList_calc(Map<String, Object> searchMap) throws DataAccessException {
+		System.out.println("service_searchList_calc: "+searchMap);
+		List<holiday_VO> list =  p0002DAO.searchList_calc(searchMap); 
+//		List<holiday_VO> list1 =  p0002DAO.searchList_calc1(searchMap); 
+		
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		return list;
+	}
 
 
 	//데이터 저장
@@ -88,6 +131,46 @@ public class holiday_ServiceImpl implements holiday_Service {
 		}
 	}
 	
+	
+	//데이터 저장
+		@Override
+		public void saveData_holi_da(Map<String, String[]> dataMap)  throws DataAccessException  {
+			String[] status = dataMap.get("STATUS");
+			int length = status.length; // row��
+			int i = 0;
+			
+			for(String str : status) {
+				Map<String, String> row = getRow(dataMap, length, i); // ���� Index�� Row Map
+				if("I".equals(str)) { // �߰�
+					p0002DAO.insertData_holi(row);
+				}else if("U".equals(str)) { // ����
+					p0002DAO.updateData_holi_da(row);
+				}else if("D".equals(str)) { // ����
+					p0002DAO.deleteData_holi(row);
+				}
+				i++;
+			}
+		}
+		
+		//휴가계산 저장
+		@Override
+		public void saveData_calc(Map<String, String[]> dataMap)  throws DataAccessException  {
+			String[] status = dataMap.get("STATUS");
+			int length = status.length; // row��
+			int i = 0;
+			
+			for(String str : status) {
+				Map<String, String> row = getRow(dataMap, length, i); // ���� Index�� Row Map
+				if("I".equals(str)) { // �߰�
+					p0002DAO.insertData_calc(row);
+				}else if("U".equals(str)) { // ����
+					p0002DAO.updateData_calc(row);
+				}else if("D".equals(str)) { // ����
+					p0002DAO.deleteData_calc(row);
+				}
+				i++;
+			}
+		}
 //----------------------------------------------------------------------------------------------------	
 	private Map getRow(Map<String, String[]> dataMap, int length, int index) {
 		Map<String, String> row = new HashMap<String, String>();

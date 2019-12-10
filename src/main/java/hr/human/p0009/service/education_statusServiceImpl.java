@@ -38,11 +38,19 @@ public class education_statusServiceImpl implements education_statusService {
       return list;
    }
    
+   
    @Override
    public List<education_statusVO> searchList3(Map<String, Object> searchMap) throws DataAccessException {
       List<education_statusVO> list =  education_statusDAO.searchList3(searchMap); 
       return list;
    }
+   
+   @Override
+   public List<education_statusVO> searchList4(Map<String, Object> searchMap) throws DataAccessException {
+      List<education_statusVO> list =  education_statusDAO.searchList4(searchMap); 
+      return list;
+   }
+
    @Override
    public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
       String[] status = dataMap.get("STATUS");

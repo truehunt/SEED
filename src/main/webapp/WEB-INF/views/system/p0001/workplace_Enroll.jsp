@@ -95,7 +95,9 @@
 	//시트 높이 계산용
 	var pageheightoffset = 200;
 	
+	//Combo 값 위한 초기화
 	var S2="";
+	
 	/*Sheet 기본 설정 */
 	function LoadPage() {
 		mySheet.RemoveAll();

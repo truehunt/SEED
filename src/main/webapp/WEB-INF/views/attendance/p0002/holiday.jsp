@@ -7,7 +7,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일일 근태 등록</title>
 <!----------------------------------------------------------------------------------------->
 <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
@@ -76,37 +75,20 @@
 				SaveName : "STATUS",
 				MinWidth : 40
 			}, {
-				Header : "전자결재 상태",
-				Type : "Text",
-				SaveName : "holiday_PAY",
-				MinWidth : 30
-			}, {
 				Header : "삭제",
 				Type : "DelCheck",
 				SaveName : "DEL_CHK",
 				MinWidth : 40
-			}, {
-				Header : "신청일",
-				Type : "Date",
+			},{
+				Header : "신청 일자",
+				Type : "Text",
 				SaveName : "holiday_REGIST",
-				MinWidth : 80,
-				Edit : 0
-			}, { 
-				Header : "성명",
-				Type : "Text",
-				SaveName : "sawon_NAME",
-				MinWidth : 80
+				MinWidth :80,
 			}, {
-				Header : "부서",
+				Header : "전자결재 상태",
 				Type : "Text",
-				SaveName : "fk_DEPT_NAME",
-				MinWidth : 80
-			}, {
-				Header : "직급",
-				Type : "Text",
-				SaveName : "rank_NAME",
-				MinWidth : 80,
-				Wrap : 1
+				SaveName : "holiday_PAY",
+				MinWidth : 30
 			}, {
 				Header : "휴가구분",
 				Type : "Text",
@@ -127,7 +109,19 @@
 				Type : "Text",
 				SaveName : "holiday_REASON",
 				MinWidth : 60
-			} ];
+			},{
+		          Header : "사원코드",
+		          Type : "Text",
+		          SaveName : "fk_HOLIDAY_SAWON_CODE",
+		          MinWidth : 60,
+		          Hidden :1
+		       }, {
+					Header : "순번",
+					Type : "Text",
+					SaveName : "holiday_NUM",
+					MinWidth : 60,
+				    Hidden :1
+				}  ];
 			IBS_InitSheet(mySheet, initSheet);
 		//mySheet.SetEditable(false);
 		//mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
@@ -140,9 +134,11 @@
 	function doAction(sAction) {
 		switch (sAction) {
 		case "search": //조회
-		var val1 = "&pk_SAWON_CODE=" + '<%=session.getAttribute("PK_SAWON_CODE")%>';
-			mySheet.DoSearch("${contextPath}/attendance/p0002/searchList_holi.do", val1);
-			alert("val1 : " +val1)
+		
+		var val1 = "&pk_SAWON_CODE=" + '<%=session.getAttribute("PK_SAWON_CODE")%>'
+		+"&fd_year="+ $('#fd_year option:selected').val()
+		+"&HOLIDAY_PAY="+ $('#HOLIDAY_PAY option:selected').val()
+			mySheet.DoSearch("${contextPath}/attendance/p0002/searchList_holi.do", val1)
 			break;
 
 		case "reload": //초기화
@@ -151,21 +147,22 @@
 
 		case "save": // 저장
 			mySheet.DoSave("${contextPath}/attendance/p0002/insertData_holi.do");
-			console.log("save");
 			break;
 
 		case "insert": //신규행 추가
 			var row = mySheet.DataInsert();
-			selectSite();
+		    var select_row = mySheet.GetSelectRow();
+			var val2 = '<%=session.getAttribute("PK_SAWON_CODE")%>';
+            mySheet.SetCellValue(select_row, 8, val2);
+        	mySheet.SetCellValue(select_row, 2, getToday());
+        	mySheet.SetCellValue(select_row, 3, '요청');
 			break;
 		}
 	}
    
-   
 // 	 function mySheet_OnSearchEnd() {
 // 		// mySheet.SetRowEditable(1, 0);
 // 		//  1열 수정불가
-// 		 alert("1");
 // 	 }
 	 //5번째 행을 수정할수 있게해줌
   function selectSite() {
@@ -188,26 +185,59 @@
                   mySheet.SetCellValue(1,6,RANK_CODE);
                   
             }
-            alert(NAME_CODE);
          },
          error : function(jqxhr, status, error) {
-            alert("에러");
          }
       });
    }
    
-   // mySheet 조회 끝나기 직전 이벤트 
-//   function mySheet_OnSearchEnd() {
-//       if(mySheet.GetCellValue(1,1) == -1 ){
-<%--     	  val2 = '<%=session.getAttribute("PK_SAWON_CODE")%>'; --%>
+ // mySheet 조회 끝나기 직전 이벤트 
+  function mySheet_OnSearchEnd() {
+      if(mySheet.GetCellValue(1,1) == -1 ){
+    	  val2 = '<%=session.getAttribute("PK_SAWON_CODE")%>';
 
-// 			var PK_DAILY_TA_WORKING_DATE = document
-// 					.getElementById("PK_DAILY_TA_WORKING_DATE").value;
-// 			mySheet.SetCellValue(1, 5, PK_DAILY_TA_WORKING_DATE);
-// 			//첫번째 열에서 두번째에다가 변수이름:PK_DAILY_TA_WORKING_DATE를 추가한다.
-// 		}
-// 	}
-	// let today = new Date();
+			var PK_DAILY_TA_WORKING_DATE = document
+					.getElementById("PK_SAWON_CODE").value;
+			mySheet.SetCellValue(1, 8, PK_DAILY_TA_WORKING_DATE);
+			//첫번째 열에서 두번째에다가 변수이름:PK_DAILY_TA_WORKING_DATE를 추가한다.
+		}
+	}
+	function mySheet_OnRowSearchEnd(Row) {
+		if (mySheet.GetCellValue(Row, 3) != "요청") {
+			mySheet.SetRowEditable(Row, 0);
+		}
+	}
+	
+	$(document).ready(function(){            
+        var now = new Date();
+        var nyear = now.getFullYear();
+        
+        //년도 selectbox만들기               
+        for(var sy = 2015 ; sy <= nyear ; sy++) {
+            $('#fd_year').append('<option value="' + sy + '">' + sy + '년</option>');    
+        }
+
+        jQuery("#fd_year  > option[value="+nyear+"]").attr("selected", "true");    
+    })
+
+	// 오늘 날짜 삽입
+	function getToday() {
+		var now = new Date();
+		var year = now.getFullYear();
+		var month = now.getMonth() + 1; //1월이 0으로 되기때문에 +1을 함.
+		var date = now.getDate();
+
+		if ((month + "").length < 2) { //2자리가 아니면 0을 붙여줌.
+			month = "0" + month;
+		}
+	    if((date + "").length < 2){        //2자리가 아니면 0을 붙여줌.
+            date = "0" + date;
+        }
+		// ""을 빼면 year + month (숫자+숫자) 됨.. ex) 2018 + 12 = 2030이 리턴됨.
+		return today = "" + year + "-" + month + "-" + date;
+		mySheet.SetCellValue(select_row, 2, today); //조퇴시간
+	}
+	//	let today = new Date();
 </script>
 </head>
 <body onload="LoadPage()">
@@ -230,21 +260,16 @@
 				<!-- /.col-lg-12 -->
 			</div>
 			기준년도
-			<td><select id="year" name="year">
-			</select></td>
-			</tr>
-</body>
-
-&emsp; &emsp; &emsp; 전자결재 상태
-<select name="HOLIDAY_PAY">
+	<td class="item_input"><select id="fd_year" name="fd_year"
+		style="width: 80px;"></select></td>
+&emsp; &emsp;  전자결재 상태
+<select id="HOLIDAY_PAY", name = "HOLIDAY_PAY">
 	<option value="">전자 결재 상태</option>
-	<option value="대기">대기</option>
+	<option value="요청">요청</option>
 	<option value="반려">반려</option>
-	<option value="완료">완료</option>
+	<option value="승인">승인</option>
 </select>
 <br>
-<div class="ib_function float_right"></div>
-
 <div class="ib_function float_right">
 	<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
 	<a href="javascript:doAction('search')" class="f1_btn_gray lightgray">조회</a>

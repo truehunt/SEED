@@ -453,6 +453,12 @@
               </foreach>  
         )             
     </delete> 
+    
+    <delete id="deleteBoardFile2" parameterType="String"> 
+        DELETE 
+          FROM BOARDFILE
+         WHERE FILENO = #{fileno}
+    </delete>
 
     <!-- =============================================================================== -->
     <select id="selectBoardReplyList" resultType="hr.system.p0003.vo.BoardReplyVO" parameterType="String">

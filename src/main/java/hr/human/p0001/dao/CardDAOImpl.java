@@ -18,9 +18,6 @@ import hr.human.p0001.vo.Com_codeVO;
 public class CardDAOImpl implements CardDAO {
 	@Autowired
 	private SqlSession sqlSession;
-	private String num;
-	private int fam_code;
-	private int hl_code;
 
 	@Override
 	public List<CardVO> searchList(Map<String, Object> searchMap) throws DataAccessException {
@@ -43,7 +40,6 @@ public class CardDAOImpl implements CardDAO {
 	
 	@Override
 	public List<Com_codeVO> COM_CODE(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println(searchMap);
 		List<Com_codeVO> list = sqlSession.selectList("hr.human.p0001.COM_CODE",searchMap);
 		return list;
 	}
@@ -95,8 +91,9 @@ public class CardDAOImpl implements CardDAO {
     /**
      * 등록된 결재 이미지 삭제
      */
-    public void deleteSignImage(String param) {
-        sqlSession.delete("deleteSawonImage", param);
+    public void deleteSignImage(SignImageVO param) {
+//    	System.out.println(param);
+        sqlSession.update("updateSawonImage", param);
 	}
 	
 

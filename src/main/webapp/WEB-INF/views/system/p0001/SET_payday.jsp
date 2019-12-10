@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%> 
 <c:set var="contextPath"  value="${pageContext.request.contextPath}" />
    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
@@ -50,15 +51,15 @@ table.ui-datepicker-calendar { display:none; }
       //{Header:"No",Type:"Seq", Align:"Center"},
          {Header:"NO",Type:"pk_D_B_PAYMENT_SEQ_CODE",Width:20,SaveName:"pk_D_B_PAYMENT_SEQ_CODE", Align:"Center"},
          {Header:"상태",Type:"Status",Width:60,SaveName:"STATUS", Align:"Center"},
-           {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
-           {Header:"귀속연월",Type:"Text",SaveName:"d_B_PAYMENT_DATE_ATTRIBUT",Width:100,Align:"Center"},
+         {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
+         {Header:"귀속연월",Type:"Text",SaveName:"d_B_PAYMENT_DATE_ATTRIBUT",Width:100,Align:"Center"},
          {Header:"지급일자",Type:"Date",SaveName:"d_B_PAYMENT_DT",Width:100,Align:"Center"},
          {Header:"동시발행",Type:"Combo",Width:80,SaveName:"d_B_PAYMENT_SIMULTANE_ISSUE", Align:"Center", ComboCode:"분리|동시"},
-           {Header:"대상자선정",Type:"Text",SaveName:"d_B_PAYMENT_TARGET_SELECT",Width:200,Align:"Center"}
+         {Header:"대상자선정",Type:"Text",SaveName:"d_B_PAYMENT_TARGET_SELECT",Width:200,Align:"Center"}
        ];
       IBS_InitSheet(mySheet,initData);
    
-      mySheet.SetSumValue(4,"합 계");
+       mySheet.SetSumValue(4,"합 계");
        mySheet.SetCellAlign(mySheet.LastRow(),0,"Center");
    
        
@@ -235,14 +236,15 @@ function mySheet_OnSaveEnd(code,msg){
 <body onload="LoadPage()">
  <!-- 달력 datepicker  -->
    
- 
+ <div class="row">
+      <div class="col-lg-12">        <!-- 해당 메뉴의 아이콘 -->        <!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
+         <h1 class="page-header"><i class="fa fa-cog fa-fw"></i> <s:message code="main.setup2"/></h1>
+      </div>
+         <!-- /.col-lg-12 -->
+   </div>
 
-  <div class="page_title">
-    <span><a class="closeDepth" href="#">closeDepth</a></span> 
-    <span class="title">기초환경설정 > <b>급여지급일자등록</b></span>
-  </div>
   <div class="main_content">
-    <div class="ib_function float_right" style="padding:10 20">
+    <div class="ib_function float_left" style="padding:10 20">
          <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
          <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
          <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>

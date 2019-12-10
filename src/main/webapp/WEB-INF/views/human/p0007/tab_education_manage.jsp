@@ -9,9 +9,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>교육관리</title>
+<title>교육등록</title>
 
 <style>
+
+   .table{
+    max-width: 500px;
+    margin-left: -20px;
+    margin-bottom: 0px;
+    margin-right: -550px;
+     }
+     
+     
    .frame {
         width : 1200px;
         margin: 0px;

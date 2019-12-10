@@ -130,7 +130,6 @@ window.onload = function() {
 			break;
 		case "save": // 저장
 			//var tempStr = mySheet.GetSaveString();
-			//alert("서버로 전달되는 문자열 확인 :"+tempStr);
 			mySheet.DoSave("${contextPath}/attendance/p0001/insertData.do");
 			break;
 		case "insert": //신규행 추가
@@ -148,7 +147,6 @@ window.onload = function() {
 	// code: 0(저장성공), -1(저장실패)
 	function mySheet_OnSaveEnd(code, msg) {
 		if (msg != "") {
-			alert(msg);
 			//번호 다시 매기기
 			//mySheet.ReNumberSeq();
 		}

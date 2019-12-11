@@ -65,8 +65,10 @@ $(document).ready(function(){
 		        if (elId) { 
 		            if (url === "schList") { // 일정관리
 		                urlToGo = "/SEED/schList"; 
-		            } else if(url === "myinfo"){ // 내정보보기
+		            } else if(url === "myinfo"){ // 내정보보기 
 		            	urlToGo = "myinfo"; 
+		            } else if(url === "deptInfo"){ // 팀원정보보기
+		            	urlToGo = "deptInfo"; 
 		            } else if(url === "adCodeList"){ // 공통코드관리
 		            	urlToGo = "/SEED/adCodeList"; 
 		            } else if(url === "searchMember"){ // 사원조회(ESS)
@@ -327,7 +329,7 @@ $(document).ready(function(){
                         </li>
                         <!-- 게시판(공지사항) -->             
                         <li>
-                            <a href='#' onClick="doAction(myTab,'<s:message code="main.board"/>','chart','boardList','boardList'); return false"><i class="fa fa-send fa-fw"></i> <s:message code="main.board"/></a>
+                            <a href='#' onClick="doAction(myTab,'<s:message code="main.board"/>','chart','boardList','boardList'); return false"><i class="fa fa-clipboard fa-fw"></i> <s:message code="main.board"/></a>
                         </li>
                         <!-- 전자결재 -->
                         <li>
@@ -369,12 +371,6 @@ $(document).ready(function(){
                                 <li>
                                     <a href='#'  onClick="doAction(myTab,'<s:message code="main.pay1"/>','chart','TA_input','TA_input'); return false"><s:message code="main.pay1"/></a>
                                 </li>
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay2"/>','chart','SALARY_calcul','SALARY_calcul'); return false"><s:message code="main.pay2"/></a>
-                                </li>                                
-                                <li>
-                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay3"/>','chart','SALARY_bo_sta','SALARY_bo_sta'); return false"><s:message code="main.pay3"/></a>
-                                </li>
 	                        </ul>                             
                         </li>
                         <!-- 부서장메뉴 --> 
@@ -382,31 +378,13 @@ $(document).ready(function(){
 	                        <li>
 	                            <a href="#"> MSS</a>
 	                        </li>
-	                         <!-- 근태/연차 관리 -->
-	                        <li>
-	                            <a href="#"><i class="fa fa-user fa-fw"></i> <s:message code="main.T&A"/><span class="fa arrow"></span></a>
-								<ul class="nav nav-second-level">
-									<li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.dayCls"/>','chart','Aday_regist','Aday_regist'); return false"><s:message code="main.dayCls"/></a> 
-	                                </li>
-	                                <li>
-	                                <a href='#' onClick="doAction(myTab,'<s:message code="main.monthlyCls2"/>','chart','Amonth','Amonth'); return false"><s:message code="main.monthlyCls2"/></a>
-	                                </li>
-	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.calHoliday"/>','chart','Aholiday_calc','Aholiday_calc'); return false"><s:message code="main.calHoliday"/></a>
-	                                </li>
-	                                <li>
-     									<a href='#' onClick="doAction(myTab,'<s:message code="main.findHoliday2"/>','chart','Aholiday_da','Aholiday_da'); return false"><s:message code="main.findHoliday2"/></a>
-                                	</li>
-                                	<li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.findBT2"/>','chart','Abusiness_da','Abusiness_da'); return false"><s:message code="main.findBT2"/></a>
-	                                </li>
-                                </ul>
-                            </li>
-                            <!-- 인사관리 -->
+	                        <!-- 인사관리 -->
 	                        <li>
 	                            <a href="#"><i class="fa fa-users fa-fw"></i> <s:message code="main.per"/><span class="fa arrow"></span></a>
 	                            <ul class="nav nav-second-level">
+			                        <li>
+			                            <a href='#' onClick="doAction(myTab,'<s:message code="main.per6"/>','chart','deptInfo','deptInfo'); return false"><s:message code="main.per6"/></a>
+			                        </li>
 	                            	<li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per8"/>','chart','education_evaluation','education_evaluation'); return false"><s:message code="main.per8"/></a>
 	                                </li>
@@ -414,6 +392,18 @@ $(document).ready(function(){
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per9"/>','chart','education_status','education_status'); return false"><s:message code="main.per9"/></a>
 	                                </li>
 	                            </ul>
+                            </li>
+	                         <!-- 근태/연차 관리 -->
+	                        <li>
+	                            <a href="#"><i class="fa fa-user fa-fw"></i> <s:message code="main.T&A"/><span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+	                                <li>
+     									<a href='#' onClick="doAction(myTab,'<s:message code="main.findHoliday2"/>','chart','Aholiday_da','Aholiday_da'); return false"><s:message code="main.findHoliday2"/></a>
+                                	</li>
+                                	<li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.findBT2"/>','chart','Abusiness_da','Abusiness_da'); return false"><s:message code="main.findBT2"/></a>
+	                                </li>
+                                </ul>
                             </li>
                             <!-- 급여관리 -->
 	                        <li>
@@ -467,9 +457,6 @@ $(document).ready(function(){
 
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup3"/>','chart','vv','vv'); return false"><s:message code="main.setup3"/></a>
-	                                </li>
-	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.setup4"/>','chart','code','code'); return false"><s:message code="main.setup4"/></a>
 	                                </li>
 	                            </ul>
@@ -491,15 +478,41 @@ $(document).ready(function(){
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per4"/>','chart','ballyeong_sawon','ballyeong_sawon'); return false"><s:message code="main.per4"/></a>
 	                                </li>
 	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per5"/>','chart','a2','a2'); return false"><s:message code="main.per5"/></a>
-	                                </li>
-	                                <li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per6"/>','chart','a3','a3'); return false"><s:message code="main.per6"/></a>
-	                                </li>
-	                                <li>
 	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.per7"/>','chart','education','education'); return false"><s:message code="main.per7"/></a>
 	                                </li>
 	                            </ul>
+	                        </li>
+	                        <!-- 근태/연차 관리 -->
+	                        <li>
+	                            <a href="#"><i class="fa fa-user fa-fw"></i> <s:message code="main.T&A"/><span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+									<li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.dayCls"/>','chart','Aday_regist','Aday_regist'); return false"><s:message code="main.dayCls"/></a> 
+	                                </li>
+	                                <li>
+	                                	<a href='#' onClick="doAction(myTab,'<s:message code="main.monthlyCls2"/>','chart','Amonth','Amonth'); return false"><s:message code="main.monthlyCls2"/></a>
+	                                </li>
+	                                <li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.calHoliday"/>','chart','Aholiday_calc','Aholiday_calc'); return false"><s:message code="main.calHoliday"/></a>
+	                                </li>
+	                                <li>
+     									<a href='#' onClick="doAction(myTab,'<s:message code="main.findHoliday2"/>','chart','Aholiday_da','Aholiday_da'); return false"><s:message code="main.findHoliday2"/></a>
+                                	</li>
+                                	<li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.findBT2"/>','chart','Abusiness_da','Abusiness_da'); return false"><s:message code="main.findBT2"/></a>
+	                                </li>
+                                </ul>
+	                        <!-- 급여/퇴직정산관리 -->
+	                        <li>
+	                            <a href="#"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay"/><span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+	                                <li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay2"/>','chart','SALARY_calcul','SALARY_calcul'); return false"><s:message code="main.pay2"/></a>
+	                                </li>                                
+	                                <li>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.pay3"/>','chart','SALARY_bo_sta','SALARY_bo_sta'); return false"><s:message code="main.pay3"/></a>
+	                                </li>
+		                        </ul>                             
 	                        </li>
                              <li>
                                  <a href='#' onClick="doAction(myTab,'<s:message code="main.adSign"/>','chart','adSignDocTypeList','adSignDocTypeList'); return false"><i class="fa fa-files-o fa-fw"></i> <s:message code="main.adSign"/></a>

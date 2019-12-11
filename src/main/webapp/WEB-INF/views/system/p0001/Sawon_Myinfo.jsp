@@ -43,7 +43,7 @@
 		  margin-left:510px;
 		  margin-top:-771px;
 		  float: right;
-		  width: 1000px;
+		  width: 900px;
 		  height: 771px;
 		  border : 1px solid lightblue;
 	}
@@ -181,7 +181,7 @@
           	{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
        	];
 		
-		createIBSheet2($("#ib-container1")[0],"mySheet4", "998px", "300px");
+		createIBSheet2($("#ib-container1")[0],"mySheet4", "890px", "300px");
        	IBS_InitSheet(mySheet4,initData);
 		
 		//mySheet5 //학력
@@ -203,7 +203,7 @@
             {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
         ];
    
-          createIBSheet2($("#ib-container2")[0],"mySheet5", "998px", "300px");
+          createIBSheet2($("#ib-container2")[0],"mySheet5", "890px", "300px");
           IBS_InitSheet(mySheet5,initData);
           
       //mySheet6 //경력
@@ -224,7 +224,7 @@
             {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
         ];
          
-        createIBSheet2($("#ib-container3")[0],"mySheet6", "998px", "300px");
+        createIBSheet2($("#ib-container3")[0],"mySheet6", "890px", "300px");
       IBS_InitSheet(mySheet6,initData);
       
       //mySheet7 //면허/자격
@@ -242,7 +242,7 @@
             {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
         ];
           
-        createIBSheet2($("#ib-container4")[0],"mySheet7", "998px", "300px");
+        createIBSheet2($("#ib-container4")[0],"mySheet7", "890px", "300px");
         IBS_InitSheet(mySheet7,initData);
         
       //mySheet8 //인사발령
@@ -259,7 +259,7 @@
          {Header:"비고",Type:"Text", SaveName:"sPos", Width:60, Align:"Center",Edit:0},
       ];
            
-		createIBSheet2($("#ib-container5")[0],"mySheet8", "998px", "320px");
+		createIBSheet2($("#ib-container5")[0],"mySheet8", "890px", "320px");
 		IBS_InitSheet(mySheet8,initData);
 		
 		//mySheet9 //인사고과
@@ -280,7 +280,7 @@
 			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
 		];
            
-		createIBSheet2($("#ib-container6")[0],"mySheet9", "998px", "320px");
+		createIBSheet2($("#ib-container6")[0],"mySheet9", "890px", "320px");
 		IBS_InitSheet(mySheet9,initData);
 		
 		//mySheet10 //출장
@@ -302,7 +302,7 @@
 			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
 		];
            
-		createIBSheet2($("#ib-container7")[0],"mySheet10", "998px", "320px");
+		createIBSheet2($("#ib-container7")[0],"mySheet10", "890px", "320px");
 		IBS_InitSheet(mySheet10,initData);
 		
 		//mySheet11 //상벌관리
@@ -323,7 +323,7 @@
 			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
 		];
            
-		createIBSheet2($("#ib-container8")[0],"mySheet11", "998px", "320px");
+		createIBSheet2($("#ib-container8")[0],"mySheet11", "890px", "320px");
 		IBS_InitSheet(mySheet11,initData);
 		
 		
@@ -828,48 +828,46 @@
 								</colgroup>
 								<tr>
 									<td class="bg01_r">한자이름</td><!-- 이름 변경해야함 -->
-									<td class="bg02_l"><input type="text" id="isa_HANJA_NAME" style="width: 98%; " readonly></td>
+									<td class="bg02_l"><input type="text" id="isa_HANJA_NAME" style="width: 98%; background-color: #eee;" readonly></td>
 									<td class="bg01_r">채용구분</td>
 									<td class="bg02_l">
-										<select id="isa_HIRE_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_HIRE_CODE" style="width: 80px; background-color: #eee;" class="select_02" disabled>
 												<option value="" ></option>
 										</select>
 									</td>
 									<td class="bg01_r">기수</td>
-									<td class="bg02_l"><input type="text" id="isa_NUM" style="width: 98%; " readonly></td>
+									<td class="bg02_l"><input type="text" id="isa_NUM" style="width: 98%; background-color: #eee;" readonly></td>
 								</tr>
 								
 								<tr>
 									<td class="bg01_r">현주소</td>
 									<td>
-										<input type="text" id="isa_ADDR_ZIP" size="10px" readonly>
-										<img src='${contextPath}/resources/image/search_icon.png;' style='cursor:pointer;' />
+										<input type="text" id="isa_ADDR_ZIP" size="10px" style="background-color: #eee;" readonly>
 									</td>
 									<td class="bg02_l" colspan="4">
-										<input type="text" id="isa_ADDRESS" size="50px" style="width:100%;" readonly>
+										<input type="text" id="isa_ADDRESS" size="50px" style="width:100%; background-color: #eee;" readonly>
 									</td>
 								</tr>
 	   							<tr>
 		   							<td class="bg01_r"></td><!-- 이름 변경해야함 -->
-		   							<td class="bg02_l" colspan="5"><input type="text" id="isa_ADDR_DETAIL" size="50px" style="width:100%;" readonly></td>
+		   							<td class="bg02_l" colspan="5"><input type="text" id="isa_ADDR_DETAIL" size="50px" style="width:100%; background-color: #eee;" readonly></td>
 	   							</tr>
 	   							
 								<tr>
 									<td class="bg01_r">등록기준지</td><!-- 이름 변경해야함 -->
 									<td>
-										<input type="text" id="isa_PER_ADDR_ZIP" size="10px" readonly>
-										<img src='${contextPath}/resources/image/search_icon.png;' style='cursor:pointer;' />
+										<input type="text" id="isa_PER_ADDR_ZIP" size="10px" style="background-color: #eee;" readonly>
 									</td>
-									<td class="bg02_l" colspan="5"><input type="text" id="isa_PERMANENT_ADDR" size="50px" style="width:100%;" readonly></td>
+									<td class="bg02_l" colspan="5"><input type="text" id="isa_PERMANENT_ADDR" size="50px" style="width:100%; background-color: #eee;" readonly></td>
 								</tr>
 								<tr><!-- 이름 변경해야함 -->
 									<td class="bg01_r"></td><!-- 이름 변경해야함 -->
-									<td class="bg02_l" colspan="5"><input type="text" id="isa_PER_ADDR_DETAIL" size="50px" style="width:100%;" readonly></td>
+									<td class="bg02_l" colspan="5"><input type="text" id="isa_PER_ADDR_DETAIL" size="50px" style="width:100%; background-color: #eee;" readonly></td>
 								</tr>
 								<tr>
 									<td class="bg01_r">결혼여부</td>
 									<td class="bg02_l">
-										<select id="isa_MARRIAGE_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_MARRIAGE_CODE" style="width: 80px; background-color: #eee;" class="select_02" disabled>
 												<option value=""></option>
 												<option value="미혼">미혼</option>
 												<option value="기혼">기혼</option>
@@ -877,13 +875,13 @@
 									</td>
 									<td class="bg01_r">주거구분</td>
 									<td class="bg02_l">
-										<select id="isa_HOUSE_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_HOUSE_CODE" style="width: 80px; background-color: #eee;" class="select_02" disabled>
 												<option value=""></option>
 										</select>
 									</td>
 									<td class="bg01_r">생활수준</td>
 									<td class="bg02_l">
-										<select id="isa_LIVING_CODE" style="width: 80px;" class="select_02">
+										<select id="isa_LIVING_CODE" style="width: 80px; background-color: #eee;" class="select_02" disabled>
 												<option value=""></option>
 										</select>
 									</td>
@@ -892,40 +890,40 @@
                         <tr>
                            <td class="bg01_r">종교</td>
                            <td class="bg02_l">
-                              <select id="isa_RELIGION_CODE" style="width: 80px;" class="select_02" onchange="direct_religion(this.value)">
+                              <select id="isa_RELIGION_CODE" style="width: 80px; background-color: #eee;" class="select_02" onchange="direct_religion(this.value)" disabled>
                                  <option value=""></option>
                                  <option value="religion">직접입력</option>
                               </select>
                            </td>
                            <td colspan="4" class="bg02_l">
-                              <input type="text" id="religion_DETAI" readonly/>
+                              <input type="text" id="religion_DETAI" style="background-color: #eee;" readonly/>
                            </td>
                         </tr>
                      
                         <tr>
                            <td class="bg01_r">취미</td>
                            <td class="bg02_l">
-                              <select id="isa_HOBBY_CODE" style="width: 80px;" class="select_02" onchange="direct_hobby(this.value)">
+                              <select id="isa_HOBBY_CODE" style="width: 80px; background-color: #eee;" class="select_02" onchange="direct_hobby(this.value)" disabled>
                                  <option value=""></option>
                                  <option value="hobby">직접입력</option>
                               </select>
                            </td>
                            <td colspan="4" class="bg02_l">
-                              <input type="text" id="hobby_DETAI" readonly/>
+                              <input type="text" id="hobby_DETAI" style="background-color: #eee;" readonly/>
                            </td>
                         </tr>
                      
                         <tr>
                            <td class="bg01_r">특기</td>
                            <td class="bg02_l">
-                              <select id="isa_SPECIALTY_CODE" style="width: 80px;" class="select_02" onchange="direct(this.value)">
+                              <select id="isa_SPECIALTY_CODE" style="width: 80px; background-color: #eee;" class="select_02" onchange="direct(this.value)" disabled>
                                  <option value=""></option>
                                  <option value="specialty">직접입력</option>
                               </select>
                            </td>
                            <!-- 처음 불러올 때 숨겨둔다. -->
                            <td colspan="4" class="bg02_l" >
-                              <input type="text" id="specialty_DETAI" readonly/>
+                              <input type="text" id="specialty_DETAI" style="background-color: #eee;" readonly/>
                            </td>
                         </tr>
                      </table>
@@ -947,28 +945,28 @@
                         <tr>
                            <td class="bg01_r">병역구분</td><!-- 이름 변경해야함 -->
                            <td class="bg02_l">
-                              <select id="isa_MILITARY_CODE" style="width: 80px;" class="select_02">
+                              <select id="isa_MILITARY_CODE" style="width: 80px; background-color: #eee;" class="select_02" disabled>
                                     <option value=""></option>
                               </select>
                            </td>
                            <td class="bg01_r">면제사유</td>
                            <td class="bg02_l">
-                              <input type="text" id="isa_MYEONJE" style="width: 98%; " readonly>   
+                              <input type="text" id="isa_MYEONJE" style="width: 98%; background-color: #eee;" readonly>   
                            </td>
                            <td class="bg01_r">군번</td>
-                           <td class="bg02_l"><input type="text" id="isa_MIL_NUM" style="width: 98%; " readonly></td>
+                           <td class="bg02_l"><input type="text" id="isa_MIL_NUM" style="width: 98%; background-color: #eee;" readonly></td>
                         </tr>
                         
                         <tr>
                            <td class="bg01_r">복무시작일</td>
-                           <td class="bg02_l"><input type="text" id="isa_MILI_STA_DATE" style="width: 98%; " readonly></td>
+                           <td class="bg02_l"><input type="text" id="isa_MILI_STA_DATE" style="width: 98%; background-color: #eee;" readonly></td>
                            
                            <td class="bg01_r">복무종료일</td>
-                           <td class="bg02_l"><input type="text" id="isa_MILI_END_DATE" style="width: 98%; " readonly></td>
+                           <td class="bg02_l"><input type="text" id="isa_MILI_END_DATE" style="width: 98%; background-color: #eee;" readonly></td>
                            
                            <td class="bg01_r">복무기간포함</td>
                            <td class="bg02_l">
-                              <select id="isa_POS_CODE" style="width: 80px;" class="select_02">
+                              <select id="isa_POS_CODE" style="width: 80px; background-color: #eee;" class="select_02" disabled>
                                     <option value=""></option>
                               </select>
                            </td>
@@ -977,19 +975,19 @@
                         <tr>
                            <td class="bg01_r">군별</td>
                            <td class="bg02_l">
-                              <select id="isa_GUNBYEOL_CODE" style="width: 80px;" class="select_02">
+                              <select id="isa_GUNBYEOL_CODE" style="width: 80px; background-color: #eee;" class="select_02" disabled>
                                     <option value=""></option>
                               </select>
                            </td>
                            <td class="bg01_r">병과</td>
                            <td class="bg02_l">
-                              <select id="isa_BOTS_CODE" style="width: 80px;" class="select_02">
+                              <select id="isa_BOTS_CODE" style="width: 80px; background-color: #eee;" class="select_02" disabled>
                                     <option value=""></option>
                               </select>
                            </td>
                            <td class="bg01_r">예비군</td>
                            <td class="bg02_l">
-                              <select id="isa_YEBIGUN_CODE" style="width: 80px;" class="select_02">
+                              <select id="isa_YEBIGUN_CODE" style="width: 80px; background-color: #eee;" class="select_02" disabled>
                                     <option value=""></option>
                               </select>
                            </td>
@@ -998,14 +996,14 @@
                         <tr>
                            <td class="bg01_r">제대구분</td>
                            <td class="bg02_l">
-                              <select id="isa_DISCHARGE_CODE" style="width: 80px;" class="select_02">
+                              <select id="isa_DISCHARGE_CODE" style="width: 80px; background-color: #eee;" class="select_02" disabled>
                                  <option value=""></option>
                               </select>
                            </td>
                            
                            <td class="bg01_r">계급</td>
                            <td class="bg02_l">
-                              <select id="isa_MILITARY_CLASS_CODE" style="width: 80px;" class="select_02">
+                              <select id="isa_MILITARY_CLASS_CODE" style="width: 80px; background-color: #eee;" class="select_02" disabled>
                                  <option value=""></option>
                               </select>
                            </td>

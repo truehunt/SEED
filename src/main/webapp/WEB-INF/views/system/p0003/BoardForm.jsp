@@ -85,7 +85,7 @@ function fn_fileDelete(fileno) {
         <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-send fa-fw"></i> <c:out value="${bgInfo.bgname}"/></h1>
+                    <h1 class="page-header"><i class="fa fa-clipboard fa-fw"></i> <c:out value="${bgInfo.bgname}"/></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -99,7 +99,7 @@ function fn_fileDelete(fileno) {
 	                            <label class="col-lg-1"><s:message code="board.title"/></label>
 	                            <div class="col-lg-9">
 	                            	<input type="text" class="form-control" id="brdtitle" name="brdtitle" size="70" maxlength="250" value="<c:out value="${boardInfo.brdtitle}"/>">
-	                            	<c:if test="${bgInfo.bgnotice=='Y'}">
+	                            	<c:if test="${bgInfo.bgnotice=='Y' and sessionScope.SAWON_VIEW_PERMISSION == 'A' }">
 									 	<label>
 				                        	<input type="checkbox" name="brdnotice" value="Y" <c:if test="${boardInfo.brdnotice=='Y'}">checked="checked"</c:if>/>
 				                        	<s:message code="common.notice"/>

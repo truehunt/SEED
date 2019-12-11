@@ -152,7 +152,7 @@ function calendarDayMouseout(){
      
      
      <!-- 공지사항 & 생일자 & 경조사 -->
-    		<h1 class="page-header"> <i class="fa fa-send fa-fw"></i> <s:message code="main.board"/></h1>
+    		<h1 class="page-header"> <i class="fa fa-clipboard fa-fw"></i> <s:message code="main.board"/></h1>
             <div class="row">
                 <div class="col-lg-4">
                     <div class="panel panel-default">
@@ -176,7 +176,7 @@ function calendarDayMouseout(){
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-volume-up fa-fw"></i> <s:message code="common.birthday"/>
+                            <i class="fa fa-birthday-cake fa-fw"></i> <s:message code="common.birthday"/>
                         </div>
                         <div class="panel-body maxHeight400">
                         	<div class="listHead">
@@ -185,37 +185,55 @@ function calendarDayMouseout(){
                                     <div class="listHiddenField pull-right field100">부서</div>
                                     <div class="listTitle">성명</div>
                                </div>
-                            <div class="listBody">
-                           		<c:forEach var="birthday" items="${birthday}" varStatus="status">    
+                            <c:forEach var="birthday" items="${birthday}" varStatus="status">    
+                            	<div class="listBody">
                                         <div class="listHiddenField pull-right field100"><c:out value="${birthday.PERSON_INFO_DATE_BIRTH}"/></div>
                                         <div class="listHiddenField pull-right field100"><c:out value="${birthday.RANK_NAME}"/></div>
                                         <div class="listHiddenField pull-right field100"><c:out value="${birthday.FK_DEPT_NAME}"/></div>
                                         <div class="listTitle"><c:out value="${birthday.SAWON_NAME}"/>
                                         </div>
-                                 </c:forEach>
-                            </div>
+                            	</div>
+                           	</c:forEach>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-volume-up fa-fw"></i> <s:message code="common.family"/>
+                            <i class="fa fa-send fa-fw"></i> <s:message code="common.news"/>
+                            <div class="pull-right"><a href="boardList">more</a>
+                            </div>
                         </div>
-                        <div class="panel-body maxHeight400">
-                            <c:forEach var="noticeList" items="${noticeList}" varStatus="status">    
-                                <c:url var="link" value="boardRead">
-                                    <c:param name="brdno" value="${noticeList.brdno}" />
-                                </c:url>    
-                                <a href="${link}">
-                                <div class="listBody listTitle">
-                                    <c:out value="${noticeList.brdtitle}"/>
-                                </div>    
-                                </a>
-                            </c:forEach>
+                        <div class="panel-body">
+                            <div class="col-lg-12">
+                                <div class="listHead">
+                                    <div class="listHiddenField pull-right field100"><s:message code="board.locate"/></div>
+                                    <div class="listHiddenField pull-right field100"><s:message code="board.date"/></div>
+                                    <div class="listHiddenField pull-right field100"><s:message code="board.writer"/></div>
+                                    <div class="listTitle"><s:message code="board.title"/></div>
+                                </div>
+                                <c:forEach var="listview" items="${listview}" varStatus="status">    
+                                    <c:url var="link" value="boardRead">
+                                        <c:param name="brdno" value="${listview.brdno}" />
+                                    </c:url>        
+                                    <div class="listBody">
+                                        <div class="listHiddenField pull-right field100"><c:out value="${listview.bgname}"/></div>
+                                        <div class="listHiddenField pull-right field100"  style="font-size:11px;"><c:out value="${listview.brddate}"/></div>
+                                        <div class="listHiddenField pull-right field100"><c:out value="${listview.brdwriter}"/></div>
+                                        <div class="listTitle" title="<c:out value="${listview.brdtitle}"/>">
+                                            <a href="${link}"><c:out value="${listview.brdtitle}"/></a>
+                                            <c:if test="${listview.replycnt>0}">
+                                                (<c:out value="${listview.replycnt}"/>)
+                                            </c:if>                                                
+                                        </div>
+                                        <div class="showField text-muted small">
+                                            <c:out value="${listview.brdwriter}"/> <c:out value="${listview.brddate}"/>
+                                        </div>
+                                    </div>
+                                </c:forEach>    
+                            </div>                        
                         </div>
                     </div>
-                </div>
           </div>
      
      

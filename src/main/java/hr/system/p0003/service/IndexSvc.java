@@ -34,7 +34,7 @@ public class IndexSvc {
         return sqlSession.selectList("selectSignList", param);
     }
     
-    // 인덱스 게시판 & 공지사항
+    // 인덱스 게시판 & 공지사항 & 생일자
     public List<?> selectRecentNews() {
         return sqlSession.selectList("selectRecentNews");
     }

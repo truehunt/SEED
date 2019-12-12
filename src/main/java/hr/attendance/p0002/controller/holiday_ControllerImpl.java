@@ -48,6 +48,28 @@ public class holiday_ControllerImpl implements holiday_Controller {
 		ModelAndView main = new ModelAndView(viewName);
 		return main;
 	}
+	
+	@Override
+	@RequestMapping(value = "attendance/p0002/business_M.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView business_M(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = getViewName(request);
+		viewName = "attendance/p0002/business_M";
+		request.setCharacterEncoding("utf-8");
+		// ModelAndView main = new ModelAndView("hr/p0001_init");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
+	
+	@Override
+	@RequestMapping(value = "attendance/p0002/holiday_M.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView holiday_M(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = getViewName(request);
+		viewName = "attendance/p0002/holiday_M";
+		request.setCharacterEncoding("utf-8");
+		// ModelAndView main = new ModelAndView("hr/p0001_init");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
 
 	@Override
 	@RequestMapping(value = "Aholiday_da", method = { RequestMethod.GET, RequestMethod.POST })
@@ -168,11 +190,11 @@ public class holiday_ControllerImpl implements holiday_Controller {
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
 		searchMap.put("fd_year", request.getParameter("fd_year")+request.getParameter("fd_month")+"%");
 		searchMap.put("sawon_num", request.getParameter("sawon_num"));
 		searchMap.put("option", request.getParameter("option"));
 		searchMap.put("HOLIDAY_PAY", request.getParameter("HOLIDAY_PAY"));
-		System.out.println("11111111"+searchMap.put("HOLIDAY_PAY", request.getParameter("HOLIDAY_PAY")));
 		// ?��?��?�� 조회
 		List<business_VO> data = holiday_Service.searchList_busin_da(searchMap);
 		List<DateVO> calenList = new ArrayList<DateVO>();
@@ -249,7 +271,6 @@ public class holiday_ControllerImpl implements holiday_Controller {
 	@ResponseBody
 	public Map searchList_holi_da(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
 			throws Exception {
-
 		request.setCharacterEncoding("utf-8");
 		Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
@@ -257,6 +278,7 @@ public class holiday_ControllerImpl implements holiday_Controller {
 		searchMap.put("sawon_num", request.getParameter("sawon_num"));
 		searchMap.put("option", request.getParameter("option"));
 		searchMap.put("HOLIDAY_PAY", request.getParameter("HOLIDAY_PAY"));
+		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
 		
 		// ?��?��?�� 조회
 		List<holiday_VO> data = holiday_Service.searchList_holi_da(searchMap);

@@ -12,4 +12,20 @@ public interface Bal_Sawon_Controller {
 	public ModelAndView insaBal_Sawon(HttpServletRequest request, HttpServletResponse response) throws Exception; // 인사발령 사원
 
 	public ModelAndView bal_Num_Code(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	public ModelAndView bal_Content(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	public Map Sawon_BalNum(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	public Map BalDiv(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	public Map BalSearch(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	public Map fk_Sawon(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	public Map BalContent(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	public Map EM_INFO(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	
 }

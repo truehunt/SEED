@@ -141,7 +141,7 @@ public class SignControllerImpl implements SignController {
         	signDocInfo.setAD_CONTENT(docType.getDOCTYPE_DTCONTENTS());
         	signDocInfo.setPK_SAWON_CODE(userno);
         	// 사번, 이름, 기안/합의/결제, 직책
-            signlist = signDAO.selectSignLast(signDocInfo);
+            signlist = signDAO.selectSignLast(signDocInfo); // 마지막에 기안했던 결재경로를 불러옴.
             String signPath = "";
             for (int i=0; i<signlist.size();i++){
             	SignVO svo = (SignVO) signlist.get(i);

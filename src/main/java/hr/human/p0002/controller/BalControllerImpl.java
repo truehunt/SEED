@@ -196,6 +196,7 @@ public class BalControllerImpl implements BalController{
 			return resultMap;
 		}
 		
+		
 		@Override
 		@RequestMapping(value = "/human/p0002/insertBal.do", method = { RequestMethod.GET, RequestMethod.POST })
 		@ResponseBody

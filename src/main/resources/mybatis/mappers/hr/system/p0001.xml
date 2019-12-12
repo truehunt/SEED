@@ -96,10 +96,8 @@
     <!-- 사용자 권한 조회 -->
     <select id="selectUserList" parameterType="String" resultType="hr.system.p0001.vo.SawonVO">
         SELECT PK_SAWON_CODE, SAWON_NAME, FK_DEPT_CODE, SAWON_VIEW_PERMISSION 
-          FROM SAWON CU
-         INNER JOIN COM_CODE CC ON CC.CODECD=CU.SAWON_VIEW_PERMISSION
+          FROM SAWON
          WHERE KEY=#{deptno} 
-           AND CC.CLASSNO=1          
     </select> 
     
     <!-- 전자결재문서등록 -->
@@ -753,8 +751,8 @@
 	</update>	
 	
 	<insert id="SEinsertData" parameterType="java.util.Map">
-		INSERT INTO SAWON(PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME, SAWON_JOIN_DATE, SAWON_USER_STATUS, SAWON_PASSWORD, SAWON_VIEW_PERMISSION, FK_DEPT_NAME, SAWON_EMAIL, FK_DEPT_CODE, SAWON_INT_USER_ID, SAWON_INT_DATE)
-		VALUES (#{pk_SAWON_CODE}, #{sawon_NAME}, #{sawon_ENG_NAME, jdbcType=VARCHAR}, #{sawon_JOIN_DATE}, #{sawon_USER_STATUS}, #{pk_SAWON_CODE}, 'C', #{fk_DEPT_NAME, jdbcType=VARCHAR}, #{sawon_EMAIL, jdbcType=VARCHAR}, #{fk_DEPT_CODE, jdbcType=VARCHAR}, #{PK_SAWON_CODE2, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'))
+		INSERT INTO SAWON(PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME, SAWON_JOIN_DATE, SAWON_USER_STATUS, SAWON_PASSWORD, SAWON_VIEW_PERMISSION, FK_DEPT_NAME, SAWON_EMAIL, FK_DEPT_CODE, SAWON_INT_USER_ID, SAWON_INT_DATE, key, RANK_NAME, FK_SAWON_WORKPLACE_CODE)
+		VALUES (#{pk_SAWON_CODE}, #{sawon_NAME}, #{sawon_ENG_NAME, jdbcType=VARCHAR}, #{sawon_JOIN_DATE}, #{sawon_USER_STATUS}, #{pk_SAWON_CODE}, 'C', #{fk_DEPT_NAME, jdbcType=VARCHAR}, #{sawon_EMAIL, jdbcType=VARCHAR}, #{fk_DEPT_CODE, jdbcType=VARCHAR}, #{PK_SAWON_CODE2, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), (select key from DEPT where PK_DEPT_CODE=#{fk_DEPT_CODE, jdbcType=VARCHAR}), '사원', '1000')
 	</insert>	
 	
 	<delete id="SEdeleteData" parameterType="java.util.Map">

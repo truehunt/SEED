@@ -69,8 +69,6 @@ $(document).ready(function(){
 		            	urlToGo = "myinfo"; 
 		            } else if(url === "deptInfo"){ // 팀원정보보기
 		            	urlToGo = "deptInfo"; 
-		            } else if(url === "adCodeList"){ // 공통코드관리
-		            	urlToGo = "/SEED/adCodeList"; 
 		            } else if(url === "searchMember"){ // 사원조회(ESS)
 		            	urlToGo = "searchMember";
 		            } else if(url === "boardList"){ // 게시판(공지사항)
@@ -205,33 +203,6 @@ $(document).ready(function(){
 
 	            <ul class="nav navbar-top-links navbar-right">
 	            	
-	                <!-- /.dropdown 알림창 -->
-                    <c:if test="${alertcount>0}">
-		                <li class="dropdown">
-		                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" onclick="showAlertList()">
-		                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
-		                        	<div class="msgAlert"><c:out value="${alertcount}"/></div>
-		                    </a>
-		                    <script>
-		                    	function showAlertList(){
-		                    		$.ajax({
-		                    			url: "alertList4Ajax", 
-		                    			dataType: "html",
-		                    			type:"post", 
-		                    			success: function(result){
-		                    				if (result!=="") {
-		                    					$("#alertlist").html(result);
-		                    				}
-		                    			}
-		                    		})		                    		
-		                    	}
-		                    </script>
-		                    <ul id="alertlist" class="dropdown-menu dropdown-alerts">
-		                    </ul>
-		                    <!-- /.dropdown-alerts -->
-		                </li>
-                    </c:if>
-                    
 	                <!-- /.dropdown 유저상태창 -->
 	                <li class="dropdown">
 	                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -516,9 +487,6 @@ $(document).ready(function(){
 	                        </li>
                              <li>
                                  <a href='#' onClick="doAction(myTab,'<s:message code="main.adSign"/>','chart','adSignDocTypeList','adSignDocTypeList'); return false"><i class="fa fa-files-o fa-fw"></i> <s:message code="main.adSign"/></a>
-                             </li>
-                             <li>
-                                 <a href='#' onClick="doAction(myTab,'<s:message code="main.adCode"/>','chart','adCodeList','adCodeList'); return false"><i class="fa fa-check fa-fw"></i> <s:message code="main.adCode"/></a>
                              </li>
 	                	</c:if>
                         	        

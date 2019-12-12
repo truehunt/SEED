@@ -86,7 +86,7 @@
       		{Header:"사원코드",Type:"Text",SaveName:"fk_BAL_SAWON_CODE", Align:"Center",Edit:0},
       		{Header:"사원명",Type:"Text", SaveName:"sawon_NAME", Width:150, Align:"Center",Edit:0},
 			{Header:"부서",Type:"Text", SaveName:"dept_NAME", Width:60, Align:"Center",Edit:0},
-			{Header:"직책",Type:"Text", SaveName:"rank_NAME", Width:60, Align:"Center",Edit:0},
+			{Header:"직급",Type:"Text", SaveName:"rank_NAME", Width:60, Align:"Center",Edit:0},
 			
 			{Header:"발령자코드",Type:"Text", SaveName:"fk_BAL_CODE", Width:60, Align:"Center",Edit:0},
 			{Header:"발령호수",Type:"Text", SaveName:"bal_NUM", Width:60, Align:"Center",Edit:0},

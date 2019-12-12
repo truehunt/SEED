@@ -90,7 +90,7 @@ public class SchCtr {
         }
         modelMap.addAttribute("schInfo", schInfo);
         
-        List<?> sstypelist= etcSvc.selectClassCode("4");
+        List<?> sstypelist= etcSvc.selectClassCode("SE");
         modelMap.addAttribute("sstypelist", sstypelist);
         
         return "system/p0003/SchForm";

@@ -31,6 +31,8 @@ public class BalVO {
 	private String pk_DEPT_CODE;
 	private String rank_NAME;
 	
+	private String info;
+	
 	public BalVO() {
 		System.out.println("BalVO 메서드호출");
 	}
@@ -235,4 +237,13 @@ public class BalVO {
 		this.rank_NAME = rank_NAME;
 	}
 
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	
 }

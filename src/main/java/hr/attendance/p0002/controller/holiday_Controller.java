@@ -16,8 +16,9 @@ public interface holiday_Controller {
 	public ModelAndView business(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView business_da(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView outside(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView holiday_M(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public String select(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	
+	public ModelAndView business_M(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 //	��� 
 	public Map saveData_holi(HttpServletRequest request, HttpServletResponse response) throws Exception;
@@ -30,6 +31,9 @@ public interface holiday_Controller {
 	public Map searchList_busin_da(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)	throws Exception;
 	public Map searchList_holi_da(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception;
 	public Map searchList_calc(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception;
+	
+	
+	
 	
 	
 	

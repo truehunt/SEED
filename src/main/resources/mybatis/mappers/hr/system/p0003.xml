@@ -148,13 +148,13 @@
     </select>  
 
     <select id="selectSchOne4Read" parameterType="hr.system.p0003.vo.SchVO" resultType="hr.system.p0003.vo.SchVO">
-        SELECT SSNO, SSTITLE, CC1.CODENM SSTYPE, SSSTARTDATE, SSSTARTHOUR, SSSTARTMINUTE, SSENDDATE, SSENDHOUR 
-        	 , SSENDMINUTE, SSREPEATTYPE, CC2.CODENM SSREPEATTYPENM, SSREPEATEND, SSCONTENTS, CC3.CODENM SSISOPEN, TC.PK_SAWON_CODE, SAWON_NAME
+        SELECT SSNO, SSTITLE, CC1.PERSON_BC_DETAI_MNGEMENT_NAME SSTYPE, SSSTARTDATE, SSSTARTHOUR, SSSTARTMINUTE, SSENDDATE, SSENDHOUR 
+        	 , SSENDMINUTE, SSREPEATTYPE, CC2.PERSON_BC_DETAI_MNGEMENT_NAME SSREPEATTYPENM, SSREPEATEND, SSCONTENTS, CC3.PERSON_BC_DETAI_MNGEMENT_NAME SSISOPEN, TC.PK_SAWON_CODE, SAWON_NAME
           FROM SCHEDULE TC
          INNER JOIN SAWON CU ON TC.PK_SAWON_CODE=CU.PK_SAWON_CODE
-         INNER JOIN COM_CODE CC1 ON CC1.CODECD=TC.SSTYPE AND CC1.CLASSNO=4
-         INNER JOIN COM_CODE CC2 ON CC2.CODECD=TC.SSREPEATTYPE AND CC2.CLASSNO=5
-         INNER JOIN COM_CODE CC3 ON CC3.CODECD=TC.SSISOPEN AND CC3.CLASSNO=6
+         INNER JOIN PERSON_BC_DETAI CC1 ON CC1.PK_PERSON_BC_DETAI_CODE_NUM=TC.SSTYPE AND CC1.FK_PERSON_BC_CODE_NUM='SE'
+         INNER JOIN PERSON_BC_DETAI CC2 ON CC2.PK_PERSON_BC_DETAI_CODE_NUM=TC.SSREPEATTYPE AND CC2.FK_PERSON_BC_CODE_NUM='SH'
+         INNER JOIN PERSON_BC_DETAI CC3 ON CC3.PK_PERSON_BC_DETAI_CODE_NUM=TC.SSISOPEN AND CC3.FK_PERSON_BC_CODE_NUM='SI'
          WHERE TC.DELETEFLAG='N' AND SSNO=#{SSNO, jdbcType=VARCHAR}
     </select>  
     
@@ -164,61 +164,13 @@
          WHERE SSNO=#{SSNO} 
     </delete>
     
-    <!-- 공통코드관리 -->
+    <!-- 일정관리-입력 에서 사용되는 공통코드관리 -->
     <select id="selectClassCode" parameterType="String"  resultType="hr.system.p0003.vo.ClassCodeVO">
-        SELECT CODECD, CODENM 
-          FROM COM_CODE 
-         WHERE CLASSNO=#{CLASSNO} -- AND DELETEFLAG='N'
-         ORDER BY CAST(CODECD AS INT)
+        SELECT PK_PERSON_BC_DETAI_CODE_NUM CODECD, PERSON_BC_DETAI_MNGEMENT_NAME CODENM
+          FROM PERSON_BC_DETAI 
+         WHERE FK_PERSON_BC_CODE_NUM=#{CLASSNO} -- AND DELETEFLAG='N'
+         ORDER BY CAST(PK_PERSON_BC_DETAI_CODE_NUM AS INT)
     </select> 
-    
-    <select id="selectCodeOne" parameterType="hr.system.p0003.vo.CodeVO" resultType="hr.system.p0003.vo.CodeVO">
-        SELECT CLASSNO, CODECD, CODENM
-          FROM COM_CODE CC
-         WHERE CLASSNO=#{CLASSNO} AND CODECD=#{CODECD}
-    </select>
-    
-    <sql id="includeCode">
-        WHERE 1=1
-        <if test="searchKeyword!=null and searchKeyword!='' and searchType!=''">
-            <foreach item="item" index="index" collection="searchTypeArr" separator=" OR " open="AND (" close=")">
-                 ${item} LIKE CONCAT('%', #{searchKeyword},'%' )
-            </foreach>
-        </if>               
-    </sql>
-
-    <select id="selectCodeCount" resultType="Integer" parameterType="project.common.SearchVO">
-        SELECT COUNT(*)
-          FROM COM_CODE CC
-         <include refid="includeCode"/>
-    </select> 
-    
-    <select id="selectCodeList" resultType="hr.system.p0003.vo.CodeVO" parameterType="project.common.SearchVO">
-          SELECT CLASSNO, CODECD, CODENM
-			FROM (SELECT ROWNUM as NO, CLASSNO, CODECD, CODENM
-		      FROM COM_CODE TB
-	      	ORDER by CLASSNO, CODECD) A
-	      	<include refid="includeCode"/>
-      	<if test="rowStart != null">
-			AND NO BETWEEN ${rowStart-1} AND ${rowStart+9}
-         </if>
-    </select> 
-        
-    <insert id="insertCode" parameterType="hr.system.p0003.vo.CodeVO" >
-        INSERT INTO COM_CODE(CLASSNO, CODECD, CODENM)
-        VALUES (#{CLASSNO}, #{CODECD}, #{CODENM})
-    </insert>
-    
-    <update id="updateCode" parameterType="hr.system.p0003.vo.CodeVO">
-        UPDATE COM_CODE
-           SET CODENM=#{CODENM}
-         WHERE CLASSNO=#{CLASSNO} AND CODECD=#{CODECD}
-    </update> 
-        
-    <delete id="deleteCodeOne" parameterType="hr.system.p0003.vo.CodeVO">
-        DELETE FROM COM_CODE
-         WHERE CLASSNO=#{CLASSNO} AND CODECD=#{CODECD}
-    </delete>
     
     <!-- chart -->
     <select id="selectBoardGroupCount4Statistic" resultType="project.common.CountVO" >
@@ -238,13 +190,13 @@
     </select>
     
     <select id="selectSignList" resultType="hr.elect.p0001.vo.SignDocVO" parameterType="project.common.SearchVO">
-        SELECT PK_AD_NUM, AD_TITLE, SD.SAWON_NAME, DT.DOCTYPE_DTTITLE, AD_INT_DATE, CODENM AS AD_DOCSTATUS
+        SELECT PK_AD_NUM, AD_TITLE, SD.SAWON_NAME, DT.DOCTYPE_DTTITLE, AD_INT_DATE, PERSON_BC_DETAI_MNGEMENT_NAME AS AD_DOCSTATUS
 		FROM AD AD
 		INNER JOIN SAWON SD ON AD.PK_SAWON_CODE=SD.PK_SAWON_CODE
-		INNER JOIN COM_CODE CC ON AD.AD_DOCSTATUS=CC.CODECD
+		INNER JOIN PERSON_BC_DETAI CC ON AD.AD_DOCSTATUS=CC.PK_PERSON_BC_DETAI_CODE_NUM
 		INNER JOIN DOCTYPE DT ON DT.PK_DOCTYPE_NUM=AD.PK_DOCTYPE_NUM
 		WHERE AD_DELETEFLAG='N'
-		AND CC.CLASSNO=2
+		AND CC.FK_PERSON_BC_CODE_NUM='SD'
 		AND AD_DOCSTATUS IN(1,2)
 		<if test="rowStart != null">
              AND ROWNUM BETWEEN ${rowStart-1} AND ${displayRowCount}

@@ -194,17 +194,17 @@
             {Header:"본교",Type:"Combo", SaveName:"hl_MAIN_CODE", Width:60, Align:"Center"},
             {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
         ];
-   
-          createIBSheet2($("#ib-container2")[0],"mySheet5", "100%", "300px");
-          IBS_InitSheet(mySheet5,initData);
-          
-//           //숨김
-//           mySheet5.SetColHidden([
-//            {Col: 0, Hidden:1}, //상태
-//            {Col: 3, Hidden:1} // pk값
-//          ]);
-          
-      //mySheet6 //경력
+	
+       	createIBSheet2($("#ib-container2")[0],"mySheet5", "100%", "300px");
+       	IBS_InitSheet(mySheet5,initData);
+       	
+//        	//숨김
+//        	mySheet5.SetColHidden([
+//   	      {Col: 0, Hidden:1}, //상태
+//   	      {Col: 3, Hidden:1} // pk값
+//   	    ]);
+       	
+		//mySheet6 //경력
         initData.Cols = [
         	{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
         	{Header:"NO",Type:"Seq", Align:"Center"},
@@ -223,15 +223,15 @@
         ];
          
         createIBSheet2($("#ib-container3")[0],"mySheet6", "100%", "300px");
-      IBS_InitSheet(mySheet6,initData);
-      
-//       //숨김
-//           mySheet6.SetColHidden([
-//           // {Col: 0, Hidden:1}, //상태
-//            //{Col: 3, Hidden:1} // pk값
-//          ]);
-      
-      //mySheet7 //면허/자격
+		IBS_InitSheet(mySheet6,initData);
+		
+// 		//숨김
+//        	mySheet6.SetColHidden([
+//   	     // {Col: 0, Hidden:1}, //상태
+//   	      //{Col: 3, Hidden:1} // pk값
+//   	    ]);
+		
+		//mySheet7 //면허/자격
         initData.Cols = [
         	{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
         	{Header:"NO",Type:"Seq", Align:"Center"},
@@ -249,25 +249,25 @@
         createIBSheet2($("#ib-container4")[0],"mySheet7", "100%", "300px");
         IBS_InitSheet(mySheet7,initData);
         
-//        //숨김
-//           mySheet7.SetColHidden([
-//            {Col: 0, Hidden:1}, //상태
-//            {Col: 3, Hidden:1} // pk값
-//          ]);
+//     	//숨김
+//        	mySheet7.SetColHidden([
+//   	      {Col: 0, Hidden:1}, //상태
+//   	      {Col: 3, Hidden:1} // pk값
+//   	    ]);
         
-      //mySheet8 //인사발령
-      initData.Cols = [
-         {Header:"NO",Type:"Status",SaveName:"Seq", Align:"Center"},
-         {Header:"발령호수",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"발령일자",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"제목",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"발령구분",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"발령내역",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"발령전정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"현정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"발령후정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"비고",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-      ];
+		//mySheet8 //인사발령
+		initData.Cols = [
+			{Header:"NO",Type:"Status",SaveName:"Seq", Align:"Center"},
+			{Header:"발령호수",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+			{Header:"발령일자",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+			{Header:"제목",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+			{Header:"발령구분",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+			{Header:"발령내역",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+			{Header:"발령전정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+			{Header:"현정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+			{Header:"발령후정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+			{Header:"비고",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+		];
            
 		createIBSheet2($("#ib-container5")[0],"mySheet8", "100%", "300px");
 		IBS_InitSheet(mySheet8,initData);
@@ -1284,16 +1284,16 @@
 </script>
 <body onload="LoadPage()">
   
-   <div id="wrapper">
-      <div id="page-wrapper" style="margin: 0px;">
+	<div id="wrapper">
+		<div id="page-wrapper" style="margin: 0px;">
 
-   <!--tab 하단의 메인 타이틀(제목) 들어가는 부분 -->
-   <div class="row">
-      <div class="col-lg-12">        <!-- 해당 메뉴의 아이콘 -->        <!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
-         <h1 class="page-header"><i class="fa fa-users fa-fw"></i> <s:message code="main.per1"/></h1>
-      </div>
-      <!-- /.col-lg-12 -->
-   </div>
+	<!--tab 하단의 메인 타이틀(제목) 들어가는 부분 -->
+	<div class="row">
+		<div class="col-lg-12">        <!-- 해당 메뉴의 아이콘 -->        <!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
+			<h1 class="page-header"><i class="fa fa-users fa-fw"></i> <s:message code="main.per1"/></h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
   
   <div class="main_content">
 		<!-- 버튼 -->
@@ -1347,7 +1347,7 @@
 						<a class="ib-tab-tabs-item__link"> <span class="ib-tab-tabs-item__title">면허/자격</span></a>
 					</div>
 				</div>
-				
+				<div style="height:5%"></div><div style="height:5%"></div>
 				<div id="tab_contents" class="ib-tab-contents" ><!-- style="height:100%; display: block; overflow: auto" -->
 					<!-- 채용/거주 -->
 					<div class="ib-tab-contents__item">
@@ -1424,192 +1424,192 @@
 									</td>
 								</tr>
 
-                        <tr>
-                           <td class="bg01_r">종교</td>
-                           <td class="bg02_l">
-                              <select id="isa_RELIGION_CODE" style="width: 80px;" class="select_02" onchange="direct_religion(this.value)">
-                                 <option value=""></option>
-                                 <option value="religion">직접입력</option>
-                              </select>
-                           </td>
-                           <td colspan="4" class="bg02_l">
-                              <input type="text" id="religion_DETAI" />
-                           </td>
-                        </tr>
-                     
-                        <tr>
-                           <td class="bg01_r">취미</td>
-                           <td class="bg02_l">
-                              <select id="isa_HOBBY_CODE" style="width: 80px;" class="select_02" onchange="direct_hobby(this.value)">
-                                 <option value=""></option>
-                                 <option value="hobby">직접입력</option>
-                              </select>
-                           </td>
-                           <td colspan="4" class="bg02_l">
-                              <input type="text" id="hobby_DETAI" />
-                           </td>
-                        </tr>
-                     
-                        <tr>
-                           <td class="bg01_r">특기</td>
-                           <td class="bg02_l">
-                              <select id="isa_SPECIALTY_CODE" style="width: 80px;" class="select_02" onchange="direct(this.value)">
-                                 <option value=""></option>
-                                 <option value="specialty">직접입력</option>
-                              </select>
-                           </td>
-                           <!-- 처음 불러올 때 숨겨둔다. -->
-                           <td colspan="4" class="bg02_l" >
-                              <input type="text" id="specialty_DETAI" />
-                           </td>
-                        </tr>
-                     </table>
-                  </form>
-               </div>
-               
-               <!-- 병역 -->
-               <div class="ib-tab-contents__item">
-                  <form name='frm'>
-                     <table class="tb01" style="width: 100%; min-width:400px">
-                        <colgroup>
-                           <col style="width: 12%;"></col>
-                           <col style="width: 22%;"></col>
-                           <col style="width: 11%;"></col>
-                           <col style="width: 22%;"></col>
-                           <col style="width: 11%;"></col>
-                           <col style="width: 22%;"></col>
-                        </colgroup>
-                        <tr>
-                           <td class="bg01_r">병역구분</td><!-- 이름 변경해야함 -->
-                           <td class="bg02_l">
-                              <select id="isa_MILITARY_CODE" style="width: 80px;" class="select_02">
-                                    <option value=""></option>
-                              </select>
-                           </td>
-                           <td class="bg01_r">면제사유</td>
-                           <td class="bg02_l">
-                              <input type="text" id="isa_MYEONJE" style="width: 98%; ">   
-                           </td>
-                           <td class="bg01_r">군번</td>
-                           <td class="bg02_l"><input type="text" id="isa_MIL_NUM" style="width: 98%; "></td>
-                        </tr>
-                        
-                        <tr>
-                           <td class="bg01_r">복무시작일</td>
-                           <td class="bg02_l"><input type="text" id="isa_MILI_STA_DATE" style="width: 98%; "></td>
-                           
-                           <td class="bg01_r">복무종료일</td>
-                           <td class="bg02_l"><input type="text" id="isa_MILI_END_DATE" style="width: 98%; "></td>
-                           
-                           <td class="bg01_r">복무기간포함</td>
-                           <td class="bg02_l">
-                              <select id="isa_POS_CODE" style="width: 80px;" class="select_02">
-                                    <option value=""></option>
-                              </select>
-                           </td>
-                        </tr>
-                           
-                        <tr>
-                           <td class="bg01_r">군별</td>
-                           <td class="bg02_l">
-                              <select id="isa_GUNBYEOL_CODE" style="width: 80px;" class="select_02">
-                                    <option value=""></option>
-                              </select>
-                           </td>
-                           <td class="bg01_r">병과</td>
-                           <td class="bg02_l">
-                              <select id="isa_BOTS_CODE" style="width: 80px;" class="select_02">
-                                    <option value=""></option>
-                              </select>
-                           </td>
-                           <td class="bg01_r">예비군</td>
-                           <td class="bg02_l">
-                              <select id="isa_YEBIGUN_CODE" style="width: 80px;" class="select_02">
-                                    <option value=""></option>
-                              </select>
-                           </td>
-                        </tr>
+								<tr>
+									<td class="bg01_r">종교</td>
+									<td class="bg02_l">
+										<select id="isa_RELIGION_CODE" style="width: 80px;" class="select_02" onchange="direct_religion(this.value)">
+											<option value=""></option>
+											<option value="religion">직접입력</option>
+										</select>
+									</td>
+									<td colspan="4" class="bg02_l">
+										<input type="text" id="religion_DETAI" />
+									</td>
+								</tr>
+							
+								<tr>
+									<td class="bg01_r">취미</td>
+									<td class="bg02_l">
+										<select id="isa_HOBBY_CODE" style="width: 80px;" class="select_02" onchange="direct_hobby(this.value)">
+											<option value=""></option>
+											<option value="hobby">직접입력</option>
+										</select>
+									</td>
+									<td colspan="4" class="bg02_l">
+										<input type="text" id="hobby_DETAI" />
+									</td>
+								</tr>
+							
+								<tr>
+									<td class="bg01_r">특기</td>
+									<td class="bg02_l">
+										<select id="isa_SPECIALTY_CODE" style="width: 80px;" class="select_02" onchange="direct(this.value)">
+											<option value=""></option>
+											<option value="specialty">직접입력</option>
+										</select>
+									</td>
+									<!-- 처음 불러올 때 숨겨둔다. -->
+									<td colspan="4" class="bg02_l" >
+										<input type="text" id="specialty_DETAI" />
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					
+					<!-- 병역 -->
+					<div class="ib-tab-contents__item">
+						<form name='frm'>
+							<table class="tb01" style="width: 100%; min-width:400px">
+								<colgroup>
+									<col style="width: 12%;"></col>
+									<col style="width: 22%;"></col>
+									<col style="width: 11%;"></col>
+									<col style="width: 22%;"></col>
+									<col style="width: 11%;"></col>
+									<col style="width: 22%;"></col>
+								</colgroup>
+								<tr>
+									<td class="bg01_r">병역구분</td><!-- 이름 변경해야함 -->
+									<td class="bg02_l">
+										<select id="isa_MILITARY_CODE" style="width: 80px;" class="select_02">
+												<option value=""></option>
+										</select>
+									</td>
+									<td class="bg01_r">면제사유</td>
+									<td class="bg02_l">
+										<input type="text" id="isa_MYEONJE" style="width: 98%; ">	
+									</td>
+									<td class="bg01_r">군번</td>
+									<td class="bg02_l"><input type="text" id="isa_MIL_NUM" style="width: 98%; "></td>
+								</tr>
+								
+								<tr>
+									<td class="bg01_r">복무시작일</td>
+									<td class="bg02_l"><input type="text" id="isa_MILI_STA_DATE" style="width: 98%; "></td>
+									
+									<td class="bg01_r">복무종료일</td>
+									<td class="bg02_l"><input type="text" id="isa_MILI_END_DATE" style="width: 98%; "></td>
+									
+									<td class="bg01_r">복무기간포함</td>
+									<td class="bg02_l">
+										<select id="isa_POS_CODE" style="width: 80px;" class="select_02">
+												<option value=""></option>
+										</select>
+									</td>
+								</tr>
+	   							
+								<tr>
+									<td class="bg01_r">군별</td>
+									<td class="bg02_l">
+										<select id="isa_GUNBYEOL_CODE" style="width: 80px;" class="select_02">
+												<option value=""></option>
+										</select>
+									</td>
+									<td class="bg01_r">병과</td>
+									<td class="bg02_l">
+										<select id="isa_BOTS_CODE" style="width: 80px;" class="select_02">
+												<option value=""></option>
+										</select>
+									</td>
+									<td class="bg01_r">예비군</td>
+									<td class="bg02_l">
+										<select id="isa_YEBIGUN_CODE" style="width: 80px;" class="select_02">
+												<option value=""></option>
+										</select>
+									</td>
+								</tr>
 
-                        <tr>
-                           <td class="bg01_r">제대구분</td>
-                           <td class="bg02_l">
-                              <select id="isa_DISCHARGE_CODE" style="width: 80px;" class="select_02">
-                                 <option value=""></option>
-                              </select>
-                           </td>
-                           
-                           <td class="bg01_r">계급</td>
-                           <td class="bg02_l">
-                              <select id="isa_MILITARY_CLASS_CODE" style="width: 80px;" class="select_02">
-                                 <option value=""></option>
-                              </select>
-                           </td>
-                        </tr>
-                     </table>
-                  </form>
-               </div>
-               
-               <!-- 가족 -->
-               <div class="ib-tab-contents__item">
-                  <div id='ib-container1'></div>
-               </div>
-               
-               <!-- 학력 -->
-               <div class="ib-tab-contents__item">
-                  <div id='ib-container2'></div>
-               </div>
-               
-               <!-- 경력 -->
-               <div class="ib-tab-contents__item">
-                  <div id='ib-container3'></div>
-               </div>
-               
-               <!-- 면허/자격 -->
-               <div class="ib-tab-contents__item">
-                  <div id='ib-container4'></div>
-               </div>
+								<tr>
+									<td class="bg01_r">제대구분</td>
+									<td class="bg02_l">
+										<select id="isa_DISCHARGE_CODE" style="width: 80px;" class="select_02">
+											<option value=""></option>
+										</select>
+									</td>
+									
+									<td class="bg01_r">계급</td>
+									<td class="bg02_l">
+										<select id="isa_MILITARY_CLASS_CODE" style="width: 80px;" class="select_02">
+											<option value=""></option>
+										</select>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					
+					<!-- 가족 -->
+					<div class="ib-tab-contents__item">
+						<div id='ib-container1'></div>
+					</div>
+					
+					<!-- 학력 -->
+					<div class="ib-tab-contents__item">
+						<div id='ib-container2'></div>
+					</div>
+					
+					<!-- 경력 -->
+					<div class="ib-tab-contents__item">
+						<div id='ib-container3'></div>
+					</div>
+					
+					<!-- 면허/자격 -->
+					<div class="ib-tab-contents__item">
+						<div id='ib-container4'></div>
+					</div>
 
-            </div>
-            
-               <div style="height:5%"></div>
-               
-               <!-- 아래 tab기능_2 -->
-            <div id="tab2" class="ib-tab-tabs">
-               <div class="ib-tab-tabs-item">
-                  <a class="ib-tab-tabs-item__link"> <span class="ib-tab-tabs-item__title">인사발령</span></a>
-                  <a class="ib-tab-tabs-item__link"> <span class="ib-tab-tabs-item__title">인사고과</span></a>
-                  <a class="ib-tab-tabs-item__link"> <span class="ib-tab-tabs-item__title">출장</span></a>
-                  <a class="ib-tab-tabs-item__link"> <span class="ib-tab-tabs-item__title">상벌관리</span></a>
-               </div>
-            </div>
-            
-            <div id="tab_contents_2" class="ib-tab-contents">
-               <!-- 인사발령 -->
-               <div class="ib-tab-contents__item"> 
-                  <div id='ib-container5'></div> 
-               </div>
-               
-               <!-- 인사고과 -->
-               <div class="ib-tab-contents__item"> 
-                  <div id='ib-container6'></div> 
-               </div>
-               
-               <!-- 출장 -->
-               <div class="ib-tab-contents__item"> 
-                  <div id='ib-container7'></div> 
-               </div>
-               
-               <!-- 상벌관리 -->
-               <div class="ib-tab-contents__item">
-                  <div id='ib-container8'></div> 
-               </div>
-            </div>
-            
-         </div>
-      </div>
-   </DIV>
-   
-   </div>
-   </div>
+				</div>
+				
+            	<div style="height:5%"></div>
+            	
+            	<!-- 아래 tab기능_2 -->
+				<div id="tab2" class="ib-tab-tabs">
+					<div class="ib-tab-tabs-item">
+						<a class="ib-tab-tabs-item__link"> <span class="ib-tab-tabs-item__title">인사발령</span></a>
+						<a class="ib-tab-tabs-item__link"> <span class="ib-tab-tabs-item__title">인사고과</span></a>
+						<a class="ib-tab-tabs-item__link"> <span class="ib-tab-tabs-item__title">출장</span></a>
+						<a class="ib-tab-tabs-item__link"> <span class="ib-tab-tabs-item__title">상벌관리</span></a>
+					</div>
+				</div>
+				
+				<div id="tab_contents_2" class="ib-tab-contents">
+					<!-- 인사발령 -->
+					<div class="ib-tab-contents__item"> 
+						<div id='ib-container5'></div> 
+					</div>
+					
+					<!-- 인사고과 -->
+					<div class="ib-tab-contents__item"> 
+						<div id='ib-container6'></div> 
+					</div>
+					
+					<!-- 출장 -->
+					<div class="ib-tab-contents__item"> 
+						<div id='ib-container7'></div> 
+					</div>
+					
+					<!-- 상벌관리 -->
+					<div class="ib-tab-contents__item">
+						<div id='ib-container8'></div> 
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</DIV>
+	
+	</div>
+	</div>
 </body>
 </html>

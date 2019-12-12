@@ -44,7 +44,7 @@
         <div id="page-wrapper" style="margin: 0px;"> 
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-gear fa-fw"></i> 일정관리</h1>
+                    <h1 class="page-header"><i class="fa fa-calendar fa-fw"></i> 일정관리</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

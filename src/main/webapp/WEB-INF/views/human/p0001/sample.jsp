@@ -14,6 +14,7 @@
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
+
  <link href="${contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/sb-admin/metisMenu.min.css" rel="stylesheet">
     <link href="${contextPath}/resources/css/sb-admin/sb-admin-2.css" rel="stylesheet">
@@ -38,6 +39,7 @@ table.ui-datepicker-calendar { display:none; }
 
 <script language="javascript">
    var pageheightoffset = 200;
+
    /*Sheet 기본 설정 */
     function LoadPage() {
       var initData = {};
@@ -52,6 +54,11 @@ table.ui-datepicker-calendar { display:none; }
       IBS_InitSheet(mySheet,initData);
       mySheet.SetDataAutoTrim(0);
       mySheet.SetSumText(1,"총인원");
+
+      
+      
+      
+      
       
       var cfg = {FrozenCol:8,MergeSheet:msHeaderOnly };  
       mySheet2.SetConfig(cfg); 
@@ -295,12 +302,7 @@ function mySheet_OnSaveEnd(code,msg){
    
    
    
->>>>>>> refs/remotes/origin/master
 </script>
-<<<<<<< HEAD
-</head>
-<body onload="LoadPage()">
-=======
 
 <script>
 function selectSite() {
@@ -333,50 +335,9 @@ function selectSite() {
          });
       };
       
->>>>>>> refs/remotes/origin/master
 
-<<<<<<< HEAD
-        <div id="page-wrapper" style="margin: 0px;">
-        	<div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-folder fa-fw"></i> <s:message code="main.enroll4"/></h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            
-			  <div class="main_content" style="width:1500px;">
-			    
-			    <div class="ib_function float_left">
-			      <button class="btn btn-outline btn-primary" onclick="fn_DeptSelect()">부서선택</button>
-				  <button type="button" class="btn btn-primary" onclick="doAction('reload')">초기화</button>
-				  <button type="button" class="btn btn-primary" onclick="doAction('insert')">추가</button>
-				  <button class="btn btn-outline btn-primary" onclick="doAction('search')">조회</button>
-				  <button class="btn btn-outline btn-primary" onclick="doAction('save')">저장</button>
-				</div>
-				<br><br><br>
-			    <div class="exp_product">
-			      <form name='frm'>
-			         사원명검색:<input type='text' id="SAWON_NAME" name="SAWON_NAME" />
-			         부서코드:<input type="text" name="SelectDeptCode" id="SelectDeptCode" readonly />
-			         부서명:<input type="text" name="SelectDeptName" id="SelectDeptName" readonly />  
-			      </form>
-			      
-			    </div>
-			    <br>
-			
-				<div class="clear hidden"></div>
-				<div class="ib_product_1"><script>createIBSheet("mySheet", "100%", "500px");</script></div>
-			  </div>
-        </div>
-        <!-- /#page-wrapper -->
-        <div id="popupDept" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" 
-    aria-labelledby="myLargeModalLabel"></div> 
-=======
    function selectDept() {
->>>>>>> refs/remotes/origin/master
 
-<<<<<<< HEAD
-=======
       var SiteList = $('#SiteList').val();
       
       if(SiteList==1){
@@ -758,6 +719,5 @@ $(function(){
    
     <!--main_content-->
 
->>>>>>> refs/remotes/origin/master
 </body>
 </html>

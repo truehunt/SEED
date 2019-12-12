@@ -104,33 +104,43 @@
 
 	<select id="searchList_month_click" resultMap="p0001Result01"
 		parameterType="java.util.Map"> 
-		
       <![CDATA[
-   select substr(d.pk_daily_ta_working_date,6,5) AS note
-    from daily_ta d
+      select distinct
+            d.pk_DAILY_TA_WORKING_DATE,
+            d.daily_TA_GO_TIME,
+            d.daily_TA_OFF_TIME,
+            d.daily_TA_WORK_TIME,
+            d.daily_TA_EXTEN_WORK,
+            d.daily_TA_LATE_TIME,
+            d.daily_TA_LEAVE_TIME,
+            d.fk_daily_ta_sawon_code,
+            d.daily_TA_END,d.num,
+            s.fk_DEPT_NAME,
+            s.rank_NAME,
+            s.sawon_NAME
+            from DAILY_TA d, sawon s
       ]]>
+
 		<where>
-			TO_CHAR(TO_DATE(substr(pk_daily_ta_working_date,1,7),
+TO_CHAR(TO_DATE(substr(pk_daily_ta_working_date,1,7),
 			'YYYY-MM'), 'YYYYMM') = #{fd_year}
-			and daily_ta_end is NULL
-			and
-			FK_DAILY_TA_SAWON_CODE = #{sawon_code}
+			and s.pk_sawon_code = d.fk_daily_ta_sawon_code
+
+			<if test="option != '' and option != null">
+				<if test="option =='dept_name'">
+					and s.FK_DEPT_NAME = #{sawon_num}
+				</if>
+				<if test="option =='sawon_code'">
+					and s.PK_SAWON_CODE = #{sawon_num}
+				</if>
+				<if test="option =='sawon_name'">
+					and s.SAWON_NAME = #{sawon_num}
+				</if>
+			</if>
 		</where>
 	</select>
 
-
-
-	<!-- 부서명 select문 -->
-	<select id="select" resultType="java.util.HashMap"> 
-      <![CDATA[
-        select dept_name
-		from dept
-      ]]>
-	</select>
-
-
-
-	<!-- 근태등록 화면 / 관리자 화면 -->
+<!-- 근태등록 화면 / 관리자 화면 -->
 	<select id="da_searchList" resultMap="p0001Result01"
 		parameterType="java.util.Map"> 
       <![CDATA[
@@ -151,16 +161,9 @@
       ]]>
 
 		<where>
+TO_CHAR(TO_DATE(substr(pk_daily_ta_working_date,1,7),
+			'YYYY-MM'), 'YYYYMM') = #{fd_year}
 			s.pk_sawon_code = d.fk_daily_ta_sawon_code
-			<if
-				test="PK_DAILY_TA_WORKING_DATE2 != '' and PK_DAILY_TA_WORKING_DATE2 != null
-				and PK_DAILY_TA_WORKING_DATE3 != '' and PK_DAILY_TA_WORKING_DATE3 != null">
-				and PK_DAILY_TA_WORKING_DATE
-				between
-				#{PK_DAILY_TA_WORKING_DATE2}
-				and
-				#{PK_DAILY_TA_WORKING_DATE3}
-			</if>
 
 			<if test="option != '' and option != null">
 				<if test="option =='dept_name'">
@@ -178,10 +181,6 @@
 
 		</where>
 	</select>
-
-
-
-
 
 	<update id="updateData_da" parameterType="java.util.Map">
 		<!-- <if test="DAILY_TA_OFF_TIME = '' and DAILY_TA_OFF_TIME = null"> 널값일 

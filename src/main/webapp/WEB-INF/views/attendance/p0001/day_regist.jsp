@@ -60,80 +60,20 @@
 		// keyfield : keyfield값 필수값 체크시 필요(미입력시 추가안됨.)
 		// MultiLineText:1  : 하나의 셀에 여러값을 넣을수 있음(shift+enter)
 		// Wrap:1 : 데이터
-		{
-			Header : "상태",
-			Type : "Status",
-			SaveName : "STATUS",
-			MinWidth : 40,
-			edit : 0
-		}, {
-			Header : "마감",
-			Type : "Text",
-			SaveName : "daily_TA_END",
-			MinWidth : 30
-		}, {
-			Header : "삭제",
-			Type : "DelCheck",
-			SaveName : "DEL_CHK",
-			MinWidth : 40
-		}, {
-			Header : "근무일자",
-			Type : "Text",
-			SaveName : "pk_DAILY_TA_WORKING_DATE",
-			MinWidth : 100
-		}, {
-			Header : "성명",
-			Type : "Text",
-			SaveName : "sawon_NAME",
-			MinWidth : 80
-		}, {
-			Header : "직급",
-			Type : "Text",
-			SaveName : "rank_NAME",
-			MinWidth : 80,
-			editable : 0
-		}, {
-			Header : "부서",
-			Type : "Text",
-			SaveName : "fk_RANK_NAME",
-			MinWidth : 80
-		}, {
-			Header : "출근시각",
-			Type : "Text",
-			SaveName : "daily_TA_GO_TIME",
-			MinWidth : 60
-		}, {
-			Header : "퇴근시각",
-			Type : "Text",
-			SaveName : "daily_TA_OFF_TIME",
-			MinWidth : 60
-		}, {
-			Header : "근무시간",
-			Type : "Text",
-			SaveName : "daily_TA_WORK_TIME",
-			MinWidth : 60
-		}, {
-			Header : "연장근로",
-			Type : "Text",
-			SaveName : "daily_TA_EXTEN_WORK",
-			MinWidth : 60
-		}, {
-			Header : "지각시간",
-			Type : "Text",
-			SaveName : "daily_TA_LATE_TIME",
-			MinWidth : 60
-		}, {
-			Header : "조퇴시간",
-			Type : "Text",
-			SaveName : "daily_TA_LEAVE_TIME",
-			MinWidth : 60
-		}, {
-			Header : "순번",
-			Type : "Text",
-			SaveName : "num",
-			MinWidth : 60,
-			Hidden :1
-		}];
+		{Header : "상태",	Type : "Status",SaveName : "STATUS",MinWidth : 40,edit : 0}, 
+		{Header : "마감",	Type : "Text",SaveName : "daily_TA_END",MinWidth : 30},
+		{Header : "삭제",Type : "DelCheck",SaveName : "DEL_CHK",	MinWidth : 40},
+		{Header : "근무일자",Type : "Text",SaveName : "pk_DAILY_TA_WORKING_DATE",MinWidth : 100},
+		{Header : "성명",	Type : "Text",SaveName : "sawon_NAME",MinWidth : 80},
+		{Header : "직급",Type : "Text",SaveName : "rank_NAME",MinWidth : 80,editable : 0},
+		{Header : "부서",	Type : "Text",SaveName : "fk_RANK_NAME",MinWidth : 80},
+		{Header : "출근시각",Type : "Text",SaveName : "daily_TA_GO_TIME",MinWidth : 60},
+		{Header : "퇴근시각",Type : "Text",SaveName : "daily_TA_OFF_TIME",MinWidth : 60}, 
+		{Header : "근무시간",Type : "Text",SaveName : "daily_TA_WORK_TIME",MinWidth : 60}, 
+		{Header : "연장근로",Type : "Text",SaveName : "daily_TA_EXTEN_WORK",MinWidth : 60},
+		{Header : "지각시간",Type : "Text",SaveName : "daily_TA_LATE_TIME",MinWidth : 60}, 
+		{Header : "조퇴시간",Type : "Text",SaveName : "daily_TA_LEAVE_TIME",MinWidth : 60},
+		{Header : "순번",Type : "Text",SaveName : "num",MinWidth : 60,Hidden :1}];
 		
 		IBS_InitSheet(mySheet, initSheet);
 

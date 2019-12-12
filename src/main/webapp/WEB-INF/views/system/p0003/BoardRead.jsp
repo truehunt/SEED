@@ -193,7 +193,7 @@ function fn_addBoardLike(brdno){
         <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header"><i class="fa fa-send fa-fw"></i> <c:out value="${bgInfo.bgname}"/></h1>
+                    <h1 class="page-header"><i class="fa fa-clipboard fa-fw"></i> <c:out value="${bgInfo.bgname}"/></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>

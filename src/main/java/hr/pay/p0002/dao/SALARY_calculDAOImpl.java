@@ -73,6 +73,20 @@ public class SALARY_calculDAOImpl implements SALARY_calculDAO {
 	}
 	
 	@Override
+	public List<SALARY_calculVO> payList(Map<String, Object> searchMap) throws DataAccessException {
+		List<SALARY_calculVO> list = sqlSession.selectList("hr.pay.p0002.payList", searchMap);
+		System.out.println(searchMap);
+		return list;
+	}
+	
+	@Override
+	public List<SALARY_calculVO> payList2(Map<String, Object> searchMap) throws DataAccessException {
+		List<SALARY_calculVO> list = sqlSession.selectList("hr.pay.p0002.payList2", searchMap);
+		System.out.println(searchMap);
+		return list;
+	}
+	
+	@Override
 	public void insertData(Map<String, String> row) throws DataAccessException {
 		System.out.println("1."+row);
 		sqlSession.update("hr.pay.p0002.insertData", row);

@@ -184,14 +184,21 @@
 		
 	case "yes": //승인
 		var select_row = mySheet.GetSelectRow();
-		if (mySheet.GetCellValue(select_row, 9) == '요청') {
+		if (mySheet.GetCellValue(select_row, 9) == '승인') {
+			mySheet.SetCellValue(select_row, 9, '요청')
+		}
+		else if(mySheet.GetCellValue(select_row, 9) == '반려') {
+			mySheet.SetCellValue(select_row, 9, '승인')
+		}if(mySheet.GetCellValue(select_row, 9) == '요청') {
 			mySheet.SetCellValue(select_row, 9, '승인')
 		}
-		if (mySheet.GetCellValue(select_row, 9) == '반려') {
-			mySheet.SetCellValue(select_row, 9, '승인')
-		}else{
-			mySheet.SetCellValue(select_row, 9, '요청')
-		} 
+		mySheet.DoSave("${contextPath}/attendance/p0002/insertData_busin_da.do");
+		var val1 = "&fd_year="+ $('#fd_year option:selected').val()
+		+ "&fd_month="+ $('#fd_month option:selected').val()
+		+ "&sawon_num="+ document.getElementById("sawon_num").value 
+		+ "&option="+ $('#select option:selected').val()
+		+"&HOLIDAY_PAY="+ $('#HOLIDAY_PAY option:selected').val()
+			mySheet.DoSearch("${contextPath}/attendance/p0002/searchList_busin_da.do", val1);		
 		break;
 
 	case "no": //반려
@@ -201,9 +208,16 @@
 		}
 		if (mySheet.GetCellValue(select_row, 9) == '승인') {
 			mySheet.SetCellValue(select_row, 9, '반려')
-		}else {
+		}if(mySheet.GetCellValue(select_row, 9) == '반려') {
 			mySheet.SetCellValue(select_row, 9, '요청')
 		}
+		mySheet.DoSave("${contextPath}/attendance/p0002/insertData_busin_da.do");
+		var val1 = "&fd_year="+ $('#fd_year option:selected').val()
+		+ "&fd_month="+ $('#fd_month option:selected').val()
+		+ "&sawon_num="+ document.getElementById("sawon_num").value 
+		+ "&option="+ $('#select option:selected').val()
+		+"&HOLIDAY_PAY="+ $('#HOLIDAY_PAY option:selected').val()
+			mySheet.DoSearch("${contextPath}/attendance/p0002/searchList_busin_da.do", val1);
 		break;
 
 	}
@@ -213,6 +227,7 @@
 	function mySheet_OnRowSearchEnd(Row) {
 		if (mySheet.GetCellValue(Row, 9) != "요청") {
 			mySheet.SetRowEditable(Row, 0);
+			alert(mySheet.GetCellValue(Row, 9))
 		}
 	}
    

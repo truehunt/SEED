@@ -29,4 +29,7 @@ public interface SALARY_calculController {
 	
 	public Map yearday(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map yeardayd(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	public Map payList(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map payList2(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

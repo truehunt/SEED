@@ -258,7 +258,18 @@
         WHERE AD_DELETEFLAG='N'
     </select>
     
-    <!-- 게시판 & 공지사항 -->
+    <!-- 공지사항 & 생일자 & 최신글-->
+    <select id="selectBirthday" resultType="java.util.Map">
+    	select *
+        FROM (SELECT ROWNUM as NO, TO_CHAR(TO_DATE(p.person_info_date_birth),'MM-DD') as person_info_date_birth, s.sawon_name, s.fk_dept_name, s.rank_name
+            from   PERSON_INFO p, SAWON s
+            where p.fk_sawon_code = s.pk_sawon_code
+            and TO_CHAR(TO_DATE(p.person_info_date_birth),'MM') = to_char(sysdate, 'MM')
+            ) A
+        WHERE A.NO <![CDATA[<=]]>5
+        ORDER BY sawon_name ASC
+    </select>
+    
     <select id="selectRecentNews" resultType="hr.system.p0003.vo.BoardVO">
     <![CDATA[
         SELECT *

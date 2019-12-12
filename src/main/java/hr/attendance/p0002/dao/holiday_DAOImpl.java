@@ -26,9 +26,16 @@ public class holiday_DAOImpl implements holiday_DAO {
 
 	@Override
 	public List<holiday_VO> searchList_holi_da(Map<String, Object> searchMap) throws DataAccessException {
-		List<holiday_VO> list = sqlSession.selectList("hr.attendance.p0002.searchList_holi_da", searchMap);
-		System.out.println("DAO");
-		return list;
+		String OX = (String) searchMap.get("pk_SAWON_CODE");
+		System.out.println("ox= " + OX);
+		if (OX != null) {
+			List<holiday_VO> list = sqlSession.selectList("hr.attendance.p0002.searchList_holi_da", searchMap);
+			return list;
+		} else {
+			List<holiday_VO> list = sqlSession.selectList("hr.attendance.p0002.searchList_holiM", searchMap);
+			return list;
+		}
+
 	}
 
 	// �߰�, ���
@@ -60,17 +67,21 @@ public class holiday_DAOImpl implements holiday_DAO {
 	// 조회
 	@Override
 	public List<business_VO> searchList_busin(Map<String, Object> searchMap) throws DataAccessException {
-		List<business_VO> list = sqlSession.selectList("hr.attendance.p0002.searchList_busin", searchMap);
-		System.out.println("DAO_searchList: " + list);
-		return list;
+			List<business_VO> list = sqlSession.selectList("hr.attendance.p0002.searchList_busin", searchMap);
+			return list;
 	}
 
 	@Override
 	public List<business_VO> searchList_busin_da(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("searchList_busin_da : " + searchMap);
-		List<business_VO> list = sqlSession.selectList("hr.attendance.p0002.searchList_busin_da", searchMap);
-		System.out.println("DAO_searchList: " + list);
-		return list;
+		String OX = (String) searchMap.get("pk_SAWON_CODE");
+		System.out.println("ox= " + OX);
+		if (OX != null) {
+			List<business_VO> list = sqlSession.selectList("hr.attendance.p0002.searchList_busin_da", searchMap);
+			return list;
+		} else {
+			List<business_VO> list = sqlSession.selectList("hr.attendance.p0002.searchList_businM", searchMap);
+			return list;
+		}
 	}
 
 	@Override
@@ -105,7 +116,7 @@ public class holiday_DAOImpl implements holiday_DAO {
 		List<holiday_VO> list = sqlSession.selectList("hr.attendance.p0002.searchList_calc", searchMap);
 		return list;
 	}
-	
+
 //	// 휴가
 //		@Override
 //		public List<holiday_VO> searchList_calc1(Map<String, Object> searchMap) throws DataAccessException {
@@ -133,7 +144,7 @@ public class holiday_DAOImpl implements holiday_DAO {
 		sqlSession.update("hr.attendance.p0002.deleteData_holi", row);
 	}
 
-	//----------------------------------------------------------------------------------------------------------------------------------
+	// ----------------------------------------------------------------------------------------------------------------------------------
 	// �� �߰��� ���ֱ�
 	@Override
 	public void GetData(Map<String, String> row) throws DataAccessException {

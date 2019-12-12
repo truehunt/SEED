@@ -136,6 +136,31 @@
          break;
 
       //------------------------------------------------------------------------------------------------------------------------------   
+      //조회조건 입력하면 자동으로 조회
+      
+      // 발령일자 및 제목
+         function regist_sawon() {
+            var val = "PK_DAILY_TA_WORKING_DATE=" + document.getElementById("PK_DAILY_TA_WORKING_DATE").value
+            + "&pk_SAWON_CODE=" + '<%=session.getAttribute("PK_SAWON_CODE")%>'
+            + "&work =" + $('#work option:selected').val()
+            $.ajax({
+               url : "searchList.do",//목록을 조회 할 url
+                 type : "POST",
+                 dataType : "JSON",
+                 data : {bal_DIV : bal_DIV},
+                 success : function(data) {
+                    $('input[id=balDate]').val(data['Data'][0].bal_DATE);
+                    $('input[id=balTitle]').val(data['Data'][0].bal_TITLE);
+                 }, error : function(jqxhr, status, error) {
+                    alert("에러");
+               }
+            });
+         } 
+      
+      
+      
+      
+      
       //출근
       case "gowork":
          //var select_row = mySheet.GetSelectRow();
@@ -254,24 +279,7 @@
              mySheet.SetCellValue(select_row, 1, today); //조퇴시간
          }
    
-   // mySheet 조회 끝나기 직전 이벤트 
-//   function mySheet_OnSearchEnd() {
-//       if(mySheet.GetCellValue(1,1) == -1 ){
-//     	  val1 = document.getElementById("PK_DAILY_TA_WORKING_DATE").value
-<%--     	  val2 = '<%=session.getAttribute("PK_SAWON_CODE")%>'; --%>
-// 			mySheet.DataInsert(-1);
-// 			alert(getToday());
-// 			mySheet.SetCellValue(1, 1, getToday());
-// 			alert(val2);
-// 			mySheet.SetCellValue(1, 8, val2);
-// 		} else if (mySheet.GetCellValue(1, 1) == ""
-// 				|| mySheet.GetCellValue(1, 1) == null) {
-// 			var PK_DAILY_TA_WORKING_DATE = document
-// 					.getElementById("PK_DAILY_TA_WORKING_DATE").value;
-			
-// 			//첫번째 열에서 두번째에다가 변수이름:PK_DAILY_TA_WORKING_DATE를 추가한다.
-// 		}
-// 	}
+
 </script>
 </head>
 <body onload="LoadPage()">

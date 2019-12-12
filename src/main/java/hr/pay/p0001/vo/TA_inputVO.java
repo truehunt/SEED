@@ -40,6 +40,10 @@ public class TA_inputVO {
 	private String workplace_INQUIRY_CODE;
 	private String dept_INQUIRY_CODE;
 	private String PK_TA_TOTAL_CODE;
+	
+	private String fk_HOBONG_CODE;
+	private String fk_RANK_CODE;
+	private String hobong_TABLE_START_DATE_APPLI;
 
 	public TA_inputVO() {
 		System.out.println("TA_inputVO");
@@ -370,6 +374,42 @@ public class TA_inputVO {
 
 	public void setPK_TA_TOTAL_CODE(String pK_TA_TOTAL_CODE) {
 		PK_TA_TOTAL_CODE = pK_TA_TOTAL_CODE;
+	}
+
+
+
+	public String getFk_HOBONG_CODE() {
+		return fk_HOBONG_CODE;
+	}
+
+
+
+	public void setFk_HOBONG_CODE(String fk_HOBONG_CODE) {
+		this.fk_HOBONG_CODE = fk_HOBONG_CODE;
+	}
+
+
+
+	public String getFk_RANK_CODE() {
+		return fk_RANK_CODE;
+	}
+
+
+
+	public void setFk_RANK_CODE(String fk_RANK_CODE) {
+		this.fk_RANK_CODE = fk_RANK_CODE;
+	}
+
+
+
+	public String getHobong_TABLE_START_DATE_APPLI() {
+		return hobong_TABLE_START_DATE_APPLI;
+	}
+
+
+
+	public void setHobong_TABLE_START_DATE_APPLI(String hobong_TABLE_START_DATE_APPLI) {
+		this.hobong_TABLE_START_DATE_APPLI = hobong_TABLE_START_DATE_APPLI;
 	}
 
 

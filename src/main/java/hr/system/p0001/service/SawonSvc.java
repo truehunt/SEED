@@ -106,5 +106,21 @@ public class SawonSvc {
 	public List<SbVO> myISA_sb(Map<String, Object> searchMap) throws DataAccessException {
 		return sqlSession.selectList("myISA_sb", searchMap);
 	}
+	
+	/*부서원정보보기
+    public List<?> deptISA(String param) throws DataAccessException {
+		return sqlSession.selectList("deptISA",param);
+	} */
+    
+    /*부서원정보보기 */
+	public List<?> deptISA(Map<String, Object> searchMap) throws DataAccessException {
+		List<?> list = sqlSession.selectList("deptISA",searchMap);
+		return list;
+	}
+	
+	public List<?> deptISA2(String param) throws DataAccessException {
+		List<?> list = sqlSession.selectList("deptISA2", param);
+		return list;
+	}
 
 }

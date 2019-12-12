@@ -24,7 +24,6 @@
 		<result property="bal_INT_DATE" column="bal_INT_DATE" />
 		<result property="bal_MOD_USER_ID" column="bal_MOD_USER_ID" />
 		<result property="bal_MOD_DATE" column="bal_MOD_DATE" />
-		
 		<result property="pk_SAWON_CODE" column="pk_SAWON_CODE" />
 		<result property="sawon_NAME" column="sawon_NAME" />
 		<result property="workplace_NAME" column="workplace_NAME" />

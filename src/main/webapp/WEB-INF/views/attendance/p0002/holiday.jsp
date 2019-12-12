@@ -164,32 +164,31 @@
 // 		// mySheet.SetRowEditable(1, 0);
 // 		//  1열 수정불가
 // 	 }
-	 //5번째 행을 수정할수 있게해줌
-  function selectSite() {
-      $.ajax({ // 
-         url : "${contextPath}/attendance/p0002/searchList.do",//목록을 조회 할 url
-         type : "POST",
-         dataType : "JSON",
-         data : { "pk_SAWON_CODE": val1},
-         success : function(data) {
-            var NAME_CODE = ""; // 성명 
-            var DEPT_CODE = ""; // 부서
-            var RANK_CODE = ""; // 직급코드
-            for (var i = 0; i < data['Data'].length; i++) {
-         	   NAME_CODE = data['Data'][i].sawon_NAME;
-         	   DEPT_CODE = data['Data'][i].fk_RANK_NAME;
-         	   RANK_CODE = data['Data'][i].rank_NAME;
+//   function selectSite() {
+//       $.ajax({ // 
+//          url : "${contextPath}/attendance/p0002/searchList.do",//목록을 조회 할 url
+//          type : "POST",
+//          dataType : "JSON",
+//          data : { "pk_SAWON_CODE": val1},
+//          success : function(data) {
+//             var NAME_CODE = ""; // 성명 
+//             var DEPT_CODE = ""; // 부서
+//             var RANK_CODE = ""; // 직급코드
+//             for (var i = 0; i < data['Data'].length; i++) {
+//          	   NAME_CODE = data['Data'][i].sawon_NAME;
+//          	   DEPT_CODE = data['Data'][i].fk_RANK_NAME;
+//          	   RANK_CODE = data['Data'][i].rank_NAME;
                
-                  mySheet.SetCellValue(1,4,NAME_CODE);
-                  mySheet.SetCellValue(1,5,DEPT_CODE);
-                  mySheet.SetCellValue(1,6,RANK_CODE);
+//                   mySheet.SetCellValue(1,4,NAME_CODE);
+//                   mySheet.SetCellValue(1,5,DEPT_CODE);
+//                   mySheet.SetCellValue(1,6,RANK_CODE);
                   
-            }
-         },
-         error : function(jqxhr, status, error) {
-         }
-      });
-   }
+//             }
+//          },
+//          error : function(jqxhr, status, error) {
+//          }
+//       });
+//    }
    
  // mySheet 조회 끝나기 직전 이벤트 
   function mySheet_OnSearchEnd() {

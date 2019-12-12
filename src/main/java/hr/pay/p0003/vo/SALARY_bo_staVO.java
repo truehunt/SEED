@@ -49,6 +49,7 @@ public class SALARY_bo_staVO {
 	private String d_B_PAYMENT_DATE_ATTRIBUT;
 	private String d_B_PAYMENT_DT;
 	private String fk_SAWON_CODE;
+	private String salary_CAL_SALARY_ITEM;
 	
 	public SALARY_bo_staVO() {
 		System.out.println("SALARY_bo_staVO");
@@ -413,6 +414,16 @@ public class SALARY_bo_staVO {
 
 	public void setFk_SAWON_CODE(String fk_SAWON_CODE) {
 		this.fk_SAWON_CODE = fk_SAWON_CODE;
+	}
+
+
+	public String getSalary_CAL_SALARY_ITEM() {
+		return salary_CAL_SALARY_ITEM;
+	}
+
+
+	public void setSalary_CAL_SALARY_ITEM(String salary_CAL_SALARY_ITEM) {
+		this.salary_CAL_SALARY_ITEM = salary_CAL_SALARY_ITEM;
 	}
 
 

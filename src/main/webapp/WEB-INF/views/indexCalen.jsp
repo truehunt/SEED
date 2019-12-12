@@ -151,13 +151,56 @@ function calendarDayMouseout(){
      <div class="calendarTooltip"></div>
      
      
-     <!-- 게시판 & 공지사항  -->
-    		<h1 class="page-header"> <i class="fa fa-send fa-fw"></i> <s:message code="main.board"/></h1>
+     <!-- 공지사항 & 생일자 & 경조사 -->
+    		<h1 class="page-header"> <i class="fa fa-clipboard fa-fw"></i> <s:message code="main.board"/></h1>
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-4">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-send fa-fw"></i> 최신글
+                            <i class="fa fa-volume-up fa-fw"></i> <s:message code="common.notice"/>
+                        </div>
+                        <div class="panel-body maxHeight400">
+                            <c:forEach var="noticeList" items="${noticeList}" varStatus="status">    
+                                <c:url var="link" value="boardRead">
+                                    <c:param name="brdno" value="${noticeList.brdno}" />
+                                </c:url>    
+                                <a href="${link}">
+                                <div class="listBody listTitle">
+                                    <c:out value="${noticeList.brdtitle}"/>
+                                </div>    
+                                </a>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-birthday-cake fa-fw"></i> <s:message code="common.birthday"/>
+                        </div>
+                        <div class="panel-body maxHeight400">
+                        	<div class="listHead">
+                                    <div class="listHiddenField pull-right field100">생일</div>
+                                    <div class="listHiddenField pull-right field100">직위</div>
+                                    <div class="listHiddenField pull-right field100">부서</div>
+                                    <div class="listTitle">성명</div>
+                               </div>
+                            <c:forEach var="birthday" items="${birthday}" varStatus="status">    
+                            	<div class="listBody">
+                                        <div class="listHiddenField pull-right field100"><c:out value="${birthday.PERSON_INFO_DATE_BIRTH}"/></div>
+                                        <div class="listHiddenField pull-right field100"><c:out value="${birthday.RANK_NAME}"/></div>
+                                        <div class="listHiddenField pull-right field100"><c:out value="${birthday.FK_DEPT_NAME}"/></div>
+                                        <div class="listTitle"><c:out value="${birthday.SAWON_NAME}"/>
+                                        </div>
+                            	</div>
+                           	</c:forEach>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-send fa-fw"></i> <s:message code="common.news"/>
                             <div class="pull-right"><a href="boardList">more</a>
                             </div>
                         </div>
@@ -191,27 +234,6 @@ function calendarDayMouseout(){
                             </div>                        
                         </div>
                     </div>
-                </div>
-                
-                <div class="col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-volume-up fa-fw"></i> <s:message code="common.notice"/>
-                        </div>
-                        <div class="panel-body maxHeight400">
-                            <c:forEach var="noticeList" items="${noticeList}" varStatus="status">    
-                                <c:url var="link" value="boardRead">
-                                    <c:param name="brdno" value="${noticeList.brdno}" />
-                                </c:url>    
-                                <a href="${link}">
-                                <div class="listBody listTitle">
-                                    <c:out value="${noticeList.brdtitle}"/>
-                                </div>    
-                                </a>
-                            </c:forEach>
-                        </div>
-                    </div>
-                </div>
           </div>
      
      

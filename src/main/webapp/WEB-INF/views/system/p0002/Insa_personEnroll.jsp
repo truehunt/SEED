@@ -13,7 +13,7 @@
 
 <style>
 	.frame {
-		  width : 800px;
+		  width : 850px;
 		  margin: 0px;
 	}
 
@@ -26,7 +26,7 @@
 	.nav {
 		  float: left;
 		  margin-left:0px;
-		  width: 800px;
+		  width: 850px;
 		  height: 650px;
 		  border : 1px solid lightblue;
 	}
@@ -35,7 +35,7 @@
 		width:500px;
 	}
 	.main_content{
-		width: 800px;
+		width: 850px;
 	}
 	.main_menu {
 		border : 1px solid lightblue;
@@ -124,7 +124,7 @@
 			// 기능을 위해서 전부  hidden 처리 함
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center"},
-			{Header:"No",Type:"Text",SaveName:"pk_person_info_unique_num",MinWidth:50, Align:"Center"},
+			{Header:"No",Type:"Seq",SaveName:"pk_person_info_unique_num",MinWidth:50, Align:"Center"},
 			{Header:"사원 코드",Type:"Text",SaveName:"fk_sawon_code",MinWidth:90, Align:"Center"},
 			{Header:"사진",Type:"Image",SaveName:"person_info_picture",MinWidth:100, Align:"Center"},			
 			{Header:"사원 명(영문)",Type:"Text",SaveName:"person_info_eng_name",MinWidth:80, Align:"Center"},
@@ -132,7 +132,7 @@
 			{Header:"주민등록번호",Type:"Text",SaveName:"person_info_res_reg_num",MinWidth:100, Align:"Center"},
 			{Header:"외국인등록번호",Type:"Text",SaveName:"person_info_forei_reg_num",MinWidth:100, Align:"Center"},
 			{Header:"성별",Type:"Combo",SaveName:"person_info_gender",MinWidth:50, Align:"Center"},
-			{Header:"생년월일",Type:"Date",SaveName:"person_info_date_birth",MinWidth:100, Align:"Center"},			
+			{Header:"생년월일",Type:"Text",SaveName:"person_info_date_birth",MinWidth:100, Align:"Center"},			
 			{Header:"전화번호",Type:"Text",SaveName:"person_info_tel",MinWidth:80, Align:"Center"},
 			{Header:"비상연락망",Type:"Text",SaveName:"person_info_emerg_call",MinWidth:80, Align:"Center"},
 			{Header:"최종학력코드",Type:"Text",SaveName:"person_info_final_edu_code",MinWidth:80, Align:"Center"},
@@ -163,52 +163,46 @@
 
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
+				
 		//doAction('search');
-		
-		mySheet.DoSearch("${contextPath}/system/p0002/searchList2.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
+
+		//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
+ 		selectPerson();
+		$('#person_info_domes_forei_pop').html("   ");
+		$('#person_info_gender').html("   ");
+		$('#person_info_head_household').html("   ");
+		$('#person_info_dis_classifi').html("   ");
+		$('#person_info_nation_mngement').html("   ");
+		$('#person_info_resident_classifi').html("   "); 
+		//var param = FormQueryStringEnc(document.frm);
+		//mySheet.DoSearch("${contextPath}/system/p0002/searchList2.do",param); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 	
-		//콤보박스에 값 불러오기 -> searchList.do 뒤에 실행 
-		selectPerson();
-		
 		//ibSheet 에서 col 지정해서 숨김
-		 mySheet.SetColHidden([//0~33번째 까지...실상 전 ibSheet 숨김
+		/*  mySheet.SetColHidden([//0~33번째 까지...실상 전 ibSheet 숨김
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 2, Hidden:1}, {Col: 3, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1}, {Col: 6, Hidden:1}, 
 	      {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1}, {Col: 10, Hidden:1}, {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, 
 	      {Col: 14, Hidden:1}, {Col: 15, Hidden:1}, {Col: 16, Hidden:1}, {Col: 17, Hidden:1}, {Col: 18, Hidden:1}, {Col: 19, Hidden:1}, {Col: 20, Hidden:1}, 
 	      {Col: 21, Hidden:1}, {Col: 22, Hidden:1}, {Col: 23, Hidden:1}, {Col: 24, Hidden:1}, {Col: 25, Hidden:1}, {Col: 26, Hidden:1}, {Col: 27, Hidden:1}, 
 	      {Col: 28, Hidden:1}, {Col: 29, Hidden:1}, {Col: 30, Hidden:1}, {Col: 31, Hidden:1}, {Col: 32, Hidden:1}, {Col: 33, Hidden:1},
-	    ]); 
-	}
-	
-	//onClick 이벤트
-	 var t_row = 0;
-	 function mySheet_OnClick(row, col, value, cellx, celly, cellw, cellh) {
-	     t_row = row;
-	     if (row == null || row <= 0) return; // row가 null 이거나 0보다 같거나 작으면 바로 리턴
-	    
-	     var pk = mySheet.GetCellValue(row,2); // 마우스로 클릭한 셀의 value를 가져와서 pk에 저장
-	     
-	     var colArr =  Object.keys(mySheet.SaveNameInfo); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 										 // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
-	  	  
-	  	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
-		  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
-		  })
-	
-		  // onClick 이벤트 중 select 태그에 person_info_domes_forei_pop인 값의 변경이 있을때 실행
+	    ]); */ 
+
+	 // select박스 수정 시 실행되야 되는 함수들 
+		  // select 태그에 person_info_domes_forei_pop인 값의 변경이 있을때 실행
 		  $("#person_info_domes_forei_pop").change(function(e){ 
-				var colNum = colArr.indexOf(e.target.id);	
-				 
-			 /* var forei = document.getElementById("person_info_domes_forei_pop");
-				var selectBox = forei.options[forei.selectedIndex].value;
-				//console.log(selectBox); */
-				  
+			  var colArr =  Object.keys(mySheet.SaveNameInfo);
+			  var colNum = colArr.indexOf(e.target.id);	
+			  t_row = 1; 
+			  var forei = document.getElementById("person_info_domes_forei_pop");
+			  var selectBox = forei.options[forei.selectedIndex].value;
+			    console.log(selectBox); 
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
 			
 		  // onClick 이벤트 중 select 태그에 person_info_gender인 값의 변경이 있을때 실행
 		  $("#person_info_gender").change(function(e){ 
+			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
-				 
+				t_row = 1; 
 			 /* var gender = document.getElementById("person_info_gender");
 				var selectBox = gender.options[gender.selectedIndex].value;
 				//console.log(selectBox); */
@@ -218,8 +212,9 @@
 			
 		  // onClick 이벤트 중 select 태그에 person_info_head_household인 값의 변경이 있을때 실행
 		  $("#person_info_head_household").change(function(e){ 
+			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
-				 
+				t_row = 1; 
 			 /* var household = document.getElementById("person_info_head_household");
 				var selectBox = household.options[household.selectedIndex].value;
 				//console.log(selectBox); */
@@ -229,8 +224,9 @@
 			
 		  // onClick 이벤트 중 select 태그에 person_info_dis_classifi인 값의 변경이 있을때 실행
 		  $("#person_info_dis_classifi").change(function(e){ 
+			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
-				 
+				t_row = 1; 
 			 /* var classifi = document.getElementById("person_info_dis_classifi");
 				var selectBox = classifi.options[classifi.selectedIndex].value;
 				//console.log(selectBox); */
@@ -240,8 +236,9 @@
 			
 		  // onClick 이벤트 중 select 태그에 person_info_nation_mngement인 값의 변경이 있을때 실행
 		  $("#person_info_nation_mngement").change(function(e){ 
+			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
-				 
+				t_row = 1; 
 			 /* var nation = document.getElementById("person_info_nation_mngement");
 				var selectBox = nation.options[nation.selectedIndex].value;
 				//console.log(selectBox); */
@@ -251,36 +248,64 @@
 			
 		  // onClick 이벤트 중 select 태그에 person_info_resident_classifi인 값의 변경이 있을때 실행
 		  $("#person_info_resident_classifi").change(function(e){ 
+			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
-				 
+				t_row = 1; 
 			 /* var resident = document.getElementById("person_info_resident_classifi");
 				var selectBox = resident.options[resident.selectedIndex].value;
 				//console.log(selectBox); */
 				  
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
-	  }
+			
+		 // select박스 수정 시 실행되야 되는 함수들 끝
+	}
+	
+	 function rowCheck(code){//메인화면에서 클릭한 row부분에 대한 사원코드 값 받아옴
+			$('#sawon_code').val(code);
+	 
+			//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
+			doAction('search');
+			//$("#person_info_gender").val("여성").attr("selected","selected");
+	 }
+	 
 	 	 
+	 //onClick 이벤트
+	 var t_row = 0;
+	 function mySheet_OnClick(row, col, value, cellx, celly, cellw, cellh) {
+	     t_row = row;
+	     if (row == null || row <= 0) return; // row가 null 이거나 0보다 같거나 작으면 바로 리턴
+	    
+	     var pk = mySheet.GetCellValue(row,2); // 마우스로 클릭한 셀의 value를 가져와서 pk에 저장
+	     
+	     var colArr =  Object.keys(mySheet.SaveNameInfo); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 
+	 													  // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
+	  	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
+		  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
+		  })
+	  
+	  }
+	 
 	 $(document).on('change', 'input', function(e) { // 수정할시에 state에 문구 저장 및 SetCellValue 실행
 		  var colArr = Object.keys(mySheet.SaveNameInfo);
 		  var colNum = colArr.indexOf(e.target.id);
-			
    		  mySheet.SetCellValue(t_row, colNum ,e.target.value);
 	 	
 	 });
 	 
-	
 	/*Sheet 각종 처리*/
 	function doAction(sAction) {
 		switch(sAction) {
 			case "search": //조회
-				//var param = FormQueryStringEnc(document.frm);
-				//alert(param);
+			
+				var param = FormQueryStringEnc(document.frm);
+				mySheet.DoSearch("${contextPath}/system/p0002/searchList2.do", param);
+				//alert("param : "+param);
 				//mySheet.DoSearch("${contextPath}/human/s0001/searchList.do", param);
 				
-				mySheet.DoSearch("${contextPath}/system/p0002/searchList2.do");
-
 				//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
+				//selectPerson();
+				
 				selectPerson();
 				$('#person_info_domes_forei_pop').html("   ");
 				$('#person_info_gender').html("   ");
@@ -288,7 +313,6 @@
 				$('#person_info_dis_classifi').html("   ");
 				$('#person_info_nation_mngement').html("   ");
 				$('#person_info_resident_classifi').html("   ");
-				
 				break;
 			case "reload": //초기화
 				mySheet.RemoveAll();
@@ -311,8 +335,7 @@
 				$('#person_info_dis_classifi').html("   ");
 				$('#person_info_nation_mngement').html("   ");
 				$('#person_info_resident_classifi').html("   ");
-				
-				
+
 				break;
 		}
 	}
@@ -337,37 +360,37 @@
 					var info1 = '|' + data['Data'][i].person_BC_DETAI_MNGEMENT_NAME; // 안건드려도 됩니다.
 					
 					var code_ = data['Data'][i].fk_PERSON_BC_CODE_NUM; //
-					var H5=""; // 국가(관리용)
+					
 					switch(code_){
 						case 'HG': // 내국인 여부 -> input box
 							person1 = person1+info1; // 그리드에 저장
 							$('#person_info_domes_forei_pop').append(MNGEMENT_NAME);//input box에 저장
-							console.log(person1);
+							//console.log(person1);
 							break;
 						case 'R8': // 성별 -> input box
 							person2 = person2+info1; // 그리드에 저장
 							$('#person_info_gender').append(MNGEMENT_NAME);//input box에 저장
-							console.log(person2);
+							//console.log(person2);
 							break;
 						case 'S2': // 세대주 구분 -> input box
 							person3 = person3+info1; // 그리드에 저장
 							$('#person_info_head_household').append(MNGEMENT_NAME);//input box에 저장
-							console.log(person3);
+							//console.log(person3);
 							break;
 						case 'RQ': // 장애인 구분 -> input box
 							person4 = person4+info1; // 그리드에 저장
 							$('#person_info_dis_classifi').append(MNGEMENT_NAME);//input box에 저장
-							console.log(person4);
+							//console.log(person4);
 							break;
 						case 'H5': // 국가(관리용) -> input box
 							person5 = person5+info1; // 그리드에 저장
 							$('#person_info_nation_mngement').append(MNGEMENT_NAME);//input box에 저장
-							console.log(person5);
+							//console.log(person5);
 							break;
 						case 'HH': // 거주자 구분 -> input box
 							person6 = person6+info1; // 그리드에 저장
 							$('#person_info_resident_classifi').append(MNGEMENT_NAME);//input box에 저장
-							console.log(person6);
+							//console.log(person6);
 							break;
 					}
 					
@@ -375,14 +398,13 @@
 				this.Action();
 			},
 			Action: function(){	 // combo를 넣는 곳
-
 				HG = {'ComboCode':person1,'ComboText':person1}; // 내국인 여부
 				R8 = {'ComboCode':person2,'ComboText':person2}; // 성별
 				S2 = {'ComboCode':person3,'ComboText':person3}; // 세대주 구분
 				RQ = {'ComboCode':person4,'ComboText':person4}; // 장애인 구분
 				H5 = {'ComboCode':person5,'ComboText':person5}; // 국가(관리용)
 				HH = {'ComboCode':person6,'ComboText':person6}; // 거주자 구분
-				
+								
 				for(var i = 1; i<=mySheet.RowCount(); i++){ // 조회할때 갯수 세어서 거기에 전부 넣기위해서 for문 돌립니다.
 					console.log(i);
 					mySheet.CellComboItem(i,6,HG); // 내국인여부 ( 내국인 , 외국인 )
@@ -391,7 +413,9 @@
 					mySheet.CellComboItem(i,22,RQ); // 장애인 구분 ( 비해당 , 장애인복지법 , 국가유공자등 , 중증환자 )
 					mySheet.CellComboItem(i,23,H5); // 국가(관리용) ( 대한민국 , 미국 , 중국 , 일본 )
 					mySheet.CellComboItem(i,26,HH); // 거주자 구분 ( 거주자 , 비 거주자)
+					
 				}
+				mySheet_OnSearchEnd();
 			},
 			error : function(jqxhr, status, error) {
 				alert("에러");
@@ -401,8 +425,50 @@
 
 	// 조회완료 후 처리할 작업
 	function mySheet_OnSearchEnd() {
-	
+		var pk = mySheet.GetCellValue(1,3);
+		t_row = 1;
+		var colArr = Object.keys(mySheet.SaveNameInfo);
+ 	    if(mySheet.GetCellValue(1,3) == -1){ // 데이터가 비어있을 시 실행
+ 	    	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
+				  	$("#"+v).val(''); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
+			  })
+		  }else if(mySheet.GetCellValue(1,3) != -1){ // 데이터가 있을 시 실행
+			 /*  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
+				  	$("#"+v).val(mySheet.GetCellValue(1,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
+			  }) */
+ 			  $('#person_info_picture').val(mySheet.GetCellValue(1,4));
+			  $('#person_info_eng_name').val(mySheet.GetCellValue(1,5));
+			  $('#person_info_domes_forei_pop').val(mySheet.GetCellValue(1,6)).attr("selected","selected");
+			  $('#person_info_res_reg_num').val(mySheet.GetCellValue(1,7));
+			  $('#person_info_forei_reg_num').val(mySheet.GetCellValue(1,8));
+			  $("#person_info_gender").val(mySheet.GetCellValue(1,9)).attr("selected","selected");
+			  $('#person_info_date_birth').val(mySheet.GetCellValue(1,10));
+			  $('#person_info_tel').val(mySheet.GetCellValue(1,11));
+			  $('#person_info_emerg_call').val(mySheet.GetCellValue(1,12));
+			  $('#person_info_final_edu_code').val(mySheet.GetCellValue(1,13));
+			  $('#person_info_final_edu_name').val(mySheet.GetCellValue(1,14));
+			  $('#person_info_zip').val(mySheet.GetCellValue(1,15));
+			  $('#person_info_resi_reg_address').val(mySheet.GetCellValue(1,16));
+			  $('#person_info_detail_address').val(mySheet.GetCellValue(1,17));
+			  $('#person_info_eng_address').val(mySheet.GetCellValue(1,18));
+			  $('#person_info_email').val(mySheet.GetCellValue(1,19));
+			  $('#person_info_access_card_no').val(mySheet.GetCellValue(1,20));
+			  $('#person_info_head_household').val(mySheet.GetCellValue(1,21)).attr("selected","selected");
+			  $('#person_info_dis_classifi').val(mySheet.GetCellValue(1,22)).attr("selected","selected");
+			  $('#person_info_nation_mngement').val(mySheet.GetCellValue(1,23)).attr("selected","selected");
+			  $('#person_info_nation_report_cd').val(mySheet.GetCellValue(1,24));
+			  $('#person_info_nation_report_nm').val(mySheet.GetCellValue(1,25));
+			  $('#person_info_resident_classifi').val(mySheet.GetCellValue(1,26)).attr("selected","selected");
+			  $('#person_info_coun_resi_code').val(mySheet.GetCellValue(1,27));
+			  $('#person_info_coun_resi_name').val(mySheet.GetCellValue(1,28));
+			  $('#pk_sawon_code').val(mySheet.GetCellValue(1,29));
+			  $('#person_info_int_user_id').val(mySheet.GetCellValue(1,30));
+			  $('#person_info_int_date').val(mySheet.GetCellValue(1,31));
+			  $('#person_info_mod_user_id').val(mySheet.GetCellValue(1,32));
+			  $('#person_info_mod_date').val(mySheet.GetCellValue(1,33));   
+		  }
 	}
+	
 	
 	// 저장완료 후 처리할 작업
 	// code: 0(저장성공), -1(저장실패)
@@ -442,18 +508,18 @@
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('person_info_zip').value = data.zonecode; // 우편번호
-                mySheet.SetCellValue(t_row,8, data.zonecode);
+                mySheet.SetCellValue(t_row,15, data.zonecode);
                 
                 document.getElementById('person_info_resi_reg_address').value = roadAddr; // 도로명주소
-                mySheet.SetCellValue(t_row,9, roadAddr);
+                mySheet.SetCellValue(t_row,16, roadAddr);
                 
                 // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
                 if(roadAddr !== ''){ // 상세주소
                     document.getElementById('person_info_detail_address').value = extraRoadAddr;
-                	mySheet.SetCellValue(t_row,10,extraRoadAddr); // 변경이 있으면 mysheet에 setCellValue를 써서 값 입력
+                	mySheet.SetCellValue(t_row,17,extraRoadAddr); // 변경이 있으면 mysheet에 setCellValue를 써서 값 입력
                 } else {
                     document.getElementById('person_info_detail_address').value = '';
-                    mySheet.SetCellValue(t_row,10,"");
+                    mySheet.SetCellValue(t_row,17,"");
                 }
 
                 var guideTextBox = document.getElementById("guide");
@@ -484,7 +550,7 @@
 		        ,showMonthAfterYear:true //년도 먼저 나오고, 뒤에 월 표시
 		        ,changeYear: true //콤보박스에서 년 선택 가능
 		        ,changeMonth: true //콤보박스에서 월 선택 가능                
-		        ,yearRange: "-120:+0" // 콤보박스에서 100년 전 부터 현재 년도 까지 표시되게 만듬
+		        ,yearRange: "-120:+1" // 콤보박스에서 100년 전 부터 현재 년도 까지 표시되게 만듬
 		        ,showOn: "both" //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시  
 		        ,buttonImage: "${contextPath}/resources/ibsheet/Main/calendar.gif;" //버튼 이미지 경로
 		        ,buttonImageOnly: true //기본 버튼의 회색 부분을 없애고, 이미지만 보이게 함
@@ -513,23 +579,21 @@
   <div class="nav">
 	  
 	  <div class="main_content">
+	  		<div class="ib_function float_right">
+			  
+			</div>
 	    <div class="exp_product">
 	    </div>
 		
 		<!-- ibsheet 뿌려주는 부분  -->
 		<div class="hidden">
-		
-			<div class="ib_function float_light">
-			  <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-			  <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-			  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-			  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
-			</div>
-		
 			<div class="ib_product"><script>createIBSheet("mySheet", "80%", "80%");</script></div>
 		</div>
+
+		<form name='frm'>
 		
-		<form id="frm">
+		<!-- 사원코드 값 가져오기 -->
+		<input type='text' id="sawon_code" name="sawon_code" hidden="1" />		
 		<!-- 개인 정보 -->
 		<!-- <input type="text" name="company_reg_num" id="company_reg_num" size="30px" placeholder="_ _ _-_ _-_ _ _ _ _"> -->
 		<div style="border:1px solid lightblue">
@@ -546,9 +610,10 @@
 						<br><input type="button" id="" name="" value="사진등록"/> 
 					</td>
 					<td align="right" style="width:105px;">성명 (영문) : </td>
-	    			<td>
+	    			<td style="width:250px;">
 	    				<input type="text" name="person_info_eng_name" id="person_info_eng_name" size="30px">
 	    			</td>
+	    			<td align="left"><a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a></td>
 				</tr>
 				<tr>
 				  	<td align="right">내 외국인구분 : </td>

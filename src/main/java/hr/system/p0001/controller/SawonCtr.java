@@ -125,7 +125,7 @@ public class SawonCtr {
     }
     
     /**
-     * 사용자 조회.
+     * 내정보보기
      */
     @RequestMapping(value = "/myinfo")
     public String myInfo(HttpServletRequest request, ModelMap modelMap) {
@@ -293,5 +293,66 @@ public class SawonCtr {
         return answer;
     }
     
+    /**
+     * 부서원정보보기
+     * @throws Exception 
+     */
+    @RequestMapping(value = "/deptInfo")
+    public String deptInfo(HttpServletRequest request, ModelMap modelMap) throws Exception {
+        
+    	String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+        
+        modelMap.addAttribute("PK_SAWON_CODE", userno);
+        
+        //데이터 조회
+  		// List<?> listview = sawonSvc.deptISA(userno);
+  		// modelMap.addAttribute("listview", listview);
+        
+        // deptISA(userno);
+        
+        return "system/p0001/Sawon_DeptInfo";
+    }
+    
+	//부서원정보보기_리스트 조회
+    @RequestMapping(value = "/deptISA", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map deptISA(HttpServletRequest request, ModelMap modelMap) throws Exception {
+    	
+    	String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
+        
+        modelMap.addAttribute("PK_SAWON_CODE", userno);
+    	
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		// 검색조건설정
+		searchMap.put("PK_SAWON_CODE", userno);
+		
+		//데이터 조회
+		List<?> data = sawonSvc.deptISA(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+	}
+    
+    /**
+     * 부서원 정보보기_개별
+     */
+    @RequestMapping(value = "/deptISA2")
+    @ResponseBody
+    public Map deptISA2(HttpServletRequest request, ModelMap modelMap) {
+        
+    	String userno = request.getParameter("pk_SAWON_CODE");
+        
+        modelMap.addAttribute("PK_SAWON_CODE", userno);
+        
+        //데이터 조회
+  		List<?> listview = sawonSvc.deptISA2(userno);
+  		
+  		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+  		
+  		resultMap.put("Data", listview);
+        
+        return resultMap;
+    }
     
 }

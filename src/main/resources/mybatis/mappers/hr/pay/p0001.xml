@@ -164,9 +164,9 @@
 	
 	<insert id="insertData" parameterType="java.util.Map">
 		
-		 <selectKey resultType="String" keyProperty="PK_TA_TOTAL_CODE" order="BEFORE">
+		 <selectKey resultType="String" keyProperty="pk_TA_TOTAL_CODE" order="BEFORE">
 
-          SELECT NVL(MAX(PK_TA_TOTAL_CODE)+1, 1) FROM TA_TOTAL
+          SELECT NVL(MAX(pk_TA_TOTAL_CODE)+1, 1) FROM TA_TOTAL
 
        </selectKey>
 		insert into TA_TOTAL(PK_TA_TOTAL_CODE, FK_TA_TOTAL_SAWON_CODE, TA_TOTAL_DIVI_CODE, TA_TOTAL_DAY, TA_TOTAL_HOUR, ta_TOTAL_PAYMENTDAY) values(#{pk_TA_TOTAL_CODE, jdbcType=VARCHAR},#{pk_SAWON_CODE, jdbcType=VARCHAR}, #{ta_TOTAL_DIVI_CODE, jdbcType=VARCHAR}, #{ta_TOTAL_DAY, jdbcType=VARCHAR}, #{ta_TOTAL_HOUR, jdbcType=VARCHAR}, #{ta_TOTAL_PAYMENTDAY, jdbcType=VARCHAR})

@@ -172,7 +172,6 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 			searchMap.put("fd_year", request.getParameter("fd_year"));
 			searchMap.put("option", request.getParameter("option"));
 			// ?��?��?�� 조회
-			System.out.println("aaaaaa: "+request.getParameter("sawon_code"));
 			List<day_regist_VO> data = day_regist_Service.searchList_month_click(searchMap);
 			List<DateVO> calenList = new ArrayList<DateVO>();
 			Field3VO fld = new Field3VO();
@@ -199,7 +198,6 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		searchMap.put("PK_DAILY_TA_WORKING_DATE", request.getParameter("PK_DAILY_TA_WORKING_DATE"));
 		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
 		searchMap.put("work", request.getParameter("work"));
-		System.out.println("11111"+searchMap.put("work", request.getParameter("work")));// 왜 널값?
 		
 		// ?��?��?�� 조회
 		
@@ -229,7 +227,6 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 
 		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
 		searchMap.put("pk_DAILY_TA_WORKING_DATE", request.getParameter("PK_DAILY_TA_WORKING_DATE"));
-		System.out.println("sawon_work_1: " + request.getParameter("PK_DAILY_TA_WORKING_DATE"));
 
 		// ?��?��?�� 조회
 		List<day_regist_VO> data = day_regist_Service.searchList_sawon(searchMap);

@@ -29,12 +29,19 @@ public interface SALARY_calculService {
 	 public List<SALARY_calculVO> yearday(Map<String, Object> searchMap) throws DataAccessException;
 
 	public List<SALARY_calculVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException;
+	
+	public List<SALARY_calculVO> payList(Map<String, Object> searchMap) throws DataAccessException;
 
+	public List<SALARY_calculVO> payList2(Map<String, Object> searchMap) throws DataAccessException;
+	
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException ;
 
 	public void updateMember(Map<String, Object> dataMap);
 
 	public void insertMember(Map<String, Object> dataMap);
+
+	
+
 
 
 	

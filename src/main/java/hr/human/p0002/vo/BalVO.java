@@ -235,6 +235,4 @@ public class BalVO {
 		this.rank_NAME = rank_NAME;
 	}
 
-
-	
 }

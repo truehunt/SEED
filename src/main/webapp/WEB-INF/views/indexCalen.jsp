@@ -234,6 +234,7 @@ function calendarDayMouseout(){
                             </div>                        
                         </div>
                     </div>
+          	</div>
           </div>
      
      

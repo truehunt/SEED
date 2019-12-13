@@ -18,9 +18,8 @@ public interface day_regist_Controller {
 	public ModelAndView day_regist_sawon(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView day_regist(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView day_deadline(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView inquery(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView month(HttpServletRequest request, HttpServletResponse response) throws Exception;	
-	public String select(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView month_da(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	//��� 
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
@@ -30,6 +29,7 @@ public interface day_regist_Controller {
 	public Map searchList_Sawon(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception;
 	public Map month(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception;
 	public Map month_click(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws Exception;
+	
 
 	
 	

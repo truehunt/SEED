@@ -25,8 +25,8 @@ $(document).ready(function(){
 	
 		        createIBTab(tabBar, contents, "myTab", {
 		            widthTabBar: "100%", // 탭바 너비
-		            widthContents: "1620px", // 콘탠츠 너비
-		            heightContents: "1650px", // 콘텐츠 높이
+		            widthContents: "1450px", // 콘탠츠 너비
+		            heightContents: "1640px", // 콘텐츠 높이
 		            themes: {
 		                tabs: "simple_under_blue", // 탭바 테마
 		                contents: "simple_under_blue", // 콘텐츠 테마

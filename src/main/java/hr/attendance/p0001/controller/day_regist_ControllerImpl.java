@@ -61,6 +61,16 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
+	@Override
+	@RequestMapping(value = "Amonth_da", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView month_da(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = getViewName(request);
+		viewName = "/attendance/p0001/month_da";
+		request.setCharacterEncoding("utf-8");
+		// ModelAndView main = new ModelAndView("hr/p0001_init");
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
 
 	// ���ϱ���Ȯ��_(���)
 	@Override
@@ -100,35 +110,6 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		return main;
 	}
 
-	// ����/����/�߰� �ٹ���ȸ//연장 근무 조회
-	@Override
-	@RequestMapping(value = "attendance/p0001/inquery.do", method = { RequestMethod.GET, RequestMethod.POST }) // ���θ�(������
-																												// �ּ�)
-	public ModelAndView inquery(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String viewName = getViewName(request);
-		viewName = "/attendance/p0001/inquery";// �����̸�
-		request.setCharacterEncoding("utf-8");
-		// ModelAndView main = new ModelAndView("hr/p0001_init");
-		ModelAndView main = new ModelAndView(viewName);
-		return main;
-	}
-
-	
-	@ResponseBody
-	@RequestMapping(value = "attendance/p0001/select.do", method = { RequestMethod.GET, RequestMethod.POST },produces="application/text;charset=utf-8")
-	// impl �̸� = business
-	public String select(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//String viewName = getViewName(request);
-		//viewName = "/attendance/p0001/select";
-		request.setCharacterEncoding("utf-8");
-		List<HashMap<String,String>> result = day_regist_Service.select();
-		ObjectMapper mapper = new ObjectMapper();
-		String resultJson=mapper.writeValueAsString(result);
-		return resultJson;
-		//return main;
-	}
-	
-
 
 	// ============================================================================================================
 	// ��� ����
@@ -143,6 +124,7 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 			Map<String, Object> searchMap = new HashMap<String, Object>(); // �??��조건
 			Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
 			// �??��조건?��?��
+			searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
 			searchMap.put("fd_year", request.getParameter("fd_year"));
 			searchMap.put("option", request.getParameter("option"));
 			searchMap.put("sawon_num", request.getParameter("sawon_num"));
@@ -170,7 +152,8 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 			// �??��조건?��?��
 			searchMap.put("sawon_code", request.getParameter("sawon_code"));
 			searchMap.put("fd_year", request.getParameter("fd_year"));
-			searchMap.put("option", request.getParameter("option"));
+			searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
+			
 			// ?��?��?�� 조회
 			List<day_regist_VO> data = day_regist_Service.searchList_month_click(searchMap);
 			List<DateVO> calenList = new ArrayList<DateVO>();
@@ -187,7 +170,6 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 	@ResponseBody
 	public Map searchList(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)
 			throws Exception {
-		// request.getSession() => 현재 세션이 존재하면 기존 세션 리턴, 없으면 새로생성한 세션 리턴
 		String userno = request.getSession().getAttribute("PK_SAWON_CODE").toString();
 
 		request.setCharacterEncoding("utf-8");
@@ -195,9 +177,10 @@ public class day_regist_ControllerImpl implements day_regist_Controller {
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
 
 		// �??��조건?��?��
-		searchMap.put("PK_DAILY_TA_WORKING_DATE", request.getParameter("PK_DAILY_TA_WORKING_DATE"));
+		searchMap.put("fd_year", request.getParameter("fd_year"));
 		searchMap.put("PK_SAWON_CODE", request.getParameter("pk_SAWON_CODE"));
 		searchMap.put("work", request.getParameter("work"));
+		
 		
 		// ?��?��?�� 조회
 		

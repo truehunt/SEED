@@ -248,9 +248,9 @@
 <div class="ib_function float_right"></div>
 
 <div class="ib_function float_right">
-	<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-	<a href="javascript:doAction('search')" class="f1_btn_gray lightgray">조회</a>
-	<a href="javascript:doAction('save')" class="f1_btn_gray lightgray">저장</a>
+	<a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
+	<a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
+	<a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
 </div>
 
 <div class="exp_product"></div>

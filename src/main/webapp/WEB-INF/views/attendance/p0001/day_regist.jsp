@@ -108,11 +108,7 @@
 			mySheet.DoSave("${contextPath}/attendance/p0001/insertData_da.do");
 			function mySheet_OnRowSearchEnd(Row){
 				
-				if (mySheet.GetCellValue(Row, 2) == "Y") {
-					mySheet.SetRowEditable(Row, 0)
-				}else {
-					
-				}
+				
 			}			
 			break;
 
@@ -122,7 +118,7 @@
 
 		case "end": //마감관리
 			var select_row = mySheet.GetSelectRow();
-		
+		alert(mySheet.GetCellValue(select_row, 1));
 		if(mySheet.GetCellValue(select_row, 1) =='Y'){
 			mySheet.SetCellValue(select_row, 1, '')
 		}else {

@@ -107,7 +107,7 @@
 			 ORDER BY SSNO DESC
 			 ) A
 		<if test="rowStart != null">
-		     WHERE A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+		     WHERE A.NO BETWEEN ${rowStart} AND ${rowStart+9}
 		</if>
     </select> 
         
@@ -196,7 +196,7 @@
 		AND CC.FK_PERSON_BC_CODE_NUM='SD'
 		AND AD_DOCSTATUS IN(1,2)
 		<if test="rowStart != null">
-             AND ROWNUM BETWEEN ${rowStart-1} AND ${displayRowCount}
+             AND ROWNUM BETWEEN ${rowStart} AND ${displayRowCount}
          </if>
          ORDER BY PK_AD_NUM DESC
     </select> 
@@ -304,7 +304,7 @@
             AND A.BGNO=#{bgno}
         </if>  
          <if test="rowStart != null">
-             AND A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+             AND A.NO BETWEEN ${rowStart} AND ${rowStart+9}
          </if>
          ORDER BY BRDNO DESC 
     </select> 
@@ -540,7 +540,7 @@
 		        INNER JOIN SAWON CU ON CU.PK_SAWON_CODE=TB.FK_SAWON_CODE
 		    ) A
 		<if test="rowStart != null">
-			WHERE A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+			WHERE A.NO BETWEEN ${rowStart} AND ${rowStart+9}
          </if>         
      </select>
 

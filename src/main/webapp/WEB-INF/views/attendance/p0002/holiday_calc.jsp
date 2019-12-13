@@ -86,11 +86,13 @@
 			Type : "Status",
 			SaveName : "STATUS",
 			MinWidth : 40,
+			Hidden : 1
 		}, {
 			Header : "삭제",
 			Type : "DelCheck",
 			SaveName : "STATUS",//디비명
 			MinWidth : 80,
+			Hidden : 1
 		}, {
 			Header : "성명",
 			Type : "Text",
@@ -149,34 +151,8 @@
 			Align : "Center"
 		} ];
 		IBS_InitSheet(mySheet, initSheet);
-		select();
-		//mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
-		//mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
-		//doAction('search');
 	}
-	//부서명 뽑기
-	// 	function select() {
-
-	// 		$
-	// 				.ajax({
-	// 					url : "${contextPath}/attendance/p0002/select.do",//목록을 조회 할 url
-	// 					type : "POST",
-	// 					dataType : "JSON",
-	// 					success : function(data) {
-	// 						console.log(data);
-	// 						for (var i = 0; i < data.length; i++) {
-	// 							var option = "<option class='' value='" + data[i].DEPT_NAME + "'>"
-	// 									+ data[i].DEPT_NAME + "</option>";
-	// 							//대상 콤보박스에 추가
-
-	// 							$('#select').append(option);
-	// 						}
-	// 					},
-	// 					error : function(jqxhr, status, error) {
-	// 					}
-	// 				});
-	// 	};
-
+	
 	/*Sheet 각종 처리*/
 	function doAction(sAction) {
 		switch (sAction) {
@@ -185,8 +161,8 @@
 					+ "&sawon_num="
 					+ document.getElementById("sawon_num").value + "&option="
 					+ $('#select option:selected').val()
-			mySheet.DoSearch(
-					"${contextPath}/attendance/p0002/searchList_calc.do", val1);
+					alert(val1)
+			mySheet.DoSearch("${contextPath}/attendance/p0002/searchList_calc.do", val1);
 			break;
 		case "reload": //초기화
 			mySheet.RemoveAll();
@@ -217,6 +193,9 @@
 
 		var num = mySheet.GetCellValue(Row, 8)
 		var num1 = mySheet.GetCellValue(Row, 9)
+		if(mySheet.GetCellValue(Row, 9)==""){
+			mySheet.SetCellValue(Row, 9,0)
+		}
 		num = Number(num) - Number(num1)
 		mySheet.SetCellValue(Row, 10, num)
 
@@ -234,6 +213,8 @@
 					$('#fd_year').append(
 							'<option value="' + sy + '">' + sy + '년</option>');
 				}
+				jQuery("#fd_year  > option[value=" + nyear + "]").attr(
+						"selected", "true");
 			})
 </script>
 </head>
@@ -268,10 +249,7 @@
 			</select> <input type="text" name="sawon_num" id="sawon_num"> <br>
 			<body onload="LoadPage()">
 				<div class="ib_function float_right">
-					<a href="javascript:doAction('insert')"
-						class="f1_btn_gray lightgray">추가</a> <a
-						href="javascript:doAction('search')" class="f1_btn_gray lightgray">조회</a>
-					<a href="javascript:doAction('save')" class="f1_btn_gray lightgray">저장</a>
+				<a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
 					</form>
 				</div>
 				<div class="ib_function float_right">

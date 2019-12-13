@@ -55,7 +55,7 @@
 			        ORDER BY PK_AD_NUM DESC
          		) A
          <if test="rowStart != null">
-             WHERE A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+             WHERE A.NO BETWEEN ${rowStart} AND ${rowStart+9}
          </if>
          
     </select> 
@@ -107,14 +107,14 @@
 	         ORDER BY PK_AD_NUM DESC
          ) A
          <if test="rowStart != null">
-             WHERE A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+             WHERE A.NO BETWEEN ${rowStart} AND ${rowStart+9}
          </if>
          
     </select> 
             
     <insert id="insertSignDoc" parameterType="hr.elect.p0001.vo.SignDocVO">
     	<selectKey resultType="string" keyProperty="PK_AD_NUM" order="BEFORE">
-    		SELECT NVL(MAX(PK_AD_NUM)+1, 0) FROM AD
+    		SELECT NVL(MAX(PK_AD_NUM)+1, 1) FROM AD
     	</selectKey>
         INSERT INTO AD(PK_AD_NUM, AD_TITLE, PK_SAWON_CODE, AD_CONTENT, AD_DOCSTATUS, AD_DOCSTEP, PK_DOCTYPE_NUM, AD_DEPT_NAME, AD_DOCSIGNPATH, AD_MOD_DATE, AD_INT_DATE, AD_DELETEFLAG)
         VALUES (#{PK_AD_NUM}, #{AD_TITLE}, #{PK_SAWON_CODE}, #{AD_CONTENT}, #{AD_DOCSTATUS}, 1, #{PK_DOCTYPE_NUM, jdbcType=VARCHAR}, #{AD_DEPT_NAME, jdbcType=VARCHAR}, #{AD_DOCSIGNPATH, jdbcType=VARCHAR}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), to_char(sysdate,'yyyy.mm.dd hh24:mi'), 'N')
@@ -135,7 +135,7 @@
          
     <insert id="insertSign" parameterType="hr.elect.p0001.vo.SignVO" >
     	<selectKey resultType="string" keyProperty="PK_APPROVAL_NUM" order="BEFORE">
-    		SELECT NVL(MAX(PK_APPROVAL_NUM)+1, 0) FROM APPROVAL
+    		SELECT NVL(MAX(PK_APPROVAL_NUM)+1, 1) FROM APPROVAL
     	</selectKey>
         INSERT INTO APPROVAL(PK_APPROVAL_NUM, FK_AD_NUM, APPROVAL_SSSTEP, APPROVAL_SSTYPE, APPROVAL_SSRESULT, APPROVAL_RECEIVE_DATE, PK_SAWON_CODE, APPROVAL_USER_POS)
         VALUES (#{PK_APPROVAL_NUM}, #{FK_AD_NUM}, #{APPROVAL_SSSTEP}, #{APPROVAL_SSTYPE}, #{APPROVAL_SSRESULT}, to_char(sysdate,'yyyy.mm.dd hh24:mi'), #{PK_SAWON_CODE}, #{APPROVAL_USER_POS})

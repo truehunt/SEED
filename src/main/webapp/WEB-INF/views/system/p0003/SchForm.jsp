@@ -58,9 +58,15 @@ window.onload = function() {
     </c:if> 
 }
 
-function fn_formSubmit(){
+function fn_formSubmit(){  // SSSTARTDATE, SSENDDATE
 	if ( ! chkInputValue("#SSTITLE", "일정명")) return false;
 	if ( ! chkInputValue("#SSCONTENTS", "내용")) return false;
+	var a = $("#SSSTARTDATE").val();
+	var b = $("#SSENDDATE").val();
+	if ( a > b ){
+		alert("날짜값이 올바르지 않습니다.");
+		return false;
+	}
 	
 	if (!confirm("저장 하시겠습니까?")) return;
 	
@@ -177,23 +183,6 @@ function SSREPEATTYPEChange(){
 									 	</c:forTokens>
 									</select>						
 								 </div>		                            
-	                        </div>
-	                    	<div class="row form-group">
-	                            <label class="col-lg-1">반복</label>
-	                            <div class="col-lg-2">
-		                           	<select id="SSREPEATTYPE" name="SSREPEATTYPE" class="form-control" onchange="SSREPEATTYPEChange()">
-		                           		<option value="1" <c:if test='${schInfo.SSREPEATTYPE==1}'>selected</c:if>>반복없음</option>
-		                           		<option value="2" <c:if test='${schInfo.SSREPEATTYPE==2}'>selected</c:if>>주간반복</option>
-		                           		<option value="3" <c:if test='${schInfo.SSREPEATTYPE==3}'>selected</c:if>>월간반복</option>
-									</select>						
-	                            </div> 
-	                            <div class="col-lg-1">
-		                           	<select id="SSREPEATOPTION" name="SSREPEATOPTION" class="form-control" style="display:none">
-									</select>						
-	                            </div> 
-	                            <div class="col-lg-2">
-	                            	<input class="form-control" size="16" id="SSREPEATEND" name="SSREPEATEND" value="<c:out value="${schInfo.SSREPEATEND}"/>"  style="display:none" readonly>
-	                            </div>
 	                        </div>
 	                    	<div class="row form-group">
 	                            <label class="col-lg-1">공개</label>

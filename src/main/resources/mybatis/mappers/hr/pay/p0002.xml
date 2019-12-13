@@ -33,8 +33,12 @@
 		<result property="fk_HOBONG_CODE" column="fk_HOBONG_CODE"/>
 		<result property="fk_RANK_CODE" column="fk_RANK_CODE"/>
 		<result property="hobong_TABLE_START_DATE_APPLI" column="hobong_TABLE_START_DATE_APPLI"/>
-		
-		
+		<result property="salary_CAL_PAYMENTDAY" column="salary_CAL_PAYMENTDAY"/>
+		<result property="fk_SAWON_CODE" column="fk_SAWON_CODE"/>
+		<result property="fk_TA_TOTAL_SAWON_CODE" column="fk_TA_TOTAL_SAWON_CODE"/>
+	    <result property="ta_TOTAL_PAYMENTDAY" column="ta_TOTAL_PAYMENTDAY"/>
+	    <result property="rank_CODE" column="rank_CODE"/>
+	     <result property="rank_NAME" column="rank_NAME"/>
 		
 		
 	</resultMap>
@@ -57,6 +61,8 @@
 	          <result property="salary_CAL_SALARY_ITEM" column="salary_CAL_SALARY_ITEM"/>
 	          <result property="ta_TOTAL_HOUR" column="ta_TOTAL_HOUR"/>
 	          
+	              <result property="fk_TA_TOTAL_SAWON_CODE" column="fk_TA_TOTAL_SAWON_CODE"/>
+	           <result property="ta_TOTAL_PAYMENTDAY" column="ta_TOTAL_PAYMENTDAY"/>
 	</resultMap>
 	
 	
@@ -65,7 +71,7 @@
 	
 	<select id="searchList" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
 		<![CDATA[
-			select a.pk_sawon_code, a.sawon_name
+			select a.pk_sawon_code, a.sawon_name, a.rank_name, a.rank_code
 			from SAWON a, DEPT b, workplace c
 			
 		]]>
@@ -103,7 +109,7 @@
 				      and salary_CAL_PAYMENTDAY = #{salary_CAL_PAYMENTDAY, jdbcType=VARCHAR}
 			</if>
 		 
-				     
+				     order by pk_SALARY_CAL_INFO ASC
 		
 		</where>
 	</select>
@@ -168,40 +174,42 @@
 	
 		<select id="payList" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
 		<![CDATA[
-			select ta_TOTAL_HOUR*8350 AS salary_CAL_MONEY
-			from ta_total
+			select sum(a.ta_TOTAL_HOUR)*b.sal_info_salary AS salary_CAL_MONEY
+			from ta_total a, sal_info b
 		]]>
 		<where>
-		<if test="pk_SAWON_CODE != null">
-				      and FK_TA_TOTAL_SAWON_CODE = #{pk_SAWON_CODE, jdbcType=VARCHAR}
-			</if>
 		
+		    a.FK_TA_TOTAL_SAWON_CODE = b.fk_sawon_code
+		    
+		<if test="fk_SALARY_CAL_SAWON_CODE != null">
+				      and FK_TA_TOTAL_SAWON_CODE = #{fk_SALARY_CAL_SAWON_CODE, jdbcType=VARCHAR}
+			</if>
+	     
+	     		<if test="salary_CAL_PAYMENTDAY != null">
+				      and TA_TOTAL_PAYMENTDAY = #{salary_CAL_PAYMENTDAY, jdbcType=VARCHAR}
+			</if>
 		</where>
 		
-	</select>
+		 group by b.sal_info_salary
+	</select> 
 	
 	
 		<select id="payList2" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
 		<![CDATA[
-			select a.hobong_table_price AS salary_CAL_MONEY
-              from HOBONG_TABLE a, em_info b, sal_info c
-             where a.fk_rank_code = b.EM_INFO_POSITION_CODE
-               and a.FK_HOBONG_CODE = c.FK_HOBONG_CODE 
+		        select a.hobong_table_price AS salary_CAL_MONEY
+                  from HOBONG_TABLE a, sal_info b, sawon c
+              
 		]]>
 		
 		 <where>
-		      
-			<if test="FK_HOBONG_CODE != null">
-				and FK_HOBONG_CODE = #{FK_HOBONG_CODE}
+		              a.fk_rank_code = b.fk_rank_code 
+                  and a.fk_hobong_code = b.fk_hobong_code
+                  and a.FK_RANK_CODE = c.RANK_CODE
+                   
+		      <if test="rank_CODE != null">
+				      and rank_CODE = #{rank_CODE, jdbcType=VARCHAR}
 			</if>
 			
-			<if test="FK_RANK_CODE != null">
-				and FK_RANK_CODE = #{FK_RANK_CODE}
-			</if>
-			
-			<if test="HOBONG_TABLE_START_DATE_APPLI != null">
-				and HOBONG_TABLE_START_DATE_APPLI = #{HOBONG_TABLE_START_DATE_APPLI}
-			</if>
 		</where>
 		
 	</select>

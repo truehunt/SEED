@@ -13,7 +13,7 @@
 
 <style>
 	.frame {
-		  width : 800px;
+		  width : 850px;
 		  margin: 0px;
 	}
 
@@ -26,7 +26,7 @@
 	.nav {
 		  float: left;
 		  margin-left:0px;
-		  width: 800px;
+		  width: 850px;
 		  height: 650px;
 		  border : 1px solid lightblue;
 	}
@@ -35,7 +35,7 @@
 		width:500px;
 	}
 	.main_content{
-		width: 800px;
+		width: 850px;
 	}
 	.main_menu {
 		border : 1px solid lightblue;
@@ -57,6 +57,13 @@
 	
 	table{
 		width:100%;
+	}
+	
+	.disabled {
+    pointer-events: none;
+    background-color: #eee;
+    color: #555;
+    opacity: 1;
 	}
 	/*datepicer 버튼 롤오버 시 손가락 모양 표시*/
 	.ui-datepicker-trigger{cursor: pointer;}
@@ -154,7 +161,7 @@
 			{Header:"분류 코드 명",Type:"Text",SaveName:"em_info_classifi_name",MinWidth:80, Align:"Center"},
 			{Header:"퇴직사유 코드",Type:"Text",SaveName:"em_info_retire_reason_code",MinWidth:60, Align:"Center"},
 			{Header:"퇴직사유 명",Type:"Text",SaveName:"em_info_retire_reason_name",MinWidth:80, Align:"Center"},
-			//{Header:"귀속연월",Type:"Text",SaveName:"em_info_attri",MinWidth:150, Align:"Center"},
+			{Header:"귀속연월",Type:"Text",SaveName:"em_info_attri",MinWidth:150, Align:"Center"},
 			{Header:"pk_사원코드",Type:"Text",SaveName:"pk_sawon_code",MinWidth:100, Align:"Center"},
 			{Header:"pk_부서코드",Type:"Text",SaveName:"pk_dept_code",MinWidth:100, Align:"Center"},
 
@@ -170,22 +177,70 @@
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
 		
-		mySheet.DoSearch("${contextPath}/system/p0002/searchList3.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
-	
-		//콤보박스에 값 불러오기 -> searchList.do 뒤에 실행 
+		//mySheet.DoSearch("${contextPath}/system/p0002/searchList3.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
+		 
+		//콤보박스에 값 불러오기 -> 페이지 로드 시 콤보박스 초기화
 		selectEm();
+		$('#em_info_offi_division').html("   ");
+		$('#em_info_prob_appli').html("   ");
+		$('#em_info_includ_work_peri').html("   ");
 		
 		//ibSheet 에서 col 지정해서 숨김
-		mySheet.SetColHidden([//0~39번째 까지...실상 전 ibSheet 숨김
+		 mySheet.SetColHidden([//0~39번째 까지...실상 전 ibSheet 숨김
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 2, Hidden:1}, {Col: 3, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1}, {Col: 6, Hidden:1}, 
 	      {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1}, {Col: 10, Hidden:1}, {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, 
 	      {Col: 14, Hidden:1}, {Col: 15, Hidden:1}, {Col: 16, Hidden:1}, {Col: 17, Hidden:1}, {Col: 18, Hidden:1}, {Col: 19, Hidden:1}, {Col: 20, Hidden:1}, 
 	      {Col: 21, Hidden:1}, {Col: 22, Hidden:1}, {Col: 23, Hidden:1}, {Col: 24, Hidden:1}, {Col: 25, Hidden:1}, {Col: 26, Hidden:1}, {Col: 27, Hidden:1}, 
 	      {Col: 28, Hidden:1}, {Col: 29, Hidden:1}, {Col: 30, Hidden:1}, {Col: 31, Hidden:1}, {Col: 32, Hidden:1}, {Col: 33, Hidden:1}, {Col: 34, Hidden:1},
 	      {Col: 35, Hidden:1}, {Col: 36, Hidden:1}, {Col: 37, Hidden:1}, {Col: 38, Hidden:1}, {Col: 39, Hidden:1}, {Col: 40, Hidden:1},
-	    ]); 
+	    ]);  
+	 // onClick 이벤트 중 select 태그에 em_info_offi_division인 값의 변경이 있을때 실행
+		  $("#em_info_offi_division").change(function(e){ 
+			  var colArr =  Object.keys(mySheet.SaveNameInfo);
+			  var colNum = colArr.indexOf(e.target.id);	
+			  t_row = 1; 	
+				 
+			 /* var offi = document.getElementById("em_info_offi_division");
+				var selectBox = offi.options[offi.selectedIndex].value;
+				//console.log(selectBox); */
+				  
+				mySheet.SetCellValue(t_row, colNum, e.target.value);
+			})
+			
+		  // onClick 이벤트 중 select 태그에 em_info_prob_appli인 값의 변경이 있을때 실행
+		  $("#em_info_prob_appli").change(function(e){ 
+			  var colArr =  Object.keys(mySheet.SaveNameInfo);
+			  var colNum = colArr.indexOf(e.target.id);	
+			  t_row = 1; 
+			  
+				 /* var prob = document.getElementById("em_info_prob_appli");
+				var selectBox = prob.options[prob.selectedIndex].value;
+				//console.log(selectBox); */
+				  
+				mySheet.SetCellValue(t_row, colNum, e.target.value);
+			})
+			
+		  // onClick 이벤트 중 select 태그에 em_info_includ_work_peri인 값의 변경이 있을때 실행
+		  $("#em_info_includ_work_peri").change(function(e){ 
+			  var colArr =  Object.keys(mySheet.SaveNameInfo);
+			  var colNum = colArr.indexOf(e.target.id);	
+			  t_row = 1; 
+				 /* var includ = document.getElementById("em_info_includ_work_peri");
+				var selectBox = includ.options[includ.selectedIndex].value;
+				//console.log(selectBox); */
+				  
+				mySheet.SetCellValue(t_row, colNum, e.target.value);
+			})
 	}
 	
+	 function rowCheck(code){//메인화면에서 클릭한 row부분에 대한 사원코드 값 받아옴
+			$('#sawon_code').val(code);
+	 
+	 		console.log($('#sawon_code'));
+			doAction('search');
+			
+	 }
+	 
 	//onClick 이벤트
 	 var t_row = 0;
 	 function mySheet_OnClick(row, col, value, cellx, celly, cellw, cellh) {
@@ -199,40 +254,7 @@
 	 	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
 		  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 		  })
-	
-		  // onClick 이벤트 중 select 태그에 em_info_offi_division인 값의 변경이 있을때 실행
-		  $("#em_info_offi_division").change(function(e){ 
-				var colNum = colArr.indexOf(e.target.id);	
-				 
-			 /* var offi = document.getElementById("em_info_offi_division");
-				var selectBox = offi.options[offi.selectedIndex].value;
-				//console.log(selectBox); */
-				  
-				mySheet.SetCellValue(t_row, colNum, e.target.value);
-			})
-			
-		  // onClick 이벤트 중 select 태그에 em_info_prob_appli인 값의 변경이 있을때 실행
-		  $("#em_info_prob_appli").change(function(e){ 
-				var colNum = colArr.indexOf(e.target.id);	
-				 
-				 /* var prob = document.getElementById("em_info_prob_appli");
-				var selectBox = prob.options[prob.selectedIndex].value;
-				//console.log(selectBox); */
-				  
-				mySheet.SetCellValue(t_row, colNum, e.target.value);
-			})
-			
-		  // onClick 이벤트 중 select 태그에 em_info_includ_work_peri인 값의 변경이 있을때 실행
-		  $("#em_info_includ_work_peri").change(function(e){ 
-				var colNum = colArr.indexOf(e.target.id);	
-				 
-				 /* var includ = document.getElementById("em_info_includ_work_peri");
-				var selectBox = includ.options[includ.selectedIndex].value;
-				//console.log(selectBox); */
-				  
-				mySheet.SetCellValue(t_row, colNum, e.target.value);
-			})
-		  
+ 
 	 }
 	 	 
 	 $(document).on('change', 'input', function(e) { // 수정할시에 state에 문구 저장 및 SetCellValue 실행
@@ -247,11 +269,10 @@
 	function doAction(sAction) {
 		switch(sAction) {
 			case "search": //조회
-				//var param = FormQueryStringEnc(document.frm);
+				var param = FormQueryStringEnc(document.frm2);
 				//alert(param);
-				//mySheet.DoSearch("${contextPath}/human/s0001/searchList.do", param);
 				
-				mySheet.DoSearch("${contextPath}/system/p0002/searchList3.do");
+				mySheet.DoSearch("${contextPath}/system/p0002/searchList3.do", param);
 				
 				//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
 				selectEm();
@@ -268,6 +289,7 @@
 				//save 를 하면서 중복 처리 됨 
 				var tempStr = mySheet.GetSaveString();
 				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				console.log("dkdkdk");
 				mySheet.DoSave("${contextPath}/system/p0002/insertData3.do");
 				break;
 			case "insert": //신규행 추가
@@ -335,6 +357,7 @@
 						mySheet.CellComboItem(i,10,S6); // 근속기간 포함 ( 안함 , 함 )
 
 					}
+					mySheet_OnSearchEnd();
 				},
 				error : function(jqxhr, status, error) {
 					alert("에러");
@@ -344,7 +367,58 @@
 	
 	// 조회완료 후 처리할 작업
 	function mySheet_OnSearchEnd() {
-	
+		var pk = mySheet.GetCellValue(1,3);
+		t_row = 1;
+		var colArr = Object.keys(mySheet.SaveNameInfo);
+ 	    if(mySheet.GetCellValue(1,3) == -1){ // 데이터가 비어있을 시 실행
+ 	    	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
+				  	$("#"+v).val(''); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
+			  })
+		  }else if(mySheet.GetCellValue(1,3) != -1){ // 데이터가 있을 시 실행
+			 /*  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
+				  	$("#"+v).val(mySheet.GetCellValue(1,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
+			  }) */
+
+ 			  $('#em_info_join_date').val(mySheet.GetCellValue(1,4));
+			  $('#em_info_resi_date').val(mySheet.GetCellValue(1,5));
+			  $('#em_info_offi_division').val(mySheet.GetCellValue(1,6)).attr("selected","selected");
+			  $('#em_info_date_retire').val(mySheet.GetCellValue(1,7));
+			  $('#em_info_prob_appli').val(mySheet.GetCellValue(1,8)).attr("selected","selected");
+			  $("#em_info_prob_expi_date").val(mySheet.GetCellValue(1,9));
+			  $('#em_info_includ_work_peri').val(mySheet.GetCellValue(1,10)).attr("selected","selected");
+			  $('#em_info_lea_absence_o').val(mySheet.GetCellValue(1,11));
+			  $('#em_info_lea_absence_t').val(mySheet.GetCellValue(1,12));
+			  $('#fk_dept_code').val(mySheet.GetCellValue(1,13));
+			  $('#dept_name').val(mySheet.GetCellValue(1,14));
+			  $('#em_info_emply_form_cd').val(mySheet.GetCellValue(1,15));
+			  $('#em_info_emply_form_nm').val(mySheet.GetCellValue(1,16));
+			  $('#fk_occupation_code').val(mySheet.GetCellValue(1,17));
+			  $('#occupation_name').val(mySheet.GetCellValue(1,18));
+			  $('#fk_pay_form_code').val(mySheet.GetCellValue(1,19));
+			  $('#pay_form_name').val(mySheet.GetCellValue(1,20));
+			  $('#em_info_project_code').val(mySheet.GetCellValue(1,21));
+			  $('#em_info_project_name').val(mySheet.GetCellValue(1,22));
+			  $('#em_info_work_group_cd').val(mySheet.GetCellValue(1,23));
+			  $('#em_info_work_group_nm').val(mySheet.GetCellValue(1,24));
+			  $('#fk_rank_code').val(mySheet.GetCellValue(1,25));
+			  $('#rank_name').val(mySheet.GetCellValue(1,26));
+			  $('#em_info_position_code').val(mySheet.GetCellValue(1,27));
+			  $('#em_info_position_name').val(mySheet.GetCellValue(1,28));
+			  $('#em_info_duty_code').val(mySheet.GetCellValue(1,29));
+			  $('#em_info_duty_name').val(mySheet.GetCellValue(1,30));
+			  $('#em_info_classifi_code').val(mySheet.GetCellValue(1,31));
+			  $('#em_info_classifi_name').val(mySheet.GetCellValue(1,32));
+			  $('#em_info_retire_reason_code').val(mySheet.GetCellValue(1,33));
+			  $('#em_info_retire_reason_name').val(mySheet.GetCellValue(1,34));   
+			  $('#em_info_attri').val(mySheet.GetCellValue(1,35)); 
+			  $('#pk_sawon_code').val(mySheet.GetCellValue(1,36)); 
+			  $('#pk_dept_code').val(mySheet.GetCellValue(1,37)); 
+			  
+			  $('#em_info_int_user_id').val(mySheet.GetCellValue(1,38)); 
+			  $('#em_info_int_date').val(mySheet.GetCellValue(1,39)); 
+			  $('#em_info_mod_user_id').val(mySheet.GetCellValue(1,40)); 
+			  $('#em_info_mod_date').val(mySheet.GetCellValue(1,41));
+		  }
 	}
 	
 	// 저장완료 후 처리할 작업
@@ -410,17 +484,12 @@
 	    
 		<!-- ibsheet 뿌려주는 부분  -->
 		<div class="hidden">
-		
-			<div class="ib_function float_light">
-				  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-				  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
-			</div>
-			
 			<div class="ib_product"><script>createIBSheet("mySheet", "80%", "80%");</script></div>
 		</div>
 		
-		<form id=frm2>
-			
+		<form name = 'frm2'>
+			<!-- 사원코드 값 가져오기 -->
+			<input type='text' id="sawon_code" name="sawon_code" hidden="1" />	
 			<div style="border:1px solid lightblue">
 			<!-- 입사 정보 -->
 			<table>
@@ -434,8 +503,9 @@
 					<td align="right" style="width:90px;">입사 일 : </td>
 	    			<td style="width:250px;">
 	    				<input type="text" name="em_info_join_date" id="em_info_join_date" size="12px" placeholder="_ _ _ _-_ _-_ _">
-	    			</td>
-					<td colspan="2"></td><!-- 빈 데이터 -->
+	    			</td><td></td>
+					<td>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+					<a href="javascript:doAction('save')" class="f1_btn_white gray" style="align:right;">저장</a></td>
 				</tr>
 				<tr>
 					<td align="right">퇴직 일 : </td>
@@ -508,7 +578,7 @@
 	    			<td>
 	    				<input type="text" name="fk_dept_code" id="fk_dept_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="dept_name" id="dept_name" size="45px" disabled>
+	    				<input type="text" name="dept_name" id="dept_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -516,7 +586,7 @@
 	    			<td>
 	    				<input type="text" name="em_info_emply_form_cd" id="em_info_emply_form_cd" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="em_info_emply_form_nm" id="em_info_emply_form_nm" size="45px" disabled>
+	    				<input type="text" name="em_info_emply_form_nm" id="em_info_emply_form_nm" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -524,7 +594,7 @@
 	    			<td>
 	    				<input type="text" name="fk_occupation_code" id="fk_occupation_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="occupation_name" id="occupation_name" size="45px" disabled>
+	    				<input type="text" name="occupation_name" id="occupation_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -532,7 +602,7 @@
 	    			<td>
 	    				<input type="text" name="fk_pay_form_code" id="fk_pay_form_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="pay_form_name" id="pay_form_name" size="45px" disabled>
+	    				<input type="text" name="pay_form_name" id="pay_form_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -540,7 +610,7 @@
 	    			<td>
 	    				<input type="text" name="em_info_project_code" id="em_info_project_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="em_info_project_name" id="em_info_project_name" size="45px" disabled>
+	    				<input type="text" name="em_info_project_name" id="em_info_project_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -548,7 +618,7 @@
 	    			<td>
 	    				<input type="text" name="em_info_work_group_cd" id="em_info_work_group_cd" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="em_info_work_group_nm" id="em_info_work_group_nm" size="45px" disabled>
+	    				<input type="text" name="em_info_work_group_nm" id="em_info_work_group_nm" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -556,7 +626,7 @@
 	    			<td>
 	    				<input type="text" name="fk_rank_code" id="fk_rank_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="rank_name" id="rank_name" size="45px" disabled>
+	    				<input type="text" name="rank_name" id="rank_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -564,7 +634,7 @@
 	    			<td>
 	    				<input type="text" name="em_info_position_code" id="em_info_position_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="em_info_position_name" id="em_info_position_name" size="45px" disabled>
+	    				<input type="text" name="em_info_position_name" id="em_info_position_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -572,7 +642,7 @@
 	    			<td>
 	    				<input type="text" name="em_info_duty_code" id="em_info_duty_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="em_info_duty_name" id="em_info_duty_name" size="45px" disabled>
+	    				<input type="text" name="em_info_duty_name" id="em_info_duty_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -580,7 +650,7 @@
 	    			<td>
 	    				<input type="text" name="em_info_classifi_code" id="em_info_classifi_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="em_info_classifi_name" id="em_info_classifi_name" size="45px" disabled>
+	    				<input type="text" name="em_info_classifi_name" id="em_info_classifi_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -588,7 +658,7 @@
 	    			<td>
 	    				<input type="text" name="em_info_retire_reason_code" id="em_info_retire_reason_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="em_info_retire_reason_name" id="em_info_retire_reason_name" size="45px" disabled>
+	    				<input type="text" name="em_info_retire_reason_name" id="em_info_retire_reason_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>

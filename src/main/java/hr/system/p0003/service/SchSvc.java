@@ -84,50 +84,10 @@ public class SchSvc {
 
             Integer inx = 1;
             Date sdate = Util4calen.str2Date(param.getSSSTARTDATE());
-            if ("1".equals(param.getSSREPEATTYPE())) {			//반복없음
-	            Date edate = Util4calen.str2Date(param.getSSENDDATE());
-	            while (!sdate.after(edate)) {  
-	                param2.setSDSEQ(inx++);
-	                param2.setSDDATE( Util4calen.date2Str(sdate));
-	            	sqlSession.insert("insertSchDetail", param2);
-	            	sdate = Util4calen.dateAdd(sdate, 1);
-	            }
-            } else 
-            if ("2".equals(param.getSSREPEATTYPE())) {			//주간반복
-	            Date edate = Util4calen.str2Date(param.getSSREPEATEND());
-	            
-	            Integer dayofweek = Integer.parseInt(param.getSSREPEATOPTION()); 
-	            while (!sdate.after(edate)) {  
-	                if (Util4calen.getDayOfWeek(sdate)==dayofweek) break;
-	            	sdate = Util4calen.dateAdd(sdate, 1);
-	            }
-	            while (!sdate.after(edate)) {  
-	                param2.setSDSEQ(inx++);
-	                param2.setSDDATE( Util4calen.date2Str(sdate));
-	            	sqlSession.insert("insertSchDetail", param2);
-	            	sdate = Util4calen.dateAdd(sdate, 7);
-	            }
-            } else 
-            if ("3".equals(param.getSSREPEATTYPE())) {			//월간반복
-	            Date edate = Util4calen.str2Date(param.getSSREPEATEND());
-	            
-	            Integer iYear = Util4calen.getYear(sdate);
-	            Integer iMonth = Util4calen.getMonth(sdate);
-	            String sday = param.getSSREPEATOPTION();
-	            
-	            Date ndate = Util4calen.str2Date(iYear + "-" + iMonth + "-" + sday);
-	            if (sdate.after(ndate)) 
-	                 sdate = Util4calen.str2Date(String.format("%s-%s-%s", iYear, ++iMonth, sday));
-	            else sdate = ndate;
-	            
-	            while (!sdate.after(edate)) {
-	                param2.setSDSEQ(inx++); 
-	                param2.setSDDATE( Util4calen.date2Str(sdate));
-	            	sqlSession.insert("insertSchDetail", param2);
-	                sdate = Util4calen.str2Date(String.format("%s-%s-%s", iYear, ++iMonth, sday));
-	            }            
-	        }
-            	
+            param2.setSDSEQ(inx++);
+            param2.setSDDATE( Util4calen.date2Str(sdate));
+        	sqlSession.insert("insertSchDetail", param2);
+            
             txManager.commit(status);
         } catch (TransactionException ex) {
             txManager.rollback(status);
@@ -150,6 +110,7 @@ public class SchSvc {
      */
     public void deleteSch(SchVO param) {
         sqlSession.update("deleteSch", param);
+        sqlSession.insert("deleteSchDetail", param);
     }
 }
 

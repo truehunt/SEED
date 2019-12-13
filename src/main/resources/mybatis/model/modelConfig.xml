@@ -36,6 +36,8 @@
       	<typeAlias type="hr.pay.p0002.vo.SALARY_calculVO"  alias="SALARY_calculVO" />
       	<typeAlias type="hr.pay.p0003.vo.SALARY_bo_staVO"  alias="SALARY_bo_staVO" />
       	<typeAlias type="hr.pay.p0004.vo.SALARY_specVO"  alias="SALARY_specVO" />
+      	<typeAlias type="hr.pay.p0005.vo.ANNUAL_statusVO"  alias="ANNUAL_statusVO" />
+      	
       	<typeAlias type="hr.system.p0001.vo.SET_paydayVO"  alias="SET_paydayVO" />
       
        	<typeAlias type="hr.human.p0007.vo.education_manageVO"  alias="education_manageVO" />

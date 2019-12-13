@@ -58,6 +58,13 @@
 	table{
 		width:110%;
 	}
+	
+	.disabled {
+    pointer-events: none;
+    background-color: #eee;
+    color: #555;
+    opacity: 1;
+	}
 	/*datepicer 버튼 롤오버 시 손가락 모양 표시*/
 	.ui-datepicker-trigger{cursor: pointer;}
 	
@@ -126,7 +133,8 @@
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center"},
 			{Header:"No",Type:"Seq",SaveName:"pk_person_info_unique_num",MinWidth:50, Align:"Center"},
 			{Header:"사원 코드",Type:"Text",SaveName:"fk_sawon_code",MinWidth:90, Align:"Center"},
-			{Header:"사진",Type:"Image",SaveName:"person_info_picture",MinWidth:100, Align:"Center"},			
+			{Header:"사진",Type:"Text",SaveName:"person_info_picture",MinWidth:100, Align:"Center"},
+			//{Header:"사진",Type:"Text",SaveName:"photo",MinWidth:100, Align:"Center"},
 			{Header:"사원 명(영문)",Type:"Text",SaveName:"person_info_eng_name",MinWidth:80, Align:"Center"},
 			{Header:"내외국인구분",Type:"Combo",SaveName:"person_info_domes_forei_pop",MinWidth:50, Align:"Center"},
 			{Header:"주민등록번호",Type:"Text",SaveName:"person_info_res_reg_num",MinWidth:100, Align:"Center"},
@@ -152,6 +160,7 @@
 			{Header:"거주지국코드",Type:"Text",SaveName:"person_info_coun_resi_code",MinWidth:60, Align:"Center"},
 			{Header:"거주지국이름",Type:"Text",SaveName:"person_info_coun_resi_name",MinWidth:60, Align:"Center"},
 			{Header:"pk_사원코드",Type:"Text",SaveName:"pk_sawon_code",MinWidth:60, Align:"Center"},
+			{Header:"사진2",Type:"Text",SaveName:"photo",MinWidth:60, Align:"Center"},
 			
 			{Header:"입력자",Type:"Text",SaveName:"person_info_int_user_id",MinWidth:80, Align:"Center"},
 			{Header:"입력일시",Type:"Text",SaveName:"person_info_int_date",MinWidth:80, Align:"Center"},
@@ -166,7 +175,7 @@
 				
 		//doAction('search');
 
-		//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
+		////콤보박스에 값 불러오기 -> 페이지 로드 시 콤보박스 초기화
  		selectPerson();
 		$('#person_info_domes_forei_pop').html("   ");
 		$('#person_info_gender').html("   ");
@@ -178,13 +187,13 @@
 		//mySheet.DoSearch("${contextPath}/system/p0002/searchList2.do",param); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 	
 		//ibSheet 에서 col 지정해서 숨김
-		/*  mySheet.SetColHidden([//0~33번째 까지...실상 전 ibSheet 숨김
+		/*   mySheet.SetColHidden([//0~33번째 까지...실상 전 ibSheet 숨김
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 2, Hidden:1}, {Col: 3, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1}, {Col: 6, Hidden:1}, 
 	      {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1}, {Col: 10, Hidden:1}, {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, 
 	      {Col: 14, Hidden:1}, {Col: 15, Hidden:1}, {Col: 16, Hidden:1}, {Col: 17, Hidden:1}, {Col: 18, Hidden:1}, {Col: 19, Hidden:1}, {Col: 20, Hidden:1}, 
 	      {Col: 21, Hidden:1}, {Col: 22, Hidden:1}, {Col: 23, Hidden:1}, {Col: 24, Hidden:1}, {Col: 25, Hidden:1}, {Col: 26, Hidden:1}, {Col: 27, Hidden:1}, 
 	      {Col: 28, Hidden:1}, {Col: 29, Hidden:1}, {Col: 30, Hidden:1}, {Col: 31, Hidden:1}, {Col: 32, Hidden:1}, {Col: 33, Hidden:1},
-	    ]); */ 
+	    ]); */
 
 	 // select박스 수정 시 실행되야 되는 함수들 
 		  // select 태그에 person_info_domes_forei_pop인 값의 변경이 있을때 실행
@@ -198,7 +207,7 @@
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
 			
-		  // onClick 이벤트 중 select 태그에 person_info_gender인 값의 변경이 있을때 실행
+		  // select 태그에 person_info_gender인 값의 변경이 있을때 실행
 		  $("#person_info_gender").change(function(e){ 
 			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
@@ -210,7 +219,7 @@
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
 			
-		  // onClick 이벤트 중 select 태그에 person_info_head_household인 값의 변경이 있을때 실행
+		  // select 태그에 person_info_head_household인 값의 변경이 있을때 실행
 		  $("#person_info_head_household").change(function(e){ 
 			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
@@ -222,7 +231,7 @@
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
 			
-		  // onClick 이벤트 중 select 태그에 person_info_dis_classifi인 값의 변경이 있을때 실행
+		  // select 태그에 person_info_dis_classifi인 값의 변경이 있을때 실행
 		  $("#person_info_dis_classifi").change(function(e){ 
 			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
@@ -234,7 +243,7 @@
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
 			
-		  // onClick 이벤트 중 select 태그에 person_info_nation_mngement인 값의 변경이 있을때 실행
+		  // select 태그에 person_info_nation_mngement인 값의 변경이 있을때 실행
 		  $("#person_info_nation_mngement").change(function(e){ 
 			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
@@ -246,7 +255,7 @@
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
 			
-		  // onClick 이벤트 중 select 태그에 person_info_resident_classifi인 값의 변경이 있을때 실행
+		  // select 태그에 person_info_resident_classifi인 값의 변경이 있을때 실행
 		  $("#person_info_resident_classifi").change(function(e){ 
 			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
@@ -259,12 +268,15 @@
 			})
 			
 		 // select박스 수정 시 실행되야 되는 함수들 끝
+		 
+		$('#pk_sawon_code').val(rowCheck());
+	 	console.log($('#pk_sawon_code').val);
 	}
 	
 	 function rowCheck(code){//메인화면에서 클릭한 row부분에 대한 사원코드 값 받아옴
 			$('#sawon_code').val(code);
 	 
-			//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
+			console.log($('#sawon_code'));
 			doAction('search');
 			//$("#person_info_gender").val("여성").attr("selected","selected");
 	 }
@@ -301,11 +313,8 @@
 				var param = FormQueryStringEnc(document.frm);
 				mySheet.DoSearch("${contextPath}/system/p0002/searchList2.do", param);
 				//alert("param : "+param);
-				//mySheet.DoSearch("${contextPath}/human/s0001/searchList.do", param);
 				
 				//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
-				//selectPerson();
-				
 				selectPerson();
 				$('#person_info_domes_forei_pop').html("   ");
 				$('#person_info_gender').html("   ");
@@ -436,7 +445,7 @@
 			 /*  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
 				  	$("#"+v).val(mySheet.GetCellValue(1,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 			  }) */
- 			  $('#person_info_picture').val(mySheet.GetCellValue(1,4));
+ 			  $('#photo').val(mySheet.GetCellValue(1,4));
 			  $('#person_info_eng_name').val(mySheet.GetCellValue(1,5));
 			  $('#person_info_domes_forei_pop').val(mySheet.GetCellValue(1,6)).attr("selected","selected");
 			  $('#person_info_res_reg_num').val(mySheet.GetCellValue(1,7));
@@ -535,7 +544,98 @@
         }).open();
         
     } // 주소 api function end
-	
+    
+    // 이미지 업로드
+//	    <!-- 미리 보기 불러오는 곳 바뀔때마다 바뀜-->
+    $(function(){
+        $("#photofile").change(function(){
+        	console.log($('#pk_sawon_code').val);
+        	readImage(this);
+        });
+    });
+
+//	    <!-- 미리 보기 불러오는 function -->
+    function readImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#previewImg').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function fn_formSubmit(){ // 저장 및 업데이트
+    	t_row=1;
+    	alert("1.")
+    	var form = $("#form1")[0];
+    	var formData = new FormData(form);
+    	if(document.getElementById('photofile').value != ''){
+    		$.ajax({
+	    		cache : false,
+	    		url: "${contextPath}/system/p0002/imageSave",
+	            processData: false,
+	            contentType: false,
+		        type:"POST", 
+		        data: formData,
+				success: function(result){
+					mySheet.SetCellValue(t_row, 'photo', result);
+					document.getElementById('photofile').value = '';
+					var Status = mySheet.GetCellValue(t_row, 'STATUS');
+					
+					if(Status == "U"){
+						mySheet.SetCellValue(t_row, "STATUS", "R");
+					}
+				},error:function(request,status,error){
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+			    },complete : function(data) {
+			    	//  실패했어도 완료가 되었을 때 처리
+				}
+		    })
+    	}
+    } 
+    
+    function fn_formDelete(){ // 저장 및 업데이트
+    	var form = $("#form1")[0];
+    	var formData = new FormData(form);
+    		$.ajax({
+	    		cache : false,
+	    		url: "${contextPath}/system/p0002/imageDelete",
+	            processData: false,
+	            contentType: false,
+		        type:"POST", 
+		        data: formData,
+				success: function(result){
+					
+				},error:function(request,status,error){
+					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+			    },complete : function(data) {
+			    	//  실패했어도 완료가 되었을 때 처리
+				}
+		    })
+    }
+    
+  //첨부파일 용량 제한 & 확장자 제한
+    function checkSize(input) {
+    	
+    	var fileDir = input.value;
+    	
+        if (input.files && input.files[0].size > (1024 * 1024)) {
+            alert("파일 사이즈가 1MB 를 넘습니다.");
+            input.value = null;
+            $('#previewImg').attr('src', null);
+        } else if(fileDir.substring(fileDir.lastIndexOf(".")+1,fileDir.length).search("png") == -1){
+       		alert("지정된 확장자의 파일만 업로드 가능합니다!");
+       	  	input.value = null;
+       	 	$('#previewImg').attr('src', null);
+    	}
+    }
+  
+    function mySheet_OnSelectCell(oldrow, oldcol, row, col) {
+    	t_row=1;
+    	var image = "/SEED/fileDownload?downname=" + mySheet.GetCellValue(t_row, 'photo');
+		$("#previewImg").attr("src", image); // 이미지
+	}
 </script>
 </head>
 <body onload="LoadPage()">
@@ -591,29 +691,45 @@
 		</div>
 
 		<form name='frm'>
-		
-		<!-- 사원코드 값 가져오기 -->
-		<input type='text' id="sawon_code" name="sawon_code" hidden="1" />		
+			<!-- 사원코드 값 가져오기 -->
+			<input type='text' id="sawon_code" name="sawon_code" hidden="1" />		
+		</form>
 		<!-- 개인 정보 -->
-		<!-- <input type="text" name="company_reg_num" id="company_reg_num" size="30px" placeholder="_ _ _-_ _-_ _ _ _ _"> -->
-		<div style="border:1px solid lightblue">
+		<div style="border:1px solid lightblue;">
 			<table>
 				<tr>
-					<td rowspan="9">
+					<td rowspan="9" width="45px">
 						<div style="writing-mode: tb-rl; width:40px; height:301px; border:1px solid lightblue; padding-right:10px;">
 							<img src='${contextPath}/resources/ibsheet/Main/d_right2.gif' style="margin-top:5px; margin-left:-5px; width:15px; height:15px;" />
 							개인 정보
 						</div>
 					</td>
-					<td rowspan="9" align="center" style="border:1px solid lightblue; margin-left:-10px;">
-						<div style="width:100px; height:150px; border:1px solid lightblue;"></div>
-						<br><input type="button" id="" name="" value="사진등록"/> 
+					<td rowspan="9" align="center" style="border:1px solid lightblue; width:220px;" >
+						&emsp; &emsp; &emsp; &emsp;
+						<input type="button" class="f1_btn_white gray" value="주의사항" onClick="alert('이미지 권장 크기는 가로(35px)*세로(35px)입니다.\n확장자는 이미지 파일(.png)만 업로드 가능합니다.\n용량은 1MB를 초과 할 수 없습니다.')">
+						<a href="javascript:fn_formSubmit();" class="f1_btn_white gray">저장</a>
+						<br><br>
+						<form id="form1" name="form1" role="form" action="imageSave" method="post" enctype="multipart/form-data" >
+								<div>
+									<!--이미지 미리보기 되는 곳 -->
+									<div>
+										<img id="previewImg" style="width:100px; height: 120px; max-width: 100px;" align="center"><br>
+										<br>
+										<input type="file" name="photofile" id="photofile" accept='image/*' onchange="checkSize(this)" style="width:200px;"/>
+										<input type="hidden" name="pk_sawon_code" id="pk_sawon_code" />
+									</div>
+								</div>
+							</form>
+						
 					</td>
 					<td align="right" style="width:105px;">성명 (영문) : </td>
-	    			<td style="width:250px;">
-	    				<input type="text" name="person_info_eng_name" id="person_info_eng_name" size="30px">
+	    			<td style="width:270px;">
+	    				<input type="text" name="person_info_eng_name" id="person_info_eng_name" size="33px">
 	    			</td>
-	    			<td align="left"><a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a></td>
+	    			<td align="left"> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &nbsp;
+	    				<!-- <a href="javascript:doAction('save'); fn_formSubmit();" class="f1_btn_white gray">저장</a> -->
+	    				<a href="javascript:doAction('save');" class="f1_btn_white gray">저장</a>
+	    			</td>
 				</tr>
 				<tr>
 				  	<td align="right">내 외국인구분 : </td>
@@ -627,13 +743,13 @@
 				<tr>
 				  	<td align="right">주민 등록번호 : </td>
 	    			<td>
-	    				<input type="text" name="person_info_res_reg_num" id="person_info_res_reg_num" size="30px" placeholder="_ _ _ _ _ _-_ _ _ _ _ _ _">
+	    				<input type="text" name="person_info_res_reg_num" id="person_info_res_reg_num" size="33px" placeholder="_ _ _ _ _ _-_ _ _ _ _ _ _">
 	    			</td>
 				</tr>
 				<tr>
 				  	<td align="right">외국인 등록번호 : </td>
 	    			<td>
-	    				<input type="text" name="person_info_forei_reg_num" id="person_info_forei_reg_num" size="30px" placeholder="_ _ _ _ _ _-_ _ _ _ _ _ _">
+	    				<input type="text" name="person_info_forei_reg_num" id="person_info_forei_reg_num" size="33px" placeholder="_ _ _ _ _ _-_ _ _ _ _ _ _">
 	    			</td>
 				</tr>
 				<tr>
@@ -654,12 +770,12 @@
 				<tr>
 				  	<td align="right">전화번호 : </td>
 	    			<td colspan="2">
-	    				<input class="phoneNo" type="text" name="person_info_tel" id="person_info_tel" size="30px;">
+	    				<input class="phoneNo" type="text" name="person_info_tel" id="person_info_tel" size="33px">
 	    			</td>
 				<tr>
 				  	<td align="right">비상 연락(HP) : </td>
 	    			<td>
-	    				<input class="phoneNo" type="text" name="person_info_emerg_call" id="person_info_emerg_call" size="30px;">
+	    				<input class="phoneNo" type="text" name="person_info_emerg_call" id="person_info_emerg_call" size="33px">
 	    			</td>
 				</tr>
 				<tr>
@@ -667,7 +783,7 @@
 	    			<td>
 	    				<input type="text" name="person_info_final_edu_code" id="person_info_final_edu_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="person_info_final_edu_name" id="person_info_final_edu_name" size="15px" disabled>
+	    				<input type="text" name="person_info_final_edu_name" id="person_info_final_edu_name" size="18px" class="disabled">
 	    			</td>
 				</tr>
 			</table>
@@ -746,7 +862,7 @@
 		  			<td> 
 		  				<input type="text" name="person_info_nation_report_cd" id="person_info_nation_report_cd" size="10px">
 		  				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' /> 
-		  				<input type="text" name="person_info_nation_report_nm" id="person_info_nation_report_nm" size="45px" disabled>
+		  				<input type="text" name="person_info_nation_report_nm" id="person_info_nation_report_nm" size="45px" class="disabled">
 		  			</td>
 				</tr>
 				<tr>
@@ -765,12 +881,12 @@
 		  			<td> 
 		  				<input type="text" name="person_info_coun_resi_code" id="person_info_coun_resi_code" size="10px">
 		  				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' /> 
-		  				<input type="text" name="person_info_coun_resi_name" id="person_info_coun_resi_name" size="45px" disabled>
+		  				<input type="text" name="person_info_coun_resi_name" id="person_info_coun_resi_name" size="45px" class="disabled">
 		  			</td>
 				</tr>
 			</table>
 		</div><!-- //거주 정보 -->
-		</form>
+
 	  </div> <!-- //nav  -->
 	  </div> <!-- //onClick -->
 

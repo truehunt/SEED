@@ -72,7 +72,7 @@ table.ui-datepicker-calendar { display:none; }
        mySheet2.InitHeaders(header,info);  
        
        var cols = [   
-           {Header:"구분",Type:"Text",SaveName:"salary_CAL_SALARY_ITEM",Width:300,Align:"Center", Edit:0},
+           {Header:"구분",Type:"Text",SaveName:"salary_CAL_SALARY_ITEM",Width:250,Align:"Center", Edit:0},
            {Header:"지급액",Type:"AutoSum", RowSpan:1,SaveName:"salary_CAL_MONEY",Width:300, Edit:0,Format:"#,### 만원"}         
 
     
@@ -627,34 +627,39 @@ function yearday() {
 
 
 <body onload="LoadPage()">
+
 <div id="wrapper">
 
         <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
-                <h1 class="page-header"><i class="fa fa-money fa-fw"></i><s:message code="main.pay2"/></h1>
+                <h1 class="page-header"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay4"/></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+  
+ 
+  
+ 
   <div class="main_content">
-       <div class="exp_product">
       
-      <div class="ib_function float_left">
+       <div class="exp_product">
+            <div class="ib_function float_left">
          <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
-         <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
-         <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
-          <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
+         <a href="javascript:doAction('search')" class="btn btn-outline btn-primary"> 조회</a>
+         <a href="javascript:doAction('popprint');" class="btn btn-outline btn-primary"> 인쇄</a>
          </div>
-         </div>
+      </div>
+    
          <br>      <br>
-         
-         <div>
-            <br>  <br>
-            
-           <div class="form-group">
+          
+             </div>
+   
+ <br>  
+   <div class="form-group">
     <form class="form-inline">
                      <div class="row">
-                                   <label for="yearday" class="pull-left">
+                                <label for="yearday" class="pull-left">
                                &ensp;&ensp;    귀속연월 &ensp;
                                 </label>
                          
@@ -663,7 +668,7 @@ function yearday() {
                       
                      
                                  <label>
-     &emsp; &emsp; &emsp;&emsp;  &emsp;  &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;        지급일 &ensp;
+      &emsp; &emsp;&emsp; &emsp;    지급일 &ensp;
                                 </label>
                             <div class="input-group custom-search-form col-lg-3">
                                  <div class="input-group">
@@ -676,58 +681,39 @@ function yearday() {
                              </div>
                          </div>
                          </form>
-                         
-                         <br>  <br> 
-                         
-                         
-           <form class="form-inline">
-                     <div class="row">
-                                 <label for="SiteList" class="pull-left">
-                            &ensp;&ensp;          조회조건 &ensp;
-                                </label>
-                            
-                            <div class="input-group custom-search-form col-lg-3">
-                                 <div class="input-group">
-                         <select id="SiteList"  class="form-control" onchange="selectDept()">
-			        		 <option value="" selected>전체</option>
-			     		 </select>
-                                 </div>
-                             </div>
-                      
-                     
-                                 <label>
-                                 &ensp;   구분 &ensp; 
-                                </label>
-                            <div class="input-group custom-search-form col-lg-3">
-                                 <div class="input-group">
-                                 <select id="DeptList" class="form-control">
-                                    <option  value="" selected>전체</option>
-                                </select>
-                                
-                                 </div>
-                                        
-                             </div>
-                         </div>
-                         </form>
+    
+         <br>
+        <form class="form-inline">
+    
+         <label for="SiteList">조회조건</label>
+        &ensp;<select id="SiteList"   onchange="selectDept()" class="form-control" >
+         <option value="" selected>전체</option>
+      </select>   
+       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+       <label  for="DeptList">구분</label>
+      &ensp; <select id="DeptList"  class="form-control">
+         <option value="" selected>전체</option>
+      </select>
+            </form>
                   </div>
    
-   
 
-   
+
 
 
 
 <br><br>
       <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
-              <DIV class="ib_product" style="width:70%;float:left">
-            <div style="height:100%;width:45%;float:left">
-               <script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); selectSite(); </script>
+              <DIV class="ib_product" style="width:60%;float:left">
+            <div style="height:100%;width:30%;float:left">
+               <script type="text/javascript"> createIBSheet("mySheet", "80%", "100%"); selectSite(); </script>
             </div>
-         
             
-            <div style="height:100%;width:45%;float:left">
-               <script type="text/javascript"> createIBSheet("mySheet2", "200%", "100%"); </script>
+            <div style="height:100%;width:1%;float:left"></div>
+            <div style="height:100%;width:68%;float:left">
+               <script type="text/javascript"> createIBSheet("mySheet2", "100%", "100%"); </script>
             </div>
             
            
@@ -738,16 +724,13 @@ function yearday() {
                <script type="text/javascript"> createIBSheet("mySheet2", "100%", "100%"); </script>
             </div>
             </div>
-      
+               
+     
         
         <!--right단 정보입력 및 수정단 -->
-      </div>
-      </div>
-      </div>
-      </div>
-      
- 
-          
+    
+    </div>
+    </div>
    
     <!--main_content-->
 

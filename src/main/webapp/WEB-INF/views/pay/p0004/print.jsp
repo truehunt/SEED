@@ -124,12 +124,12 @@
 <li>* 인쇄미리보기 설정에서 머리글, 바닥글 항목 보두 비어있음 설정후, 배경색 및 이미지 인쇄 체크후 인쇄하세요 </li>
 </ul>
 </div>							
-<div id="area" style="width:500px">
+<div id="area" style="width:550px">
 <img  align="left" src="${pageContext.request.contextPath}/resources/image/SEED.png" width="250px" height="70px" style="margin-bottom:5px;">
 <table style="width:510px;border-collapse:collapse; border:1px solid black;">
 	<tr>
 		<td colspan="8" style="border-collapse:collapse; border:1px solid black">
-			<table style="width:600px; float:center">
+			<table style="width:550px; float:center">
 				<tr height="15px"><td colspan="4"></td></tr>
 				<tr>
 					<td colspan="4" style="font-size:45px;text-align:center;"><b>급&nbsp;&nbsp;&nbsp;여&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;세&nbsp;&nbsp;&nbsp;서</b></td>

@@ -573,7 +573,7 @@
 	<div id="page-wrapper" style="margin: 0px;">
 		<div class="row">
 	        <div class="col-lg-12">
-	            <h1 class="page-header"><i class="fa fa-folder fa-fw"> </i><s:message code="main.enroll3"/> <p class='indent' />
+	            <h1 class="page-header"><i class="fa fa-folder fa-fw"></i> <s:message code="main.enroll3"/> <p class='indent' />
 	            <a href="#layerSectorEnroll" class="btn-example lightgray">부문 등록</a><br></h1>
 	        </div>
    	 	</div>
@@ -606,7 +606,7 @@
 		<div class="clear hidden"></div>
 		
 		<div class="ib_product" style="margin-left:10px; margin-top:10px;">
-			<script>createIBSheet("mySheet", "100%", "70%");</script>
+			<script>createIBSheet("mySheet", "100%", "163%");</script>
 			<div style="height:10px"></div>
 		</div>
 		<!-- 레이어  팝업 시작 및 내용-->

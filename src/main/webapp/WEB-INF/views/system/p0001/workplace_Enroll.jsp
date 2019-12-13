@@ -520,7 +520,7 @@
 	<div id="page-wrapper" style="margin: 0px;">
 		<div class="row">
 	        <div class="col-lg-12">
-	            <h1 class="page-header"><i class="fa fa-folder fa-fw"></i><s:message code="main.enroll2"/></h1>
+	            <h1 class="page-header"><i class="fa fa-folder fa-fw"></i> <s:message code="main.enroll2"/></h1>
 	        </div>
    	 	</div>
   <div class="frame">

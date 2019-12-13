@@ -68,11 +68,11 @@
                 FROM SAWON CU
                 INNER JOIN DEPT CD ON CD.PK_DEPT_CODE=CU.FK_DEPT_CODE
                 WHERE CU.SAWON_USER_STATUS='Y'
+                AND CU.SAWON_NAME LIKE '%'||#{searchKeyword}||'%'
                 ORDER by PK_SAWON_CODE
                 ) A
-        WHERE A.SAWON_NAME LIKE '%'||#{searchKeyword}||'%'
        	<if test="rowStart != null">
-			AND A.NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+			WHERE A.NO BETWEEN ${rowStart} AND ${rowStart+9}
         </if>
     </select>
 	
@@ -132,7 +132,7 @@
 		      ORDER by PK_DOCTYPE_NUM DESC) A
 		<include refid="includeCode"/>
       	<if test="rowStart != null">
-			AND NO BETWEEN ${rowStart-1} AND ${rowStart+9}
+			AND NO BETWEEN ${rowStart} AND ${rowStart+9}
          </if>
           AND DOCTYPE_DELETEFLAG='N'
     </select> 

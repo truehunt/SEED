@@ -50,6 +50,8 @@ table.ui-datepicker-calendar { display:none; }
          {Header:"",Type:"DummyCheck", SaveName:"chk", Width:35, Align:"Center",Edit:1,HeaderCheck:1},
        {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:60,Align:"Center"},
        {Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:50, Edit:0},
+       {Header:"직책",Type:"Text",SaveName:"rank_NAME",Width:50, Edit:0},
+       {Header:"직책코드",Type:"Text",SaveName:"rank_CODE",Width:50, Edit:0, Hidden:1}
       ];
       IBS_InitSheet(mySheet,initData);
       mySheet.SetDataAutoTrim(0);
@@ -81,8 +83,8 @@ table.ui-datepicker-calendar { display:none; }
    
       mySheet2.SetSumValue(2,"합 계");
   	  mySheet2.SetCellAlign(mySheet2.LastRow(),0,"Center");
-  	 
-  	  
+  	  mySheet2.ColumnSort("1", "ASC"); 
+  	
   	  
   	    selectSite1();
     	yearday();
@@ -163,6 +165,7 @@ table.ui-datepicker-calendar { display:none; }
            }
 
           console.log(param);
+         
          mySheet.DoSearch("${contextPath}/pay/SALARY_calcul/searchList.do", param);
          
          //mySheet.DoSearch("transaction_data2.json");
@@ -201,7 +204,8 @@ table.ui-datepicker-calendar { display:none; }
    function mySheet_OnSelectCell(oldrow,oldcol,row,col) {
 	   	var xx = document.getElementById("yeardayd");
 	   	var xy = xx.options[xx.selectedIndex].text;  
-		x = "fk_SALARY_CAL_SAWON_CODE=" + mySheet.GetCellValue(row,2) + "&salary_CAL_PAYMENTDAY=" + xy ;
+		x = "fk_SALARY_CAL_SAWON_CODE=" + mySheet.GetCellValue(row,2) + "&salary_CAL_PAYMENTDAY=" + xy;
+    	rank_code = row;
     
       console.log(x);
       pk_sawon_code = mySheet.GetCellValue(row,2);
@@ -587,7 +591,9 @@ function yearday() {
 		               type : "POST",
 
 		               data : {
-		                  "salary_CAL_MONEY" : salary_CAL_MONEY
+		                  "salary_CAL_MONEY" : salary_CAL_MONEY,
+		                  "fk_SALARY_CAL_SAWON_CODE" : fk_SALARY_CAL_SAWON_CODE,
+ 		                  "salary_CAL_PAYMENTDAY" : salary_CAL_PAYMENTDAY
 		               },
 
 		               dataType : "JSON",
@@ -621,7 +627,8 @@ function yearday() {
 		             type : "POST",
 
 		             data : {
-		                "salary_CAL_MONEY" : salary_CAL_MONEY
+		                "salary_CAL_MONEY" : salary_CAL_MONEY,
+		                "rank_CODE" : rank_CODE
 		             },
 
 		             dataType : "JSON",
@@ -661,9 +668,13 @@ function yearday() {
 		function mySheet2_OnChange(Row, Col, Value, OldValue, RaiseFlag) {
 			sRow = Row;
 			if(Value == '기본급'){
+				fk_SALARY_CAL_SAWON_CODE = mySheet2.GetCellValue(sRow, 'fk_SALARY_CAL_SAWON_CODE');  // 사원코드
+				salary_CAL_PAYMENTDAY = mySheet2.GetCellValue(sRow, 'salary_CAL_PAYMENTDAY');  // 자급알자
 				salary_CAL_MONEY = "기본급"; 
 				selectpay();
 			}else if(Value == '직책수당'){
+				rank_CODE = mySheet.GetCellValue(rank_code, 'rank_CODE'); 
+				console.log("직책코드: "+rank_CODE);// 사원코드
 				salary_CAL_MONEY = "직책수당";
 				selectpay();
 			}
@@ -681,7 +692,7 @@ function yearday() {
         <div id="page-wrapper" style="margin: 0px;">
             <div class="row">
                 <div class="col-lg-12">
-                <h1 class="page-header"><i class="fa fa-money fa-fw"></i><s:message code="main.pay2"/></h1>
+                <h1 class="page-header"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay2"/></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -735,7 +746,7 @@ function yearday() {
         &ensp;<select id="SiteList"   onchange="selectDept()" class="form-control" >
          <option value="" selected>전체</option>
       </select>   
-       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;
+       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
 
        <label  for="DeptList">구분</label>
       &ensp; <select id="DeptList"  class="form-control">
@@ -760,14 +771,14 @@ function yearday() {
 <br><br>
       <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
-              <DIV class="ib_product" style="width:70%;float:left">
-				<div style="height:100%;width:17%;float:left">
+              <DIV class="ib_product" style="width:49%;float:left">
+				<div style="height:100%;width:30%;float:left">
 					<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%");selectSite(); </script>
 				</div>
 			
 				<div style="height:100%;width:1%;float:left"></div>
 				<div style="height:100%;width:50%;float:left">
-					<script type="text/javascript"> createIBSheet("mySheet2", "200%", "70%"); </script>
+					<script type="text/javascript"> createIBSheet("mySheet2", "200%", "100%"); </script>
 				</div>
 			</div>
                

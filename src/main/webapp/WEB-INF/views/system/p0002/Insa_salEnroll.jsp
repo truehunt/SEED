@@ -13,7 +13,7 @@
 
 <style>
 	.frame {
-		  width : 800px;
+		  width : 850px;
 		  margin: 0px;
 	}
 
@@ -26,7 +26,7 @@
 	.nav {
 		  float: left;
 		  margin-left:0px;
-		  width: 800px;
+		  width: 850px;
 		  height: 650px;
 		  border : 1px solid lightblue;
 	}
@@ -35,7 +35,7 @@
 		width:500px;
 	}
 	.main_content{
-		width: 800px;
+		width: 850px;
 	}
 	.main_menu {
 		border : 1px solid lightblue;
@@ -161,20 +161,56 @@
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
 		
-		mySheet.DoSearch("${contextPath}/system/p0002/searchList4.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
+		//mySheet.DoSearch("${contextPath}/system/p0002/searchList4.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 	
-		//콤보박스에 값 불러오기 -> searchList.do 뒤에 실행 
+		//콤보박스에 값 불러오기 -> 페이지 로드 시 콤보박스 초기화
 		selectSal();
+		$('#sal_info_spouse_ded').html("   ");
+		$('#sal_info_deduction').html("   ");
 		
 		//ibSheet 에서 col 지정해서 숨김
-		mySheet.SetColHidden([//0~26번째 까지...실상 전 ibSheet 숨김
+		/* mySheet.SetColHidden([//0~26번째 까지...실상 전 ibSheet 숨김
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 2, Hidden:1}, {Col: 3, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1}, {Col: 6, Hidden:1}, 
 	      {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1}, {Col: 10, Hidden:1}, {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, 
 	      {Col: 14, Hidden:1}, {Col: 15, Hidden:1}, {Col: 16, Hidden:1}, {Col: 17, Hidden:1}, {Col: 18, Hidden:1}, {Col: 19, Hidden:1}, {Col: 20, Hidden:1}, 
 	      {Col: 21, Hidden:1}, {Col: 22, Hidden:1}, {Col: 23, Hidden:1}, {Col: 24, Hidden:1}, {Col: 25, Hidden:1}, {Col: 26, Hidden:1},  
-	    ]);
+	    ]); */
+	    
+		  // select 태그에 sal_info_spouse_ded인 값의 변경이 있을때 실행
+		  $("#sal_info_spouse_ded").change(function(e){ 
+			  var colArr =  Object.keys(mySheet.SaveNameInfo);
+			  var colNum = colArr.indexOf(e.target.id);	
+			  t_row = 1;	
+				 
+			 /* var spouse = document.getElementById("sal_info_spouse_ded");
+				var selectBox = spouse.options[spouse.selectedIndex].value;
+				//console.log(selectBox); */
+				  
+				mySheet.SetCellValue(t_row, colNum, e.target.value);
+			})
+	
+		  // select 태그에 sal_info_deduction인 값의 변경이 있을때 실행
+		  $("#sal_info_deduction").change(function(e){ 
+			  var colArr =  Object.keys(mySheet.SaveNameInfo);
+			  var colNum = colArr.indexOf(e.target.id);	
+			  t_row = 1;	
+				 
+		     /* var deduction = document.getElementById("sal_info_deduction");
+				var selectBox = deduction.options[deduction.selectedIndex].value;
+				//console.log(selectBox); */
+				  
+				mySheet.SetCellValue(t_row, colNum, e.target.value);
+			})
 	}
 	
+	 function rowCheck(code){//메인화면에서 클릭한 row부분에 대한 사원코드 값 받아옴
+			$('#sawon_code').val(code);
+	 
+	 		console.log($('#sawon_code'));
+			doAction('search');
+			
+	 }
+	 
 	//onClick 이벤트
 	 var t_row = 0;
 	 function mySheet_OnClick(row, col, value, cellx, celly, cellw, cellh) {
@@ -189,28 +225,6 @@
 		  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 		  })
 	
-		  // onClick 이벤트 중 select 태그에 sal_info_spouse_ded인 값의 변경이 있을때 실행
-		  $("#sal_info_spouse_ded").change(function(e){ 
-				var colNum = colArr.indexOf(e.target.id);	
-				 
-			 /* var spouse = document.getElementById("sal_info_spouse_ded");
-				var selectBox = spouse.options[spouse.selectedIndex].value;
-				//console.log(selectBox); */
-				  
-				mySheet.SetCellValue(t_row, colNum, e.target.value);
-			})
-	
-		  // onClick 이벤트 중 select 태그에 sal_info_deduction인 값의 변경이 있을때 실행
-		  $("#sal_info_deduction").change(function(e){ 
-				var colNum = colArr.indexOf(e.target.id);	
-				 
-		     /* var deduction = document.getElementById("sal_info_deduction");
-				var selectBox = deduction.options[deduction.selectedIndex].value;
-				//console.log(selectBox); */
-				  
-				mySheet.SetCellValue(t_row, colNum, e.target.value);
-			})
-		  
 	}
 	 	 
 	 $(document).on('change', 'input', function(e) { // 수정할시에 state에 문구 저장 및 SetCellValue 실행
@@ -225,11 +239,11 @@
 	function doAction(sAction) {
 		switch(sAction) {
 			case "search": //조회
-				//var param = FormQueryStringEnc(document.frm);
+				var param = FormQueryStringEnc(document.frm3);
 				//alert(param);
 				//mySheet.DoSearch("${contextPath}/human/s0001/searchList.do", param);
 				
-				mySheet.DoSearch("${contextPath}/system/p0002/searchList4.do");
+				mySheet.DoSearch("${contextPath}/system/p0002/searchList4.do", param);
 			
 				//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
 				selectSal();
@@ -305,6 +319,7 @@
 					mySheet.CellComboItem(i,16,S1); // 부녀자 공제 ( 비해당 , 해당 )
 
 				}
+				mySheet_OnSearchEnd();
 			},
 			error : function(jqxhr, status, error) {
 				alert("에러");
@@ -314,7 +329,43 @@
 	
 	// 조회완료 후 처리할 작업
 	function mySheet_OnSearchEnd() {
-	
+		var pk = mySheet.GetCellValue(1,3);
+		t_row = 1;
+		var colArr = Object.keys(mySheet.SaveNameInfo);
+ 	    if(mySheet.GetCellValue(1,3) == -1){ // 데이터가 비어있을 시 실행
+ 	    	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
+				  	$("#"+v).val(''); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
+			  })
+		  }else if(mySheet.GetCellValue(1,3) != -1){ // 데이터가 있을 시 실행
+			 /*  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
+				  	$("#"+v).val(mySheet.GetCellValue(1,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
+			  }) */
+
+ 			  $('#fk_hobong_code').val(mySheet.GetCellValue(1,4));
+			  $('#sal_info_acc_type_code').val(mySheet.GetCellValue(1,5));
+			  $('#sal_info_acc_type_name').val(mySheet.GetCellValue(1,6));
+			  $('#sal_info_trans_amount_o_code').val(mySheet.GetCellValue(1,7));
+			  $('#sal_info_trans_amount_o').val(mySheet.GetCellValue(1,8));
+			  $("#sal_info_acc_num_one").val(mySheet.GetCellValue(1,9));
+			  $('#sal_info_acc_hold_one').val(mySheet.GetCellValue(1,10));
+			  $('#sal_info_trans_amount_t_code').val(mySheet.GetCellValue(1,11));
+			  $('#sal_info_trans_amount_t').val(mySheet.GetCellValue(1,12));
+			  $('#sal_info_acc_num_two').val(mySheet.GetCellValue(1,13));
+			  $('#sal_info_acc_hold_two').val(mySheet.GetCellValue(1,14));
+			  $('#sal_info_spouse_ded').val(mySheet.GetCellValue(1,15)).attr("selected","selected");
+			  $('#sal_info_deduction').val(mySheet.GetCellValue(1,16)).attr("selected","selected");
+			  $('#sal_info_under_age_twen').val(mySheet.GetCellValue(1,17));
+			  $('#sal_info_depend_60years_older').val(mySheet.GetCellValue(1,18));
+			  $('#sal_info_disabled_person').val(mySheet.GetCellValue(1,19));
+			  $('#sal_info_reci_foster_child').val(mySheet.GetCellValue(1,20));
+			  $('#sal_info_multi_child_ded').val(mySheet.GetCellValue(1,21));
+			  $('#pk_sawon_code').val(mySheet.GetCellValue(1,22));
+			  			  
+			  $('#sal_info_int_user_id').val(mySheet.GetCellValue(1,23)); 
+			  $('#sal_info_int_date').val(mySheet.GetCellValue(1,24)); 
+			  $('#sal_info_mod_user_id').val(mySheet.GetCellValue(1,25)); 
+			  $('#sal_info_mod_date').val(mySheet.GetCellValue(1,26));
+		  }
 	}
 	
 	// 저장완료 후 처리할 작업
@@ -345,16 +396,11 @@
 	    
 		<!-- ibsheet 뿌려주는 부분  -->
 		<div class="hidden">
-		
-			<div class="ib_function float_light">
-				  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-				  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
-			</div>
-		
 			<div class="ib_product"><script>createIBSheet("mySheet", "80%", "80%");</script></div>
 		</div>
-		<form id="frm3">
-		
+		<form name='frm3'>
+			<!-- 사원코드 값 가져오기 -->
+			<input type='text' id="sawon_code" name="sawon_code" hidden="1" />
 			<div style="border:1px solid lightblue">
 			<!-- 급여 항목 -->
 			<table>
@@ -366,17 +412,18 @@
 						</div>
 					</td>
 				  	<td align="right" style="width:130px;">호 봉 : </td>
-	    			<td>
+	    			<td style="width:500px;">
 	    				<input type="text" name="fk_hobong_code" id="fk_hobong_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
 	    			</td>
+	    			<td><a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a></td>
 				</tr>
 				<tr>
 				  	<td align="right">계정 유형 : </td>
 	    			<td>
 	    				<input type="text" name="sal_info_acc_type_code" id="sal_info_acc_type_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="sal_info_acc_type_name" id="sal_info_acc_type_name" size="45px" disabled>
+	    				<input type="text" name="sal_info_acc_type_name" id="sal_info_acc_type_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -384,7 +431,7 @@
 	    			<td>
 	    				<input type="text" name="sal_info_trans_amount_o_code" id="sal_info_trans_amount_o_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="sal_info_trans_amount_o" id="sal_info_trans_amount_o" size="45px" disabled>
+	    				<input type="text" name="sal_info_trans_amount_o" id="sal_info_trans_amount_o" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -404,7 +451,7 @@
 	    			<td>
 	    				<input type="text" name="sal_info_trans_amount_t_code" id="sal_info_trans_amount_t_code" size="10px">
 	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
-	    				<input type="text" name="sal_info_trans_amount_t" id="sal_info_trans_amount_t" size="45px" disabled>
+	    				<input type="text" name="sal_info_trans_amount_t" id="sal_info_trans_amount_t" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
@@ -448,21 +495,21 @@
 				</tr>
 				<tr>
 				   	<td align="right">20세 이하: </td>
-		  			<td> <input type="text" name="sal_info_under_age_twen" id="sal_info_under_age_twen" size="15px"> </td>
+		  			<td> <input type="text" name="sal_info_under_age_twen" id="sal_info_under_age_twen" size="15px" placeholder="0"> </td>
 		  			
 				   	<td align="right">부양 60세 이상 : </td>
-		  			<td> <input type="text" name="sal_info_depend_60years_older" id="sal_info_depend_60years_older" size="15px"> </td>
+		  			<td> <input type="text" name="sal_info_depend_60years_older" id="sal_info_depend_60years_older" size="15px" placeholder="0"> </td>
 				</tr>
 				<tr>
 				   	<td align="right">장애인: </td>
-		  			<td> <input type="text" name="sal_info_disabled_person" id="sal_info_disabled_person" size="15px"> </td>
+		  			<td> <input type="text" name="sal_info_disabled_person" id="sal_info_disabled_person" size="15px" placeholder="0"> </td>
 		  			
 				   	<td align="right">수급자/위탁아동 : </td>
-		  			<td> <input type="text" name="sal_info_reci_foster_child" id="sal_info_reci_foster_child" size="15px"> </td>
+		  			<td> <input type="text" name="sal_info_reci_foster_child" id="sal_info_reci_foster_child" size="15px" placeholder="0"> </td>
 				</tr>
 				<tr>
 				   	<td align="right">다자녀 추가공제 : </td>
-		  			<td> <input type="text" name="sal_info_multi_child_ded" id="sal_info_multi_child_ded" size="15px"> </td>
+		  			<td> <input type="text" name="sal_info_multi_child_ded" id="sal_info_multi_child_ded" size="15px" placeholder="0"> </td>
 					<td colspan="2"></td>
 				</tr>
 				<tr>

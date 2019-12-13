@@ -136,6 +136,18 @@ public class Insa_infoEnroll_ServiceImpl implements Insa_infoEnroll_Service {
       }      
       return row;
    }
+   
+	private Map getRow2(Map<String, String[]> dataMap, int length, int i, String x) {
+		Map<String, String> row = new HashMap<String, String>();
+		for(String name : dataMap.keySet()) {
+			String[] data = dataMap.get(name);
+			if(length == data.length) {
+				row.put(name, data[i]);
+				row.put("fk_SAWON_CODE", x);
+			}
+		}		
+		return row;
+	}
 
    @Override
    public void updateMember(Map<String, Object> dataMap) {

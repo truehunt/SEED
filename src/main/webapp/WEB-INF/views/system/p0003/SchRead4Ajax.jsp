@@ -15,18 +15,9 @@
              	<div class="row form-group">
                      <label class="col-lg-2">일시</label>
                      <div class="col-lg-10">
-                     	<c:if test='${schInfo.SSREPEATTYPE=="1"}'> 
 	                     	<c:out value="${schInfo.SSSTARTDATE}"/> <c:out value="${schInfo.SSSTARTHOUR}"/>:<c:out value="${schInfo.SSSTARTMINUTE}"/>
-	                     	~ <c:out value="${schInfo.SSSTARTDATE}"/> <c:out value="${schInfo.SSENDHOUR}"/>:<c:out value="${schInfo.SSENDMINUTE}"/>
-	                    </c:if>
-	                    <c:if test='${schInfo.SSREPEATTYPE!="1"}'>
-	                    	<c:out value="${CDDATE}"/>
-	                    </c:if>
+	                     	~ <c:out value="${schInfo.SSENDDATE}"/> <c:out value="${schInfo.SSENDHOUR}"/>:<c:out value="${schInfo.SSENDMINUTE}"/>
                       </div> 
-                 </div>
-             	<div class="row form-group">
-                     <label class="col-lg-2">반복</label>
-                     <div class="col-lg-10"><c:out value="${schInfo.SSREPEATTYPENM}"/></div>
                  </div>
              	<div class="row form-group">
                      <label class="col-lg-2">공개</label>

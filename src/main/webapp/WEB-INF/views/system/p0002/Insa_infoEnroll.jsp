@@ -121,6 +121,7 @@
 			{Header:"암호",Type:"Text",SaveName:"sawon_PASSWORD",MinWidth:150, Align:"Center"},
 			{Header:"조회권한",Type:"Text",SaveName:"sawon_VIEW_PERMISSION",MinWidth:60, Align:"Center"},			
 			{Header:"부서 명",Type:"Text",SaveName:"fk_DEPT_NAME",MinWidth:80, Align:"Center"},
+			{Header:"사진",Type:"Text",SaveName:"PHOTO", MinWidth:80, Align:"Center"},
 			{Header:"이메일",Type:"Text",SaveName:"sawon_EMAIL",MinWidth:60, Align:"Center"},
 			{Header:"입력자",Type:"Text",SaveName:"sawon_INT_USER_ID",MinWidth:80, Align:"Center",hidden:1},
 			{Header:"입력일시",Type:"Text",SaveName:"sawon_INT_DATE",MinWidth:80, Align:"Center",hidden:1},
@@ -144,7 +145,7 @@
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1},
 	      {Col: 6, Hidden:1}, {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1},
 	      {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, {Col: 14, Hidden:1},
-	      {Col: 15, Hidden:1},
+	      {Col: 15, Hidden:1}, {Col: 16, Hidden:1},
 	      
 	    ]);
 		
@@ -216,7 +217,10 @@
 	  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 	  })
 	  
+	  //iframe 값을 자식 요소에게 넘겨주기
 	  $('#myTabs_contents-0-iframe').get(0).contentWindow.rowCheck(pk);
+  	  $('#myTabs_contents-1-iframe').get(0).contentWindow.rowCheck(pk);
+  	  $('#myTabs_contents-2-iframe').get(0).contentWindow.rowCheck(pk);
 	  
   }
 	 	 
@@ -311,7 +315,7 @@
 	<div id="page-wrapper" style="margin: 0px;">
 		<div class="row">
 	        <div class="col-lg-12">
-	            <h1 class="page-header"><i class="fa fa-users fa-fw"></i><s:message code="main.per2"/></h1>
+	            <h1 class="page-header"><i class="fa fa-users fa-fw"></i> <s:message code="main.per2"/></h1>
 	        </div>
    	 	</div>
   <div class="frame">
@@ -319,22 +323,21 @@
  	
  	<!-- action -->
 		<div class="ib_function float_right">
-		  <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-		  <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
 		  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
 		  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
 		</div>
   <div class="container" style="padding:0px; margin-left:0px;">
 		<!-- radio 검색 -->
-	   	<div style="border : 1px solid lightblue; width:29%;">
-    		<h5><p class='indent' />조회 기준 : 
-    		<input type="radio" id="" name="chk_info" onClick="" checked> 재직 &nbsp;
-    		<input type="radio" id="" name="chk_info" onClick=""> 퇴직 &nbsp;
-    		<input type="radio" id="" name="chk_info" onClick=""> 전체  &nbsp;<br></h5>
-    		<h5><p class='indent' />사원 검색 : <input type="text" id="" name="" size="13px">&nbsp;
-    		<button type="submit" id="" name="">조회</button></h5>
-    	</div><br>
-    			
+		<form id ="search" action="javascript:searchState();">
+		   	<div style="border : 1px solid lightblue; width:29%;">
+	    		<h5><p class='indent' />조회 기준 : 
+	    		<input type="radio" id="chk_info" name="chk_info" onClick="" checked> 재직 &nbsp;
+	    		<input type="radio" id="chk_info" name="chk_info" onClick=""> 퇴직 &nbsp;
+	    		<input type="radio" id="chk_info" name="chk_info" onClick=""  checked> 전체  &nbsp;<br></h5>
+	    		<h5><p class='indent' />사원 검색 : <input type="text" id="" name="" size="13px">&nbsp;
+	    		<button type="submit" id="" name="">조회</button></h5>
+	    	</div><br>
+    	</form>		
   <%-- nav (왼쪽 layout)시작 --%>
   <div class="nav">
 	  

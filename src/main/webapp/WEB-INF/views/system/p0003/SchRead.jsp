@@ -32,6 +32,17 @@
     <script src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
 
 <script>
+function fn_delete(){
+	if (!confirm("삭제 하시겠습니까?")) return;
+	
+	$("#form1").attr("action", "schDelete");
+	$("#form1").submit();
+} 
+function fn_update(){
+	
+	$("#form1").attr("action", "schForm");
+	$("#form1").submit();
+}
 </script>
     
 </head>
@@ -72,20 +83,23 @@
 	                            </div>
 	                        </div>
 	                    	<div class="row form-group">
-	                            <label class="col-lg-1">반복</label>
-	                            <div class="col-lg-8"><c:out value="${schInfo.SSREPEATTYPE}"/></div>
-	                        </div>
-	                    	<div class="row form-group">
 	                            <label class="col-lg-1">공개</label>
 	                            <div class="col-lg-8"><c:out value="${schInfo.SSISOPEN}"/></div>
-	                        </div> 
+	                        </div>
+	                        <div class="row form-group">
+			                     <label class="col-lg-1">작성자</label> 
+			                     <div class="col-lg-8"><c:out value="${schInfo.SAWON_NAME}"/></div>
+			                 </div>  
 	                    	<div class="row form-group">
 	                            <label class="col-lg-1">내용</label>
 	                            <div class="col-lg-8"><c:out value="${schInfo.SSCONTENTS}"/></div>
 	                        </div>
 	                    </div> 
 	                </div>
-			        <button class="btn btn-outline btn-primary"><s:message code="common.btnSave"/></button>
+	                <c:if test='${schInfo.PK_SAWON_CODE==sessionScope.PK_SAWON_CODE}'>
+	                	<button class="btn btn-outline btn-primary" onclick="fn_update()" ><s:message code="common.btnUpdate"/></button>
+		            	<button class="btn btn-outline btn-primary" onclick="fn_delete()" ><s:message code="common.btnDelete"/></button>
+		            </c:if>
 				</form>	
                 
             </div>

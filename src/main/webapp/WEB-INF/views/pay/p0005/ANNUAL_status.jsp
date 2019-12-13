@@ -385,20 +385,23 @@ table.ui-datepicker-calendar { display:none; }
 <body onload="LoadPage()">
  <!-- 달력 datepicker  -->
    
- <div class="row">
-      <div class="col-lg-12">        <!-- 해당 메뉴의 아이콘 -->        <!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
-           <h1 class="page-header"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay5"/></h1>
-      </div>
-         <!-- /.col-lg-12 -->
-   </div>
+<div id="wrapper">
+
+        <div id="page-wrapper" style="margin: 0px;">
+            <div class="row">
+                <div class="col-lg-12">
+                <h1 class="page-header"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay5"/></h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
 
   <div class="main_content">
-    <div class="ib_function float_left" style="padding:10 20">
+    <div class="ib_function float_right" style="padding:10 20">
          <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
          <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
    
    </div>
-         </div>
+        
          <br>      <br>
          
          
@@ -407,7 +410,7 @@ table.ui-datepicker-calendar { display:none; }
          <form class="form-inline">
   <div class="form-group">
     <label for="yearday"></label>
-    <input type="text" class="form-control" id="yearday" > 년도
+    <input type="text" class="form-control" id="yearday" >
     
   </div>
   
@@ -424,7 +427,7 @@ table.ui-datepicker-calendar { display:none; }
   
  </form>
 
-
+ </div>
 
 
 
@@ -449,7 +452,8 @@ table.ui-datepicker-calendar { display:none; }
         
         <!--right단 정보입력 및 수정단 -->
       
-      
+       </div>
+    </div>
  
           
    

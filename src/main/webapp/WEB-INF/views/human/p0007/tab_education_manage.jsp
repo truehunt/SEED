@@ -23,6 +23,7 @@
      
    .frame {
         width : 1200px;
+        height: 200px;
         margin: 0px;
    }
 
@@ -36,22 +37,19 @@
         float: left;
         margin-left:0px;
         width: 550px;
-        height: 600px;
-        border : 1px solid lightblue;
+        height: 300px;
    }
    .content {
         margin-left:570px;
         margin-top:-600px;
         float: right;
         width: 800px;
-        height: 600px;
-        border : 1px solid lightblue;
+        height: 300px;
    }
    .main_content{
       width: 510px;
    }
    .main_menu {
-      border : 1px solid lightblue;
    }
    
    .nav, .content {<!--메뉴바 꽉차게 만들기-->
@@ -146,11 +144,11 @@
 </script>
 </head>
 
-<body  onload='PageLoad()'>
+<body  onload='PageLoad()' style="height:300px;"  >
       
         <div class="row">
 		<div class="col-lg-12">        <!-- 해당 메뉴의 아이콘 -->        <!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
-			<h1 class="page-header"><i class="fa fa-users fa-fw"></i>교육관리</h1>
+			<h1 class="page-header"><i class="fa fa-users fa-fw"></i>  <s:message code="main.per7"/></h1>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>

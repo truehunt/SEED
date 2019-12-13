@@ -19,11 +19,13 @@ public interface Bal_Sawon_DAO {
 	public List<BalVO> INFO_DEPT(Map<String, Object> searchMap) throws DataAccessException;
 	public List<BalVO> INFO_RANK(Map<String, Object> searchMap) throws DataAccessException;
 	public List<BalVO> SAL_HOBONG(Map<String, Object> searchMap) throws DataAccessException;
-	public List<BalVO> BF_INFO(Map<String, Object> searchMap);
+	public List<BalVO> BalAfter_INFO(Map<String, Object> searchMap) throws DataAccessException;
+	public List<BalVO> Content_Div(Map<String, Object> searchMap) throws DataAccessException;
 	
 	public void insertData(Map<String, String> row) throws DataAccessException;
 	public void updateData(Map<String, String> row) throws DataAccessException;
 	public void deleteData(Map<String, String> row) throws DataAccessException;
+	public List<BalVO> ContentInsert(Map<String, Object> searchMap) throws DataAccessException;
 	
 	
 }

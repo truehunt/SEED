@@ -37,7 +37,6 @@
         margin-left:0px;
         width: 550px;
         height: 600px;
-        border : 1px solid lightblue;
    }
    .content {
         margin-left:400px;
@@ -45,13 +44,11 @@
         float: right;
         width: 800px;
         height: 600px;
-        border : 1px solid lightblue;
    }
    .main_content{
       width: 510px;
    }
    .main_menu {
-      border : 1px solid lightblue;
    }
    
    .nav, .content {<!--메뉴바 꽉차게 만들기-->
@@ -345,14 +342,22 @@
 
 
 <body onLoad="LoadPage()">
+
+
+   <div class="row">
+                <div class="col-lg-12">
+                <h1 class="page-header"><i class="fa fa-users fa-fw"></i>  <s:message code="main.per8"/></h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
       
-      <div class="nav" style="width:100%; overflow:hidden;">
-           <div class="main_content"  style="width:1300px;">
-                <div class="ib_function float_left">
-                 <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-                 <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-                 <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-                 <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
+      <div class="nav" style="width:90%; overflow:hidden;">
+           <div class="main_content"  style="width:1150px;">
+                <div class="ib_function float_right">
+                 <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
+                 <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
+                 <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
+                 <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
                </div>
                
             

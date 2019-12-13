@@ -36,9 +36,10 @@
       <result property="education_EVAL_DEPT" column="education_EVAL_DEPT" />
       <result property="education_EVAL_POSITION" column="education_EVAL_POSITION" />
       
-      
-      
-      
+      <result property="dept_NAME" column="dept_NAME" />
+	  <result property="pk_DEPT_CODE" column="pk_DEPT_CODE" />
+	  <result property="pk_SAWON_CODE" column="pk_SAWON_CODE" />
+	  <result property="sawon_NAME" column="sawon_NAME" />
       
       <result property="education_MANA_int_user_id" column="education_MANA_int_user_id" />
       <result property="education_MANA_int_date" column="education_MANA_int_date" />
@@ -63,17 +64,14 @@
    
    
    
-   
       <select id="searchList2" resultMap="p0007Result01" parameterType="java.util.Map"> 
       <![CDATA[
          select pk_EDUCATION_MANA_CODE, education_MANA_SAWON_CODE, education_MANA_SAWON_NAME, education_MANA_DEPT, education_MANA_POSITION
   
          from   EDUCATION_MANA
          
-          
       ]]>
      
-           
    </select>
    
    
@@ -92,12 +90,36 @@
             <if test="PK_EDUCATION_MANA_CODE != null ">
 				      and PK_EDUCATION_MANA_CODE = #{PK_EDUCATION_MANA_CODE, jdbcType=VARCHAR}
 			</if>
-                   
      </where>
            
    </select>
    
-   
+   	<select id="DeptList" resultMap="p0007Result01" parameterType="java.util.Map"> 
+     	 <![CDATA[
+			select dept_NAME, PK_DEPT_CODE
+			from DEPT
+		]]>
+	</select>
+	
+	
+		<select id="sawon_search" resultMap="p0007Result01" parameterType="java.util.Map"> 
+     	 <![CDATA[
+			select s.pk_sawon_code, s.sawon_name, d.dept_name, p.person_bc_detai_mngement_name as rank_name
+			  from sawon s, dept d, person_bc_detai p
+			   
+		]]>
+		<where>
+			       s.fk_dept_code = d.pk_dept_code
+			   and s.rank_name = p.person_bc_detai_mngement_name
+			   and p.fk_person_bc_code_num = 'G4'
+			   <if test="pk_DEPT_CODE != null and pk_DEPT_CODE != ''">
+					and d.pk_dept_code=#{pk_DEPT_CODE, jdbcType=VARCHAR}
+			   </if>
+			   <if test="rank_NAME !=null and rank_NAME != ''">
+					and s.rank_name=#{rank_NAME, jdbcType=VARCHAR}
+			   </if>
+		</where>
+	</select>
    
    
    

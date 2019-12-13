@@ -582,7 +582,7 @@ function mySheet_OnSaveEnd(code,msg){
             
   <div class="main_content">
     <div class="exp_product">
-     <div class="ib_function float_left">
+     <div class="ib_function float_right">
          <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
          <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
          </div>

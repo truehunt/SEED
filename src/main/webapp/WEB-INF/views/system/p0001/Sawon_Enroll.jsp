@@ -53,14 +53,14 @@
 			// Wrap:1 : 데이터
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50},
-			{Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",MinWidth:80,Align:"Center", KeyField:1},
-			{Header:"사원명",Type:"Text",SaveName:"sawon_NAME",MinWidth:80, KeyField:1},			
+			{Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",MinWidth:150,Align:"Center", KeyField:1},
+			{Header:"사원명",Type:"Text",SaveName:"sawon_NAME",MinWidth:150, KeyField:1},			
 			{Header:"사원명(영문)",Type:"Text",SaveName:"sawon_ENG_NAME",MinWidth:150, KeyField:1},
-			{Header:"부서코드",Type:"Text",SaveName:"fk_DEPT_CODE",MinWidth:150, KeyField:1},
-			{Header:"부서명",Type:"Text",SaveName:"fk_DEPT_NAME",MinWidth:100, KeyField:1},
-			{Header:"입사일",Type:"Date",SaveName:"sawon_JOIN_DATE",MinWidth:150, KeyField:1, format:"Ymd"},
-			{Header:"사용자여부",Type:"Combo",SaveName:"sawon_USER_STATUS",MinWidth:60, KeyField:1, ComboText:"Y|N", ComboCode:"Y|N"},
-			{Header:"이메일주소",Type:"Text",SaveName:"sawon_EMAIL",MinWidth:150, KeyField:1},
+			{Header:"부서코드",Type:"Text",SaveName:"fk_DEPT_CODE",MinWidth:100, KeyField:1},
+			{Header:"부서명",Type:"Text",SaveName:"fk_DEPT_NAME",MinWidth:200, KeyField:1},
+			{Header:"입사일",Type:"Date",SaveName:"sawon_JOIN_DATE",MinWidth:200, KeyField:1, format:"Ymd"},
+			{Header:"사용자여부",Type:"Combo",SaveName:"sawon_USER_STATUS",MinWidth:50, KeyField:1, ComboText:"Y|N", ComboCode:"Y|N"},
+			{Header:"이메일주소",Type:"Text",SaveName:"sawon_EMAIL",MinWidth:200, KeyField:1},
 		];   
 		IBS_InitSheet( mySheet , initSheet);
 
@@ -146,7 +146,7 @@
             
 			  <div class="main_content" style="width:1500px;">
 			    
-			    <div class="ib_function float_left">
+			    <div class="ib_function float_right" style="margin-right:100px;">
 			      <button class="btn btn-outline btn-primary" onclick="fn_DeptSelect()">부서선택</button>
 				  <button type="button" class="btn btn-primary" onclick="doAction('reload')">초기화</button>
 				  <button type="button" class="btn btn-primary" onclick="doAction('insert')">추가</button>
@@ -156,9 +156,18 @@
 				<br><br><br>
 			    <div class="exp_product">
 			      <form name='frm'>
-			         사원명검색:<input type='text' id="SAWON_NAME" name="SAWON_NAME" />
-			         부서코드:<input type="text" name="SelectDeptCode" id="SelectDeptCode" readonly />
-			         부서명:<input type="text" name="SelectDeptName" id="SelectDeptName" readonly />  
+			      	<div class="row" style="margin-bottom: 5px;">
+				      <label class="col-lg-2" style="width:90px;">사원명:</label>
+				      <input type='text' class="form-control" style="width:100px; height:25px;" id="SAWON_NAME" name="SAWON_NAME" />
+			      	</div>
+			      	<div class="row" style="margin-bottom: 5px;">
+				      <label class="col-lg-2" style="width:90px;">부서코드:</label>
+				      <input type='text' class="form-control" style="width:100px; height:25px;" name="SelectDeptCode" id="SelectDeptCode" readonly />
+			      	</div>
+			      	<div class="row">
+				      <label class="col-lg-2" style="width:90px;">부서명:</label>
+				      <input type='text' class="form-control" style="width:100px; height:25px;" name="SelectDeptName" id="SelectDeptName" readonly />
+			        </div>
 			      </form>
 			      
 			    </div>

@@ -45,7 +45,12 @@ public class education_manageVO {
 		private String fk_EDUCATION_EVAL_SAWON_NAME;
 		private String education_EVAL_DEPT;
 		private String education_EVAL_POSITION;
-	
+		private String pk_DEPT_CODE;
+		private String dept_NAME;
+		private String rank_NAME;
+		private String pk_SAWON_CODE;
+		private String sawon_NAME;
+		
 	
 	
 	public education_manageVO() {
@@ -442,6 +447,76 @@ public class education_manageVO {
 
 	public void setEducation_EVAL_POSITION(String education_EVAL_POSITION) {
 		this.education_EVAL_POSITION = education_EVAL_POSITION;
+	}
+
+
+
+
+	public String getPk_DEPT_CODE() {
+		return pk_DEPT_CODE;
+	}
+
+
+
+
+	public void setPk_DEPT_CODE(String pk_DEPT_CODE) {
+		this.pk_DEPT_CODE = pk_DEPT_CODE;
+	}
+
+
+
+
+	public String getRank_NAME() {
+		return rank_NAME;
+	}
+
+
+
+
+	public void setRank_NAME(String rank_NAME) {
+		this.rank_NAME = rank_NAME;
+	}
+
+
+
+
+	public String getDept_NAME() {
+		return dept_NAME;
+	}
+
+
+
+
+	public void setDept_NAME(String dept_NAME) {
+		this.dept_NAME = dept_NAME;
+	}
+
+
+
+
+	public String getPk_SAWON_CODE() {
+		return pk_SAWON_CODE;
+	}
+
+
+
+
+	public void setPk_SAWON_CODE(String pk_SAWON_CODE) {
+		this.pk_SAWON_CODE = pk_SAWON_CODE;
+	}
+
+
+
+
+	public String getSawon_NAME() {
+		return sawon_NAME;
+	}
+
+
+
+
+	public void setSawon_NAME(String sawon_NAME) {
+		this.sawon_NAME = sawon_NAME;
 	}
 
 

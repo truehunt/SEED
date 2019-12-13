@@ -20,6 +20,7 @@
 
 <script>
 	function Loading(){
+		ballyeong_Check_NUMBER = 0;
 		initData = {};
 		//mySheet4
 		initData.Cols = [
@@ -40,15 +41,29 @@
 		case 'list':
 			mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0002/code.do");
 			break;
-
+		case 'list_After':
+			// fn_EM_INFO(ComboCode)에서 ComboCode를 가져옴
+			ballyeong_Check_NUMBER++;
+			var Num_code = "Num_code=" + proChk;
+			mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0002/BalAfter_INFO.do",Num_code);
+			break;
 		}
 	}
 
 	function fn_DeptSelected() {
-		container1 = $("#ib-container1").detach();
-		var codenm = codename;
-		fn_selectDept(codenm);
+		if(ballyeong_Check_NUMBER == 0){
+			container1 = $("#ib-container1").detach();
+			var codenm = codename;
+			fn_selectDept(codenm);
+		}else{
+			var bal_AF_NM = mySheet5.GetCellValue(N5Row, 'person_BC_DETAI_MNGEMENT_NAME');
+			mySheet2.SetCellValue(M2_Row,'bal_AFT_INFO',bal_AF_NM);
+			container1 = $("#ib-container1").detach();
+		}
 	}  
+	function mySheet5_OnSelectCell(OldRow, OldCol, NewRow, NewCol,isDelete) {
+		if(OldRow != NewRow) {N5Row = NewRow;}
+	} 
    
 </script>
 
@@ -56,7 +71,7 @@
   <div class="modal-content">
 		  				<div class="modal-header">
 		                    <button type="button" id="closeX" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                    <h4 class="modal-title" id="myModalLabel">부서선택</h4>
+		                    <h4 class="modal-title" id="myModalLabel">코드도움</h4>
 		                </div>
 		                
                 		<div class="modal-body">

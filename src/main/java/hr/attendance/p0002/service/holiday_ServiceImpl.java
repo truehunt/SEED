@@ -29,6 +29,7 @@ public class holiday_ServiceImpl implements holiday_Service {
 	public List<business_VO> searchList_busin(Map<String, Object> searchMap) throws DataAccessException {
 		
 		List<business_VO> list =  p0002DAO.searchList_busin(searchMap); 
+		System.out.println("service_business: "+searchMap);
 		List<DateVO> calenList = new ArrayList<DateVO>();
 		return list;
 	}
@@ -36,7 +37,6 @@ public class holiday_ServiceImpl implements holiday_Service {
 public List<business_VO> searchList_busin_da(Map<String, Object> searchMap) throws DataAccessException {
 		
 		List<business_VO> list =  p0002DAO.searchList_busin_da(searchMap);
-		System.out.println("service_business: "+searchMap);
 		List<DateVO> calenList = new ArrayList<DateVO>();
 		return list;
 	}
@@ -97,7 +97,6 @@ public List<business_VO> searchList_busin_da(Map<String, Object> searchMap) thro
 		List<holiday_VO> list =  p0002DAO.searchList_holi_da(searchMap);
 		
 		List<DateVO> calenList = new ArrayList<DateVO>();
-		System.out.println(list);
 		return list;
 	}
 	

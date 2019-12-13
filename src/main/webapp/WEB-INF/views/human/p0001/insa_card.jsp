@@ -13,6 +13,40 @@
 <meta name="author" content="">
 
 <title><s:message code="common.pageTitle"/></title>
+<style>
+	.frame {
+		  width : 1365px;
+		  margin: 0px;
+	}
+
+	.container {
+  		overflow: hidden;
+  		display: table;
+  		margin: 0px;
+  		
+	}
+	.nav {
+		position: relative;
+		  float: left;
+		  margin-left:0px;
+		  width: 400px;
+		  height: 700px;
+		  border : 1px solid lightblue;
+		  display: table;
+	}
+	.main_content{
+		width: 500px;
+		height: 500px;
+		margin-right:0px;
+	}
+	.content {
+		  margin-left:510px;
+		  margin-top:-700px;
+		  width: 900px;
+		  height: 700px;
+		  border : 1px solid lightblue;
+	}
+</style>
 <script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
@@ -1295,28 +1329,30 @@
       <!-- /.col-lg-12 -->
    </div>
   
-  <div class="main_content">
-		<!-- 버튼 -->
-		<div class="ib_function float_right">
-			<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-			<a href="javascript:fn_formSubmit(); doAction('save'); " class="f1_btn_white gray">저장</a>
-		</div>
 <!-- 		; fn_formSubmit() -->
 		<div class="clear hidden"></div>
 		
 		
+ <div class="frame">          
+            <!-- /.row -->
+  <div class="container" style="padding:0px; margin-left:0px;">
+	<%-- nav (왼쪽 layout)시작 --%>
+
+  	<div class="nav">
+  	
+  		<div class="main_content">
+		
             
             <!-- /.row -->
 		
-		<div class="ib_product" style="width:100%;float:left">
 			<!-- left 사원리스트 -->
-			<div style="height:100%;width:45%;float:left">
+			<div style="height:100%;width:100%;float:left;">
 				<div class="row">
-					<div class="col-lg-7">
+					<div class="col-lg-8">
 						<form id="form1" name="form1" role="form" action="imageSave" method="post" enctype="multipart/form-data" >
 							<div class="row form-group">
 <!-- 								이미지 미리보기 되는 곳 -->
-								<div class="col-sm-3">
+								<div class="col-sm-3" style="width:100%;">
 									<br> 	
 									<img id="previewImg" style="width:100%; height: 120px; max-width: 100px;" align="left">
 									<input type="file" name="photofile" id="photofile" accept='image/*' onchange="checkSize(this)" />
@@ -1332,11 +1368,20 @@
 					</div>	  
 				</div>
 				<br><br>
-				<script>createIBSheet("mySheet", "100%", "100%");</script>
+				<div class="ib_product" style="width:100%;float:left">
+					<script>createIBSheet("mySheet", "100%", "100%");</script>
+				</div>
 			</div>
+			
+			
+			</div> 
+		</div> 	<!-- main content -->
+	</div><!-- nav -->
+	
+	<div class="content">
 				
 			<!-- right -->
-			<div style="height:100%;width:45%;float:left">
+			<div style="height:100%;width:100%;float:left">
 				<div id="tab1" class="ib-tab-tab">
 					<div class="ib-tab-tabs-item">
 						<a class="ib-tab-tabs-item__link"> <span class="ib-tab-tabs-item__title">채용/거주</span></a> 
@@ -1347,7 +1392,6 @@
 						<a class="ib-tab-tabs-item__link"> <span class="ib-tab-tabs-item__title">면허/자격</span></a>
 					</div>
 				</div>
-				<div style="height:5%"></div><div style="height:5%"></div>
 				<div id="tab_contents" class="ib-tab-contents" ><!-- style="height:100%; display: block; overflow: auto" -->
 					<!-- 채용/거주 -->
 					<div class="ib-tab-contents__item">
@@ -1571,7 +1615,6 @@
 
             </div>
             
-               <div style="height:5%"></div>
                
                <!-- 아래 tab기능_2 -->
             <div id="tab2" class="ib-tab-tabs">
@@ -1605,11 +1648,13 @@
                </div>
             </div>
             
-         </div>
-      </div>
-   </DIV>
    
-   </div>
-   </div>
+   </div> <!-- content -->
+   </div> <!-- container -->
+   </div> <!-- frame -->
+   </div> <!-- page wrapper -->
+   </div> <!-- wrapper -->
+   
+   
 </body>
 </html>

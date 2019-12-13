@@ -23,10 +23,17 @@ public interface education_manageController {
 	public ModelAndView tab_education_manage(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView education_manage(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView education_manage2(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView edu_add_sawon_target(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public Map DeptList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map saveData2(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map saveData3(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public  Map sawon_search(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
+	
+
+	
 	
 	
 }

@@ -18,6 +18,10 @@ public interface education_manageDAO {
 	
 	public List<education_manageVO> searchList3(Map<String, Object> searchMap) throws DataAccessException;
 
+	public List<education_manageVO> sawon_search(Map<String, Object> searchMap);
+	
+	public List<education_manageVO> DeptList(Map<String, Object> searchMap) throws DataAccessException;
+	
 	
 	public void insertData(Map<String, String> row) throws DataAccessException;
 
@@ -37,6 +41,10 @@ public interface education_manageDAO {
 	public void deleteData2(Map<String, String> row) throws DataAccessException;
 
 	public void deleteData3(Map<String, String> row) throws DataAccessException;
+
+	
+
+	
 
 
 

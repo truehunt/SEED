@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import hr.human.p0002.vo.BalVO;
 import hr.human.p0007.dao.education_manageDAO;
 import hr.human.p0007.vo.education_manageVO;
+import hr.pay.p0001.vo.TA_inputVO;
 
 
 
@@ -42,6 +44,19 @@ public class education_manageServiceImpl implements education_manageService {
       List<education_manageVO> list =  education_manageDAO.searchList3(searchMap); 
       return list;
    }
+   
+	@Override
+	public List<education_manageVO> sawon_search(Map<String, Object> searchMap) {
+		List<education_manageVO> list =  education_manageDAO.sawon_search(searchMap);
+		return list;
+	}
+   
+   
+	@Override
+	public List<education_manageVO> DeptList(Map<String, Object> searchMap) throws DataAccessException {
+		List<education_manageVO> list =  education_manageDAO.DeptList(searchMap); 
+		return list;
+	}
    @Override
    public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
       String[] status = dataMap.get("STATUS");

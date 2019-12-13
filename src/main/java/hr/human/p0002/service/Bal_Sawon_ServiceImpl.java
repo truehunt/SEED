@@ -39,6 +39,12 @@ public class Bal_Sawon_ServiceImpl implements Bal_Sawon_Service {
 	}
 	
 	@Override
+	public List<BalVO> BalAfter_INFO(Map<String, Object> searchMap) throws DataAccessException {
+		List<BalVO> list =  p0002DAO.BalAfter_INFO(searchMap); 
+		return list;
+	}
+	
+	@Override
 	public List<BalVO> fk_Sawon(Map<String, Object> searchMap) throws DataAccessException {
 		List<BalVO> list = null;
 		String sawon = (String)searchMap.get("fk_BAL_SAWON_CODE");
@@ -49,6 +55,13 @@ public class Bal_Sawon_ServiceImpl implements Bal_Sawon_Service {
 			list =  p0002DAO.fk_Sawon_Contents(searchMap);
 		}
 		 
+		return list;
+	}
+	
+	// ...
+	@Override
+	public List<BalVO> Content_Div(Map<String, Object> searchMap) throws DataAccessException {
+		List<BalVO> list =  p0002DAO.Content_Div(searchMap); 
 		return list;
 	}
 	
@@ -75,16 +88,10 @@ public class Bal_Sawon_ServiceImpl implements Bal_Sawon_Service {
 			list =  p0002DAO.EM_INFO(searchMap);
 		}
 		
-//		list = p0002DAO.BF_INFO(searchMap);
-		
 		
 		return list;
 	}
 	
-	
-	
-	
-	//
 	@Override
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
 		String[] status = dataMap.get("STATUS");
@@ -103,6 +110,14 @@ public class Bal_Sawon_ServiceImpl implements Bal_Sawon_Service {
 			i++;
 		}
 	}
+	
+	// 현정보 저장
+	@Override
+	public List<BalVO> ContentSave(Map<String, Object> searchMap)  throws DataAccessException  {
+		List<BalVO> list =  p0002DAO.ContentInsert(searchMap); 
+		return list;
+	}
+	
 	
 	private Map getRow(Map<String, String[]> dataMap, int length, int i, String x) {
 		Map<String, String> row = new HashMap<String, String>();

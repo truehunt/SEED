@@ -13,7 +13,7 @@
 
 <style>
    .frame {
-        width : 1800px;
+        width : 900px;
         margin: 0px;
    }
 
@@ -28,7 +28,6 @@
         margin-left:0px;
         width: 700px;
         height: 400px;
-        border : 1px solid lightblue;
    }
    .content {
         margin-left:570px;
@@ -36,13 +35,11 @@
         float: right;
         width: 900px;
         height: 400px;
-        border : 1px solid lightblue;
    }
    .main_content{
       width: 510px;
    }
    .main_menu {
-      border : 1px solid lightblue;
    }
    
    .nav, .content {<!--메뉴바 꽉차게 만들기-->
@@ -141,14 +138,14 @@
       
          <div class="row">
                 <div class="col-lg-12">
-                <h1 class="page-header"><i class="fa fa-users fa-fw"></i><s:message code="main.per9"/></h1>
+                <h1 class="page-header"><i class="fa fa-users fa-fw"></i>  <s:message code="main.per9"/></h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
   
     
         
-       <div class="main_content" style="width:1400px;">
+       <div class="main_content" style="width:1300px;">
             <div class="exp_product">
             </div>
 

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import hr.human.p0002.vo.BalVO;
 import hr.human.p0007.vo.education_manageVO;
+import hr.pay.p0001.vo.TA_inputVO;
 
 
 
@@ -37,9 +39,23 @@ public class education_manageDAOImpl implements education_manageDAO {
       return list;
    }
    
+   @Override
+	public List<education_manageVO> sawon_search(Map<String, Object> searchMap) {
+		List<education_manageVO> list = sqlSession.selectList("hr.human.p0007.sawon_search",searchMap);
+		return list;
+	}
+   
+   
+	@Override
+	public List<education_manageVO> DeptList(Map<String, Object> searchMap) throws DataAccessException {
+		List<education_manageVO> list = sqlSession.selectList("hr.human.p0007.DeptList", searchMap);
+		System.out.println(searchMap);
+		return list;
+	}
    
     @Override
    public void insertData(Map<String, String> row) throws DataAccessException {
+    	System.out.println(row);
       sqlSession.update("hr.human.p0007.insertData", row);
    }
 

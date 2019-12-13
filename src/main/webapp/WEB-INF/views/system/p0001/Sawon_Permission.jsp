@@ -175,11 +175,11 @@ function fn_SawonPermissionsUpdate(){
             <div class="row">
             	<!-- 부서리스트 -->
             	<div class="col-lg-3" >
-	            	<div class="panel panel-default" >
+	            	<div class="panel panel-default">
 	            		<div class="panel-heading">
 	                            <s:message code="common.deptList"/>
 	                    </div>
-	                    <div style="max-height:400px; overflow:auto;" >
+	                    <div style="max-height:500px; overflow:auto;" >
 					    	<div id="tree">
 							</div>
 						</div>
@@ -207,8 +207,6 @@ function fn_SawonPermissionsUpdate(){
 								<input type="hidden" name="userno" id="userno"> 
 								<input type="hidden" name="deptno" id="deptno" value=""> 
 		                    	<div class="row form-group">
-		                            <div class="col-lg-1"></div>
-		                            <label class="col-lg-2">권한</label>
 		                            <div class="col-lg-8 checkbox-inline">
 										 	<label><input name="userrole" id="userrole" type="radio" checked="checked" value="C">사원</label>
 										 	<label><input name="userrole" id="userrole" type="radio" value="B">부서장</label>

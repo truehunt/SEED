@@ -1,7 +1,6 @@
 package hr.system.p0002.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -31,14 +30,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import hr.system.p0002.service.Insa_infoEnroll_Service;
-import hr.elect.p0002.vo.SignImageVO;
 import hr.system.p0001.vo.SawonVO;
 import hr.system.p0002.vo.Insa_personEnroll_VO;
 import hr.system.p0002.vo.Insa_emEnroll_VO;
 import hr.system.p0002.vo.Insa_salEnroll_VO;
-import hr.system.p0002.dao.Insa_infoEnroll_DAO;
-import project.common.FileUtil;
-import project.common.FileVO;
 
 @Controller("adInsa_infoEnroll_Controller")
 public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controller {
@@ -50,8 +45,6 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
    Insa_personEnroll_VO Insa_personEnroll_VO;
    Insa_emEnroll_VO Insa_emEnroll_VO;
    Insa_salEnroll_VO Insa_salEnroll_VO;
-   @Autowired
-   Insa_infoEnroll_DAO Insa_infoEnroll_DAO; 
    
    @Override
    @RequestMapping(value = "/system/p0002/init.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -165,10 +158,8 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
       Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
       
-      System.out.println("sawonController3 : "+ request.getParameter("sawon_code"));
       // 검색조건설정
-      searchMap.put("sawon_code", request.getParameter("sawon_code"));
-      System.out.println("sawonController4 ="+searchMap);
+      //searchMap.put("pk_company_code", request.getParameter("p_id"));
       
       //데이터 조회
       List<Insa_emEnroll_VO> data = Insa_infoEnroll_Service.searchList3(searchMap);
@@ -185,11 +176,8 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
       Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
       
-      System.out.println("sawonController5 : "+ request.getParameter("sawon_code"));
       // 검색조건설정
-      searchMap.put("sawon_code", request.getParameter("sawon_code"));
-      System.out.println("sawonController6 ="+searchMap);
-      
+      //searchMap.put("pk_company_code", request.getParameter("p_id"));
       
       //데이터 조회
       List<Insa_salEnroll_VO> data = Insa_infoEnroll_Service.searchList4(searchMap);
@@ -320,46 +308,6 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
       
       resultMap.put("Result", result);         
         return resultMap;
-   }
-   
-   /**
-    * 결재이미지 저장, 업데이트.
-    */
-	@RequestMapping(value = "/system/p0002/imageSave")
-	@ResponseBody
-   public String imageSave(HttpServletRequest request,  HttpServletResponse response , SignImageVO signImageInfo)  throws IOException  {
-		response.setContentType("text/html;charset=utf-8");
-		
- 		String sawon_code = request.getParameter("pk_sawon_code");
- 	    
- 		System.out.println("sawon_code = "+sawon_code);
- 		
- 		signImageInfo.setPK_SAWON_CODE(sawon_code);
- 		
- 		FileUtil fs = new FileUtil();
- 	       
- 		FileVO fileInfo = fs.saveImage(signImageInfo.getPhotofile());
- 		if (fileInfo != null) {
- 			signImageInfo.setPhoto(fileInfo.getRealname());
- 			Insa_infoEnroll_DAO.updateSignImage(signImageInfo);
- 		}
- 		
- 		String photo = signImageInfo.getPhoto();
-       System.out.println(photo);
-       
- 		return photo;
-   }
-
-	//이미지
-	@RequestMapping(value = "/system/p0002/imageDelete")
-	@ResponseBody
-   public void imageDelete(HttpServletRequest request,  HttpServletResponse response , SignImageVO signImageInfo)  throws IOException  {
-		response.setContentType("text/html;charset=utf-8");
-		
- 		String userno = request.getParameter("PK_SAWON_CODE");
- 		System.out.println("확인중..." + userno);
- 		Insa_infoEnroll_DAO.deleteSignImage(signImageInfo);
-       
    }
    
    private String getViewName(HttpServletRequest request) throws Exception {

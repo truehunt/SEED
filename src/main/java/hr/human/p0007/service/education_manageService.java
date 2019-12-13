@@ -22,6 +22,10 @@ public interface education_manageService {
 	
 	public List<education_manageVO> searchList3(Map<String, Object> searchMap) throws DataAccessException;
 
+	public List<education_manageVO> sawon_search(Map<String, Object> searchMap);
+	
+	public List<education_manageVO> DeptList(Map<String, Object> searchMap) throws DataAccessException;
+	
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException;
 
 	public void saveData2(Map<String, String[]> dataMap) throws DataAccessException;
@@ -31,6 +35,10 @@ public interface education_manageService {
 	public void updateMember(Map<String, Object> dataMap);
 
 	public void insertMember(Map<String, Object> dataMap);
+
+	
+
+	
 
 
 

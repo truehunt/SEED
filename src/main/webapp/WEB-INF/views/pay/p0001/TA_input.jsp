@@ -674,7 +674,7 @@ function yearday() {
        <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
               <DIV class="ib_product" style="width:70%;float:left">
-            <div style="height:100%;width:17%;float:left">
+            <div style="height:100%;width:19%;float:left">
                <script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); selectSite(); </script>
             </div>
          

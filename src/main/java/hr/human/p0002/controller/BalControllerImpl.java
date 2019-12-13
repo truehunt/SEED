@@ -67,6 +67,17 @@ public class BalControllerImpl implements BalController{
 		return main;
 	}
 	
+	// 발령호수
+	@RequestMapping(value = "/human/p0002/BalNum.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView BalNum(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String viewName = getViewName(request);
+		viewName = "/human/p0002/bal_Num";
+		request.setCharacterEncoding("utf-8");
+		
+		ModelAndView main = new ModelAndView(viewName);
+		return main;
+	}
+	
 	@RequestMapping(value = "/human/p0002/ballyeong_sawon.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView Popup_sawon(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String viewName = getViewName(request);
@@ -195,6 +206,7 @@ public class BalControllerImpl implements BalController{
 					        
 			return resultMap;
 		}
+		
 		
 		@Override
 		@RequestMapping(value = "/human/p0002/insertBal.do", method = { RequestMethod.GET, RequestMethod.POST })

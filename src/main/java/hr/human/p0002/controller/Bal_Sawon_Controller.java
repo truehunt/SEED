@@ -27,5 +27,13 @@ public interface Bal_Sawon_Controller {
 
 	public Map EM_INFO(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
+	public Map BalAfter_INFO(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	public Map Content_Div(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	public Map ContentSave(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
 	
 }

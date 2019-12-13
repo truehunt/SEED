@@ -24,6 +24,7 @@
 		<result property="bal_INT_DATE" column="bal_INT_DATE" />
 		<result property="bal_MOD_USER_ID" column="bal_MOD_USER_ID" />
 		<result property="bal_MOD_DATE" column="bal_MOD_DATE" />
+		
 		<result property="pk_SAWON_CODE" column="pk_SAWON_CODE" />
 		<result property="sawon_NAME" column="sawon_NAME" />
 		<result property="workplace_NAME" column="workplace_NAME" />
@@ -32,8 +33,11 @@
 		<result property="rank_NAME" column="rank_NAME" />
 		
 		<result property="info" column="info" />
+		
+		<result property="pk_PERSON_BC_DETAI_CODE_NUM" column="pk_PERSON_BC_DETAI_CODE_NUM" />
+		<result property="person_BC_DETAI_MNGEMENT_NAME" column="person_BC_DETAI_MNGEMENT_NAME" />
 	</resultMap>
-	
+	 
 	<select id="Ballyeong" resultMap="BaldResult" parameterType="java.util.Map"> 
       	<![CDATA[
          	select DISTINCT bal_num, bal_title, bal_div_code, bal_date, fk_BAL_CODE
@@ -167,17 +171,15 @@
 			from bal
 		]]>
 		<where>
-			<choose>
-				<when test="bal_NUM != null">
+				<if test="bal_NUM != null">
 					bal_NUM = #{bal_NUM, jdbcType=VARCHAR}
-				</when>
-				<when test="bal_DIV_CODE != null">
+				</if>
+				<if test="bal_DIV_CODE != null">
 					bal_DIV_CODE = #{bal_DIV_CODE, jdbcType=VARCHAR}
-				</when>
-				<when test="bal_DATE != null">
+				</if>
+				<if test="bal_DATE != null">
 					bal_DATE = #{bal_DATE, jdbcType=VARCHAR}
-				</when>
-			</choose>
+				</if>
 		</where>
 	</select>
 	
@@ -201,7 +203,7 @@
 	<!-- 발령대상자 -->
 	<select id="fk_Sawon" resultMap="BaldResult" parameterType="java.util.Map"> 
      	 <![CDATA[
-			SELECT fk_BAL_SAWON_CODE, 
+			SELECT DISTINCT fk_BAL_SAWON_CODE, 
       			  (select sawon_NAME from sawon where pk_SAWON_CODE = fk_BAL_SAWON_CODE) AS sawon_NAME,
        			   bal_DATE
 			  FROM bal
@@ -212,10 +214,44 @@
 			   AND fk_BAL_SAWON_CODE IS NOT NULL
 		]]>
 	</select>
+	<!-- 현정보 -->
+	<select id="Content_Div" resultMap="BaldResult" parameterType="java.util.Map">
+		<choose>
+			<when test="bal_DETAILS != null and bal_DETAILS.equals('부서')">
+				<![CDATA[
+					select fk_dept_name AS bal_INFO
+					from sawon 
+					where pk_sawon_code = #{fk_BAL_SAWON_CODE, jdbcType=VARCHAR}
+				]]> 
+			</when>
+			<when test="bal_DETAILS != null and bal_DETAILS.equals('호봉')">
+				<![CDATA[
+					SELECT fk_hobong_code AS bal_INFO
+				 	  FROM SAL_INFO
+				 	 WHERE fk_sawon_code = #{fk_BAL_SAWON_CODE, jdbcType=VARCHAR}
+				]]> 
+			</when>
+			<when test="bal_DETAILS != null and bal_DETAILS.equals('직급')">
+				<![CDATA[
+					select rank_NAME AS bal_INFO
+					  from sawon 
+					 where pk_sawon_code = #{fk_BAL_SAWON_CODE, jdbcType=VARCHAR}
+				]]> 
+			</when>
+			<otherwise>
+				<![CDATA[
+				 SELECT ${info} AS bal_INFO
+  			  	 FROM EM_INFO
+  			  	 WHERE fk_sawon_code = #{fk_BAL_SAWON_CODE, jdbcType=VARCHAR}
+				]]>
+			</otherwise>
+		</choose>
+	</select>  
+	
 	<!-- 발령내역 -->
 	<select id="fk_Sawon_Contents" resultMap="BaldResult" parameterType="java.util.Map"> 
      	 <![CDATA[
-			SELECT bal_DETAILS, bal_INFO, bal_BEF_INFO, bal_AFT_INFO
+			SELECT pk_BAL_CODE, bal_DETAILS, bal_BEF_INFO, bal_AFT_INFO
   			  FROM BAL
  			 WHERE bal_NUM = #{bal_NUM, jdbcType=VARCHAR}
    			   AND fk_BAL_SAWON_CODE = #{fk_BAL_SAWON_CODE, jdbcType=VARCHAR}
@@ -223,7 +259,7 @@
    			   AND bal_DATE = #{bal_DATE, jdbcType=VARCHAR}
    			   AND bal_TITLE = #{bal_TITLE, jdbcType=VARCHAR}
    			   AND bal_DETAILS IS NOT NULL
-		]]>
+		]]> 
 	</select>
 <!-- 	현정보 -->
 	<select id="EM_INFO" resultMap="BaldResult" parameterType="java.util.Map"> 
@@ -269,16 +305,81 @@
 		</where>
 	</select> 
 	
-	<!-- 발령전정보 확인 -->
-	<select id="BF_INFO" resultMap="BaldResult" parameterType="java.util.Map"> 
+	<!-- 발령후 정보 - 부서 -->
+	<select id="BalAfter_INFO" resultMap="BaldResult" parameterType="java.util.Map"> 
      	 <![CDATA[
-			select bal_bef_info
-			from bal
+			SELECT pk_DEPT_CODE AS PK_PERSON_BC_DETAI_CODE_NUM, dept_NAME AS PERSON_BC_DETAI_MNGEMENT_NAME
+			FROM dept
 		]]>
-		<where>
-			fk_BAL_SAWON_CODE = #{sawon, jdbcType=VARCHAR}
-		</where>
 	</select> 
+	
+	<update id="ContentUpdate" parameterType="java.util.Map">
+		update BAL
+		set  bal_num = #{bal_NUM , jdbcType=VARCHAR},
+			 bal_title = #{bal_TITLE , jdbcType=VARCHAR},
+			 bal_div_code = #{bal_DIV_CODE , jdbcType=VARCHAR},
+			 bal_date = #{bal_DATE , jdbcType=VARCHAR},
+			 fk_BAL_CODE = #{fk_BAL_CODE , jdbcType=VARCHAR},
+			 bal_DETAILS = #{bal_DETAILS , jdbcType=VARCHAR},
+			 bal_BEF_INFO = #{bal_BEF_INFO , jdbcType=VARCHAR},
+			 bal_AFT_INFO = #{bal_AFT_INFO , jdbcType=VARCHAR}
+		where pk_bal_code = #{pk_BAL_CODE , jdbcType=VARCHAR}
+	</update>	
+	  
+	<insert id="ContentInsert" parameterType="java.util.Map">
+		INSERT INTO BAL(pk_bal_code, 
+                bal_num, 
+                bal_title, 
+                bal_div_code, 
+                bal_date,
+                fk_BAL_SAWON_CODE,
+                BAL_DETAILS, BAL_BEF_INFO, BAL_AFT_INFO)
+		VALUES((select trim(to_char(NVL(MAX(pk_bal_code),'0')+'1','0000'))from BAL),
+        		#{bal_NUM, jdbcType=VARCHAR},
+        		#{bal_TITLE, jdbcType=VARCHAR},
+        		#{bal_DIV_CODE, jdbcType=VARCHAR},
+        		#{bal_DATE, jdbcType=VARCHAR},
+        		#{fk_BAL_SAWON_CODE, jdbcType=VARCHAR},
+        		#{bal_DETAILS, jdbcType=VARCHAR},
+        		#{bal_BEF_INFO, jdbcType=VARCHAR},
+        		#{bal_AFT_INFO, jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="ContentDelete" parameterType="java.util.Map">
+		delete BAL
+		 where pk_BAL_CODE = #{pk_BAL_CODE}
+	</delete>
+	
+	
+	
+	<!-- 발령내역 적용 -->
+	<update id="Update" parameterType="java.util.Map">
+		<choose>
+			<when test="bal_DETAILS != null and bal_DETAILS.equals('부서')">
+				update 	SAWON
+				set 	fk_dept_name = #{bal_INFO, jdbcType=VARCHAR}
+				where	pk_sawon_code = #{fk_BAL_SAWON_CODE , jdbcType=VARCHAR}
+			</when>
+			<when test="bal_DETAILS != null and bal_DETAILS.equals('직급')">
+				update 	SAWON
+				set		rank_NAME = #{bal_INFO, jdbcType=VARCHAR}
+				where	pk_sawon_code = #{fk_BAL_SAWON_CODE , jdbcType=VARCHAR}
+			</when>
+			<when test="bal_DETAILS != null and bal_DETAILS.equals('호봉')">
+				update 	SAL_INFO
+				set		fk_HOBONG_CODE = #{bal_INFO, jdbcType=VARCHAR}
+				where	fk_sawon_code = #{fk_BAL_SAWON_CODE , jdbcType=VARCHAR}
+			</when>
+			<otherwise>
+				update 	em_INFO
+				set		${info} = #{bal_INFO, jdbcType=VARCHAR}
+				where 	fk_sawon_code = #{fk_BAL_SAWON_CODE , jdbcType=VARCHAR}
+			</otherwise>
+		</choose>
+		
+	</update>	
+	
+	
 	
 	
 </mapper>

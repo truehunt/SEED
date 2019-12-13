@@ -15,7 +15,7 @@
 
    .div{
     max-width: 500px;
-    margin-left: -20px;
+    margin-left: -5px;
     margin-bottom: 0px;
     margin-right: -550px;
      }
@@ -37,7 +37,6 @@
         margin-left:0px;
         width: 550px;
         height: 600px;
-        border : 1px solid lightblue;
    }
    .content {
         margin-left:400px;
@@ -45,13 +44,11 @@
         float: right;
         width: 800px;
         height: 600px;
-        border : 1px solid lightblue;
    }
    .main_content{
       width: 510px;
    }
    .main_menu {
-      border : 1px solid lightblue;
    }
    
    .nav, .content {<!--메뉴바 꽉차게 만들기-->
@@ -111,7 +108,7 @@
 	      //{Header:"No",Type:"Seq", Align:"Center"},
 	         {Header:"NO",Type:"Seq",SaveName:"Seq", Align:"Center"},
 	         {Header:"",Type:"DummyCheck", SaveName:"chk", Width:40, Align:"Center",Edit:1,HeaderCheck:1},
-	         {Header:"사원코드",Type:"Text",SaveName:"pk_EDUCATION_ADD_SAWON_CODE",MinWidth:80, Align:"Center", Edit:0},
+	         {Header:"사원코드",Type:"Text",SaveName:"pk_EDUCATION_EVAL_SAWON_CODE",MinWidth:80, Align:"Center", Edit:0},
 	         {Header:"사원명",Type:"Text",SaveName:"fk_EDUCATION_EVAL_SAWON_NAME",MinWidth:60, MinWidth:80, Align:"Center", Edit:0}, 
           ];
 	      IBS_InitSheet(mySheet,initData);
@@ -296,27 +293,27 @@
 <body onLoad="LoadPage()">
       
       <div class="nav" style="width:100%; overflow:hidden;">
-           <div class="main_content"  style="width:1600px;">
-                <div class="ib_function float_left">
-                 <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-                 <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-                 <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-                 <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
+           <div class="main_content"  style="width:1250px;">
+                <div class="ib_function float_right">
+                 <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
+                 <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
+                 <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
+                 <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
                </div>
                
             
 
-     <div class="ib_product" style="width:60%;float:left">
+     <div class="ib_product" style="width:65%;float:left">
      <!-- content (오른쪽 layout시작)  -->
        
   
      
-				<div  style="height:100%;width:35%;float:left">
-					<script type="text/javascript"> createIBSheet("mySheet", "70%", "100%");</script>
+				<div  style="height:100%;width:39%;float:left">
+					<script type="text/javascript"> createIBSheet("mySheet", "75%", "100%");</script>
 				</div>
 			
-				
-				<div  style="height:100%;width:65%;float:left">
+				<div style="height:100%;width:0%;float:left"></div>
+				<div  style="height:100%;width:60%;float:left">
 					<script type="text/javascript"> createIBSheet("mySheet2", "180%", "70%"); </script>
 				</div>
         

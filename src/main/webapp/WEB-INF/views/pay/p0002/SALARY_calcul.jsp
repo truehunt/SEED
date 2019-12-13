@@ -699,7 +699,7 @@ function yearday() {
 <div class="main_content">
       
        <div class="exp_product">
-            <div class="ib_function float_left">
+            <div class="ib_function float_right">
          <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
          <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
          <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
@@ -771,7 +771,7 @@ function yearday() {
 <br><br>
       <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
-              <DIV class="ib_product" style="width:49%;float:left">
+              <DIV class="ib_product" style="width:56%;float:left">
 				<div style="height:100%;width:30%;float:left">
 					<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%");selectSite(); </script>
 				</div>

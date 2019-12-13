@@ -8,12 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
-import hr.elect.p0002.vo.SignImageVO;
 import hr.system.p0001.vo.SawonVO;
 import hr.system.p0002.vo.Insa_personEnroll_VO;
 import hr.system.p0002.vo.Insa_emEnroll_VO;
 import hr.system.p0002.vo.Insa_salEnroll_VO;
-import hr.elect.p0002.vo.SignImageVO;
 
 
 @Repository("adInsa_infoEnroll_DAO")
@@ -109,20 +107,5 @@ public class Insa_infoEnroll_DAOImpl implements Insa_infoEnroll_DAO {
    public void deleteData4(Map<String, String> row) throws DataAccessException {
       sqlSession.update("hr.system.p0002.SALdeleteData", row);
    }
-   
-   /**
-    * 결재이미지 저장, 업데이트.
-    */
-   public void updateSignImage(SignImageVO param) {
-   	  sqlSession.insert("upSawonImage", param);
-   }
-   
-   /**
-    * 등록된 결재 이미지 삭제
-    */
-   public void deleteSignImage(SignImageVO param) {
-//   	System.out.println(param);
-      sqlSession.update("upSawonImage", param);
-   }
-	
+
 }

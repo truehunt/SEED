@@ -10,7 +10,28 @@
 <head>
 <meta charset="UTF-8">
 <title>교육대상자등록</title>
+<script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
+<script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
+<script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
+<script src="${contextPath}/resources/ibsheet/ibtab.js"></script>
+<script src="${contextPath}/resources/ibsheet/ibtabinfo.js"></script>
 
+<link rel="stylesheet" href="${contextPath}/resources/css/style.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/ibtab-style.min.css">
+
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+ <script src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/dynatree/jquery.dynatree.js"></script>
+	
 <style>
 
    .table{
@@ -37,7 +58,6 @@
         margin-left:0px;
         width: 550px;
         height: 600px;
-        border : 1px solid lightblue;
    }
    .content {
         margin-left:400px;
@@ -45,13 +65,11 @@
         float: right;
         width: 800px;
         height: 600px;
-        border : 1px solid lightblue;
    }
    .main_content{
       width: 510px;
    }
    .main_menu {
-      border : 1px solid lightblue;
    }
    
    .nav, .content {<!--메뉴바 꽉차게 만들기-->
@@ -101,6 +119,10 @@
    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 <script type="text/javascript">
+   
+   
+var j = 0;
+   
    //시트 높이 계산용
    var pageheightoffset = 270;
 	function LoadPage() {
@@ -205,12 +227,49 @@
             mySheet2.DoSave("${contextPath}/human/p0007/insertData3.do");
             break;
          case "insert": //신규행 추가
-            var row = mySheet2.DataInsert();
+        	  $.ajax({
+        	        url: "edu_add_sawon_target.do", // 알아서 주소를 칠 것.
+        	        type: "post"        
+        	    }).success(function(result){
+        	                $("#popupTarget").html(result);
+        	                Loading();
+        	                if(j == 0){
+        	                	createIBSheet2($("#ib-container3")[0],"mySheet6", "100%", "300px");
+        	              		IBS_InitSheet(mySheet6,initData);
+//         	            		Action_popup('list_sawon');
+        	            		j++;
+        	                }else{
+        	                	$("#ib-container3_copy").after(container3);
+        	                }
+        	    });
+        	    $("#popupTarget").modal("show");
          
-         	mySheet2.SetCellValue(row, 'pk_EDUCATION_MANA_CODE', pk_EDUCATION_MANA_CODE);
+            //var row = mySheet2.DataInsert();
+         	//mySheet2.SetCellValue(row, 'pk_EDUCATION_MANA_CODE', pk_EDUCATION_MANA_CODE);
             break;
       }
    }
+	 
+	 
+	 
+  
+	 
+   
+   
+   function mySheet2_OnSearchEnd() {
+	   	
+
+		//조회 하자마자 datainsert
+		//mySheet2.DataInsert(-1);
+	 
+		
+		if(mySheet2.GetCellValue(mySheet2.RowCount(),'STATUS') == 'U' )
+			mySheet2.SetCellValue(mySheet2.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+		
+	}
+	 
+	 
+	 
    // Validation 확인하기
    function mySheet_OnValidation(Row, Col, Value){
       console.log('확인');
@@ -283,12 +342,12 @@
 <body onLoad="LoadPage()">
       
       <div class="nav" style="width:100%; overflow:hidden;">
-           <div class="main_content"  style="width:1300px;">
-                <div class="ib_function float_left">
-                 <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-                 <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-                 <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-                 <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
+           <div class="main_content"  style="width:1150px;">
+                <div class="ib_function float_right">
+                 <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
+                 <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
+                 <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
+                 <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
                </div>
                
             
@@ -309,6 +368,6 @@
 </div>
 
       <!--main_content-->
-
+<div id="popupTarget" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ></div> 
 </body>
 </html>

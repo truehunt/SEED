@@ -33,9 +33,7 @@ public class Insa_personEnroll_VO {
 	private String person_info_resident_classifi; // 거주자구분
 	private String person_info_coun_resi_code; // 거주지국 코드
 	private String person_info_coun_resi_name; // 거주지국 이름
-	
 	private String pk_sawon_code; // 조건 위한 사원코드
-	private String photo; // 사원의 photo 사용-> person_info_picture 연계해서 사용할 예정 
 	
 	private String person_info_int_user_id; // 입력자
 	private Timestamp person_info_int_date; // 입력일시
@@ -269,14 +267,6 @@ public class Insa_personEnroll_VO {
 
 	public void setPk_sawon_code(String pk_sawon_code) {
 		this.pk_sawon_code = pk_sawon_code;
-	}
-	
-	public String getPhoto() {
-		return photo;
-	}
-
-	public void setPhoto(String photo) {
-		this.photo = photo;
 	}
 
 	public String getPerson_info_int_user_id() {

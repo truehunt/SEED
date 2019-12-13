@@ -33,6 +33,9 @@ public class BalVO {
 	
 	private String info;
 	
+	private String pk_PERSON_BC_DETAI_CODE_NUM;
+	private String person_BC_DETAI_MNGEMENT_NAME;
+	
 	public BalVO() {
 		System.out.println("BalVO 메서드호출");
 	}
@@ -245,5 +248,21 @@ public class BalVO {
 		this.info = info;
 	}
 
+	public String getPk_PERSON_BC_DETAI_CODE_NUM() {
+		return pk_PERSON_BC_DETAI_CODE_NUM;
+	}
+
+	public void setPk_PERSON_BC_DETAI_CODE_NUM(String pk_PERSON_BC_DETAI_CODE_NUM) {
+		this.pk_PERSON_BC_DETAI_CODE_NUM = pk_PERSON_BC_DETAI_CODE_NUM;
+	}
+
+	public String getPerson_BC_DETAI_MNGEMENT_NAME() {
+		return person_BC_DETAI_MNGEMENT_NAME;
+	}
+
+	public void setPerson_BC_DETAI_MNGEMENT_NAME(String person_BC_DETAI_MNGEMENT_NAME) {
+		this.person_BC_DETAI_MNGEMENT_NAME = person_BC_DETAI_MNGEMENT_NAME;
+	}
+	
 	
 }

@@ -22,53 +22,43 @@
 var selectedNode = null;
 	function Loading(){
 		initData = {};
-		//mySheet4
-		initData.Cols = [
-			{Header:"NO",Type:"Seq", Align:"Center"},
-  			{Header:"코드",Type:"Text", SaveName:"pk_PERSON_BC_DETAI_CODE_NUM", Width:80, Align:"Center",Edit:0},
-  			{Header:"발령내역명", Type: "Text",SaveName:"person_BC_DETAI_MNGEMENT_NAME",Width:120,  Align: "Center",Edit:0},
-  		];
+		//mySheet
+		 initData.Cols = [
+	         {Header:"NO",Type:"Seq", Align:"Center"},
+	         {Header:"발령호수",Type:"Text", SaveName:"bal_NUM", Width:120, Align:"Center",Edit:0},
+	         {Header:"제목", Type: "Text",SaveName:"bal_TITLE",Width:200,  Align: "Center", Edit:0},
+			 {Header:"발령구분",Type:"Text",SaveName:"bal_DIV_CODE",Width:120, Align:"Center", Edit:0},
+			 {Header:"발령일자",Type:"Date",SaveName:"bal_DATE",Width:120, Align:"Center", Edit:0},
+			 {Header:"발령코드",Type:"Text",SaveName:"pk_BAL_CODE",Width:120, Align:"Center", Hidden:1}
+	      ];
 	}
 	
 	
 	function Action_popup(code){
 		switch(code) {
-		case 'bal_Content':
-			mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0002/BalContent.do");
+		case 'list':
+			mySheet.DoSearch("${pageContext.request.contextPath}/human/p0002/ballyeong.do");
 			break;
 		}
 	}
 	
 	function fn_Selected() {
-		var ComboText = mySheet4.GetCellValue(NRow, 'person_BC_DETAI_MNGEMENT_NAME'); // name
-		mySheet2.SetCellValue(M2_Row,'bal_DETAILS',ComboText);
+		var ComboText = mySheet.GetCellValue(NRow, 'person_BC_DETAI_MNGEMENT_NAME'); // name
+		mySheet.SetCellValue(M2_Row,'bal_DETAILS',ComboText);
 		fn_EM_INFO(ComboText);
 		
-		mySheet4.RemoveAll();
-		container3 = $("#ib-container3").detach();
+		mySheet.RemoveAll();
+		container0 = $("#ib-container0").detach();
 	}
 	
-	function mySheet4_OnSelectCell(OldRow, OldCol, NewRow, NewCol,isDelete) {
+	function mySheet_OnSelectCell(OldRow, OldCol, NewRow, NewCol,isDelete) {
 		if(OldRow != NewRow) {NRow = NewRow;}
 	} 
 	
-	
-// 	// 조회조건 
-// 	function bal_Condition() {
-// 		var SiteList = $('#SiteList').val();
-// 		if(SiteList == 1){
-// 			var param = "bal_NUM=" + document.getElementById("Condition").value;
-// 		}else if(SiteList == 2){
-// 			var param = "bal_DIV_CODE=" + document.getElementById("Condition").value;
-// 		}else if(SiteList == 3){
-// 			var param = "bal_DATE=" + document.getElementById("Condition").value;
-// 		}
-// 		mySheet3.DoSearch("${pageContext.request.contextPath}/human/p0002/Sawon_BalNum.do", param);
-// 	};
-   
+
 </script>
 
-<div class="modal-dialog modal-sm" role="document">
+<div class="modal-dialog modal-md" role="document">
   <div class="modal-content">
 		  				<div class="modal-header">
 		                    <button type="button" id="closeX" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -78,9 +68,9 @@ var selectedNode = null;
                 		<div class="modal-body">
                 		 <!-- /.row -->
 			 				<div class="row form-group">
-				   				<div style="width:5%; float:left;">&nbsp</div>
-								<div id='ib-container3_copy'></div>
-								<div id='ib-container3'></div>
+				   				<div style="width:1%; float:left;">&nbsp</div>
+								<div id='ib-container0_copy'></div>
+								<div id='ib-container0'></div>
 							</div>
 						</div>
 				

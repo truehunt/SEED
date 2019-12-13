@@ -42,6 +42,7 @@
    var pageheightoffset = 200;
    var bal_check = 0; // 발령호수 check
    var Content_check = 0; // 발령내역 check
+   var After_check = 0; // 발령내역 check
    /*Sheet 기본 설정 */
    function LoadPage() {
 	   
@@ -63,21 +64,29 @@
       		//체크박스 만들것 
       		{Header:"상태|상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
       		{Header:"NO|NO",Type:"Seq", Align:"Center"},
-      		{Header:"발령내역|발령내역 ",Type:"ComboEdit",SaveName:"bal_DETAILS", Width:120, Align:"Center",Edit:0},
+      		{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
+      		{Header:"발령내역|발령내역 ",Type:"Text",SaveName:"bal_DETAILS", Width:120, Align:"Center",Edit:0},
       		{Header:"발령내역|현정보",Type:"Text", SaveName:"bal_INFO", Width:150, Align:"Center",Edit:0},
-			{Header:"발령내역|발령전정보",Type:"Text", SaveName:"dept_NAME", Width:150, Align:"Center",Edit:0},
-			{Header:"발령내역|발령후정보",Type:"Text", SaveName:"rank_NAME", Width:150, Align:"Center",Edit:0},
-			{Header:"발령내역|적요",Type:"Text", SaveName:"rank_NAME", Width:60, Align:"Center",Edit:0},
+			{Header:"발령내역|발령전정보",Type:"Text", SaveName:"bal_BEF_INFO", Width:150, Align:"Center",Edit:0},
+			{Header:"발령내역|발령후정보",Type:"Text", SaveName:"bal_AFT_INFO", Width:150, Align:"Center",Edit:0},
+			{Header:"발령내역|적용",Type:"Button", SaveName:"button", Width:80, Align:"Center"},
 			
-// 			{Header:"발령자코드",Type:"Text", SaveName:"fk_BAL_CODE", Width:60, Align:"Center",Edit:0},
-// 			{Header:"발령호수",Type:"Text", SaveName:"bal_NUM", Width:60, Align:"Center",Edit:0},
-// 			{Header:"발령제목",Type:"Text", SaveName:"bal_TITLE", Width:60, Align:"Center",Edit:0},
-// 			{Header:"발령구분",Type:"Text", SaveName:"bal_DIV_CODE", Width:60, Align:"Center",Edit:0},
-// 			{Header:"발령일자",Type:"Text", SaveName:"bal_DATE", Width:60, Align:"Center",Edit:0}
+			{Header:"발령내역|발령자코드",Type:"Text", SaveName:"fk_BAL_SAWON_CODE", Width:60, Align:"Center",Edit:0},
+			{Header:"발령내역|발령호수",Type:"Text", SaveName:"bal_NUM", Width:60, Align:"Center",Edit:0},
+			{Header:"발령내역|발령제목",Type:"Text", SaveName:"bal_TITLE", Width:60, Align:"Center",Edit:0},
+			{Header:"발령내역|발령구분",Type:"Text", SaveName:"bal_DIV_CODE", Width:60, Align:"Center",Edit:0},
+			{Header:"발령내역|발령일자",Type:"Text", SaveName:"bal_DATE", Width:60, Align:"Center",Edit:0},
+			{Header:"pk_code",Type:"Text", SaveName:"pk_BAL_CODE", Width:60, Align:"Center",Edit:0,Hidden:1}
        	];
-      	createIBSheet2($("#tab2_contents")[0],"mySheet2", "100%", "300px");
+      	createIBSheet2($("#tab2_contents")[0],"mySheet2", "100%", "348px");
       	IBS_InitSheet(mySheet2,initData);
-      	 
+      	mySheet2.SetColHidden([
+			{Col: 'fk_BAL_SAWON_CODE', Hidden:1},
+			{Col: 'bal_NUM', Hidden:1},
+			{Col: 'bal_TITLE', Hidden:1},
+			{Col: 'bal_DIV_CODE', Hidden:1},
+			{Col: 'bal_DATE', Hidden:1}
+  	    ]);
       	
    }
 
@@ -87,7 +96,17 @@
    function doAction(sAction) {
       switch(sAction) {
          case "save":
-        	 mySheet3.DoSave("${pageContext.request.contextPath}/human/p0002/insertBal.do");
+        	 for(var i=2; i<=mySheet2.RowCount()+1; i++){
+        		 if(mySheet2.GetCellValue(i,'STATUS') != 'R'){
+        			 mySheet2.SetCellValue(i,'bal_NUM',$('#bal_NUMBER').val());
+                	 mySheet2.SetCellValue(i,'bal_DATE',$('#balDate').val());
+                	 mySheet2.SetCellValue(i,'bal_DIV_CODE',$('#Bal_DIV').val());
+                	 mySheet2.SetCellValue(i,'bal_TITLE',$('#balTitle').val());
+                	 mySheet2.SetCellValue(i,'fk_BAL_SAWON_CODE',Bal_Sawon_Code);
+        		 }
+        	 }
+        	 
+        	 mySheet2.DoSave("${pageContext.request.contextPath}/human/p0002/balContentSave.do");
             break;
          case "insert":
 			mySheet2.DataInsert(-1);
@@ -151,6 +170,8 @@
 			}
 		});
 	} 
+	
+// =======================================================================	
    
 	// 발령일자 및 제목
 	function Search_Date_Title() {
@@ -171,6 +192,7 @@
 	} 
    
 	function mySheet_OnSelectCell(OldRow, OldCol, NewRow, NewCol,isDelete) {
+		m2nrow = NewRow;
 		if(OldRow != NewRow){
 			Bal_Sawon_Code = mySheet.GetCellValue(NewRow, 'fk_BAL_SAWON_CODE');
 			var bal_Contents = "bal_NUM=" + $('#bal_NUMBER').val() 
@@ -185,43 +207,134 @@
 
 	function mySheet2_OnDblClick(Row, Col, Value, CellX, CellY, CellW, CellH) {
 		M2_Row = Row; // mySheet2 row 저장
-		if(Col == 2){
-			$.ajax({
-		    	url: "bal_Content.do", // popup창 주소
-		    	type: "post"
-			}).success(function(result){
-				$("#PopBalContents").html(result); 
-		        Loading();
-		        if(Content_check == 0){
-		        	createIBSheet2($("#ib-container3")[0],"mySheet4", "100%", "300px");
-		    	    IBS_InitSheet(mySheet4,initData);
-			        Action_popup('bal_Content');
-			        Content_check++;
-				}else if(Content_check == 1){
-		        	$("#ib-container3_copy").after(container3);
-		        	Action_popup('bal_Content');
-		        }
-		    });
-		    $("#PopBalContents").modal("show"); // modal : popupNum을 보여준다.(생성)
+		proChk = mySheet2.GetCellValue(Row, 'bal_DETAILS');
+		// 버튼 적용완료시  사용 불가 & 
+		// 발령내역 버튼 적용이 있을 시 사용 불가
+		if(mySheet2.GetCellValue(Row,'button') != '적용완료'){
+			if(Col == 3 &&  mySheet2.GetCellValue(Row,'button') != '적용'){ // 발령내역
+				$.ajax({
+			    	url: "bal_Content.do", // popup창 주소
+			    	type: "post"
+				}).success(function(result){
+					$("#PopBalContents").html(result); 
+			        Loading();
+			        if(Content_check == 0){
+			        	createIBSheet2($("#ib-container3")[0],"mySheet4", "100%", "300px");
+			    	    IBS_InitSheet(mySheet4,initData);
+				        Action_popup('bal_Content');
+				        Content_check++;
+					}else if(Content_check == 1){
+			        	$("#ib-container3_copy").after(container3);
+			        	Action_popup('bal_Content');
+			        }
+			    });
+			    $("#PopBalContents").modal("show"); // modal : popupNum을 보여준다.(생성)
+			}else if(Col == 6){ // 발령후 정보
+				if(proChk != "프로젝트"){ // 프로젝트가 아닐 때
+					$.ajax({
+				    	url: "ballyeong_Popup.do", // 알아서 주소를 칠 것.
+				    	type: "post",
+					}).success(function(result){
+						$("#popupAfter").html(result);
+				        Loading();
+				        if(After_check == 0){
+				        	createIBSheet2($("#ib-container1")[0],"mySheet5", "100%", "300px");
+				    	    IBS_InitSheet(mySheet5,initData);
+					        Action_popup('list_After');
+					        After_check++;
+						}else if(After_check == 1){
+				        	$("#ib-container1_copy").after(container1);
+				        	mySheet5.RemoveAll();
+				        	Action_popup('list_After');
+				        }
+				    });
+				    $("#popupAfter").modal("show"); // modal : popupNum을 보여준다.(생성)
+				}
+			}
 		}
 		
 	}
 
-	function fn_EM_INFO(ComboCode){
+	function fn_EM_INFO(ComboText){
+		Code = ComboText;
 		$.ajax({
 			url : "EM_INFO.do",//목록을 조회 할 url
 	        type : "POST",
 	        dataType : "JSON",
-	        data : {Code : ComboCode, Sawon : Bal_Sawon_Code},
+	        data : {Code : ComboText, Sawon : Bal_Sawon_Code},
 	        success : function(data) {
-				mySheet2.SetCellValue(M2_Row, 'bal_INFO', data['Data'][0].info);
-				
-	        	
+	        	if(data['Data'][0] != null){
+	        		mySheet2.SetCellValue(M2_Row, 'bal_INFO', data['Data'][0].info);
+					mySheet2.SetCellValue(M2_Row, 'bal_BEF_INFO', data['Data'][0].info);
+					mySheet2.SetCellValue(M2_Row, 'bal_AFT_INFO', '');
+	        	}else {
+	        		mySheet2.SetCellValue(M2_Row, 'bal_INFO', '');
+	        		mySheet2.SetCellValue(M2_Row, 'bal_BEF_INFO', '');
+	        		mySheet2.SetCellValue(M2_Row, 'bal_AFT_INFO', '');
+	        	}
+		        	
 	        }, error : function(jqxhr, status, error) {
 	        	alert("에러");
 			}
 		});
 	}
+	
+	
+	function mySheet2_OnSearchEnd(){
+		var fk_BAL_SAWON_CODE = mySheet.GetCellValue(m2nrow, 'fk_BAL_SAWON_CODE');
+   	 	for(var i=2; i<=mySheet2.RowCount()+1; i++){
+			var bal_DETAILS = mySheet2.GetCellValue(i,'bal_DETAILS'); // 발령내역을 bal_DETAILS에 저장 
+			$.ajax({
+				url : "Content_Div.do",
+		        type : "POST",
+	        	dataType : "JSON",
+	        	data : {fk_BAL_SAWON_CODE : fk_BAL_SAWON_CODE, bal_DETAILS : bal_DETAILS}, // 사원코드, 발령내역을 보낸다.
+	    	    success : function(data) {
+	    	    	var Row1 = mySheet2.FindText('bal_DETAILS', data['result'], 0); // 발령내역과 같은곳을 찾는다
+	    	    	if(data['Data'][0] != null){
+	    	    		mySheet2.SetCellValue(Row1,'bal_INFO', data['Data'][0].bal_INFO); // 현정보에 값을 넣는다.
+	    	    		if(mySheet2.GetCellValue(Row1,'bal_INFO') == mySheet2.GetCellValue(Row1,'bal_AFT_INFO')){
+	    	    			mySheet2.SetCellValue(Row1, 'button', '적용완료'); // 적용완료
+	    					mySheet2.SetCellEditable(Row1, 'button', 0); // 적용완료시 수정 불가
+	    					mySheet2.SetCellEditable(Row1, 'DEL_CHK', 0); // 삭제불가
+	    	    		}
+	    	    		mySheet2.SetCellValue(Row1, 'STATUS', 'R'); // 값을 넣으면서 수정으로 변경된 상태값을 다시 조회로 변경해준다.
+	    	    	}
+		        }, error : function(jqxhr, status, error) {
+	        		alert("에러");
+				}
+			});
+   	 	}
+		for(var k=2; k<=mySheet2.RowCount()+1; k++){
+			mySheet2.SetCellValue(k, 'button', '적용'); // 적용버튼 생성
+			mySheet2.SetCellValue(k, 'STATUS', 'R'); // 적용버튼이 생성되면서 수정으로 변경된 값을 다시 조회로 변경해준다.
+ 		}
+	}
+	
+	// 버튼 눌렀을 시
+	function mySheet2_OnButtonClick(Row, Col) {
+		// ajax로 보낼 값 정리
+		var fk_BAL_SAWON_CODE = mySheet.GetCellValue(m2nrow, 'fk_BAL_SAWON_CODE'); // 사원코드
+		var bal_DETAILS = mySheet2.GetCellValue(Row,'bal_DETAILS'); // 발령내역
+		var bal_INFO = mySheet2.GetCellValue(Row, 'bal_AFT_INFO'); // 현정보
+		
+		$.ajax({
+			url : "ContentSave.do", 
+	        type : "POST",
+        	dataType : "JSON",
+        	data : {fk_BAL_SAWON_CODE: fk_BAL_SAWON_CODE, bal_DETAILS: bal_DETAILS, bal_INFO: bal_INFO},
+    	    success : function(data) {
+    	    	 mySheet2.SetCellValue(Row,'bal_INFO', data['Data'][0].bal_INFO);
+    	    	 mySheet2.SetCellValue(Row, 'button', '적용완료');
+    	    	 mySheet2.SetCellEditable(Row, 'button', 0); // 적용완료시 수정 불가
+    	    	 mySheet2.SetCellEditable(Row, 'DEL_CHK', 0); // 삭제불가
+    	    	 mySheet2.SetCellValue(Row, 'STATUS', 'R'); // 적용버튼이 생성되면서 수정으로 변경된 값을 다시 조회로 변경해준다.
+	        }, error : function(jqxhr, status, error) {
+        		alert("에러");
+			}
+		});
+		
+	} 
 	
 </script>
 
@@ -321,7 +434,7 @@ $(function(){
 			<div style="height:100%;width:1%;float:left"></div>
 			
 			<!-- right -->
-			<div style="height:100%;width:45%;float:left">
+			<div style="height:100%;width:50%;float:left">
 				<div id="tab2_contents"></div>
 			</div>
 		</div>
@@ -332,6 +445,6 @@ $(function(){
 	</div>
 <!-- 발령호수 팝업 -->	  <div id="popupNum" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ></div>
 <!-- 발령내역 팝업 -->	  <div id="PopBalContents" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ></div> 
-<!-- 	  <div id="popupNum" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ></div> -->
+<!-- 발령 후 정보 -->	  <div id="popupAfter" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ></div>
 </body>
 </html>

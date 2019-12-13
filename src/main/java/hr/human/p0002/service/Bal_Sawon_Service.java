@@ -22,7 +22,13 @@ public interface Bal_Sawon_Service {
 
 	public List<BalVO> EM_INFO(Map<String, Object> searchMap) throws DataAccessException;
 
+	public List<BalVO> BalAfter_INFO(Map<String, Object> searchMap) throws DataAccessException;
+
+	public List<BalVO> Content_Div(Map<String, Object> searchMap) throws DataAccessException;
+
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException ;
+
+	public List<BalVO> ContentSave(Map<String, Object> searchMap) throws DataAccessException;
 
 	
 

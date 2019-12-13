@@ -1,5 +1,6 @@
 package hr.human.p0002.dao;
 
+import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,13 @@ public class Bal_Sawon_DAOImpl implements Bal_Sawon_DAO {
 		return list;
 	}
 	
+	@Override
+	public List<BalVO> Content_Div(Map<String, Object> searchMap) throws DataAccessException {
+		System.out.println(searchMap);
+		List<BalVO> list = sqlSession.selectList("hr.human.p0002.Content_Div",searchMap);
+		return list;
+	}
+	
 	// 발령내역 코드
 	@Override
 	public List<BalVO> BalContent(Map<String, Object> searchMap) throws DataAccessException {
@@ -80,29 +88,33 @@ public class Bal_Sawon_DAOImpl implements Bal_Sawon_DAO {
 		List<BalVO> list = sqlSession.selectList("hr.human.p0002.SAL_HOBONG",searchMap);
 		return list;
 	}
-	
-	// 발령전정보가 있는지 확인하는 코드
-		@Override
-		public List<BalVO> BF_INFO(Map<String, Object> searchMap) throws DataAccessException {
-			List<BalVO> list = sqlSession.selectList("hr.human.p0002.BF_INFO",searchMap);
-			return list;
-		}
-	
+	// 발령후 정보 -> 부서일 때
+	@Override
+	public List<BalVO> BalAfter_INFO(Map<String, Object> searchMap) throws DataAccessException {
+		List<BalVO> list = sqlSession.selectList("hr.human.p0002.BalAfter_INFO",searchMap);
+		return list;
+	}
 	
 	@Override
 	public void insertData(Map<String, String> row) throws DataAccessException {
-		System.out.println(row);
-		sqlSession.update("hr.human.p0002.insertDataBal", row);
+		sqlSession.insert("hr.human.p0002.ContentInsert", row);
 	}
 	@Override
 	public void updateData(Map<String, String> row) throws DataAccessException {
-		System.out.println(row);
-		sqlSession.update("hr.human.p0002.updateDataBal", row);
+		sqlSession.update("hr.human.p0002.ContentUpdate", row);
 	}
 	@Override
 	public void deleteData(Map<String, String> row) throws DataAccessException {
-		System.out.println(row);
-		sqlSession.update("hr.human.p0002.deleteDataBal", row);
+		sqlSession.delete("hr.human.p0002.ContentDelete", row);
 	}
+	
+	//적용버튼
+	@Override
+	public List<BalVO> ContentInsert(Map<String, Object> searchMap) throws DataAccessException {
+		sqlSession.update("hr.human.p0002.Update",searchMap);
+		List<BalVO> list = sqlSession.selectList("hr.human.p0002.Content_Div",searchMap);
+		return list;
+	}
+	
 
 }

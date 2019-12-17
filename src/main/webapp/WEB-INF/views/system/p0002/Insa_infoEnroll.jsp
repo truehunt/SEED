@@ -94,7 +94,8 @@
 	//시트 높이 계산용
 	var pageheightoffset = 200;
 	
-	var S2="";
+	var i = 0; // 공통코드 팝업 초기화
+	
 	/*Sheet 기본 설정 */
 	function LoadPage() {
 		mySheet.RemoveAll();
@@ -123,6 +124,7 @@
 			{Header:"부서 명",Type:"Text",SaveName:"fk_DEPT_NAME",MinWidth:80, Align:"Center"},
 			{Header:"사진",Type:"Text",SaveName:"PHOTO", MinWidth:80, Align:"Center"},
 			{Header:"이메일",Type:"Text",SaveName:"sawon_EMAIL",MinWidth:60, Align:"Center"},
+			{Header:"fk_사원코드",Type:"Text",SaveName:"fk_sawon_code",MinWidth:60, Align:"Center"},
 			{Header:"입력자",Type:"Text",SaveName:"sawon_INT_USER_ID",MinWidth:80, Align:"Center",hidden:1},
 			{Header:"입력일시",Type:"Text",SaveName:"sawon_INT_DATE",MinWidth:80, Align:"Center",hidden:1},
 			{Header:"수정자",Type:"Text",SaveName:"sawon_MOD_USER_ID",MinWidth:80, Align:"Center",hidden:1},
@@ -145,7 +147,7 @@
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1},
 	      {Col: 6, Hidden:1}, {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1},
 	      {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, {Col: 14, Hidden:1},
-	      {Col: 15, Hidden:1}, {Col: 16, Hidden:1},
+	      {Col: 15, Hidden:1}, {Col: 16, Hidden:1}, {Col: 17, Hidden:1},
 	      
 	    ]);
 		
@@ -278,6 +280,67 @@
 		}	
 	}	
 	
+	//사원검색 조건
+	function searchState(){
+		 var sawon = document.getElementById("sawon_search").value;
+		 var command =$('input[name="chk_info"]:checked').val();	 
+		 mySheet.DoSearch('${contextPath}/system/p0002/searchList.do','sawon_search='+sawon+"&command="+command);
+	 }
+	
+	//공통 팝업
+	function fn_Popup(code_division, id, name, frameId){
+			if($("#common_pop").html() == ''){
+				$.ajax({
+			        url: "${contextPath}/system/p0002/Modal_Popup.do", //view
+			        type: "post",
+			        //data: {"code_division" : code_division},
+			    }).success(function(result){
+			                $("#common_pop").html(result);
+			                 
+			                //if(i == 0){
+			                	Loading();
+			                	createIBSheet2($("#ib-container1")[0],"mySheet2", "100%", "300px");
+			                	IBS_InitSheet(mySheet2,initSheet);
+			            		Action_popup('list', code_division, id, name, frameId);
+			            		i++;
+			                //}else{
+			                //	$("#ib-container1_copy").after(container1);
+			                //} 
+			    });
+			} else {
+        		Action_popup('list', code_division, id, name, frameId);
+			}
+		   $("#common_pop").modal("show");   
+		   
+	}
+	
+	//부서 팝업
+	function fn_Popup_Dept(id, name, frameId){
+		if($("#dept_pop").html() == ''){
+			$.ajax({
+		        url: "${contextPath}/system/p0002/Modal_Popup_Dept.do", //view
+		        type: "post",
+		        //data: {"code_division" : code_division},
+		    }).success(function(result){
+		                $("#dept_pop").html(result);
+		                 
+		                //if(i == 0){
+		                	Loading2();
+		                	createIBSheet2($("#ib-container1")[0],"mySheet3", "100%", "300px");
+		                	IBS_InitSheet(mySheet3,initSheet);
+		            		Action_popup2('list', id, name, frameId);
+		            		i++;
+		                //}else{
+		                //	$("#ib-container1_copy").after(container1);
+		                //} 
+		    });
+		} else {
+    		Action_popup2('list', id, name, frameId);
+		}
+	   $("#dept_pop").modal("show");   
+	   
+}
+	
 </script>
 </head>
 <body onload="LoadPage()">
@@ -323,19 +386,19 @@
  	
  	<!-- action -->
 		<div class="ib_function float_right">
-		  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-		  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
+				  <button class="btn btn-outline btn-primary" onclick="doAction('search')">조회</button>
+				  <button class="btn btn-outline btn-primary" onclick="doAction('save')">저장</button>
 		</div>
   <div class="container" style="padding:0px; margin-left:0px;">
 		<!-- radio 검색 -->
 		<form id ="search" action="javascript:searchState();">
 		   	<div style="border : 1px solid lightblue; width:29%;">
 	    		<h5><p class='indent' />조회 기준 : 
-	    		<input type="radio" id="chk_info" name="chk_info" onClick="" checked> 재직 &nbsp;
-	    		<input type="radio" id="chk_info" name="chk_info" onClick=""> 퇴직 &nbsp;
-	    		<input type="radio" id="chk_info" name="chk_info" onClick=""  checked> 전체  &nbsp;<br></h5>
-	    		<h5><p class='indent' />사원 검색 : <input type="text" id="" name="" size="13px">&nbsp;
-	    		<button type="submit" id="" name="">조회</button></h5>
+	    		<input type="radio" id="chk_info" name="chk_info" value="OFFICE" onClick="searchState();" checked> 재직 &nbsp;
+	    		<input type="radio" id="chk_info" name="chk_info" value="RETIREMENT" onClick="searchState();"> 퇴직 &nbsp;
+	    		<input type="radio" id="chk_info" name="chk_info" value="" onClick="searchState();"  checked="checked"> 전체  &nbsp;<br></h5>
+	    		<h5><p class='indent' />사원 검색 : <input type="text" id="sawon_search" name="sawon_search" size="13px">&nbsp;
+	    		<button type="submit" value="조회">조회</button></h5>
 	    	</div><br>
     	</form>		
   <%-- nav (왼쪽 layout)시작 --%>
@@ -346,8 +409,8 @@
 	    </div>
 		<!-- ibsheet 뿌려주는 부분  -->
 		<div class="clear hidden"></div>
-		<div class="ib_product"><script>createIBSheet("mySheet", "100%", "100%");</script></div>
-
+		<div class="ib_product"><script>createIBSheet("mySheet", "100%", "150%");</script></div>
+	
 	  </div> <!-- //nav  -->
 	  </div> <!-- //onClick -->
 	  <!-- content (오른쪽 layout시작)  -->
@@ -365,6 +428,7 @@
   </div><!-- //page-wrapper -->
   </div><!-- //wrap -->
   
-      
+     <!-- 공통 팝업 --><div id="common_pop" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ></div></div>
+     <!-- 부서 팝업 --><div id="dept_pop" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ></div></div>
 </body>
 </html>

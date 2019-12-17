@@ -65,10 +65,11 @@
 		<!-- 인사발령 -->
 		<typeAlias alias="balVO" type="hr.human.p0002.vo.BalVO"/>
 		
-		<!-- 인사정보등록 순서대로 인적정보, 재직정보, 급여정보 -->
+		<!-- 인사정보등록 순서대로 인적정보, 재직정보, 급여정보, 공통 코드 팝업 -->
 		<typeAlias alias="Insa_personEnroll_VO" type="hr.system.p0002.vo.Insa_personEnroll_VO"/>
 		<typeAlias alias="Insa_emEnroll_VO" type="hr.system.p0002.vo.Insa_emEnroll_VO"/>
 		<typeAlias alias="Insa_salEnroll_VO" type="hr.system.p0002.vo.Insa_salEnroll_VO"/>
+        <typeAlias alias="Insa_popup_VO" type="hr.system.p0002.vo.Insa_popup_VO"/>
         
         <!-- 등록정보관리 - 회사등록 -->
 	    <typeAlias alias="comEnroll_VO" type="hr.system.p0001.vo.ComEnroll_VO"/>

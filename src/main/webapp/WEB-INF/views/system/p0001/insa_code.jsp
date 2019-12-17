@@ -61,6 +61,7 @@
          {Header:"관리내역명",Type:"Text", SaveName:"person_BC_DETAI_MNGEMENT_NAME", Width:100, Align:"Center"},
          {Header:"사용여부",Type:"Text", SaveName:"person_BC_DETAI_NOT_USE", Width:80, Align:"Center"},
          {Header:"비고",Type:"Text", SaveName:"person_BC_DETAI_REMARKS", Width:90, Align:"Center"},
+         {Header:"fk_Code",Type:"Text", SaveName:"pk_PERSON_BC_CODE_NUM", Width:90, Align:"Center", Hidden:1}
       ];
       
       IBS_InitSheet(mySheet2,initData);
@@ -72,54 +73,6 @@
     	  {Col: 4, Hidden:1} //update
       ]); 
    }
-
-
-   /* function mySheet_OnDropEnd(FromSheet, FromRow, ToSheet, ToRow, X, Y, Type) {
-      //같은 시트에서는 데이터이동 안됨.
-      //if(FromSheet == ToSheet) return;
-      
-      var rowjson = FromSheet.GetRowData(FromRow);
-      
-      //행 데이터 복사
-      ToSheet.SetRowData(ToRow+1 , rowjson ,{Add:1} );
-      
-      //원본 데이터 삭제
-      if(ToRow<FromRow) FromRow++;
-      FromSheet.RowDelete(FromRow);
-      
-   }
- */   
-
-   /* //드레그 드롭 데이터 이동
-   function mySheet2_OnDropEnd(FromSheet, FromRow, ToSheet, ToRow, X, Y, Type) {
-	   //같은 시트에서는 데이터이동 안됨.
-	      //if(FromSheet == ToSheet) return;
-	      
-	      var rowjson = FromSheet.GetRowData(FromRow);
-	      
-	      //행 데이터 복사
-	      ToSheet.SetRowData(ToRow+1 , rowjson ,{Add:1} );
-	      
-	      //원본 데이터 삭제
-	      if(ToRow<FromRow) FromRow++;
-	      FromSheet.RowDelete(FromRow);
-   }
-   
-	var toggle = 1;
-   	function mySheet_OnDragStart(row,col){
-    	  if(toggle){
-        	 if(row == 3) {
-            
-//            mySheet.SetRowDraggable(3,0);
-//            setTimeout(function(){mySheet.SetRowDraggable(3,1);},100);
-            	toggle=0;
-         }
-      }
-      if(mySheet.CheckedRows("chk")>1)
-      return "<div style='background-color:#FFFFFF;border:2px solid #666'> <h2>이동 중...<h2> </div>";
-   }
- */
-
 
    /*Sheet 각종 처리*/
    function doAction(sAction) {
@@ -135,12 +88,20 @@
 			break;
 		//저장
 		case "save":
-			var sRow = mySheet2.FindStatusRow("U"); // 업데이트 하는 곳을 찾는다
+			var sRow = mySheet2.FindStatusRow("U"); // 수정 하는 곳을 찾는다
+			var dRow = mySheet2.FindStatusRow("D"); // 삭제
 			var arrow = sRow.split(";"); // 위에서 찾은 위치를 배열로서 저장
+			var Darrow = dRow.split(";");
+			//
 			for (var i = 0; i < arrow.length; i++) {
 				var row = arrow[i];
 				var code = mySheet2.CellSearchValue(row, 3);
 				mySheet2.SetCellValue(row, 4, code);
+			}
+			// 삭제하는 곳에 fk_code를 set
+			for (var j = 0; j < Darrow.length; j++) {
+				var D_row = Darrow[j];
+				mySheet2.SetCellValue(D_row, 'pk_PERSON_BC_CODE_NUM', code_num);
 			}
 			mySheet2.DoSave("${pageContext.request.contextPath}/system/p0001/insertData.do");
 			break;
@@ -186,24 +147,6 @@
 		}
 	}
 
-	////////////////////////////////////////////////
-	/* 
-	function fnAppendLog(msg) {
-		var evt_log = document.getElementById("evt_log");
-		evt_log.value = msg + "\n" + evt_log.value;
-	} 
-	// var code = mySheet2.CellSearchValue(row,3); // 원래 가지고있던 값을 가져온다 
-	// 기타 이벤트 //마우스 더블클릭시
-	function mySheet2_OnDblClick(row,col) {
-		 var msg = "";
-
-		msg += "[" + mySheet.GetCellValue(row,2)+   "] ";
-		console.log(mySheet.GetCellValue(row,2));
-		 if (document.getElementById('chkEtc').checked == true) 
-			 fnAppendLog(msg)
-	
-	}*/
-
 	// 기타 이벤트 //마우스 클릭시
 	function mySheet_OnSelectCell(oldrow, oldcol, row, col) {
 		x = "fk_PERSON_BC_CODE_NUM=" + mySheet.GetCellValue(row, 1);
@@ -212,19 +155,15 @@
 		mySheet2.DoSearch("${pageContext.request.contextPath}/system/p0001/detai.do", x);
 	}
 
-	// 기타이벤트 // 키보드 버튼이 올라올 시
-	function mySheet2_OnKeyUp(Row, Col, KeyCode, Shift) {
-		if (Modify == 1) { //인사코드 부분 - 수정 가능일시이니까 / 인사기록카드에서는 상관x
-			//console.log("keycode: "+KeyCode+"&col:"+mySheet2.LastCol()+"&row:"+mySheet2.RowCount());
-			/* console.log("keycode: " + KeyCode);
-			console.log("col:" + Col + "lastcol:" + mySheet2.LastCol());
-			console.log("row:" + Row + "row갯수:" + mySheet2.RowCount()); */
-			if (KeyCode == 13 && Col == mySheet2.LastCol()
-					&& Row == mySheet2.RowCount()) { // 엔터를 누르고 / col이 마지막 col이고 / row가 마지막 열일경우
-				doAction("insert");
-			}
-		}
-	}
+// 	// 기타이벤트 // 키보드 버튼이 올라올 시
+// 	function mySheet2_OnKeyUp(Row, Col, KeyCode, Shift) {
+// 		if (Modify == 1) { //인사코드 부분 - 수정 가능일시이니까 / 인사기록카드에서는 상관x
+// 			if (KeyCode == 13 && Col == mySheet2.LastCol()
+// 					&& Row == mySheet2.RowCount()) { // 엔터를 누르고 / col이 마지막 col이고 / row가 마지막 열일경우
+// 				doAction("insert");
+// 			}
+// 		}
+// 	}
 </script>
 
 <body onload="LoadPage()">
@@ -238,65 +177,45 @@
 				</div>
                 <!-- /.col-lg-12 -->
             </div>
-  			<div class="main_content">
-				<!-- 버튼 -->
-				<div class="ib_function float_right">
-					<a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-					<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-					<a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
-				</div>
-		
-		<br />
-		<br />
-		<br />
+            
+         <!-- 버튼 -->
+		<div class="ib_function float_right">
+			<button class="btn btn-outline btn-primary" onclick="doAction('insert')"><s:message code="board.append"/></button>
+			<button class="btn btn-outline btn-primary" onclick="doAction('save')"><s:message code="common.btnSave"/></button>
+		</div>
 		
 		<!-- SELECT문 기본기능으로 가져옴 확인바람 -->
-		<div class="ib_function2 border_sheet">
-				<table class="ib_column2">
-					<tr>
-						<th class="r20">출력구분</th>
-						<td class="r20">
-							<select id="selTheme" class="contentsLeftText" onChange="doAction(this.value);">
-								<option value="">----</option>
-								<option value="insa" id="insa" >0. 인사(H,R)</option>
-    							<option value="tae" id="tae">1. 근태(T)</option>
-    							<option value="salary" id="salary">2. 급여(P)</option>
-    							<option value="group" id="group">3. 사원그룹(G)</option>
-    							<option value="other" id="other">4. 기타(E)</option>
-    							<option value="system" id="system">5. 시스템설정(S)</option>
-							</select>	
-						</td>
-						
-						<!-- 클릭하는 값에 대한 정보를 가져온다 -->
-						<!-- // 기타 이벤트 //마우스 클릭시 확인 -->
-						<td><input class="r20" type="hidden" checked="checked" id="chkEtc"/></td>
-					 </tr>
-					<tr>
-				</table>
-           </div>
-           
-		<div class="clear hidden"></div>
+		<form class="form-inline" style="margin:20px">
+			<label for="Bal_DIV">출력구분</label>
+			<select class="form-control" id="selTheme" onchange="doAction(this.value)">
+				<option value="">----</option>
+				<option value="insa" id="insa" >0. 인사(H,R)</option>
+    			<option value="tae" id="tae">1. 근태(T)</option>
+    			<option value="salary" id="salary">2. 급여(P)</option>
+	    		<option value="group" id="group">3. 사원그룹(G)</option>
+    			<option value="other" id="other">4. 기타(E)</option>
+    			<option value="system" id="system">5. 시스템설정(S)</option>
+			</select>
+<!-- 			<div class="form-group"> -->
+<!--     			<label for="balDate">발령일자</label> -->
+<!-- 				<input type="text" class="form-control" id="balDate" readonly> -->
+<!--         	</div>  -->
+        	<hr style="border: solid 1px gray ;">
+		</form>
+		
+		
+  		<div class="main_content">
 		<div class="ib_product" style="width:100%;float:left">
-	
-			<div style="height:100%;width:30%;float:left">
+			<div style="height:100%;width:20.6%;float:left">
 				<script>createIBSheet("mySheet", "100%", "100%");</script>
 			</div>
 			
-			<div style="height:100%;width:5%; float:left"></div>
+			<div style="height:100%;width:1%; float:left"></div>
 			
 			<div style="height:100%;width:50%;float:left">
 				<script> createIBSheet("mySheet2", "100%", "100%"); </script> 
 			</div>
 		</div>
-		<!-- ---------------------- 로그 나오는부분 -------------------------
-		
-		CellSearchValue
-				<div class="w50pro" style="height:100%">
-					<div  style=";height:100%">
-						<textarea id="evt_log" cols="40" style="width:100%;height:99%;border:1px solid #888888;"></textarea>
-					</div>
-				</div> 
-        -->
 	</DIV>
 	</div>
 	</div>

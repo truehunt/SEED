@@ -19,7 +19,13 @@ import hr.human.p0002.vo.BalVO;
 public class Bal_Sawon_ServiceImpl implements Bal_Sawon_Service {
 	@Autowired
 	private Bal_Sawon_DAO p0002DAO;
-
+	
+	@Override
+	public List<BalVO> ISA_bal(Map<String, Object> searchMap) throws DataAccessException {
+		List<BalVO> list =  p0002DAO.ISA_bal(searchMap); 
+		return list;
+	}
+	
 	@Override
 	public List<BalVO> searchNum(Map<String, Object> searchMap) throws DataAccessException {
 		List<BalVO> list =  p0002DAO.searchNum(searchMap); 

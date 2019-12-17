@@ -39,13 +39,12 @@ public class InsaCodeDAOImpl implements InsaCodeDAO {
 
 	@Override
 	public void updateData(Map<String, String> row) throws DataAccessException {
-		System.out.println(row);
 		sqlSession.update("hr.system.p0001.updateData", row);
 	}
 
 	@Override
 	public void deleteData(Map<String, String> row) throws DataAccessException {
-		sqlSession.update("hr.system.p0001.deleteData", row);
+		sqlSession.delete("hr.system.p0001.deleteData", row);
 	}
 
 }

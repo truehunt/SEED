@@ -80,6 +80,8 @@
 
    /*Sheet 기본 설정 */
    	function LoadPage() {
+   		index2 = ''; // 조회를 위한 index 생성
+		index = ''; // 조회를 위한 index 생성
 	   //ibtab 생성
 		createIBTab($('#tab1')[0], $('#tab_contents')[0], 'myTabs1', {
 			themes: {
@@ -108,9 +110,9 @@
       	//{Header:"No",Type:"Seq", Align:"Center"},
       		{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
          	{Header:"NO",Type:"Seq", Align:"Center"},
-         	{Header:"",Type:"DummyCheck", SaveName:"chk", Width:35, Align:"Center",Edit:1,HeaderCheck:1},
-		 	{Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:60,Align:"Center"},
-		 	{Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:50, Edit:0},
+         	{Header:"",Type:"DummyCheck", SaveName:"chk", Width:35, Align:"Center",Edit:1,Hidden:1},
+		 	{Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:80, Align:"Center", Edit:0},
+		 	{Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:80, Align:"Center", Edit:0},
 		 	
 		 	{Header:"",Type:"Text",SaveName:"fk_ISA_SAWON_CODE",Width:60,Align:"Center"},
 		 	{Header:"",Type:"Text",SaveName:"isa_HANJA_NAME",Width:60,Align:"Center"},
@@ -147,10 +149,10 @@
 		 	{Header:"",Type:"Text",SaveName:"isa_BOTS_CODE",Width:60,Align:"Center", Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_YEBIGUN_CODE",Width:60,Align:"Center", Hidden:1},
 		 	{Header:"",Type:"Text",SaveName:"isa_DISCHARGE_CODE",Width:60,Align:"Center", Hidden:1},
-		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CLASS_CODE",Width:60,Align:"Center", Hidden:1},
+		 	{Header:"",Type:"Text",SaveName:"isa_MILITARY_CLASS_CODE",Width:60, Align:"Center", Hidden:1},
 		 	
 		 	{Header:"사진",Type:"Text",SaveName:"photo",Width:50, Edit:0},
-		 	{Header:"사진삭제",Type:"Button",SaveName:"photo_delete",Width:50}
+		 	{Header:"사진삭제",Type:"Button",SaveName:"photo_delete",Width:60, Align:"Center"}
       	];
       	IBS_InitSheet(mySheet,initData);
       	mySheet.SetDataAutoTrim(0);
@@ -173,8 +175,8 @@
 			{Col: 20, Hidden:1},
 			{Col: 'religion_DETAI', Hidden:1},
 			{Col: 'hobby_DETAI', Hidden:1},
-			{Col: 'specialty_DETAI', Hidden:1}
-// 			{Col: 'photo', Hidden:1}
+			{Col: 'specialty_DETAI', Hidden:1},
+			{Col: 'photo', Hidden:1}
   	    ]);
       	doAction("list");
 		
@@ -183,7 +185,7 @@
 			{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
 			{Header:"NO",Type:"Seq", Align:"Center"},
 			{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
-			{Header:"", Type:"Text", SaveName:"pk_FAM_CODE", Align:"Center"},
+			{Header:"", Type:"Text", SaveName:"pk_FAM_CODE", Align:"Center",Hidden:1},
 			{Header:"성명",Type:"Text", SaveName:"fam_NAME", Width:100, Align:"Left", Align:"Center"},
           	{Header:"관계",Type:"Combo", SaveName:"fam_RELATIONS", Width:60, Align:"Center"},
           	{Header:"동거여부",Type:"Combo", SaveName:"fam_LIVE", Width:60, Align:"Center"},
@@ -198,7 +200,8 @@
           	{Header:"직업",Type:"Text", SaveName:"fam_JOB", Width:60, Align:"Center"},
           	{Header:"직장명",Type:"Text", SaveName:"fam_WORK_NAME", Width:60, Align:"Center"},
           	{Header:"직위",Type:"Text", SaveName:"fam_POSITION", Width:60, Align:"Center"},
-          	{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
+          	{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"},
+          	{Header:"수정/추가여부",Type:"Text", SaveName:"fam_OX", Width:60, Align:"Center", Hidden:1}
        	];
 		
 		createIBSheet2($("#ib-container1")[0],"mySheet4", "100%", "300px");
@@ -215,7 +218,7 @@
        		{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
 			{Header:"NO",Type:"Seq", Align:"Center"},
 			{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
-			{Header:"", Type:"Text", SaveName:"pk_HL_CODE", Align:"Center"},
+			{Header:"", Type:"Text", SaveName:"pk_HL_CODE", Align:"Center",Hidden:1},
             {Header:"학교명",Type:"ComboEdit", SaveName:"hl_SCHOOL_CODE", Width:100, Align:"Center"},
             {Header:"입학일",Type:"Date", SaveName:"hl_STA_DATE", Width:120, Align:"Center"},
             {Header:"졸업일",Type:"Date", SaveName:"hl_END_DATE", Width:120, Align:"Center"},
@@ -226,7 +229,8 @@
             {Header:"학위구분",Type:"Text", SaveName:"hl_DEGREE", Width:60, Align:"Center"},
             {Header:"주야",Type:"Combo", SaveName:"hl_JUYA_CODE", Width:60, Align:"Center"},
             {Header:"본교",Type:"Combo", SaveName:"hl_MAIN_CODE", Width:60, Align:"Center"},
-            {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
+            {Header:"추가",Type:"Button", SaveName:"hl_ADD", Width:60, Align:"Center"},
+            {Header:"수정/추가여부",Type:"Text", SaveName:"hl_OX", Width:60, Align:"Center", Hidden:1}
         ];
    
           createIBSheet2($("#ib-container2")[0],"mySheet5", "100%", "300px");
@@ -243,17 +247,17 @@
         	{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
-        	{Header:"경력코드",Type:"Text",SaveName:"pk_CAR_CODE", Align:"Center"},
+        	{Header:"경력코드",Type:"Text",SaveName:"pk_CAR_CODE", Align:"Center",Hidden:1},
             {Header:"직장명",Type:"Text", SaveName:"car_NAME", Width:120, Align:"Center"},
             {Header:"입사일",Type:"Date", SaveName:"car_STA_DATE", Width:120, Align:"Center"},
             {Header:"퇴사일",Type:"Date", SaveName:"car_END_DATE", Width:120, Align:"Center"},
-//             {Header:"근무년한",Type:"Text", SaveName:"car_DATE", Format:"##년/##월", Width:60, Align:"Center"},
             {Header:"담당업무",Type:"Text", SaveName:"car_DANDANG", Width:100, Align:"Center"},
             {Header:"직위",Type:"Text", SaveName:"car_POSITION", Width:100, Align:"Center"},
             {Header:"급여",Type:"Int", SaveName:"car_SALARY", "Format": "#,### 원", Width:100, Align:"Center"},
             {Header:"퇴직사유",Type:"Text", SaveName:"car_RESIGN", Width:120, Align:"Center"},
             {Header:"근속기",Type:"Combo", SaveName:"car_GEUNSOG_CODE", Width:60, Align:"Center"},
-            {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
+            {Header:"추가",Type:"Button", SaveName:"car_ADD", Width:60, Align:"Center"},
+            {Header:"수정/추가여부",Type:"Text", SaveName:"car_OX", Width:60, Align:"Center", Hidden:1}
         ];
          
         createIBSheet2($("#ib-container3")[0],"mySheet6", "100%", "300px");
@@ -270,14 +274,15 @@
         	{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
-        	{Header:"자격코드",Type:"Text",SaveName:"pk_CERTIFICATE_CODE", Align:"Center"},
+        	{Header:"자격코드",Type:"Text",SaveName:"pk_CERTIFICATE_CODE", Align:"Center",Hidden:1},
             {Header:"자격종류",Type:"ComboEdit", SaveName:"certificate_SORT_CODE", Width:150, Align:"Left"},
             {Header:"취득일",Type:"Date", SaveName:"certificate_STA_DATE", Width:60, Align:"Center"},
             {Header:"만료일",Type:"Date", SaveName:"certificate_END_DATE", Width:60, Align:"Center"},
             {Header:"자격증번호",Type:"Text", SaveName:"certificate_NUM", Width:60, Align:"Center"},
             {Header:"발행기관",Type:"ComboEdit", SaveName:"certificate_ISSUER_CODE", Width:60, Align:"Center"},
             {Header:"수당",Type:"Combo", SaveName:"certificate_SUDANG_CODE", Width:60, Align:"Center"},
-            {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
+            {Header:"추가",Type:"Button", SaveName:"certificate_ADD", Width:60, Align:"Center"},
+            {Header:"수정/추가여부",Type:"Text", SaveName:"certificate_OX", Width:60, Align:"Center", Hidden:1}
         ];
           
         createIBSheet2($("#ib-container4")[0],"mySheet7", "100%", "300px");
@@ -291,16 +296,14 @@
         
       //mySheet8 //인사발령
       initData.Cols = [
-         {Header:"NO",Type:"Status",SaveName:"Seq", Align:"Center"},
-         {Header:"발령호수",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"발령일자",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"제목",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"발령구분",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"발령내역",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"발령전정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"현정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"발령후정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
-         {Header:"비고",Type:"Text", SaveName:"sPos", Width:60, Align:"Center"},
+    	 {Header:"NO",Type:"Seq", Align:"Center"},
+         {Header:"발령호수",Type:"Text", SaveName:"bal_NUM", Width:110, Align:"Center", Edit:0},
+         {Header:"발령일자",Type:"Text", SaveName:"bal_DATE", Width:110, Align:"Center", Edit:0},
+         {Header:"제목",Type:"Text", SaveName:"bal_TITLE", Width:120, Align:"Center", Edit:0},
+         {Header:"발령구분",Type:"Text", SaveName:"bal_DIV_CODE", Width:100, Align:"Center", Edit:0},
+         {Header:"발령내역",Type:"Text", SaveName:"bal_DETAILS", Width:120, Align:"Center", Edit:0},
+         {Header:"발령전정보",Type:"Text", SaveName:"bal_BEF_INFO", Width:120, Align:"Center", Edit:0},
+         {Header:"발령후정보",Type:"Text", SaveName:"bal_AFT_INFO", Width:120, Align:"Center", Edit:0}
       ];
            
 		createIBSheet2($("#ib-container5")[0],"mySheet8", "100%", "300px");
@@ -311,7 +314,7 @@
 			{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
-        	{Header:"고과코드",Type:"Text",SaveName:"pk_ASS_CODE", Align:"Center"},
+        	{Header:"고과코드",Type:"Text",SaveName:"pk_ASS_CODE", Align:"Center",Hidden:1},
 			{Header:"고과명",Type:"Text", SaveName:"ass_NAME", Width:60, Align:"Center"}, // Combo를...
 			{Header:"평가시작일",Type:"Date", SaveName:"ass_STA_DATE", Width:60, Align:"Center"},
 			{Header:"평가종료일",Type:"Date", SaveName:"ass_END_DATE", Width:60, Align:"Center"},
@@ -321,7 +324,8 @@
 			{Header:"점수",Type:"Float", SaveName:"ass_SCORE", Width:60, Align:"Center", Format:"#,##0.00"},
 			{Header:"등급",Type:"Text", SaveName:"ass_CLASS", Width:60, Align:"Center"},
 			{Header:"비고",Type:"Text", SaveName:"ass_NOTE", Width:60, Align:"Center"},
-			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
+			{Header:"추가",Type:"Button", SaveName:"ass_ADD", Width:60, Align:"Center"},
+			{Header:"수정/추가여부",Type:"Text", SaveName:"ass_OX", Width:60, Align:"Center", Hidden:1}
 		];
            
 		createIBSheet2($("#ib-container6")[0],"mySheet9", "100%", "300px");
@@ -332,7 +336,7 @@
 			{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
-        	{Header:"출장코드",Type:"Text",SaveName:"pk_CHJ_CODE", Align:"Center"},
+        	{Header:"출장코드",Type:"Text",SaveName:"pk_CHJ_CODE", Align:"Center",Hidden:1},
 			{Header:"출장국가",Type:"ComboEdit", SaveName:"chj_COUNTRY_CODE", Width:60, Align:"Center"},
 			{Header:"출장지",Type:"Text", SaveName:"chj_AREA", Width:60, Align:"Center"},
 			{Header:"시작일",Type:"Date", SaveName:"chj_STA_YMD", Width:60, Align:"Center"},
@@ -343,7 +347,8 @@
 			{Header:"기타비용",Type:"Int", SaveName:"chj_OTHER", Width:60, Align:"Center",Format:"#,###원"},
 			{Header:"총비용",Type:"Int", SaveName:"chj_TOTAL", Width:60, Align:"Center",CalcLogic:"|chj_AIRFARE|+|chj_OWN|+|chj_COMPANY|+|chj_OTHER|", Format:"#,###원"},
 			{Header:"목적",Type:"Text", SaveName:"chj_PURPOSE", Width:60, Align:"Center"},
-			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
+			{Header:"추가",Type:"Button", SaveName:"chj_ADD", Width:60, Align:"Center"},
+			{Header:"수정/추가여부",Type:"Text", SaveName:"chj_OX", Width:60, Align:"Center", Hidden:1}
 		];
            
 		createIBSheet2($("#ib-container7")[0],"mySheet10", "100%", "300px");
@@ -354,7 +359,7 @@
 			{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
-        	{Header:"상벌코드",Type:"Text",SaveName:"pk_SB_CODE", Align:"Center"},
+        	{Header:"상벌코드",Type:"Text",SaveName:"pk_SB_CODE", Align:"Center",Hidden:1},
 			{Header:"구분",Type:"Combo", SaveName:"sb_DIVISION", Width:60, Align:"Center", ComboText:"|포상|징계", ComboCode:"|포상|징계"},
 			{Header:"포상/징계명",Type:"Text", SaveName:"sb_NAME", Width:100, Align:"Center"}, // Combo를 쓸 필요가 있나..?
 			{Header:"포상/징계일",Type:"Date", SaveName:"sb_DATE", Width:100, Align:"Center"},
@@ -364,7 +369,8 @@
 			{Header:"징계시작일",Type:"Date", SaveName:"sb_STA_DATE", Width:100, Align:"Center"},
 			{Header:"징계종료일",Type:"Date", SaveName:"sb_END_DATE", Width:100, Align:"Center"},
 			{Header:"비고",Type:"Text", SaveName:"sb_NOTE", Width:60, Align:"Center"},
-			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"}
+			{Header:"추가",Type:"Button", SaveName:"sb_ADD", Width:60, Align:"Center"},
+			{Header:"수정/추가여부",Type:"Text", SaveName:"sb_OX", Width:60, Align:"Center", Hidden:1}
 		];
            
 		createIBSheet2($("#ib-container8")[0],"mySheet11", "100%", "300px");
@@ -391,47 +397,117 @@
 							mySheet.DoSave("${pageContext.request.contextPath}/human/p0001/insertData.do");
 						break;
 					case 2:
-						if(mySheet4.FindStatusRow('U|I|D') != "")
-						mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
+						if(mySheet4.FindStatusRow('U|I|D') != ""){
+							if(mySheet4.GetCellValue(1,'fam_OX') == 'I'){ // 첫번째 열이 입력이었는지 확인 
+								mySheet4.SetCellValue(1,'STATUS','I'); // 입력이였으면 STATUS를 입력으로 변경
+							}
+							mySheet4.DoSave("${pageContext.request.contextPath}/human/p0001/insertFam.do", fk_fam_sawon_code);
+						}
+						mySheet4.RemoveAll();
 						break;
 					case 3:
-						if(mySheet5.FindStatusRow('U|I|D') != "")
+						if(mySheet5.FindStatusRow('U|I|D') != ""){
+							if(mySheet5.GetCellValue(1,'hl_OX') == 'I'){ // 첫번째 열이 입력이었는지 확인 
+								mySheet5.SetCellValue(1,'STATUS','I'); // 입력이였으면 STATUS를 입력으로 변경
+							}
 						mySheet5.DoSave("${pageContext.request.contextPath}/human/p0001/insertHL.do", fk_hl_sawon_code);
+						}
+						mySheet5.RemoveAll();
 						break;
 					case 4:
-						if(mySheet6.FindStatusRow('U|I|D') != "")
+						if(mySheet6.FindStatusRow('U|I|D') != ""){
+							if(mySheet6.GetCellValue(1,'car_OX') == 'I'){ // 첫번째 열이 입력이었는지 확인 
+								mySheet6.SetCellValue(1,'STATUS','I'); // 입력이였으면 STATUS를 입력으로 변경
+							}
 						mySheet6.DoSave("${pageContext.request.contextPath}/human/p0001/insertCar.do", fk_car_sawon_code);
+						}
+						mySheet6.RemoveAll();
 						break;
 					case 5:
-						if(mySheet7.FindStatusRow('U|I|D') != "")
-						mySheet7.DoSave("${pageContext.request.contextPath}/human/p0001/insertCert.do", fk_cert_sawon_code);
+						if(mySheet7.FindStatusRow('U|I|D') != ""){
+							if(mySheet7.GetCellValue(1,'certificate_OX') == 'I'){ // 첫번째 열이 입력이었는지 확인 
+								mySheet7.SetCellValue(1,'STATUS','I'); // 입력이였으면 STATUS를 입력으로 변경
+							}
+							mySheet7.DoSave("${pageContext.request.contextPath}/human/p0001/insertCert.do", fk_cert_sawon_code);
+						}
+						mySheet7.RemoveAll();
 						break;
 				}
-					
 	   			return true; 
-			} 
+			},
+	 	GoToTab: function(event) {
+			index = event.index;
+			switch(index){
+				case 2:
+					mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
+					break;
+				case 3:
+					mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
+					break;
+				case 4:
+					mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
+					break;
+				case 5:
+					mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
+					break;
+			}
+   			return true; 
+		} 
 	   	});
 	 // tab 이동전에 발생
 	 	myTabs2.setEvents({ 
 			beforeGoToTab: function(event) {
-				var index = event.indexActive;
-				switch(index){
+				var index2 = event.indexActive;
+				switch(index2){
+					case 0:
+						mySheet8.RemoveAll();
+						break;
 					case 1:
-						if(mySheet9.FindStatusRow('U|I|D') != "")
+						if(mySheet9.FindStatusRow('U|I|D') != ""){
+							if(mySheet9.GetCellValue(1,'ass_OX') == 'I'){ // 첫번째 열이 입력이었는지 확인 
+								mySheet9.SetCellValue(1,'STATUS','I'); // 입력이였으면 STATUS를 입력으로 변경
+							}
 							mySheet9.DoSave("${pageContext.request.contextPath}/human/p0001/insertAss.do", fk_ass_sawon_code);
+						}
+						mySheet9.RemoveAll();
 						break;
 					case 2:
-						if(mySheet10.FindStatusRow('U|I|D') != "")
-						mySheet10.DoSave("${pageContext.request.contextPath}/human/p0001/insertChj.do", fk_chj_sawon_code);
+						if(mySheet10.FindStatusRow('U|I|D') != ""){
+							if(mySheet10.GetCellValue(1,'chj_OX') == 'I'){ // 첫번째 열이 입력이었는지 확인 
+								mySheet10.SetCellValue(1,'STATUS','I'); // 입력이였으면 STATUS를 입력으로 변경
+							}
+							mySheet10.DoSave("${pageContext.request.contextPath}/human/p0001/insertChj.do", fk_chj_sawon_code);
+						}
+						mySheet10.RemoveAll();
 						break;
 					case 3:
-						if(mySheet11.FindStatusRow('U|I|D') != "")
-						mySheet11.DoSave("${pageContext.request.contextPath}/human/p0001/insertSb.do", fk_sb_sawon_code);
+						if(mySheet11.FindStatusRow('U|I|D') != ""){
+							if(mySheet11.GetCellValue(1,'sb_OX') == 'I'){ // 첫번째 열이 입력이었는지 확인 
+								mySheet11.SetCellValue(1,'STATUS','I'); // 입력이였으면 STATUS를 입력으로 변경
+							}
+							mySheet11.DoSave("${pageContext.request.contextPath}/human/p0001/insertSb.do", fk_sb_sawon_code);							
+						}
+						mySheet11.RemoveAll();
 						break;
 				}
-					
 	   			return true; 
-			} 
+			},GoToTab: function(event) {
+				index2 = event.index;
+				switch(index2){
+				case 0:
+					mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0002/ISA_bal.do", fk_bal_sawon_code);
+					break;
+				case 1:
+					mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
+					break;
+				case 2:
+					mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
+					break;
+				case 3:
+					mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
+					break;
+				}
+			}
 	   	});
 		
 	}
@@ -446,6 +522,7 @@
 		fk_car_sawon_code = "fk_CAR_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
 		fk_cert_sawon_code = "fk_CERTIFICATE_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
 		
+		fk_bal_sawon_code = "fk_BAL_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
 		fk_ass_sawon_code = "fk_ASS_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
 		fk_chj_sawon_code = "fk_CHJ_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
 		fk_sb_sawon_code = "fk_SB_SAWON_CODE=" + mySheet.GetCellValue(row, 3); // mysheet에 있는 사원코드
@@ -462,16 +539,42 @@
 		ISA(); // 채용/거주, 병역을 셋팅한다.
 		
 		document.getElementById('PK_SAWON_CODE').value = x;
+		if(index != ''){
+			switch(index){
+			case 2:
+				mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
+				break;
+			case 3:
+				mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
+				break;
+			case 4:
+				mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
+				break;
+			case 5:
+				mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
+				break;
+			}
+		}
 		
-		mySheet4.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", fk_fam_sawon_code);
-		mySheet5.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_hl.do", fk_hl_sawon_code);
-		mySheet6.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_car.do", fk_car_sawon_code);
-		mySheet7.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_cert.do", fk_cert_sawon_code);
-		
-// 		//mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_fam.do", x);
-		mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
-		mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
-		mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
+		if(index2 == ''){
+			mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0002/ISA_bal.do", fk_bal_sawon_code);
+		}
+		if(index2 != ''){
+			switch(index2){
+			case 0:
+				mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0002/ISA_bal.do", fk_bal_sawon_code);
+				break;
+			case 1:
+				mySheet9.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_ass.do", fk_ass_sawon_code);
+				break;
+			case 2:
+				mySheet10.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_chj.do", fk_chj_sawon_code);
+				break;
+			case 3:
+				mySheet11.DoSearch("${pageContext.request.contextPath}/human/p0001/ISA_sb.do", fk_sb_sawon_code);
+				break;
+			}
+		}
 		
 	}
 	
@@ -516,8 +619,13 @@
 			mySheet4.CellComboItem(i,12,S3); // 양/음
 		}
 		mySheet4.SetCellValue(mySheet4.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
-		if(mySheet4.GetCellValue(mySheet4.RowCount(),'STATUS') == 'U' )
-			mySheet4.SetCellValue(mySheet4.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+		if(mySheet4.GetCellValue(mySheet4.RowCount(),'STATUS') == 'U' ){
+			mySheet4.SetCellValue(mySheet4.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경
+		}
+		if(mySheet4.GetCellValue(mySheet4.RowCount(),'STATUS') == 'I' ){
+			mySheet4.SetCellValue(mySheet4.RowCount(), 'fam_OX', 'I'); // 추가 저장
+			mySheet4.SetCellValue(mySheet4.RowCount(), 'STATUS', 'R'); // 추가  -> 조회로 변경
+		}
 		
 	}
 	
@@ -561,9 +669,14 @@
 		
 		ISA_hl_Select(); // 
 		
-		mySheet5.SetCellValue(mySheet5.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
-		if(mySheet5.GetCellValue(mySheet5.RowCount(),'STATUS') == 'U' )
-			mySheet5.SetCellValue(mySheet5.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+		mySheet5.SetCellValue(mySheet5.RowCount(),'hl_ADD', '추가'); // 추가에 추가버튼
+		if(mySheet5.GetCellValue(mySheet5.RowCount(),'STATUS') == 'U' ){
+			mySheet5.SetCellValue(mySheet5.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경
+		}
+		if(mySheet5.GetCellValue(mySheet5.RowCount(),'STATUS') == 'I' ){
+			mySheet5.SetCellValue(mySheet5.RowCount(), 'hl_OX', 'I'); // 추가 저장
+			mySheet5.SetCellValue(mySheet5.RowCount(), 'STATUS', 'R'); // 추가  -> 조회로 변경
+		}
 	}
 	
 	// 추가버튼 누를시 현제 row에 있는 추가버튼을 없애고, 다음 Row에 추가버튼을 추가한다.
@@ -579,7 +692,6 @@
 		mySheet5.CellComboItem(Row+1,13,R1); // 양/음
 		
 		mySheet5.SetCellValue(Row+1, Col, "추가");
-		
 	} 
 	
 	
@@ -600,9 +712,13 @@
 			mySheet6.CellComboItem(i,'car_GEUNSOG_CODE',S1); // 해당여부 - /해당/비해당/ : 조회된 곳에 COMBO를 집어넣는다.
 		}
 		
-		mySheet6.SetCellValue(mySheet6.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		mySheet6.SetCellValue(mySheet6.RowCount(),'car_ADD', '추가'); // 추가에 추가버튼
 		if(mySheet6.GetCellValue(mySheet6.RowCount(),'STATUS') == 'U' )
-			mySheet6.SetCellValue(mySheet6.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+			mySheet6.SetCellValue(mySheet6.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경
+		if(mySheet6.GetCellValue(mySheet6.RowCount(),'STATUS') == 'I' ){
+			mySheet6.SetCellValue(mySheet6.RowCount(), 'car_OX', 'I'); // 추가 저장
+			mySheet6.SetCellValue(mySheet6.RowCount(), 'STATUS', 'R'); // 추가  -> 조회로 변경
+		}
 	}
 	
 	// 추가버튼 누를시 현재 row에 있는 추가버튼을 없애고,
@@ -639,9 +755,13 @@
 		
 		ISA_cert_Select();
 		
-		mySheet7.SetCellValue(mySheet7.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		mySheet7.SetCellValue(mySheet7.RowCount(),'certificate_ADD', '추가'); // 추가에 추가버튼
 		if(mySheet7.GetCellValue(mySheet7.RowCount(),'STATUS') == 'U' )
-			mySheet7.SetCellValue(mySheet7.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+			mySheet7.SetCellValue(mySheet7.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경
+		if(mySheet7.GetCellValue(mySheet7.RowCount(),'STATUS') == 'I' ){
+			mySheet7.SetCellValue(mySheet7.RowCount(), 'certificate_OX', 'I'); // 추가 저장
+			mySheet7.SetCellValue(mySheet7.RowCount(), 'STATUS', 'R'); // 추가  -> 조회로 변경
+		}
 	}
 	
 	// 추가버튼 누를시 현재 row에 있는 추가버튼을 없애고,
@@ -679,9 +799,13 @@
 //			combo가 들어갈시 넣어주면 됩니다.
 // 		}
 		
-		mySheet9.SetCellValue(mySheet9.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		mySheet9.SetCellValue(mySheet9.RowCount(),'ass_ADD', '추가'); // 추가에 추가버튼
 		if(mySheet9.GetCellValue(mySheet9.RowCount(),'STATUS') == 'U' )
-			mySheet9.SetCellValue(mySheet9.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+			mySheet9.SetCellValue(mySheet9.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경
+		if(mySheet9.GetCellValue(mySheet9.RowCount(),'STATUS') == 'I' ){
+			mySheet9.SetCellValue(mySheet9.RowCount(), 'ass_OX', 'I'); // 추가 저장
+			mySheet9.SetCellValue(mySheet9.RowCount(), 'STATUS', 'R'); // 추가  -> 조회로 변경
+		}
 	}
 	
 	// 추가버튼 누를시 현재 row에 있는 추가버튼을 없애고,
@@ -712,9 +836,13 @@
 		}
 		ISA_chj_Select();
 		
-		mySheet10.SetCellValue(mySheet10.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		mySheet10.SetCellValue(mySheet10.RowCount(),'chj_ADD', '추가'); // 추가에 추가버튼
 		if(mySheet10.GetCellValue(mySheet10.RowCount(),'STATUS') == 'U' )
-			mySheet10.SetCellValue(mySheet10.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+			mySheet10.SetCellValue(mySheet10.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경
+		if(mySheet10.GetCellValue(mySheet10.RowCount(),'STATUS') == 'I' ){
+			mySheet10.SetCellValue(mySheet10.RowCount(), 'chj_OX', 'I'); // 추가 저장
+			mySheet10.SetCellValue(mySheet10.RowCount(), 'STATUS', 'R'); // 추가  -> 조회로 변경
+		}
 	}
 	
 	// 추가버튼 누를시 현재 row에 있는 추가버튼을 없애고,
@@ -747,9 +875,13 @@
 // 			
 // 		}
 		
-		mySheet11.SetCellValue(mySheet11.RowCount(),'fam_ADD', '추가'); // 추가에 추가버튼
+		mySheet11.SetCellValue(mySheet11.RowCount(),'sb_ADD', '추가'); // 추가에 추가버튼
 		if(mySheet11.GetCellValue(mySheet11.RowCount(),'STATUS') == 'U' )
-			mySheet11.SetCellValue(mySheet11.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경 
+			mySheet11.SetCellValue(mySheet11.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경
+		if(mySheet11.GetCellValue(mySheet11.RowCount(),'STATUS') == 'I' ){
+			mySheet11.SetCellValue(mySheet11.RowCount(), 'sb_OX', 'I'); // 추가 저장
+			mySheet11.SetCellValue(mySheet11.RowCount(), 'STATUS', 'R'); // 추가  -> 조회로 변경
+		}
 	}
 	
 	// 추가버튼 누를시 현재 row에 있는 추가버튼을 없애고,
@@ -1049,7 +1181,10 @@
 						if(arr1[0] == "null" ){ arr1[0] = "" };
 						if(arr2[0] == "null" ){ arr2[0] = "" };
 						if(arr3[0] == "null" ){	arr3[0] = "" };
-						mySheet5.SetCellValue(i,4,arr1[0]);	mySheet5.SetCellValue(i,9,arr2[0]);	mySheet5.SetCellValue(i,10,arr3[0]); // 
+						mySheet5.SetCellValue(i,4,arr1[0]);	mySheet5.SetCellValue(i,9,arr2[0]);	mySheet5.SetCellValue(i,10,arr3[0]);
+						if(mySheet5.GetCellValue(mySheet5.RowCount(),'STATUS') == 'U' ){
+							mySheet5.SetCellValue(mySheet5.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경
+						}
 					}
 				}
 				
@@ -1078,7 +1213,7 @@
 					if(i != 0){
 						if(arr1[0] == "null" ){ arr1[0] = "" };
 						if(arr2[0] == "null" ){ arr2[0] = "" };
-						mySheet7.SetCellValue(i,'certificate_SORT_CODE',arr1[0]);	mySheet5.SetCellValue(i,'certificate_ISSUER_CODE',arr2[0]); 
+						mySheet7.SetCellValue(i,'certificate_SORT_CODE',arr1[0]);	mySheet7.SetCellValue(i,'certificate_ISSUER_CODE',arr2[0]); 
 					}
 				}
 				
@@ -1350,9 +1485,13 @@
 				<div class="row">
 					<div class="col-lg-8">
 						<form id="form1" name="form1" role="form" action="imageSave" method="post" enctype="multipart/form-data" >
+						
 							<div class="row form-group">
 <!-- 								이미지 미리보기 되는 곳 -->
 								<div class="col-sm-3" style="width:100%;">
+								<div class="ib_function float_right">
+									<button type="button" class="btn btn-outline btn-primary" onclick="fn_formSubmit()"><s:message code="common.btnSave"/></button>
+								</div>
 									<br> 	
 									<img id="previewImg" style="width:100%; height: 120px; max-width: 100px;" align="left">
 									<input type="file" name="photofile" id="photofile" accept='image/*' onchange="checkSize(this)" />

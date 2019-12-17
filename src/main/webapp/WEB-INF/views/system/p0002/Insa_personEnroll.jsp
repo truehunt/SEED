@@ -134,7 +134,6 @@
 			{Header:"No",Type:"Seq",SaveName:"pk_person_info_unique_num",MinWidth:50, Align:"Center"},
 			{Header:"사원 코드",Type:"Text",SaveName:"fk_sawon_code",MinWidth:90, Align:"Center"},
 			{Header:"사진",Type:"Text",SaveName:"person_info_picture",MinWidth:100, Align:"Center"},
-			//{Header:"사진",Type:"Text",SaveName:"photo",MinWidth:100, Align:"Center"},
 			{Header:"사원 명(영문)",Type:"Text",SaveName:"person_info_eng_name",MinWidth:80, Align:"Center"},
 			{Header:"내외국인구분",Type:"Combo",SaveName:"person_info_domes_forei_pop",MinWidth:50, Align:"Center"},
 			{Header:"주민등록번호",Type:"Text",SaveName:"person_info_res_reg_num",MinWidth:100, Align:"Center"},
@@ -187,13 +186,13 @@
 		//mySheet.DoSearch("${contextPath}/system/p0002/searchList2.do",param); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 	
 		//ibSheet 에서 col 지정해서 숨김
-		/*   mySheet.SetColHidden([//0~33번째 까지...실상 전 ibSheet 숨김
+		/* mySheet.SetColHidden([//0~33번째 까지...실상 전 ibSheet 숨김
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 2, Hidden:1}, {Col: 3, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1}, {Col: 6, Hidden:1}, 
 	      {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1}, {Col: 10, Hidden:1}, {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, 
 	      {Col: 14, Hidden:1}, {Col: 15, Hidden:1}, {Col: 16, Hidden:1}, {Col: 17, Hidden:1}, {Col: 18, Hidden:1}, {Col: 19, Hidden:1}, {Col: 20, Hidden:1}, 
 	      {Col: 21, Hidden:1}, {Col: 22, Hidden:1}, {Col: 23, Hidden:1}, {Col: 24, Hidden:1}, {Col: 25, Hidden:1}, {Col: 26, Hidden:1}, {Col: 27, Hidden:1}, 
-	      {Col: 28, Hidden:1}, {Col: 29, Hidden:1}, {Col: 30, Hidden:1}, {Col: 31, Hidden:1}, {Col: 32, Hidden:1}, {Col: 33, Hidden:1},
-	    ]); */
+	      {Col: 28, Hidden:1}, {Col: 29, Hidden:1}, {Col: 30, Hidden:1}, {Col: 31, Hidden:1}, {Col: 32, Hidden:1}, {Col: 33, Hidden:1}, {Col: 34, Hidden:1},
+	    ]);  */
 
 	 // select박스 수정 시 실행되야 되는 함수들 
 		  // select 태그에 person_info_domes_forei_pop인 값의 변경이 있을때 실행
@@ -268,9 +267,6 @@
 			})
 			
 		 // select박스 수정 시 실행되야 되는 함수들 끝
-		 
-		$('#pk_sawon_code').val(rowCheck());
-	 	console.log($('#pk_sawon_code').val);
 	}
 	
 	 function rowCheck(code){//메인화면에서 클릭한 row부분에 대한 사원코드 값 받아옴
@@ -281,23 +277,6 @@
 			//$("#person_info_gender").val("여성").attr("selected","selected");
 	 }
 	 
-	 	 
-	 //onClick 이벤트
-	 var t_row = 0;
-	 function mySheet_OnClick(row, col, value, cellx, celly, cellw, cellh) {
-	     t_row = row;
-	     if (row == null || row <= 0) return; // row가 null 이거나 0보다 같거나 작으면 바로 리턴
-	    
-	     var pk = mySheet.GetCellValue(row,2); // 마우스로 클릭한 셀의 value를 가져와서 pk에 저장
-	     
-	     var colArr =  Object.keys(mySheet.SaveNameInfo); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 
-	 													  // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
-	  	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
-		  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
-		  })
-	  
-	  }
-	 
 	 $(document).on('change', 'input', function(e) { // 수정할시에 state에 문구 저장 및 SetCellValue 실행
 		  var colArr = Object.keys(mySheet.SaveNameInfo);
 		  var colNum = colArr.indexOf(e.target.id);
@@ -305,15 +284,34 @@
 	 	
 	 });
 	 
+	 // 공통_팝업에서  onClick 이벤트 후 값 입력
+	 function fn_selectCode(code_num, code_name, code_id, code_nameId) {
+			console.log("info:"+code_num);//코드
+			console.log("info:"+code_name);//코드명
+			console.log("info:"+code_id);//코드 id
+			console.log("info:"+code_nameId);// 코드명 id
+			
+			//코드
+			mySheet.SetCellValue(1, code_id, code_num);
+			$("#"+code_id).val(code_num);
+			
+			//명
+			mySheet.SetCellValue(1, code_nameId, code_name);
+			$("#"+code_nameId).val(code_name);
+			
+		    //$("#popupUsers").modal("hide");
+	}
+	 
 	/*Sheet 각종 처리*/
 	function doAction(sAction) {
 		switch(sAction) {
 			case "search": //조회
 			
 				var param = FormQueryStringEnc(document.frm);
-				mySheet.DoSearch("${contextPath}/system/p0002/searchList2.do", param);
 				//alert("param : "+param);
 				
+				mySheet.DoSearch("${contextPath}/system/p0002/searchList2.do", param);
+								
 				//콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
 				selectPerson();
 				$('#person_info_domes_forei_pop').html("   ");
@@ -331,7 +329,7 @@
 				//save 를 하면서 중복 처리 됨 
 				var tempStr = mySheet.GetSaveString();
 				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
-				mySheet.DoSave("${contextPath}/system/p0002/insertData2.do");
+				mySheet.DoSave("${contextPath}/system/p0002/insertData2.do"); 
 				break;
 			case "insert": //신규행 추가
 				var row = mySheet.DataInsert();
@@ -445,7 +443,7 @@
 			 /*  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
 				  	$("#"+v).val(mySheet.GetCellValue(1,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 			  }) */
- 			  $('#photo').val(mySheet.GetCellValue(1,4));
+ 			  $('#person_info_picture').val(mySheet.GetCellValue(1,4));
 			  $('#person_info_eng_name').val(mySheet.GetCellValue(1,5));
 			  $('#person_info_domes_forei_pop').val(mySheet.GetCellValue(1,6)).attr("selected","selected");
 			  $('#person_info_res_reg_num').val(mySheet.GetCellValue(1,7));
@@ -474,7 +472,8 @@
 			  $('#person_info_int_user_id').val(mySheet.GetCellValue(1,30));
 			  $('#person_info_int_date').val(mySheet.GetCellValue(1,31));
 			  $('#person_info_mod_user_id').val(mySheet.GetCellValue(1,32));
-			  $('#person_info_mod_date').val(mySheet.GetCellValue(1,33));   
+			  $('#person_info_mod_date').val(mySheet.GetCellValue(1,33));
+			  photoCheck(mySheet.GetCellValue(1, 'photo'));
 		  }
 	}
 	
@@ -559,7 +558,8 @@
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('#previewImg').attr('src', e.target.result);
+                //$('#previewImg').attr('src', e.target.result);
+            	photoCheck(e.target.result); // (사진에 값 넣기)
             }
             reader.readAsDataURL(input.files[0]);
         }
@@ -595,27 +595,7 @@
     	}
     } 
     
-    function fn_formDelete(){ // 저장 및 업데이트
-    	var form = $("#form1")[0];
-    	var formData = new FormData(form);
-    		$.ajax({
-	    		cache : false,
-	    		url: "${contextPath}/system/p0002/imageDelete",
-	            processData: false,
-	            contentType: false,
-		        type:"POST", 
-		        data: formData,
-				success: function(result){
-					
-				},error:function(request,status,error){
-					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-			    },complete : function(data) {
-			    	//  실패했어도 완료가 되었을 때 처리
-				}
-		    })
-    }
-    
-  //첨부파일 용량 제한 & 확장자 제한
+    //첨부파일 용량 제한 & 확장자 제한
     function checkSize(input) {
     	
     	var fileDir = input.value;
@@ -623,19 +603,31 @@
         if (input.files && input.files[0].size > (1024 * 1024)) {
             alert("파일 사이즈가 1MB 를 넘습니다.");
             input.value = null;
-            $('#previewImg').attr('src', null);
+            //$('#previewImg').attr('src', null);
+            photoCheck(null); // (사진 초기화)
         } else if(fileDir.substring(fileDir.lastIndexOf(".")+1,fileDir.length).search("png") == -1){
        		alert("지정된 확장자의 파일만 업로드 가능합니다!");
        	  	input.value = null;
-       	 	$('#previewImg').attr('src', null);
-    	}
+       	 	//$('#previewImg').attr('src', null);
+    		photoCheck(null); // (사진 초기화)
+        }
     }
   
+  	//이미지 불러오기 및 다운로드 
     function mySheet_OnSelectCell(oldrow, oldcol, row, col) {
     	t_row=1;
-    	var image = "/SEED/fileDownload?downname=" + mySheet.GetCellValue(t_row, 'photo');
-		$("#previewImg").attr("src", image); // 이미지
+    	photoCheck(mySheet.GetCellValue(t_row, 'photo'));
 	}
+  	
+  	function photoCheck(imageName){
+  		var image = "";
+  		if(imageName != '' && imageName != '-1'){ // imageName 값이  null 이나 -1 이 아닐 때  
+    		image = "/SEED/fileDownload?downname=" + imageName;
+    	}else{// imageName 값이 없거나 그 외의 경우 
+    		image = "${contextPath}/resources/image/noprofile_pic_icon.jpg";
+    	}
+  		$("#previewImg").attr("src", image); // previewImg 에 값 넣음
+  	}
 </script>
 </head>
 <body onload="LoadPage()">
@@ -687,9 +679,8 @@
 		
 		<!-- ibsheet 뿌려주는 부분  -->
 		<div class="hidden">
-			<div class="ib_product"><script>createIBSheet("mySheet", "80%", "80%");</script></div>
+				<div class="ib_product"><script>createIBSheet("mySheet", "50%", "50%");</script></div>	
 		</div>
-
 		<form name='frm'>
 			<!-- 사원코드 값 가져오기 -->
 			<input type='text' id="sawon_code" name="sawon_code" hidden="1" />		
@@ -706,14 +697,14 @@
 					</td>
 					<td rowspan="9" align="center" style="border:1px solid lightblue; width:220px;" >
 						&emsp; &emsp; &emsp; &emsp;
-						<input type="button" class="f1_btn_white gray" value="주의사항" onClick="alert('이미지 권장 크기는 가로(35px)*세로(35px)입니다.\n확장자는 이미지 파일(.png)만 업로드 가능합니다.\n용량은 1MB를 초과 할 수 없습니다.')">
-						<a href="javascript:fn_formSubmit();" class="f1_btn_white gray">저장</a>
+						<input type="button" class="btn btn-outline btn-primary" value="주의사항" onClick="alert('이미지 권장 크기는 가로(35px)*세로(35px)입니다.\n확장자는 이미지 파일(.png)만 업로드 가능합니다.\n용량은 1MB를 초과 할 수 없습니다.\n현재 페이지에서는 저장 및 수정만 가능합니다.')">
+						<a href="javascript:fn_formSubmit();" class="btn btn-outline btn-primary">저장</a>
 						<br><br>
 						<form id="form1" name="form1" role="form" action="imageSave" method="post" enctype="multipart/form-data" >
 								<div>
 									<!--이미지 미리보기 되는 곳 -->
 									<div>
-										<img id="previewImg" style="width:100px; height: 120px; max-width: 100px;" align="center"><br>
+										<img id="previewImg" src="${contextPath}/resources/image/noprofile_pic_icon.jpg" style="width:100px; height: 120px; max-width: 100px;" align="center"><br>
 										<br>
 										<input type="file" name="photofile" id="photofile" accept='image/*' onchange="checkSize(this)" style="width:200px;"/>
 										<input type="hidden" name="pk_sawon_code" id="pk_sawon_code" />
@@ -727,8 +718,7 @@
 	    				<input type="text" name="person_info_eng_name" id="person_info_eng_name" size="33px">
 	    			</td>
 	    			<td align="left"> &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &nbsp;
-	    				<!-- <a href="javascript:doAction('save'); fn_formSubmit();" class="f1_btn_white gray">저장</a> -->
-	    				<a href="javascript:doAction('save');" class="f1_btn_white gray">저장</a>
+	    				<button class="btn btn-outline btn-primary" onclick="doAction('save')">저장</button>
 	    			</td>
 				</tr>
 				<tr>
@@ -782,7 +772,7 @@
 				  	<td align="right">최종학력 : </td>
 	    			<td>
 	    				<input type="text" name="person_info_final_edu_code" id="person_info_final_edu_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("HB","person_info_final_edu_code", "person_info_final_edu_name", "#myTabs_contents-0-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="person_info_final_edu_name" id="person_info_final_edu_name" size="18px" class="disabled">
 	    			</td>
 				</tr>
@@ -861,7 +851,7 @@
 				   	<td align="right">국적 (신고용) : </td>
 		  			<td> 
 		  				<input type="text" name="person_info_nation_report_cd" id="person_info_nation_report_cd" size="10px">
-		  				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' /> 
+		  				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("RR","person_info_nation_report_cd", "person_info_nation_report_nm", "#myTabs_contents-0-iframe");' style='cursor:pointer;' /> 
 		  				<input type="text" name="person_info_nation_report_nm" id="person_info_nation_report_nm" size="45px" class="disabled">
 		  			</td>
 				</tr>
@@ -880,7 +870,7 @@
 				   	<td align="right">거주지국 코드 : </td>
 		  			<td> 
 		  				<input type="text" name="person_info_coun_resi_code" id="person_info_coun_resi_code" size="10px">
-		  				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' /> 
+		  				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("RR","person_info_coun_resi_code", "person_info_coun_resi_name", "#myTabs_contents-0-iframe");' style='cursor:pointer;' /> 
 		  				<input type="text" name="person_info_coun_resi_name" id="person_info_coun_resi_name" size="45px" class="disabled">
 		  			</td>
 				</tr>
@@ -891,7 +881,6 @@
 	  </div> <!-- //onClick -->
 
   </div><!-- //container -->
-  </div><!-- //frame -->  
-      
+  </div><!-- //frame -->   
 </body>
 </html>

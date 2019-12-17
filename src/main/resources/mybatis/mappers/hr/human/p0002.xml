@@ -38,10 +38,23 @@
 		<result property="person_BC_DETAI_MNGEMENT_NAME" column="person_BC_DETAI_MNGEMENT_NAME" />
 	</resultMap>
 	 
+	 <!-- 인사기록카드 인사발령 -->
+	 <select id="ISA_bal" resultMap="BaldResult" parameterType="java.util.Map"> 
+      	<![CDATA[
+         	select  bal_NUM, bal_DATE, bal_TITLE, bal_DIV_CODE, bal_DETAILS, bal_BEF_INFO, bal_AFT_INFO
+			 from   Bal
+			where   fk_bal_sawon_code = #{fk_BAL_SAWON_CODE, jdbcType=VARCHAR}
+			  AND	fk_BAL_CODE IS NULL
+			  AND	bal_LONELY = '적용'
+      	]]>
+	</select> 
+	 
+	 
 	<select id="Ballyeong" resultMap="BaldResult" parameterType="java.util.Map"> 
       	<![CDATA[
          	select DISTINCT bal_num, bal_title, bal_div_code, bal_date, fk_BAL_CODE
 			from bal
+			where bal_DETAILS IS NULL
       	]]>
 	</select> 
 	
@@ -107,8 +120,10 @@
 			from BAL
 		]]>
 		<where>
-			bal_NUM = #{bal_NUM , jdbcType=VARCHAR}
+			    bal_NUM = #{bal_NUM , jdbcType=VARCHAR}
 			and bal_DIV_CODE = #{bal_DIV_CODE , jdbcType=VARCHAR}
+			AND fk_BAL_SAWON_CODE IS NOT NULL
+			AND fk_BAL_CODE IS NOT NULL
 		</where>
 	</select>
 	
@@ -376,10 +391,11 @@
 				where 	fk_sawon_code = #{fk_BAL_SAWON_CODE , jdbcType=VARCHAR}
 			</otherwise>
 		</choose>
-		
-	</update>	
-	
-	
-	
+	</update>
+	<update id="apply" parameterType="java.util.Map">
+		update 	bal
+		set 	BAL_LONELY = #{button, jdbcType=VARCHAR}
+		where 	pk_bal_code = #{pk_BAL_CODE , jdbcType=VARCHAR}
+	</update>
 	
 </mapper>

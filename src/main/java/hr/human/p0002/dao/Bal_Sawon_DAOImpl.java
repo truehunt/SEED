@@ -18,6 +18,12 @@ public class Bal_Sawon_DAOImpl implements Bal_Sawon_DAO {
 	private SqlSession sqlSession;
 
 	@Override
+	public List<BalVO> ISA_bal(Map<String, Object> searchMap) throws DataAccessException {
+		List<BalVO> list = sqlSession.selectList("hr.human.p0002.ISA_bal",searchMap);
+		return list;
+	}
+	
+	@Override
 	public List<BalVO> searchNum(Map<String, Object> searchMap) throws DataAccessException {
 		List<BalVO> list = sqlSession.selectList("hr.human.p0002.searchNum",searchMap);
 		
@@ -52,7 +58,6 @@ public class Bal_Sawon_DAOImpl implements Bal_Sawon_DAO {
 	
 	@Override
 	public List<BalVO> Content_Div(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println(searchMap);
 		List<BalVO> list = sqlSession.selectList("hr.human.p0002.Content_Div",searchMap);
 		return list;
 	}
@@ -111,7 +116,9 @@ public class Bal_Sawon_DAOImpl implements Bal_Sawon_DAO {
 	//적용버튼
 	@Override
 	public List<BalVO> ContentInsert(Map<String, Object> searchMap) throws DataAccessException {
+		System.out.println(searchMap);
 		sqlSession.update("hr.human.p0002.Update",searchMap);
+		sqlSession.update("hr.human.p0002.apply",searchMap);
 		List<BalVO> list = sqlSession.selectList("hr.human.p0002.Content_Div",searchMap);
 		return list;
 	}

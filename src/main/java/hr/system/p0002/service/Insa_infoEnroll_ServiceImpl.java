@@ -13,11 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import hr.system.p0002.dao.Insa_infoEnroll_DAO;
 import hr.system.p0001.vo.SawonVO;
-import hr.system.p0002.vo.Insa_personEnroll_VO;
-import hr.system.p0002.vo.Insa_emEnroll_VO;
-import hr.system.p0002.vo.Insa_salEnroll_VO;
-
-
+import hr.system.p0002.vo.Insa_personEnroll_VO;//인적정보
+import hr.system.p0002.vo.Insa_emEnroll_VO;//재직 정보
+import hr.system.p0002.vo.Insa_salEnroll_VO;//급여 정보
+import hr.system.p0002.vo.Insa_popup_VO;//공통 팝업
 
 
 @Service("adInsa_infoEnroll_Service")
@@ -47,6 +46,18 @@ public class Insa_infoEnroll_ServiceImpl implements Insa_infoEnroll_Service {
    @Override // 인사정보등록-급여 정보
    public List<Insa_salEnroll_VO> searchList4(Map<String, Object> searchMap) throws DataAccessException {
       List<Insa_salEnroll_VO> list =  Insa_infoEnroll_DAO.searchList4(searchMap); 
+      return list;
+   }
+   
+   @Override // 인사정보등록-공통 팝업
+   public List<Insa_popup_VO> common_pop(Map<String, Object> searchMap) throws DataAccessException {
+      List<Insa_popup_VO> list =  Insa_infoEnroll_DAO.common_pop(searchMap); 
+      return list;
+   }
+   
+   @Override // 인사정보등록-부서 팝업
+   public List<Insa_popup_VO> dept_pop(Map<String, Object> searchMap) throws DataAccessException {
+      List<Insa_popup_VO> list =  Insa_infoEnroll_DAO.dept_pop(searchMap); 
       return list;
    }
    
@@ -136,6 +147,18 @@ public class Insa_infoEnroll_ServiceImpl implements Insa_infoEnroll_Service {
       }      
       return row;
    }
+   
+	private Map getRow2(Map<String, String[]> dataMap, int length, int i, String x) {
+		Map<String, String> row = new HashMap<String, String>();
+		for(String name : dataMap.keySet()) {
+			String[] data = dataMap.get(name);
+			if(length == data.length) {
+				row.put(name, data[i]);
+				row.put("fk_SAWON_CODE", x);
+			}
+		}		
+		return row;
+	}
 
    @Override
    public void updateMember(Map<String, Object> dataMap) {

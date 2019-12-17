@@ -234,6 +234,7 @@
 	<delete id="deleteData" parameterType="java.util.Map">
 		delete PERSON_BC_DETAI
 		where pk_PERSON_BC_DETAI_CODE_NUM = #{pk_PERSON_BC_DETAI_CODE_NUM}
+		and fk_person_bc_code_num = #{pk_PERSON_BC_CODE_NUM}
 	</delete>
 	
 	<!-- 호봉테이블 -->

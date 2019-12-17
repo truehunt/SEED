@@ -108,9 +108,12 @@
 	
 	//Combo 값 위한 초기화
 	var S1=""; // 배우자공제, 부녀자공제
- 
+    $(document).ready(function(){
+    	 LoadPage();
+    });
 	/*Sheet 기본 설정 */
 	function LoadPage() {
+		console.log("save2");
 		mySheet.RemoveAll();
 		//아이비시트 초기화
 		var initSheet = {};
@@ -169,12 +172,12 @@
 		$('#sal_info_deduction').html("   ");
 		
 		//ibSheet 에서 col 지정해서 숨김
-		/* mySheet.SetColHidden([//0~26번째 까지...실상 전 ibSheet 숨김
+		 /* mySheet.SetColHidden([//0~26번째 까지...실상 전 ibSheet 숨김
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 2, Hidden:1}, {Col: 3, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1}, {Col: 6, Hidden:1}, 
 	      {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1}, {Col: 10, Hidden:1}, {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, 
 	      {Col: 14, Hidden:1}, {Col: 15, Hidden:1}, {Col: 16, Hidden:1}, {Col: 17, Hidden:1}, {Col: 18, Hidden:1}, {Col: 19, Hidden:1}, {Col: 20, Hidden:1}, 
 	      {Col: 21, Hidden:1}, {Col: 22, Hidden:1}, {Col: 23, Hidden:1}, {Col: 24, Hidden:1}, {Col: 25, Hidden:1}, {Col: 26, Hidden:1},  
-	    ]); */
+	    ]);  */
 	    
 		  // select 태그에 sal_info_spouse_ded인 값의 변경이 있을때 실행
 		  $("#sal_info_spouse_ded").change(function(e){ 
@@ -207,26 +210,9 @@
 			$('#sawon_code').val(code);
 	 
 	 		console.log($('#sawon_code'));
-			doAction('search');
-			
+	 		doAction('search');
 	 }
 	 
-	//onClick 이벤트
-	 var t_row = 0;
-	 function mySheet_OnClick(row, col, value, cellx, celly, cellw, cellh) {
-	   t_row = row;
-	   if (row == null || row <= 0) return; // row가 null 이거나 0보다 같거나 작으면 바로 리턴
-	  
-	   var pk = mySheet.GetCellValue(row,2); // 마우스로 클릭한 셀의 value를 가져와서 pk에 저장
-	   
-	   var colArr =  Object.keys(mySheet.SaveNameInfo); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 										 // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
-		  
-		  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
-		  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
-		  })
-	
-	}
-	 	 
 	 $(document).on('change', 'input', function(e) { // 수정할시에 state에 문구 저장 및 SetCellValue 실행
 		  var colArr = Object.keys(mySheet.SaveNameInfo);
 		  var colNum = colArr.indexOf(e.target.id);
@@ -234,6 +220,24 @@
  		  mySheet.SetCellValue(t_row, colNum ,e.target.value);
 	 	
 	 });
+	 
+	 //공통_팝업에서  onClick 이벤트 후 값 입력
+	 function fn_selectCode(code_num, code_name, code_id, code_nameId) {
+			console.log("info:"+code_num);//코드
+			console.log("info:"+code_name);//코드명
+			console.log("info:"+code_id);//코드 id
+			console.log("info:"+code_nameId);// 코드명 id
+			
+			//코드
+			mySheet.SetCellValue(1, code_id, code_num);
+			$("#"+code_id).val(code_num);
+			
+			//명
+			mySheet.SetCellValue(1, code_nameId, code_name);
+			$("#"+code_nameId).val(code_name);
+			
+		    //$("#popupUsers").modal("hide");
+	}
 	
 	/*Sheet 각종 처리*/
 	function doAction(sAction) {
@@ -259,6 +263,7 @@
 				//save 를 하면서 중복 처리 됨 
 				var tempStr = mySheet.GetSaveString();
 				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				console.log("save1");
 				mySheet.DoSave("${contextPath}/system/p0002/insertData4.do");
 				break;
 			case "insert": //신규행 추가
@@ -274,7 +279,7 @@
 	}
 	
 	function selectSal() { // 인사코드조회
-		
+		console.log("sal");
 		var sal1 =""; // 배우자 공제 
 		var sal2 =""; // 부녀자 공제
 
@@ -371,16 +376,17 @@
 	// 저장완료 후 처리할 작업
 	// code: 0(저장성공), -1(저장실패)
 	function mySheet_OnSaveEnd(code,msg){
+		
 		if(msg != ""){
 			alert(msg);	
 			//번호 다시 매기기
             //mySheet.ReNumberSeq();
-		}	
+		}
 	}	
 	
 </script>
 </head>
-<body onload="LoadPage()">
+<body>
 
   <div class="frame">
     <%-- //header 및 container 시작--%>
@@ -397,10 +403,12 @@
 		<!-- ibsheet 뿌려주는 부분  -->
 		<div class="hidden">
 			<div class="ib_product"><script>createIBSheet("mySheet", "80%", "80%");</script></div>
-		</div>
+		</div> 
+
 		<form name='frm3'>
 			<!-- 사원코드 값 가져오기 -->
 			<input type='text' id="sawon_code" name="sawon_code" hidden="1" />
+		</form>			
 			<div style="border:1px solid lightblue">
 			<!-- 급여 항목 -->
 			<table>
@@ -413,16 +421,18 @@
 					</td>
 				  	<td align="right" style="width:130px;">호 봉 : </td>
 	    			<td style="width:500px;">
-	    				<input type="text" name="fk_hobong_code" id="fk_hobong_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<input type="text" name="fk_hobong_code" id="fk_hobong_code" size="10px"><!-- window.parent.fn_Popup("PE","fk_hobong_code", "#myTabs_contents-2-iframe"); -->
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='' style='cursor:pointer;' />
 	    			</td>
-	    			<td><a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a></td>
+	    			<td>
+	    				<button class="btn btn-outline btn-primary" onclick="doAction('save')">저장</button>
+	    			</td>
 				</tr>
 				<tr>
 				  	<td align="right">계정 유형 : </td>
 	    			<td>
 	    				<input type="text" name="sal_info_acc_type_code" id="sal_info_acc_type_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("ED","sal_info_acc_type_code", "sal_info_acc_type_name", "#myTabs_contents-2-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="sal_info_acc_type_name" id="sal_info_acc_type_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -430,14 +440,14 @@
 				  	<td align="right">급여 이체 은행 1: </td>
 	    			<td>
 	    				<input type="text" name="sal_info_trans_amount_o_code" id="sal_info_trans_amount_o_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("EM","sal_info_trans_amount_o_code", "sal_info_trans_amount_o", "#myTabs_contents-2-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="sal_info_trans_amount_o" id="sal_info_trans_amount_o" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
 				  	<td align="right">계좌 번호 1 : </td>
 	    			<td>
-	    				<input type="text" name="sal_info_acc_num_one" id="sal_info_acc_num_one" size="15px">
+	    				<input type="text" name="sal_info_acc_num_one" id="sal_info_acc_num_one" size="19px">
 	    			
 	    			<!-- 공백 -->
     				&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &nbsp;
@@ -450,14 +460,14 @@
 					<td align="right">급여 이체 은행 2: </td>
 	    			<td>
 	    				<input type="text" name="sal_info_trans_amount_t_code" id="sal_info_trans_amount_t_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("EM","sal_info_trans_amount_t_code", "sal_info_trans_amount_t", "#myTabs_contents-2-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="sal_info_trans_amount_t" id="sal_info_trans_amount_t" size="45px" class="disabled">
 	    			</td>
 				</tr>
 				<tr>
 					<td align="right">계좌 번호 2 : </td>
 	    			<td>
-	    				<input type="text" name="sal_info_acc_num_two" id="sal_info_acc_num_two" size="15px">
+	    				<input type="text" name="sal_info_acc_num_two" id="sal_info_acc_num_two" size="19px">
 	    			
 	    			<!-- 공백 -->
     				&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &nbsp;
@@ -517,7 +527,7 @@
 				</tr>
 			</table> 
 			</div><!-- //부양 가족 -->
-		</form>
+		
 
 	  </div> <!-- //nav  -->
 	  </div> <!-- //onClick -->

@@ -42,6 +42,8 @@ public class FileDownload {
             LOGGER.error("UnsupportedEncodingException");
         }
         
+        if(downname == ""){ return;} // downname 이 null일때 바로 return 
+        
         realPath = path + downname.substring(0,4) + "/" + downname;
 
         File file1 = new File(realPath);

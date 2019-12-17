@@ -151,8 +151,8 @@
 			{Header:"프로젝트 명",Type:"Text",SaveName:"em_info_project_name",MinWidth:80, Align:"Center"},
 			{Header:"근무조 코드",Type:"Text",SaveName:"em_info_work_group_cd",MinWidth:60, Align:"Center"},			
 			{Header:"근무조 명",Type:"Text",SaveName:"em_info_work_group_nm",MinWidth:80, Align:"Center"},
-			{Header:"직급 코드",Type:"Date",SaveName:"fk_rank_code",MinWidth:60, Align:"Center"},
-			{Header:"직급 명",Type:"Date",SaveName:"rank_name",MinWidth:80, Align:"Center"},
+			{Header:"직급 코드",Type:"Text",SaveName:"fk_rank_code",MinWidth:60, Align:"Center"},
+			{Header:"직급 명",Type:"Text",SaveName:"rank_name",MinWidth:80, Align:"Center"},
 			{Header:"직책 코드",Type:"Text",SaveName:"em_info_position_code",MinWidth:60, Align:"Center"},
 			{Header:"직책 명",Type:"Text",SaveName:"em_info_position_name",MinWidth:80, Align:"Center"},
 			{Header:"직무 코드",Type:"Text",SaveName:"em_info_duty_code",MinWidth:60, Align:"Center"},			
@@ -186,14 +186,14 @@
 		$('#em_info_includ_work_peri').html("   ");
 		
 		//ibSheet 에서 col 지정해서 숨김
-		 mySheet.SetColHidden([//0~39번째 까지...실상 전 ibSheet 숨김
+		 /* mySheet.SetColHidden([//0~39번째 까지...실상 전 ibSheet 숨김
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 2, Hidden:1}, {Col: 3, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1}, {Col: 6, Hidden:1}, 
 	      {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1}, {Col: 10, Hidden:1}, {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, 
 	      {Col: 14, Hidden:1}, {Col: 15, Hidden:1}, {Col: 16, Hidden:1}, {Col: 17, Hidden:1}, {Col: 18, Hidden:1}, {Col: 19, Hidden:1}, {Col: 20, Hidden:1}, 
 	      {Col: 21, Hidden:1}, {Col: 22, Hidden:1}, {Col: 23, Hidden:1}, {Col: 24, Hidden:1}, {Col: 25, Hidden:1}, {Col: 26, Hidden:1}, {Col: 27, Hidden:1}, 
 	      {Col: 28, Hidden:1}, {Col: 29, Hidden:1}, {Col: 30, Hidden:1}, {Col: 31, Hidden:1}, {Col: 32, Hidden:1}, {Col: 33, Hidden:1}, {Col: 34, Hidden:1},
 	      {Col: 35, Hidden:1}, {Col: 36, Hidden:1}, {Col: 37, Hidden:1}, {Col: 38, Hidden:1}, {Col: 39, Hidden:1}, {Col: 40, Hidden:1},
-	    ]);  
+	    ]);   */
 	 // onClick 이벤트 중 select 태그에 em_info_offi_division인 값의 변경이 있을때 실행
 		  $("#em_info_offi_division").change(function(e){ 
 			  var colArr =  Object.keys(mySheet.SaveNameInfo);
@@ -237,26 +237,9 @@
 			$('#sawon_code').val(code);
 	 
 	 		console.log($('#sawon_code'));
-			doAction('search');
-			
+	 		doAction('search');		
 	 }
 	 
-	//onClick 이벤트
-	 var t_row = 0;
-	 function mySheet_OnClick(row, col, value, cellx, celly, cellw, cellh) {
-	    t_row = row;
-	    if (row == null || row <= 0) return; // row가 null 이거나 0보다 같거나 작으면 바로 리턴
-	   
-	    var pk = mySheet.GetCellValue(row,2); // 마우스로 클릭한 셀의 value를 가져와서 pk에 저장
-	    
-	    var colArr =  Object.keys(mySheet.SaveNameInfo); // object.keys()메서드는 개체 고유 속성의 키를 배열로 반환, 										 // 배열순서는 일반반복문을 사용할 때와 동일 , rx는 매핑되려는 칼럼의 이름을 들고있다.
-	 	  
-	 	  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
-		  	  $("#"+v).val(mySheet.GetCellValue(row,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
-		  })
- 
-	 }
-	 	 
 	 $(document).on('change', 'input', function(e) { // 수정할시에 state에 문구 저장 및 SetCellValue 실행
 		  var colArr = Object.keys(mySheet.SaveNameInfo);
 		  var colNum = colArr.indexOf(e.target.id);
@@ -264,6 +247,42 @@
   		  mySheet.SetCellValue(t_row, colNum ,e.target.value);
 	 	
 	 });
+	 
+	// 공통_팝업에서  onClick 이벤트 후 값 입력
+	 function fn_selectCode(code_num, code_name, code_id, code_nameId) {
+			console.log("info:"+code_num);//코드
+			console.log("info:"+code_name);// 코드명
+			console.log("info:"+code_id);//코드 id
+			console.log("info:"+code_nameId);// 코드명 id
+			
+			//코드
+			mySheet.SetCellValue(1, code_id, code_num);
+			$("#"+code_id).val(code_num);
+			
+			//명
+			mySheet.SetCellValue(1, code_nameId, code_name);
+			$("#"+code_nameId).val(code_name);
+			
+		    //$("#popupUsers").modal("hide");
+	}
+	
+	// 부서_팝업에서  onClick 이벤트 후 값 입력
+	 function fn_Dept_Selected(code_num, code_name, code_id, code_nameId) {
+			console.log("info:"+code_num);//코드
+			console.log("info:"+code_name);// 코드명
+			console.log("info:"+code_id);//코드 id
+			console.log("info:"+code_nameId);// 코드명 id
+			
+			//코드
+			mySheet.SetCellValue(1, code_id, code_num);
+			$("#"+code_id).val(code_num);
+			
+			//명
+			mySheet.SetCellValue(1, code_nameId, code_name);
+			$("#"+code_nameId).val(code_name);
+			
+		    //$("#popupUsers").modal("hide");
+	}
 	
 	/*Sheet 각종 처리*/
 	function doAction(sAction) {
@@ -287,9 +306,12 @@
 			case "save": // 저장
 				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
 				//save 를 하면서 중복 처리 됨 
+// 				if(mySheet.RowCount() == -1){
+					
+// 				}
 				var tempStr = mySheet.GetSaveString();
 				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
-				console.log("dkdkdk");
+				console.log("save: "+$('#STATUS').val + "입니다.");
 				mySheet.DoSave("${contextPath}/system/p0002/insertData3.do");
 				break;
 			case "insert": //신규행 추가
@@ -486,10 +508,11 @@
 		<div class="hidden">
 			<div class="ib_product"><script>createIBSheet("mySheet", "80%", "80%");</script></div>
 		</div>
-		
+
 		<form name = 'frm2'>
 			<!-- 사원코드 값 가져오기 -->
 			<input type='text' id="sawon_code" name="sawon_code" hidden="1" />	
+		</form>
 			<div style="border:1px solid lightblue">
 			<!-- 입사 정보 -->
 			<table>
@@ -505,7 +528,8 @@
 	    				<input type="text" name="em_info_join_date" id="em_info_join_date" size="12px" placeholder="_ _ _ _-_ _-_ _">
 	    			</td><td></td>
 					<td>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-					<a href="javascript:doAction('save')" class="f1_btn_white gray" style="align:right;">저장</a></td>
+						<button class="btn btn-outline btn-primary" onclick="doAction('save')">저장</button>
+					</td>
 				</tr>
 				<tr>
 					<td align="right">퇴직 일 : </td>
@@ -555,8 +579,8 @@
 				<tr>
 				   	<td align="right">휴직 기간 : </td>
 				   	<td> 
-					   	<input type="text" name="em_info_lea_absence_o" id="em_info_lea_absence_o" size="12px" placeholder="_ _ _ _-_ _-_ _">
-					   	~  <input type="text" name="em_info_lea_absence_t" id="em_info_lea_absence_t" size="12px" placeholder="_ _ _ _-_ _-_ _">
+					   	<input type="text" name="em_info_lea_absence_o" id="em_info_lea_absence_o" size="12px" placeholder="_ _ _ _-_ _-_ _" readonly>
+					   	~  <input type="text" name="em_info_lea_absence_t" id="em_info_lea_absence_t" size="12px" placeholder="_ _ _ _-_ _-_ _" readonly>
 				   	</td>
 					<td colspan="2"></td>
 					
@@ -577,7 +601,7 @@
 				  	<td align="right" style="width:137px; margin-top:5px;">부 서 : </td>
 	    			<td>
 	    				<input type="text" name="fk_dept_code" id="fk_dept_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup_Dept("fk_dept_code", "dept_name", "#myTabs_contents-1-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="dept_name" id="dept_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -585,7 +609,7 @@
 				  	<td align="right">고용 형태 : </td>
 	    			<td>
 	    				<input type="text" name="em_info_emply_form_cd" id="em_info_emply_form_cd" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("G1","em_info_emply_form_cd", "em_info_emply_form_nm", "#myTabs_contents-1-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="em_info_emply_form_nm" id="em_info_emply_form_nm" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -593,7 +617,7 @@
 				  	<td align="right">직 종 : </td>
 	    			<td>
 	    				<input type="text" name="fk_occupation_code" id="fk_occupation_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("G2","fk_occupation_code", "occupation_name", "#myTabs_contents-1-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="occupation_name" id="occupation_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -601,7 +625,7 @@
 				  	<td align="right">급여 형태 : </td>
 	    			<td>
 	    				<input type="text" name="fk_pay_form_code" id="fk_pay_form_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("P5","fk_pay_form_code", "pay_form_name", "#myTabs_contents-1-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="pay_form_name" id="pay_form_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -609,7 +633,7 @@
 				  	<td align="right">프로젝트 : </td>
 	    			<td>
 	    				<input type="text" name="em_info_project_code" id="em_info_project_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("G5","em_info_project_code", "em_info_project_name", "#myTabs_contents-1-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="em_info_project_name" id="em_info_project_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -617,7 +641,7 @@
 				  	<td align="right">근무조 : </td>
 	    			<td>
 	    				<input type="text" name="em_info_work_group_cd" id="em_info_work_group_cd" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("02","em_info_work_group_cd", "em_info_work_group_nm", "#myTabs_contents-1-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="em_info_work_group_nm" id="em_info_work_group_nm" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -625,7 +649,7 @@
 				  	<td align="right">직 급 : </td>
 	    			<td>
 	    				<input type="text" name="fk_rank_code" id="fk_rank_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("G4","fk_rank_code", "rank_name", "#myTabs_contents-1-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="rank_name" id="rank_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -633,7 +657,7 @@
 				  	<td align="right">직 책 : </td>
 	    			<td>
 	    				<input type="text" name="em_info_position_code" id="em_info_position_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("G3","em_info_position_code", "em_info_position_name", "#myTabs_contents-1-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="em_info_position_name" id="em_info_position_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -641,7 +665,7 @@
 				  	<td align="right">직 무 : </td>
 	    			<td>
 	    				<input type="text" name="em_info_duty_code" id="em_info_duty_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("G5","em_info_duty_code", "em_info_duty_name", "#myTabs_contents-1-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="em_info_duty_name" id="em_info_duty_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -649,7 +673,7 @@
 				  	<td align="right">분류 코드 : </td>
 	    			<td>
 	    				<input type="text" name="em_info_classifi_code" id="em_info_classifi_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("G5","em_info_classifi_code", "em_info_classifi_name", "#myTabs_contents-1-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="em_info_classifi_name" id="em_info_classifi_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -657,7 +681,7 @@
 				  	<td align="right">퇴직 사유 : </td>
 	    			<td>
 	    				<input type="text" name="em_info_retire_reason_code" id="em_info_retire_reason_code" size="10px">
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup("RL","em_info_retire_reason_code", "em_info_retire_reason_name", "#myTabs_contents-1-iframe");' style='cursor:pointer;' />
 	    				<input type="text" name="em_info_retire_reason_name" id="em_info_retire_reason_name" size="45px" class="disabled">
 	    			</td>
 				</tr>
@@ -669,7 +693,6 @@
 				</tr>																																												
 			</table>
 			</div><!-- //근무 정보 -->
-		</form>
 
 	  </div> <!-- //nav  -->
 	  </div> <!-- //onClick -->

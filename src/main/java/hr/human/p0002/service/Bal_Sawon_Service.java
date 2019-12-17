@@ -30,6 +30,8 @@ public interface Bal_Sawon_Service {
 
 	public List<BalVO> ContentSave(Map<String, Object> searchMap) throws DataAccessException;
 
+	public List<BalVO> ISA_bal(Map<String, Object> searchMap) throws DataAccessException;
+
 	
 
 	

@@ -22,8 +22,9 @@ public class SawonVO {
 	private String SAWON_MOD_USER_ID;
 	private String SAWON_MOD_DATE;
 	private String RANK_NAME; // 직급명
-	private String FK_DEPT_NAME; // 부서명
-	private String PHOTO; // 부서명
+	private String FK_DEPT_NAME; // fk_부서명
+	private String PHOTO; // 사진
+	private String fk_sawon_code; // fk_사원코드
 	
 	private String newpw; // 비밀번호 바꾸기 - 새로운 비밀번호
 	
@@ -178,6 +179,14 @@ public class SawonVO {
 
 	public void setPHOTO(String pHOTO) {
 		PHOTO = pHOTO;
+	}
+	
+	public String getFk_sawon_code() {
+		return fk_sawon_code;
+	}
+
+	public void setFk_sawon_code(String fk_sawon_code) {
+		this.fk_sawon_code = fk_sawon_code;
 	}
 
 	public String getNewpw() {

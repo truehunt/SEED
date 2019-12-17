@@ -44,7 +44,7 @@
 		 margin-left:30px;
 	}
 	p.indent{
-		 padding-left:38em; 
+		 padding-left:37em; 
 		 margin-left:48%;
 		 height:-30px;
 	}
@@ -574,7 +574,7 @@
 		<div class="row">
 	        <div class="col-lg-12">
 	            <h1 class="page-header"><i class="fa fa-folder fa-fw"></i> <s:message code="main.enroll3"/> <p class='indent' />
-	            <a href="#layerSectorEnroll" class="btn-example lightgray">부문 등록</a><br></h1>
+	            <a href="#layerSectorEnroll" class="btn-example btn-outline btn-primary">부문 등록</a><br></h1>
 	        </div>
    	 	</div>
   <div class="frame">
@@ -589,10 +589,10 @@
 		        	<img src='${contextPath}/resources/image/search_icon.png;' onclick="layer_popup('#layerSearch');" style='cursor:pointer;' />
 	        		
 	        		<div class="ib_function float_right">
-						  <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-						  <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-						  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-						  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
+    	  		  <button type="button" class="btn btn-primary" onclick="doAction('reload')">초기화</button>
+				  <button type="button" class="btn btn-primary" onclick="doAction('insert')">추가</button>
+				  <button class="btn btn-outline btn-primary" onclick="doAction('search')">조회</button>
+				  <button class="btn btn-outline btn-primary" onclick="doAction('save')">저장</button>
 					</div>
 	        	</form>
 	        </div>
@@ -624,10 +624,10 @@
        	 		</div><br>
 				<div class="ib_product" style="margin-left:10px;">
 					<div class="ib_function float_right">
-					  <a href="javascript:doAction2('reload')" class="f1_btn_gray lightgray">초기화</a>
-					  <a href="javascript:doAction2('insert')" class="f1_btn_gray lightgray">추가</a>
-					  <a href="javascript:doAction2('search')" class="f1_btn_white gray">조회</a>
-					  <a href="javascript:doAction2('save')" class="f1_btn_white gray">저장</a>
+    	  		  <button type="button" class="btn btn-primary" onclick="doAction2('reload')">초기화</button>
+				  <button type="button" class="btn btn-primary" onclick="doAction2('insert')">추가</button>
+				  <button class="btn btn-outline btn-primary" onclick="doAction2('search')">조회</button>
+				  <button class="btn btn-outline btn-primary" onclick="doAction2('save')">저장</button>
 					</div>	
 					<script> createIBSheet("mySheet2", "100%", "50%"); </script>
 					

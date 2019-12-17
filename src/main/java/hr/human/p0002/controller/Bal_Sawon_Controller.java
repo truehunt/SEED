@@ -14,6 +14,8 @@ public interface Bal_Sawon_Controller {
 	public ModelAndView bal_Num_Code(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	public ModelAndView bal_Content(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	public Map ISA_bal(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public Map Sawon_BalNum(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
@@ -34,6 +36,7 @@ public interface Bal_Sawon_Controller {
 	public Map Content_Div(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	public Map ContentSave(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
 
 	
 }

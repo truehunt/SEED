@@ -67,6 +67,26 @@ public class Bal_Sawon_ControllerImpl implements Bal_Sawon_Controller{
 	}
 	
 // ==============================================================================================
+	
+	// 인사기록카드 인사발령조회
+	@Override
+	@RequestMapping(value = "/human/p0002/ISA_bal.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public Map ISA_bal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.setCharacterEncoding("utf-8");
+		Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+		// 검색조건설정
+		searchMap.put("fk_BAL_SAWON_CODE", request.getParameter("fk_BAL_SAWON_CODE"));
+		
+		//데이터 조회
+		List<BalVO> data = p0002Service.ISA_bal(searchMap);
+	    resultMap.put("Data", data);
+	    return resultMap;
+	}
+	
+// ==============================================================================================
+	
 	// search > ibsheet : 호수조회
 	@Override
 	@RequestMapping(value = "/human/p0002/Sawon_BalNum.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -172,6 +192,7 @@ public class Bal_Sawon_ControllerImpl implements Bal_Sawon_Controller{
 		searchMap.put("fk_BAL_SAWON_CODE", request.getParameter("fk_BAL_SAWON_CODE"));
 		searchMap.put("bal_DETAILS", request.getParameter("bal_DETAILS"));
 		searchMap.put("info", info);
+		
 		
 		//데이터 조회
 		List<BalVO> data = p0002Service.Content_Div(searchMap);
@@ -341,6 +362,8 @@ public class Bal_Sawon_ControllerImpl implements Bal_Sawon_Controller{
 		searchMap.put("bal_DETAILS", request.getParameter("bal_DETAILS")); // 발령내역
 		searchMap.put("info", info); // 발령내역
 		searchMap.put("bal_INFO", request.getParameter("bal_INFO")); // 현정보
+		searchMap.put("button", request.getParameter("button")); // 버튼값
+		searchMap.put("pk_BAL_CODE", request.getParameter("pk_BAL_CODE")); // pk값
 		
 		//데이터 조회
 		List<BalVO> data = p0002Service.ContentSave(searchMap);

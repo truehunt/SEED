@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import hr.elect.p0002.vo.SignImageVO;
 import hr.system.p0001.vo.SawonVO;
-import hr.system.p0002.vo.Insa_personEnroll_VO;
-import hr.system.p0002.vo.Insa_emEnroll_VO;
-import hr.system.p0002.vo.Insa_salEnroll_VO;
+import hr.system.p0002.vo.Insa_personEnroll_VO;//인적정보
+import hr.system.p0002.vo.Insa_emEnroll_VO;//재직 정보
+import hr.system.p0002.vo.Insa_salEnroll_VO;//급여 정보
+import hr.system.p0002.vo.Insa_popup_VO;//공통 팝업
 
 
 @Repository("adInsa_infoEnroll_DAO")
@@ -47,6 +49,20 @@ public class Insa_infoEnroll_DAOImpl implements Insa_infoEnroll_DAO {
       return list;
    }
    
+   @Override // 인사정보등록-공통 팝업
+   public List<Insa_popup_VO> common_pop(Map<String, Object> searchMap) throws DataAccessException {
+   	  List<Insa_popup_VO> list = sqlSession.selectList("hr.system.p0002.PopsearchList", searchMap);
+      
+      return list;
+   }
+   
+   @Override // 인사정보등록-부서 팝업
+   public List<Insa_popup_VO> dept_pop(Map<String, Object> searchMap) throws DataAccessException {
+   	  List<Insa_popup_VO> list = sqlSession.selectList("hr.system.p0002.Dept_PopsearchList", searchMap);
+      
+      return list;
+   }
+   
     @Override // 인사정보등록
    public void insertData(Map<String, String> row) throws DataAccessException {
       sqlSession.update("hr.system.p0002.insertData", row);
@@ -75,6 +91,7 @@ public class Insa_infoEnroll_DAOImpl implements Insa_infoEnroll_DAO {
    
    @Override // 인사정보등록-인적 정보
    public void updateData2(Map<String, String> row) throws DataAccessException {
+	  System.out.println("아아");
       sqlSession.update("hr.system.p0002.PSupdateData", row);
    }
    
@@ -107,5 +124,20 @@ public class Insa_infoEnroll_DAOImpl implements Insa_infoEnroll_DAO {
    public void deleteData4(Map<String, String> row) throws DataAccessException {
       sqlSession.update("hr.system.p0002.SALdeleteData", row);
    }
-
+   
+   /**
+    * 결재이미지 저장, 업데이트.
+    */
+   public void updateSignImage(SignImageVO param) {
+   	  sqlSession.insert("upSawonImage", param);
+   }
+   
+   /**
+    * 등록된 결재 이미지 삭제
+    */
+   public void deleteSignImage(SignImageVO param) {
+//   	System.out.println(param);
+      sqlSession.update("upSawonImage", param);
+   }
+	
 }

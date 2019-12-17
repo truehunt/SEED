@@ -26,6 +26,7 @@ public interface Bal_Sawon_DAO {
 	public void updateData(Map<String, String> row) throws DataAccessException;
 	public void deleteData(Map<String, String> row) throws DataAccessException;
 	public List<BalVO> ContentInsert(Map<String, Object> searchMap) throws DataAccessException;
+	public List<BalVO> ISA_bal(Map<String, Object> searchMap) throws DataAccessException;
 	
 	
 }

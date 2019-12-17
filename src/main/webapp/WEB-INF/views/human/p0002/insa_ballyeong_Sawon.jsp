@@ -76,7 +76,7 @@
 			{Header:"발령내역|발령제목",Type:"Text", SaveName:"bal_TITLE", Width:60, Align:"Center",Edit:0},
 			{Header:"발령내역|발령구분",Type:"Text", SaveName:"bal_DIV_CODE", Width:60, Align:"Center",Edit:0},
 			{Header:"발령내역|발령일자",Type:"Text", SaveName:"bal_DATE", Width:60, Align:"Center",Edit:0},
-			{Header:"pk_code",Type:"Text", SaveName:"pk_BAL_CODE", Width:60, Align:"Center",Edit:0,Hidden:1}
+			{Header:"pk_code",Type:"Text", SaveName:"pk_BAL_CODE", Width:60, Align:"Center",Edit:0}
        	];
       	createIBSheet2($("#tab2_contents")[0],"mySheet2", "100%", "348px");
       	IBS_InitSheet(mySheet2,initData);
@@ -85,7 +85,8 @@
 			{Col: 'bal_NUM', Hidden:1},
 			{Col: 'bal_TITLE', Hidden:1},
 			{Col: 'bal_DIV_CODE', Hidden:1},
-			{Col: 'bal_DATE', Hidden:1}
+			{Col: 'bal_DATE', Hidden:1},
+			{Col: 'pk_BAL_CODE', Hidden:1}
   	    ]);
       	
    }
@@ -103,10 +104,11 @@
                 	 mySheet2.SetCellValue(i,'bal_DIV_CODE',$('#Bal_DIV').val());
                 	 mySheet2.SetCellValue(i,'bal_TITLE',$('#balTitle').val());
                 	 mySheet2.SetCellValue(i,'fk_BAL_SAWON_CODE',Bal_Sawon_Code);
+                	 mySheet2.SetCellValue(i,'button', '적용');
         		 }
         	 }
-        	 
         	 mySheet2.DoSave("${pageContext.request.contextPath}/human/p0002/balContentSave.do");
+        	 mySheet2.DoSearch("${pageContext.request.contextPath}/human/p0002/fk_Sawon.do",bal_Contents);
             break;
          case "insert":
 			mySheet2.DataInsert(-1);
@@ -195,7 +197,7 @@
 		m2nrow = NewRow;
 		if(OldRow != NewRow){
 			Bal_Sawon_Code = mySheet.GetCellValue(NewRow, 'fk_BAL_SAWON_CODE');
-			var bal_Contents = "bal_NUM=" + $('#bal_NUMBER').val() 
+			bal_Contents = "bal_NUM=" + $('#bal_NUMBER').val() 
        	 + "&bal_DATE=" + $('#balDate').val() 
     	 + "&bal_DIV_CODE=" + $('#Bal_DIV').val() 
     	 + "&bal_TITLE=" + $('#balTitle').val()
@@ -317,12 +319,14 @@
 		var fk_BAL_SAWON_CODE = mySheet.GetCellValue(m2nrow, 'fk_BAL_SAWON_CODE'); // 사원코드
 		var bal_DETAILS = mySheet2.GetCellValue(Row,'bal_DETAILS'); // 발령내역
 		var bal_INFO = mySheet2.GetCellValue(Row, 'bal_AFT_INFO'); // 현정보
+		var pk_BAL_CODE = mySheet2.GetCellValue(Row, 'pk_BAL_CODE'); // pk_code값
+		var button = mySheet2.GetCellValue(Row, 'button'); // 버튼값
 		
 		$.ajax({
 			url : "ContentSave.do", 
 	        type : "POST",
         	dataType : "JSON",
-        	data : {fk_BAL_SAWON_CODE: fk_BAL_SAWON_CODE, bal_DETAILS: bal_DETAILS, bal_INFO: bal_INFO},
+        	data : {fk_BAL_SAWON_CODE: fk_BAL_SAWON_CODE, bal_DETAILS: bal_DETAILS, bal_INFO: bal_INFO, button: button, pk_BAL_CODE: pk_BAL_CODE},
     	    success : function(data) {
     	    	 mySheet2.SetCellValue(Row,'bal_INFO', data['Data'][0].bal_INFO);
     	    	 mySheet2.SetCellValue(Row, 'button', '적용완료');
@@ -389,6 +393,10 @@ $(function(){
 		</span>
 	</div>
 	
+	
+	<div class="ib_function float_right">
+		<button class="btn btn-outline btn-primary" onclick="doAction('search')"><s:message code="common.btnSearch"/></button>
+	</div>
 	<form class="form-inline" style="margin:20px">
 		<label for="Bal_DIV">발령구분</label>
 		<select id="Bal_DIV" onchange="Search_Date_Title()">
@@ -404,10 +412,6 @@ $(function(){
     		<label for="balTitle">발령제목</label>
 			<input type="text" class="form-control" id="balTitle" readonly>
         </div>
-        
-    <div class="ib_function float_right">
-			<a href="javascript:doAction('search')" class="f1_btn_gray lightgray">조회</a>
-	</div>
 	
 	<hr style="border: solid 1px gray ;">    
 	</form>
@@ -417,15 +421,14 @@ $(function(){
   <div class="main_content">
 		<!-- 버튼 -->
 		<div class="ib_function float_right">
-			<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-			<a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
+			<button class="btn btn-outline btn-primary" onclick="doAction('insert')"><s:message code="board.append"/></button>
+			<button class="btn btn-outline btn-primary" onclick="doAction('save')"><s:message code="common.btnSave"/></button>
 		</div>
-
 		<div class="clear hidden"></div>
 		
 		<div class="ib_product" style="width:100%;float:left">
 			<!-- left -->
-			<div style="height:100%;width:33%;float:left; ">
+			<div style="height:100%;width:37%;float:left; ">
 				<div id="ballyeong_copy"></div>
 				<div id="ballyeong"></div>
 			</div>
@@ -434,7 +437,7 @@ $(function(){
 			<div style="height:100%;width:1%;float:left"></div>
 			
 			<!-- right -->
-			<div style="height:100%;width:50%;float:left">
+			<div style="height:100%;width:57%;float:left">
 				<div id="tab2_contents"></div>
 			</div>
 		</div>

@@ -8,6 +8,47 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	.frame {
+		  width : 1365px;
+		  height: 1050px;
+		  margin: 0px;
+	}
+ 	.content{
+ 		height: 149%;
+    	width: 45%;
+    	float: left;
+    	border: 1px solid lightblue;
+ 	}
+ 	.rank_content{
+ 		position: absolute;
+    	height: 21.3%;
+    	width: 40%;
+    	left: 66px;
+    	border: 1px solid lightblue;
+ 	}
+ 	.record_content{
+ 		position: absolute;
+    	top: 535px;
+    	left: 66px;
+    	width: 40%;
+    	height: 9%;
+    	float: left;
+    	border: 1px solid lightblue;
+ 	}
+ 	.table_content{
+ 		height: 67%;
+    	width: 33%;
+    	float: left;
+    	border: 1px solid lightblue;
+ 	}
+ 	.hobong_content{
+ 		height: 149%;
+    	width: 54%;
+    	float: left;
+    	border: 1px solid lightblue;
+ 	}
+</style>
 <script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
@@ -35,8 +76,8 @@
       initData.Cfg = {SearchMode:smLazyLoad, Page:50,MergeSheet:msHeaderOnly,ChildPage:10,DragMode:1 };
       initData.Cols = [
       	{Header:"상태|상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
-        {Header:"대상직급|코드",Type:"Text", SaveName:"pk_PERSON_BC_DETAI_CODE_NUM", Width:60, Align:"Center",Edit:0},
-        {Header:"대상직급|직급",Type:"Text", SaveName:"person_BC_DETAI_MNGEMENT_NAME", Width:120, Align:"Center",Edit:0}
+        {Header:"대상직급|코드",Type:"Text", SaveName:"pk_PERSON_BC_DETAI_CODE_NUM", Width:73, Align:"Center",Edit:0},
+        {Header:"대상직급|직급",Type:"Text", SaveName:"person_BC_DETAI_MNGEMENT_NAME", Width:150, Align:"Center",Edit:0}
       ];
       
       IBS_InitSheet(mySheet,initData);
@@ -71,7 +112,7 @@
         	{Header:"상태|상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 			{Header:"호봉이력|적용시작년월",Type:"Date", SaveName:"hobong_TABLE_START_DATE_APPLI", Width:120, Align:"Center",Edit:0, Format: "Ym"},
 			{Header:"호봉이력|적용종료월",Type:"Date", SaveName:"hobong_TABLE_END_DATE_APPLI", Width:120, Align:"Center",Edit:0, Format: "Ym"},
-			{Header:"직급코드|직급코드",Type:"Text", SaveName:"fk_RANK_CODE", Width:10, Align:"Center",Edit:0}
+			{Header:"직급코드|직급코드",Type:"Text", SaveName:"fk_RANK_CODE", Width:10, Align:"Center",Edit:0, Hidden:1}
         ];
         
         IBS_InitSheet(mySheet3,initData);
@@ -180,44 +221,42 @@
 		</div>
 			<!-- /.col-lg-12 -->
 	</div>
-	
-  <div class="main_content">
-		<!-- 버튼 -->
-		<div class="ib_function float_right">
-			<a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
-		</div>
+ 	<div class="frame"> 
+  			<div class="main_content">
+				<!-- 버튼 -->
+				<div class="ib_function float_right">
+					<button class="btn btn-outline btn-primary" onclick="doAction('save')"><s:message code="common.btnSave"/></button>
+				</div>
+			
+				<div class="ib_product" style="width:100%;float:left">
+					<!-- 대상직급 Sheet -->
+					<div class="content">
+						<div class="rank_content">
+							<script> createIBSheet("mySheet", "100%", "100%"); </script>
+						</div><!-- rank_content -->
+					</div>
+					
+					<!-- 좌,우 나누는 공간 -->
+					<div style="height: 100%; width: 1%; float: left"></div>
+					
+					<!-- 호봉테이블 Sheet -->						
+					<div class="hobong_content">
+						<div class="table_content">
+							<script> createIBSheet("mySheet2", "100%", "100%"); </script>
+						</div>
+					</div><!-- hobong_content -->
+					<!-- 위,아래 나누는 공간 -->
+					<div style="height: 10px; width: 100%; float:left"></div>
+					<!-- 호봉이력 Sheet -->
+					<div class="record_content">
+						<script> createIBSheet("mySheet3", "100%", "100%"); </script>
+					</div><!-- record_content -->
+				</div>
 		
-		<div class="ib_product" style="width:100%;float:left">
-			<div style="height: 100%; width: 45%; float: left">
-				<script>
-					createIBSheet("mySheet", "100%", "100%");
-				</script>
-			</div>
-			
-			
-			<div style="height: 100%; width: 30%; float: left">
-				<script>
-					createIBSheet("mySheet2", "100%", "100%");
-				</script>
-			</div>
-			
-			<div style="height: 100%; width: 5%; float: left"></div>
-			
-			<div style="height: 10px; width: 100%; float:left"></div>
-			
-			<div style="height:100%;width:50%;float:left">
-				<script> createIBSheet("mySheet3", "100%", "100%"); </script> 
-			</div>
-			
-		</div>	
-			   
-		<div class="clear hidden"></div>
-		
-	</DIV>
-	</div>
-        <!-- /#page-wrapper -->
+	</DIV><!-- main_content -->
+	</div><!-- frame -->
+	</div><!-- page-wrapper -->
+	</div><!-- wrapper -->
 
-</div>
-<!-- /#wrapper -->
 </body>
 </html>

@@ -123,6 +123,7 @@
         	 + "&bal_DIV_CODE=" + $('#Bal_DIV').val() 
         	 + "&bal_TITLE=" + $('#balTitle').val();
         	 mySheet.DoSearch("${pageContext.request.contextPath}/human/p0002/fk_Sawon.do", param); 
+        	 mySheet2.RemoveAll();
         	 break;
         	 
       }

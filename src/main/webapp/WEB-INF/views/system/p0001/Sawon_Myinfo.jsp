@@ -163,7 +163,7 @@
 			{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center",Edit:0},
 			{Header:"NO",Type:"Seq", Align:"Center",Edit:0},
 			{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50,Edit:0},
-			{Header:"", Type:"Text", SaveName:"pk_FAM_CODE", Align:"Center",Edit:0},
+			{Header:"", Type:"Text", SaveName:"pk_FAM_CODE", Align:"Center",Edit:0,Hidden:1},
 			{Header:"성명",Type:"Text", SaveName:"fam_NAME", Width:100, Align:"Left", Align:"Center",Edit:0},
           	{Header:"관계",Type:"Combo", SaveName:"fam_RELATIONS", Width:60, Align:"Center",Edit:0},
           	{Header:"동거여부",Type:"Combo", SaveName:"fam_LIVE", Width:60, Align:"Center",Edit:0},
@@ -177,8 +177,7 @@
           	{Header:"졸업구분",Type:"Combo", SaveName:"fam_GRADUATION_CODE", Width:60, Align:"Center",Edit:0},
           	{Header:"직업",Type:"Text", SaveName:"fam_JOB", Width:60, Align:"Center",Edit:0},
           	{Header:"직장명",Type:"Text", SaveName:"fam_WORK_NAME", Width:60, Align:"Center",Edit:0},
-          	{Header:"직위",Type:"Text", SaveName:"fam_POSITION", Width:60, Align:"Center",Edit:0},
-          	{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
+          	{Header:"직위",Type:"Text", SaveName:"fam_POSITION", Width:60, Align:"Center",Edit:0}
        	];
 		
 		createIBSheet2($("#ib-container1")[0],"mySheet4", "890px", "300px");
@@ -189,7 +188,7 @@
        		{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center",Edit:0},
 			{Header:"NO",Type:"Seq", Align:"Center",Edit:0},
 			{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50,Edit:0},
-			{Header:"", Type:"Text", SaveName:"pk_HL_CODE", Align:"Center",Edit:0},
+			{Header:"", Type:"Text", SaveName:"pk_HL_CODE", Align:"Center",Edit:0,Hidden:1},
             {Header:"학교명",Type:"Text", SaveName:"hl_SCHOOL_CODE", Width:100, Align:"Center",Edit:0},
             {Header:"입학일",Type:"Date", SaveName:"hl_STA_DATE", Width:120, Align:"Center",Edit:0},
             {Header:"졸업일",Type:"Date", SaveName:"hl_END_DATE", Width:120, Align:"Center",Edit:0},
@@ -199,8 +198,7 @@
             {Header:"부전공",Type:"Text", SaveName:"hl_MINOR_CODE", Width:60, Align:"Center",Edit:0},
             {Header:"학위구분",Type:"Text", SaveName:"hl_DEGREE", Width:60, Align:"Center",Edit:0},
             {Header:"주야",Type:"Text", SaveName:"hl_JUYA_CODE", Width:60, Align:"Center",Edit:0},
-            {Header:"본교",Type:"Text", SaveName:"hl_MAIN_CODE", Width:60, Align:"Center",Edit:0},
-            {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
+            {Header:"본교",Type:"Text", SaveName:"hl_MAIN_CODE", Width:60, Align:"Center",Edit:0}
         ];
    
           createIBSheet2($("#ib-container2")[0],"mySheet5", "890px", "300px");
@@ -211,7 +209,7 @@
         	{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center",Edit:0},
         	{Header:"NO",Type:"Seq", Align:"Center",Edit:0},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50,Edit:0},
-        	{Header:"경력코드",Type:"Text",SaveName:"pk_CAR_CODE", Align:"Center",Edit:0},
+        	{Header:"경력코드",Type:"Text",SaveName:"pk_CAR_CODE", Align:"Center",Edit:0,Hidden:1},
             {Header:"직장명",Type:"Text", SaveName:"car_NAME", Width:120, Align:"Center",Edit:0},
             {Header:"입사일",Type:"Date", SaveName:"car_STA_DATE", Width:120, Align:"Center",Edit:0},
             {Header:"퇴사일",Type:"Date", SaveName:"car_END_DATE", Width:120, Align:"Center",Edit:0},
@@ -220,8 +218,7 @@
             {Header:"직위",Type:"Text", SaveName:"car_POSITION", Width:100, Align:"Center",Edit:0},
             {Header:"급여",Type:"Int", SaveName:"car_SALARY", "Format": "#,### 원", Width:100, Align:"Center",Edit:0},
             {Header:"퇴직사유",Type:"Text", SaveName:"car_RESIGN", Width:120, Align:"Center",Edit:0},
-            {Header:"근속기",Type:"Combo", SaveName:"car_GEUNSOG_CODE", Width:60, Align:"Center",Edit:0},
-            {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
+            {Header:"근속기",Type:"Combo", SaveName:"car_GEUNSOG_CODE", Width:60, Align:"Center",Edit:0}
         ];
          
         createIBSheet2($("#ib-container3")[0],"mySheet6", "890px", "300px");
@@ -232,14 +229,13 @@
         	{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center",Edit:0},
         	{Header:"NO",Type:"Seq", Align:"Center",Edit:0},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50,Edit:0},
-        	{Header:"자격코드",Type:"Text",SaveName:"pk_CERTIFICATE_CODE", Align:"Center",Edit:0},
+        	{Header:"자격코드",Type:"Text",SaveName:"pk_CERTIFICATE_CODE", Align:"Center",Edit:0,Hidden:1},
             {Header:"자격종류",Type:"ComboEdit", SaveName:"certificate_SORT_CODE", Width:150, Align:"Left",Edit:0},
             {Header:"취득일",Type:"Date", SaveName:"certificate_STA_DATE", Width:60, Align:"Center",Edit:0},
             {Header:"만료일",Type:"Date", SaveName:"certificate_END_DATE", Width:60, Align:"Center",Edit:0},
             {Header:"자격증번호",Type:"Text", SaveName:"certificate_NUM", Width:60, Align:"Center",Edit:0},
             {Header:"발행기관",Type:"ComboEdit", SaveName:"certificate_ISSUER_CODE", Width:60, Align:"Center",Edit:0},
-            {Header:"수당",Type:"Combo", SaveName:"certificate_SUDANG_CODE", Width:60, Align:"Center",Edit:0},
-            {Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
+            {Header:"수당",Type:"Combo", SaveName:"certificate_SUDANG_CODE", Width:60, Align:"Center",Edit:0}
         ];
           
         createIBSheet2($("#ib-container4")[0],"mySheet7", "890px", "300px");
@@ -256,7 +252,7 @@
          {Header:"발령전정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center",Edit:0},
          {Header:"현정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center",Edit:0},
          {Header:"발령후정보",Type:"Text", SaveName:"sPos", Width:60, Align:"Center",Edit:0},
-         {Header:"비고",Type:"Text", SaveName:"sPos", Width:60, Align:"Center",Edit:0},
+         {Header:"비고",Type:"Text", SaveName:"sPos", Width:60, Align:"Center",Edit:0}
       ];
            
 		createIBSheet2($("#ib-container5")[0],"mySheet8", "890px", "320px");
@@ -267,7 +263,7 @@
 			{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center",Edit:0},
         	{Header:"NO",Type:"Seq", Align:"Center",Edit:0},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50,Edit:0},
-        	{Header:"고과코드",Type:"Text",SaveName:"pk_ASS_CODE", Align:"Center",Edit:0},
+        	{Header:"고과코드",Type:"Text",SaveName:"pk_ASS_CODE", Align:"Center",Edit:0,Hidden:1},
 			{Header:"고과명",Type:"Text", SaveName:"ass_NAME", Width:60, Align:"Center",Edit:0}, // Combo를...
 			{Header:"평가시작일",Type:"Date", SaveName:"ass_STA_DATE", Width:60, Align:"Center",Edit:0},
 			{Header:"평가종료일",Type:"Date", SaveName:"ass_END_DATE", Width:60, Align:"Center",Edit:0},
@@ -276,8 +272,7 @@
 			{Header:"반영률",Type:"Float", SaveName:"ass_REFLECTANCE", Width:60, Align:"Center", Format:"#,##0.00",Edit:0},
 			{Header:"점수",Type:"Float", SaveName:"ass_SCORE", Width:60, Align:"Center", Format:"#,##0.00",Edit:0},
 			{Header:"등급",Type:"Text", SaveName:"ass_CLASS", Width:60, Align:"Center",Edit:0},
-			{Header:"비고",Type:"Text", SaveName:"ass_NOTE", Width:60, Align:"Center",Edit:0},
-			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
+			{Header:"비고",Type:"Text", SaveName:"ass_NOTE", Width:60, Align:"Center",Edit:0}
 		];
            
 		createIBSheet2($("#ib-container6")[0],"mySheet9", "890px", "320px");
@@ -288,7 +283,7 @@
 			{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center",Edit:0},
         	{Header:"NO",Type:"Seq", Align:"Center",Edit:0},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50,Edit:0},
-        	{Header:"출장코드",Type:"Text",SaveName:"pk_CHJ_CODE", Align:"Center",Edit:0},
+        	{Header:"출장코드",Type:"Text",SaveName:"pk_CHJ_CODE", Align:"Center",Edit:0,Hidden:1},
 			{Header:"출장국가",Type:"ComboEdit", SaveName:"chj_COUNTRY_CODE", Width:60, Align:"Center",Edit:0},
 			{Header:"출장지",Type:"Text", SaveName:"chj_AREA", Width:60, Align:"Center",Edit:0},
 			{Header:"시작일",Type:"Date", SaveName:"chj_STA_YMD", Width:60, Align:"Center",Edit:0},
@@ -298,8 +293,7 @@
 			{Header:"회사부담",Type:"Int", SaveName:"chj_COMPANY", Width:60, Align:"Center",Format:"#,###원",Edit:0},
 			{Header:"기타비용",Type:"Int", SaveName:"chj_OTHER", Width:60, Align:"Center",Format:"#,###원",Edit:0},
 			{Header:"총비용",Type:"Int", SaveName:"chj_TOTAL", Width:60, Align:"Center",CalcLogic:"|chj_AIRFARE|+|chj_OWN|+|chj_COMPANY|+|chj_OTHER|", Format:"#,###원",Edit:0},
-			{Header:"목적",Type:"Text", SaveName:"chj_PURPOSE", Width:60, Align:"Center",Edit:0},
-			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
+			{Header:"목적",Type:"Text", SaveName:"chj_PURPOSE", Width:60, Align:"Center",Edit:0}
 		];
            
 		createIBSheet2($("#ib-container7")[0],"mySheet10", "890px", "320px");
@@ -310,7 +304,7 @@
 			{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center",Edit:0},
         	{Header:"NO",Type:"Seq", Align:"Center",Edit:0},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50,Edit:0},
-        	{Header:"상벌코드",Type:"Text",SaveName:"pk_SB_CODE", Align:"Center",Edit:0},
+        	{Header:"상벌코드",Type:"Text",SaveName:"pk_SB_CODE", Align:"Center",Edit:0,Hidden:1},
 			{Header:"구분",Type:"Combo", SaveName:"sb_DIVISION", Width:60, Align:"Center", ComboText:"|포상|징계", ComboCode:"|포상|징계",Edit:0},
 			{Header:"포상/징계명",Type:"Text", SaveName:"sb_NAME", Width:100, Align:"Center",Edit:0}, // Combo를 쓸 필요가 있나..?
 			{Header:"포상/징계일",Type:"Date", SaveName:"sb_DATE", Width:100, Align:"Center",Edit:0},
@@ -319,8 +313,7 @@
 			{Header:"금액",Type:"Int", SaveName:"sb_AMOUNT", Width:60, Align:"Center",Format:"#,###원",Edit:0},
 			{Header:"징계시작일",Type:"Date", SaveName:"sb_STA_DATE", Width:100, Align:"Center",Edit:0},
 			{Header:"징계종료일",Type:"Date", SaveName:"sb_END_DATE", Width:100, Align:"Center",Edit:0},
-			{Header:"비고",Type:"Text", SaveName:"sb_NOTE", Width:60, Align:"Center",Edit:0},
-			{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center",Edit:0}
+			{Header:"비고",Type:"Text", SaveName:"sb_NOTE", Width:60, Align:"Center",Edit:0}
 		];
            
 		createIBSheet2($("#ib-container8")[0],"mySheet11", "890px", "320px");
@@ -362,17 +355,99 @@
 			});
 		}
 		
-		ISA();
 		
 		PK_SAWON_CODE = "${sessionScope['PK_SAWON_CODE']}";
+		fk_bal_sawon_code = "${sessionScope['PK_SAWON_CODE']}";
 		
-		mySheet4.DoSearch("${pageContext.request.contextPath}/myISA_fam", PK_SAWON_CODE);
-		mySheet5.DoSearch("${pageContext.request.contextPath}/myISA_hl", PK_SAWON_CODE);
-		mySheet6.DoSearch("${pageContext.request.contextPath}/myISA_car", PK_SAWON_CODE);
-		mySheet7.DoSearch("${pageContext.request.contextPath}/myISA_cert", PK_SAWON_CODE);
-		mySheet9.DoSearch("${pageContext.request.contextPath}/myISA_ass", PK_SAWON_CODE);
-		mySheet10.DoSearch("${pageContext.request.contextPath}/myISA_chj", PK_SAWON_CODE);
-		mySheet11.DoSearch("${pageContext.request.contextPath}/myISA_sb", PK_SAWON_CODE);
+		myTabs1.setEvents({ 
+			beforeGoToTab: function(event) {
+				var index = event.indexActive;
+				switch(index){
+					case 2:
+						mySheet4.RemoveAll();
+						break;
+					case 3:
+						mySheet5.RemoveAll();
+						break;
+					case 4:
+						mySheet6.RemoveAll();
+						break;
+					case 5:
+						mySheet7.RemoveAll();
+						break;
+				}
+	   			return true; 
+			},
+	 	GoToTab: function(event) {
+			index = event.index;
+			switch(index){
+				case 2:
+					mySheet4.DoSearch("${pageContext.request.contextPath}/myISA_fam", PK_SAWON_CODE);
+					break;
+				case 3:
+					mySheet5.DoSearch("${pageContext.request.contextPath}/myISA_hl", PK_SAWON_CODE);
+					break;
+				case 4:
+					mySheet6.DoSearch("${pageContext.request.contextPath}/myISA_car", PK_SAWON_CODE);
+					break;
+				case 5:
+					mySheet7.DoSearch("${pageContext.request.contextPath}/myISA_cert", PK_SAWON_CODE);
+					break;
+			}
+   			return true; 
+		} 
+	   	});
+	 // tab 이동전에 발생
+	 	myTabs2.setEvents({ 
+			beforeGoToTab: function(event) {
+				var index2 = event.indexActive;
+				switch(index2){
+					case 0:
+						mySheet8.RemoveAll();
+						break;
+					case 1:
+						mySheet9.RemoveAll();
+						break;
+					case 2:
+						mySheet10.RemoveAll();
+						break;
+					case 3:
+						mySheet11.RemoveAll();
+						break;
+				}
+	   			return true; 
+			},GoToTab: function(event) {
+				index2 = event.index;
+				switch(index2){
+				case 0:
+					mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0002/ISA_bal.do", fk_bal_sawon_code);
+					break;
+				case 1:
+					mySheet9.DoSearch("${pageContext.request.contextPath}/myISA_ass", PK_SAWON_CODE);
+					break;
+				case 2:
+					mySheet10.DoSearch("${pageContext.request.contextPath}/myISA_chj", PK_SAWON_CODE);
+					break;
+				case 3:
+					mySheet11.DoSearch("${pageContext.request.contextPath}/myISA_sb", PK_SAWON_CODE);
+					break;
+				}
+			}
+	   	});
+		
+		
+		ISA();
+		
+// 		mySheet4.DoSearch("${pageContext.request.contextPath}/myISA_fam", PK_SAWON_CODE);
+// 		mySheet5.DoSearch("${pageContext.request.contextPath}/myISA_hl", PK_SAWON_CODE);
+// 		mySheet6.DoSearch("${pageContext.request.contextPath}/myISA_car", PK_SAWON_CODE);
+// 		mySheet7.DoSearch("${pageContext.request.contextPath}/myISA_cert", PK_SAWON_CODE);
+// 		mySheet9.DoSearch("${pageContext.request.contextPath}/myISA_ass", PK_SAWON_CODE);
+// 		mySheet10.DoSearch("${pageContext.request.contextPath}/myISA_chj", PK_SAWON_CODE);
+// 		mySheet11.DoSearch("${pageContext.request.contextPath}/myISA_sb", PK_SAWON_CODE);
+		
+		mySheet8.DoSearch("${pageContext.request.contextPath}/human/p0002/ISA_bal.do", fk_bal_sawon_code);
+		
 		
 	}
    

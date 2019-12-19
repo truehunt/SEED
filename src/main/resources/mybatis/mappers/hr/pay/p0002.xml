@@ -39,6 +39,7 @@
 	    <result property="ta_TOTAL_PAYMENTDAY" column="ta_TOTAL_PAYMENTDAY"/>
 	    <result property="rank_CODE" column="rank_CODE"/>
 	     <result property="rank_NAME" column="rank_NAME"/>
+	     <result property="fk_HOBONG_CODE" column="fk_HOBONG_CODE"/>
 		
 		
 	</resultMap>
@@ -71,13 +72,14 @@
 	
 	<select id="searchList" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
 		<![CDATA[
-			select a.pk_sawon_code, a.sawon_name, a.rank_name, a.rank_code
-			from SAWON a, DEPT b, workplace c
+			select a.pk_sawon_code, a.sawon_name, a.rank_name, a.rank_code, d.fk_HOBONG_CODE 
+			from SAWON a, DEPT b, workplace c, sal_info d
 			
 		]]>
 		<where>
 		          a.fk_SAWON_WORKPLACE_CODE = c.pk_workplace_code
             and   a.fk_dept_code = b.pk_dept_code
+            and   a.pk_sawon_code = d.fk_sawon_code
 		      
 				<if test="PK_WORKPLACE_CODE != null">
 				      and FK_SAWON_WORKPLACE_CODE = #{PK_WORKPLACE_CODE}
@@ -174,12 +176,13 @@
 	
 		<select id="payList" resultMap="SALARY_calculResult01" parameterType="java.util.Map">
 		<![CDATA[
-			select sum(a.ta_TOTAL_HOUR)*b.sal_info_salary AS salary_CAL_MONEY
-			from ta_total a, sal_info b
+			select sum(a.ta_total_hour) * c.hobong_table_price AS salary_CAL_MONEY
+              from ta_total a, sawon b, hobong_table c
 		]]>
 		<where>
 		
-		    a.FK_TA_TOTAL_SAWON_CODE = b.fk_sawon_code
+		        a.FK_TA_TOTAL_SAWON_CODE =  b.pk_sawon_code
+            and b.rank_code = c.fk_rank_code
 		    
 		<if test="fk_SALARY_CAL_SAWON_CODE != null">
 				      and FK_TA_TOTAL_SAWON_CODE = #{fk_SALARY_CAL_SAWON_CODE, jdbcType=VARCHAR}
@@ -188,9 +191,19 @@
 	     		<if test="salary_CAL_PAYMENTDAY != null">
 				      and TA_TOTAL_PAYMENTDAY = #{salary_CAL_PAYMENTDAY, jdbcType=VARCHAR}
 			</if>
+			
+			
+			<if test="rank_CODE != null">
+				      and rank_CODE = #{rank_CODE, jdbcType=VARCHAR}
+			</if>
+			
+			<if test="fk_HOBONG_CODE != null">
+				      and fk_HOBONG_CODE = #{fk_HOBONG_CODE, jdbcType=VARCHAR}
+			</if>
+			
 		</where>
 		
-		 group by b.sal_info_salary
+		 group by c.hobong_table_price
 	</select> 
 	
 	

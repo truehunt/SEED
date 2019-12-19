@@ -91,8 +91,9 @@
 			<if test="SALARY_CAL_PAYMENTDAY != null">
 				      and salary_CAL_PAYMENTDAY = #{SALARY_CAL_PAYMENTDAY, jdbcType=VARCHAR}
 			</if>
-		
+		             order by pk_SALARY_CAL_INFO ASC
 		</where>
+		    
 	</select>
 	
 <select id="siteList" resultMap="SALARY_specResult01" parameterType="java.util.Map">

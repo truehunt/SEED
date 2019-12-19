@@ -104,7 +104,7 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 		searchMap.put("FK_SAWON_WORKPLACE_CODE", request.getParameter("FK_SAWON_WORKPLACE_CODE"));
 		searchMap.put("PK_DEPT_CODE", request.getParameter("PK_DEPT_CODE"));
 		searchMap.put("FK_DEPT_CODE", request.getParameter("FK_DEPT_CODE"));
-		
+		searchMap.put("rank_CODE", request.getParameter("rank_CODE"));
 		
 	
 		List<SALARY_calculVO> data = SALARY_calculService.searchList(searchMap);
@@ -127,6 +127,9 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 		searchMap.put("salary_CAL_PAYMENTDAY", request.getParameter("salary_CAL_PAYMENTDAY"));
 		searchMap.put("D_B_PAYMENT_DT", request.getParameter("D_B_PAYMENT_DT"));
 		searchMap.put("fk_SALARY_CAL_SAWON_CODE", request.getParameter("fk_SALARY_CAL_SAWON_CODE"));
+		searchMap.put("rank_CODE", request.getParameter("rank_CODE"));
+		searchMap.put("fk_HOBONG_CODE", request.getParameter("fk_HOBONG_CODE"));
+		
 		System.out.println("1" + request.getParameter("salary_CAL_PAYMENTDAY"));
 		
 		
@@ -258,8 +261,8 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 		searchMap.put("salary_CAL_MONEY", request.getParameter("salary_CAL_MONEY"));
 		searchMap.put("fk_SALARY_CAL_SAWON_CODE", request.getParameter("fk_SALARY_CAL_SAWON_CODE"));
 		searchMap.put("FK_TA_TOTAL_SAWON_CODE", request.getParameter("FK_TA_TOTAL_SAWON_CODE"));
-
-		
+		searchMap.put("rank_CODE", request.getParameter("rank_CODE"));
+		searchMap.put("fk_HOBONG_CODE", request.getParameter("fk_HOBONG_CODE"));
 		List<SALARY_calculVO> data = SALARY_calculService.payList(searchMap);
         resultMap.put("Data", data);
         
@@ -281,7 +284,7 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 		searchMap.put("HOBONG_TABLE_START_DATE_APPLI", request.getParameter("HOBONG_TABLE_START_DATE_APPLI"));
 		
 		searchMap.put("FK_TA_TOTAL_SAWON_CODE", request.getParameter("FK_TA_TOTAL_SAWON_CODE"));
-		
+		searchMap.put("rank_CODE", request.getParameter("rank_CODE"));
 		
 		List<SALARY_calculVO> data = SALARY_calculService.payList2(searchMap);
         resultMap.put("Data", data);
@@ -309,10 +312,10 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 		try {
 			SALARY_calculService.saveData(dataMap);	
 			result.put("Code","0");
-			result.put("Message","���옣�릺�뿀�뒿�땲�떎.");
+			result.put("Message","저장되었습니다.");
 		}catch(Exception e) {
 			result.put("Code","-1");
-			result.put("Message","�삤瑜섍� 諛쒖깮�븯���뒿�땲�떎.");
+			result.put("Message","오류가 발생하였습니다.");
 			e.printStackTrace();
 		}
 		

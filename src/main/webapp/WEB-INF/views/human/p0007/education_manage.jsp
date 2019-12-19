@@ -14,10 +14,19 @@
 <style>
 
    .table{
-    max-width: 500px;
-    margin-left: -20px;
-    margin-bottom: 0px;
-    margin-right: -550px;
+    max-width: 200px;
+    margin-left: 500px;
+    margin-top: -171px;
+    margin-bottom: 50px;
+    margin-right: -500px;
+    border: 2px solid #81BEF7;
+    width: 200px;
+    height: 400px;
+    align: right;
+     }
+    .th,td{
+    border: 1px solid #81BEF7;
+    border-width: 50%;
      }
      
      
@@ -37,21 +46,18 @@
         margin-left:0px;
         width: 550px;
         height: 600px;
-        border : 1px solid lightblue;
    }
    .content {
         margin-left:400px;
         margin-top:-600px;
         float: right;
-        width: 800px;
+        width: 500px;
         height: 600px;
-        border : 1px solid lightblue;
    }
    .main_content{
       width: 510px;
    }
    .main_menu {
-      border : 1px solid lightblue;
    }
    
    .nav, .content {<!--메뉴바 꽉차게 만들기-->
@@ -118,14 +124,14 @@
 	         
 	         {Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},
 	         {Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center"},
-	         {Header:"교육코드",Type:"Text",SaveName:"pk_EDUCATION_MANA_CODE",MinWidth:80, Align:"Center"},
-	         {Header:"교육명",Type:"Text",SaveName:"education_MANA_NAME",MinWidth:60, MinWidth:100, Align:"Center"},         
-	         {Header:"시작일",Type:"Date",SaveName:"education_MANA_STA",MinWidth:110, Align:"Center"},
-	         {Header:"종료일",Type:"Date",SaveName:"education_MANA_END",MinWidth:110, Align:"Center"},
+	         {Header:"교육코드",Type:"Text",SaveName:"pk_EDUCATION_MANA_CODE",MinWidth:100, Align:"Center"},
+	         {Header:"교육명",Type:"Text",SaveName:"education_MANA_NAME",MinWidth:250, Align:"Center"},         
+	         {Header:"시작일",Type:"Text",SaveName:"education_MANA_STA",MinWidth:110, Align:"Center", Hidden:1},
+	         {Header:"종료일",Type:"Text",SaveName:"education_MANA_END",MinWidth:110, Align:"Center", Hidden:1},
 	         
 	         
 	         
-	         {Header:"교육일수",Type:"Text",SaveName:"education_MANA_DAYS",MinWidth:100, KeyField:1, Hidden:1, DateDiff:"(d, |education_MANA_STA|, |education_MANA_END|)"},
+	         {Header:"교육일수",Type:"Text",SaveName:"education_MANA_DAYS",MinWidth:100, Hidden:1},
 	         {Header:"교육목적",Type:"Text",SaveName:"education_MANA_PUR",MinWidth:300, Hidden:1},
 	         {Header:"교육장소",Type:"Text",SaveName:"education_MANA_LOCA",MinWidth:80, KeyField:1, Hidden:1},
 	         {Header:"담당강사",Type:"Text",SaveName:"education_MANA_TEA",MinWidth:60, Hidden:1},
@@ -193,7 +199,6 @@
             mySheet.DoSearch("${contextPath}/human/p0007/searchList.do");
             
             //콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
-            selectHead();
             $('#pk_EDUCATION_MANA_CODE').html("   ");
             
             break;
@@ -204,6 +209,8 @@
             //현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
             //save 를 하면서 중복 처리 됨 
             var tempStr = mySheet.GetSaveString();
+            mySheet.SetCellValue(t_row, 'education_MANA_DAYS' , $('#education_MANA_DAYS').val());
+            
             tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
             mySheet.DoSave("${contextPath}/human/p0007/insertData.do");
             break;
@@ -211,31 +218,12 @@
             var row = mySheet.DataInsert();
          
             //콤보박스에 값 불러오기 -> 행 추가후 실행
-            selectHead();
             $('#pk_EDUCATION_MANA_CODE').html("   ");
             
             break;
       }
    }
-   // Validation 확인하기
-   function mySheet_OnValidation(Row, Col, Value){
-      console.log('확인');
-      
-      switch(Col){
-         
-         case 5: // 교육번호 
-            //console.log(Value);
-            //console.log(Value.length);
-            if(Value.length >= 0 && Value.length < 4){
-               alert("교육관리번호는 4자리로 입력하셔야 됩니다.");
-               mySheet.ValidateFail(1); // Validation 실패
-               document.getElementById('education_MANA_DAYS').focus(); //실패시 포커스 이동
-            }
-            break;
-      
-   
-      }
-   }
+
    
 
    
@@ -253,6 +241,10 @@
             //mySheet.ReNumberSeq();
       }   
    }   
+   
+   
+   
+   
    
 
 </script>
@@ -286,6 +278,32 @@
           $("#education_MANA_END").datepicker();
 
       });
+      
+      
+      
+      
+      
+      
+      function call()
+      {
+          var sdd = document.getElementById("education_MANA_STA").value;
+          var edd = document.getElementById("education_MANA_END").value;
+          var ar1 = sdd.split('-');
+          var ar2 = edd.split('-');
+          var da1 = new Date(ar1[0], ar1[1], ar1[2]);
+          var da2 = new Date(ar2[0], ar2[1], ar2[2]);
+          var dif = da2 - da1;
+          var cDay = 24 * 60 * 60 * 1000;// 시 * 분 * 초 * 밀리세컨
+          var cMonth = cDay * 30;// 월 만듬
+          var cYear = cMonth * 12; // 년 만듬
+       if(sdd && edd){
+          document.getElementById("education_MANA_DAYS").value = parseInt(dif/cDay)
+       }
+      }
+
+      
+      
+      
       </script>
 
 
@@ -294,68 +312,83 @@
 <body onLoad="LoadPage()">
       
       <div class="nav" style="width:100%; overflow:hidden;">
-           <div class="main_content"  style="width:1300px;">
-                <div class="ib_function float_left">
-                 <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-                 <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-                 <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-                 <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
+           <div class="main_content"  style="width:1150px;">
+                <div class="ib_function float_right">
+                 <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
+                 <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
+                 <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
+                 <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
                </div>
                
-            
+             <br><br><br>
 
+ 
      <div class="ib_product">
      <!-- content (오른쪽 layout시작)  -->
        
-     <table id="table" class="table" width="550px" height="550px" align="right">
+        <script type="text/javascript"> createIBSheet("mySheet", "150%", "calc(50% - 3px)"); </script>
+       
+       
+     <table id="table" class="table" style="width: 620px;"  > 
+
+
+
      	<tr>
-     		<td style="width:50px"><span class="title" style="font-size:15px; height:15px"><b>기본등록사항</b></span></td>
+     		<td ><span class="title" style="font-size:15px; height:15px"><b>기본등록사항</b></span></td>
      	</tr>
+     	
+     	<tr>
+     	<td  align="left">
+     	 시작일 : <input type="text" name="education_MANA_STA" id="education_MANA_STA" onchange="call()">   ~   
+           종료일 : <input type="text" name="education_MANA_END" id="education_MANA_END"onchange="call()"> <p></p>
+     	</tr>
+     	
+     	
         <tr>
-           <td style="width:50px" align="left"> 교육일수 :
+           <td align="left"> 교육일수 :
             <input type="text" name="education_MANA_DAYS" id="education_MANA_DAYS" size="30px" > 
             </td>
               
         </tr>
         <tr>
-           <td style="width:25%" align="left">교육목적 :  
+           <td align="left">교육목적 :  
            <input type="text" name="education_MANA_PUR" id="education_MANA_PUR" size="50px" > 
            </td>
              
         </tr>
         <tr>
-           <td style="width:25%" align="left">교육장소 :
+           <td  align="left">교육장소 :
            <input type="text" name=education_MANA_LOCA id="education_MANA_LOCA" size="25px"> 
             </td>
                
         </tr>
         <tr>
-           <td style="width:25%" align="left">담당강사 :
+           <td  align="left">담당강사 :
            <input type="text" name="education_MANA_TEA" id="education_MANA_TEA" size="25px" >
             </td>
                
         </tr>
         <tr>
-           <td style="width:25%" align="left">교육기관 :
+           <td  align="left">교육기관 :
             <input type="text" name="education_MANA_AGENCY" id="education_MANA_AGENCY" size="50px" >
              </td>
               
         </tr>
         <tr>
-           <td style="width:25%" align="left">교육시간 :
+           <td  align="left">교육시간 :
             <input type="text" name="education_MANA_TIMES" id="education_MANA_TIMES" size="50px" >
              </td>
             
         </tr>
 
-        <tr><td></td></tr><!-- 공백 -->
+       
         
      </table>
      
      
-					<script type="text/javascript"> createIBSheet("mySheet", "150%", "calc(50% - 3px)"); </script>
+
 										
-        
+       
    
   
      

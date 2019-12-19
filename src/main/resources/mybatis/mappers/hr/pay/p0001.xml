@@ -86,6 +86,7 @@
 			
 		
 		</where>
+		order by PK_TA_TOTAL_CODE ASC
 	</select>
 	
 <select id="siteList" resultMap="TA_inputResult01" parameterType="java.util.Map">

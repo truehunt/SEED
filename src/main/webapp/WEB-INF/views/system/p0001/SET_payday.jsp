@@ -52,10 +52,10 @@ table.ui-datepicker-calendar { display:none; }
          {Header:"NO",Type:"pk_D_B_PAYMENT_SEQ_CODE",Width:20,SaveName:"pk_D_B_PAYMENT_SEQ_CODE", Align:"Center"},
          {Header:"상태",Type:"Status",Width:60,SaveName:"STATUS", Align:"Center"},
          {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
-         {Header:"귀속연월",Type:"Text",SaveName:"d_B_PAYMENT_DATE_ATTRIBUT",Width:100,Align:"Center"},
-         {Header:"지급일자",Type:"Date",SaveName:"d_B_PAYMENT_DT",Width:100,Align:"Center"},
-         {Header:"동시발행",Type:"Combo",Width:80,SaveName:"d_B_PAYMENT_SIMULTANE_ISSUE", Align:"Center", ComboCode:"분리|동시"},
-         {Header:"대상자선정",Type:"Text",SaveName:"d_B_PAYMENT_TARGET_SELECT",Width:200,Align:"Center"}
+         {Header:"귀속연월",Type:"Text",SaveName:"d_B_PAYMENT_DATE_ATTRIBUT",Width:120,Align:"Center"},
+         {Header:"지급일자",Type:"Date",SaveName:"d_B_PAYMENT_DT",Width:120,Align:"Center"},
+         {Header:"동시발행",Type:"Combo",Width:80,SaveName:"d_B_PAYMENT_SIMULTANE_ISSUE", Width:100, Align:"Center", ComboCode:"분리|동시"},
+         {Header:"대상자선정",Type:"Text",SaveName:"d_B_PAYMENT_TARGET_SELECT",Width:200,Align:"Center", Hidden:1}
        ];
       IBS_InitSheet(mySheet,initData);
    
@@ -96,6 +96,7 @@ table.ui-datepicker-calendar { display:none; }
          mySheet.DataInsert();
           var i = mySheet.RowCount();
           mySheet.CellComboItem(i,4,PY); // 관계
+          mySheet.SetCellValue(i,3,$("#d_B_PAYMENT_DATE_ATTRIBUT").val());
           //코드부분 들어가는 코딩
           var select_row = mySheet.GetSelectRow();
           var col = 3;
@@ -201,7 +202,7 @@ function mySheet_OnSaveEnd(code,msg){
             yearSuffix : '',
             
             showOn: 'both', // 텍스트와 버튼을 함께 보여준다
-            buttonImage:'https://www.shareicon.net/data/16x16/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
+            buttonImage:'https://www.shareicon.net/data/27x27/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
             buttonImageOnly: true,
             
             showButtonPanel: true
@@ -244,7 +245,7 @@ function mySheet_OnSaveEnd(code,msg){
    </div>
 
   <div class="main_content">
-    <div class="ib_function float_left" style="padding:10 20">
+    <div class="ib_function float_right" style="padding:10 20">
          <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
          <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
          <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
@@ -278,8 +279,8 @@ function mySheet_OnSaveEnd(code,msg){
      <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
               <DIV class="ib_product" style="width:100%;float:left">
-            <div style="height:100%;width:45%;float:left">
-               <script type="text/javascript"> createIBSheet("mySheet", "90%", "70%"); </script>
+            <div style="height:100%;width:60%;float:left">
+               <script type="text/javascript"> createIBSheet("mySheet", "100%", "70%"); </script>
             </div>
          
             

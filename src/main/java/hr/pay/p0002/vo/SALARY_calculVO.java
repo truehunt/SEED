@@ -43,6 +43,10 @@ public class SALARY_calculVO {
    private String fk_SAWON_WORKPLACE_CODE; 
    private String fk_dept_code;
    private String ta_TOTAL_HOUR;
+   
+   private String rank_CODE;
+   private String rank_NAME;
+   private String fk_HOBONG_CODE;
   
 
    public SALARY_calculVO() {
@@ -502,6 +506,48 @@ public String getTa_TOTAL_HOUR() {
 
 public void setTa_TOTAL_HOUR(String ta_TOTAL_HOUR) {
 	this.ta_TOTAL_HOUR = ta_TOTAL_HOUR;
+}
+
+
+
+
+public String getRank_CODE() {
+	return rank_CODE;
+}
+
+
+
+
+public void setRank_CODE(String rank_CODE) {
+	this.rank_CODE = rank_CODE;
+}
+
+
+
+
+public String getRank_NAME() {
+	return rank_NAME;
+}
+
+
+
+
+public void setRank_NAME(String rank_NAME) {
+	this.rank_NAME = rank_NAME;
+}
+
+
+
+
+public String getFk_HOBONG_CODE() {
+	return fk_HOBONG_CODE;
+}
+
+
+
+
+public void setFk_HOBONG_CODE(String fk_HOBONG_CODE) {
+	this.fk_HOBONG_CODE = fk_HOBONG_CODE;
 }
 
 

@@ -215,10 +215,10 @@ public class education_statusControllerImpl implements education_statusControlle
       try {
     	  education_statusService.saveData(dataMap);   
          result.put("Code","0");
-         result.put("Message","����Ǿ����ϴ�");
+         result.put("Message","저장되었습니다.");
       }catch(Exception e) {
          result.put("Code","-1");
-         result.put("Message","���忡 �����Ͽ����ϴ�");
+         result.put("Message","오류가 발생하였습니다");
          e.printStackTrace();
       }
       

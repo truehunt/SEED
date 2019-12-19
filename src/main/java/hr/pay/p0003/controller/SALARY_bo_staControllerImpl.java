@@ -273,10 +273,10 @@ public class SALARY_bo_staControllerImpl implements SALARY_bo_staController {
 		try {
 			SALARY_bo_staService.saveData(dataMap);	
 			result.put("Code","0");
-			result.put("Message","���옣�릺�뿀�뒿�땲�떎.");
+			result.put("Message","저장되었습니다.");
 		}catch(Exception e) {
 			result.put("Code","-1");
-			result.put("Message","�삤瑜섍� 諛쒖깮�븯���뒿�땲�떎.");
+			result.put("Message","오류가 발생하였습니다.");
 			e.printStackTrace();
 		}
 		

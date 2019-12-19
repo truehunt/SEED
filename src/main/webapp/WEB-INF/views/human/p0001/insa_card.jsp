@@ -192,14 +192,14 @@
           	{Header:"주민등록번호",Type:"Text", SaveName:"fam_RES_NUM", Format: "IdNo", Width:120, Align:"Center"},
           	{Header:"수당여부",Type:"Combo", SaveName:"fam_SUDANG", Width:60, Align:"Center"},
           	{Header:"장애인구분",Type:"Combo", SaveName:"fam_DISABLED_CODE", ComboText:"|비해당|장애인복지법|국가유공자|중증환자", ComboCode:"|비해당|장애인복지법|국가유공자|중증환자", Width:120, Align:"Center"},
-          	{Header:"내외국인",Type:"Combo", SaveName:"fam_LOCAL_CODE", ComboText:"|내국인|외국인", ComboCode:"|내국인|외국인" ,Width:60, Align:"Center"},
-          	{Header:"생년월일",Type:"Text", SaveName:"fam_BIRTH_DATE", Width:60, Align:"Center"},
+          	{Header:"내외국인",Type:"Combo", SaveName:"fam_LOCAL_CODE", ComboText:"|내국인|외국인", ComboCode:"|내국인|외국인" ,Width:100, Align:"Center"},
+          	{Header:"생년월일",Type:"Text", SaveName:"fam_BIRTH_DATE", Width:120, Align:"Center"},
           	{Header:"양음구분",Type:"Combo", SaveName:"fam_SOLAR_CODE", Width:60, Align:"Center"},
-          	{Header:"학력",Type:"Combo", SaveName:"fam_HAGLYEOG_CODE", Width:60, Align:"Center"},
-          	{Header:"졸업구분",Type:"Combo", SaveName:"fam_GRADUATION_CODE", Width:60, Align:"Center"},
-          	{Header:"직업",Type:"Text", SaveName:"fam_JOB", Width:60, Align:"Center"},
-          	{Header:"직장명",Type:"Text", SaveName:"fam_WORK_NAME", Width:60, Align:"Center"},
-          	{Header:"직위",Type:"Text", SaveName:"fam_POSITION", Width:60, Align:"Center"},
+          	{Header:"학력",Type:"Combo", SaveName:"fam_HAGLYEOG_CODE", Width:100, Align:"Center"},
+          	{Header:"졸업구분",Type:"Combo", SaveName:"fam_GRADUATION_CODE", Width:100, Align:"Center"},
+          	{Header:"직업",Type:"Text", SaveName:"fam_JOB", Width:110, Align:"Center"},
+          	{Header:"직장명",Type:"Text", SaveName:"fam_WORK_NAME", Width:120, Align:"Center"},
+          	{Header:"직위",Type:"Text", SaveName:"fam_POSITION", Width:100, Align:"Center"},
           	{Header:"추가",Type:"Button", SaveName:"fam_ADD", Width:60, Align:"Center"},
           	{Header:"수정/추가여부",Type:"Text", SaveName:"fam_OX", Width:60, Align:"Center", Hidden:1}
        	];
@@ -224,8 +224,8 @@
             {Header:"졸업일",Type:"Date", SaveName:"hl_END_DATE", Width:120, Align:"Center"},
             {Header:"구분",Type:"Combo", SaveName:"hl_SORT_CODE", Width:60, Align:"Center"},
             {Header:"소재지",Type:"Text", SaveName:"hl_LOCATION", Width:60, Align:"Center"},
-            {Header:"전공과목",Type:"ComboEdit", SaveName:"hl_MAJOR_CODE", Width:60, Align:"Center"},
-            {Header:"부전공",Type:"ComboEdit", SaveName:"hl_MINOR_CODE", Width:60, Align:"Center"},
+            {Header:"전공과목",Type:"ComboEdit", SaveName:"hl_MAJOR_CODE", Width:120, Align:"Center"},
+            {Header:"부전공",Type:"ComboEdit", SaveName:"hl_MINOR_CODE", Width:120, Align:"Center"},
             {Header:"학위구분",Type:"Text", SaveName:"hl_DEGREE", Width:60, Align:"Center"},
             {Header:"주야",Type:"Combo", SaveName:"hl_JUYA_CODE", Width:60, Align:"Center"},
             {Header:"본교",Type:"Combo", SaveName:"hl_MAIN_CODE", Width:60, Align:"Center"},
@@ -276,11 +276,11 @@
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
         	{Header:"자격코드",Type:"Text",SaveName:"pk_CERTIFICATE_CODE", Align:"Center",Hidden:1},
             {Header:"자격종류",Type:"ComboEdit", SaveName:"certificate_SORT_CODE", Width:150, Align:"Left"},
-            {Header:"취득일",Type:"Date", SaveName:"certificate_STA_DATE", Width:60, Align:"Center"},
-            {Header:"만료일",Type:"Date", SaveName:"certificate_END_DATE", Width:60, Align:"Center"},
-            {Header:"자격증번호",Type:"Text", SaveName:"certificate_NUM", Width:60, Align:"Center"},
-            {Header:"발행기관",Type:"ComboEdit", SaveName:"certificate_ISSUER_CODE", Width:60, Align:"Center"},
-            {Header:"수당",Type:"Combo", SaveName:"certificate_SUDANG_CODE", Width:60, Align:"Center"},
+            {Header:"취득일",Type:"Date", SaveName:"certificate_STA_DATE", Width:120, Align:"Center"},
+            {Header:"만료일",Type:"Date", SaveName:"certificate_END_DATE", Width:120, Align:"Center"},
+            {Header:"자격증번호",Type:"Text", SaveName:"certificate_NUM", Width:138, Align:"Center"},
+            {Header:"발행기관",Type:"ComboEdit", SaveName:"certificate_ISSUER_CODE", Width:100, Align:"Center"},
+            {Header:"수당",Type:"Combo", SaveName:"certificate_SUDANG_CODE", Width:100, Align:"Center"},
             {Header:"추가",Type:"Button", SaveName:"certificate_ADD", Width:60, Align:"Center"},
             {Header:"수정/추가여부",Type:"Text", SaveName:"certificate_OX", Width:60, Align:"Center", Hidden:1}
         ];
@@ -315,15 +315,15 @@
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
         	{Header:"고과코드",Type:"Text",SaveName:"pk_ASS_CODE", Align:"Center",Hidden:1},
-			{Header:"고과명",Type:"Text", SaveName:"ass_NAME", Width:60, Align:"Center"}, // Combo를...
-			{Header:"평가시작일",Type:"Date", SaveName:"ass_STA_DATE", Width:60, Align:"Center"},
-			{Header:"평가종료일",Type:"Date", SaveName:"ass_END_DATE", Width:60, Align:"Center"},
-			{Header:"고과일",Type:"Date", SaveName:"ass_DATE", Width:60, Align:"Center"},
-			{Header:"고과자",Type:"Text", SaveName:"fk_ASS_PER_CODE", Width:60, Align:"Center"},
-			{Header:"반영률",Type:"Float", SaveName:"ass_REFLECTANCE", Width:60, Align:"Center", Format:"#,##0.00"},
-			{Header:"점수",Type:"Float", SaveName:"ass_SCORE", Width:60, Align:"Center", Format:"#,##0.00"},
-			{Header:"등급",Type:"Text", SaveName:"ass_CLASS", Width:60, Align:"Center"},
-			{Header:"비고",Type:"Text", SaveName:"ass_NOTE", Width:60, Align:"Center"},
+			{Header:"고과명",Type:"Text", SaveName:"ass_NAME", Width:100, Align:"Center"}, // Combo를...
+			{Header:"평가시작일",Type:"Date", SaveName:"ass_STA_DATE", Width:120, Align:"Center"},
+			{Header:"평가종료일",Type:"Date", SaveName:"ass_END_DATE", Width:120, Align:"Center"},
+			{Header:"고과일",Type:"Date", SaveName:"ass_DATE", Width:120, Align:"Center"},
+			{Header:"고과자",Type:"Text", SaveName:"fk_ASS_PER_CODE", Width:80, Align:"Center"},
+			{Header:"반영률",Type:"Float", SaveName:"ass_REFLECTANCE", Width:80, Align:"Center", Format:"#,##0.00"},
+			{Header:"점수",Type:"Float", SaveName:"ass_SCORE", Width:80, Align:"Center", Format:"#,##0.00"},
+			{Header:"등급",Type:"Text", SaveName:"ass_CLASS", Width:80, Align:"Center"},
+			{Header:"비고",Type:"Text", SaveName:"ass_NOTE", Width:80, Align:"Center"},
 			{Header:"추가",Type:"Button", SaveName:"ass_ADD", Width:60, Align:"Center"},
 			{Header:"수정/추가여부",Type:"Text", SaveName:"ass_OX", Width:60, Align:"Center", Hidden:1}
 		];
@@ -337,16 +337,16 @@
         	{Header:"NO",Type:"Seq", Align:"Center"},
         	{Header:"삭제",Type:"DelCheck", SaveName:"DEL_CHK", Width:35, MinWidth:50},
         	{Header:"출장코드",Type:"Text",SaveName:"pk_CHJ_CODE", Align:"Center",Hidden:1},
-			{Header:"출장국가",Type:"ComboEdit", SaveName:"chj_COUNTRY_CODE", Width:60, Align:"Center"},
-			{Header:"출장지",Type:"Text", SaveName:"chj_AREA", Width:60, Align:"Center"},
-			{Header:"시작일",Type:"Date", SaveName:"chj_STA_YMD", Width:60, Align:"Center"},
-			{Header:"종료일",Type:"Date", SaveName:"chj_END_YMD", Width:60, Align:"Center"},
-			{Header:"항공료",Type:"Int", SaveName:"chj_AIRFARE", Width:60, Align:"Center",Format:"#,###원"},
-			{Header:"본인부담",Type:"Int", SaveName:"chj_OWN", Width:60, Align:"Center",Format:"#,###원"},
-			{Header:"회사부담",Type:"Int", SaveName:"chj_COMPANY", Width:60, Align:"Center",Format:"#,###원"},
-			{Header:"기타비용",Type:"Int", SaveName:"chj_OTHER", Width:60, Align:"Center",Format:"#,###원"},
-			{Header:"총비용",Type:"Int", SaveName:"chj_TOTAL", Width:60, Align:"Center",CalcLogic:"|chj_AIRFARE|+|chj_OWN|+|chj_COMPANY|+|chj_OTHER|", Format:"#,###원"},
-			{Header:"목적",Type:"Text", SaveName:"chj_PURPOSE", Width:60, Align:"Center"},
+			{Header:"출장국가",Type:"ComboEdit", SaveName:"chj_COUNTRY_CODE", Width:100, Align:"Center"},
+			{Header:"출장지",Type:"Text", SaveName:"chj_AREA", Width:100, Align:"Center"},
+			{Header:"시작일",Type:"Date", SaveName:"chj_STA_YMD", Width:120, Align:"Center"},
+			{Header:"종료일",Type:"Date", SaveName:"chj_END_YMD", Width:120, Align:"Center"},
+			{Header:"항공료",Type:"Int", SaveName:"chj_AIRFARE", Width:100, Align:"Center",Format:"#,###원"},
+			{Header:"본인부담",Type:"Int", SaveName:"chj_OWN", Width:100, Align:"Center",Format:"#,###원"},
+			{Header:"회사부담",Type:"Int", SaveName:"chj_COMPANY", Width:100, Align:"Center",Format:"#,###원"},
+			{Header:"기타비용",Type:"Int", SaveName:"chj_OTHER", Width:100, Align:"Center",Format:"#,###원"},
+			{Header:"총비용",Type:"Int", SaveName:"chj_TOTAL", Width:100, Align:"Center",CalcLogic:"|chj_AIRFARE|+|chj_OWN|+|chj_COMPANY|+|chj_OTHER|", Format:"#,###원"},
+			{Header:"목적",Type:"Text", SaveName:"chj_PURPOSE", Width:100, Align:"Center"},
 			{Header:"추가",Type:"Button", SaveName:"chj_ADD", Width:60, Align:"Center"},
 			{Header:"수정/추가여부",Type:"Text", SaveName:"chj_OX", Width:60, Align:"Center", Hidden:1}
 		];
@@ -364,11 +364,11 @@
 			{Header:"포상/징계명",Type:"Text", SaveName:"sb_NAME", Width:100, Align:"Center"}, // Combo를 쓸 필요가 있나..?
 			{Header:"포상/징계일",Type:"Date", SaveName:"sb_DATE", Width:100, Align:"Center"},
 			{Header:"포상/징계내역",Type:"Text", SaveName:"sb_DETAILS", Width:100, Align:"Center"},
-			{Header:"시행처",Type:"Text", SaveName:"sb_SIHAENGCHEO", Width:60, Align:"Center"},
-			{Header:"금액",Type:"Int", SaveName:"sb_AMOUNT", Width:60, Align:"Center",Format:"#,###원"},
-			{Header:"징계시작일",Type:"Date", SaveName:"sb_STA_DATE", Width:100, Align:"Center"},
-			{Header:"징계종료일",Type:"Date", SaveName:"sb_END_DATE", Width:100, Align:"Center"},
-			{Header:"비고",Type:"Text", SaveName:"sb_NOTE", Width:60, Align:"Center"},
+			{Header:"시행처",Type:"Text", SaveName:"sb_SIHAENGCHEO", Width:120, Align:"Center"},
+			{Header:"금액",Type:"Int", SaveName:"sb_AMOUNT", Width:100, Align:"Center",Format:"#,###원"},
+			{Header:"징계시작일",Type:"Date", SaveName:"sb_STA_DATE", Width:120, Align:"Center"},
+			{Header:"징계종료일",Type:"Date", SaveName:"sb_END_DATE", Width:120, Align:"Center"},
+			{Header:"비고",Type:"Text", SaveName:"sb_NOTE", Width:80, Align:"Center"},
 			{Header:"추가",Type:"Button", SaveName:"sb_ADD", Width:60, Align:"Center"},
 			{Header:"수정/추가여부",Type:"Text", SaveName:"sb_OX", Width:60, Align:"Center", Hidden:1}
 		];
@@ -1240,6 +1240,8 @@
 					if(i != 0){
 						if(arr1[0] == "null" ){ arr1[0] = "" };
 						mySheet10.SetCellValue(i,'chj_COUNTRY_CODE',arr1[0]);
+						if(mySheet10.GetCellValue(mySheet10.RowCount(),'STATUS') == 'U' )
+							mySheet10.SetCellValue(mySheet10.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경
 					}
 				}
 				
@@ -1688,6 +1690,8 @@
                            <td class="bg02_l">
                               <select id="isa_POS_CODE" style="width: 80px;" class="select_02">
                                     <option value=""></option>
+                                    <option value="1">함</option>
+                                    <option value="2">안함</option>
                               </select>
                            </td>
                         </tr>

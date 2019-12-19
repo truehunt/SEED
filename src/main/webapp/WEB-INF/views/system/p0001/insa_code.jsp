@@ -59,7 +59,7 @@
          {Header:"상세코드",Type:"Text", SaveName:"pk_PERSON_BC_DETAI_CODE_NUM", Width:60, Align:"Center"},
          {Header:"update용코드",Type:"Text", SaveName:"copy_CODE_NUM", Width:60, Align:"Center"},
          {Header:"관리내역명",Type:"Text", SaveName:"person_BC_DETAI_MNGEMENT_NAME", Width:100, Align:"Center"},
-         {Header:"사용여부",Type:"Text", SaveName:"person_BC_DETAI_NOT_USE", Width:80, Align:"Center"},
+         {Header:"사용여부",Type:"Combo", SaveName:"person_BC_DETAI_NOT_USE",ComboCode:"|사용|사용불가", ComboText:"|사용|사용불가", Width:80, Align:"Center"},
          {Header:"비고",Type:"Text", SaveName:"person_BC_DETAI_REMARKS", Width:90, Align:"Center"},
          {Header:"fk_Code",Type:"Text", SaveName:"pk_PERSON_BC_CODE_NUM", Width:90, Align:"Center", Hidden:1}
       ];
@@ -155,15 +155,6 @@
 		mySheet2.DoSearch("${pageContext.request.contextPath}/system/p0001/detai.do", x);
 	}
 
-// 	// 기타이벤트 // 키보드 버튼이 올라올 시
-// 	function mySheet2_OnKeyUp(Row, Col, KeyCode, Shift) {
-// 		if (Modify == 1) { //인사코드 부분 - 수정 가능일시이니까 / 인사기록카드에서는 상관x
-// 			if (KeyCode == 13 && Col == mySheet2.LastCol()
-// 					&& Row == mySheet2.RowCount()) { // 엔터를 누르고 / col이 마지막 col이고 / row가 마지막 열일경우
-// 				doAction("insert");
-// 			}
-// 		}
-// 	}
 </script>
 
 <body onload="LoadPage()">

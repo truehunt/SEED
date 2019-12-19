@@ -349,11 +349,11 @@
 <br>
 <br>
 <div class="ib_function float_right">
-	<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-	<a href="javascript:doAction('search')" class="f1_btn_gray lightgray">조회</a>
-	<a href="javascript:doAction('save')" class="f1_btn_gray lightgray">저장</a>
-	<a href="javascript:doAction('yes')" class="f1_btn_gray lightgray">승인</a>
-	<a href="javascript:doAction('no')" class="f1_btn_gray lightgray">반려</a>
+	<a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
+	<a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
+	<a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
+	<a href="javascript:doAction('yes')" class="btn btn-outline btn-primary">승인</a>
+	<a href="javascript:doAction('no')" class="btn btn-outline btn-primary">반려</a>
 </div>
 
 선택조건

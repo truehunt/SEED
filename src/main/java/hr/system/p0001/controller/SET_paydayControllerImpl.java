@@ -138,7 +138,7 @@ public class SET_paydayControllerImpl implements SET_paydayController {
 			
 		}catch(Exception e) {
 			result.put("Code","-1");
-			result.put("Message","?삤瑜섍? 諛쒖깮?븯???뒿?땲?떎.");
+			result.put("Message","저장되었습니다.");
 			e.printStackTrace();
 		}
 		

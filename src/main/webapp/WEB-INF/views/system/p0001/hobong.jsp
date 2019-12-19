@@ -186,7 +186,6 @@
 							var month = mySheet3.GetCellValue(Row,1).substr(4,2);
 							if(month-1 == "00"){
 								mySheet3.SetCellValue(Row-1,2,(year-1)+"12");
-								alert((year-1)+"12");
 							}else{
 								mySheet3.SetCellValue(Row-1,2,mySheet3.GetCellValue(Row,1)-1);	
 							}

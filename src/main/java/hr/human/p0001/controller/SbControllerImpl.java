@@ -65,7 +65,6 @@ public class SbControllerImpl implements SbController{
 				dataMap.put(name, values);
 			}
 			String fk_SB_SAWON_CODE = request.getParameter("fk_SB_SAWON_CODE");
-			System.out.println(request.getParameter("fk_SB_SAWON_CODE"));
 			Map<String, String> result = new HashMap<String, String>();
 			try {
 				p0001Service.saveDataSb(dataMap, fk_SB_SAWON_CODE);

@@ -27,7 +27,6 @@ public class InsaCodeDAOImpl implements InsaCodeDAO {
 	
 	@Override
 	public List<InsaCodeVO> deTai(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("3. " + searchMap);
 		List<InsaCodeVO> list = sqlSession.selectList("hr.system.p0001.deTai",searchMap);
 		return list;
 	}

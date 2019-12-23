@@ -373,13 +373,13 @@
    
    <insert id="SPinsertData" parameterType="java.util.Map">
    
-      <selectKey resultType="String" keyProperty="pk_SALARY_CAL_INFO" order="BEFORE">
+      <selectKey resultType="String" keyProperty="pk_D_B_PAYMENT_SEQ_CODE" order="BEFORE">
 
           SELECT NVL(MAX(pk_D_B_PAYMENT_SEQ_CODE)+1, 1) FROM D_B_PAYMENT
 
        </selectKey>
-      insert into D_B_PAYMENT(pk_D_B_PAYMENT_SEQ_CODE, D_B_PAYMENT_DATE_ATTRIBUT, d_B_PAYMENT_DT, d_B_PAYMENT_SIMULTANE_ISSUE, d_B_PAYMENT_TARGET_SELECT) values(#{pk_D_B_PAYMENT_SEQ_CODE, jdbcType=VARCHAR},#{D_B_PAYMENT_DATE_ATTRIBUT, jdbcType=VARCHAR}, #{d_B_PAYMENT_DT , jdbcType=VARCHAR}, #{d_B_PAYMENT_SIMULTANE_ISSUE, jdbcType=VARCHAR}, #{d_B_PAYMENT_TARGET_SELECT, jdbcType=VARCHAR})
-   
+      insert into D_B_PAYMENT(pk_D_B_PAYMENT_SEQ_CODE, d_B_PAYMENT_DATE_ATTRIBUT, d_B_PAYMENT_DT, d_B_PAYMENT_SIMULTANE_ISSUE, d_B_PAYMENT_TARGET_SELECT) values(#{pk_D_B_PAYMENT_SEQ_CODE, jdbcType=VARCHAR},#{d_B_PAYMENT_DATE_ATTRIBUT, jdbcType=VARCHAR}, #{d_B_PAYMENT_DT , jdbcType=VARCHAR}, #{d_B_PAYMENT_SIMULTANE_ISSUE, jdbcType=VARCHAR}, #{d_B_PAYMENT_TARGET_SELECT, jdbcType=VARCHAR})
+      
    </insert>   
    
    <delete id="SPdeleteData" parameterType="java.util.Map">

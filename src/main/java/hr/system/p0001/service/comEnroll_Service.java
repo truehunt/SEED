@@ -11,8 +11,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import hr.system.p0001.vo.ComEnroll_VO;
 
-
-
 public interface comEnroll_Service {
 	public List<ComEnroll_VO> searchList(Map<String, Object> searchMap) throws DataAccessException;
 	

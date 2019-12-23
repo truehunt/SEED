@@ -40,7 +40,6 @@ public class FamControllerImpl implements FamController{
 			Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
 			// 검색조건설정
 			searchMap.put("fk_FAM_SAWON_CODE", request.getParameter("fk_FAM_SAWON_CODE"));
-			System.out.println("1_fam."+request.getParameter("fk_FAM_SAWON_CODE"));
 			//데이터 조회
 			List<CardFamVO> data = p0001Service.ISA_fam(searchMap);
 	        resultMap.put("Data", data);

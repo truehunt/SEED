@@ -55,7 +55,6 @@ public class CardControllerImpl implements CardController{
 		String viewName = getViewName(request);
 		viewName = "/human/p0001/sample";
 		request.setCharacterEncoding("utf-8");
-		//ModelAndView main = new ModelAndView("hr/p0001_init");
 		ModelAndView main = new ModelAndView(viewName);
 		return main;
 	}
@@ -72,31 +71,6 @@ public class CardControllerImpl implements CardController{
 		
 		return main;
 	}
-	
-//	//인사발령_페이지
-//		@Override
-//		@RequestMapping(value = "/human/p0001/insa_ballyeong.do", method = { RequestMethod.GET, RequestMethod.POST })
-//		public ModelAndView insaBal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//			String viewName = getViewName(request);
-//			viewName = "/human/p0001/insa_ballyeong";
-//			request.setCharacterEncoding("utf-8");
-//			ModelAndView main = new ModelAndView(viewName);
-//			return main;
-//		}
-		
-
-//	// 팝업
-//		@Override
-//		@RequestMapping(value = "/popupHL", method = { RequestMethod.GET, RequestMethod.POST })
-//		public ModelAndView popupHL(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//			String viewName = getViewName(request);
-//			viewName = "human/p0001/popupHL";
-//			request.setCharacterEncoding("utf-8");
-//			//ModelAndView main = new ModelAndView("hr/p0001_init");
-//			ModelAndView main = new ModelAndView(viewName);
-//			return main;
-//		}
-		
 	
 	@Override
 	@RequestMapping(value = "/human/p0001/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -276,7 +250,6 @@ public class CardControllerImpl implements CardController{
   		}
   		
   		String photo = signImageInfo.getPhoto();
-        System.out.println(photo);
         
   		return photo;
     }
@@ -288,7 +261,6 @@ public class CardControllerImpl implements CardController{
 		response.setContentType("text/html;charset=utf-8");
 		
   		String userno = request.getParameter("PK_SAWON_CODE");
-  		System.out.println("확인중..." + userno);
         CardDAO.deleteSignImage(signImageInfo);
         
     }

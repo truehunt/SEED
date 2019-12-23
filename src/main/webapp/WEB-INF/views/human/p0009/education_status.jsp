@@ -129,9 +129,9 @@
 			 {Header:"교육명",Type:"Text",SaveName:"education_MANA_NAME",MinWidth:100, Align:"Center"},
 			 {Header:"시작일",Type:"Date",SaveName:"education_MANA_STA",MinWidth:80, Align:"Center"},
 			 {Header:"종료일",Type:"Date",SaveName:"education_MANA_END",MinWidth:80, Align:"Center"},
-			 {Header:"교육시간",Type:"Text",SaveName:"education_MANA_TIMES",MinWidth:50, Align:"Center"},
-			 {Header:"교육일수",Type:"Text",SaveName:"education_MANA_DAYS",MinWidth:50, Align:"Center", DateDiff:"(d, |education_MANA_STA|, |education_MANA_END|)"},
-			 {Header:"이수여부",Type:"Combo",SaveName:"education_EVAL_COMP",ComboCode:"여|부",MinWidth:40, Align:"Center"},
+			 {Header:"교육시간",Type:"Text",SaveName:"education_MANA_TIMES",MinWidth:70, Align:"Center"},
+			 {Header:"교육일수",Type:"Text",SaveName:"education_MANA_DAYS",MinWidth:70, Align:"Center", DateDiff:"(d, |education_MANA_STA|, |education_MANA_END|)"},
+			 {Header:"이수여부",Type:"Combo",SaveName:"education_EVAL_COMP",ComboCode:"여|부",MinWidth:50, Align:"Center"},
 			 {Header:"출석점수(A)",Type:"Text",SaveName:"education_EVAL_ATTE",MinWidth:60, Align:"Center"},
 	         {Header:"태도점수(B)",Type:"Text",SaveName:"education_EVAL_ATTI",MinWidth:60, Align:"Center"},
 	         {Header:"평가점수(C)",Type:"Text",SaveName:"education_EVAL_SCORE",MinWidth:60, Align:"Center"},
@@ -190,7 +190,7 @@
       
             
             mySheet.DoSearch("${contextPath}/human/p0009/searchList.do");
-            
+            mySheet2.DoSearch("${contextPath}/human/p0009/searchList2.do");
             //콤보박스에 값 불러오기 -> 행 추가(입력) 및 append 중복 추가 방지
             selectHead();
             $('#pk_EDUCATION_MANA_CODE').html("   ");
@@ -291,30 +291,31 @@
 
 
 <body onLoad="LoadPage()">
-      
+         <div id="wrapper">
+
+        <div id="page-wrapper" style="margin: 0px; ">
+        
       <div class="nav" style="width:100%; overflow:hidden;">
-           <div class="main_content"  style="width:1250px;">
+           <div class="main_content"  style="width:1300px;">
                 <div class="ib_function float_right">
                  <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
-                 <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
                  <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
-                 <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
                </div>
                
-            
+             <br><br><br>
 
      <div class="ib_product" style="width:65%;float:left">
      <!-- content (오른쪽 layout시작)  -->
        
   
      
-				<div  style="height:100%;width:39%;float:left">
-					<script type="text/javascript"> createIBSheet("mySheet", "75%", "100%");</script>
+				<div  style="height:100%;width:29%;float:left">
+					<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%");</script>
 				</div>
 			
-				<div style="height:100%;width:0%;float:left"></div>
-				<div  style="height:100%;width:60%;float:left">
-					<script type="text/javascript"> createIBSheet("mySheet2", "180%", "70%"); </script>
+				<div style="height:100%;width:0.9%;float:left"></div>
+				<div  style="height:100%;width:70%;float:left">
+					<script type="text/javascript"> createIBSheet("mySheet2", "200%", "70%"); </script>
 				</div>
         
    
@@ -332,6 +333,9 @@
       
       </div>
       <!--main_content-->
+      </div>
+      </div>
+      
 
 </body>
 </html>

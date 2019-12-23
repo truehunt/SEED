@@ -150,7 +150,6 @@ public class BalControllerImpl implements BalController{
 			searchMap.put("FK_DEPT_CODE", request.getParameter("deptno")); // 부서코드
 			searchMap.put("fk_BAL_CODE", request.getParameter("fk_BAL_CODE")); // 발령자
 			//데이터 조회
-			System.out.println("sawon_확인중...");
 			List<BalVO> data = p0002Service.Sawon(searchMap);
 		    resultMap.put("Data", data);
 		       

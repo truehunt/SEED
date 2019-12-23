@@ -12,10 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import hr.elect.p0002.vo.SignImageVO;
 
 public interface CardController {
-//	public ModelAndView insaBal(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView insaCard(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView sample(HttpServletRequest request, HttpServletResponse response) throws Exception;
-//	public ModelAndView popupHL(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public Map saveData(HttpServletRequest request, HttpServletResponse response ) throws Exception;
 	

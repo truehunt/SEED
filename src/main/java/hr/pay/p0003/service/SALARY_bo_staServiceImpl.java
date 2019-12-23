@@ -29,7 +29,6 @@ public class SALARY_bo_staServiceImpl implements SALARY_bo_staService {
 
 	@Override
 	public List<SALARY_bo_staVO> searchList(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("2. "+searchMap);
 		List<SALARY_bo_staVO> list =  SALARY_bo_staDAO.searchList(searchMap); 
 		return list;
 	}

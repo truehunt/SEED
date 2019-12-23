@@ -45,7 +45,6 @@ public class HBCodeDAOImpl implements HBCodeDAO {
 
 	@Override
 	public void updateData(Map<String, String> row) throws DataAccessException {
-		System.out.println(row);
 		sqlSession.update("hr.system.p0001.updateHB", row);
 	}
 
@@ -56,7 +55,6 @@ public class HBCodeDAOImpl implements HBCodeDAO {
 	
 	@Override
 	public void updatePRICE(Map<String, String> row) throws DataAccessException {
-		System.out.println(row);
 		sqlSession.update("hr.system.p0001.updatePrice", row);
 	}
 

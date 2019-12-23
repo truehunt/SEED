@@ -28,7 +28,6 @@ public class ANNUAL_statusServiceImpl implements ANNUAL_statusService {
 
 	@Override
 	public List<ANNUAL_statusVO> searchList(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("2. "+searchMap);
 		List<ANNUAL_statusVO> list =  ANNUAL_statusDAO.searchList(searchMap); 
 		return list;
 	}

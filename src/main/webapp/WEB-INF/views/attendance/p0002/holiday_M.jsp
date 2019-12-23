@@ -15,29 +15,16 @@
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
 
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css"
-	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css"	rel="stylesheet">
+<link	href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css"	rel="stylesheet">
+<link	href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css"	rel="stylesheet">
+<link	href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css"	rel="stylesheet">
 
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
 <script language="javascript">
 	//시트 높이 계산용
 
@@ -53,91 +40,23 @@
 		mySheet.RemoveAll();
 		//아이비시트 초기화
 		var initSheet = {};
-		initSheet.Cfg = {
-			SearchMode : smLazyLoad,
-			ToolTip : 1
-		};
-		initSheet.HeaderMode = {
-			Sort : 1,
-			ColMove : 1,
-			ColResize : 1,
-			HeaderCheck : 1
-		};
+		initSheet.Cfg = {SearchMode : smLazyLoad,ToolTip : 1};
+		initSheet.HeaderMode = {Sort : 1,ColMove : 1,ColResize : 1,HeaderCheck : 1};
 		initSheet.Cols = [ // 상태, 삭제는 건들면 안됨. SaveName은 VO속성과 동일하게
 		// MinWidth는 최소 길이값.(줄여도 최소길이값 이하로 안줄여짐.)
-		// Align : data 정렬값.
-		// keyfield : keyfield값 필수값 체크시 필요(미입력시 추가안됨.)
-		// MultiLineText:1  : 하나의 셀에 여러값을 넣을수 있음(shift+enter)
-		// Wrap:1 : 데이터
-		{
-			Header : "상태",
-			Type : "Status",
-			SaveName : "STATUS",
-			MinWidth : 40
-		}, {
-			Header : "삭제",
-			Type : "DelCheck",
-			SaveName : "DEL_CHK",
-			MinWidth : 40
-		}, {
-			Header : "결재 상태",
-			Type : "Text",
-			SaveName : "holiday_PAY",
-			MinWidth : 30
-		}, {
-			Header : "신청 일자",
-			Type : "Text",
-			SaveName : "holiday_REGIST",
-			MinWidth : 80,
-			Edit : 0
-		}, {
-			Header : "사원명",
-			Type : "Text",
-			SaveName : "sawon_NAME",
-			MinWidth : 80
-		}, {
-			Header : "부서명",
-			Type : "Text",
-			SaveName : "fk_DEPT_NAME",
-			MinWidth : 80
-		}, {
-			Header : "직급 명",
-			Type : "Text",
-			SaveName : "rank_NAME",
-			MinWidth : 80
-		}, {
-			Header : "휴가구분",
-			Type : "Text",
-			SaveName : "holiday_DIVISION",
-			MinWidth : 60
-		}, {
-			Header : "휴가시작일",
-			Type : "Date",
-			SaveName : "holiday_ANNUAL_STR",
-			MinWidth : 100
-		}, {
-			Header : "휴가종료일",
-			Type : "Date",
-			SaveName : "holiday_ANNUAL_END",
-			MinWidth : 100
-		}, {
-			Header : "휴가사유",
-			Type : "Text",
-			SaveName : "holiday_REASON",
-			MinWidth : 60
-		}, {
-			Header : "사원코드",
-			Type : "Text",
-			SaveName : "fk_HOLIDAY_SAWON_CODE",
-			MinWidth : 60,
-			Hidden : 1
-		}, {
-			Header : "순번",
-			Type : "Text",
-			SaveName : "holiday_NUM",
-			MinWidth : 60,
-			Hidden : 1
-		} ];
+		{Header : "상태",Type : "Status",	SaveName : "STATUS",MinWidth : 40}, 
+		{Header : "삭제",Type : "DelCheck",SaveName : "DEL_CHK",MinWidth : 40}, 
+		{Header : "결재 상태",	Type : "Text",SaveName : "holiday_PAY",MinWidth : 30},
+		{Header : "신청 일자",Type : "Text",SaveName : "holiday_REGIST",MinWidth : 80,Edit : 0},
+		{Header : "사원명",Type : "Text",SaveName : "sawon_NAME",MinWidth : 80},
+		{Header : "부서명",Type : "Text",	SaveName : "fk_DEPT_NAME",MinWidth : 80},
+		{Header : "직급 명",Type : "Text",SaveName : "rank_NAME",MinWidth : 80},
+		{Header : "휴가구분",Type : "Text",SaveName : "holiday_DIVISION",MinWidth : 60},
+		{Header : "휴가시작일",Type : "Date",SaveName : "holiday_ANNUAL_STR",MinWidth : 100},
+		{Header : "휴가종료일",	Type : "Date",SaveName : "holiday_ANNUAL_END",MinWidth : 100},
+		{Header : "휴가사유",Type : "Text",SaveName : "holiday_REASON",MinWidth : 60},
+		{Header : "사원코드",Type : "Text",SaveName : "fk_HOLIDAY_SAWON_CODE",	MinWidth : 60,Hidden : 1},
+		{Header : "순번",	Type : "Text",SaveName : "holiday_NUM",MinWidth : 60,Hidden : 1} ];
 		IBS_InitSheet(mySheet, initSheet);
 		   mySheet.SetEditable(false);
 		// 			select();
@@ -210,7 +129,7 @@
 		return today = "" + year + "-" + month + "-" + date;
 		mySheet.SetCellValue(select_row, 2, today); //조퇴시간
 	}
-	</script>
+</script>
 </head>
 <body onload="LoadPage()">
 <body>
@@ -231,19 +150,21 @@
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
-			<td class="item_title_border">년월선택</td>
-			<td class="item_input"><select id="fd_year" name="fd_year"
-				style="width: 80;"></select> <select id="fd_month" name="fd_month"
-				style="width: 80px;">
-					<option value="">월</option>
-			</select></td>
-			</tr>
-			&emsp;&emsp;
-			</table>
+			<form class="form-inline">
+				<div class="main_content">
+					<td class="item_title_border" class="form-control">년월선택</td>
+					<td class="item_input"><select id="fd_year" name="fd_year"
+						style="width: 80;" class="form-control"></select> <select id="fd_month" name="fd_month"
+						style="width: 90px;" class="form-control">
+							<option value="">월</option>
+					</select></td>
+					</tr>
+					&emsp;&emsp;
+					</table>
 </body>
 
 &emsp;전자결재 상태
-<select name="HOLIDAY_PAY" , id="HOLIDAY_PAY">
+<select name="HOLIDAY_PAY" , id="HOLIDAY_PAY" class="form-control">
 	<option value="">전자 결재 상태</option>
 	<option value="요청">요청</option>
 	<option value="반려">반려</option>
@@ -252,16 +173,17 @@
 <br>
 <br>
 <div class="ib_function float_right">
-	<a href="javascript:doAction('search')" class="f1_btn_gray lightgray">조회</a>
+	<a href="javascript:doAction('search')"
+		class="btn btn-outline btn-primary">조회</a>
 </div>
 선택조건
 
-<select id="select">
+<select id="select" class="form-control">
 	<option value="" selected="selected">선택</option>
 	<option value="sawon_name">사원명</option>
 	<option value="sawon_code">사원코드</option>
 </select>
-<input type="text" name="sawon_num" id="sawon_num">
+<input type="text" name="sawon_num" id="sawon_num" class="form-control">
 <br>
 <br>
 <br>
@@ -269,7 +191,7 @@
 <!-- 공간을 넓게 -->
 <div class="ib_product">
 	<script>
-	createIBSheet("mySheet", "100%", "100%");
+		createIBSheet("mySheet", "100%", "100%");
 	</script>
 </div>
 <!-- /#page-wrapper -->

@@ -853,7 +853,7 @@
 										3. 비밀번호에 아이디 포함불가<br><br>
 		                            	 아래 이미지를 보이는 대로 입력해주세요.
 												<div id="captcha"><img/></div>
-												<br/><input type="text" class="form-control" placeholder="자동입력방지문자 입력" id="captchaInput" name="captchaInput"/>
+												<br/><input type="password" class="form-control" placeholder="자동입력방지문자 입력" id="captchaInput" name="captchaInput"/>
 												<div id="captchaAnswer"><input type="hidden" id="captchaAnswer" name="captchaAnswer" value=""/>
 												</div>
 			                            	</div>

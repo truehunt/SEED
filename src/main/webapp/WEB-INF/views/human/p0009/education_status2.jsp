@@ -185,8 +185,8 @@
             //var param = FormQueryStringEnc(document.frm);
             //alert(param);
             //mySheet.DoSearch("${contextPath}/human/s0001/searchList.do", param);
-            mySheet.DoSearch("${contextPath}/human/p0007/searchList.do");
-            mySheet2.DoSearch("${contextPath}/human/p0007/searchList3.do");
+            mySheet.DoSearch("${contextPath}/human/p0009/searchList3.do");
+            mySheet2.DoSearch("${contextPath}/human/p0009/searchList4.do");
             break;
          case "reload": //초기화
             mySheet.RemoveAll();
@@ -235,7 +235,7 @@
   
       console.log(x);
       pk_EDUCATION_MANA_CODE = mySheet.GetCellValue(row, 0);
-       mySheet2.DoSearch("${pageContext.request.contextPath}/human/p0007/searchList3.do", x);
+       mySheet2.DoSearch("${pageContext.request.contextPath}/human/p0009/searchList4.do", x);
    }
    
    
@@ -278,18 +278,20 @@
 
 
 <body onLoad="LoadPage()">
+
+   <div id="wrapper">
+
+        <div id="page-wrapper" style="margin: 0px; ">
       
       <div class="nav" style="width:100%; overflow:hidden;">
-           <div class="main_content"  style="width:1250px;">
+           <div class="main_content"  style="width:1300px;">
                 <div class="ib_function float_right">
                  <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
-                 <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
                  <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
-                 <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
                </div>
                
             
-
+ <br><br><br>
 
      
      
@@ -306,6 +308,9 @@
 </div>
 
       <!--main_content-->
+      </div>
+      </div>
+      
 
 </body>
 </html>

@@ -172,7 +172,8 @@
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 				
-		//doAction('search');
+		//로딩됨과 동시에 2019001 로 내용 채워짐 
+		doAction('search');
 
 		////콤보박스에 값 불러오기 -> 페이지 로드 시 콤보박스 초기화
  		selectPerson();
@@ -186,13 +187,13 @@
 		//mySheet.DoSearch("${contextPath}/system/p0002/searchList2.do",param); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 	
 		//ibSheet 에서 col 지정해서 숨김
-		/* mySheet.SetColHidden([//0~33번째 까지...실상 전 ibSheet 숨김
+		mySheet.SetColHidden([//0~33번째 까지...실상 전 ibSheet 숨김
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 2, Hidden:1}, {Col: 3, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1}, {Col: 6, Hidden:1}, 
 	      {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1}, {Col: 10, Hidden:1}, {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, 
 	      {Col: 14, Hidden:1}, {Col: 15, Hidden:1}, {Col: 16, Hidden:1}, {Col: 17, Hidden:1}, {Col: 18, Hidden:1}, {Col: 19, Hidden:1}, {Col: 20, Hidden:1}, 
 	      {Col: 21, Hidden:1}, {Col: 22, Hidden:1}, {Col: 23, Hidden:1}, {Col: 24, Hidden:1}, {Col: 25, Hidden:1}, {Col: 26, Hidden:1}, {Col: 27, Hidden:1}, 
 	      {Col: 28, Hidden:1}, {Col: 29, Hidden:1}, {Col: 30, Hidden:1}, {Col: 31, Hidden:1}, {Col: 32, Hidden:1}, {Col: 33, Hidden:1}, {Col: 34, Hidden:1},
-	    ]);  */
+	    ]);
 
 	 // select박스 수정 시 실행되야 되는 함수들 
 		  // select 태그에 person_info_domes_forei_pop인 값의 변경이 있을때 실행
@@ -211,9 +212,6 @@
 			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
 				t_row = 1; 
-			 /* var gender = document.getElementById("person_info_gender");
-				var selectBox = gender.options[gender.selectedIndex].value;
-				//console.log(selectBox); */
 				  
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
@@ -223,9 +221,6 @@
 			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
 				t_row = 1; 
-			 /* var household = document.getElementById("person_info_head_household");
-				var selectBox = household.options[household.selectedIndex].value;
-				//console.log(selectBox); */
 				  
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
@@ -235,9 +230,6 @@
 			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
 				t_row = 1; 
-			 /* var classifi = document.getElementById("person_info_dis_classifi");
-				var selectBox = classifi.options[classifi.selectedIndex].value;
-				//console.log(selectBox); */
 				  
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
@@ -247,9 +239,6 @@
 			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
 				t_row = 1; 
-			 /* var nation = document.getElementById("person_info_nation_mngement");
-				var selectBox = nation.options[nation.selectedIndex].value;
-				//console.log(selectBox); */
 				  
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
@@ -259,9 +248,6 @@
 			    var colArr =  Object.keys(mySheet.SaveNameInfo);
 				var colNum = colArr.indexOf(e.target.id);	
 				t_row = 1; 
-			 /* var resident = document.getElementById("person_info_resident_classifi");
-				var selectBox = resident.options[resident.selectedIndex].value;
-				//console.log(selectBox); */
 				  
 				mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
@@ -272,7 +258,7 @@
 	 function rowCheck(code){//메인화면에서 클릭한 row부분에 대한 사원코드 값 받아옴
 			$('#sawon_code').val(code);
 	 
-			console.log($('#sawon_code'));
+			console.log("personEnroll : "+$('#sawon_code').val());
 			doAction('search');
 			//$("#person_info_gender").val("여성").attr("selected","selected");
 	 }
@@ -325,10 +311,12 @@
 				mySheet.RemoveAll();
 				break;
 			case "save": // 저장
+				var tempStr = mySheet.GetSaveString();
+
 				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
 				//save 를 하면서 중복 처리 됨 
-				var tempStr = mySheet.GetSaveString();
-				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				//tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				
 				mySheet.DoSave("${contextPath}/system/p0002/insertData2.do"); 
 				break;
 			case "insert": //신규행 추가
@@ -440,9 +428,7 @@
 				  	$("#"+v).val(''); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 			  })
 		  }else if(mySheet.GetCellValue(1,3) != -1){ // 데이터가 있을 시 실행
-			 /*  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
-				  	$("#"+v).val(mySheet.GetCellValue(1,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
-			  }) */
+			  
  			  $('#person_info_picture').val(mySheet.GetCellValue(1,4));
 			  $('#person_info_eng_name').val(mySheet.GetCellValue(1,5));
 			  $('#person_info_domes_forei_pop').val(mySheet.GetCellValue(1,6)).attr("selected","selected");
@@ -548,7 +534,6 @@
 //	    <!-- 미리 보기 불러오는 곳 바뀔때마다 바뀜-->
     $(function(){
         $("#photofile").change(function(){
-        	console.log($('#pk_sawon_code').val);
         	readImage(this);
         });
     });
@@ -558,8 +543,8 @@
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                //$('#previewImg').attr('src', e.target.result);
-            	photoCheck(e.target.result); // (사진에 값 넣기)
+                $('#previewImg').attr('src', e.target.result);
+            	//photoCheck(e.target.result); // (사진에 값 넣기)
             }
             reader.readAsDataURL(input.files[0]);
         }
@@ -567,10 +552,10 @@
 
     function fn_formSubmit(){ // 저장 및 업데이트
     	t_row=1;
-    	alert("1.")
     	var form = $("#form1")[0];
     	var formData = new FormData(form);
     	if(document.getElementById('photofile').value != ''){
+    		var tempStr = mySheet.GetSaveString();
     		$.ajax({
 	    		cache : false,
 	    		url: "${contextPath}/system/p0002/imageSave",
@@ -579,13 +564,15 @@
 		        type:"POST", 
 		        data: formData,
 				success: function(result){
+
 					mySheet.SetCellValue(t_row, 'photo', result);
 					document.getElementById('photofile').value = '';
 					var Status = mySheet.GetCellValue(t_row, 'STATUS');
-					
+
 					if(Status == "U"){
 						mySheet.SetCellValue(t_row, "STATUS", "R");
 					}
+					
 				},error:function(request,status,error){
 					alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
 			    },complete : function(data) {
@@ -608,8 +595,8 @@
         } else if(fileDir.substring(fileDir.lastIndexOf(".")+1,fileDir.length).search("png") == -1){
        		alert("지정된 확장자의 파일만 업로드 가능합니다!");
        	  	input.value = null;
-       	 	//$('#previewImg').attr('src', null);
-    		photoCheck(null); // (사진 초기화)
+       	 	$('#previewImg').attr('src', null);
+    		//photoCheck(null); // (사진 초기화)
         }
     }
   
@@ -733,7 +720,7 @@
 				<tr>
 				  	<td align="right">주민 등록번호 : </td>
 	    			<td>
-	    				<input type="text" name="person_info_res_reg_num" id="person_info_res_reg_num" size="33px" placeholder="_ _ _ _ _ _-_ _ _ _ _ _ _">
+	    					<input type="text" name="person_info_res_reg_num" id="person_info_res_reg_num" size="33px" placeholder="_ _ _ _ _ _-_ _ _ _ _ _ _">
 	    			</td>
 				</tr>
 				<tr>

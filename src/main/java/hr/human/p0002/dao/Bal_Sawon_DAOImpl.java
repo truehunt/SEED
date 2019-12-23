@@ -116,7 +116,6 @@ public class Bal_Sawon_DAOImpl implements Bal_Sawon_DAO {
 	//적용버튼
 	@Override
 	public List<BalVO> ContentInsert(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println(searchMap);
 		sqlSession.update("hr.human.p0002.Update",searchMap);
 		sqlSession.update("hr.human.p0002.apply",searchMap);
 		List<BalVO> list = sqlSession.selectList("hr.human.p0002.Content_Div",searchMap);

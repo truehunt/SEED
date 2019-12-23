@@ -20,8 +20,4 @@ public interface InsaCodeService {
 	 public List<InsaCodeVO> deTai(Map<String, Object> searchMap) throws DataAccessException;
 	 
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException ;
-
-	public void updateMember(Map<String, Object> dataMap);
-
-	public void insertMember(Map<String, Object> dataMap);
 }

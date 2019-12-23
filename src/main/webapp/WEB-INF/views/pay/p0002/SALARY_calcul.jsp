@@ -48,10 +48,11 @@ table.ui-datepicker-calendar { display:none; }
       //{Header:"No",Type:"Seq", Align:"Center"},
          {Header:"NO",Type:"Seq",SaveName:"Seq", Align:"Center"},
          {Header:"",Type:"DummyCheck", SaveName:"chk", Width:35, Align:"Center",Edit:1,HeaderCheck:1},
-       {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:60,Align:"Center"},
-       {Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:50, Edit:0},
-       {Header:"직책",Type:"Text",SaveName:"rank_NAME",Width:50, Edit:0},
-       {Header:"직책코드",Type:"Text",SaveName:"rank_CODE",Width:50, Edit:0, Hidden:1}
+       {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:80,Align:"Center"},
+       {Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:70, Edit:0},
+       {Header:"직책",Type:"Text",SaveName:"rank_NAME",Width:80, Edit:0},
+       {Header:"직책코드",Type:"Text",SaveName:"rank_CODE",Width:70, Edit:0, Hidden:1},
+       {Header:"호봉코드",Type:"Text",SaveName:"fk_HOBONG_CODE",Width:70, Edit:0, Hidden:1}
       ];
       IBS_InitSheet(mySheet,initData);
       mySheet.SetDataAutoTrim(0);
@@ -73,10 +74,10 @@ table.ui-datepicker-calendar { display:none; }
          {Header:"NO",Type:"pk_SALARY_CAL_INFO",SaveName:"pk_SALARY_CAL_INFO",  Align:"Center"},
          {Header:"상태",Type:"Status",Width:60,SaveName:"STATUS", Align:"Center"},
    	     {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
-         {Header:"사원코드",Type:"Text",SaveName:"fk_SALARY_CAL_SAWON_CODE",Width:60,Align:"Center", Edit:0},
-         {Header:"지급항목",Type:"Combo", RowSpan:1,Width:100,SaveName:"salary_CAL_SALARY_ITEM"},   
-         {Header:"금액",Type:"AutoSum",SaveName:"salary_CAL_MONEY",Format:"#,### 원",Width:150,Align:"Center", Edit:0},
-         {Header:"지급일",Type:"Text",SaveName:"salary_CAL_PAYMENTDAY",Format:" 일",Width:150,Align:"Center", Edit:0}
+         {Header:"사원코드",Type:"Text",SaveName:"fk_SALARY_CAL_SAWON_CODE",Width:110,Align:"Center", Edit:0},
+         {Header:"지급항목",Type:"Combo", RowSpan:1,Width:150,SaveName:"salary_CAL_SALARY_ITEM"},   
+         {Header:"금액",Type:"AutoSum",SaveName:"salary_CAL_MONEY",Format:"#,### 원",Width:180,Align:"Center", Edit:0},
+         {Header:"지급일",Type:"Text",SaveName:"salary_CAL_PAYMENTDAY",Format:" 일",Width:180,Align:"Center", Edit:0}
 
          ];
       IBS_InitSheet(mySheet2,initData);
@@ -204,9 +205,10 @@ table.ui-datepicker-calendar { display:none; }
    function mySheet_OnSelectCell(oldrow,oldcol,row,col) {
 	   	var xx = document.getElementById("yeardayd");
 	   	var xy = xx.options[xx.selectedIndex].text;  
-		x = "fk_SALARY_CAL_SAWON_CODE=" + mySheet.GetCellValue(row,2) + "&salary_CAL_PAYMENTDAY=" + xy;
-    	rank_code = row;
-    
+		x = "fk_SALARY_CAL_SAWON_CODE=" + mySheet.GetCellValue(row,2) + "&salary_CAL_PAYMENTDAY=" + xy
+		     "&fk_HOBONG_CODE=" + mySheet.GetCellValue(row, 6);
+    	rank_CODE = row;
+    	
       console.log(x);
       pk_sawon_code = mySheet.GetCellValue(row,2);
       mySheet2.DoSearch("${pageContext.request.contextPath}/pay/SALARY_calcul/searchList2.do",x);
@@ -421,7 +423,7 @@ $(function(){
    			yearSuffix : '',
    			
    			showOn: 'both', // 텍스트와 버튼을 함께 보여준다
-   			buttonImage:'https://www.shareicon.net/data/16x16/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
+   			buttonImage:'https://www.shareicon.net/data/27x27/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
    			buttonImageOnly: true,
    			
    			showButtonPanel: true
@@ -593,7 +595,9 @@ function yearday() {
 		               data : {
 		                  "salary_CAL_MONEY" : salary_CAL_MONEY,
 		                  "fk_SALARY_CAL_SAWON_CODE" : fk_SALARY_CAL_SAWON_CODE,
- 		                  "salary_CAL_PAYMENTDAY" : salary_CAL_PAYMENTDAY
+ 		                  "salary_CAL_PAYMENTDAY" : salary_CAL_PAYMENTDAY,
+ 			              "rank_CODE" : rank_CODE,
+ 			              "fk_HOBONG_CODE" : fk_HOBONG_CODE
 		               },
 
 		               dataType : "JSON",
@@ -628,7 +632,8 @@ function yearday() {
 
 		             data : {
 		                "salary_CAL_MONEY" : salary_CAL_MONEY,
-		                "rank_CODE" : rank_CODE
+		                "rank_CODE" : rank_CODE,
+		                "fk_HOBONG_CODE" : fk_HOBONG_CODE
 		             },
 
 		             dataType : "JSON",
@@ -670,10 +675,14 @@ function yearday() {
 			if(Value == '기본급'){
 				fk_SALARY_CAL_SAWON_CODE = mySheet2.GetCellValue(sRow, 'fk_SALARY_CAL_SAWON_CODE');  // 사원코드
 				salary_CAL_PAYMENTDAY = mySheet2.GetCellValue(sRow, 'salary_CAL_PAYMENTDAY');  // 자급알자
+				fk_HOBONG_CODE = mySheet.GetCellValue(mySheet.GetSelectRow(), 'fk_HOBONG_CODE');
+				rank_CODE = mySheet.GetCellValue(mySheet.GetSelectRow(), 'rank_CODE'); //직급코드
+				
 				salary_CAL_MONEY = "기본급"; 
 				selectpay();
 			}else if(Value == '직책수당'){
-				rank_CODE = mySheet.GetCellValue(rank_code, 'rank_CODE'); 
+				rank_CODE = mySheet.GetCellValue(mySheet.GetSelectRow(), 'rank_CODE'); //직급코드
+				fk_HOBONG_CODE = mySheet.GetCellValue(mySheet.GetSelectRow(), 'fk_HOBONG_CODE');
 				console.log("직책코드: "+rank_CODE);// 사원코드
 				salary_CAL_MONEY = "직책수당";
 				selectpay();
@@ -696,14 +705,14 @@ function yearday() {
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-<div class="main_content">
+<div class="main_content" style="padding-left: 0px; padding:0px;">
       
        <div class="exp_product">
             <div class="ib_function float_right">
          <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
          <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
+         <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
          <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
-          <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
          </div>
       </div>
     
@@ -714,45 +723,60 @@ function yearday() {
            
   
    
-   <form class="form-inline">
-                     <div class="row">
-                                <label for="yearday" class="pull-left">
-                               &ensp;&ensp;    귀속연월 &ensp;
-                                </label>
-                         
-                                  <input type="text" class="form-control" id="yearday" onchange="yeardayd()"> 
-                             
-                      
-                     
-                                 <label>
-      &emsp; &emsp;&emsp; &emsp;    지급일 &ensp;
-                                </label>
-                            <div class="input-group custom-search-form col-lg-3">
-                                 <div class="input-group">
-                                 <select id="yeardayd"  class="form-control">
-                                       <option value="" id="yeardayd" selected>전체</option>
-                                 </select>
-                                
-                                 </div>
-                                        
-                             </div>
-                         </div>
-                         </form>
     
-         <br>
-        <form class="form-inline">
-    
-         <label for="SiteList">조회조건</label>
-        &ensp;<select id="SiteList"   onchange="selectDept()" class="form-control" >
-         <option value="" selected>전체</option>
-      </select>   
-       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+<div class="ib_function border_sheet"  style="width: 1087px; height: 78px;">
+     <div class="form-group">
+    <form class="form-inline">
+               <table class="ib_basic">
 
-       <label  for="DeptList">구분</label>
-      &ensp; <select id="DeptList"  class="form-control">
-         <option value="" selected>전체</option>
-      </select>
-            </form>
+				   <tr>
+				        <td width="270"></td>
+						<td> <label for="yearday">귀속연월 </label></td>
+						<td>    
+			<div class="input-group">
+                    <div class="input-group-append">
+                     <input type="button" style="width:90px;" class="form-control" id="yearday" onchange="yeardayd()"> 
+                  </div>
+           </div>
+                        </td>
+			
+                     <td width="160"></td>
+                      
+					 <td><label> 지급일 </label></td>
+                     <td><select id="yeardayd"  class="form-control">
+                           <option value="" id="yeardayd" selected>전체</option>
+                         </select>
+                     </td>
+                     
+					</tr>
+				  
+				  
+				  
+				  
+				 <tr>
+				 		<td width="270"></td>
+						<td> <label for="SiteList"  class="pull-left">조회조건 </label></td>
+						<td><select id="SiteList"   onchange="selectDept()" class="form-control" >
+                              <option value="" selected>전체</option>
+                            </select>  
+                       </td>
+                       
+                       	<td width="160"></td>
+
+					 <td><label  for="DeptList">구분</label></td>
+                     <td><select id="DeptList"  class="form-control">
+                           <option value="" selected>전체</option>
+                         </select>
+                     </td>
+					
+					</tr>
+				  
+               </table> 
+                    </form>
+                 </div>
+          
+             
+           </div>
                  
              
              
@@ -768,15 +792,15 @@ function yearday() {
 
 
 
-<br><br>
+
       <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
               <DIV class="ib_product" style="width:56%;float:left">
-				<div style="height:100%;width:30%;float:left">
+				<div style="height:100%;width:37.5%;float:left">
 					<script type="text/javascript"> createIBSheet("mySheet", "100%", "100%");selectSite(); </script>
 				</div>
 			
-				<div style="height:100%;width:1%;float:left"></div>
+				<div style="height:100%;width:1.5%;float:left"></div>
 				<div style="height:100%;width:50%;float:left">
 					<script type="text/javascript"> createIBSheet("mySheet2", "200%", "100%"); </script>
 				</div>

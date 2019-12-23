@@ -106,7 +106,6 @@ public class SALARY_specControllerImpl implements SALARY_specController {
 		searchMap.put("fk_DEPT_NAME", request.getParameter("fk_DEPT_NAME"));
 		
 
-		System.out.println(request.getParameter("FK_WORKPLACE_CODE"));
 		
 		List<SALARY_specVO> data = SALARY_specService.searchList(searchMap);
         resultMap.put("Data", data);

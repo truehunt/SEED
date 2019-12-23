@@ -41,7 +41,6 @@ public class ChjDAOImpl implements ChjDAO{
 	}
 	@Override
 	public void updateDataChj(Map<String, String> row) throws DataAccessException {
-		System.out.println(" - 확인중 -  :  CHJ" + row);
 		sqlSession.update("hr.human.p0001.updateDataChj", row);
 		
 		List<CertVO> listMap = sqlSession.selectList("hr.human.p0001.COUNTRY_select",row); // count_num이 0인지 아닌지를 조회

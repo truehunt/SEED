@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public interface HoBongController {
 	public ModelAndView hobong(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-//	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map hobongCode(HttpServletRequest request, HttpServletResponse response) throws Exception;  
 	public Map hobongApp(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map hobongTable(HttpServletRequest request, HttpServletResponse response) throws Exception;

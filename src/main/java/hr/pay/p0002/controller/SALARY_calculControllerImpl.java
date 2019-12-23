@@ -92,10 +92,9 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	@ResponseBody
 	public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		Map<String, Object> searchMap = new HashMap<String, Object>(); // �뇦猿볦삕�뜝�럡�돰�댖怨뚰�쀦뤃?
-		Map<String, Object> resultMap = new HashMap<String, Object>(); // �댖怨뚰��?�뤂�뇦猿됲��?沅�
+		Map<String, Object> searchMap = new HashMap<String, Object>(); 
+		Map<String, Object> resultMap = new HashMap<String, Object>(); 
 		
-		// �뇦猿볦삕�뜝�럡�돰�댖怨뚰�쀦뤃酉귥삕�땻類㏃삕?�젧
 		searchMap.put("TA_ATTRIBUTION", request.getParameter("TA_ATTRIBUTION"));
 		searchMap.put("TA_PAYMENTDAY", request.getParameter("TA_PAYMENTDAY"));
 		
@@ -119,8 +118,8 @@ public class SALARY_calculControllerImpl implements SALARY_calculController {
 	@ResponseBody
 	public Map searchList2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		Map<String, Object> searchMap = new HashMap<String, Object>(); // �뇦猿볦삕�뜝�럡�돰�댖怨뚰�쀦뤃?
-		Map<String, Object> resultMap = new HashMap<String, Object>(); // �댖怨뚰��?�뤂�뇦猿됲��?沅�
+		Map<String, Object> searchMap = new HashMap<String, Object>(); 
+		Map<String, Object> resultMap = new HashMap<String, Object>(); 
 		
 		
 		searchMap.put("PK_SAWON_CODE", request.getParameter("PK_SAWON_CODE"));

@@ -272,7 +272,6 @@ public class Bal_Sawon_ControllerImpl implements Bal_Sawon_Controller{
 		// 검색조건설정
 		String Code = null;
 		// 부서와 프로젝트를 제외한 나머지 일 경우
-		System.out.println(request.getParameter("Num_code"));
 		if("부서".equals(request.getParameter("Num_code"))) {
 			//데이터 조회
 			List<BalVO> data = p0002Service.BalAfter_INFO(searchMap);

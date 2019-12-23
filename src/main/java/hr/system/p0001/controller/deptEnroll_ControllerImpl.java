@@ -62,17 +62,6 @@ public class deptEnroll_ControllerImpl implements deptEnroll_Controller {
       return main;
    }
 
-   @Override
-   @RequestMapping(value = "/human/s0003/ibsheet.do", method = { RequestMethod.GET, RequestMethod.POST })
-   public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
-      String viewName = getViewName(request);
-      viewName = "/human/s0003/ibsheet_basic";
-      request.setCharacterEncoding("utf-8");
-      //ModelAndView main = new ModelAndView("hr/p0001_init");
-      ModelAndView main = new ModelAndView(viewName);
-      return main;
-   }
-   
    //부서 메인
    @Override
    @RequestMapping(value = "/human/s0003/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -83,8 +72,10 @@ public class deptEnroll_ControllerImpl implements deptEnroll_Controller {
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
       
       // 검색조건설정
+      String code = request.getParameter("code");
+      System.out.println("code : "+code);
       searchMap.put("code", request.getParameter("code"));
-      System.out.println(searchMap);
+      
       
       //데이터 조회
       List<DeptEnroll_VO> data = deptEnroll_Service.searchList(searchMap);
@@ -138,8 +129,6 @@ public class deptEnroll_ControllerImpl implements deptEnroll_Controller {
       request.setCharacterEncoding("utf-8");
       Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 저장할Data
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
-      
-      System.out.println("c!!");
       
       // 저장 Data 추출하기
       Enumeration enu = request.getParameterNames();

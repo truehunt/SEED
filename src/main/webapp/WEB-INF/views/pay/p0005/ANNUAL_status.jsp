@@ -56,12 +56,12 @@ table.ui-datepicker-calendar { display:none; }
          mySheet.InitHeaders(header,info);  
          
          var cols = [   
-        	 {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:100,Align:"Center", Edit:0},
-        	 {Header:"이름",Type:"Text",SaveName:"sawon_NAME",Width:100,Align:"Center", Edit:0},
-        	 {Header:"부서",Type:"Text",SaveName:"fk_DEPT_NAME",Width:80,Align:"Center", Edit:0},
-        	 {Header:"직책",Type:"Text",SaveName:"rank_NAME",Width:80,Align:"Center", Edit:0},
-             {Header:"구분",Type:"Text",SaveName:"salary_CAL_SALARY_ITEM",Width:150,Align:"Center", Edit:0},
-             {Header:"지급액",Type:"AutoSum", RowSpan:1,SaveName:"salary_CAL_MONEY",Width:150, Edit:0,Format:"#,### 원"},         
+        	 {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:180,Align:"Center", Edit:0},
+        	 {Header:"이름",Type:"Text",SaveName:"sawon_NAME",Width:180,Align:"Center", Edit:0},
+        	 {Header:"부서",Type:"Text",SaveName:"fk_DEPT_NAME",Width:140,Align:"Center", Edit:0},
+        	 {Header:"직책",Type:"Text",SaveName:"rank_NAME",Width:160,Align:"Center", Edit:0},
+             {Header:"구분",Type:"Text",SaveName:"salary_CAL_SALARY_ITEM",Width:210,Align:"Center", Edit:0},
+             {Header:"지급액",Type:"AutoSum", RowSpan:1,SaveName:"salary_CAL_MONEY",Width:215, Edit:0,Format:"#,### 원"},         
 
       
             ]; 
@@ -351,7 +351,7 @@ table.ui-datepicker-calendar { display:none; }
             yearSuffix : '',
             
             showOn: 'both', // 텍스트와 버튼을 함께 보여준다
-            buttonImage:'https://www.shareicon.net/data/16x16/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
+            buttonImage:'https://www.shareicon.net/data/27x27/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
             buttonImageOnly: true,
             
             showButtonPanel: true
@@ -395,7 +395,7 @@ table.ui-datepicker-calendar { display:none; }
                 <!-- /.col-lg-12 -->
             </div>
 
-  <div class="main_content">
+  <div class="main_content" style="padding-left: 0px; padding:0px;">
     <div class="ib_function float_right" style="padding:10 20">
          <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
          <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
@@ -407,35 +407,51 @@ table.ui-datepicker-calendar { display:none; }
          
          
             <br>
-         <form class="form-inline">
-  <div class="form-group">
-    <label for="yearday"></label>
-    <input type="text" class="form-control" id="yearday" >
-    
-  </div>
-  
-  &emsp;&ensp;
-   <label for="SiteList">조회조건</label>
-        &ensp;<select id="SiteList"   onchange="selectDept()" class="form-control" >
-         <option value="" selected>전체</option>
-      </select>   
-       &emsp;&emsp;&ensp;
-       <label for="DeptList">구분</label>
-      &ensp; <select id="DeptList"  class="form-control">
-         <option value="" selected>전체</option>
-      </select>
-  
- </form>
+  <div class="ib_function border_sheet"  style="width: 1087px; height: 42px;">
+     <div class="form-group">
+    <form class="form-inline">
+               <table class="ib_basic">
+
+				   <tr>
+				        <td width="170"></td>
+						<td> <label for="yearday">연도</label></td>
+						<td>    
+			<div class="input-group">
+                    <div class="input-group-append">
+                     <input type="button" style="width:90px;" class="form-control" id="yearday" onchange="yeardayd()"> 
+                  </div>
+           </div>
+                        </td>
+			
+			            <td width="170"></td> 
+						<td> <label for="SiteList"  class="pull-left">조회조건 </label></td>
+						<td><select id="SiteList"   onchange="selectDept()" class="form-control" >
+                              <option value="" selected>전체</option>
+                            </select>  
+                       </td>
+                       
+                  
+                     <td width="170"></td>
+					 <td><label  for="DeptList">구분</label></td>
+                     <td><select id="DeptList"  class="form-control">
+                           <option value="" selected>전체</option>
+                         </select>
+                     </td>
+					
+					</tr>
+				  
+               </table> 
+             </form>
+            </div>
+          
+             
+           </div>
 
  </div>
 
 
 
-   
-   
-   
-
-<br><br>
+  
      <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
               <DIV class="ib_product" style="width:100%;float:left">

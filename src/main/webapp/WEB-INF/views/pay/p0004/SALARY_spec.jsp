@@ -48,9 +48,9 @@ table.ui-datepicker-calendar { display:none; }
       //{Header:"No",Type:"Seq", Align:"Center"},
          {Header:"NO",Type:"Seq",SaveName:"Seq", Align:"Center"},
          {Header:"",Type:"DummyCheck", SaveName:"chk", Width:35, Align:"Center",Edit:1,HeaderCheck:1},
-       {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:60,Align:"Center"},
-       {Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:50, Edit:0},
-       {Header:"부서",Type:"Text",SaveName:"fk_DEPT_NAME",Width:50, Edit:0},
+       {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:100,Align:"Center"},
+       {Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:100, Edit:0},
+       {Header:"부서",Type:"Text",SaveName:"fk_DEPT_NAME",Width:100, Edit:0},
       ];
       IBS_InitSheet(mySheet,initData);
       mySheet.SetDataAutoTrim(0);
@@ -72,8 +72,8 @@ table.ui-datepicker-calendar { display:none; }
        mySheet2.InitHeaders(header,info);  
        
        var cols = [   
-           {Header:"구분",Type:"Text",SaveName:"salary_CAL_SALARY_ITEM",Width:250,Align:"Center", Edit:0},
-           {Header:"지급액",Type:"AutoSum", RowSpan:1,SaveName:"salary_CAL_MONEY",Width:300, Edit:0,Format:"#,### 만원"}         
+           {Header:"구분",Type:"Text",SaveName:"salary_CAL_SALARY_ITEM",Width:355,Align:"Center", Edit:0},
+           {Header:"지급액",Type:"AutoSum", RowSpan:1,SaveName:"salary_CAL_MONEY",Width:355, Edit:0,Format:"#,### 만원"}         
 
     
           ]; 
@@ -629,7 +629,7 @@ function yearday() {
 
 <div id="wrapper">
 
-        <div id="page-wrapper" style="margin: 0px;">
+        <div id="page-wrapper" style="margin: 0px; ">
             <div class="row">
                 <div class="col-lg-12">
                 <h1 class="page-header"><i class="fa fa-money fa-fw"></i> <s:message code="main.pay4"/></h1>
@@ -640,7 +640,7 @@ function yearday() {
  
   
  
-  <div class="main_content" style="padding-left: 0px;">
+  <div class="main_content" style="padding-left: 0px; padding:0px;">
       
        <div class="exp_product">
             <div class="ib_function float_right">
@@ -657,13 +657,13 @@ function yearday() {
  <br>  
   
 
-<div class="ib_function border_sheet"  style="width: 790px; height: 78px;">
+<div class="ib_function border_sheet"  style="width: 1087px; height: 78px;">
      <div class="form-group">
     <form class="form-inline">
                <table class="ib_basic">
 
 				   <tr>
-				        <td width="145"></td>
+				        <td width="270"></td>
 						<td> <label for="yearday">귀속연월 </label></td>
 						<td>    
 			<div class="input-group">
@@ -673,7 +673,7 @@ function yearday() {
            </div>
                         </td>
 			
-                     <td width="145"></td>
+                     <td width="160"></td>
                       
 					 <td><label> 지급일 </label></td>
                      <td><select id="yeardayd"  class="form-control">
@@ -687,14 +687,14 @@ function yearday() {
 				  
 				  
 				 <tr>
-				 		<td width="145"></td>
+				 		<td width="270"></td>
 						<td> <label for="SiteList"  class="pull-left">조회조건 </label></td>
 						<td><select id="SiteList"   onchange="selectDept()" class="form-control" >
                               <option value="" selected>전체</option>
                             </select>  
                        </td>
                        
-                       	<td width="145"></td>
+                       	<td width="160"></td>
 
 					 <td><label  for="DeptList">구분</label></td>
                      <td><select id="DeptList"  class="form-control">
@@ -713,18 +713,15 @@ function yearday() {
    
  </div>
 
-
-
-<br>
       <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
-              <DIV class="ib_product" style="width:70%;float:left">
-            <div style="height:100%;width:25%;float:left">
-               <script type="text/javascript"> createIBSheet("mySheet", "95%", "100%"); selectSite(); </script>
+              <DIV class="ib_product" style="width:100%;float:left">
+            <div style="height:100%;width:26%;float:left">
+               <script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); selectSite(); </script>
             </div>
             
-            <div style="height:100%;width:0.1%;float:left"></div>
-            <div style="height:100%;width:65%;float:left">
+            <div style="height:100%;width:1%;float:left"></div>
+            <div style="height:100%;width:68%;float:left">
                <script type="text/javascript"> createIBSheet("mySheet2", "100%", "100%"); </script>
             </div>
             

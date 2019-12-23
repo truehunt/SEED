@@ -32,10 +32,10 @@
 	}
 	.content {
 		  margin-left: 400px;
-		  margin-top:-720px;
+		  margin-top:-705px;
 		  float: right;
 		  width: 900px;
-		  height: 720px;
+		  height: 705px;
 		  border : 1px solid lightblue;
 	}
 	.main_content{
@@ -158,7 +158,7 @@
 		contents = document.getElementById("tab_contents");
 		createIBTab(tabBar,contents,"myTabs",{
 			widthTabBar: "100%",
-			heightContents:($(window).height()-970) + "px"
+			heightContents:($(window).height()-975) + "px"
 	    });
 		
 		myTabs.setOptions({
@@ -234,10 +234,6 @@
 	 	
 	 });
 	 
-/* 	 function rowCheck(val){
-		console.log(val);
-	 } */
-	
 	/*Sheet 각종 처리*/
 	function doAction(sAction) {
 		switch(sAction) {
@@ -253,10 +249,12 @@
 				mySheet.RemoveAll();
 				break;
 			case "save": // 저장
+				var tempStr = mySheet.GetSaveString();
+			
 				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
 				//save 를 하면서 중복 처리 됨 
-				var tempStr = mySheet.GetSaveString();
-				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				//tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				
 				mySheet.DoSave("${contextPath}/system/p0002/insertData.do");
 				break;
 			case "insert": //신규행 추가
@@ -339,7 +337,34 @@
 		}
 	   $("#dept_pop").modal("show");   
 	   
-}
+	}
+	
+	//호봉 팝업
+	function fn_Popup_Hobong(sawon_code, id, price, frameId){
+		if($("#hobong_pop").html() == ''){
+			$.ajax({
+		        url: "${contextPath}/system/p0002/Modal_Popup_Hobong.do", //view
+		        type: "post",
+		        //data: {"sawon_code" : sawon_code},
+		    }).success(function(result){
+		                $("#hobong_pop").html(result);
+		                 
+		                //if(i == 0){
+		                	Loading3();
+		                	createIBSheet2($("#ib-container1")[0],"mySheet4", "100%", "300px");
+		                	IBS_InitSheet(mySheet4,initSheet);
+		            		Action_popup3('list', sawon_code, id, price, frameId);
+		            		i++;
+		                //}else{
+		                //	$("#ib-container1_copy").after(container1);
+		                //} 
+		    });
+		} else {
+    		Action_popup3('list', sawon_code, id, price, frameId);
+		}
+	   $("#hobong_pop").modal("show");   
+	   
+	}
 	
 </script>
 </head>
@@ -394,12 +419,12 @@
 		<form id ="search" action="javascript:searchState();">
 		   	<div style="border : 1px solid lightblue; width:29%;">
 	    		<h5><p class='indent' />조회 기준 : 
-	    		<input type="radio" id="chk_info" name="chk_info" value="OFFICE" onClick="searchState();" checked> 재직 &nbsp;
+	    		<input type="radio" id="chk_info" name="chk_info" value="OFFICE" onClick="searchState();"> 재직 &nbsp;
 	    		<input type="radio" id="chk_info" name="chk_info" value="RETIREMENT" onClick="searchState();"> 퇴직 &nbsp;
 	    		<input type="radio" id="chk_info" name="chk_info" value="" onClick="searchState();"  checked="checked"> 전체  &nbsp;<br></h5>
 	    		<h5><p class='indent' />사원 검색 : <input type="text" id="sawon_search" name="sawon_search" size="13px">&nbsp;
 	    		<button type="submit" value="조회">조회</button></h5>
-	    	</div><br>
+	    	</div><div style="height:5px;"></div>
     	</form>		
   <%-- nav (왼쪽 layout)시작 --%>
   <div class="nav">
@@ -411,8 +436,8 @@
 		<div class="clear hidden"></div>
 		<div class="ib_product"><script>createIBSheet("mySheet", "100%", "150%");</script></div>
 	
-	  </div> <!-- //nav  -->
-	  </div> <!-- //onClick -->
+	  </div> <!-- //main_content  -->
+	  </div> <!-- //nav -->
 	  <!-- content (오른쪽 layout시작)  -->
 		<div class="content" >
 	 		<div id="tab" class="ib-tab-tabs" style="margin-left:3px; margin-top:-1px;">
@@ -430,5 +455,6 @@
   
      <!-- 공통 팝업 --><div id="common_pop" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ></div></div>
      <!-- 부서 팝업 --><div id="dept_pop" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ></div></div>
+     <!-- 호봉 팝업 --><div id="hobong_pop" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" ></div></div>
 </body>
 </html>

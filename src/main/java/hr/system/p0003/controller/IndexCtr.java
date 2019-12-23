@@ -74,12 +74,6 @@ public class IndexCtr {
 	        modelMap.addAttribute("listview2", listview2);
         } else {
         	 
-        // -----------------------------------------
-        
-        
-        
-        //List<?> listtime = indexSvc.selectTimeLine();
-        // modelMap.addAttribute("listtime", listtime);
         }
         
         return "indexCalen";

@@ -80,7 +80,7 @@ function fn_DeptSelected() {
                 
                 		<div class="modal-body">
 				            <!-- /.row -->
-				                    <div style="max-height:400px;" >
+				                    <div style="max-height:600px;" >
 								    	<div id="tree">
 										</div>
 									</div>

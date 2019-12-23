@@ -42,7 +42,6 @@
 			column="holiday_CALC_LEFT_ANNUAL" />
 		<result property="fk_holiday_calc_sawon_code"
 			column="fk_holiday_calc_sawon_code" />
-		<result property="holiday_DAYS" column="holiday_DAYS" />
 		<result property="sum_HOLIDAY" column="sum_HOLIDAY" />
 	</resultMap>
 
@@ -74,13 +73,19 @@
 		parameterType="java.util.Map"> 
 		
       <![CDATA[
-          	select distinct holiday_DIVISION,
+        select distinct holiday_DIVISION,
+          	s.sawon_name, s.rank_name, s.fk_dept_name,
 			holiday_PAY,
 			holiday_REASON,	
 			holiday_ANNUAL_STR,
 			holiday_ANNUAL_END,	
-			holiday_REGIST , fk_HOLIDAY_SAWON_CODE, holiday_NUM
-			from holiday h, sawon s
+			holiday_REGIST , 
+            holiday_NUM,sum_holiday,
+            case when (#{fd_year1}-substr(s.sawon_join_date,1,4)) >= '0' then (  #{fd_year1}-substr(s.sawon_join_date,1,4))+'10' else 0 end as HOLIDAY_INT_DATE
+			
+            from sawon s, holiday h left outer join (select  nvl(sum(holiday_days),0) as sum_holiday,
+            fk_holiday_sawon_code from holiday where  substr(holiday_annual_str,1,4) =   '2019' /**P*/
+            group by fk_holiday_sawon_code)k ON (h.fk_holiday_sawon_code = k.fk_holiday_sawon_code)
       ]]>
 
 		<where>
@@ -95,7 +100,15 @@
 			</if>
 
 		</where>
-
+		group by s.sawon_name, s.rank_name, s.fk_dept_name, s.sawon_JOIN_DATE,
+		HOLIDAY_INT_USER_ID,
+		HOLIDAY_INT_DATE, HOLIDAY_MOD_USER_ID,
+		HOLIDAY_ANNUAL_STR, holiday_REGIST, holiday_NUM,
+		sum_holiday,case when
+		( #{fd_year1}-substr(s.sawon_join_date,1,4)) >= '0' then (
+		#{fd_year1}-substr(s.sawon_join_date,1,4))+'10' else 0 end,
+		pk_sawon_code, holiday_DIVISION, holiday_PAY, holiday_REASON,
+		holiday_ANNUAL_END, k.sum_holiday
 	</select>
 
 
@@ -122,14 +135,20 @@
 		parameterType="java.util.Map"> 
 		
       <![CDATA[
-          	select distinct holiday_DIVISION,
+      select distinct holiday_DIVISION,
           	s.sawon_name, s.rank_name, s.fk_dept_name,
 			holiday_PAY,
 			holiday_REASON,	
 			holiday_ANNUAL_STR,
 			holiday_ANNUAL_END,	
-			holiday_REGIST , fk_HOLIDAY_SAWON_CODE, holiday_NUM
-			from holiday h, sawon s
+			holiday_REGIST , 
+            
+            holiday_NUM,sum_holiday,
+            case when (#{fd_year1}-substr(s.sawon_join_date,1,4)) >= '0' then ( #{fd_year1} -substr(s.sawon_join_date,1,4))+'10' else 0 end as HOLIDAY_INT_DATE
+			
+            from sawon s, holiday h left outer join (select  nvl(sum(holiday_days),0) as sum_holiday,
+fk_holiday_sawon_code from holiday where  substr(holiday_annual_str,1,4) =  #{fd_year1}
+   group by fk_holiday_sawon_code)k ON (h.fk_holiday_sawon_code = k.fk_holiday_sawon_code)
       ]]>
 
 		<where>
@@ -151,8 +170,76 @@
 
 			</if>
 		</where>
+		group by s.sawon_name, s.rank_name, s.fk_dept_name, s.sawon_JOIN_DATE,
+		HOLIDAY_INT_USER_ID,
+		HOLIDAY_INT_DATE, HOLIDAY_MOD_USER_ID,
+		HOLIDAY_ANNUAL_STR, holiday_REGIST, holiday_NUM,
+		sum_holiday,
+		case when
+		( #{fd_year1} -substr(s.sawon_join_date,1,4)) >= '0' then (
+		#{fd_year1} -substr(s.sawon_join_date,1,4))+'10' else 0 end,
+		pk_sawon_code, holiday_DIVISION, holiday_PAY, holiday_REASON,
+		holiday_ANNUAL_END, k.sum_holiday
 
 	</select>
+
+
+
+	<select id="searchList_holi_da2" resultMap="p0002Result01"
+		parameterType="java.util.Map"> 
+		
+      <![CDATA[
+     select distinct pk_sawon_code,
+            sawon_name,
+               nvl(sum_holiday,0),
+            case when ( #{fd_year1}-substr(s.sawon_join_date,1,4)) >= '0' then (  #{fd_year1} -substr(s.sawon_join_date,1,4))+'10' else 0 end as HOLIDAY_INT_DATE
+			
+            from sawon s, holiday h left outer join (select  nvl(sum(holiday_days),0) as sum_holiday,
+fk_holiday_sawon_code from holiday 
+where  substr(holiday_annual_str,1,4) = #{fd_year1}
+
+   group by fk_holiday_sawon_code)k ON (h.fk_holiday_sawon_code = k.fk_holiday_sawon_code)
+      ]]>
+
+		<where>
+			h.fk_HOLIDAY_SAWON_CODE = s.pk_sawon_code
+			and pk_sawon_code = (select
+			distinct
+			pk_sawon_code
+			from sawon
+			where sawon_name = #{sawon_NAME}
+			and
+			fk_DEPT_NAME = #{fk_DEPT_NAME}
+			and rank_name = #{rank_NAME})
+			and h.fk_holiday_sawon_code = pk_sawon_code
+		</where>
+	</select>
+
+
+<select id="searchList_holi_da1" resultMap="p0002Result01"
+		parameterType="java.util.Map"> 
+		
+      <![CDATA[
+     select distinct pk_sawon_code,
+            sawon_name,
+            nvl(sum_holiday,0),
+            case when ( #{fd_year1}-substr(s.sawon_join_date,1,4)) >= '0' then (  #{fd_year1} -substr(s.sawon_join_date,1,4))+'10' else 0 end as HOLIDAY_INT_DATE
+			
+            from sawon s, holiday h left outer join (select  nvl(sum(holiday_days),0) as sum_holiday,
+fk_holiday_sawon_code from holiday 
+where  substr(holiday_annual_str,1,4) = #{fd_year1}
+
+   group by fk_holiday_sawon_code)k ON (h.fk_holiday_sawon_code = k.fk_holiday_sawon_code)
+      ]]>
+
+		<where>
+			h.fk_HOLIDAY_SAWON_CODE = s.pk_sawon_code
+			and pk_sawon_code = #{sawon_CODE}
+			and h.fk_holiday_sawon_code = pk_sawon_code
+			
+		</where>
+	</select>
+
 
 	<select id="searchList_holiM" resultMap="p0002Result01"
 		parameterType="java.util.Map"> 
@@ -170,14 +257,19 @@
 
 		<where>
 			fk_dept_name = (select fk_dept_name
-							from sawon
-							where pk_sawon_code =  #{PK_SAWON_CODE,jdbcType=VARCHAR})
-			and fk_holiday_sawon_code in (select pk_sawon_code
-										from sawon 
+			from sawon
+			where pk_sawon_code =
+			#{PK_SAWON_CODE,jdbcType=VARCHAR})
+			and
+			fk_holiday_sawon_code in (select
+			pk_sawon_code
+			from sawon
 			where fk_dept_name = (select fk_dept_name
-									from sawon
-			where pk_sawon_code =  #{PK_SAWON_CODE,jdbcType=VARCHAR}))
-			and h.fk_holiday_sawon_code = s.pk_sawon_code
+			from
+			sawon
+			where pk_sawon_code = #{PK_SAWON_CODE,jdbcType=VARCHAR}))
+			and
+			h.fk_holiday_sawon_code = s.pk_sawon_code
 			<if test="HOLIDAY_PAY != '' and HOLIDAY_PAY != null">
 				and HOLIDAY_PAY = #{HOLIDAY_PAY}
 			</if>
@@ -195,12 +287,14 @@
 			</if>
 		</where>
 	</select>
-	
+
 	<update id="updateData_holi_da" parameterType="java.util.Map">
 
 		update holiday set
-		holiday_division = #{holiday_DIVISION,jdbcType=VARCHAR},
-		holiday_regist = #{holiday_REGIST,jdbcType=VARCHAR},
+		holiday_division =
+		#{holiday_DIVISION,jdbcType=VARCHAR},
+		holiday_regist =
+		#{holiday_REGIST,jdbcType=VARCHAR},
 		holiday_pay =
 		#{holiday_PAY,jdbcType=VARCHAR},
 		holiday_annual_str =
@@ -218,9 +312,13 @@
 		and fk_DEPT_NAME =
 		#{fk_DEPT_NAME,jdbcType=VARCHAR}
 		and rank_name =
-		#{rank_NAME,jdbcType=VARCHAR}),
-		holiday_DAYS =
-		(#{holiday_ANNUAL_END}-#{holiday_ANNUAL_STR}+1)
+		#{rank_NAME,jdbcType=VARCHAR})
+		<if test="holiday_DIVISION =='연가'">
+			<if test="holiday_PAY =='승인'">
+				,holiday_DAYS =
+				(#{holiday_ANNUAL_END}-#{holiday_ANNUAL_STR}+1)
+			</if>
+		</if>
 		where holiday_NUM =
 		#{holiday_NUM,jdbcType=VARCHAR}
 	</update>
@@ -233,7 +331,7 @@
 		(holiday_division, holiday_pay, holiday_regist,
 		fk_holiday_sawon_code,
 		holiday_annual_str,holiday_annual_end,
-		holiday_reason,holiday_NUM,holiday_DAYS)
+		holiday_NUM,holiday_reason)
 		values(#{holiday_DIVISION,jdbcType=VARCHAR},
 		#{holiday_PAY,jdbcType=VARCHAR},
 		#{holiday_REGIST,jdbcType=VARCHAR},
@@ -248,10 +346,13 @@
 		#{rank_NAME,jdbcType=VARCHAR}),
 		#{holiday_ANNUAL_STR,jdbcType=VARCHAR},
 		#{holiday_ANNUAL_END,jdbcType=VARCHAR},
-		#{holiday_REASON,
-		jdbcType=VARCHAR},(select NVL(max(holiday_NUM)+1,0)from holiday),
-		(#{holiday_ANNUAL_END}-#{holiday_ANNUAL_STR}+1))
-
+		(select
+		NVL(max(holiday_NUM)+1,0)from holiday),
+		#{holiday_REASON,jdbcType=VARCHAR})
+		<if test="holiday_PAY =='승인'">
+			holiday_DAYS =
+			(#{holiday_ANNUAL_END}-#{holiday_ANNUAL_STR}+1)
+		</if>
 	</insert>
 
 	<!-- 삭제 화면 <완성> -->
@@ -282,14 +383,14 @@
 			and
 			b.fk_BUSINESS_TRIP_SAWON_CODE = #{PK_SAWON_CODE,jdbcType=VARCHAR}
 			<if test="HOLIDAY_PAY != '' and HOLIDAY_PAY != null">
-				and HOLIDAY_PAY = #{HOLIDAY_PAY}
+				and business_trip_pay = #{HOLIDAY_PAY}
 			</if>
 			and b.business_TRIP_STR like #{fd_year,jdbcType=VARCHAR}
 		</where>
 
 	</select>
 
-<!-- 출장 내역 조회 -->
+	<!-- 출장 내역 조회 -->
 	<select id="searchList_businM" resultMap="p0002Result02"
 		parameterType="java.util.Map"> 
 		
@@ -304,18 +405,27 @@
       ]]>
 
 		<where>
-			 fk_dept_name = (select fk_dept_name
-							from sawon
-							where pk_sawon_code =  #{PK_SAWON_CODE,jdbcType=VARCHAR})
-			and fK_business_trip_sawon_code in (select pk_sawon_code
-										from sawon 
-			where fk_dept_name = (select fk_dept_name
-									from sawon
-			where pk_sawon_code =   #{PK_SAWON_CODE,jdbcType=VARCHAR}))
-			and b.fK_business_trip_sawon_code = s.pk_sawon_code
-			and b.fk_BUSINESS_TRIP_SAWON_CODE = #{PK_SAWON_CODE,jdbcType=VARCHAR}
+			fk_dept_name = (select fk_dept_name
+			from sawon
+			where pk_sawon_code =
+			#{PK_SAWON_CODE,jdbcType=VARCHAR})
+			and
+			fK_business_trip_sawon_code in
+			(select pk_sawon_code
+			from sawon
+			where fk_dept_name = (select
+			fk_dept_name
+			from sawon
+			where pk_sawon_code =
+			#{PK_SAWON_CODE,jdbcType=VARCHAR}))
+			and
+			b.fK_business_trip_sawon_code =
+			s.pk_sawon_code
+			and
+			b.fk_BUSINESS_TRIP_SAWON_CODE =
+			#{PK_SAWON_CODE,jdbcType=VARCHAR}
 			<if test="HOLIDAY_PAY != '' and HOLIDAY_PAY != null">
-				and HOLIDAY_PAY = #{HOLIDAY_PAY}
+				and business_trip_pay = #{HOLIDAY_PAY}
 			</if>
 			and b.business_TRIP_STR like #{fd_year,jdbcType=VARCHAR}
 		</where>
@@ -549,19 +659,4 @@ fk_holiday_sawon_code from holiday where  substr(holiday_annual_str,1,4) = #{fd_
 		delete holiday <!-- from 생략가능 -->
 		where holiday_NUM = #{holiday_NUM, jdbcType=VARCHAR}
 	</delete>
-
-	<!-- ========================================================================================================================================= -->
-	<select id="select" resultType="java.util.HashMap"> 
-      <![CDATA[
-        select dept_name
-		from dept
-      ]]>
-	</select>
-
 </mapper>
-<!-- 사원 -->
-<!-- 휴가 = 조회 / 수정 / 삭제 -->
-<!-- 출장 = 조회 / 수정 / 삭제 -->
-<!-- 관리자 -->
-<!-- 휴가 = 조회 / 수정 / 삭제 -->
-<!-- 출장 = 조회 / 수정 / 삭제 -->

@@ -32,6 +32,7 @@ public interface holiday_Service {
 	public void insertMember(Map<String, Object> dataMap);
 
 	public List<HashMap<String,String>> select() throws DataAccessException;
+	public List<holiday_VO> searchList_holi_da2(Map<String, Object> searchMap) throws DataAccessException;
 	
 
 	

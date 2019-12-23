@@ -36,6 +36,7 @@ public interface holiday_DAO {
 	public void insertData_calc(Map<String, String> row);
 	public void updateData_calc(Map<String, String> row) throws DataAccessException;
 	public void deleteData_calc(Map<String, String> row) throws DataAccessException;
+	public List<holiday_VO> searchList_holi_da2(Map<String, Object> searchMap);
 	
 	
 	

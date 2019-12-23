@@ -92,7 +92,6 @@ public class TA_inputControllerImpl implements TA_inputController {
 		Map<String, Object> searchMap = new HashMap<String, Object>(); 
 		Map<String, Object> resultMap = new HashMap<String, Object>(); 
 		
-		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙?젟
 		searchMap.put("TA_ATTRIBUTION", request.getParameter("TA_ATTRIBUTION"));
 		searchMap.put("TA_PAYMENTDAY", request.getParameter("TA_PAYMENTDAY"));
 		
@@ -116,8 +115,8 @@ public class TA_inputControllerImpl implements TA_inputController {
 	@ResponseBody
 	public Map searchList2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
-		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		Map<String, Object> searchMap = new HashMap<String, Object>(); 
+		Map<String, Object> resultMap = new HashMap<String, Object>(); 
 		
 	
 		searchMap.put("PK_SAWON_CODE", request.getParameter("PK_SAWON_CODE"));
@@ -145,7 +144,6 @@ public class TA_inputControllerImpl implements TA_inputController {
 	
 
 		
-		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬?돳
 		List<TA_inputVO> data = TA_inputService.SiteList(searchMap);
         resultMap.put("Data", data);
         
@@ -159,8 +157,8 @@ public class TA_inputControllerImpl implements TA_inputController {
 	@ResponseBody
 	public Map DeptList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
-		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		Map<String, Object> searchMap = new HashMap<String, Object>(); 
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
 
 		
@@ -182,8 +180,8 @@ public class TA_inputControllerImpl implements TA_inputController {
 	@ResponseBody
 	public Map DeptList2(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
-		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		Map<String, Object> searchMap = new HashMap<String, Object>(); 
+		Map<String, Object> resultMap = new HashMap<String, Object>(); 
 		
 		
 		
@@ -229,8 +227,8 @@ public class TA_inputControllerImpl implements TA_inputController {
 	@ResponseBody
 	public Map yeardayd(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援?
-		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬?돳野껉퀗?궢
+		Map<String, Object> searchMap = new HashMap<String, Object>(); 
+		Map<String, Object> resultMap = new HashMap<String, Object>(); 
 		
 		
 		
@@ -253,8 +251,8 @@ public class TA_inputControllerImpl implements TA_inputController {
 	@ResponseBody
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 占쏙옙占쎌삢占쎈막Daa
-		Map<String, Object> resultMap = new HashMap<String, Object>(); // 筌ｌ꼶?봺野껉퀗?궢
+		Map<String, String[]> dataMap = new HashMap<String, String[]>(); 
+		Map<String, Object> resultMap = new HashMap<String, Object>(); 
 		
 		
 		Enumeration enu = request.getParameterNames();

@@ -7,9 +7,6 @@ import org.springframework.dao.DataAccessException;
 
 import hr.system.p0001.vo.DeptEnroll_VO;
 
-
-
-
 public interface deptEnroll_DAO {
 	public List<DeptEnroll_VO> searchList(Map<String, Object> searchMap) throws DataAccessException;
 	

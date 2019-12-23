@@ -73,7 +73,7 @@
 				Header : "상태",
 				Type : "Status",
 				SaveName : "STATUS",
-				MinWidth : 40
+				MinWidth : 40,
 			}, {
 				Header : "삭제",
 				Type : "DelCheck",
@@ -84,16 +84,19 @@
 				Type : "Text",
 				SaveName : "holiday_REGIST",
 				MinWidth :80,
+				Edit : 0
 			}, {
 				Header : "전자결재 상태",
 				Type : "Text",
 				SaveName : "holiday_PAY",
-				MinWidth : 30
+				MinWidth : 30,
+				Edit : 0
 			}, {
 				Header : "휴가구분",
-				Type : "Text",
+				Type : "Combo",
 				SaveName : "holiday_DIVISION",
-				MinWidth : 60
+				MinWidth : 60,
+				ComboCode:"연가|병가|특별휴가"
 			}, {
 				Header : "휴가시작일",
 				Type : "Date",
@@ -121,7 +124,28 @@
 					SaveName : "holiday_NUM",
 					MinWidth : 60,
 				    Hidden :1
-				}  ];
+				},{
+					Header : "근속연차",
+					Type : "Text",
+					MinWidth : 80,
+					SaveName : "holiday_INT_DATE",
+					Align : "Center",
+					Hidden :1
+				} ,{
+					Header : "사용연차",
+					Type : "Text",
+					SaveName : "sum_HOLIDAY",
+					MinWidth : 80,
+					Align : "Center",
+					Hidden :1
+				},{
+					Header : "잔여연차",
+					Type : "Text",
+					SaveName : "holiday_CALC_LEFT_ANNUAL",
+					MinWidth : 80,
+					Align : "Center",
+					Hidden :1
+				}   ];
 			IBS_InitSheet(mySheet, initSheet);
 		//mySheet.SetEditable(false);
 		//mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
@@ -146,49 +170,72 @@
 			break;
 
 		case "save": // 저장
-			mySheet.DoSave("${contextPath}/attendance/p0002/insertData_holi.do");
+			for (var i = 1; i <= mySheet.RowCount(); i++) {
+				if(mySheet.GetCellValue(i,'STATUS') == 'I'){
+					var fd_year = $('#fd_year option:selected').val();
+					var nm = mySheet.GetCellValue(i,8);
+					var cnt = i;
+					$.ajax({
+						url : "searchList_holi_da2.do", // 알아서 주소를 칠 것.
+						type : "post",
+						data : {sawon_code : nm, fd_year : fd_year}
+					}).success(function(data){
+						var int_date = data['Data'][0].holiday_INT_DATE; 
+						var sum_Hol = data['Data'][0].sum_HOLIDAY
+						var num = int_date - sum_Hol;
+						mySheet.SetCellValue(cnt,'holiday_INT_DATE',int_date);
+						mySheet.SetCellValue(cnt,'sum_HOLIDAY',sum_Hol);
+						mySheet.SetCellValue(cnt,'holiday_CALC_LEFT_ANNUAL',num);
+								if (mySheet.GetCellValue(cnt, 'holiday_DIVISION') == '연가') {
+									if(((mySheet.GetCellValue(cnt, 6))- (mySheet.GetCellValue(cnt, 5)) + 1) > (mySheet.GetCellValue(cnt, 12))){
+										alert("잔여일수보다 신청일수가 큽니다.남은 잔여일수는 "
+												+ (mySheet.GetCellValue(cnt, 12)) + "일 입니다.")
+										return false;
+									}
+								}
+						mySheet.DoSave("${contextPath}/attendance/p0002/insertData_holi.do");
+						}
+					);
+				}
+				mySheet.GetCellValue(i, 6);
+				mySheet.GetCellValue(i, 5);
+				// 
+				
+				if (mySheet.GetCellValue(i, 5) > mySheet.GetCellValue(i, 6)) {
+					alert(i + "열의 날짜를 정확히 입력해주세요");
+					return false;
+				}
+			
+				if (mySheet.GetCellValue(i, 'STATUS') != 'R') {
+					if (mySheet.GetCellValue(i, 'holiday_DIVISION') == '연가') {
+						(((mySheet.GetCellValue(i, 6))
+								- (mySheet.GetCellValue(i, 5)) + 1) > (mySheet
+								.GetCellValue(i, 15)))
+						alert("잔여일수보다 신청일수가 큽니다. 남은 잔여일수는 "
+								+ (mySheet.GetCellValue(i, 12)) + "입니다.")
+						return false;
+					}
+				}
+			if(mySheet.GetCellValue(i,'STATUS') == 'U'){
+				mySheet.DoSave("${contextPath}/attendance/p0002/insertData_holi.do");
+			}
+			if((mySheet.GetCellValue(i,'STATUS') == "D")){
+				mySheet.DoSave("${contextPath}/attendance/p0002/deleteData_holi.do");
+			}
+				
+			}
 			break;
 
 		case "insert": //신규행 추가
-			var row = mySheet.DataInsert();
+			var row = mySheet.DataInsert(-1);
 		    var select_row = mySheet.GetSelectRow();
 			var val2 = '<%=session.getAttribute("PK_SAWON_CODE")%>';
-            mySheet.SetCellValue(select_row, 8, val2);
+            mySheet.SetCellValue(select_row,8, val2);
         	mySheet.SetCellValue(select_row, 2, getToday());
         	mySheet.SetCellValue(select_row, 3, '요청');
 			break;
 		}
 	}
-   
-// 	 function mySheet_OnSearchEnd() {
-// 		// mySheet.SetRowEditable(1, 0);
-// 		//  1열 수정불가
-// 	 }
-//   function selectSite() {
-//       $.ajax({ // 
-//          url : "${contextPath}/attendance/p0002/searchList.do",//목록을 조회 할 url
-//          type : "POST",
-//          dataType : "JSON",
-//          data : { "pk_SAWON_CODE": val1},
-//          success : function(data) {
-//             var NAME_CODE = ""; // 성명 
-//             var DEPT_CODE = ""; // 부서
-//             var RANK_CODE = ""; // 직급코드
-//             for (var i = 0; i < data['Data'].length; i++) {
-//          	   NAME_CODE = data['Data'][i].sawon_NAME;
-//          	   DEPT_CODE = data['Data'][i].fk_RANK_NAME;
-//          	   RANK_CODE = data['Data'][i].rank_NAME;
-               
-//                   mySheet.SetCellValue(1,4,NAME_CODE);
-//                   mySheet.SetCellValue(1,5,DEPT_CODE);
-//                   mySheet.SetCellValue(1,6,RANK_CODE);
-                  
-//             }
-//          },
-//          error : function(jqxhr, status, error) {
-//          }
-//       });
-//    }
    
  // mySheet 조회 끝나기 직전 이벤트 
   function mySheet_OnSearchEnd() {
@@ -205,19 +252,31 @@
 		if (mySheet.GetCellValue(Row, 3) != "요청") {
 			mySheet.SetRowEditable(Row, 0);
 		}
-	}
-	
-	$(document).ready(function(){            
-        var now = new Date();
-        var nyear = now.getFullYear();
-        
-        //년도 selectbox만들기               
-        for(var sy = 2015 ; sy <= nyear ; sy++) {
-            $('#fd_year').append('<option value="' + sy + '">' + sy + '년</option>');    
-        }
+		var num = mySheet.GetCellValue(Row, 11)
+		var num1 = mySheet.GetCellValue(Row, 10)
+		num = Number(num1) - Number(num)
+		mySheet.SetCellValue(Row, 12, num)
+		mySheet.SetCellValue(Row, 0, "R")
 
-        jQuery("#fd_year  > option[value="+nyear+"]").attr("selected", "true");    
-    })
+	}
+	function mySheet_OnSelectCell() {
+
+	}
+
+	$(document).ready(
+			function() {
+				var now = new Date();
+				var nyear = now.getFullYear();
+
+				//년도 selectbox만들기               
+				for (var sy = 2015; sy <= nyear; sy++) {
+					$('#fd_year').append(
+							'<option value="' + sy + '">' + sy + '년</option>');
+				}
+
+				jQuery("#fd_year  > option[value=" + nyear + "]").attr(
+						"selected", "true");
+			})
 
 	// 오늘 날짜 삽입
 	function getToday() {
@@ -229,9 +288,9 @@
 		if ((month + "").length < 2) { //2자리가 아니면 0을 붙여줌.
 			month = "0" + month;
 		}
-	    if((date + "").length < 2){        //2자리가 아니면 0을 붙여줌.
-            date = "0" + date;
-        }
+		if ((date + "").length < 2) { //2자리가 아니면 0을 붙여줌.
+			date = "0" + date;
+		}
 		// ""을 빼면 year + month (숫자+숫자) 됨.. ex) 2018 + 12 = 2030이 리턴됨.
 		return today = "" + year + "-" + month + "-" + date;
 		mySheet.SetCellValue(select_row, 2, today); //조퇴시간
@@ -243,9 +302,7 @@
 <body>
 
 	<div id="wrapper">
-
 		<div id="page-wrapper" style="margin: 0px;">
-
 			<!--tab 하단의 메인 타이틀(제목) 들어가는 부분 -->
 			<div class="row">
 				<div class="col-lg-12">
@@ -258,33 +315,39 @@
 				</div>
 				<!-- /.col-lg-12 -->
 			</div>
-			기준년도
-	<td class="item_input"><select id="fd_year" name="fd_year"
-		style="width: 80px;"></select></td>
-&emsp; &emsp;  전자결재 상태
-<select id="HOLIDAY_PAY", name = "HOLIDAY_PAY">
-	<option value="">전자 결재 상태</option>
-	<option value="요청">요청</option>
-	<option value="반려">반려</option>
-	<option value="승인">승인</option>
-</select>
-<br>
-<div class="ib_function float_right">
-	<a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
-	<a href="javascript:doAction('search')" class="f1_btn_gray lightgray">조회</a>
-	<a href="javascript:doAction('save')" class="f1_btn_gray lightgray">저장</a>
-</div>
+			<form class="form-inline">
+				<br>
+				<td class="item_title_border">기준년도</td> <select id="fd_year"
+					name="fd_year" style="width: 100px;" class="form-control"></select>
+				</td> &emsp; &emsp; 전자결재 상태 <select id="HOLIDAY_PAY" , name="HOLIDAY_PAY"
+					class="form-control" style="width: 150px;">
+					<option value="">전자 결재 상태</option>
+					<option value="요청">요청</option>
+					<option value="반려">반려</option>
+					<option value="`승인">승인</option>
+				</select> <br>
+				<div class="ib_function float_right">
+					<a href="javascript:doAction('insert')"
+						class="btn btn-outline btn-primary">추가</a> <a
+						href="javascript:doAction('search')"
+						class="btn btn-outline btn-primary">조회</a> <a
+						href="javascript:doAction('save')"
+						class="btn btn-outline btn-primary">저장</a>
+				</div>
+			</form>
 
-<div class="exp_product"></div>
-<!-- 공간을 넓게 -->
-<div class="ib_product">
-	<script>
-		createIBSheet("mySheet", "100%", "100%");
-	</script>
-</div>
-<!-- /#page-wrapper -->
+			<div class="exp_product"></div>
+			<!-- 공간을 넓게 -->
+			<div class="ib_product">
+				<script>
+					createIBSheet("mySheet", "100%", "100%");
+				</script>
+			</div>
+		</div>
 
-</div>
-<!-- /#wrapper -->
+		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
 </body>
 </html>

@@ -12,12 +12,6 @@
 		<result property="daily_TA_OFF_TIME" column="daily_TA_OFF_TIME" />
 		<result property="daily_TA_WORK_TIME"
 			column="daily_TA_WORK_TIME" />
-		<result property="daily_TA_HOLI_WORK"
-			column="daily_TA_HOLI_WORK" />
-		<result property="daily_TA_EXTEN_WORK"
-			column="daily_TA_EXTEN_WORK" />
-		<result property="daily_TA_NIGHT_WORK"
-			column="daily_TA_NIGHT_WORK" />
 		<result property="daily_TA_LATE_TIME"
 			column="daily_TA_LATE_TIME" />
 		<result property="daily_TA_LEAVE_TIME"
@@ -58,19 +52,16 @@
       ]]>
 		<where>
 			FK_DAILY_TA_SAWON_CODE = #{PK_SAWON_CODE}
-			<if
-				test=" PK_DAILY_TA_WORKING_DATE != '' and PK_DAILY_TA_WORKING_DATE != null">
-				and pk_DAILY_TA_WORKING_DATE = #{PK_DAILY_TA_WORKING_DATE}
-				<if test="option != '' and select != null">
-					<if test="option =='late'">
-						and daily_TA_LATE_TIME is not null
-					</if>
-					<if test="option =='early'">
-						and s.daily_TA_LEAVE_TIME is not null
-					</if>
-					<if test="option =='long'">
-						and daily_TA_EXTEN_WORK is not null
-					</if>
+			and substr(pk_daily_ta_working_date,1,6) = #{fd_year}
+			<if test="work != '' and work != null">
+				<if test="work =='late'">
+					and daily_TA_LATE_TIME is not null
+				</if>
+				<if test="work =='early'">
+					and daily_TA_LEAVE_TIME is not null
+				</if>
+				<if test="work =='long'">
+					and daily_TA_EXTEN_WORK is not null
 				</if>
 			</if>
 		</where>
@@ -102,6 +93,29 @@
 		</where>
 	</select>
 
+	<select id="searchList_month_da" resultMap="p0001Result01"
+		parameterType="java.util.Map"> 
+		
+      <![CDATA[
+   select s.sawon_NAME, s.rank_NAME, s.fk_DEPT_NAME,s.pk_SAWON_CODE
+    from sawon s
+     ]]>
+		<where>
+			fk_dept_name = (select fk_dept_name
+			from sawon
+			where pk_sawon_code = #{PK_SAWON_CODE,jdbcType=VARCHAR})
+						<if test="option != '' and option != null">
+				<if test="option =='sawon_code'">
+					and s.PK_SAWON_CODE = #{sawon_num}
+				</if>
+				<if test="option =='sawon_name'">
+					and s.SAWON_NAME = #{sawon_num}
+				</if>
+
+			</if>
+		</where>
+	</select>
+
 	<select id="searchList_month_click" resultMap="p0001Result01"
 		parameterType="java.util.Map"> 
       <![CDATA[
@@ -122,10 +136,9 @@
       ]]>
 
 		<where>
-TO_CHAR(TO_DATE(substr(pk_daily_ta_working_date,1,7),
-			'YYYY-MM'), 'YYYYMM') = #{fd_year}
+			substr(pk_daily_ta_working_date,1,6)= #{fd_year}
 			and s.pk_sawon_code = d.fk_daily_ta_sawon_code
-
+			and fk_daily_ta_sawon_code = #{sawon_code}
 			<if test="option != '' and option != null">
 				<if test="option =='dept_name'">
 					and s.FK_DEPT_NAME = #{sawon_num}
@@ -140,7 +153,7 @@ TO_CHAR(TO_DATE(substr(pk_daily_ta_working_date,1,7),
 		</where>
 	</select>
 
-<!-- 근태등록 화면 / 관리자 화면 -->
+	<!-- 근태등록 화면 / 관리자 화면 -->
 	<select id="da_searchList" resultMap="p0001Result01"
 		parameterType="java.util.Map"> 
       <![CDATA[
@@ -161,8 +174,9 @@ TO_CHAR(TO_DATE(substr(pk_daily_ta_working_date,1,7),
       ]]>
 
 		<where>
-TO_CHAR(TO_DATE(substr(pk_daily_ta_working_date,1,7),
-			'YYYY-MM'), 'YYYYMM') = #{fd_year}
+			TO_CHAR(TO_DATE(substr(pk_daily_ta_working_date,1,7),
+			'YYYY-MM'),
+			'YYYYMM') = #{fd_year}
 			s.pk_sawon_code = d.fk_daily_ta_sawon_code
 
 			<if test="option != '' and option != null">
@@ -194,12 +208,6 @@ TO_CHAR(TO_DATE(substr(pk_daily_ta_working_date,1,7),
 		#{daily_TA_OFF_TIME,jdbcType=VARCHAR} ,
 		DAILY_TA_WORK_TIME =
 		#{daily_TA_WORK_TIME,jdbcType=VARCHAR},
-		DAILY_TA_HOLI_WORK =
-		#{daily_TA_HOLI_WORK,jdbcType=VARCHAR} ,
-		DAILY_TA_EXTEN_WORK =
-		#{daily_TA_EXTEN_WORK,jdbcType=VARCHAR} ,
-		DAILY_TA_NIGHT_WORK =
-		#{daily_TA_NIGHT_WORK,jdbcType=VARCHAR},
 		DAILY_TA_LATE_TIME =
 		#{daily_TA_LATE_TIME,jdbcType=VARCHAR} ,
 		DAILY_TA_LEAVE_TIME=
@@ -231,18 +239,13 @@ TO_CHAR(TO_DATE(substr(pk_daily_ta_working_date,1,7),
 		#{daily_TA_OFF_TIME,jdbcType=VARCHAR} ,
 		DAILY_TA_WORK_TIME =
 		#{daily_TA_WORK_TIME,jdbcType=VARCHAR},
-		DAILY_TA_HOLI_WORK =
-		#{daily_TA_HOLI_WORK,jdbcType=VARCHAR} ,
-		DAILY_TA_EXTEN_WORK =
-		#{daily_TA_EXTEN_WORK,jdbcType=VARCHAR} ,
-		DAILY_TA_NIGHT_WORK =
-		#{daily_TA_NIGHT_WORK,jdbcType=VARCHAR},
 		DAILY_TA_LATE_TIME =
 		#{daily_TA_LATE_TIME,jdbcType=VARCHAR} ,
 		DAILY_TA_LEAVE_TIME=
 		#{daily_TA_LEAVE_TIME,jdbcType=VARCHAR},
 		daily_TA_END =
-		#{daily_TA_END,jdbcType=VARCHAR}
+		#{daily_TA_END,jdbcType=VARCHAR},
+		daily_TA_EXTEN_WORK = #{daily_TA_EXTEN_WORK,jdbcType=VARCHAR}
 		where num = #{num,
 		jdbcType=VARCHAR}
 	</update>

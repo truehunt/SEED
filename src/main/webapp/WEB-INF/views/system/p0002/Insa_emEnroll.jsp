@@ -175,7 +175,9 @@
 
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
-		//doAction('search');
+		
+		//로딩됨과 동시에 2019001 로 내용 채워짐 
+		doAction('search');
 		
 		//mySheet.DoSearch("${contextPath}/system/p0002/searchList3.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 		 
@@ -186,25 +188,21 @@
 		$('#em_info_includ_work_peri').html("   ");
 		
 		//ibSheet 에서 col 지정해서 숨김
-		 /* mySheet.SetColHidden([//0~39번째 까지...실상 전 ibSheet 숨김
+		 mySheet.SetColHidden([//0~39번째 까지...실상 전 ibSheet 숨김
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 2, Hidden:1}, {Col: 3, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1}, {Col: 6, Hidden:1}, 
 	      {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1}, {Col: 10, Hidden:1}, {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, 
 	      {Col: 14, Hidden:1}, {Col: 15, Hidden:1}, {Col: 16, Hidden:1}, {Col: 17, Hidden:1}, {Col: 18, Hidden:1}, {Col: 19, Hidden:1}, {Col: 20, Hidden:1}, 
 	      {Col: 21, Hidden:1}, {Col: 22, Hidden:1}, {Col: 23, Hidden:1}, {Col: 24, Hidden:1}, {Col: 25, Hidden:1}, {Col: 26, Hidden:1}, {Col: 27, Hidden:1}, 
 	      {Col: 28, Hidden:1}, {Col: 29, Hidden:1}, {Col: 30, Hidden:1}, {Col: 31, Hidden:1}, {Col: 32, Hidden:1}, {Col: 33, Hidden:1}, {Col: 34, Hidden:1},
 	      {Col: 35, Hidden:1}, {Col: 36, Hidden:1}, {Col: 37, Hidden:1}, {Col: 38, Hidden:1}, {Col: 39, Hidden:1}, {Col: 40, Hidden:1},
-	    ]);   */
+	    ]);
 	 // onClick 이벤트 중 select 태그에 em_info_offi_division인 값의 변경이 있을때 실행
 		  $("#em_info_offi_division").change(function(e){ 
 			  var colArr =  Object.keys(mySheet.SaveNameInfo);
 			  var colNum = colArr.indexOf(e.target.id);	
 			  t_row = 1; 	
 				 
-			 /* var offi = document.getElementById("em_info_offi_division");
-				var selectBox = offi.options[offi.selectedIndex].value;
-				//console.log(selectBox); */
-				  
-				mySheet.SetCellValue(t_row, colNum, e.target.value);
+			  mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
 			
 		  // onClick 이벤트 중 select 태그에 em_info_prob_appli인 값의 변경이 있을때 실행
@@ -212,12 +210,8 @@
 			  var colArr =  Object.keys(mySheet.SaveNameInfo);
 			  var colNum = colArr.indexOf(e.target.id);	
 			  t_row = 1; 
-			  
-				 /* var prob = document.getElementById("em_info_prob_appli");
-				var selectBox = prob.options[prob.selectedIndex].value;
-				//console.log(selectBox); */
-				  
-				mySheet.SetCellValue(t_row, colNum, e.target.value);
+			    
+			  mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
 			
 		  // onClick 이벤트 중 select 태그에 em_info_includ_work_peri인 값의 변경이 있을때 실행
@@ -225,18 +219,15 @@
 			  var colArr =  Object.keys(mySheet.SaveNameInfo);
 			  var colNum = colArr.indexOf(e.target.id);	
 			  t_row = 1; 
-				 /* var includ = document.getElementById("em_info_includ_work_peri");
-				var selectBox = includ.options[includ.selectedIndex].value;
-				//console.log(selectBox); */
-				  
-				mySheet.SetCellValue(t_row, colNum, e.target.value);
+				
+			  mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
 	}
 	
 	 function rowCheck(code){//메인화면에서 클릭한 row부분에 대한 사원코드 값 받아옴
 			$('#sawon_code').val(code);
 	 
-	 		console.log($('#sawon_code'));
+	 		console.log("emEnroll : "+$('#sawon_code').val());
 	 		doAction('search');		
 	 }
 	 
@@ -304,14 +295,14 @@
 				mySheet.RemoveAll();
 				break;
 			case "save": // 저장
+
+				var tempStr = mySheet.GetSaveString();
+
 				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
 				//save 를 하면서 중복 처리 됨 
-// 				if(mySheet.RowCount() == -1){
-					
-// 				}
-				var tempStr = mySheet.GetSaveString();
-				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
-				console.log("save: "+$('#STATUS').val + "입니다.");
+				//tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				
+				//console.log("save: "+$('#STATUS').val + "입니다.");
 				mySheet.DoSave("${contextPath}/system/p0002/insertData3.do");
 				break;
 			case "insert": //신규행 추가
@@ -397,9 +388,6 @@
 				  	$("#"+v).val(''); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 			  })
 		  }else if(mySheet.GetCellValue(1,3) != -1){ // 데이터가 있을 시 실행
-			 /*  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
-				  	$("#"+v).val(mySheet.GetCellValue(1,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
-			  }) */
 
  			  $('#em_info_join_date').val(mySheet.GetCellValue(1,4));
 			  $('#em_info_resi_date').val(mySheet.GetCellValue(1,5));

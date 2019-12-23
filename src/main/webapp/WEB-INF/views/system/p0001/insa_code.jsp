@@ -155,6 +155,15 @@
 		mySheet2.DoSearch("${pageContext.request.contextPath}/system/p0001/detai.do", x);
 	}
 
+// 	// 기타이벤트 // 키보드 버튼이 올라올 시
+// 	function mySheet2_OnKeyUp(Row, Col, KeyCode, Shift) {
+// 		if (Modify == 1) { //인사코드 부분 - 수정 가능일시이니까 / 인사기록카드에서는 상관x
+// 			if (KeyCode == 13 && Col == mySheet2.LastCol()
+// 					&& Row == mySheet2.RowCount()) { // 엔터를 누르고 / col이 마지막 col이고 / row가 마지막 열일경우
+// 				doAction("insert");
+// 			}
+// 		}
+// 	}
 </script>
 
 <body onload="LoadPage()">

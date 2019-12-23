@@ -29,7 +29,6 @@ public class SbDAOImpl implements SbDAO{
 	}
 	@Override
 	public void updateDataSb(Map<String, String> row) throws DataAccessException {
-		System.out.println(" - 확인중 -  :  SB" + row);
 		sqlSession.update("hr.human.p0001.updateDataSb", row);
 	}
 	@Override

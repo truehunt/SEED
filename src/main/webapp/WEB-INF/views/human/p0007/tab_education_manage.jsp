@@ -104,7 +104,7 @@
 	contents = document.getElementById("tab_contents");
 	createIBTab(tabBar,contents,"myTabs",{
 		widthTabBar: "100%",
-		heightContents:($(window).height()-200) + "px"
+		heightContents:($(window).height()-750) + "px"
     });
 	
 	myTabs.setOptions({
@@ -144,7 +144,10 @@
 </script>
 </head>
 
-<body  onload='PageLoad()' style="height:300px;"  >
+<body  onload='PageLoad()' style="height:200px;"  >
+   <div id="wrapper">
+
+        <div id="page-wrapper" style="margin: 0px; ">
       
         <div class="row">
 		<div class="col-lg-12">        <!-- 해당 메뉴의 아이콘 -->        <!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
@@ -155,7 +158,7 @@
   
     
         
-       <div class="main_content" style="width:1200px;">
+       <div class="main_content" style="width:1400px; height:200px;">
             <div class="exp_product">
             </div>
 
@@ -167,5 +170,9 @@
              </div>
         </div>
         <!--main contents-->
+        
+        </div>
+        </div>
+        
 </body>
 </html>

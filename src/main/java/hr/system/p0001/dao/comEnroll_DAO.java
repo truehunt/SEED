@@ -7,9 +7,6 @@ import org.springframework.dao.DataAccessException;
 
 import hr.system.p0001.vo.ComEnroll_VO;
 
-
-
-
 public interface comEnroll_DAO {
 	public List<ComEnroll_VO> searchList(Map<String, Object> searchMap) throws DataAccessException;
 

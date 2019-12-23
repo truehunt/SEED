@@ -25,11 +25,17 @@ public class holiday_ServiceImpl implements holiday_Service {
 	@Autowired
 	private holiday_DAO p0002DAO;
 
+	@Override
+	public List<holiday_VO> searchList_holi_da2(Map<String, Object> searchMap) throws DataAccessException {
+		
+		List<holiday_VO> list =  p0002DAO.searchList_holi_da2(searchMap); 
+		List<DateVO> calenList = new ArrayList<DateVO>();
+		return list;
+	}
 	//사원 조회
 	public List<business_VO> searchList_busin(Map<String, Object> searchMap) throws DataAccessException {
 		
 		List<business_VO> list =  p0002DAO.searchList_busin(searchMap); 
-		System.out.println("service_business: "+searchMap);
 		List<DateVO> calenList = new ArrayList<DateVO>();
 		return list;
 	}
@@ -37,6 +43,7 @@ public class holiday_ServiceImpl implements holiday_Service {
 public List<business_VO> searchList_busin_da(Map<String, Object> searchMap) throws DataAccessException {
 		
 		List<business_VO> list =  p0002DAO.searchList_busin_da(searchMap);
+		System.out.println("service_business: "+searchMap);
 		List<DateVO> calenList = new ArrayList<DateVO>();
 		return list;
 	}
@@ -97,12 +104,12 @@ public List<business_VO> searchList_busin_da(Map<String, Object> searchMap) thro
 		List<holiday_VO> list =  p0002DAO.searchList_holi_da(searchMap);
 		
 		List<DateVO> calenList = new ArrayList<DateVO>();
+		System.out.println(list);
 		return list;
 	}
 	
 	//조회
 	public List<holiday_VO> searchList_calc(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("service_searchList_calc: "+searchMap);
 		List<holiday_VO> list =  p0002DAO.searchList_calc(searchMap); 
 //		List<holiday_VO> list1 =  p0002DAO.searchList_calc1(searchMap); 
 		

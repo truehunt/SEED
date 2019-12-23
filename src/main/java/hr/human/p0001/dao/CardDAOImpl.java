@@ -59,28 +59,18 @@ public class CardDAOImpl implements CardDAO {
 	//
 	@Override
 	public void insertData(Map<String, String> row) throws DataAccessException {
-		System.out.println(row);
 		sqlSession.update("hr.human.p0001.insertData", row);
 	}
 	@Override
 	public void updateData(Map<String, String> row) throws DataAccessException {
-		System.out.println(row);
 		sqlSession.update("hr.human.p0001.updateData", row);
 	}
 	@Override
 	public void deleteData(Map<String, String> row) throws DataAccessException {
-		System.out.println(row);
 		sqlSession.update("hr.human.p0001.deleteData", row);
 	}
 	
 	
-//	/**
-//     * 결재이미지 등록화면
-//     */
-//    public SignImageVO selectSignImageOne(String param) {
-//        return sqlSession.selectOne("selectSawonImageOne", param);
-//    }
-    
     /**
      * 결재이미지 저장, 업데이트.
      */
@@ -92,7 +82,6 @@ public class CardDAOImpl implements CardDAO {
      * 등록된 결재 이미지 삭제
      */
     public void deleteSignImage(SignImageVO param) {
-//    	System.out.println(param);
         sqlSession.update("updateSawonImage", param);
 	}
 	

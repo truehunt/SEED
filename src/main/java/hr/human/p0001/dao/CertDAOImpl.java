@@ -25,7 +25,6 @@ public class CertDAOImpl implements CertDAO {
 	//면허/자격
 		@Override
 		public void insertDataCert(Map<String, String> row) throws DataAccessException {
-			System.out.println(row);
 			sqlSession.update("hr.human.p0001.insertDataCert", row); // insert
 			
 			List<CertVO> listMap = sqlSession.selectList("hr.human.p0001.SORT_select",row); // count_num이 0인지 아닌지를 조회
@@ -38,7 +37,6 @@ public class CertDAOImpl implements CertDAO {
 		
 		@Override
 		public void updateDataCert(Map<String, String> row) throws DataAccessException {
-			System.out.println(row);
 			sqlSession.update("hr.human.p0001.updateDataCert", row);
 			
 			List<CertVO> listMap = sqlSession.selectList("hr.human.p0001.SORT_select",row); // count_num이 0인지 아닌지를 조회

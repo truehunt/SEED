@@ -108,7 +108,7 @@ $(document).ready(function(){
 		            	urlToGo = "/SEED/attendance/p0002/holiday.do";
 		            } else if(url === "business"){//출장
 		            	urlToGo = "/SEED/attendance/p0002/business.do";
-		           	//근태관리관리자
+		           			           	//근태관리관리자
 		            } else if(url === "Aday_regist"){//일일 마감관리
 		            	urlToGo = "Aday_regist";
 		            } else if(url === "Amonth"){//월 근태마감
@@ -123,6 +123,12 @@ $(document).ready(function(){
 		            	urlToGo = "Abusiness_da";
 		            } else if(url === "findTA"){//근태조회
 		            	urlToGo = "findTA";
+		            	   } else if(url === "Aholiday_M"){//휴가조회
+		            	urlToGo = "Aholiday_M";
+		            } else if(url === "Abusiness_M"){//출장조회
+		            	urlToGo = "Abusiness_M";
+		            }	else if(url === "Amonth_da"){//출장조회
+			            	urlToGo = "Amonth_da";
 		            // 시스템환경설정
 		            } else if(url === "adcompany_Enroll"){ // 등록정보관리 - 회사등록
 		            	urlToGo = "/SEED/human/s0001/company_Enroll.do";
@@ -371,13 +377,12 @@ $(document).ready(function(){
 	                            <a href="#"><i class="fa fa-user fa-fw"></i> <s:message code="main.T&A"/><span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
 									<li>
-     									<a href='#' onClick="doAction(myTab,'<s:message code="main.findTA"/>','chart','findTA','findTA'); return false"><s:message code="main.findTA"/></a>
-                                	</li>
+     									<a href='#' onClick="doAction(myTab,'<s:message code="main.findTA"/>','chart','Amonth_da','Amonth_da'); return false"><s:message code="main.findTA"/></a>
 	                                <li>
-     									<a href='#' onClick="doAction(myTab,'<s:message code="main.findHoliday2"/>','chart','Aholiday_da','Aholiday_da'); return false"><s:message code="main.findHoliday2"/></a>
+     									<a href='#' onClick="doAction(myTab,'<s:message code="main.findHoliday2"/>','chart','Aholiday_M','Aholiday_M'); return false"><s:message code="main.findHoliday2"/></a>
                                 	</li>
                                 	<li>
-	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.findBT2"/>','chart','Abusiness_da','Abusiness_da'); return false"><s:message code="main.findBT2"/></a>
+	                                    <a href='#' onClick="doAction(myTab,'<s:message code="main.findBT2"/>','chart','Abusiness_M','Abusiness_M'); return false"><s:message code="main.findBT2"/></a>
 	                                </li>
                                 </ul>
                             </li>

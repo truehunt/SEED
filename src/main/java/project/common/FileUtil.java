@@ -96,7 +96,7 @@ public class FileUtil {
             return null;
         }
     
-        String filePath = "D:/workspace/upload";
+        String filePath = "C:/MyProject/workspace/upload";
         String newName = getNewName();
         String basePath = getRealPath(filePath, newName);
         String serverFullPath = basePath + newName;

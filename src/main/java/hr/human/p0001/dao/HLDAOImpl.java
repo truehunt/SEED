@@ -21,7 +21,6 @@ public class HLDAOImpl implements HLDAO {
 	
 	@Override
 	public List<HlVO> ISA_hl(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("3. "+searchMap);
 		List<HlVO> list = sqlSession.selectList("hr.human.p0001.ISA_hl",searchMap);
 		for(int i=0; i<list.size(); i++){
 			num = list.get(i).getPk_HL_CODE();

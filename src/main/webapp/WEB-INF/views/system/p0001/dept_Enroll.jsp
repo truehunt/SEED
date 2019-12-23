@@ -38,13 +38,13 @@
 		width:1300px;
 		border : 1px solid lightblue;
 	}
-	.header_child{
+	.header_child{ <!-- 검색 스타일 -->
 		 height:35px; 
 		 margin-top:10px;
 		 margin-left:30px;
 	}
 	p.indent{
-		 padding-left:37em; 
+		 padding-left:43em; 
 		 margin-left:48%;
 		 height:-30px;
 	}
@@ -211,12 +211,6 @@
 		];   
 		IBS_InitSheet( mySheet , initdata);
 		
-		//ibSheet 에서 col 지정해서 숨김
-		//mySheet1.SetColHidden([
-	    //   {Col: 0, Hidden:1}, //상태
-	    // ]);
-		//mySheet.SetDataAutoTrim(0);
-		
 		var initdata = {};
 		
 		initdata.Cfg = {SearchMode:smLazyLoad, Page:50};
@@ -324,9 +318,7 @@
 		t_row1 = Row;
 		t_col1 = Col;
 		t_col2 = Col+1;
-		//console.log("t_row1:"+t_row1);
-		//console.log("t_col1:"+t_col1);
-		//console.log("t_col2:"+t_col2);
+
 		switch(Col){
 		case 4:
 			 //사업장도움 코드
@@ -480,7 +472,7 @@
 			case "search": //조회
 				//검색하려는 값 받아옴
 				var param = FormQueryStringEnc(document.frm);
-				alert(param);
+// 				alert(param);
 
 				mySheet.DoSearch("${contextPath}/human/s0003/searchList.do",param);
 				mySheet2.DoSearch("${contextPath}/human/s0003/searchList2.do");
@@ -500,11 +492,11 @@
 				mySheet5.RemoveAll();
 				break;
 			case "save": // 저장
-				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
+				//var tempStr = mySheet.GetSaveString();
+				
 				//save 를 하면서 중복 처리 됨 
-				var tempStr = mySheet.GetSaveString();
-				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
-				//mySheet.DoSave("${contextPath}/human/s0003/insertData.do");
+				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
+				//tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
 				
 				 mySheet.DoSave("${pageContext.request.contextPath}/human/s0003/insertData.do");
 				
@@ -524,7 +516,6 @@
 			case "search": //조회
 				//var param = FormQueryStringEnc(document.frm);
 				//alert(param);
-				//mySheet.DoSearch("${contextPath}/human/s0001/searchList.do", param);
 
 				mySheet2.DoSearch("${contextPath}/human/s0003/searchList2.do");
 				
@@ -534,13 +525,14 @@
 				
 				break;
 			case "save": // 저장
+				
+				var tempStr = mySheet.GetSaveString();
+				
 				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
 				//save 를 하면서 중복 처리 됨 
-				var tempStr = mySheet.GetSaveString();
-				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
-				//mySheet.DoSave("${contextPath}/human/s0003/insertData.do");
+				//tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
 				
-				 mySheet2.DoSave("${pageContext.request.contextPath}/human/s0003/insertData2.do");
+				mySheet2.DoSave("${pageContext.request.contextPath}/human/s0003/insertData2.do");
 				
 				break;
 			case "insert": //신규행 추가
@@ -559,7 +551,7 @@
 	// code: 0(저장성공), -1(저장실패)
 	function mySheet_OnSaveEnd(code,msg){
 		if(msg != ""){
-			alert(msg);	
+ 			alert(msg);	
 			//번호 다시 매기기
             //mySheet.ReNumberSeq();
 		}	
@@ -580,7 +572,8 @@
   <div class="frame">
     <%-- //header 및 container 시작--%>
     	<div class="header">
-    		<div class="header_child">
+    		<div class="header_child"> 
+    		<!-- <div class="ib_function border_sheet"  style="width: 900px; height: 78px;">   -->
     			<form name='frm'>
 		        	 사업장  :  <input type='text' id="code" name="code"/> <!-- 현재는 입력후 조회 버튼 누르면 조회됨 -->
 		        	 		<%-- <select id="fk_workplace_code" name="fk_workplace_code" style="width:9%;">
@@ -591,7 +584,8 @@
 	        		<div class="ib_function float_right">
     	  		  <button type="button" class="btn btn-primary" onclick="doAction('reload')">초기화</button>
 				  <button type="button" class="btn btn-primary" onclick="doAction('insert')">추가</button>
-				  <button class="btn btn-outline btn-primary" onclick="doAction('search')">조회</button>
+				  <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
+				<!-- <button class="btn btn-outline btn-primary" onclick="doAction('search')">조회</button> -->
 				  <button class="btn btn-outline btn-primary" onclick="doAction('save')">저장</button>
 					</div>
 	        	</form>
@@ -632,7 +626,7 @@
 					<script> createIBSheet("mySheet2", "100%", "50%"); </script>
 					
 					<div class="btn-r">
-						<a href="#" class="btn-layerClose lightgray">확인</a>
+						<a href="#" class="btn btn-layerClose btn-outline btn-primary">확인</a>
 		            </div>
             	</div><!--// ib_product-->
         	</div>
@@ -651,8 +645,8 @@
 					<script> createIBSheet("mySheet3", "100%", "50%"); </script>
 								
 					<div class="btn-r">
-						<a href="#" class="btn-layerCheck lightgray">확인</a>
-						<a href="#" class="btn-layerClose lightgray">취소</a>
+						<a href="#" class="btn btn-layerCheck btn-outline btn-primary">확인</a>
+						<a href="#" class="btn btn-layerClose btn-outline btn-primary">취소</a>
 		            </div>
             	</div><!--// ib_product-->
         	</div>
@@ -670,8 +664,8 @@
 				<div class="ib_product" style="margin-left:10px;">
 					<script> createIBSheet("mySheet4", "100%", "50%"); </script>
 				<div class="btn-r">
-					<a href="#" class="btn-layerCheck lightgray">확인</a>
-					<a href="#" class="btn-layerClose lightgray">취소</a>
+					<a href="#" class="btn btn-layerCheck btn-outline btn-primary">확인</a>
+					<a href="#" class="btn btn-layerClose btn-outline btn-primary">취소</a>
 		        </div>
             	</div><!--// ib_product-->
         </div>
@@ -689,8 +683,8 @@
 				<div class="ib_product" style="margin-left:10px;">
 					<script> createIBSheet("mySheet5", "100%", "50%"); </script>
 				<div class="btn-r">
-					<a href="#" class="btn-layerCheck lightgray">확인</a>
-					<a href="#" class="btn-layerClose lightgray">취소</a>
+					<a href="#" class="btn btn-layerCheck btn-outline btn-primary">확인</a>
+					<a href="#" class="btn btn-layerClose btn-outline btn-primary">취소</a>
 		        </div>
             	</div><!--// ib_product-->
         </div>

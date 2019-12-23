@@ -231,10 +231,12 @@
 				mySheet.RemoveAll();
 				break;
 			case "save": // 저장
+				//var tempStr = mySheet.GetSaveString();
+				
 				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
-				//save 를 하면서 중복 처리 됨 
-				var tempStr = mySheet.GetSaveString();
-				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				//save 를 하면서 중복 처리 됨
+				//tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				
 				mySheet.DoSave("${contextPath}/human/s0002/insertData.do");
 				break;
 			case "insert": //신규행 추가
@@ -543,8 +545,8 @@
 		<div class="clear hidden"></div>
 		<div class="ib_product"><script>createIBSheet("mySheet", "68%", "60%");</script></div>
 
-	  </div> <!-- //nav  -->
-	  </div> <!-- //onClick -->
+	  </div> <!-- //main_content  -->
+  </div> <!-- //nav -->
 	  <!-- content (오른쪽 layout시작)  -->
 	 <div class="content" >
 	 	<div class="page_title" style="height:40px;">

@@ -23,6 +23,7 @@ public interface Insa_infoEnroll_Service {
 	
 	public List<Insa_popup_VO> common_pop(Map<String, Object> searchMap) throws DataAccessException; // 인사정보등록-공통 팝업
 	public List<Insa_popup_VO> dept_pop(Map<String, Object> searchMap) throws DataAccessException; // 인사정보등록-부서 팝업
+	public List<Insa_popup_VO> hobong_pop(Map<String, Object> searchMap) throws DataAccessException; // 인사정보등록-호봉 팝업
 	
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException ; // 위와 순서 동일
 	public void saveData2(Map<String, String[]> dataMap)  throws DataAccessException ;

@@ -107,7 +107,6 @@
 		var initData = {};
       	initData.Cfg = {SearchMode:smLazyLoad, Page:50,MergeSheet:msHeaderOnly,ChildPage:10,DragMode:1,SearchSync:1,ComboMaxHeight:50};
       	initData.Cols = [
-      	//{Header:"No",Type:"Seq", Align:"Center"},
       		{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
          	{Header:"NO",Type:"Seq", Align:"Center"},
          	{Header:"",Type:"DummyCheck", SaveName:"chk", Width:35, Align:"Center",Edit:1,Hidden:1},
@@ -207,12 +206,6 @@
 		createIBSheet2($("#ib-container1")[0],"mySheet4", "100%", "300px");
        	IBS_InitSheet(mySheet4,initData);
 		
-// 		//숨김
-// 		mySheet4.SetColHidden([
-// 	      {Col: 0, Hidden:1}, //상태
-// 	      {Col: 3, Hidden:1} // pk값
-// 	    ]);
-       	
 		//mySheet5 //학력
        	initData.Cols = [
        		{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
@@ -236,12 +229,6 @@
           createIBSheet2($("#ib-container2")[0],"mySheet5", "100%", "300px");
           IBS_InitSheet(mySheet5,initData);
           
-//           //숨김
-//           mySheet5.SetColHidden([
-//            {Col: 0, Hidden:1}, //상태
-//            {Col: 3, Hidden:1} // pk값
-//          ]);
-          
       //mySheet6 //경력
         initData.Cols = [
         	{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
@@ -263,12 +250,6 @@
         createIBSheet2($("#ib-container3")[0],"mySheet6", "100%", "300px");
       IBS_InitSheet(mySheet6,initData);
       
-//       //숨김
-//           mySheet6.SetColHidden([
-//           // {Col: 0, Hidden:1}, //상태
-//            //{Col: 3, Hidden:1} // pk값
-//          ]);
-      
       //mySheet7 //면허/자격
         initData.Cols = [
         	{Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
@@ -287,12 +268,6 @@
           
         createIBSheet2($("#ib-container4")[0],"mySheet7", "100%", "300px");
         IBS_InitSheet(mySheet7,initData);
-        
-//        //숨김
-//           mySheet7.SetColHidden([
-//            {Col: 0, Hidden:1}, //상태
-//            {Col: 3, Hidden:1} // pk값
-//          ]);
         
       //mySheet8 //인사발령
       initData.Cols = [
@@ -870,11 +845,7 @@
 	function mySheet11_OnSearchEnd() { // 경력
 		if(mySheet11.RowCount() == 0){	
 			mySheet11.DataInsert(-1);
-		} // 조회시 조회내용이 없으면 한줄 추가
-// 		for(var i = 1; i<=mySheet11.RowCount(); i++ ){
-// 			
-// 		}
-		
+		} 
 		mySheet11.SetCellValue(mySheet11.RowCount(),'sb_ADD', '추가'); // 추가에 추가버튼
 		if(mySheet11.GetCellValue(mySheet11.RowCount(),'STATUS') == 'U' )
 			mySheet11.SetCellValue(mySheet11.RowCount(),'STATUS', 'R'); // 추가버튼때문에 '수정'으로 뜬것을 다시 조회로 변경
@@ -914,9 +885,7 @@
 		var info13 = ""; // 본분교구분
 		var info14 = ""; // 면허/자격
 		var info15 = ""; // 발행기관
-// 		var info16 = ""; // 고과명
 		var info17 = ""; // 출장국가
-// 		var info18 = ""; // 상벌
 		
 		var info7 = ""; //여부코드(함/안함)
 		var info8 = ""; //여부코드(해당/비해당)
@@ -971,18 +940,10 @@
 						case 'RO': // 발행기관
 							info15 = info15 + info1;
 							break;	
-			//--------------------------------------------------------------------- 인사고과
-// 						case 'H3': // 고과명 
-// 							info16 = info16 + info1;
-// 							break;
 			//--------------------------------------------------------------------- 출장
 						case 'H5': // 출장국가
 							info17 = info17 + info1
 							break;
-			//--------------------------------------------------------------------- 상벌관리
-// 						case 'H8': // 징계/포상명 - 상벌
-// 							info18 = info18 + info1;
-// 							break;	
 			//--------------------------------------------------------------------- 채용	
 						case 'HT': // 채용구분
 							$('#isa_HIRE_CODE').append(MNGEMENT_NAME);
@@ -1036,9 +997,7 @@
 				S1 = {'ComboCode':info8,'ComboText':info8}; // 여부코드(해당/비해당)
 				H9 = {'ComboCode':info14,'ComboText':info14}; // 여부코드(해당/비해당)
 				RO = {'ComboCode':info15,'ComboText':info15}; // 여부코드(해당/비해당)
-// 				H3 = {'ComboCode':info16,'ComboText':info16}; // 고과명
 				H5 = {'ComboCode':info17,'ComboText':info17}; // 출장국가
-// 				H8 = {'ComboCode':info18,'ComboText':info18}; // 포상/징계명
 				S6 = {'ComboCode':info7,'ComboText':info7}; // 여부코드(함/안함)
 				S3 = {'ComboCode':info9,'ComboText':info9}; // 양음구분(양/음)
 			},

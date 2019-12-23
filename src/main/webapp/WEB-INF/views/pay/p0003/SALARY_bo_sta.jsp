@@ -54,12 +54,12 @@ table.ui-datepicker-calendar { display:none; }
          {Header:"상태",Type:"Status",Width:60,SaveName:"STATUS", Align:"Center"},
    	     {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
          {Header:"은행",Type:"Text",Width:110,SaveName:"sal_INFO_TRANS_AMOUNT_O",  Align:"Center"},
-   	     {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:80,Align:"Center"},
-         {Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:80,Align:"Center"},
+   	     {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:100,Align:"Center"},
+         {Header:"사원명",Type:"Text",SaveName:"sawon_NAME",Width:100,Align:"Center"},
          {Header:"계좌번호",Type:"Text",SaveName:"sal_INFO_ACC_NUM_ONE",Width:220,Align:"Center"},
-         {Header:"지급항목",Type:"Text",SaveName:"salary_CAL_SALARY_ITEM",Width:100,Align:"Center"},
+         {Header:"지급항목",Type:"Text",SaveName:"salary_CAL_SALARY_ITEM",Width:135,Align:"Center"},
          {Header:"실지급액",Type:"AutoSum",Width:150,Format:"#,### 만원",SaveName:"salary_CAL_MONEY"},   
-         {Header:"지급일자",Type:"Text",SaveName:"salary_CAL_PAYMENTDAY",Width:130,Align:"Center"}
+         {Header:"지급일자",Type:"Text",SaveName:"salary_CAL_PAYMENTDAY",Width:150,Align:"Center"}
        ];
       IBS_InitSheet(mySheet,initData);
    
@@ -280,7 +280,7 @@ function mySheet_OnSaveEnd(code,msg){
 	            yearSuffix : '',
 	            
 	            showOn: 'both', // 텍스트와 버튼을 함께 보여준다
-	            buttonImage:'https://www.shareicon.net/data/16x16/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
+	            buttonImage:'https://www.shareicon.net/data/27x27/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
 	            buttonImageOnly: true,
 	            
 	            showButtonPanel: true
@@ -580,7 +580,7 @@ function mySheet_OnSaveEnd(code,msg){
                 <!-- /.col-lg-12 -->
             </div>
             
-  <div class="main_content">
+  <div class="main_content" style="padding-left: 0px; padding:0px;">
     <div class="exp_product">
      <div class="ib_function float_right">
          <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
@@ -593,64 +593,74 @@ function mySheet_OnSaveEnd(code,msg){
          
       
             <br>
-       <form class="form-inline">
-                     <div class="row">
-                                <label for="yearday" class="pull-left">
-                               &ensp;&ensp;    귀속연월 &ensp;
-                                </label>
-                         
-                                  <input type="text" class="form-control" id="yearday" onchange="yeardayd()"> 
-                             
+<div class="ib_function border_sheet"  style="width: 1087px; height: 80px;">
+     <div class="form-group">
+    <form class="form-inline">
+               <table class="ib_basic">
+
+				   <tr>
+				        <td width="150"></td>
+						<td> <label for="yearday">귀속연월 </label></td>
+						<td>    
+			<div class="input-group">
+                    <div class="input-group-append">
+                     <input type="button" style="width:90px;" class="form-control" id="yearday" onchange="yeardayd()"> 
+                  </div>
+           </div>
+                        </td>
+			
+                     <td width="150"></td>
+					 <td><label> 지급일 </label></td>
+                     <td><select id="yeardayd"  class="form-control">
+                           <option value="" id="yeardayd" selected>전체</option>
+                         </select>
+                     </td>
+                      
                       
                      
-                                 <label>
-      &emsp; &emsp;&emsp;&ensp;&emsp;  &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;        지급일 &ensp;
-                                </label>
-                            <div class="input-group custom-search-form col-lg-3">
-                                 <div class="input-group">
-                                 <select id="yeardayd"  class="form-control">
-                                       <option value="" id="yeardayd" selected>전체</option>
-                                 </select>
-                                
-                                 </div>
-                                        
-                             </div>
-                         </div>
-                         </form>
-      &emsp;&emsp;&ensp;
-         <br>
-        <form class="form-inline">
-          <label for="SiteList1">은행코드</label>
-          &ensp;<select name="SiteList1" id="SiteList1" class="form-control">
+					</tr>
+				  
+				  
+				  
+				  
+				 <tr>
+                     <td width="150"></td>
+                    <td><label for="SiteList1">은행코드</label></td>
+          <td><select name="SiteList1" id="SiteList1" class="form-control">
                <option value="" selected>전체</option>
-                       
                            </select>
-                         
-       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&ensp;&emsp;
-       
-         <label for="SiteList">조회조건</label>
-        &ensp;<select id="SiteList"   onchange="selectDept()" class="form-control" >
-         <option value="" selected>전체</option>
-      </select>   
-       &emsp;&emsp;&ensp;&emsp;&emsp;&emsp;   
-      
-       <label for="DeptList">구분</label>
-      &ensp; <select id="DeptList"  class="form-control">
-         <option value="" selected>전체</option>
-      </select>
-            </form>
-                 
+                           </td>
+
+
+				 		<td width="150"></td>
+						<td> <label for="SiteList"  class="pull-left">조회조건 </label></td>
+						<td><select id="SiteList"   onchange="selectDept()" class="form-control" >
+                              <option value="" selected>전체</option>
+                            </select>  
+                       </td>
+                       
+                       	<td width="150"></td>
+
+					 <td><label  for="DeptList">구분</label></td>
+                     <td><select id="DeptList"  class="form-control">
+                           <option value="" selected>전체</option>
+                         </select>
+                     </td>
+					
+					</tr>
+				  
+               </table> 
+                    </form>
+                 </div>
+          
              
-             
-         
-             
-             </div>
+           </div>
+
+  </div>
    
 
 
 
-
-<br><br>
       <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
                 <DIV class="ib_product" style="width:100%;float:left">
@@ -665,7 +675,7 @@ function mySheet_OnSaveEnd(code,msg){
       
  </div>
  </div>
- 
+           
           
    
     <!--main_content-->

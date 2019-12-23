@@ -62,7 +62,7 @@ public class LoginServiceImpl implements LoginService {
  			subject = "SEED 임시 비밀번호 입니다.";
  			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
  			msg += "<h1 style='color: green;'>";
- 			msg += "SEED(Smart Erpsystem based-on Encryted Database)</h1>";
+ 			msg += "SEED(Smart ERP system for Enterprise Development)</h1>";
  			msg += "<h3 style='color: blue;'>";
  			msg += member.getPK_SAWON_CODE() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
  			msg += "<p>임시 비밀번호 : ";

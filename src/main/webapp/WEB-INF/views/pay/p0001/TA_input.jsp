@@ -72,12 +72,12 @@ table.ui-datepicker-calendar { display:none; }
       
       var cols = [   
         {Header:"NO",Type:"pk_TA_TOTAL_CODE",Width:20,SaveName:"pk_TA_TOTAL_CODE", Align:"Center"},
-        {Header:"상태",Type:"Status",SaveName:"STATUS", Align:"Center"},
+        {Header:"상태",Type:"Status",SaveName:"STATUS", Width:50, Align:"Center"},
         {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
-        {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:50,Align:"Center"},
-        {Header:"구분",Type:"Combo", RowSpan:1,SaveName:"ta_TOTAL_DIVI_CODE", ComboCode:"평일근무일|토일근무일|주휴근무일|유휴근무일|무휴근무일"},         
-        {Header:"일수",Type:"AutoSum",SaveName:"ta_TOTAL_DAY", MinWidth:10, Align: "Center"},
-        {Header:"시간",Type:"AutoSum",SaveName:"ta_TOTAL_HOUR", MinWidth:10, Align: "Center", CalcLogic:"|ta_TOTAL_DAY|*8"},
+        {Header:"사원코드",Type:"Text",SaveName:"pk_SAWON_CODE",Width:150,Align:"Center"},
+        {Header:"구분",Type:"Combo", RowSpan:1,SaveName:"ta_TOTAL_DIVI_CODE", Width:150, ComboCode:"평일근무일|토일근무일|주휴근무일|유휴근무일|무휴근무일"},         
+        {Header:"일수",Type:"AutoSum",SaveName:"ta_TOTAL_DAY", MinWidth:10, Width:160, Align: "Center"},
+        {Header:"시간",Type:"AutoSum",SaveName:"ta_TOTAL_HOUR", MinWidth:10, Width:160, Align: "Center", CalcLogic:"|ta_TOTAL_DAY|*8"},
         {Header:"지급일",Type:"Text",SaveName:"ta_TOTAL_PAYMENTDAY",Format:" 일",Width:150,Align:"Center"}
 
    
@@ -98,7 +98,7 @@ table.ui-datepicker-calendar { display:none; }
 
 
 
-   //드레그 드롭 데이터 이동
+	   //드레그 드롭 데이터 이동
    function mySheet2_OnDropEnd(FromSheet, FromRow, ToSheet, ToRow, X, Y, Type) {
       if(FromSheet!=ToSheet&&mySheet.CheckedRows("chk")>1){
                   
@@ -463,7 +463,7 @@ $(function(){
             yearSuffix : '',
             
             showOn: 'both', // 텍스트와 버튼을 함께 보여준다
-            buttonImage:'https://www.shareicon.net/data/16x16/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
+            buttonImage:'https://www.shareicon.net/data/27x27/2016/08/13/808501_calendar_512x512.png', //날짜 버튼 이미지
             buttonImageOnly: true,
             
             showButtonPanel: true
@@ -602,14 +602,14 @@ function yearday() {
  
   
  
-  <div class="main_content">
+  <div class="main_content" style="padding-left: 0px; padding:0px;">
       
        <div class="exp_product">
-            <div class="ib_function float_left">
+            <div class="ib_function float_right">
          <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
          <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
-         <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
           <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
+           <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
          </div>
       </div>
     
@@ -620,45 +620,59 @@ function yearday() {
            
   
    
-   <form class="form-inline">
-                     <div class="row">
-                                <label for="yearday" class="pull-left">
-                               &ensp;&ensp;    귀속연월 &ensp;
-                                </label>
-                         
-                                  <input type="text" class="form-control" id="yearday" onchange="yeardayd()"> 
-                             
-                      
-                     
-                                 <label>
-      &emsp; &emsp;&emsp; &emsp;    지급일 &ensp;
-                                </label>
-                            <div class="input-group custom-search-form col-lg-3">
-                                 <div class="input-group">
-                                 <select id="yeardayd"  class="form-control">
-                                       <option value="" id="yeardayd" selected>전체</option>
-                                 </select>
-                                
-                                 </div>
-                                        
-                             </div>
-                         </div>
-                         </form>
-    
-         <br>
-        <form class="form-inline">
-    
-         <label for="SiteList">조회조건</label>
-        &ensp;<select id="SiteList"   onchange="selectDept()" class="form-control" >
-         <option value="" selected>전체</option>
-      </select>   
-       &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 
+<div class="ib_function border_sheet"  style="width: 1087px; height: 78px;">
+     <div class="form-group">
+    <form class="form-inline">
+               <table class="ib_basic">
 
-       <label  for="DeptList">구분</label>
-      &ensp; <select id="DeptList"  class="form-control">
-         <option value="" selected>전체</option>
-      </select>
-            </form>
+				   <tr>
+				        <td width="270"></td>
+						<td> <label for="yearday">귀속연월 </label></td>
+						<td>    
+			<div class="input-group">
+                    <div class="input-group-append">
+                     <input type="button" style="width:90px;" class="form-control" id="yearday" onchange="yeardayd()"> 
+                  </div>
+           </div>
+                        </td>
+			
+                     <td width="160"></td>
+                      
+					 <td><label> 지급일 </label></td>
+                     <td><select id="yeardayd"  class="form-control">
+                           <option value="" id="yeardayd" selected>전체</option>
+                         </select>
+                     </td>
+                     
+					</tr>
+				  
+				  
+				  
+				  
+				 <tr>
+				 		<td width="270"></td>
+						<td> <label for="SiteList"  class="pull-left">조회조건 </label></td>
+						<td><select id="SiteList"   onchange="selectDept()" class="form-control" >
+                              <option value="" selected>전체</option>
+                            </select>  
+                       </td>
+                       
+                       	<td width="160"></td>
+
+					 <td><label  for="DeptList">구분</label></td>
+                     <td><select id="DeptList"  class="form-control">
+                           <option value="" selected>전체</option>
+                         </select>
+                     </td>
+					
+					</tr>
+				  
+               </table> 
+                    </form>
+                 </div>
+          
+             
+           </div>
                  
              
              
@@ -670,16 +684,16 @@ function yearday() {
 
 
 
-<br><br>
+
        <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
               <DIV class="ib_product" style="width:70%;float:left">
-            <div style="height:100%;width:19%;float:left">
+            <div style="height:100%;width:18%;float:left">
                <script type="text/javascript"> createIBSheet("mySheet", "100%", "100%"); selectSite(); </script>
             </div>
          
             <div style="height:100%;width:1%;float:left"></div>
-            <div style="height:100%;width:45%;float:left">
+            <div style="height:100%;width:50%;float:left">
                <script type="text/javascript"> createIBSheet("mySheet2", "200%", "100%"); </script>
             </div>
          </div>

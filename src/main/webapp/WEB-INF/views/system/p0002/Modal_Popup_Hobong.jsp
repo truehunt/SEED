@@ -8,10 +8,11 @@
 	<!-- ibsheet,tab 관련된 script 및 link 추가  -->
 
 <script type="text/javascript">
-//mySheet3
+
 /*Sheet 기본 설정 */
-	function Loading2() {
+	function Loading3() {
 		
+		//mySheet4
 		//아이비시트 초기화
 		initSheet = {};
 		initSheet.Cols = [ // 상태, 삭제는 건들면 안됨. SaveName은 VO속성과 동일하게
@@ -24,53 +25,62 @@
 			
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center", Hidden:1},
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center", Hidden:1},
-			{Header:"부서 코드",Type:"Text",SaveName:"pk_dept_code",MinWidth:70, Align:"Center"},
-			{Header:"부서 명",Type:"Text",SaveName:"dept_name",MinWidth:160, Align:"Center"},
-			
+			{Header:"코드 번호",Type:"Text",SaveName:"pk_person_bc_detai_code_num",MinWidth:60, Align:"Center"},
+			{Header:"호 봉",Type:"Text",SaveName:"person_bc_detai_mngement_name",MinWidth:90, Align:"Center"},
+			{Header:"금 액",Type:"Text",SaveName:"hobong_table_price",MinWidth:100, Align:"Center"},
+			{Header:"코드 번호(조건)",Type:"Text",SaveName:"fk_person_bc_code_num",MinWidth:70, Align:"Center", Hidden:1},
+			{Header:"호 봉(조건)",Type:"Text",SaveName:"fk_hobong_code",MinWidth:70, Align:"Center", Hidden:1},
 		];   
 	
 	}
 	
 	//초기화
 	var codeNum =""; // 코드번호
-	var codeName=""; // 관리내역 명
+	var codeHobong=""; // 호 봉
+	var codePrice=""; // 금액
 	var code_id=""; // 코드 아이디(값 넣어줄 기준)
-	var code_nameId=""; // 코드 명 (값 넣어줄 기준)
+	var code_priceId=""; // 금액 (값 넣어줄 기준)
 	var frameId =""; // iframe 번호
 	
 	//onClick 클릭시 이벤트
-	function mySheet3_OnClick (Row, Col, Value, CellX, CellY, CellW, CellH, rowType){
-		codeNum = mySheet3.GetCellValue(Row,'pk_dept_code');
-   		codeName = mySheet3.GetCellValue(Row,'dept_name');
+	function mySheet4_OnClick (Row, Col, Value, CellX, CellY, CellW, CellH, rowType){
+   		codeNum = mySheet4.GetCellValue(Row,'pk_person_bc_detai_code_num');
+   		codeHobong = mySheet4.GetCellValue(Row,'person_bc_detai_mngement_name');
+   		codePrice = mySheet4.GetCellValue(Row,'hobong_table_price');
    		
-   		console.log(codeNum);
-   		console.log(codeName);
+   		//console.log(codeNum);
+   		//console.log(codeName);
    	}
 	
-	function Action_popup2(code, id, name, frame){
-		//console.log("code_division"+code_division);
+	function Action_popup3(code, sawon_code, id, price, frame){
+		console.log("sawon_code"+sawon_code);
 		code_id = id;
-		code_nameId = name;
+		code_priceId = price;
 		frameId = frame;
 		switch(code) {
 		case 'list':
-			mySheet3.DoSearch("${pageContext.request.contextPath}/system/p0002/dept_pop.do");
+			//test=aaa&test2=bbb
+			var param = 'sawon_code='+sawon_code; // 코드번호 값을 param 변수에 저장
+			console.log(param);
+			mySheet4.DoSearch("${pageContext.request.contextPath}/system/p0002/hobong_pop.do",param);
 			break;
 		}
 	}
-	
-	function fn_Dept_Selected() {
+
+	function fn_Hobong_Selected() {
 		//container1 = $("#ib-container1").detach(); //팝업 한번만 뜨게 함 
 		var code_num = codeNum;
-		var code_name = codeName;
+		var code_hobong = codeHobong;
+		var code_price = codePrice;
 		
    		console.log(code_num);
-   		console.log(code_name);
+   		console.log(code_hobong);
+   		console.log(code_price);
    		
 		//fn_selectCode(code_num, code_name, code_id, code_nameId);
    		
 		//iframe 값을 자식 요소에게 넘겨주기
-  	  	$(frameId).get(0).contentWindow.fn_Dept_Selected(code_num, code_name, code_id, code_nameId);
+  	  	$(frameId).get(0).contentWindow.fn_Hobong_Selected(code_hobong, code_price, code_id, code_priceId);
 
 	}  
 	
@@ -81,7 +91,7 @@
   <div class="modal-content">
 		  				<div class="modal-header">
 		                    <button type="button" id="closeX" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                    <h4 class="modal-title" id="myModalLabel">부서 코드 도움</h4>
+		                    <h4 class="modal-title" id="myModalLabel">호봉 코드 도움</h4>
 		                </div>
 		                
                 		<div class="modal-body">
@@ -93,7 +103,7 @@
 					</div>
 				
 						<div class="modal-footer">
-				            	<button class="btn btn-outline btn-primary" onclick="fn_Dept_Selected()" data-dismiss="modal" id="close"><s:message code="common.btnOK"/></button>
+				            	<button class="btn btn-outline btn-primary" onclick="fn_Hobong_Selected()" data-dismiss="modal" id="close"><s:message code="common.btnOK"/></button>
 						</div>
      </div>
 </div>

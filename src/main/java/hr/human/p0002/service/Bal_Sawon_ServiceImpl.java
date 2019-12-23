@@ -54,7 +54,6 @@ public class Bal_Sawon_ServiceImpl implements Bal_Sawon_Service {
 	public List<BalVO> fk_Sawon(Map<String, Object> searchMap) throws DataAccessException {
 		List<BalVO> list = null;
 		String sawon = (String)searchMap.get("fk_BAL_SAWON_CODE");
-		System.out.println(sawon);
 		if(sawon == null) {
 			list =  p0002DAO.fk_Sawon(searchMap);
 		}else {
@@ -64,7 +63,6 @@ public class Bal_Sawon_ServiceImpl implements Bal_Sawon_Service {
 		return list;
 	}
 	
-	// ...
 	@Override
 	public List<BalVO> Content_Div(Map<String, Object> searchMap) throws DataAccessException {
 		List<BalVO> list =  p0002DAO.Content_Div(searchMap); 
@@ -83,7 +81,6 @@ public class Bal_Sawon_ServiceImpl implements Bal_Sawon_Service {
 	public List<BalVO> EM_INFO(Map<String, Object> searchMap) throws DataAccessException {
 		List<BalVO> list = null;
 		String INFO = (String)searchMap.get("info");
-		System.out.println(INFO);
 		if(INFO.equals("dept_NAME")) { // 발령내역이 부서일 때
 			list =  p0002DAO.INFO_DEPT(searchMap);
 		}else if(INFO.equals("rank_NAME")) { // 발령내역이 직급일 때

@@ -6,99 +6,42 @@ import org.springframework.stereotype.Component;
 
 @Component("TA_inputVO")
 public class TA_inputVO {
-	private String pk_TA_CODE;
-	private String fk_TA_SAWON_CODE;
-	private String ta_SAWON_NAME;
-	private String ta_INQUIRY_CONDITION;
 
-	private String ta_TOTAL_DIVI_CODE;
-	private String ta_TOTAL_DAY;
-	private String ta_TOTAL_HOUR;
+	private String ta_TOTAL_DIVI_CODE;             //구분코드
+	private String ta_TOTAL_DAY;                   //일수
+	private String ta_TOTAL_HOUR;                  //시간
 
-	private String ta_INT_USER_ID;
-	private String ta_INT_DATE;
-	private String ta_USER_ID;
-	private String ta_MOD_DATE;
-	private String fk_TA_DEPT_CODE;
+	private String ta_INT_USER_ID;                 //입력자
+	private String ta_INT_DATE;                    //입력일시
 	
-	private String pk_SAWON_CODE;
-	private String sawon_NAME;
-	private String pk_DEPT_CODE;
-	private String dept_NAME;
-	private String pk_WORKPLACE_CODE;
-	private String workplace_HEADOFF_WHE;
+	private String pk_SAWON_CODE;                  //사원코드
+	private String sawon_NAME;                     //사원이름
+	private String pk_DEPT_CODE;                   //부서코드
+	private String dept_NAME;                      //부서이름
+	private String pk_WORKPLACE_CODE;              //사업장코드
+	private String workplace_HEADOFF_WHE;          //사업장구분코드
 	
 	
-	private String d_B_PAYMENT_DATE_ATTRIBUT;
-	private String d_B_PAYMENT_DT;
+	private String d_B_PAYMENT_DATE_ATTRIBUT;      //귀속연월일
+	private String d_B_PAYMENT_DT;                 //지급일자
 	
 
-	private String pk_D_B_PAYMENT_SEQ_CODE;
-	private String ta_TOTAL_PAYMENTDAY;
-	private String workplace_NAME;
-	private String pk_SAWON_WORKPLACE_CODE;
-	private String workplace_INQUIRY_CODE;
-	private String dept_INQUIRY_CODE;
-	private String PK_TA_TOTAL_CODE;
+	private String pk_D_B_PAYMENT_SEQ_CODE;        //순번코드
+	private String ta_TOTAL_PAYMENTDAY;            //지급일자
+	private String workplace_NAME;                 //사업장이름
+	private String pk_SAWON_WORKPLACE_CODE;        //사업장코드
+	private String workplace_INQUIRY_CODE;         //사업장구분코드
+	private String dept_INQUIRY_CODE;              //부서구분코드
+	private String PK_TA_TOTAL_CODE;               //근태종합코드
 	
-	private String fk_HOBONG_CODE;
-	private String fk_RANK_CODE;
-	private String hobong_TABLE_START_DATE_APPLI;
+	private String fk_HOBONG_CODE;                 //호봉코드
+	private String fk_RANK_CODE;                   //직급코드
+	private String hobong_TABLE_START_DATE_APPLI;  //호봉테이블 시작일
 
 	public TA_inputVO() {
 		System.out.println("TA_inputVO");
 	}
 
-
-
-	public String getPk_TA_CODE() {
-		return pk_TA_CODE;
-	}
-
-
-
-	public void setPk_TA_CODE(String pk_TA_CODE) {
-		this.pk_TA_CODE = pk_TA_CODE;
-	}
-
-
-
-	public String getFk_TA_SAWON_CODE() {
-		return fk_TA_SAWON_CODE;
-	}
-
-
-
-	public void setFk_TA_SAWON_CODE(String fk_TA_SAWON_CODE) {
-		this.fk_TA_SAWON_CODE = fk_TA_SAWON_CODE;
-	}
-
-
-
-	public String getTa_SAWON_NAME() {
-		return ta_SAWON_NAME;
-	}
-
-
-
-	public void setTa_SAWON_NAME(String ta_SAWON_NAME) {
-		this.ta_SAWON_NAME = ta_SAWON_NAME;
-	}
-
-
-
-	
-
-
-	public String getTa_INQUIRY_CONDITION() {
-		return ta_INQUIRY_CONDITION;
-	}
-
-
-
-	public void setTa_INQUIRY_CONDITION(String ta_INQUIRY_CONDITION) {
-		this.ta_INQUIRY_CONDITION = ta_INQUIRY_CONDITION;
-	}
 
 
 
@@ -161,40 +104,6 @@ public class TA_inputVO {
 	}
 
 
-
-	public String getTa_USER_ID() {
-		return ta_USER_ID;
-	}
-
-
-
-	public void setTa_USER_ID(String ta_USER_ID) {
-		this.ta_USER_ID = ta_USER_ID;
-	}
-
-
-
-	public String getTa_MOD_DATE() {
-		return ta_MOD_DATE;
-	}
-
-
-
-	public void setTa_MOD_DATE(String ta_MOD_DATE) {
-		this.ta_MOD_DATE = ta_MOD_DATE;
-	}
-
-
-
-	public String getFk_TA_DEPT_CODE() {
-		return fk_TA_DEPT_CODE;
-	}
-
-
-
-	public void setFk_TA_DEPT_CODE(String fk_TA_DEPT_CODE) {
-		this.fk_TA_DEPT_CODE = fk_TA_DEPT_CODE;
-	}
 
 
 

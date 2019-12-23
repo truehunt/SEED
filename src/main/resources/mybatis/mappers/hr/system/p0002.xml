@@ -38,17 +38,17 @@
 		</resultMap>
 		<select id="searchList" resultMap="p0002Result01" parameterType="java.util.Map"> 
 	      <![CDATA[
-	         select  s.PK_SAWON_CODE, s.SAWON_NAME, s.SAWON_ENG_NAME
-	        , TO_CHAR(TO_DATE(s.SAWON_JOIN_DATE),'YYYY-MM-DD') as SAWON_JOIN_DATE
-	        , TO_CHAR(TO_DATE(s.SAWON_RESIGNATION_DATE),'YYYY-MM-DD') as SAWON_RESIGNATION_DATE
-	        , s.SAWON_USER_STATUS, s.SAWON_PASSWORD, s.SAWON_VIEW_PERMISSION, s.FK_DEPT_NAME
-	        , s.SAWON_EMAIL, s.SAWON_INT_USER_ID, s.SAWON_INT_DATE, s.SAWON_MOD_USER_ID
-	        , s.SAWON_MOD_DATE, e.em_info_offi_division
-	         from SAWON s, EM_INFO e
+	         SELECT  s.PK_SAWON_CODE, s.SAWON_NAME, s.SAWON_ENG_NAME
+			        , TO_CHAR(TO_DATE(s.SAWON_JOIN_DATE),'YYYY-MM-DD') as SAWON_JOIN_DATE
+			        , TO_CHAR(TO_DATE(s.SAWON_RESIGNATION_DATE),'YYYY-MM-DD') as SAWON_RESIGNATION_DATE
+			        , s.SAWON_USER_STATUS, s.SAWON_PASSWORD, s.SAWON_VIEW_PERMISSION, s.FK_DEPT_NAME
+			        , s.SAWON_EMAIL, s.SAWON_INT_USER_ID, s.SAWON_INT_DATE, s.SAWON_MOD_USER_ID
+			        , s.SAWON_MOD_DATE, e.em_info_offi_division
+	         FROM SAWON s, EM_INFO e
 	      ]]>
 			 <where>
-			 	 s.PK_SAWON_CODE = e.fk_sawon_code
-				 and s.PK_SAWON_CODE IS NOT NULL
+				 	 s.PK_SAWON_CODE = e.fk_sawon_code
+					 and s.PK_SAWON_CODE IS NOT NULL
 				  
 				<if test="sawon_search != '' and sawon_search != null">
 					 and (s.PK_SAWON_CODE like '%'|| #{sawon_search,jdbcType=VARCHAR} ||'%' or s.SAWON_NAME like '%'|| #{sawon_search,jdbcType=VARCHAR} ||'%')
@@ -62,12 +62,12 @@
 					</when>
 				</choose>
 			</where>
-				order By PK_SAWON_CODE ASC 
+				ORDER BY PK_SAWON_CODE ASC 
 		</select>
 
 		<update id="updateData" parameterType="java.util.Map">
-			update SAWON
-			set  SAWON_NAME = #{sawon_NAME,jdbcType=VARCHAR}
+			UPDATE SAWON
+			SET  SAWON_NAME = #{sawon_NAME,jdbcType=VARCHAR}
 			   , SAWON_ENG_NAME = #{sawon_ENG_NAME,jdbcType=VARCHAR}
 			   , SAWON_JOIN_DATE = #{sawon_JOIN_DATE,jdbcType=VARCHAR}
 			   , SAWON_RESIGNATION_DATE = #{sawon_RESIGNATION_DATE,jdbcType=VARCHAR}
@@ -84,28 +84,28 @@
 			   , SAWON_MOD_USER_ID = #{sawon_MOD_USER_ID,jdbcType=VARCHAR}
 			   , SAWON_MOD_DATE = #{sawon_MOD_DATE,jdbcType=TIMESTAMP}
 			   
-			where PK_SAWON_CODE = #{pk_SAWON_CODE, jdbcType=VARCHAR}
+			WHERE PK_SAWON_CODE = #{pk_SAWON_CODE, jdbcType=VARCHAR}
 		</update>	
 	
-		<insert id="insertData" parameterType="java.util.Map">
-			insert into SAWON(PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME, SAWON_JOIN_DATE, SAWON_RESIGNATION_DATE
+   <!-- <insert id="insertData" parameterType="java.util.Map">
+			INSERT INTO SAWON(PK_SAWON_CODE, SAWON_NAME, SAWON_ENG_NAME, SAWON_JOIN_DATE, SAWON_RESIGNATION_DATE
 								, SAWON_USER_STATUS, SAWON_PASSWORD, SAWON_VIEW_PERMISSION, SAWON_EMAIL
 								, FK_DEPT_CODE, FK_DEPT_NAME, RANK_NAME, SAWON_INT_USER_ID, SAWON_INT_DATE
 								, SAWON_MOD_USER_ID, SAWON_MOD_DATE) 
-				   values(#{pk_SAWON_CODE, jdbcType=VARCHAR},#{sawon_NAME, jdbcType=VARCHAR},#{sawon_ENG_NAME, jdbcType=VARCHAR},
+				   VALUES(#{pk_SAWON_CODE, jdbcType=VARCHAR},#{sawon_NAME, jdbcType=VARCHAR},#{sawon_ENG_NAME, jdbcType=VARCHAR},
 				   		  #{sawon_JOIN_DATE, jdbcType=VARCHAR},#{sawon_RESIGNATION_DATE, jdbcType=VARCHAR},#{sawon_USER_STATUS, jdbcType=VARCHAR},
 				   		  #{sawon_PASSWORD, jdbcType=VARCHAR},#{sawon_VIEW_PERMISSION, jdbcType=TIMESTAMP},#{sawon_EMAIL, jdbcType=VARCHAR},
 				   		  #{fk_DEPT_CODE, jdbcType=TIMESTAMP},#{fk_DEPT_NAME, jdbcType=VARCHAR},#{rank_NAME, jdbcType=VARCHAR},
 				   		  #{sawon_INT_USER_ID, jdbcType=VARCHAR},#{sawon_INT_DATE, jdbcType=VARCHAR},#{sawon_MOD_USER_ID, jdbcType=VARCHAR},
 				   		  #{sawon_MOD_DATE, jdbcType=VARCHAR}
 						  )
-		</insert>	
+		</insert>	 -->
 	
-		<delete id="deleteData" parameterType="java.util.Map">
-			delete SAWON
-			where PK_SAWON_CODE = #{pk_SAWON_CODE}
-			and SAWON_NAME = #{sawon_NAME}
-		</delete>	
+   <!-- <delete id="deleteData" parameterType="java.util.Map">
+			DELETE SAWON
+			WHERE PK_SAWON_CODE = #{pk_SAWON_CODE}
+			AND SAWON_NAME = #{sawon_NAME}
+		</delete>	 -->
 	
 		<!-- Insa_personEnroll(인적정보) -->
 
@@ -159,7 +159,7 @@
 
 		<select id="PSsearchList" resultMap="psResult01" parameterType="java.util.Map"> 
 	      <![CDATA[
-			 select p.pk_person_info_unique_num, p.fk_sawon_code, p.person_info_picture, p.person_info_eng_name, p.person_info_domes_forei_pop
+			 SELECT p.pk_person_info_unique_num, p.fk_sawon_code, p.person_info_picture, p.person_info_eng_name, p.person_info_domes_forei_pop
 					, p.person_info_res_reg_num, p.person_info_forei_reg_num, p.person_info_gender, TO_CHAR(TO_DATE(p.person_info_date_birth),'YYYY-MM-DD') as person_info_date_birth 
 					, p.person_info_tel, p.person_info_emerg_call, p.person_info_final_edu_code, p.person_info_final_edu_name, p.person_info_zip, p.person_info_resi_reg_address 
 					, p.person_info_detail_address, p.person_info_eng_address, p.person_info_email, p.person_info_access_card_no, p.person_info_head_household 
@@ -167,7 +167,7 @@
 					, p.person_info_coun_resi_code, p.person_info_coun_resi_name, s.pk_sawon_code, s.photo, p.person_info_int_user_id, p.person_info_int_date, p.person_info_mod_user_id
 					, p.person_info_mod_date
 					
-	         from   PERSON_INFO p, SAWON s
+	         FROM   PERSON_INFO p, SAWON s
 	      ]]>
 			<where>
 				p.fk_sawon_code = s.pk_sawon_code
@@ -180,10 +180,10 @@
 		</select>
 
 		<update id="PSupdateData" parameterType="java.util.Map">
-			update PERSON_INFO
-			set <!-- pk_person_info_unique_num = #{pk_person_info_unique_num,jdbcType=VARCHAR}
+			UPDATE PERSON_INFO
+			SET <!-- pk_person_info_unique_num = #{pk_person_info_unique_num,jdbcType=VARCHAR}
 			   , fk_sawon_code = #{fk_sawon_code,jdbcType=VARCHAR}  -->
-			   person_info_picture = #{person_info_picture,jdbcType=VARCHAR}
+			   	 person_info_picture = #{person_info_picture,jdbcType=VARCHAR}
 			   , person_info_eng_name = #{person_info_eng_name,jdbcType=VARCHAR}
 			   , person_info_domes_forei_pop = #{person_info_domes_forei_pop,jdbcType=VARCHAR}
 			   , person_info_res_reg_num = #{person_info_res_reg_num,jdbcType=VARCHAR}
@@ -215,12 +215,12 @@
 			   , person_info_mod_user_id = #{person_info_mod_user_id,jdbcType=VARCHAR}
 			   , person_info_mod_date = #{person_info_mod_date,jdbcType=TIMESTAMP}
 			   
-			where fk_sawon_code = #{fk_sawon_code, jdbcType=VARCHAR}
+			WHERE fk_sawon_code = #{fk_sawon_code, jdbcType=VARCHAR}
 		</update>	
 	
 		<insert id="PSinsertData" parameterType="java.util.Map">
 				
-			insert into PERSON_INFO(pk_person_info_unique_num, fk_sawon_code, person_info_picture, person_info_eng_name, person_info_domes_forei_pop
+			INSERT INTO PERSON_INFO(pk_person_info_unique_num, fk_sawon_code, person_info_picture, person_info_eng_name, person_info_domes_forei_pop
 									, person_info_res_reg_num, person_info_forei_reg_num, person_info_gender, person_info_date_birth, person_info_tel
 									, person_info_emerg_call, person_info_final_edu_code, person_info_final_edu_name, person_info_zip, person_info_resi_reg_address
 									, person_info_detail_address, person_info_eng_address, person_info_email, person_info_access_card_no, person_info_head_household
@@ -228,7 +228,7 @@
 									, person_info_resident_classifi, person_info_coun_resi_code, person_info_coun_resi_name, person_info_int_user_id
 									, person_info_int_date, person_info_mod_user_id, person_info_mod_date
 									) 
-				   values(#{pk_person_info_unique_num, jdbcType=VARCHAR},#{fk_sawon_code, jdbcType=VARCHAR},#{person_info_picture, jdbcType=VARCHAR},#{person_info_eng_name, jdbcType=VARCHAR},
+				   VALUES(#{pk_person_info_unique_num, jdbcType=VARCHAR},#{fk_sawon_code, jdbcType=VARCHAR},#{person_info_picture, jdbcType=VARCHAR},#{person_info_eng_name, jdbcType=VARCHAR},
 				   		  #{person_info_domes_forei_pop, jdbcType=VARCHAR},#{person_info_res_reg_num, jdbcType=VARCHAR},#{person_info_forei_reg_num, jdbcType=VARCHAR},#{person_info_gender, jdbcType=VARCHAR},
 				   		  #{person_info_date_birth, jdbcType=VARCHAR},#{person_info_tel, jdbcType=VARCHAR},#{person_info_emerg_call, jdbcType=VARCHAR},#{person_info_final_edu_code, jdbcType=VARCHAR},
 				   		  #{person_info_final_edu_name, jdbcType=VARCHAR},#{person_info_zip, jdbcType=VARCHAR},#{person_info_resi_reg_address, jdbcType=VARCHAR},#{person_info_detail_address, jdbcType=VARCHAR},
@@ -239,11 +239,11 @@
 						  )
 		</insert>
 	
-		<delete id="PSdeleteData" parameterType="java.util.Map">
-			delete PERSON_INFO
-			where fk_sawon_code = #{fk_sawon_code}
-			and person_info_res_reg_num = #{person_info_res_reg_num}
-		</delete>	
+   <!-- <delete id="PSdeleteData" parameterType="java.util.Map">
+			DELETE PERSON_INFO
+			WHERE fk_sawon_code = #{fk_sawon_code}
+			AND person_info_res_reg_num = #{person_info_res_reg_num}
+		</delete>	 -->
 	
 		<!-- 사원 이미지 -->
 	
@@ -318,7 +318,7 @@
 
 		<select id="EMsearchList" resultMap="emResult01" parameterType="java.util.Map"> 
 	      <![CDATA[
-			 select e.pk_em_info_uniq_num, e.fk_sawon_code
+			 SELECT e.pk_em_info_uniq_num, e.fk_sawon_code
 			 		, TO_CHAR(TO_DATE(e.em_info_join_date),'YYYY-MM-DD') as em_info_join_date
 			 		, TO_CHAR(TO_DATE(e.em_info_resi_date),'YYYY-MM-DD') as em_info_resi_date, e.em_info_offi_division
 			 		, TO_CHAR(TO_DATE(e.em_info_date_retire),'YYYY-MM-DD') as em_info_date_retire
@@ -332,7 +332,7 @@
 					, e.em_info_retire_reason_name, e.em_info_attri, s.pk_sawon_code, d.pk_dept_code
 					, e.em_info_int_user_id, e.em_info_int_date, e.em_info_mod_user_id, e.em_info_mod_date
 					
-	         from   EM_INFO e, SAWON s, DEPT d
+	         FROM   EM_INFO e, SAWON s, DEPT d
 	      ]]>
 			<where>
 				e.fk_sawon_code = s.pk_sawon_code
@@ -345,8 +345,8 @@
 		</select>
 
 		<update id="EMupdateData" parameterType="java.util.Map">
-			update EM_INFO
-			set  <!-- pk_em_info_uniq_num = #{pk_em_info_uniq_num,jdbcType=VARCHAR}
+			UPDATE EM_INFO
+			SET  <!-- pk_em_info_uniq_num = #{pk_em_info_uniq_num,jdbcType=VARCHAR}
 			   , fk_sawon_code = #{fk_sawon_code,jdbcType=VARCHAR} -->
 			     em_info_join_date = #{em_info_join_date,jdbcType=VARCHAR}
 			   , em_info_resi_date = #{em_info_resi_date,jdbcType=VARCHAR}
@@ -386,12 +386,12 @@
 			   , em_info_mod_user_id = #{em_info_mod_user_id,jdbcType=VARCHAR}
 			   , em_info_mod_date = #{em_info_mod_date,jdbcType=TIMESTAMP}
 			   
-			where fk_sawon_code = #{fk_sawon_code, jdbcType=VARCHAR}
+			WHERE fk_sawon_code = #{fk_sawon_code, jdbcType=VARCHAR}
 		</update>	
 	
 		<insert id="EMinsertData" parameterType="java.util.Map">
 
-			insert into EM_INFO(pk_em_info_uniq_num, fk_sawon_code, em_info_join_date, em_info_resi_date, em_info_offi_division
+			INSERT INTO EM_INFO(pk_em_info_uniq_num, fk_sawon_code, em_info_join_date, em_info_resi_date, em_info_offi_division
 									, em_info_date_retire, em_info_prob_appli, em_info_prob_expi_date, em_info_includ_work_peri, em_info_lea_absence_o
 									, em_info_lea_absence_t, fk_dept_code, dept_name, em_info_emply_form_cd, em_info_emply_form_nm
 									, fk_occupation_code, occupation_name, fk_pay_form_code, pay_form_name, em_info_project_code, em_info_project_name
@@ -399,7 +399,7 @@
 									, em_info_duty_code, em_info_duty_name, em_info_classifi_code, em_info_classifi_name, em_info_retire_reason_code
 									, em_info_retire_reason_name, em_info_attri, em_info_int_user_id, em_info_int_date, em_info_mod_user_id, em_info_mod_date
 									) 
-				   values(#{pk_em_info_uniq_num, jdbcType=VARCHAR},#{fk_sawon_code, jdbcType=VARCHAR},#{em_info_join_date, jdbcType=VARCHAR},#{em_info_resi_date, jdbcType=VARCHAR},
+				   VALUES(#{pk_em_info_uniq_num, jdbcType=VARCHAR},#{fk_sawon_code, jdbcType=VARCHAR},#{em_info_join_date, jdbcType=VARCHAR},#{em_info_resi_date, jdbcType=VARCHAR},
 				   		  #{em_info_offi_division, jdbcType=VARCHAR},#{em_info_date_retire, jdbcType=VARCHAR},#{em_info_prob_appli, jdbcType=VARCHAR},#{em_info_prob_expi_date, jdbcType=VARCHAR},
 				   		  #{em_info_includ_work_peri, jdbcType=VARCHAR},#{em_info_lea_absence_o, jdbcType=VARCHAR},#{em_info_lea_absence_t, jdbcType=VARCHAR},#{fk_dept_code, jdbcType=VARCHAR},
 				   		  #{dept_name, jdbcType=VARCHAR},#{em_info_emply_form_cd, jdbcType=VARCHAR},#{em_info_emply_form_nm, jdbcType=VARCHAR},#{fk_occupation_code, jdbcType=VARCHAR},
@@ -413,11 +413,11 @@
 						  )
 		</insert>
 	
-		<delete id="EMdeleteData" parameterType="java.util.Map">
-			delete EM_INFO
-			where fk_sawon_code = #{fk_sawon_code}
-			and em_info_join_date = #{em_info_join_date}
-		</delete>	
+  <!-- 	<delete id="EMdeleteData" parameterType="java.util.Map">
+			DELETE EM_INFO
+			WHERE fk_sawon_code = #{fk_sawon_code}
+			AND em_info_join_date = #{em_info_join_date}
+		</delete> -->	
 	
 		<!-- Insa_salEnroll(급여정보) -->
 
@@ -425,6 +425,7 @@
 		<result property="pk_sal_info_unique_num" column="pk_sal_info_unique_num" />
 		<result property="fk_sawon_code" column="fk_sawon_code" />
 		<result property="fk_hobong_code" column="fk_hobong_code" />
+		<result property="hobong_price" column="hobong_price" />
 		<result property="sal_info_acc_type_code" column="sal_info_acc_type_code" />
 		<result property="sal_info_acc_type_name" column="sal_info_acc_type_name" />
 		<result property="sal_info_trans_amount_o_code" column="sal_info_trans_amount_o_code" />
@@ -451,7 +452,7 @@
 		<result property="sal_info_mod_date" column="sal_info_mod_date" />
 			<!--
 			     Insa_salEnroll의 모든 칼럼 -> pk_sawon_code는 조건을 위해 추가
-				pk_sal_info_unique_num, fk_sawon_code, fk_hobong_code, sal_info_acc_type_code, sal_info_acc_type_name
+				pk_sal_info_unique_num, fk_sawon_code, fk_hobong_code, hobong_price, sal_info_acc_type_code, sal_info_acc_type_name
 				, sal_info_trans_amount_o_code, sal_info_trans_amount_o,  sal_info_acc_num_one, sal_info_acc_hold_one
 				, sal_info_trans_amount_t_code, sal_info_trans_amount_t,  sal_info_acc_num_two, sal_info_acc_hold_two
 				, sal_info_spouse_ded, sal_info_deduction, sal_info_under_age_twen, sal_info_depend_60years_older
@@ -462,14 +463,14 @@
 		
 		<select id="SALsearchList" resultMap="salResult01" parameterType="java.util.Map"> 
 		     <![CDATA[
-			 select i.pk_sal_info_unique_num, i.fk_sawon_code, i.fk_hobong_code, i.sal_info_acc_type_code, i.sal_info_acc_type_name
+			 SELECT i.pk_sal_info_unique_num, i.fk_sawon_code, i.fk_hobong_code, i.hobong_price, i.sal_info_acc_type_code, i.sal_info_acc_type_name
 					, i.sal_info_trans_amount_o_code, i.sal_info_trans_amount_o,  i.sal_info_acc_num_one, i.sal_info_acc_hold_one
 					, i.sal_info_trans_amount_t_code, i.sal_info_trans_amount_t,  i.sal_info_acc_num_two, i.sal_info_acc_hold_two
 					, i.sal_info_spouse_ded, i.sal_info_deduction, i.sal_info_under_age_twen, i.sal_info_depend_60years_older
 					, i.sal_info_disabled_person, i.sal_info_reci_foster_child, i.sal_info_multi_child_ded, s.pk_sawon_code
 					, i.sal_info_int_user_id, i.sal_info_int_date, i.sal_info_mod_user_id, i.sal_info_mod_date
 					
-		        from   SAL_INFO i, SAWON s
+		        FROM   SAL_INFO i, SAWON s
 		     ]]>
 			<where>
 				i.fk_sawon_code = s.pk_sawon_code
@@ -480,11 +481,11 @@
 		</select>
 
 		<update id="SALupdateData" parameterType="java.util.Map">
-	
-			update SAL_INFO
-			set <!-- pk_sal_info_unique_num = #{pk_sal_info_unique_num,jdbcType=VARCHAR}
+			UPDATE SAL_INFO
+			SET <!-- pk_sal_info_unique_num = #{pk_sal_info_unique_num,jdbcType=VARCHAR}
 			   , fk_sawon_code = #{fk_sawon_code,jdbcType=VARCHAR} -->
 			     fk_hobong_code = #{fk_hobong_code,jdbcType=VARCHAR}
+			   , hobong_price = #{hobong_price,jdbcType=VARCHAR}
 			   , sal_info_acc_type_code = #{sal_info_acc_type_code,jdbcType=VARCHAR}
 			   , sal_info_acc_type_name = #{sal_info_acc_type_name,jdbcType=VARCHAR}
 			   , sal_info_trans_amount_o_code = #{sal_info_trans_amount_o_code,jdbcType=VARCHAR}
@@ -508,21 +509,23 @@
 			   , sal_info_mod_user_id = #{sal_info_mod_user_id,jdbcType=VARCHAR}
 			   , sal_info_mod_date = #{sal_info_mod_date,jdbcType=TIMESTAMP}
 			   
-			where fk_sawon_code = #{fk_sawon_code, jdbcType=VARCHAR}
+			WHERE fk_sawon_code = #{fk_sawon_code, jdbcType=VARCHAR}
 		</update>	
 		
 		<insert id="SALinsertData" parameterType="java.util.Map">
 	
-			insert into SAL_INFO(pk_sal_info_unique_num, fk_sawon_code, fk_hobong_code, sal_info_acc_type_code, sal_info_acc_type_name
-									, sal_info_trans_amount_o_code, sal_info_trans_amount_o, sal_info_acc_num_one, sal_info_acc_hold_one
-									, sal_info_trans_amount_t_code, sal_info_trans_amount_t, sal_info_acc_num_two, sal_info_acc_hold_two
-									, sal_info_spouse_ded, sal_info_deduction, sal_info_under_age_twen, sal_info_depend_60years_older
-									, sal_info_disabled_person, sal_info_reci_foster_child, sal_info_multi_child_ded
-									, sal_info_int_user_id, sal_info_int_date, sal_info_mod_user_id, sal_info_mod_date
+			INSERT INTO SAL_INFO(pk_sal_info_unique_num, fk_sawon_code, fk_hobong_code, hobong_price, sal_info_acc_type_code
+									, sal_info_acc_type_name, sal_info_trans_amount_o_code, sal_info_trans_amount_o, sal_info_acc_num_one
+									, sal_info_acc_hold_one, sal_info_trans_amount_t_code, sal_info_trans_amount_t, sal_info_acc_num_two
+									, sal_info_acc_hold_two, sal_info_spouse_ded, sal_info_deduction, sal_info_under_age_twen
+									, sal_info_depend_60years_older, sal_info_disabled_person, sal_info_reci_foster_child
+									, sal_info_multi_child_ded, sal_info_int_user_id, sal_info_int_date, sal_info_mod_user_id
+									, sal_info_mod_date
 									) 
-				   values(#{pk_sal_info_unique_num, jdbcType=VARCHAR},#{fk_sawon_code, jdbcType=VARCHAR},#{fk_hobong_code, jdbcType=VARCHAR},#{sal_info_acc_type_code, jdbcType=VARCHAR},
-				   		  #{sal_info_acc_type_name, jdbcType=VARCHAR},#{sal_info_trans_amount_o_code, jdbcType=VARCHAR},#{sal_info_trans_amount_o, jdbcType=VARCHAR},#{sal_info_acc_num_one, jdbcType=VARCHAR},
-				   		  #{sal_info_acc_hold_one, jdbcType=VARCHAR},#{sal_info_trans_amount_t_code, jdbcType=VARCHAR},#{sal_info_trans_amount_t, jdbcType=VARCHAR},#{sal_info_acc_num_two, jdbcType=VARCHAR},
+				   VALUES(#{pk_sal_info_unique_num, jdbcType=VARCHAR},#{fk_sawon_code, jdbcType=VARCHAR},#{fk_hobong_code, jdbcType=VARCHAR},#{hobong_price, jdbcType=VARCHAR},
+				   		  #{sal_info_acc_type_code, jdbcType=VARCHAR},#{sal_info_acc_type_name, jdbcType=VARCHAR},#{sal_info_trans_amount_o_code, jdbcType=VARCHAR},
+				   		  #{sal_info_trans_amount_o, jdbcType=VARCHAR},#{sal_info_acc_num_one, jdbcType=VARCHAR},#{sal_info_acc_hold_one, jdbcType=VARCHAR},
+				   		  #{sal_info_trans_amount_t_code, jdbcType=VARCHAR},#{sal_info_trans_amount_t, jdbcType=VARCHAR},#{sal_info_acc_num_two, jdbcType=VARCHAR},
 				   		  #{sal_info_acc_hold_two, jdbcType=VARCHAR},#{sal_info_spouse_ded, jdbcType=VARCHAR},#{sal_info_deduction, jdbcType=VARCHAR},#{sal_info_under_age_twen, jdbcType=VARCHAR},
 				   		  #{sal_info_depend_60years_older, jdbcType=VARCHAR},#{sal_info_disabled_person, jdbcType=VARCHAR},#{sal_info_reci_foster_child, jdbcType=VARCHAR},
 				   		  #{sal_info_multi_child_ded, jdbcType=VARCHAR},#{sal_info_int_user_id, jdbcType=VARCHAR},#{sal_info_int_date, jdbcType=TIMESTAMP},#{sal_info_mod_user_id, jdbcType=VARCHAR},
@@ -530,11 +533,11 @@
 						  )
 		</insert>
 		
-		<delete id="SALdeleteData" parameterType="java.util.Map">
-			delete SAL_INFO
-			where fk_sawon_code = #{fk_sawon_code}
-			and sal_info_acc_hold_one = #{sal_info_acc_hold_one}
-		</delete>	
+   <!-- <delete id="SALdeleteData" parameterType="java.util.Map">
+			DELETE SAL_INFO
+			WHERE fk_sawon_code = #{fk_sawon_code}
+			AND sal_info_acc_hold_one = #{sal_info_acc_hold_one}
+		</delete>	 -->
 		
 		<!-- Modal_Popup(공통 팝업) -->
 		
@@ -551,15 +554,15 @@
 		
 		<select id="PopsearchList" resultMap="PopResult01" parameterType="java.util.Map"> 
 	      <![CDATA[
-	         select pk_person_bc_detai_code_num, person_bc_detai_mngement_name, fk_person_bc_code_num
-	         from PERSON_BC_DETAI
+	         SELECT pk_person_bc_detai_code_num, person_bc_detai_mngement_name, fk_person_bc_code_num
+	         FROM PERSON_BC_DETAI
 	      ]]>
 			 <where>
 			 	<if test="code_division != ''  and  code_division != null">
 						and fk_person_bc_code_num = #{code_division,jdbcType=VARCHAR}
 				</if>
 			</where>
-				order By pk_person_bc_detai_code_num ASC 
+				ORDER BY pk_person_bc_detai_code_num ASC 
 		</select>
 		
 		<!-- Dept_Popup(부서 팝업) -->
@@ -567,17 +570,61 @@
 		<result property="pk_dept_code" column="pk_dept_code" />
 		<result property="dept_name" column="dept_name" />
 		
-		<!-- 공통코드 팝업의 모든 칼럼 
+		<!-- 부서 팝업의 모든 칼럼 
 				pk_dept_code, dept_name				
 		-->
 		
 		</resultMap>
 		<select id="Dept_PopsearchList" resultMap="PopResult02" parameterType="java.util.Map"> 
 	      <![CDATA[
-	         select pk_dept_code, dept_name
-	         from DEPT 
+	         SELECT pk_dept_code, dept_name
+	         FROM DEPT 
 	      ]]>
-			 order By pk_dept_code ASC 
+			 ORDER BY pk_dept_code ASC 
 		</select>
 		
+		<!-- Hobong_Popup(호봉 팝업) -->
+		
+		<resultMap id="PopResult03" type="Insa_popup_VO">
+		<result property="pk_person_bc_detai_code_num" column="pk_person_bc_detai_code_num" />
+		<result property="person_bc_detai_mngement_name" column="person_bc_detai_mngement_name" />
+		<result property="fk_person_bc_code_num" column="fk_person_bc_code_num" />
+		
+		<result property="fk_hobong_code" column="fk_hobong_code" />
+		<result property="hobong_table_price" column="hobong_table_price" />
+		<result property="fk_hobong_code_cla_code" column="fk_hobong_code_cla_code" />
+		<result property="fk_rank_code" column="fk_rank_code" />
+		<result property="hobong_table_start_date_appli" column="hobong_table_start_date_appli" />
+		<result property="hobong_table_end_date_appli" column="hobong_table_end_date_appli" />
+			
+			<!-- 호봉 팝업의 모든 칼럼 
+					pk_person_bc_detai_code_num, person_bc_detai_mngement_name, fk_person_bc_code_num,
+					fk_hobong_code, hobong_table_price, fk_hobong_code_cla_code, fk_rank_code,
+					hobong_table_start_date_appli, hobong_table_end_date_appli				
+			-->
+			
+		</resultMap>
+		
+		<select id="Hobong_PopsearchList" resultMap="PopResult03" parameterType="java.util.Map"> 
+	      <![CDATA[
+	         SELECT DISTINCT p.pk_person_bc_detai_code_num, p.person_bc_detai_mngement_name, h.hobong_table_price, 
+	         				 p.fk_person_bc_code_num, h.fk_hobong_code
+	      	 FROM HOBONG_TABLE h, PERSON_BC_DETAI p, SAL_INFO s
+	      ]]>
+			 <where>
+			 
+			 	h.fk_hobong_code_cla_code = p.fk_person_bc_code_num
+			 	and h.fk_rank_code = s.fk_rank_code
+			 	and h.fk_hobong_code = p.person_bc_detai_mngement_name
+
+			 	<if test="sawon_code != ''  and  sawon_code != null">
+						and s.fk_sawon_code = #{sawon_code,jdbcType=VARCHAR}
+				</if>
+				
+				and h.hobong_table_start_date_appli is not null
+				and h.hobong_table_end_date_appli is null
+			
+			</where>
+				ORDER BY h.fk_hobong_code ASC
+		</select>
 </mapper>

@@ -70,7 +70,6 @@
          {Header:"제목", Type: "Text",SaveName:"bal_TITLE",Width:200,  Align: "Center"},
 		 {Header:"발령구분",Type:"Text",SaveName:"bal_DIV_CODE",Width:115, Align:"Center", Edit:0},
 		 {Header:"발령일자",Type:"Date",SaveName:"bal_DATE",Width:118, Align:"Center"},
-// 		 {Header:"저장/추가",Type:"Button", SaveName:"bal_ADD", Width:60, Align:"Center"},
 		 {Header:"발령코드",Type:"Text",SaveName:"pk_BAL_CODE",Width:120, Align:"Center", Hidden:1},
 		 
 		 {Header:"발령자",Type:"Text",SaveName:"fk_BAL_CODE",Width:120, Align:"Center", Hidden: 1}
@@ -124,7 +123,6 @@
       	                if(j == 0){
       	                	createIBSheet2($("#ib-container3")[0],"mySheet6", "100%", "300px");
       	              		IBS_InitSheet(mySheet6,initData);
-//       	            		Action_popup('list_sawon');
       	            		j++;
       	                }else{
       	                	$("#ib-container3_copy").after(container3);

@@ -18,7 +18,6 @@ import hr.system.p0002.vo.Insa_emEnroll_VO;//재직 정보
 import hr.system.p0002.vo.Insa_salEnroll_VO;//급여 정보
 import hr.system.p0002.vo.Insa_popup_VO;//공통 팝업
 
-
 @Service("adInsa_infoEnroll_Service")
 @Transactional(propagation = Propagation.REQUIRED)
 public class Insa_infoEnroll_ServiceImpl implements Insa_infoEnroll_Service {
@@ -58,6 +57,12 @@ public class Insa_infoEnroll_ServiceImpl implements Insa_infoEnroll_Service {
    @Override // 인사정보등록-부서 팝업
    public List<Insa_popup_VO> dept_pop(Map<String, Object> searchMap) throws DataAccessException {
       List<Insa_popup_VO> list =  Insa_infoEnroll_DAO.dept_pop(searchMap); 
+      return list;
+   }
+   
+   @Override // 인사정보등록-호봉 팝업
+   public List<Insa_popup_VO> hobong_pop(Map<String, Object> searchMap) throws DataAccessException {
+      List<Insa_popup_VO> list =  Insa_infoEnroll_DAO.hobong_pop(searchMap); 
       return list;
    }
    

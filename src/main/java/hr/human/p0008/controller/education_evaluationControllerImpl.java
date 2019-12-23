@@ -113,7 +113,6 @@ public class education_evaluationControllerImpl implements education_evaluationC
       // 검색조건설정
       searchMap.put("fk_EDUCATION_ADD_CODE", request.getParameter("FK_EDUCATION_ADD_CODE"));
       searchMap.put("PK_EDUCATION_MANA_CODE", request.getParameter("PK_EDUCATION_MANA_CODE"));
-         System.out.println(request.getParameter("PK_EDUCATION_MANA_CODE"));
       
       //데이터 조회
       List<education_evaluationVO> data = education_evaluationService.searchList3(searchMap);

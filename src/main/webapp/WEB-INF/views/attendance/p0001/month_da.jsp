@@ -12,38 +12,23 @@
 <script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheetinfo.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css"
-	rel="stylesheet">
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css" rel="stylesheet">
+<script src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
 <script language="javascript">
 	//시트 높이 계산용
 
 	/*Sheet 기본 설정 */
 
 	function LoadPage() {
-
 		function year() {
 			let today = new Date();
-
 			document.write(today.toLocaleDateString());
 		}
 		mySheet.RemoveAll();
@@ -53,18 +38,9 @@
 			SearchMode : smLazyLoad,
 			ToolTip : 1
 		};
-		initSheet.HeaderMode = {
-			Sort : 1,
-			ColMove : 1,
-			ColResize : 1,
-			HeaderCheck : 1
-		};
+		initSheet.HeaderMode = {Sort : 1,ColMove : 1,ColResize : 1,HeaderCheck : 1};
 		initSheet.Cols = [ // 상태, 삭제는 건들면 안됨. SaveName은 VO속성과 동일하게
 		// MinWidth는 최소 길이값.(줄여도 최소길이값 이하로 안줄여짐.)
-		// Align : data 정렬값.
-		// keyfield : keyfield값 필수값 체크시 필요(미입력시 추가안됨.)
-		// MultiLineText:1  : 하나의 셀에 여러값을 넣을수 있음(shift+enter)
-		// Wrap:1 : 데이터
 			{Header : "사원코드",Type : "Text",SaveName : "pk_SAWON_CODE", MinWidth : 80,Hidden : 1},
 			{Header : "성명", Type : "Text",SaveName : "sawon_NAME", MinWidth : 80},
 			{Header : "부서", Type : "Text", SaveName : "fk_RANK_NAME", MinWidth : 80	},
@@ -74,12 +50,8 @@
 		mySheet.SetEditable(false);
 		initSheet.Cols = [ // 상태, 삭제는 건들면 안됨. SaveName은 VO속성과 동일하게
 			// MinWidth는 최소 길이값.(줄여도 최소길이값 이하로 안줄여짐.)
-			// Align : data 정렬값.
-			// keyfield : keyfield값 필수값 체크시 필요(미입력시 추가안됨.)
-			// MultiLineText:1  : 하나의 셀에 여러값을 넣을수 있음(shift+enter)
-			// Wrap:1 : 데이터
 		{Header : "상태",	Type : "Status",SaveName : "STATUS",MinWidth : 40,edit : 0}, 
-		{Header : "근무일자",Type : "Text",SaveName : "pk_DAILY_TA_WORKING_DATE",MinWidth : 100},
+		{Header : "근무일자",Type : "Date",SaveName : "pk_DAILY_TA_WORKING_DATE",MinWidth : 100},
 		{Header : "성명",	Type : "Text",SaveName : "sawon_NAME",MinWidth : 80},
 		{Header : "직급",Type : "Text",SaveName : "rank_NAME",MinWidth : 80,editable : 0},
 		{Header : "부서",	Type : "Text",SaveName : "fk_RANK_NAME",MinWidth : 80},
@@ -91,8 +63,8 @@
 		{Header : "조퇴시간",Type : "Text",SaveName : "daily_TA_LEAVE_TIME",MinWidth : 60},
 		{Header : "순번",Type : "Text",SaveName : "num",MinWidth : 60,Hidden :1}];
 		IBS_InitSheet(mySheet2, initSheet); 
-			
-			mySheet.SetDataAutoTrim(0);
+		mySheet.SetEditable(false);
+		mySheet2.SetEditable(false);
 			
 			var val1 = "&pk_SAWON_CODE=" + '<%=session.getAttribute("PK_SAWON_CODE")%>'
 			+ "&fd_year=" + $('#fd_year option:selected').val()
@@ -104,6 +76,7 @@
 	function doAction(sAction) {
 		switch (sAction) {
 
+		//조회
 		case "search": 
 			var val1 = "&pk_SAWON_CODE=" + '<%=session.getAttribute("PK_SAWON_CODE")%>'
 			+ "&fd_year=" + $('#fd_year option:selected').val()
@@ -112,7 +85,7 @@
 			break;
 		}
 	}
-
+//년월선태 SelectBox
 	$(document).ready(
 			function() {
 				var now = new Date();
@@ -151,19 +124,7 @@
 		mySheet2.DoSearch(
 				"${contextPath}/attendance/p0001/searchList_month_click.do", val3);
 	}
-	// 오늘 날짜 삽입
-	function getToday() {
-		var now = new Date();
-		var year = now.getFullYear();
-		var month = now.getMonth() + 1; //1월이 0으로 되기때문에 +1을 함.
-		var date = now.getDate();
 
-		if ((month + "").length < 2) { //2자리가 아니면 0을 붙여줌.
-			month = "0" + month;
-		}
-		// ""을 빼면 year + month (숫자+숫자) 됨.. ex) 2018 + 12 = 2030이 리턴됨.
-		return today = "" + year + "-" + month + "-" + date;
-	}
 </script>
 </head>
 <body onload="LoadPage()">
@@ -180,7 +141,7 @@
 					<!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
 					<h1 class="page-header">
 						<i class="fa fa-user fa-fw"></i>
-						<s:message code="main.monthlyCls2" />
+						<s:message code="main.findTA" />
 					</h1>
 				</div>
 				<!-- /.col-lg-12 -->
@@ -188,10 +149,12 @@
 			</tr>
 </body>
 <body>
-	<td class="item_title_border">년월선택</td>
+	<form class="form-inline">
+				<div class="main_content">
+	<td class="item_title_border" >년월선택</td>
 	<td class="item_input"><select id="fd_year" name="fd_year"
-		style="width: 80;"></select> <select id="fd_month" name="fd_month"
-		style="width: 80px;">
+		style="width: 80;" class="form-control"></select> <select id="fd_month" name="fd_month"
+		style="width: 80px;" class="form-control">
 			<option value="">월</option>
 	</select></td>
 	</tr>

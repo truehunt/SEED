@@ -117,9 +117,16 @@ function fn_formSubmit2(IMAGENO){ // 삭제
                            		용량은 1MB를 초과 할 수 없습니다.
                            </div>
                        	</div>
+                       	<div class="row form-group">
+                           <div class="col-lg-1"></div>
+                           <label class="col-lg-2">기본 결재 이미지</label>
+                           <div class="col-sm-3">
+                           	<img style="width:35px; height: 35px; max-width: 100px;" src="${pageContext.request.contextPath}/resources/image/agree.png">
+                           </div>
+                       	</div>
                    		<div class="row form-group">
                            <div class="col-lg-1"></div>
-                           <div class="col-lg-2"><label>결재이미지</label></div>
+                           <div class="col-lg-2"><label>등록된 결재 이미지</label></div>
                            <div class="col-sm-3">
                            	<img id="previewImg" style="width:100%; height: 120px; max-width: 100px;" src="fileDownload?downname=<c:out value="${signImageInfo.photo}"/>">
                            </div>

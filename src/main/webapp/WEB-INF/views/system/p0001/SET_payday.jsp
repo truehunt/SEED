@@ -50,11 +50,11 @@ table.ui-datepicker-calendar { display:none; }
       initData.Cols = [
       //{Header:"No",Type:"Seq", Align:"Center"},
          {Header:"NO",Type:"pk_D_B_PAYMENT_SEQ_CODE",Width:20,SaveName:"pk_D_B_PAYMENT_SEQ_CODE", Align:"Center"},
-         {Header:"상태",Type:"Status",Width:60,SaveName:"STATUS", Align:"Center"},
-         {Header:"삭제",Type:"DelCheck",Width:60,SaveName:"Delete",Align:"Center"},    
-         {Header:"귀속연월",Type:"Text",SaveName:"d_B_PAYMENT_DATE_ATTRIBUT",Width:120,Align:"Center"},
-         {Header:"지급일자",Type:"Date",SaveName:"d_B_PAYMENT_DT",Width:120,Align:"Center"},
-         {Header:"동시발행",Type:"Combo",Width:80,SaveName:"d_B_PAYMENT_SIMULTANE_ISSUE", Width:100, Align:"Center", ComboCode:"분리|동시"},
+         {Header:"상태",Type:"Status",Width:100,SaveName:"STATUS", Align:"Center"},
+         {Header:"삭제",Type:"DelCheck",Width:100,SaveName:"Delete",Align:"Center"},    
+         {Header:"귀속연월",Type:"Text",SaveName:"d_B_PAYMENT_DATE_ATTRIBUT",Width:270,Align:"Center"},
+         {Header:"지급일자",Type:"Date",SaveName:"d_B_PAYMENT_DT",Width:270,Align:"Center"},
+         {Header:"동시발행",Type:"Combo",Width:80,SaveName:"d_B_PAYMENT_SIMULTANE_ISSUE", Width:150, Align:"Center", ComboCode:"분리|동시"},
          {Header:"대상자선정",Type:"Text",SaveName:"d_B_PAYMENT_TARGET_SELECT",Width:200,Align:"Center", Hidden:1}
        ];
       IBS_InitSheet(mySheet,initData);
@@ -236,7 +236,9 @@ function mySheet_OnSaveEnd(code,msg){
 
 <body onload="LoadPage()">
  <!-- 달력 datepicker  -->
-   
+   <div id="wrapper">
+
+        <div id="page-wrapper" style="margin: 0px; ">
  <div class="row">
       <div class="col-lg-12">        <!-- 해당 메뉴의 아이콘 -->        <!-- 해당 메인 타이틀(제목) 들어가는 부분 -->
          <h1 class="page-header"><i class="fa fa-cog fa-fw"></i> <s:message code="main.setup2"/></h1>
@@ -244,7 +246,7 @@ function mySheet_OnSaveEnd(code,msg){
          <!-- /.col-lg-12 -->
    </div>
 
-  <div class="main_content">
+  <div class="main_content" style="padding-left: 0px; padding:0px;">
     <div class="ib_function float_right" style="padding:10 20">
          <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
          <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
@@ -258,28 +260,36 @@ function mySheet_OnSaveEnd(code,msg){
          
          
             <br>
-         <form class="form-inline">
-  <div class="form-group">
-    <label for="d_B_PAYMENT_DATE_ATTRIBUT">귀속연월</label>
-    <input type="text" class="form-control" id="d_B_PAYMENT_DATE_ATTRIBUT" >
-    
-  </div>
-  
- </form>
+<div class="ib_function border_sheet"  style="width: 910px; height: 42px;">
+     <div class="form-group">
+    <form class="form-inline">
+               <table class="ib_basic">
+
+				   <tr>
+				        <td width="340"></td>
+						<td> <label for="d_B_PAYMENT_DATE_ATTRIBUT">귀속연월 </label></td>
+						<td>    
+			<div class="input-group">
+                    <div class="input-group-append">
+                     <input type="button" style="width:90px;" class="form-control" id="d_B_PAYMENT_DATE_ATTRIBUT" onchange="yeardayd()"> 
+                  </div>
+           </div>
+                        </td>
+			
+                         </tr>
+                   </table>
+                    </form>
+                 </div>
+          
+             
+           </div>
 
 
 
-
-
-   
-   
-   
-
-<br><br>
      <div class="clear hidden"></div>
       <!-- left단 사원리스트 -->
               <DIV class="ib_product" style="width:100%;float:left">
-            <div style="height:100%;width:60%;float:left">
+            <div style="height:100%;width:80%;float:left">
                <script type="text/javascript"> createIBSheet("mySheet", "100%", "70%"); </script>
             </div>
          
@@ -296,7 +306,8 @@ function mySheet_OnSaveEnd(code,msg){
       
  
           
-   
+    </div>
+    </div>
     <!--main_content-->
 
 </body>

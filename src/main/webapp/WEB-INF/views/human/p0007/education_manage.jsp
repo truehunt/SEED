@@ -310,9 +310,13 @@
 
 
 <body onLoad="LoadPage()">
+
+   <div id="wrapper">
+
+        <div id="page-wrapper" style="margin: 0px; ">
       
       <div class="nav" style="width:100%; overflow:hidden;">
-           <div class="main_content"  style="width:1150px;">
+           <div class="main_content"  style="width:1300px;">
                 <div class="ib_function float_right">
                  <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
                  <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
@@ -404,6 +408,8 @@
       
       </div>
       <!--main_content-->
+      </div>
+      </div>
 
 </body>
 </html>

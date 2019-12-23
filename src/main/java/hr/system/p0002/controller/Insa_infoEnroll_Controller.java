@@ -17,7 +17,6 @@ import hr.elect.p0002.vo.SignImageVO;
 
 public interface Insa_infoEnroll_Controller {
 	public ModelAndView searchInit(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception; // 인사정보등록
 	public Map saveData2(HttpServletRequest request, HttpServletResponse response) throws Exception; // 인사정보등록-인적 정보
@@ -31,6 +30,7 @@ public interface Insa_infoEnroll_Controller {
 	
 	public Map common_pop(HttpServletRequest request, HttpServletResponse response) throws Exception; // 인사정보등록-공통 팝업
 	public Map dept_pop(HttpServletRequest request, HttpServletResponse response) throws Exception; // 인사정보등록-부서 팝업
+	public Map hobong_pop(HttpServletRequest request, HttpServletResponse response) throws Exception; // 인사정보등록-부서 팝업
 	
 	public ModelAndView Insa_infoEnroll(HttpServletRequest request, HttpServletResponse response) throws Exception;//인사정보등록
 	public ModelAndView Insa_personEnroll(HttpServletRequest request, HttpServletResponse response) throws Exception;//인사정보등록-인적 정보
@@ -39,6 +39,7 @@ public interface Insa_infoEnroll_Controller {
 	
 	public ModelAndView Modal_Popup(HttpServletRequest request, HttpServletResponse response) throws Exception;// 인사정보등록-공통 팝업
 	public ModelAndView Modal_Popup_Dept(HttpServletRequest request, HttpServletResponse response) throws Exception;// 인사정보등록-부서 팝업
+	public ModelAndView Modal_Popup_Hobong(HttpServletRequest request, HttpServletResponse response) throws Exception;// 인사정보등록-호봉 팝업
 	
 	public String imageSave(HttpServletRequest request, HttpServletResponse response, SignImageVO signImageInfo)  throws IOException ;
 }

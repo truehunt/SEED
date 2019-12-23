@@ -32,7 +32,6 @@ public class InsaCodeServiceImpl implements InsaCodeService {
 	
 	@Override
 	public List<InsaCodeVO> deTai(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("2. "+searchMap);
 		List<InsaCodeVO> list =  p0001DAO.deTai(searchMap); 
 		return list;
 	}
@@ -40,16 +39,16 @@ public class InsaCodeServiceImpl implements InsaCodeService {
 	@Override
 	public void saveData(Map<String, String[]> dataMap)  throws DataAccessException  {
 		String[] status = dataMap.get("STATUS");
-		int length = status.length; // row수
+		int length = status.length; 
 		int i = 0;
 		
 		for(String str : status) {
-			Map<String, String> row = getRow(dataMap, length, i); // 현재 Index의 Row Map
-			if("I".equals(str)) { // 추가
+			Map<String, String> row = getRow(dataMap, length, i);
+			if("I".equals(str)) { 
 				p0001DAO.insertData(row);
-			}else if("U".equals(str)) { // 수정
+			}else if("U".equals(str)) { 
 				p0001DAO.updateData(row);
-			}else if("D".equals(str)) { // 삭제
+			}else if("D".equals(str)) { 
 				p0001DAO.deleteData(row);
 			}
 			i++;
@@ -66,16 +65,4 @@ public class InsaCodeServiceImpl implements InsaCodeService {
 		}		
 		return row;
 	}
-
-	@Override
-	public void updateMember(Map<String, Object> dataMap) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void insertMember(Map<String, Object> dataMap) {
-		// TODO Auto-generated method stub
-		
-	}	
 }

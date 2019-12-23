@@ -63,17 +63,6 @@ public class comEnroll_ControllerImpl implements comEnroll_Controller {
    }
 
    @Override
-   @RequestMapping(value = "/human/s0001/ibsheet.do", method = { RequestMethod.GET, RequestMethod.POST })
-   public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
-      String viewName = getViewName(request);
-      viewName = "/human/s0001/ibsheet_basic";
-      request.setCharacterEncoding("utf-8");
-      //ModelAndView main = new ModelAndView("hr/p0001_init");
-      ModelAndView main = new ModelAndView(viewName);
-      return main;
-   }
-   
-   @Override
    @RequestMapping(value = "/human/s0001/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
    @ResponseBody
    public Map searchList(HttpServletRequest request, HttpServletResponse response) throws Exception {

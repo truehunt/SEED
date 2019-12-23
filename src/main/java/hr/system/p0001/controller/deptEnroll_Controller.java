@@ -14,7 +14,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 public interface deptEnroll_Controller {
 	public ModelAndView searchInit(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	//부서 메인 ibSheet
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception;

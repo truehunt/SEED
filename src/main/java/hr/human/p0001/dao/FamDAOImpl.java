@@ -21,7 +21,6 @@ public class FamDAOImpl implements FamDAO {
 	
 	@Override
 	public List<CardFamVO> ISA_fam(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("3. "+searchMap);
 		List<CardFamVO> list = sqlSession.selectList("hr.human.p0001.ISA_fam",searchMap);
 		for(int i=0; i<list.size(); i++){
 			num = list.get(i).getPk_FAM_CODE();

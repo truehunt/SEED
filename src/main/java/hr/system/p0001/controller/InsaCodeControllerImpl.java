@@ -40,7 +40,6 @@ public class InsaCodeControllerImpl implements InsaCodeController {
 	@Autowired
 	InsaCodeVO p0001VO;
 	
-	//占쎌뵥占쎄텢�굜遺얜굡占쎈쾻嚥∽옙_占쎈읂占쎌뵠筌욑옙
 		@Override
 		@RequestMapping(value = "/system/p0001/insa_code.do", method = { RequestMethod.GET, RequestMethod.POST })
 			public ModelAndView insaCode(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -52,38 +51,30 @@ public class InsaCodeControllerImpl implements InsaCodeController {
 		}
 	
 	
-	//占쎌뵥占쎄텢�굜遺얜굡占쎈쾻嚥∽옙_left鈺곌퀬�돳
 	@Override
 	@RequestMapping(value = "/system/p0001/output.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map outPut(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援�
-		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬�돳野껉퀗�궢
-		System.out.println("1. "+request.getParameter("person_BC_OUTPUT"));
-		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙�젟
+		Map<String, Object> searchMap = new HashMap<String, Object>(); 
+		Map<String, Object> resultMap = new HashMap<String, Object>(); 
 		searchMap.put("person_BC_OUTPUT", request.getParameter("person_BC_OUTPUT"));
 		
-		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬�돳
 		List<InsaCodeVO> data = p0001Service.outPut(searchMap);
         resultMap.put("Data", data);
         
         return resultMap;
 	}
 	
-	//占쎌뵥占쎄텢�굜遺얜굡占쎈쾻嚥∽옙_right鈺곌퀬�돳
 	@Override
 	@RequestMapping(value = "/system/p0001/detai.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public Map deTai(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		Map<String, Object> searchMap = new HashMap<String, Object>(); // 野껓옙占쎄퉳鈺곌퀗援�
-		Map<String, Object> resultMap = new HashMap<String, Object>(); // 鈺곌퀬�돳野껉퀗�궢
-		System.out.println("1. "+request.getParameter("fk_PERSON_BC_CODE_NUM"));
-		// 野껓옙占쎄퉳鈺곌퀗援뷂옙苑뺧옙�젟
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		searchMap.put("fk_PERSON_BC_CODE_NUM", request.getParameter("fk_PERSON_BC_CODE_NUM"));
 		
-		//占쎈쑓占쎌뵠占쎄숲 鈺곌퀬�돳
 		List<InsaCodeVO> data = p0001Service.deTai(searchMap);
         resultMap.put("Data", data);
         return resultMap;
@@ -94,27 +85,24 @@ public class InsaCodeControllerImpl implements InsaCodeController {
 	@ResponseBody
 	public Map saveData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 占쏙옙占쎌삢占쎈막Daa
-		Map<String, Object> resultMap = new HashMap<String, Object>(); // 筌ｌ꼶�봺野껉퀗�궢
+		Map<String, String[]> dataMap = new HashMap<String, String[]>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		// 占쏙옙占쎌삢 Data �빊遺욱뀱占쎈릭疫뀐옙
 		Enumeration enu = request.getParameterNames();
 		while (enu.hasMoreElements()) {
 			String name = (String) enu.nextElement();
 			String[] values = request.getParameterValues(name);
-			System.out.println("name:"+name+"  values:"+ request.getParameterValues(name));
 			dataMap.put(name, values);
 		}
 		
 		Map<String, String> result = new HashMap<String, String>();
-		System.out.println("1."+dataMap+" \n...�뜝�럩�꼪�뜝�럩逾ι쨹恝�삕...");
 		try {
 			p0001Service.saveData(dataMap);	
 			result.put("Code","0");
-			result.put("Message","占쏙옙占쎌삢占쎈┷占쎈�占쎈뮸占쎈빍占쎈뼄");
+			result.put("Message","저장되었습니다");
 		}catch(Exception e) {
 			result.put("Code","-1");
-			result.put("Message","占쏙옙占쎌삢占쎈퓠 占쎈뼄占쎈솭占쎈릭占쏙옙占쎈뮸占쎈빍占쎈뼄");
+			result.put("Message","저장에 실패하였습니다");
 			e.printStackTrace();
 		}
 		

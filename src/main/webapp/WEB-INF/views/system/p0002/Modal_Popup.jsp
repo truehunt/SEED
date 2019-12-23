@@ -30,11 +30,6 @@
 			
 		];   
 	
-		//ibSheet 에서 col 지정해서 숨김
-	 	//initData.SetColHidden([
-	    //  {Col: 0, Hidden:1}, {Col: 1, Hidden:1},	      
-	    //]);
-		
 	}
 	
 	//초기화

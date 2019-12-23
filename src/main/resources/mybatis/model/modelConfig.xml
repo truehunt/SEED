@@ -81,7 +81,6 @@
 		<typeAlias alias="sawonVO" type="hr.system.p0001.vo.SawonVO"/>
 	    <!-- 근태관리 / 사원출퇴근 등록 -->
 	    <typeAlias alias="Day_regist_VO" type="hr.attendance.p0001.vo.day_regist_VO"/>
-		<typeAlias alias="Day_regist_VO" type="hr.attendance.p0001.vo.day_regist_VO"/>
 		<!-- 근태관리 / 휴가등록 -->
 		<typeAlias alias="holiday_VO" type="hr.attendance.p0002.vo.holiday_VO"/>
 		<!-- 근태관리 / 휴가등록 -->

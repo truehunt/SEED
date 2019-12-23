@@ -136,7 +136,7 @@
 	         {Header:"부서",Type:"Text",SaveName:"education_EVAL_DEPT",MinWidth:110, Align:"Center", Edit:0},
 	         {Header:"직책",Type:"Text",SaveName:"education_EVAL_POSITION",MinWidth:110, Align:"Center", Edit:0},
 	         {Header:"교육일수",Type:"Text",SaveName:"education_EVAL_DAYS",MinWidth:80, Align:"Center"},
-	         {Header:"이수시간",Type:"Text",SaveName:"education_EVAL_TIMES",MinWidth:80, Align:"Center"},
+	         {Header:"이수시간",Type:"Text",SaveName:"education_EVAL_TIMES",MinWidth:80, Align:"Center", CalcLogic:"|education_EVAL_DAYS|*4"},
 	         {Header:"이수여부",Type:"Combo",SaveName:"education_EVAL_COMP",ComboCode:"여|부",MinWidth:60, MinWidth:100, Align:"Center"},         
 	         {Header:"출석점수(A)",Type:"Text",SaveName:"education_EVAL_ATTE",MinWidth:60, Align:"Center"},
 	         {Header:"태도점수(B)",Type:"Text",SaveName:"education_EVAL_ATTI",MinWidth:60, Align:"Center"},
@@ -343,6 +343,9 @@
 
 <body onLoad="LoadPage()">
 
+   <div id="wrapper">
+
+        <div id="page-wrapper" style="margin: 0px; ">
 
    <div class="row">
                 <div class="col-lg-12">
@@ -355,13 +358,12 @@
            <div class="main_content"  style="width:1150px;">
                 <div class="ib_function float_right">
                  <a href="javascript:doAction('reload')" class="btn btn-outline btn-primary">초기화</a>
-                 <a href="javascript:doAction('insert')" class="btn btn-outline btn-primary">추가</a>
                  <a href="javascript:doAction('search')" class="btn btn-outline btn-primary">조회</a>
                  <a href="javascript:doAction('save')" class="btn btn-outline btn-primary">저장</a>
                </div>
                
             
-
+  <br><br><br>
 
      
      
@@ -377,6 +379,7 @@
 </div>
 
       <!--main_content-->
-
+</div>
+</div>
 </body>
 </html>

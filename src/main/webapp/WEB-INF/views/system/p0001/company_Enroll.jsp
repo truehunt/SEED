@@ -21,26 +21,25 @@
 	.container {
   		overflow: hidden;
   		display: table;
-  		margin: 0px;
   		
 	}
 	.nav {
 		  float: left;
 		  margin-left:0px;
-		  width: 650px;
+		  width: 550px;
 		  height: 600px;
 		  border : 1px solid lightblue;
 	}
 	.content {
-		  margin-left:670px;
+		  margin-left:570px;
 		  margin-top:-600px;
-		  float: right;
-		  width: 700px;
+		  float: left;
+		  width: 800px;
 		  height: 600px;
 		  border : 1px solid lightblue;
 	}
 	.main_content{
-		width: 600px;
+		width: 510px;
 		margin-right:0px;
 	}
 	.main_menu {
@@ -148,12 +147,9 @@
 		IBS_InitSheet( mySheet , initSheet);
 		
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
-        //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
-		//doAction('search');
 		
 		mySheet.DoSearch("${contextPath}/human/s0001/searchList.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
 	
-		//console.log(mySheet);
 		//콤보박스에 값 불러오기 -> searchList.do 뒤에 실행 
 		selectDivision();
 
@@ -222,17 +218,16 @@
 				mySheet.RemoveAll();
 				break;
 			case "save": // 저장
-				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
+				//var tempStr = mySheet.GetSaveString();
+				
 				//save 를 하면서 중복 처리 됨 
-				var tempStr = mySheet.GetSaveString();
-				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
+				//tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
 				
 				mySheet.DoSave("${contextPath}/human/s0001/insertData.do");
 				
 				break;			
 			case "insert": //신규행 추가
-				//var Option = { "SumRow" : "AutoSum" }; 
-				//mySheet.RemoveAll(Option); 
 				var row = mySheet.DataInsert();
 				
 				//콤보박스에 값 불러오기 -> 행 추가후 실행
@@ -557,11 +552,6 @@
 	        </div>
    	 	</div>
 	
-		 <%-- <div class="page_title">
-		    	<span class="title"><b>등록정보관리 > 회사 등록</b></span>
-			  </div>
-				<br> 
-		 --%>
   <div class="frame">
     <%-- //header 및 container 시작--%>
     	<div class="ib_function float_right">
@@ -580,10 +570,11 @@
 	    </div>
 		<!-- ibsheet 뿌려주는 부분  -->
 		<div class="clear hidden"></div>
-		<div class="ib_product"><script>createIBSheet("mySheet", "58%", "58%");</script></div>
+		<div class="ib_product"><script>createIBSheet("mySheet", "70%", "60%");</script></div>
 
-	  </div> <!-- //nav  -->
-	  </div> <!-- //onClick -->
+	  </div> <!-- //main_content  -->
+  </div> <!-- //nav -->
+  <div style="width:5px;"></div>
 	  <!-- content (오른쪽 layout시작)  -->
 	 <div class="content">
 	 	<div class="page_title" style="height:40px;">
@@ -595,9 +586,7 @@
 	   	<td align="right">회계 년도 : </td>
 	   		<td> 
 		   		<input type="text" name="company_fiscal_year_o" id="company_fiscal_year_o" size="12px" placeholder="_ _ _ _-_ _-_ _">
-		   		<!-- <img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='' style='cursor:pointer;' /> --> 
 		   		     ~  <input type="text" name="company_fiscal_year_t" id="company_fiscal_year_t" size="12px" placeholder="_ _ _ _-_ _-_ _">
-		   		     	<!-- <img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' /> -->
 	   		</td>
 	   </tr>
 	   <tr>
@@ -625,10 +614,6 @@
 	   <tr><td></td><tr> <!-- 공백 -->
 	   <tr>
 	   	<td align="right">본점 우편번호 : </td><td> <input type="text" name="company_zip" id="company_zip" size="10px" readonly> 
-	   		<!-- input type 예시  
-	   			<input type="image" src="${contextPath}/resources/image/search_icon.png" onclick="sample4_execDaumPostcode()" width="20px"; height="15px" />
-	   		    <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호찾기" />
-	   		-->
 	   		<img src='${contextPath}/resources/image/search_icon.png;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />
 	   	</td>
 	   </tr>
@@ -654,20 +639,17 @@
 	   <tr>
 	   	<td align="right">설립 연월일 : </td>
 	   		<td> <input type="text" name="company_establishment_date" id="company_establishment_date" size="12px" placeholder="_ _ _ _-_ _-_ _">
-	   			<!--<img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' /> -->
 	   		</td>
 	   </tr>
 	   <tr>
 	   	<td align="right">개업 연월일 : </td>
 	   		<td> <input type="text" name="company_open_date" id="company_open_date" size="12px" placeholder="_ _ _ _-_ _-_ _"> 
-	   			<!--<img src='${contextPath}/resources/ibsheet/Main/calendar.gif;' onclick='sample4_execDaumPostcode();' style='cursor:pointer;' />-->
 	   		</td>
 	   </tr>
 	   <tr>
 	   	<td align="right">폐업 연월일 : </td>
 	   		<td> 
 	   			<input type="text" name="company_closed_date" id="company_closed_date" size="12px" placeholder="_ _ _ _-_ _-_ _"> 
-	   			<!--<img src="${contextPath}/resources/ibsheet/Main/calendar.gif" alt="calendar_icon.png" />-->
 	   		</td>
 	   </tr>
 	                
@@ -680,7 +662,6 @@
   </div><!-- //frame -->
   </div><!-- //page-wrapper -->
   </div><!-- //wrap -->
-  
-      
+    
 </body>
 </html>

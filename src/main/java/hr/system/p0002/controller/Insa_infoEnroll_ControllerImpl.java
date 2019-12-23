@@ -131,18 +131,18 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
       ModelAndView main = new ModelAndView(viewName);
       return main;
    }
-
-   @Override
-   @RequestMapping(value = "/system/p0002/ibsheet.do", method = { RequestMethod.GET, RequestMethod.POST })
-   public ModelAndView ibSheet(HttpServletRequest request, HttpServletResponse response) throws Exception {
+   
+   @Override // 인사정보등록-호봉 팝업
+   @RequestMapping(value = "/system/p0002/Modal_Popup_Hobong.do", method = { RequestMethod.GET, RequestMethod.POST })
+   public ModelAndView Modal_Popup_Hobong(HttpServletRequest request, HttpServletResponse response) throws Exception {
       String viewName = getViewName(request);
-      viewName = "/system/p0002/ibsheet_basic";
+      viewName = "/system/p0002/Modal_Popup_Hobong";
       request.setCharacterEncoding("utf-8");
       //ModelAndView main = new ModelAndView("hr/p0001_init");
       ModelAndView main = new ModelAndView(viewName);
       return main;
    }
-   
+
    @Override // 인사정보등록
    @RequestMapping(value = "/system/p0002/searchList.do", method = { RequestMethod.GET, RequestMethod.POST })
    @ResponseBody
@@ -151,8 +151,7 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
       Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
       
-      // 검색조건설정
-      //searchMap.put("pk_company_code", request.getParameter("p_id"));
+      // 검색조건설정 - sawon_search : 사원 번호 및 이름, command : 재직,퇴직,전체 
       System.out.println("command 확인 : "+ request.getParameter("command"));
       System.out.println("sawon_search 확인 : "+ request.getParameter("sawon_search"));
       
@@ -174,10 +173,10 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
       Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
       
+      // 검색조건설정 - 마우스로 클릭된 사원에 대한 번호 
       System.out.println("sawonController1 : "+ request.getParameter("sawon_code"));
-      // 검색조건설정
+      
       searchMap.put("sawon_code", request.getParameter("sawon_code"));
-      System.out.println("sawonController2 ="+searchMap);
       
       //데이터 조회
       List<Insa_personEnroll_VO> data = Insa_infoEnroll_Service.searchList2(searchMap);
@@ -194,10 +193,10 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
       Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
       
-      System.out.println("sawonController3 : "+ request.getParameter("sawon_code"));
-      // 검색조건설정
+      // 검색조건설정 - 마우스로 클릭된 사원에 대한 번호 
+      System.out.println("sawonController2 : "+ request.getParameter("sawon_code"));
+
       searchMap.put("sawon_code", request.getParameter("sawon_code"));
-      System.out.println("sawonController4 ="+searchMap);
       
       //데이터 조회
       List<Insa_emEnroll_VO> data = Insa_infoEnroll_Service.searchList3(searchMap);
@@ -214,12 +213,11 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
       Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
       
-      System.out.println("sawonController5 : "+ request.getParameter("sawon_code"));
-      // 검색조건설정
+      // 검색조건설정 - 마우스로 클릭된 사원에 대한 번호 
+      System.out.println("sawonController3 : "+ request.getParameter("sawon_code"));
+
       searchMap.put("sawon_code", request.getParameter("sawon_code"));
-      System.out.println("sawonController6 ="+searchMap);
-      
-      
+            
       //데이터 조회
       List<Insa_salEnroll_VO> data = Insa_infoEnroll_Service.searchList4(searchMap);
         resultMap.put("Data", data);
@@ -234,6 +232,9 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
       request.setCharacterEncoding("utf-8");
       Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
       Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+      
+      // 검색조건설정 - 코드 
+      System.out.println("popController : "+ request.getParameter("code_division"));
       
       searchMap.put("code_division", request.getParameter("code_division"));
       
@@ -256,6 +257,26 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
       
       //데이터 조회
       List<Insa_popup_VO> data = Insa_infoEnroll_Service.dept_pop(searchMap);
+        resultMap.put("Data", data);
+        
+        return resultMap;
+   }
+   
+   @Override // 인사정보등록-호봉 팝업
+   @RequestMapping(value = "/system/p0002/hobong_pop.do", method = { RequestMethod.GET, RequestMethod.POST })
+   @ResponseBody
+   public Map hobong_pop(HttpServletRequest request, HttpServletResponse response) throws Exception {
+      request.setCharacterEncoding("utf-8");
+      Map<String, Object> searchMap = new HashMap<String, Object>(); // 검색조건
+      Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
+      
+      // 검색조건설정 - 사원 코드 
+      System.out.println("popController2 : "+ request.getParameter("sawon_code"));
+
+      searchMap.put("sawon_code", request.getParameter("sawon_code"));
+      
+      //데이터 조회
+      List<Insa_popup_VO> data = Insa_infoEnroll_Service.hobong_pop(searchMap);
         resultMap.put("Data", data);
         
         return resultMap;
@@ -402,6 +423,7 @@ public class Insa_infoEnroll_ControllerImpl implements Insa_infoEnroll_Controlle
  		FileUtil fs = new FileUtil();
  	       
  		FileVO fileInfo = fs.saveImage(signImageInfo.getPhotofile());
+ 		//if 문만 
  		if (fileInfo != null) {
  			signImageInfo.setPhoto(fileInfo.getRealname());
  			Insa_infoEnroll_DAO.updateSignImage(signImageInfo);

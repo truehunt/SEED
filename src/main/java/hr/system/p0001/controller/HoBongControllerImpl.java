@@ -104,7 +104,6 @@ public class HoBongControllerImpl implements HoBongController {
 		while (enu.hasMoreElements()) {
 			String name = (String) enu.nextElement();
 			String[] values = request.getParameterValues(name);
-			System.out.println("name:"+name+"  values:"+ request.getParameterValues(name));
 			dataMap.put(name, values);
 		}
 		
@@ -136,7 +135,6 @@ public class HoBongControllerImpl implements HoBongController {
 		while (enu.hasMoreElements()) {
 			String name = (String) enu.nextElement();
 			String[] values = request.getParameterValues(name);
-			System.out.println("name:"+name+"  values:"+ request.getParameterValues(name));
 			dataMap.put(name, values);
 		}
 		

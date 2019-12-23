@@ -9,6 +9,7 @@ public class Insa_salEnroll_VO {
 	private String pk_sal_info_unique_num; // 급여정보 고유정보
 	private String fk_sawon_code; // fk_사원 코드
 	private String fk_hobong_code; // fk_호봉코드
+	private String hobong_price; // 호봉 금액
 	private String sal_info_acc_type_code; // 계정유형 코드
 	private String sal_info_acc_type_name; // 계정유형 명
 	private String sal_info_trans_amount_o_code; // 급여 이체은행코드1
@@ -61,6 +62,14 @@ public class Insa_salEnroll_VO {
 
 	public void setFk_hobong_code(String fk_hobong_code) {
 		this.fk_hobong_code = fk_hobong_code;
+	}
+	
+	public String getHobong_price() {
+		return hobong_price;
+	}
+
+	public void setHobong_price(String hobong_price) {
+		this.hobong_price = hobong_price;
 	}
 
 	public String getSal_info_acc_type_code() {

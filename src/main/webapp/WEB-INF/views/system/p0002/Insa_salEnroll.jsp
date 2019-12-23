@@ -132,7 +132,8 @@
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50, Align:"Center"},
 			{Header:"No",Type:"Seq",SaveName:"pk_sal_info_unique_num",MinWidth:100, Align:"Center"},
 			{Header:"사원 코드",Type:"Text",SaveName:"fk_sawon_code",MinWidth:60, Align:"Center"},			
-			{Header:"호봉 코드",Type:"Text",SaveName:"fk_hobong_code",MinWidth:150, Align:"Center"},
+			{Header:"호봉 코드",Type:"Text",SaveName:"fk_hobong_code",MinWidth:80, Align:"Center"},
+			{Header:"호봉 금액",Type:"Text",SaveName:"hobong_price",MinWidth:100, Align:"Center"},
 			{Header:"계정유형코드",Type:"Text",SaveName:"sal_info_acc_type_code",MinWidth:150, Align:"Center"},
 			{Header:"계정유형명",Type:"Text",SaveName:"sal_info_acc_type_name",MinWidth:100, Align:"Center"},
 			{Header:"급여 이체은행코드1",Type:"Text",SaveName:"sal_info_trans_amount_o_code",MinWidth:150, Align:"Center"},
@@ -162,9 +163,9 @@
 
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
-		//doAction('search');
-		
-		//mySheet.DoSearch("${contextPath}/system/p0002/searchList4.do"); // 회사등록 페이지로 가면 자동으로 searchList.do 실행 
+
+		//로딩됨과 동시에 2019001 로 내용 채워짐
+		doAction('search');
 	
 		//콤보박스에 값 불러오기 -> 페이지 로드 시 콤보박스 초기화
 		selectSal();
@@ -172,12 +173,12 @@
 		$('#sal_info_deduction').html("   ");
 		
 		//ibSheet 에서 col 지정해서 숨김
-		 /* mySheet.SetColHidden([//0~26번째 까지...실상 전 ibSheet 숨김
+		mySheet.SetColHidden([//0~26번째 까지...실상 전 ibSheet 숨김
 	      {Col: 0, Hidden:1}, {Col: 1, Hidden:1}, {Col: 2, Hidden:1}, {Col: 3, Hidden:1}, {Col: 4, Hidden:1}, {Col: 5, Hidden:1}, {Col: 6, Hidden:1}, 
 	      {Col: 7, Hidden:1}, {Col: 8, Hidden:1}, {Col: 9, Hidden:1}, {Col: 10, Hidden:1}, {Col: 11, Hidden:1}, {Col: 12, Hidden:1}, {Col: 13, Hidden:1}, 
 	      {Col: 14, Hidden:1}, {Col: 15, Hidden:1}, {Col: 16, Hidden:1}, {Col: 17, Hidden:1}, {Col: 18, Hidden:1}, {Col: 19, Hidden:1}, {Col: 20, Hidden:1}, 
-	      {Col: 21, Hidden:1}, {Col: 22, Hidden:1}, {Col: 23, Hidden:1}, {Col: 24, Hidden:1}, {Col: 25, Hidden:1}, {Col: 26, Hidden:1},  
-	    ]);  */
+	      {Col: 21, Hidden:1}, {Col: 22, Hidden:1}, {Col: 23, Hidden:1}, {Col: 24, Hidden:1}, {Col: 25, Hidden:1}, {Col: 26, Hidden:1}, {Col: 27, Hidden:1}, 
+	    ]);
 	    
 		  // select 태그에 sal_info_spouse_ded인 값의 변경이 있을때 실행
 		  $("#sal_info_spouse_ded").change(function(e){ 
@@ -185,11 +186,7 @@
 			  var colNum = colArr.indexOf(e.target.id);	
 			  t_row = 1;	
 				 
-			 /* var spouse = document.getElementById("sal_info_spouse_ded");
-				var selectBox = spouse.options[spouse.selectedIndex].value;
-				//console.log(selectBox); */
-				  
-				mySheet.SetCellValue(t_row, colNum, e.target.value);
+			  mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
 	
 		  // select 태그에 sal_info_deduction인 값의 변경이 있을때 실행
@@ -198,18 +195,15 @@
 			  var colNum = colArr.indexOf(e.target.id);	
 			  t_row = 1;	
 				 
-		     /* var deduction = document.getElementById("sal_info_deduction");
-				var selectBox = deduction.options[deduction.selectedIndex].value;
-				//console.log(selectBox); */
-				  
-				mySheet.SetCellValue(t_row, colNum, e.target.value);
+			  mySheet.SetCellValue(t_row, colNum, e.target.value);
 			})
-	}
 	
+	}
+	 
 	 function rowCheck(code){//메인화면에서 클릭한 row부분에 대한 사원코드 값 받아옴
 			$('#sawon_code').val(code);
 	 
-	 		console.log($('#sawon_code'));
+	 		console.log("salEnroll : "+$('#sawon_code').val());
 	 		doAction('search');
 	 }
 	 
@@ -221,7 +215,7 @@
 	 	
 	 });
 	 
-	 //공통_팝업에서  onClick 이벤트 후 값 입력
+	 //공통_팝업에서  onClick 이벤트 후 값 입력e
 	 function fn_selectCode(code_num, code_name, code_id, code_nameId) {
 			console.log("info:"+code_num);//코드
 			console.log("info:"+code_name);//코드명
@@ -235,6 +229,24 @@
 			//명
 			mySheet.SetCellValue(1, code_nameId, code_name);
 			$("#"+code_nameId).val(code_name);
+			
+		    //$("#popupUsers").modal("hide");
+	}
+	 
+	//호봉_팝업에서  onClick 이벤트 후 값 입력
+	 function fn_Hobong_Selected(code_num, code_price, code_id, code_priceId) {
+			console.log("info:"+code_num);//코드
+			console.log("info:"+code_price);//코드명
+			console.log("info:"+code_id);//코드 id
+			console.log("info:"+code_priceId);// 코드명 id
+			
+			//호봉 코드
+			mySheet.SetCellValue(1, code_id, code_num);
+			$("#"+code_id).val(code_num);
+			
+			//호봉 가격
+			mySheet.SetCellValue(1, code_priceId, code_price);
+			$("#"+code_priceId).val(code_price);
 			
 		    //$("#popupUsers").modal("hide");
 	}
@@ -259,11 +271,12 @@
 				mySheet.RemoveAll();
 				break;
 			case "save": // 저장
-				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
-				//save 를 하면서 중복 처리 됨 
 				var tempStr = mySheet.GetSaveString();
-				tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
-				console.log("save1");
+
+				//현재는 테스트 하는 겸 해서 놔두지만 나중에는 주석 처리 해야됨 
+				//save 를 하면서 중복 처리 됨
+				//tempStr += alert("서버로 전달되는 문자열 확인 :"+tempStr);
+				
 				mySheet.DoSave("${contextPath}/system/p0002/insertData4.do");
 				break;
 			case "insert": //신규행 추가
@@ -320,8 +333,8 @@
 				
 				for(var i = 1; i<=mySheet.RowCount(); i++){ // 조회할때 갯수 세어서 거기에 전부 넣기위해서 for문 돌립니다.
 					//console.log(i);
-					mySheet.CellComboItem(i,15,S1); // 배우자 공제 ( 비해당 , 해당 )
-					mySheet.CellComboItem(i,16,S1); // 부녀자 공제 ( 비해당 , 해당 )
+					mySheet.CellComboItem(i,16,S1); // 배우자 공제 ( 비해당 , 해당 )
+					mySheet.CellComboItem(i,17,S1); // 부녀자 공제 ( 비해당 , 해당 )
 
 				}
 				mySheet_OnSearchEnd();
@@ -342,34 +355,32 @@
 				  	$("#"+v).val(''); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
 			  })
 		  }else if(mySheet.GetCellValue(1,3) != -1){ // 데이터가 있을 시 실행
-			 /*  $.each(colArr,function(k,v){ // .each - 배열을 반복문으로 돌림 key 와 value 값을 가진다. 
-				  	$("#"+v).val(mySheet.GetCellValue(1,k)); // ibsheet의 GetCellValue 메서드를 사용해 row 의 key value 를 가져옴 
-			  }) */
 
  			  $('#fk_hobong_code').val(mySheet.GetCellValue(1,4));
-			  $('#sal_info_acc_type_code').val(mySheet.GetCellValue(1,5));
-			  $('#sal_info_acc_type_name').val(mySheet.GetCellValue(1,6));
-			  $('#sal_info_trans_amount_o_code').val(mySheet.GetCellValue(1,7));
-			  $('#sal_info_trans_amount_o').val(mySheet.GetCellValue(1,8));
-			  $("#sal_info_acc_num_one").val(mySheet.GetCellValue(1,9));
-			  $('#sal_info_acc_hold_one').val(mySheet.GetCellValue(1,10));
-			  $('#sal_info_trans_amount_t_code').val(mySheet.GetCellValue(1,11));
-			  $('#sal_info_trans_amount_t').val(mySheet.GetCellValue(1,12));
-			  $('#sal_info_acc_num_two').val(mySheet.GetCellValue(1,13));
-			  $('#sal_info_acc_hold_two').val(mySheet.GetCellValue(1,14));
-			  $('#sal_info_spouse_ded').val(mySheet.GetCellValue(1,15)).attr("selected","selected");
-			  $('#sal_info_deduction').val(mySheet.GetCellValue(1,16)).attr("selected","selected");
-			  $('#sal_info_under_age_twen').val(mySheet.GetCellValue(1,17));
-			  $('#sal_info_depend_60years_older').val(mySheet.GetCellValue(1,18));
-			  $('#sal_info_disabled_person').val(mySheet.GetCellValue(1,19));
-			  $('#sal_info_reci_foster_child').val(mySheet.GetCellValue(1,20));
-			  $('#sal_info_multi_child_ded').val(mySheet.GetCellValue(1,21));
-			  $('#pk_sawon_code').val(mySheet.GetCellValue(1,22));
+ 			  $('#hobong_price').val(mySheet.GetCellValue(1,5));
+			  $('#sal_info_acc_type_code').val(mySheet.GetCellValue(1,6));
+			  $('#sal_info_acc_type_name').val(mySheet.GetCellValue(1,7));
+			  $('#sal_info_trans_amount_o_code').val(mySheet.GetCellValue(1,8));
+			  $('#sal_info_trans_amount_o').val(mySheet.GetCellValue(1,9));
+			  $("#sal_info_acc_num_one").val(mySheet.GetCellValue(1,10));
+			  $('#sal_info_acc_hold_one').val(mySheet.GetCellValue(1,11));
+			  $('#sal_info_trans_amount_t_code').val(mySheet.GetCellValue(1,12));
+			  $('#sal_info_trans_amount_t').val(mySheet.GetCellValue(1,13));
+			  $('#sal_info_acc_num_two').val(mySheet.GetCellValue(1,14));
+			  $('#sal_info_acc_hold_two').val(mySheet.GetCellValue(1,15));
+			  $('#sal_info_spouse_ded').val(mySheet.GetCellValue(1,16)).attr("selected","selected");
+			  $('#sal_info_deduction').val(mySheet.GetCellValue(1,17)).attr("selected","selected");
+			  $('#sal_info_under_age_twen').val(mySheet.GetCellValue(1,18));
+			  $('#sal_info_depend_60years_older').val(mySheet.GetCellValue(1,19));
+			  $('#sal_info_disabled_person').val(mySheet.GetCellValue(1,20));
+			  $('#sal_info_reci_foster_child').val(mySheet.GetCellValue(1,21));
+			  $('#sal_info_multi_child_ded').val(mySheet.GetCellValue(1,22));
+			  $('#pk_sawon_code').val(mySheet.GetCellValue(1,23));
 			  			  
-			  $('#sal_info_int_user_id').val(mySheet.GetCellValue(1,23)); 
-			  $('#sal_info_int_date').val(mySheet.GetCellValue(1,24)); 
-			  $('#sal_info_mod_user_id').val(mySheet.GetCellValue(1,25)); 
-			  $('#sal_info_mod_date').val(mySheet.GetCellValue(1,26));
+			  $('#sal_info_int_user_id').val(mySheet.GetCellValue(1,24)); 
+			  $('#sal_info_int_date').val(mySheet.GetCellValue(1,25)); 
+			  $('#sal_info_mod_user_id').val(mySheet.GetCellValue(1,26)); 
+			  $('#sal_info_mod_date').val(mySheet.GetCellValue(1,27));
 		  }
 	}
 	
@@ -383,7 +394,7 @@
             //mySheet.ReNumberSeq();
 		}
 	}	
-	
+
 </script>
 </head>
 <body>
@@ -421,8 +432,9 @@
 					</td>
 				  	<td align="right" style="width:130px;">호 봉 : </td>
 	    			<td style="width:500px;">
-	    				<input type="text" name="fk_hobong_code" id="fk_hobong_code" size="10px"><!-- window.parent.fn_Popup("PE","fk_hobong_code", "#myTabs_contents-2-iframe"); -->
-	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='' style='cursor:pointer;' />
+	    				<input type="text" name="fk_hobong_code" id="fk_hobong_code" size="10px">
+	    				<img src='${contextPath}/resources/image/search_icon.png;' onclick='window.parent.fn_Popup_Hobong($("#sawon_code").val(),"fk_hobong_code", "hobong_price", "#myTabs_contents-2-iframe");' style='cursor:pointer;' />
+	    				<input type="text" name="hobong_price" id="hobong_price" size="45px" class="disabled">
 	    			</td>
 	    			<td>
 	    				<button class="btn btn-outline btn-primary" onclick="doAction('save')">저장</button>

@@ -98,7 +98,7 @@ var selectedNode = null;
   <div class="modal-content">
 		  				<div class="modal-header">
 		                    <button type="button" id="closeX" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                    <h4 class="modal-title" id="myModalLabel">부서선택</h4>
+		                    <h4 class="modal-title" id="myModalLabel">발령자선택</h4>
 		                </div>
 		                
                 		<div class="modal-body">

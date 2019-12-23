@@ -42,11 +42,17 @@ public class SchCtr {
         modelMap.addAttribute("PK_SAWON_CODE", userno);
         // etcSvc.setCommonAttribute(userno, modelMap);
     	
-        // s
-        if (searchVO.getYEAR()==null || "".equals(searchVO.getYEAR())) {
+        if("13".equals(searchVO.getMONTH())) {         // 13월 일때 연도증가, 월 1월로
+    		searchVO.setYEAR(String.valueOf(Integer.valueOf(searchVO.getYEAR())+1));
+    		searchVO.setMONTH("1");
+    	} else if ("0".equals(searchVO.getMONTH())) {         // 0월 일때 연도감소, 월 12월로
+    		searchVO.setYEAR(String.valueOf(Integer.valueOf(searchVO.getYEAR())-1));
+    		searchVO.setMONTH("12");
+    	} else if (searchVO.getYEAR()==null || "".equals(searchVO.getYEAR())) {
         	Date today = Util4calen.getToday();
         	searchVO.setYEAR(Util4calen.getYear(today).toString());
         	searchVO.setMONTH(Util4calen.getMonth(today).toString());
+        	
         }
         Integer dayofweek = Util4calen.getDayOfWeek( Util4calen.str2Date(searchVO.getYEAR() + "-" + searchVO.getMONTH()+"-01"));
         

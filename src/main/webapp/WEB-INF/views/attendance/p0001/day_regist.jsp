@@ -12,29 +12,15 @@
 <script src="${contextPath}/resources/ibsheet/ibsheet.js"></script>
 <script src="${contextPath}/resources/ibsheet/ibleaders.js"></script>
 
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css"
-	rel="stylesheet">
-<link
-	href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css"
-	rel="stylesheet">
-
-<script
-	src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/sb-admin/font-awesome.min.css" rel="stylesheet">
+<script	src="${pageContext.request.contextPath}/resources/js/jquery-2.2.3.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/css/sb-admin/bootstrap.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/css/sb-admin/metisMenu.min.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/css/sb-admin/sb-admin-2.js"></script>
+<script	src="${pageContext.request.contextPath}/resources/js/project9.js"></script>
 
 <script language="javascript">
 	//시트 높이 계산용
@@ -44,22 +30,10 @@
 		mySheet.RemoveAll();
 		//아이비시트 초기화
 		var initSheet = {};
-		initSheet.Cfg = {
-			SearchMode : smLazyLoad,
-			ToolTip : 1
-		};
-		initSheet.HeaderMode = {
-			Sort : 1,
-			ColMove : 1,
-			ColResize : 1,
-			HeaderCheck : 1
-		};
+		initSheet.Cfg = {SearchMode : smLazyLoad,ToolTip : 1};
+		initSheet.HeaderMode = {Sort : 1,ColMove : 1,ColResize : 1,HeaderCheck : 1};
 		initSheet.Cols = [ // 상태, 삭제는 건들면 안됨. SaveName은 VO속성과 동일하게
 		// MinWidth는 최소 길이값.(줄여도 최소길이값 이하로 안줄여짐.)
-		// Align : data 정렬값.
-		// keyfield : keyfield값 필수값 체크시 필요(미입력시 추가안됨.)
-		// MultiLineText:1  : 하나의 셀에 여러값을 넣을수 있음(shift+enter)
-		// Wrap:1 : 데이터
 		{Header : "상태",	Type : "Status",SaveName : "STATUS",MinWidth : 40,edit : 0}, 
 		{Header : "마감",	Type : "Text",SaveName : "daily_TA_END",MinWidth : 30},
 		{Header : "삭제",Type : "DelCheck",SaveName : "DEL_CHK",	MinWidth : 40},
@@ -74,14 +48,9 @@
 		{Header : "지각시간",Type : "Text",SaveName : "daily_TA_LATE_TIME",MinWidth : 60}, 
 		{Header : "조퇴시간",Type : "Text",SaveName : "daily_TA_LEAVE_TIME",MinWidth : 60},
 		{Header : "순번",Type : "Text",SaveName : "num",MinWidth : 60,Hidden :1}];
-		
 		IBS_InitSheet(mySheet, initSheet);
 
-		//mySheet.SetEditable(false);
 		//InitSheet.SetRowEditable(5, 1);//5번째 행을 수정할수 있게해줌
-		//mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
-		//doAction('search');
-// 		select2();
 	}
 
 	/*Sheet 각종 처리*/
@@ -118,7 +87,6 @@
 
 		case "end": //마감관리
 			var select_row = mySheet.GetSelectRow();
-		alert(mySheet.GetCellValue(select_row, 1));
 		if(mySheet.GetCellValue(select_row, 1) =='Y'){
 			mySheet.SetCellValue(select_row, 1, '')
 		}else {
@@ -126,27 +94,6 @@
 		}
 		}// 마감을 누를시 Y가 들어감
 	}
-
-// 	function select1() {
-
-// 		$.ajax({
-// 					url : "${contextPath}/attendance/p0001/select.do",//목록을 조회 할 url
-// 					type : "POST",
-// 					dataType : "JSON",
-// 					success : function(data) {
-// 						console.log(data);
-// 						for (var i = 0; i < data.length; i++) {
-// 							var option = "<option class='' value='" + data[i].DEPT_NAME + "'>"
-// 									+ data[i].DEPT_NAME + "</option>";
-// 							//대상 콤보박스에 추가
-
-// 							$('#select').append(option);
-// 						}
-// 					},
-// 					error : function(jqxhr, status, error) {
-// 					}
-// 				});
-// 	};
 
 	// 조회완료 후 처리할 작업 //마감여부에 Y가 체크시 수정불가
 	function mySheet_OnSearchEnd() {

@@ -11,8 +11,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import hr.system.p0001.vo.WorkEnroll_VO;
 
-
-
 public interface workEnroll_Service {
 	public List<WorkEnroll_VO> searchList(Map<String, Object> searchMap) throws DataAccessException;
 	

@@ -12,7 +12,6 @@ import hr.system.p0002.vo.Insa_emEnroll_VO;//재직 정보
 import hr.system.p0002.vo.Insa_salEnroll_VO;//급여 정보
 import hr.system.p0002.vo.Insa_popup_VO;//공통 팝업
 
-
 public interface Insa_infoEnroll_DAO {
 	public List<SawonVO> searchList(Map<String, Object> searchMap) throws DataAccessException; // 인사정보등록
 	public List<Insa_personEnroll_VO> searchList2(Map<String, Object> searchMap) throws DataAccessException; // 인사정보등록-인적 정보
@@ -21,6 +20,7 @@ public interface Insa_infoEnroll_DAO {
 	
 	public List<Insa_popup_VO> common_pop(Map<String, Object> searchMap) throws DataAccessException; // 인사정보등록-공통 팝업
 	public List<Insa_popup_VO> dept_pop(Map<String, Object> searchMap) throws DataAccessException; // 인사정보등록-부서 팝업
+	public List<Insa_popup_VO> hobong_pop(Map<String, Object> searchMap) throws DataAccessException; // 인사정보등록-호봉 팝업
 		 
 	public void insertData(Map<String, String> row) throws DataAccessException; //위와 순서 동일
 	public void insertData2(Map<String, String> row) throws DataAccessException;

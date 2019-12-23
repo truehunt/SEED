@@ -121,6 +121,7 @@ public class education_statusServiceImpl implements education_statusService {
       return row;
    }
 
+   
    @Override
    public void updateMember(Map<String, Object> dataMap) {
       // TODO Auto-generated method stub

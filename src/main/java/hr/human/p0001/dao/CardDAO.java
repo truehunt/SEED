@@ -23,10 +23,6 @@ public interface CardDAO {
 	public void deleteData(Map<String, String> row) throws DataAccessException;
 	
 	
-//	 /**
-//     * 결재이미지 등록화면
-//     */
-//    public SignImageVO selectSignImageOne(String param);
     /**
      * 결재이미지 저장, 업데이트.
      */

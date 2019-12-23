@@ -26,7 +26,7 @@ public class FileDownload {
     @RequestMapping(value = "fileDownload")
     public void fileDownload(HttpServletRequest request,HttpServletResponse response) {
         // String path = LocaleMessage.getMessage("info.filePath") + "/";
-        String path = "D:/workspace/upload";
+        String path = "C:/MyProject/workspace/upload";
         
         String filename = request.getParameter("filename");
         String downname = request.getParameter("downname");

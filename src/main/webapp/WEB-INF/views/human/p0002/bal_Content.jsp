@@ -53,19 +53,6 @@ var selectedNode = null;
 	} 
 	
 	
-// 	// 조회조건 
-// 	function bal_Condition() {
-// 		var SiteList = $('#SiteList').val();
-// 		if(SiteList == 1){
-// 			var param = "bal_NUM=" + document.getElementById("Condition").value;
-// 		}else if(SiteList == 2){
-// 			var param = "bal_DIV_CODE=" + document.getElementById("Condition").value;
-// 		}else if(SiteList == 3){
-// 			var param = "bal_DATE=" + document.getElementById("Condition").value;
-// 		}
-// 		mySheet3.DoSearch("${pageContext.request.contextPath}/human/p0002/Sawon_BalNum.do", param);
-// 	};
-   
 </script>
 
 <div class="modal-dialog modal-sm" role="document">

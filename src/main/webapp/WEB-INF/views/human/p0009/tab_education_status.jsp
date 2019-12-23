@@ -94,7 +94,7 @@
 	contents = document.getElementById("tab_contents");
 	createIBTab(tabBar,contents,"myTabs",{
 		widthTabBar: "100%",
-		heightContents:($(window).height()-200) + "px"
+		heightContents:($(window).height()-750) + "px"
     });
 	
 	myTabs.setOptions({
@@ -135,7 +135,9 @@
 </head>
 
 <body  onload='PageLoad()'>
-      
+         <div id="wrapper">
+
+        <div id="page-wrapper" style="margin: 0px; ">
          <div class="row">
                 <div class="col-lg-12">
                 <h1 class="page-header"><i class="fa fa-users fa-fw"></i>  <s:message code="main.per9"/></h1>
@@ -157,5 +159,7 @@
              </div>
         </div>
         <!--main contents-->
+        </div>
+        </div>
 </body>
 </html>

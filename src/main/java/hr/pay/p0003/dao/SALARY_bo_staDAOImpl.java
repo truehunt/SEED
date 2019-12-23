@@ -24,7 +24,6 @@ public class SALARY_bo_staDAOImpl implements SALARY_bo_staDAO {
 
 	@Override
 	public List<SALARY_bo_staVO> searchList(Map<String, Object> searchMap) throws DataAccessException {
-		System.out.println("3. "+searchMap);
 		List<SALARY_bo_staVO> list = sqlSession.selectList("hr.pay.p0003.searchList", searchMap);
 		return list;
 	}
@@ -32,14 +31,12 @@ public class SALARY_bo_staDAOImpl implements SALARY_bo_staDAO {
 	@Override
 	public List<SALARY_bo_staVO> SiteList(Map<String, Object> searchMap) throws DataAccessException {
 		List<SALARY_bo_staVO> list = sqlSession.selectList("hr.pay.p0003.siteList", searchMap);
-		System.out.println(searchMap);
 		return list;
 	}
 	
 	@Override
 	public List<SALARY_bo_staVO> DeptList(Map<String, Object> searchMap) throws DataAccessException {
 		List<SALARY_bo_staVO> list = sqlSession.selectList("hr.pay.p0003.deptList", searchMap);
-		System.out.println(searchMap);
 		return list;
 	}
 	
@@ -47,34 +44,29 @@ public class SALARY_bo_staDAOImpl implements SALARY_bo_staDAO {
 	@Override
 	public List<SALARY_bo_staVO> DeptList2(Map<String, Object> searchMap) throws DataAccessException {
 		List<SALARY_bo_staVO> list = sqlSession.selectList("hr.pay.p0003.deptList2", searchMap);
-		System.out.println(searchMap);
 		return list;
 	}
 	
 	@Override
 	public List<SALARY_bo_staVO> yearday(Map<String, Object> searchMap) throws DataAccessException {
 		List<SALARY_bo_staVO> list = sqlSession.selectList("hr.pay.p0003.yearday", searchMap);
-		System.out.println(searchMap);
 		return list;
 	}
 	
 	@Override
 	public List<SALARY_bo_staVO> yeardayd(Map<String, Object> searchMap) throws DataAccessException {
 		List<SALARY_bo_staVO> list = sqlSession.selectList("hr.pay.p0003.yeardayd", searchMap);
-		System.out.println(searchMap);
 		return list;
 	}
 	
 
 	@Override
 	public void insertData(Map<String, String> row) throws DataAccessException {
-		System.out.println("1."+row);
 		sqlSession.update("hr.pay.p0003.insertData", row);
 	}
 
 	@Override
 	public void updateData(Map<String, String> row) throws DataAccessException {
-		System.out.println("save:"+row);
 		sqlSession.update("hr.pay.p0003.updateData", row);
 	}
 

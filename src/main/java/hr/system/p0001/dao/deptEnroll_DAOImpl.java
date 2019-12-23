@@ -38,7 +38,6 @@ public class deptEnroll_DAOImpl implements deptEnroll_DAO {
    
     @Override
    public void insertData(Map<String, String> row) throws DataAccessException {
-    	System.out.println("d!");
       sqlSession.update("hr.system.p0001.DEinsertData", row);
    }
 
@@ -54,7 +53,6 @@ public class deptEnroll_DAOImpl implements deptEnroll_DAO {
    
    @Override
    public void insertData2(Map<String, String> row) throws DataAccessException {
-	  System.out.println("d2!");
 	  sqlSession.update("hr.system.p0001.DEinsertData2", row);
    }
 
